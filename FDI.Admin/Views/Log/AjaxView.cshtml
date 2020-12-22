@@ -1,0 +1,82 @@
+﻿@model FDI.Base.Log                               
+@using FDI.CORE
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin Log
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên doanh nghiệp</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.ID)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Tên người dùng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.User)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Chức năng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.ChucNang)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.NgayTao)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Cửa hàng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CuaHang)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Nội dung</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.NoiDung)
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<CTS.Simple.OrderDetailItem>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td><input type="checkbox" class="checkboxR" value="@item.ProductID" data-OrderDid="@item.ID" data-orderId="@item.OrderID"  data-price="@item.Price" data-sale="@item.Sale" checked=""/></td>
+        <td>@item.ProductCode</td>
+        <td>@item.ProductName</td>
+        <td>@string.Format("{0:0,0}",item.Price)</td>
+        <td>@item.Sale</td>
+        <td>@string.Format("{0:0,0}",item.Price - item.Price*item.Sale/100)</td>
+    </tr>
+}

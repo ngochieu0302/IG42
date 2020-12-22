@@ -1,0 +1,223 @@
+﻿@model FDI.Simple.ProductItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+
+    var lst1 = (Model != null && Model.LstCostProducts.Any()) ? string.Join(",", Model.LstCostProducts.Select(c => c.CostTypeID)) : "";
+    var lst2 = Model != null && Model.LstCostProductUserItems.Any() ? string.Join(",", Model.LstCostProductUserItems.Select(c => c.CostTypeID)) : "";
+}
+<script>
+    var lstP = JSON.parse("[@(lst1)]");
+    var lstC = JSON.parse("[@(lst2)]");
+    $(function () {
+        
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () {
+                var lstRet1 = [];
+                var lstRet2 = [];
+                $('#CostType .data').each(function () {
+                    var ret = [];
+                    $('.inputValue', this).each(function () {
+                        var d = $(this).val() || $(this).text();
+                        ret.push(d);
+                    });
+                    var item = {
+                        CostTypeID: ret[0],
+                        Percent: ret[1]
+                    }
+                    lstRet1.push(item);
+                });
+                $('#UserCost .data').each(function () {
+                    var ret = [];
+                    $('.inputValue', this).each(function () {
+                        var d = $(this).val() || $(this).text();
+                        ret.push(d);
+                    });
+                    var item = {
+                        CostTypeID: ret[0],
+                        UserId: ret[1],
+                        Percent: ret[2]
+                    }
+                    lstRet2.push(item);
+                });
+                $("#lstRet1").val(JSON.stringify(lstRet1));
+                $("#lstRet2").val(JSON.stringify(lstRet2));
+                PostAction("#modalForm");
+            }
+        });
+        $('#CostName').autocomplete({
+            serviceUrl: "/CostType/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CostName').val("");
+                var index = lstP.indexOf(el.ID);
+                if (index === -1) {
+                    lstP.push(el.ID);
+                    var txt = "<tr class='data'><td>CostTypeName</td><td><input type='hidden'class='inputValue' value='ValueId'/><input type='number' class='form-control upercent inputValue' /></td><td class='text-right'><button class='btn btn-default pdelete' data-pid='ValueId'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("CostTypeName", el.value);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#CostType").append(txt);
+                }
+            }
+        });
+        $('#UserName').autocomplete({
+            serviceUrl: "/CostType/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#UserName').val("");
+                var index = lstC.indexOf(el.ID);
+                if (index === -1) {
+                    lstC.push(el.ID);
+                    var txt = "<tr class='data'>" +
+                        "<td>FullName</td>" +
+                        "<td><input type='hidden'  class='inputValue' value='ValueId'/>" +
+                        "<input type='hidden'  class='inputValue guid-ValueId' value=''/>" +
+                        "<input class='form-control us-ValueId' data-id='ValueId' /></td>" +
+                        "<td><input class='form-control inputValue quantity' value='' /></td>" +
+                        "<td class='text-right'><button class='btn btn-default cdelete' data-pid='ValueId'>" +
+                        "<i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("FullName", el.value);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#UserCost").append(txt);
+                    fnAuto(".us-" + el.ID);
+                    //
+                }
+            }
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        $("body").on("click", ".cdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        fnAuto(".useritem");
+    });
+   
+    function fnAuto(parameters) {
+        $(parameters).autocomplete({
+            serviceUrl: "/DNUser/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                var id = $(this).attr("data-id");
+                $(".guid-" + id).val(el.GuiID);
+            }
+        });
+    }
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="Add" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" id="AgencyId" name="AgencyId" value="@ViewBag.AgencyId" />
+        <input type="hidden" id="lstRet1" name="lstRet1" value="" />
+        <input type="hidden" id="lstRet2" name="lstRet2" value="" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thiết lập phí sản xuất
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-md-offset-1">
+                                <input type="text" class="form-control" placeholder="..." id="CostName" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-md-offset-2">
+                                <table class="gridView" style="width: 100%" id="CostType">
+                                    @if (Model.LstCostProducts != null)
+                                    {
+                                        foreach (var item in Model.LstCostProducts)
+                                        {
+                                            <tr class='data'>
+                                                <td>@item.CostTypeName</td>
+                                                <td>
+                                                    <input type='hidden' class='inputValue' value='@item.CostTypeID' />
+                                                    <input type='number' class='form-control inputValue' value="@item.Percent" />
+                                                </td>
+                                                <td class='text-right'>
+                                                    <button class='btn btn-default pdelete' data-pid='@item.CostTypeID'>
+                                                        <i class='fa fa-times' style='color: red;'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Nhân công sản xuất
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-md-offset-1">
+                                <input type="text" class="form-control" placeholder="..." id="UserName" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-md-offset-2">
+                                <table class="gridView" style="width: 100%" id="UserCost">
+                                    @if (Model.LstCostProducts != null)
+                                    {
+                                        foreach (var item in Model.LstCostProductUserItems)
+                                        {
+                                            <tr class='data'>
+                                                <td>@item.CostTypeName</td>
+                                                <td>
+                                                    <input type='hidden' class='inputValue' value='@item.CostTypeID' />
+                                                    <input type='hidden' class='inputValue guid-@item.CostTypeID' value='@item.UserId' />
+                                                    <input class='form-control useritem us-@item.CostTypeID' data-id='@item.CostTypeID' value="@item.UserName" />
+                                                </td>
+                                                <td><input class='form-control inputValue' value="@string.Format("{0:0.##}",item.Percent)" /></td>
+                                                <td class='text-right'>
+                                                    <button class='btn btn-default cdelete' data-pid='@item.CostTypeID'>
+                                                        <i class='fa fa-times' style='color: red;'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

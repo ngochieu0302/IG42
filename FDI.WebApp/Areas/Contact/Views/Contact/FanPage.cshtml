@@ -1,0 +1,53 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <input class="form-control" name="value" value="@Model.Value" />
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Model.CtrId", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="col-sm-6 col-md-3">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&appId=1376533359320172&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="fb-page" data-hide-cover="true" data-href="@Model.Value" data-show-facepile="true" rel="nofollow">&nbsp;</div>
+    </div>
+}

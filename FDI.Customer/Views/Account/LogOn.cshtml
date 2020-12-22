@@ -1,0 +1,43 @@
+﻿@model FDI.Customer.LogOnModel
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_LayoutLogon.cshtml";
+}
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    @using (Html.BeginForm((string)ViewBag.FormAction, "Account", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <input type="hidden" id="itemUrl" name="itemUrl" value="@ViewBag.url" />
+        <h3 class="form-title">ĐĂNG NHẬP <small>Khách hàng</small></h3>
+        @Html.ValidationSummary(true, "Đăng nhập không thành công, Xin vui lòng thử lại ...", new { @class = "alert alert-danger"})
+        <div class="form-group">
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            <label class="control-label visible-ie8 visible-ie9">Username</label>
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Username", @name = "username" })
+
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Password</label>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password", @name = "password" })
+        </div>
+        <div class="form-actions">
+            <label class="rememberme check">
+                @Html.CheckBoxFor(m => m.RememberMe, new {@name = "remember"}) Nhớ đăng nhập
+            </label>
+            <button type="submit" class="btn btn-success uppercase fr">Đăng nhập</button>
+        </div>
+        <div class="forget-password">
+            <h4>Quên mật khẩu ?</h4>
+            <p>
+                bạn hãy click
+                <a href="#" id="forget-password"> vào đây </a> để lấy lại mật khẩu.
+            </p>
+        </div>
+        <div class="create-account">
+            <p>
+                Bạn chưa có tài khoản ?&nbsp;
+                <a href="/dang-ky" class="uppercase">Đăng ký ngay</a>
+            </p>
+        </div>
+    }
+</div>

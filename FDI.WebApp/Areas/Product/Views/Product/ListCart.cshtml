@@ -1,0 +1,106 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.ShopProductCartItem>
+@{
+    var pageId = WebConfig.ProductDetail;
+}
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cart-main-wrapper section-padding">
+    <div class="container">
+        <div class="section-bg-color">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Cart Table Area -->
+                    <div class="cart-table table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="pro-thumbnail">Ảnh</th>
+                                    <th class="pro-title">Sản phẩm</th>
+                                    <th class="pro-price">Kích thước</th>
+                                    <th class="pro-price">Giá</th>
+                                    <th class="pro-quantity">Số lượng</th>
+                                    <th class="pro-subtotal">Thành tiền</th>
+                                    <th class="pro-remove">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lstCart">
+                                @if (Model.Any())
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                    <tr data-id="@item.ShopID">
+                                        <td class="pro-thumbnail"><a href="javascript:void(0);">
+                                            <img class="img-fluid" src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" /></a></td>
+                                        <td class="pro-title"><a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">@item.Name</a></td>
+                                        
+                                        <td class="pro-price"><span>@item.Size</span></td>
+                                        <td class="pro-price"><span>@item.Price.Money()</span></td>
+                                        <td class="pro-quantity">
+                                            <div class="qty-cart">
+                                                <input type="text" value="@item.Quantity" name="Updateq-@(item.ShopID)" class="Updateq" data-id="@(item.ShopID)"/></div>
+                                        </td>
+                                        <td class="pro-subtotal"><span>@item.Total.Money()</span></td>
+                                        <td class="pro-remove"><a href="javascript:void(0);" data-id="@(item.ShopID)" class="btnDelete"><i class="fa fa-trash-o"></i></a></td>
+                                    </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="8" class="pro-title"> Giỏ hàng của bạn chưa có sản phẩm nào</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Cart Update Option -->
+                    <div class="cart-update-option d-block d-md-flex justify-content-between">
+                       @* <div class="apply-coupon-wrapper">
+                            <form action="#" method="post" class=" d-block d-md-flex">
+                                <input type="text" placeholder="Enter Your Coupon Code" required />
+                                <button class="btn btn-sqr">Apply Coupon</button>
+                            </form>
+                        </div>*@
+                        <div class="cart-update">
+                            <a href="/gio-hang-cua-ban-p1001c0" class="btn btn-sqr" id="UpdateCart">Update Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 ml-auto">
+                    <!-- Cart Calculation Area -->
+                    <div class="cart-calculator-wrapper">
+                        <div class="cart-calculate-items">
+                            <h6>Cart Totals</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr class="total">
+                                        <td>Total</td>
+                                        <td class="total-amount">@(Model.Sum(c=>c.Total).Money())</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <a href="/thanh-toan-don-hang-p1002c0" class="btn btn-sqr d-block">Gửi đơn hàng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

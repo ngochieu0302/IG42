@@ -1,0 +1,180 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model ModelSalaryMonthDetailItem
+@{
+	Layout = "~/Views/Shared/_Meta.cshtml";
+	var stt = 1;
+	var listItems = Model.ListItems.GroupBy(x => x.RolesUserItems);
+	var listday = ConvertDate.ListDayInMonth(Model.DateStart);
+	var listGroup = Model.ListItems.Select(x => x.CriteriaList).FirstOrDefault();
+}
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<div class="content-control" id="BoxPrint">
+	<div class="box-control">
+		<div class="scrollable box-control-content">
+			<div class="printBangLuong">
+				<div class="tt-company">
+					<div class="left-tt-company">
+						<strong id="nameagency"></strong>
+						<strong>Mã đơn vị: ........................</strong>
+					</div>
+					<div class="right-tt-company">
+						<strong>Mẫu số: C30 - BB</strong>
+						<span>Ban hành ngày 29 tháng 12 năm 2091</span>
+					</div>
+				</div>
+				<div class="title-bangluong">
+					<h2>Bảng tính - Thanh toán tiền lương</h2>
+					<i>Tháng <span id="monthToShow">@DateTime.Now.Month</span> năm <span id="yearToShow">@DateTime.Now.Year</span></i>
+				</div>
+				<div class="print-table" id="tblLuong">
+					<table class="table-thongke-exel table-bangluong table table-bordered">
+						<tr class="table-head">
+							<th rowspan="2">STT<br></th>
+							<th rowspan="2">Họ và tên<br></th>
+							<th rowspan="2">Chức vụ</th>
+							<th rowspan="2">Lương cứng</th>
+							<th rowspan="2">Ngày CC</th>
+							<th rowspan="2">Ngày LV</th>
+							<th rowspan="2">Lương TL</th>
+							<th rowspan="2">ĐM-VS(P)</th>
+							<th colspan="5">Thưởng doanh số ĐH</th>
+							<th rowspan="2">Thưởng KH</th>
+							<th rowspan="2">Thưởng - phạt</th>
+							<th rowspan="2">Tạm ứng</th>
+							<th rowspan="2">Trả ứng</th>
+							<th rowspan="2">Tổng TN</th>
+							<th rowspan="2">Ghi chú</th>
+						</tr>
+						@if (listGroup != null)
+						{
+							<tr>
+								@foreach (var item in listGroup.OrderBy(x => x.Id))
+								{
+									<td>@item.Name</td>
+								}
+								<td>Doanh số</td>
+								<td>Tổng</td>
+							</tr>
+						}
+						@foreach (var item in listItems)
+						{
+							var sttTr = 1;
+							<tr class="table-content table-total">
+								<td>@(stt)</td>
+								<td>Phòng: @item.Key.Select(x => x.RoleName).FirstOrDefault()</td>
+								<td></td>
+								<td>@item.Sum(x => x.FixedSalary).Money()</td>
+								<td></td>
+								<td></td>
+								<td class="total-thuclinh-@stt">a</td>
+								<td></td>
+								@if (listGroup != null)
+								{
+									foreach (var item1 in item)
+									{
+										foreach (var item2 in item1.CriteriaList.GroupBy(x => x.Id).OrderBy(y => y.Key))
+										{
+											<td>@item2.Sum(x => x.Value).Money()</td>
+										}
+									}
+								}
+								<td>@item.Sum(x => x.CriteriaList.Sum(y => y.Value)).Money()</td>
+								
+								<td>@item.Sum(x => x.SalaryAward).Money()</td>
+								<td class="total-price-group-@stt"></td>
+								<td></td>
+							</tr>
+
+							foreach (var item1 in item)
+							{
+								var listc = item1.CalendarItems.ToList();
+								listc.AddRange(item1.RCalendarItems.Select(rcalendarItem => new CalendarItem
+								{
+									DateStart = rcalendarItem.DateStart,
+									DateEnd = rcalendarItem.DateEnd,
+									ID = rcalendarItem.ID,
+									DNCalendarWeeklySchedule = rcalendarItem.DNCalendarWeeklySchedule.Select(m => new CalendarWeeklyScheduleItem
+									{
+										MWSID = m.MWSID,
+										Weekid = m.Weekid
+									})
+								}));
+								var totalDate = listday.Count(m => item1.DN_Time_Job.Any(t => t.DateCreated >= m.Totals && t.DateCreated < m.Totals1));
+								var totalday = listday.Count(dayitem => listc.Any(calendarItem => calendarItem.DateStart <= dayitem.Totals && calendarItem.DateEnd > dayitem.Totals && calendarItem.DNCalendarWeeklySchedule.Any(m => m.Weekid == dayitem.Thu)));
+								var totalDateCC = totalDate + item1.TotalDateCC;
+								var tongThuongDoanhSoDH = (item1.CriteriaList.Sum(y => y.Value));
+								<tr class="table-content">
+									<td>@(sttTr++)</td>
+									<td>@item1.LoweredUserName</td>
+									<td>@string.Join(" ", item1.RolesUserItems.Select(x => x.DepartmentName))</td>
+									<td class="price">@item1.FixedSalary.Money()</td>
+									<td>@totalDateCC</td>
+									<td>@item1.TotalMuon - @item1.TotalSom</td>
+									@if (listGroup != null)
+									{
+										foreach (var item2 in item1.CriteriaList.OrderBy(x => x.Id))
+										 {
+											 <td>@item2.Value.Money()</td>
+										 }
+									}
+									<td>@(tongThuongDoanhSoDH.Money())</td>
+									<td class="price">@item1.SalaryAward.Money()</td>
+									<td class="item-price-group-@stt">@((tongThuongDoanhSoDH + item1.SalaryAward).Money())</td>
+									<td></td>
+								</tr>
+								stt++;
+							}
+						}
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+    urlLists = '@Url.Action("Detail", "TotalPersonnel")';
+    $("#nameagency").html($("#AgencyName").html());
+    $(document).ready(function () {
+        function setFooterTime() {
+            var d = new Date();
+            $('#dNow').html(d.getDate());
+            $('#mNow').html(d.getMonth() + 1);
+            $('#yNow').html(d.getFullYear());
+        };
+        function convertStringToNumber(value) {
+            var str = value;
+            while (str.indexOf(',') > 0) {
+                str = str.replace(',', '');
+            };
+            if (!isNaN(str) && str.length !== 0) {
+                return parseFloat(str);
+            }
+            return parseInt(str);
+        };
+
+        $(function () {
+            var total;
+            var numberGroup = @listItems.Count();
+			for (var i = 1 ; i <= numberGroup; i++) {
+			    total = 0;
+			    $('.item-thuclinh-' + i).each(function (index, value) {
+			        total += convertStringToNumber(value.innerHTML);
+			    });
+			    $('.total-thuclinh-' + i).html(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+
+			    total = 0;
+			    $('.item-price-group-' + i).each(function (index, value) {
+			        total += convertStringToNumber(value.innerHTML);
+			    });
+			    $('.total-price-group-' + i).html(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+			}
+		});
+	    setFooterTime();
+		
+	});
+</script>

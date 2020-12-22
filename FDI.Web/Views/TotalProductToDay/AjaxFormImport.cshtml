@@ -1,0 +1,315 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.StorageWarehousingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.LstImport != null ? string.Join(",", Model.LstImport.Where(c => c.IsDelete == false).Select(c => c.CateID)) : "";
+        //var date = DateTime.Now.ToString("dd/mm/yyyy");
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+    <input type="hidden" name="UserID" id="UserID" value="@ViewBag.UserID" />
+    <div class="modal-body npd">
+        <div class="tabs-bookatable-popup">
+            <div class="box-a-table-wrap">
+                <div class="user-order" style="width: 70%">
+                    <div class="tab-content ct-tabs-bookatable">
+                        <div class="tab-pane fade active in" id="tab_1">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã SP</th>
+                                            <th>Tên SP</th>
+                                            <th class='text-center'>Số lượng</th>
+                                            <th class='text-center'>Giá nhập</th>
+                                            <th class='text-center'>BarCode</th>
+                                            <th class='text-center'>Thành tiền</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.LstImportActive != null)
+                                        {
+                                            foreach (var item in Model.LstImportActive.Where(c => c.IsDelete == false))
+                                            {
+                                            <tr class="data">
+                                                <td>@(stt++)</td>
+                                                <td>@item.Code</td>
+                                                <td>@item.ProductName <input type="hidden" class="inputValue" value="@item.CateValueID"></td>
+                                                <td class="inputValue">@string.Format("{0:0.##}", item.Quantity)</td>
+                                                <td class="inputValue">@string.Format("{0:0,0}", item.Price)</td>
+                                                <td class="inputValue">@(item.BarCode)</td>
+
+                                                <td class="text-right">@string.Format("{0:0,0}", item.Price * item.Quantity) <input type="hidden" class="inputValue" value="@item.CateValueID"></td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-default pdelete" data-pid="@item.CateValueID"><i class="fa fa-times" style="color: red;"></i></button>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-order" style="width: 30%; height: calc(100vh - 104px);">
+                    <div class="title-box-order">
+                        <i class="fa fa-info"></i>Thông tin về phiếu nhập
+                    </div>
+                    <div class="user-detail-order">
+                        <div class="form-group">
+                            <div class="input-group" title="Mã phiếu nhập">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-barcode">Mã nhập</i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@(Model.Code ?? DateTime.Now.ToString("yyMMddHHmm"))" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Nhân viên nhập kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user">Người yêu cầu</i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@ViewBag.User" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ngày nhập kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Ngày Yêu cầu</i>
+                                </div>
+                                <input class="form-control" type="date" name="DateCreated_" value="@(Model.DateCreated != null ? Model.DateCreated.DecimalToString("yyyy-MM-dd") : DateTime.Now.Format("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Tổng tiền nhập">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Tổng</i>
+                                </div>
+                                <input class="form-control maskPrice" readonly="" id="TotalPrice" name="TotalPrice" value="@string.Format("{0:0,0}", Model.TotalPrice ?? 0)">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Thanh toán">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Thanh toán</i>
+                                </div>
+                                <input type="text" class="form-control maskPrice" id="Payment" name="Payment" placeholder="Thanh toán" value="@Model.Payment">
+                            </div>
+                        </div>
+                         <div class="form-group" title="Tổng tiền nhập">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Người duyệt</i>
+                                </div>
+                                 <input type="text" class="form-control" disabled value="@Model.UsernameActive" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Thanh toán">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Ngày duyệt</i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@Model.DateActive.DecimalToString("dd/MM/yyyy")" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ghi chú">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-sticky-note-o">Ghi chú</i>
+                                </div>
+                                <textarea rows="5" id="Note" name="Note" class="form-control" placeholder="Ghi chú (*)">@Model.Note</textarea>
+                            </div>
+                        </div>
+                        <div class="select-order">
+                                <table class="gridView table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã SP</th>
+                                            <th>Tên SP</th>
+                                            <th class='text-center'>Số lượng</th>
+                                            <th class='text-center'>Giá nhập</th>
+                                            <th class='text-center'>Thành tiền</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.LstImport != null)
+                                        {
+                                            foreach (var item in Model.LstImport.Where(c => c.IsDelete == false))
+                                            {
+                                            <tr class="data">
+                                                <td>@(stt++)</td>
+                                                <td>@item.Code</td>
+                                                <td>@item.ProductName <input type="hidden" class="inputValue" value="@item.CateID"></td>
+                                                <td>@string.Format("{0:0.##}", item.Quantity)</td>
+                                                <td>@string.Format("{0:0,0}", item.Price)</td>
+                                                <td class="text-right">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-default pdelete" data-pid="@item.CateID"><i class="fa fa-times" style="color: red;"></i></button>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" data-event="PrintNew" id="PrintNew"><i class="fa fa-floppy-o"></i>Nhập hàng</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        //$('#autoProduct').autocomplete({
+        //    serviceUrl: "/StorageWarehouse/AutoProduct?type=3",
+        //    minChars: 1,
+        //    delimiter: /(;)\s*/, // regex or character
+        //    maxHeight: 400,
+        //    onSelect: function (el) {
+        //        $('#autoProduct').val("");
+        //        debugger;
+        //        var index = lstP.indexOf(el.ID);
+        //        if (index == -1) {
+        //            lstP.push(el.ID);
+        //            var txt = "<tr class='data'><td>stt</td><td>code</td><td>name</td><td>" +
+		//			    "<input type='hidden' class='inputValue' value='productId'/>" +
+		//			    "<input type='number' min='0' class='form-control text-right changeValue inputValue quantity sl-productId' data-pid='productId' value='1'/></td><td>" +
+		//			    "<input min='0' class='form-control text-right changeValue inputValue mask maskPrice price-productId' data-pid='productId' value='PriceCost'/></td><td>" +
+		//			    "<input type='date' class='form-control inputValue Date' value='QuantityDate'/></td><td>" +
+		//			    "<input type='date' class='form-control inputValue DateEnd' value='QuantityDateEnd'/></td><td>" +
+		//			    "<input type='text' class='form-control BarCode inputValue' value='BarCodeValue'/></td>" +
+		//			    "<td class='text-right total total-productId'>totalvalue</td>" +
+        //                //"<td class='text-right'><button class='btn btn-default pdelete' data-pid='productId'></button></td>" +
+        //                "</tr>";
+        //            txt = txt.replace("stt", lstP.length);
+        //            txt = txt.replace("code", el.code);
+        //            txt = txt.replace("PriceCost", el.PriceCost);
+        //            txt = txt.replace("name", el.title);
+        //            txt = txt.replace("BarCodeValue", el.BarCode);
+        //            txt = txt.replace("QuantityDate", el.DateS);
+        //            txt = txt.replace("QuantityDateEnd", el.DateE);
+        //            txt = txt.replace(/productId/g, el.ID);
+        //            txt = txt.replace("totalvalue",numeral(el.PriceCost).format('0,0'));
+        //            $("#ProductDetail tbody").append(txt);
+        //            var totaln = parseFloat($("#TotalPrice").val());
+        //            $("#TotalPrice").val(numeral(totaln + el.PriceCost).format('0,0'));
+        //            mask();
+        //        }
+        //    }
+        //});
+        //$("body").on("click", ".pdelete", function () {
+        //    var pid = parseInt($(this).attr("data-pid"));
+        //    var index = lstP.indexOf(pid);
+        //    lstP.splice(index, 1);
+        //    $(this).parent().parent().remove();
+        //});
+        $("#Payment").change(function () {
+            var payment = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+            var total = parseFloat($("#TotalPrice").val() !== "" ? $("#TotalPrice").val().replace(/[,]+/g, '') : "0");
+            if (payment > total) {
+                toastr["error"]("Vượt quá tiền hóa đơn");
+                $("#Payment").val(numeral(total).format('0,0'));
+            }
+
+        });
+        $("body").on("change", ".changeValue", function () {
+            var pid = $(this).attr("data-pid");
+            var sl = parseInt($(".sl-" + pid).val() !== "" ? $(".sl-" + pid).val() : "0");
+            var gia = $(".price-" + pid).val() !== "" ? $(".price-" + pid).val() : "0";
+            $(".price-" + pid).val(gia);
+            $(".sl-" + pid).val(sl);
+            var price = parseFloat(gia.replace(/[,]+/g, ''));
+            $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+            var total = 0;
+            $('#ProductDetail .data').each(function () {
+                $('.total', this).each(function () {
+                    var d = $(this).text().replace(/[,]+/g, '');
+                    total += parseFloat(d);
+                });
+            });
+            $("#TotalPrice").val(numeral(total).format('0,0'));
+        });
+        debugger;
+        $("#frm-modal").validate({
+            rules: {
+                Note:
+				{
+				    required: true
+				},
+                Payment:{
+                    required: true
+                },
+            },
+            messages: {
+                Note:
+				{
+				    required: "Xin mời nhập ghi chú."
+				},
+                Payment:
+				{
+				    required: "Xin mời thanh toán."
+				}
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                debugger;
+                $.post("/Utility/DeleteImportwareActive?key=" + getCookie('CodeLogin'), function () {
+                    var check = false;
+                    debugger;
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        debugger;
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2],
+                            BarCode: ret[3],
+                            CatevalueId: ret[4],
+                            Key: getCookie('CodeLogin')
+                        };
+                        console.log(item);
+                        check = true;
+                        $.post("/Utility/AddImportwareActive?json=" + JSON.stringify(item), function () { });
+                    });
+                    if (check) {
+                        $.post("/StorageWarehouse/Actions", $("#frm-modal").serialize(), function (data) {
+                            $("#btnSave").prop('disabled', false);
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                                createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    } else {
+                        $("#btnSave").prop('disabled', false);
+                        toastr["error"]("Chưa có sản phẩm nào nhập kho");
+                    }
+                });
+            }
+        });
+    });
+
+</script>

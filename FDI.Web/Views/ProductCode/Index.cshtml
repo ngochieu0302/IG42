@@ -1,0 +1,28 @@
+﻿@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $("#btnProductCode").click(function () {
+            var val = [];
+            $('#mygird .gridView tbody :checkbox:checked').each(function (i) {
+                val.push(($(this).val()));
+            });
+            if (val.length > 0) {
+                FdiOpenDialog("#dialog-form", "/ProductCode/AjaxForm?do=Add&itemId=" + val.toString() + "&biasId=@ViewBag.BiasId", "Đánh giá sản phẩm đã chọn");
+            }
+        });
+    });
+</script>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <a href="/BiasProduce?pid=68" class="btn btn-sm btn-primary"><span class="fa fa-backward"></span>Quay lại</a>
+            <div class="btn-group pull-right">
+                <a class="btn btn-sm btn-primary" id="btnProductCode" data-event="add"><span class="fa fa-plus"></span>Thêm mới</a>
+            </div>
+        </form>
+    </div>
+</div>

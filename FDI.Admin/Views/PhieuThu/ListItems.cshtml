@@ -1,0 +1,107 @@
+﻿@model FDI.Simple.ModelThuChiItem
+
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $('.fnView').click(function () {
+            var id = $(this).data('id');
+            fn_view('/Admin/Customer', id);
+        });
+    })
+</script>
+<section id="mygird" class="vbox">
+    <section class="scrollable wrapper w-f">
+        <section class="panel panel-default">
+            <table class="gridView" cellspacing="1">
+                <thead>
+                    <tr>
+                        @*<th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>*@
+                        <th><span>STT</span></th>
+                        <th><span>Ngày</span></th>
+                        <th><span>Mã phiếu</span></th>
+                        <th><span>Loại thu</span></th>
+                        @*<th>
+                            <select name="SearchIn" id="SearchIn" class="form-control input-sm">
+                                <option value="code">Mã phiếu</option>
+                            </select>
+                        </th>*@
+                        <th><span>Hình thức</span></th>
+                        <th><span>Người nộp</span></th>
+                        <th><span>Số tiền</span></th>
+                        <th><span>Tiền nhận</span></th>
+                        <th><span>Thu ngân</span></th>
+                        <th><span>Ghi chú</span></th>
+                        <th><span>Tình trạng</span></th>
+                        <th><span>Người duyệt</span></th>
+                        <th style="width: 90px">Thao tác</th>
+                    </tr>
+                </thead>
+                @if (Model.SystemActionItem.ViewFull)
+                {
+                    var stt = 1;
+                    foreach (var item in Model.ListItem)
+                    {
+                    <tr>
+                        @*<td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check" >
+                        </td>*@
+                        <td>@(stt++)</td>
+                        <td>@item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@item.Code</td>
+                        <td>@item.CostName</td>
+                        <td>@item.PayMentName</td>
+                        <td><a class="fnView" style="cursor: pointer" data-id ="@item.CustomerId">@item.FullName</a></td>
+                        <td>@string.Format("{0:0,0}", item.Price).Replace('.', ',')</td>
+                        <td>@string.Format("{0:0,0}", item.PriceOld).Replace('.', ',')</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Note</td>
+                        @if (item.IsActive == false)
+                        {
+                            <td>Chờ duyệt</td>
+                        }
+                        else if (item.PriceOld <= 0)
+                        {
+                            <td>Không hoàn thành</td>
+                        }
+                        else if (item.PriceOld < item.Price)
+                        {
+                            <td>Hoàn thành 1 phần</td>
+                        }
+                        else
+                        {
+                            <td>Hoàn thành</td>
+                        }
+                        <td>@item.UserActive</td>
+                        <td class="btn-group">
+                            @if (Model.SystemActionItem.Edit)
+                            {
+                                @Grid.ActionEdit(item.ID, item.ID.ToString())
+                            }
+                            @if (Model.SystemActionItem.Delete)
+                            {
+                                @Grid.ActionDelete(item.ID, item.ID.ToString())
+                            }
+                        </td>
+                    </tr>
+                    }
+                }
+            </table>
+        </section>
+    </section>
+    <footer class="footer bg-white m-t-xs">
+        <div style="padding: 10px 0 10px 0">
+            <b>TỔNG TIỀN: </b><span style="color: red">@string.Format("{0:0,0} VNĐ", Model.ListItem.Sum(c => c.Price))</span>
+        </div>
+    </footer>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

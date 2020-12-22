@@ -1,0 +1,38 @@
+﻿@model FDI.Base.System_MessageTemplate
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="col-sm-12">
+    <section class="panel panel-default">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <label>Tên template</label></td>
+                <td>
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Tiêu đề</label></td>
+                <td>
+                    @Html.DisplayFor(model => model.Subject)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Nội dung</label></td>
+                <td>
+                    @Html.Raw(Model.BodyContent)
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+
+

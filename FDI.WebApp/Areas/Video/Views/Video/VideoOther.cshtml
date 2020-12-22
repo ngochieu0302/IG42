@@ -1,0 +1,46 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.VideoItem>
+@{
+    var pageId = WebConfig.VideoId;
+}
+@foreach (var item in Model)
+{
+    <div class="col-sm-6 col-md-4">
+        <div class="item-media item-media-ef">
+            <div class="img">
+                <a href="/@FomatString.Slug(item.Name)-p@(pageId)c@(item.ID)" title="@item.Name">
+                    <img src="@item.UrlPicture.UploadPicture()" alt="" class="img-responsive">
+                    <span class="roll tie-video"></span>
+                </a>
+            </div>
+            <div class="detail">
+                <h2>
+                    <a href="/@FomatString.Slug(item.Name)-p@(pageId)c@(item.ID)" title="">@item.Name</a>
+                </h2>
+                <div class="post-date">
+                    <span><i class="fa fa-user"></i>Admin</span>
+                    <span><i class="fa fa-clock-o"></i>@item.DateCreated.Value.Format("dd/MM/yyyy")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="col-sm-6 col-md-4">
+    <div class="item-media item-media-ef">
+        <div class="img">
+            <a href="#" title="">
+                <img src="img/img-news.jpg" alt="" class="img-responsive">
+                <span class="roll tie-video"></span>
+            </a>
+        </div>
+        <div class="detail">
+            <h2>
+                <a href="#" title="">Công nghệ đã thay đổi cuộc chơi của các chủ shop online ra sao?</a>
+            </h2>
+            <div class="post-date">
+                <span><i class="fa fa-user"></i>Admin</span>
+                <span><i class="fa fa-clock-o"></i>29/15/2015</span>
+            </div>
+        </div>
+    </div>
+</div>

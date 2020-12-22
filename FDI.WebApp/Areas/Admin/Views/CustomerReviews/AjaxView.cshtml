@@ -1,0 +1,61 @@
+﻿@model FDI.Base.CustomerContact
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-phone"></i>Thông tin về khách hàng liên hệ
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><label>Người gửi</label></td>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><label>Email</label></td>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <td><label>Số điện thoại</label></td>
+                        <td>@Html.DisplayFor(model => model.Phone)</td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Ngày gửi</label></td>
+                        <td>
+                            @Html.DisplayFor(model => model.CreatedOnUtc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Trạng thái liên hệ</label></td>
+                        @if (Model.Status == true)
+            {
+                            <td><span class="label label-success">Đã liên hệ</span></td>
+                        }
+                        else
+                        {
+                            <td><span class="label label-default">Chưa liên hệ</span></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><label>Tiêu đề</label></td>
+                        <td>@Html.DisplayFor(model => model.Subject)</td>
+                    </tr>
+                    <tr>
+                        <td><label>Nội dung</label></td>
+                        <td>@Html.DisplayFor(model => model.Message)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+</div>

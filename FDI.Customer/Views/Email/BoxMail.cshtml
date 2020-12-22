@@ -1,0 +1,433 @@
+﻿@model FDI.Simple.ModelDNMailSSCItem
+
+ <script src="/Content/Publishing/js/socket.io.js"></script>
+<script>
+    var socket = io("http://192.168.100.99:1000");
+
+    function toDateTime(secs) {
+        var t = new Date(2016, 1, 1); // Epoch
+        t.setSeconds(secs);
+        return t;
+    }
+
+    socket.on("server-send-mail", function (data) {
+        var obj = jQuery.parseJSON(data);
+        console.log(obj.length);
+        if (obj.length > 0) {
+            $("#MailInbox").html(obj.length);
+            $("#AlertEmail").html(obj.length);
+        } else {
+            $("#MailInbox").html('');
+            $("#AlertEmail").html('');
+        }
+
+    });
+
+    socket.on("server-save-drafts", function (data) {
+        var obj = jQuery.parseJSON(data);
+        if (obj.length > 0) {
+            $("#MailDrafts").html(obj.length);
+        } else {
+            $("#MailDrafts").html("");
+        }
+    });
+
+    socket.on("server-send-auto-draft", function (data) {
+        var obj = jQuery.parseJSON(data);
+        if (obj.length > 0) {
+            setTimeout(function () {
+                $("#MailDrafts").html(obj.length);
+            }, 3000);
+        } else {
+            $("#MailDrafts").html("");
+        }
+    });
+
+    // cho vào thùng rác
+    socket.on("server-save-recyclebin", function (data) {
+        var obj = jQuery.parseJSON(data.lstEmail);
+        $("#TotalRecord").html(obj.length);
+        if (data.type == 1) {
+            if (obj.length > 0) {
+                $("#MailInbox").html(obj.length);
+
+            } else {
+                $("#MailInbox").html("");
+            }
+        }
+
+        else if (data.type == 3) {
+            if (obj.length > 0) {
+                $("#MailDrafts").html(obj.length);
+
+            } else {
+                $("#MailDrafts").html("");
+            }
+        }
+        else if (data.type == 4) {
+            if (obj.length > 0) {
+                $("#MailSpam").html(obj.length);
+
+            } else {
+                $("#MailSpam").html("");
+            }
+        }
+
+        $("#contentEmail").html("");
+        $.each(obj, function (i, val) {
+            $("#contentEmail").append(
+                "<tr class=\"\" data-id=\"" + val.ID + "\">" +
+                    "<td><input type=\"checkbox\" class=\"chkEmail\" value=" + val.ID + "></td>" +
+                    "<td class=\"inbox-small-cells\"><i class=\"fa fa-star\"></i></td>" +
+                    "<td class=\"view-message hidden-xs\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.CustomerSendName + "</a></td>" +
+                    "<td class=\"view-message\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.Title + "</a></td>" +
+                    "<td class=\"view-message inbox-small-cells\"><i class=\"fa fa-paperclip\"></i></td>" +
+                    "<td class=\"view-message text-right\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + toDateTime(val.CreateDate).toLocaleDateString() + " " + toDateTime(val.CreateDate).toLocaleTimeString() + " </a></td>" +
+                "</tr>");
+        });
+    });
+
+    // spam server
+    socket.on("server-save-spam", function (data) {
+        var lstSpam = jQuery.parseJSON(data.ListSpam);
+        var lstInbox = jQuery.parseJSON(data.ListInbox);
+        if (data.type == 1) {
+            if (lstInbox.length > 0) {
+                $("#MailInbox").html(lstInbox.length);
+            } else {
+                $("#MailInbox").html("");
+            }
+        }
+        $("#MailSpam").html(lstSpam.length);
+        $("#TotalRecord").html(lstInbox.length);
+        $("#contentEmail").html("");
+        $.each(lstInbox, function (i, val) {
+            $("#contentEmail").append(
+                "<tr class=\"\" data-id=\"" + val.ID + "\">" +
+                    "<td><input type=\"checkbox\" class=\"chkEmail\" value=" + val.ID + "></td>" +
+                    "<td class=\"inbox-small-cells\"><i class=\"fa fa-star\"></i></td>" +
+                    "<td class=\"view-message hidden-xs\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.CustomerSendName + "</a></td>" +
+                    "<td class=\"view-message\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.Title + "</a></td>" +
+                    "<td class=\"view-message inbox-small-cells\"><i class=\"fa fa-paperclip\"></i></td>" +
+                    "<td class=\"view-message text-right\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + toDateTime(val.CreateDate).toLocaleDateString() + " " + toDateTime(val.CreateDate).toLocaleTimeString() + " </a></td>" +
+                "</tr>");
+        });
+    });
+
+    // không phải spam
+    socket.on("server-save-no-spam", function (data) {
+        var lstSpam = jQuery.parseJSON(data.lstSpam);
+        if (lstSpam.length > 0) {
+            $("#MailSpam").html(lstSpam.length);
+
+        } else {
+            $("#MailSpam").html("");
+        }
+        $("#TotalRecord").html(lstSpam.length);
+        $("#contentEmail").html("");
+        $.each(lstSpam, function (i, val) {
+            $("#contentEmail").append(
+                "<tr class=\"\" data-id=\"" + val.ID + "\">" +
+                    "<td><input type=\"checkbox\" class=\"chkEmail\" value=" + val.ID + "></td>" +
+                    "<td class=\"inbox-small-cells\"><i class=\"fa fa-star\"></i></td>" +
+                    "<td class=\"view-message hidden-xs\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.CustomerSendName + "</a></td>" +
+                    "<td class=\"view-message\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.Title + "</a></td>" +
+                    "<td class=\"view-message inbox-small-cells\"><i class=\"fa fa-paperclip\"></i></td>" +
+                    "<td class=\"view-message text-right\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + toDateTime(val.CreateDate).toLocaleDateString() + " " + toDateTime(val.CreateDate).toLocaleTimeString() + " </a></td>" +
+                "</tr>");
+        });
+    });
+
+    // xóa vĩnh viễn
+    socket.on("server-save-delete", function (data) {
+        var lstSpam = jQuery.parseJSON(data.lstEmail);
+        $("#contentEmail").html("");
+        if (data.type == 4) {
+            $("#MailSpam").html(lstSpam.length > 0 ? lstSpam.length : "");
+        }
+        else {
+            $("#TotalRecord").html(lstSpam.length);
+        }
+        $.each(lstSpam, function (i, val) {
+            $("#contentEmail").append(
+                "<tr class=\"\" data-id=\"" + val.ID + "\">" +
+                    "<td><input type=\"checkbox\" class=\"chkEmail\" value=" + val.ID + "></td>" +
+                    "<td class=\"inbox-small-cells\"><i class=\"fa fa-star\"></i></td>" +
+                    "<td class=\"view-message hidden-xs\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.CustomerSendName + "</a></td>" +
+                    "<td class=\"view-message\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.Title + "</a></td>" +
+                    "<td class=\"view-message inbox-small-cells\"><i class=\"fa fa-paperclip\"></i></td>" +
+                    "<td class=\"view-message text-right\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + toDateTime(val.CreateDate).toLocaleDateString() + " " + toDateTime(val.CreateDate).toLocaleTimeString() + " </a></td>" +
+                "</tr>");
+        });
+    });
+
+    // chuyển thư nháp đến hộp thư đến
+    socket.on("server-send-move-mailbox", function (data) {
+        var lstSpam = jQuery.parseJSON(data);
+        if (lstSpam.length > 0) {
+            $("#MailDrafts").html(lstSpam.length);
+
+        } else {
+            $("#MailDrafts").html("");
+        }
+        $("#TotalRecord").html(lstSpam.length);
+        $("#contentEmail").html("");
+        $.each(lstSpam, function (i, val) {
+            $("#contentEmail").append(
+                "<tr class=\"\" data-id=\"" + val.ID + "\">" +
+                    "<td><input type=\"checkbox\" class=\"chkEmail\" value=" + val.ID + "></td>" +
+                    "<td class=\"inbox-small-cells\"><i class=\"fa fa-star\"></i></td>" +
+                    "<td class=\"view-message hidden-xs\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.CustomerSendName + "</a></td>" +
+                    "<td class=\"view-message\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + val.Title + "</a></td>" +
+                    "<td class=\"view-message inbox-small-cells\"><i class=\"fa fa-paperclip\"></i></td>" +
+                    "<td class=\"view-message text-right\"><a data-id=\"" + val.ID + " class=\"titleEmail\">" + toDateTime(val.CreateDate).toLocaleDateString() + " " + toDateTime(val.CreateDate).toLocaleTimeString() + " </a></td>" +
+                "</tr>");
+        });
+    });
+
+    var arrID = [];
+    $("body").on("click", ".chkEmail", function () {
+        var $this = $(this).val();
+        if ($(this).is(":checked")) {
+            arrID.push($this);
+            $("#lstID").val(arrID.toString());
+        } else {
+            arrID.splice(arrID.indexOf($this), 1);
+            $("#lstID").val(arrID.toString());
+        }
+    });
+
+    //$("body").on("change", ".chkAll", function () {
+    //    debugger;
+    //    if ($(this).is(":checked")) {
+    //        //$('.chkEmail').prop('checked', true);
+    //        $('.chkEmail').each(function () {
+    //            arrID.push($(".chkEmail").val());
+    //            $("#lstID").val(arrID.toString());
+    //            $(".chkEmail").prop('checked', $(this).is(":checked"));
+    //        });
+    //    } else {
+    //        $('.chkEmail').prop('checked', false);
+    //    }
+    //});
+
+
+    // tự động lưu vào hộp thư nháp
+    @*  $("body").on("change", "#UserReceiveId", function () {
+        $.post("/Email/ProcessDraftMailbox?idMail=" + $("#ID").val() + "&userId=" + $(this).val() + "&title=" + $("#Title").val() + "&content=" + $("#Content").val() + "&lstFile=" + $("#lstImages").val(), function (data) {
+            if (data.Erros)
+                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+            else {
+                $("#ID").val(data.ID);
+                socket.emit("client-send-auto-draft", { userId: '@Model.UserId' });
+                $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+            }
+        });
+    });*@
+    
+ @*   $("body").on("change", "#Title", function () {
+        $.post("/Email/ProcessDraftMailbox?idMail= " + $("#ID").val() + "&userId=" + $("#UserReceiveId").val() + "&title=" + $(this).val() + "&content=" + $("#Content").val() + "&lstFile=" + $("#lstImages").val(), function (data) {
+            if (data.Erros)
+                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+            else {
+                $("#ID").val(data.ID);
+                socket.emit("client-send-auto-draft", { userId: '@Model.UserId' });
+                $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+            }
+        });
+    });
+    
+    $("#Content").on("keypress", "#Content", function () {
+        $.post("/Email/ProcessDraftMailbox?userId=" + $("#UserReceiveId").val() + "&title=" + $("#Title").val() + "&content=" + $(this).val() + "&lstFile=" + $("#lstImages").val(), function (data) {
+            if (data.Erros)
+                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+            else {
+                socket.emit("client-send-auto-draft", { userId: $("#UserReceiveId").val() });
+                $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+            }
+        });
+    });
+    *@
+    $("body").on("click", "#btnSend", function () {
+        $("#Type").val($(this).data("status"));
+    });
+
+    $("body").on("click", "#btnDrafts", function () {
+        $("#Type").val($(this).data("status"));
+    });
+
+    $("body").on("click", ".titleEmail", function () {
+        $.post("/Email/DetailsEmail?id=" + $(this).data("id"), function (data) {
+            $("#inbox-content").html(data);
+            socket.emit("client-send-mail", { userId: '@Model.UserId', type: 1 });
+            });
+        });
+
+        // báo cáo spam
+    $("body").on("click", "#reportSpam", function () {
+            var status = parseInt($(this).data("status"));
+            var type = parseInt($(this).data("type"));
+            $.post("/Email/UpdateType?lstId=" + $("#lstID").val() + "&status=" + status + "&type=" + type, function (data) {
+                if (data.Erros == false) {
+                    // reset lai ID
+                    arrID.splice(arrID.indexOf($("#lstID").val("")), 1);
+                    $("#lstID").val(arrID.toString());
+
+                    socket.emit("client-send-spam", { userId: '@Model.UserId', type: '@Model.Type' });
+            }
+        });
+    });
+
+    // không phải spam
+    $("body").on("click", "#NoReportSpam", function () {
+        var status = parseInt($(this).data("status"));
+        var type = parseInt($(this).data("type"));
+        $.post("/Email/UpdateType?lstId=" + $("#lstID").val() + "&status=" + status + "&type=" + type, function (data) {
+            if (data.Erros == false) {
+                // reset lai ID
+                arrID.splice(arrID.indexOf($("#lstID").val("")), 1);
+                $("#lstID").val(arrID.toString());
+                socket.emit("client-send-no-spam", { userId: '@Model.UserId', type: '@Model.Type' });
+            }
+        });
+    });
+
+    // chuyển thư nháp đến hộp thư đến
+    $("body").on("click", "#MoveMailbox", function () {
+        var status = parseInt($(this).data("status"));
+        $.post("/Email/UpdateType?lstId=" + $("#lstID").val() + "&status=" + status + "&type=" + $(this).data("type"), function (data) {
+            if (data.Erros == false) {
+                // reset lai ID
+                arrID.splice(arrID.indexOf($("#lstID").val("")), 1);
+                $("#lstID").val(arrID.toString());
+                socket.emit("client-send-move-mailbox", { userId: '@Model.UserId', type: '@Model.Type' });
+            }
+        });
+    });
+
+    // xóa thư nháp
+    $("body").on("click", "#btnDeleteDrafts", function () {
+        alert('xóa thư nháp');
+    });
+
+    // cho vào thùng rác
+    $("body").on("click", "#reportDelete", function () {
+        swal({
+            title: "Bạn có muốn chuyển vào Thùng rác không ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            cancelButtonText: "Hủy",
+            confirmButtonText: "Xác nhận",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.post("/Email/ReportDelete?lstId=" + $("#lstID").val(), function (data) {
+                    if (data.Erros == false) {
+                        socket.emit("client-send-recyclebin", { userId: '@Model.UserId', type: '@Model.Type' });
+                    }
+                });
+            }
+            swal.close();
+        });
+    });
+
+    // xóa vĩnh viễn
+    $("body").on("click", "#btnDelete", function () {
+        swal({
+            title: "Bạn có muốn xóa vĩnh viễn thư này không ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            cancelButtonText: "Hủy",
+            confirmButtonText: "Xác nhận",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.post("/Email/Delete?lstId=" + $("#lstID").val(), function (data) {
+                    if (data.Erros == false) {
+                        socket.emit("client-send-delete", { userId: '@Model.UserId', type: '@Model.Type' });
+                    }
+                });
+            }
+            swal.close();
+        });
+    });
+</script>
+
+<div class="inbox-sidebar">
+    <a href="/Email/Compose" data-title="Compose" class="btn red compose-btn btn-block"><i class="fa fa-edit"></i> Soạn thư</a>
+    <ul class="inbox-nav">
+        <li class="@(Model.Type == 1 ? "active" : string.Empty)">
+            <a href="/Email?type=1">
+                <span class="badge badge-success" id="MailInbox">@if (Model.TotalMailInbox > 0)
+                                                                 {
+                                                                     <text>@Model.TotalMailInbox</text>
+                                                                 }</span>
+                <i class="fa fa-fw fa-inbox"></i>
+                Hộp thư đến
+            </a>
+        </li>
+
+        <li class="@(Model.Type == 2 ? "active" : string.Empty)">
+            <a href="/Email?type=2">
+                <i class="fa fa-fw fa-envelope-o"></i>
+                Thư đã gửi
+            </a>
+        </li>
+
+        @* <li >
+            <a href="#">
+                <span class="badge badge-important pull-right"></span>
+                <i class="fa fa-fw fa-bookmark-o"></i>
+                Quan trọng
+            </a>
+        </li>*@
+
+        <li class="@(Model.Type == 3 ? "active" : string.Empty)">
+            <a href="/Email?type=3">
+                @if (Model.TotalMailDrafts > 0)
+                {
+                    <span class="badge badge-primary pull-right" id="MailDrafts">@Model.TotalMailDrafts</span>
+                }
+                <i class="fa fa-fw fa-pencil"></i>
+                Thư nháp
+            </a>
+        </li>
+
+        <li class="@(Model.Type == 4 ? "active" : string.Empty)">
+            <a href="/Email?type=4">
+                <span class="badge badge-hollow pull-right" id="MailSpam">@if (Model.TotalMailSpam > 0)
+                                                                          {
+                                                                              <text>@Model.TotalMailSpam</text>
+                                                                          }</span>
+                <i class="fa fa-fw fa-star-o"></i>
+                Spam
+            </a>
+        </li>
+        <li class="@(Model.Type == 5 ? "active" : string.Empty)">
+            <a href="/Email?type=5">
+                <span class="badge badge-hollow pull-right" id="MailRecycleBin"></span>
+                <i class="fa fa-trash-o"></i>
+                Thùng rác
+            </a>
+        </li>
+        <li class="@(Model.Type == 6 ? "active" : string.Empty)">
+            <a href="/Email?type=6">
+                <span class="badge-hollow @(Model.TotalNewsSsc > 0 ? "badge  pull-right" : string.Empty)" id="MailNews">
+                    @if (Model.TotalNewsSsc > 0)
+                    {
+                        <text>@Model.TotalNewsSsc</text>
+                    }
+                </span>
+                <i class="fa fa-newspaper-o"></i>
+                Tin tức nội bộ
+            </a>
+        </li>
+    </ul>
+</div>

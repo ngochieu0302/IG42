@@ -1,0 +1,4 @@
+D:\Projects\Web\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cache
+D:\Projects\Web\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache
+E:\Projects\Web\GAB2\FDI\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cache
+E:\Projects\Web\GAB2\FDI\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache

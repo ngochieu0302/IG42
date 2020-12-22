@@ -1,0 +1,217 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ShopProductDetailItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGallery();
+        LoadCKEDITOR('Details', true);
+        LoadCKEDITOR('Description', true);
+        callSelect2("#UnitID", "100%");
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true },
+                Code: {
+                    required: true,
+                    remote: "@Url.Action("CheckByCodeDetail", "ProductDetail", new { pId = Model.ID })"
+                },
+                PriceNew: { required: true },
+                UnitID: { required: true },
+                CateID :{ required: true },
+            },
+            messages: {
+                Name: "Mời bạn nhập tên sản phẩm",
+                Code: {
+                    required: "Mời bạn nhập mã sản phẩm (SKU).",
+                    remote: "Mã sản phẩm (SKU) này đã tồn tại, Xin mời nhập mã khác."
+                },
+                PriceNew: "Mời bạn nhập giá sản phẩm.",
+                UnitID: { required: "Trường này bắt buộc" },
+                CateID: { required: "Trường này bắt buộc" }
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+        $("#PriceCost").on("change",
+            function() {
+                changeprice();
+            });
+        $("#Value").on("change",
+            function () {
+                changeprice();
+            });
+        $("#Incurred").on("change",
+            function () {
+                changeprice();
+            });
+        function changeprice() {
+            debugger;
+            var a = $("#Incurred").val() !== "" ? parseInt($("#Incurred").val().replace(/\,/g, '')) : 0;
+            var b = $("#Percent").val() !== "" ? parseInt($("#Percent").val().replace(/\,/g, '')) : 0;
+            var costct = parseInt($("#PriceCost").val().replace(/\,/g, ''));
+            var costsp = parseInt($("#Value").val().replace(/\,/g, ''));
+            $("#PriceOld").val(numeral(a + b*1000 + costct).format("0,0")); 
+            $("#Price").val(numeral(a + b*1000 + costsp).format("0,0")); 
+        }
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                            <label class="col-sm-2 control-label">Mã SP</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Code" id="Code" value="@Model.Code" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đơn vị</label>
+                            <div class="col-sm-4">
+                                <select id="UnitID" name="UnitID" class="select2">
+                                    <option value="">--- Chọn đơn vị ---</option>
+                                    @foreach (var item in ViewBag.UnitID)
+                                    {
+                                        <option value="@item.ID" @(Model.UnitID == item.ID ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Giá Cost sp</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Value" id="Value" value="@(Model.Value ?? 0)" class="form-control maskPrice" />
+                            </div>
+                            <label class="col-sm-2 control-label">Hệ số</label>
+                            <div class="col-sm-4">
+                                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Hệ số</label>
+                            <div class="col-sm-4">
+                                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
+                            </div>
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Sort" id="Sort" value="@(Model.Sort ?? 0)" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Price" id="Price" value="@(Model.Price ?? 0)" class="form-control maskPrice" />
+                            </div>
+                            <label class="col-sm-2 control-label">Giá Cost theo công thức</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="PriceCost" id="PriceCost" value="@(Model.PriceCost ?? 0)" class="form-control maskPrice" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán Ct</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="PriceOld" id="PriceOld" value="@(Model.PriceOld ?? 0)" class="form-control maskPrice" />
+                            </div>
+                            <label class="col-sm-2 control-label">Chi phí</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Incurred" id="Incurred" value="@(Model.Incurred ?? 0)" class="form-control maskPrice" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">HSD</label>
+                            <div class="col-sm-4">
+                                <input type="number" name="QuantityDay" id="QuantityDay" value="@(Model.QuantityDay ?? 0)" class="form-control" />
+                            </div>
+                            <label class="col-sm-2 control-label">Chuyên mục </label>
+                            <div class="col-sm-4">
+                                <select id="CateID" name="CateID" class="form-control">
+                                    <option value="">Chọn Chuyên mục</option>
+                                    @foreach (var item in ViewBag.category)
+                                    {
+                                        <option data-percent="@item.Percent" value="@item.ID" @(Model.CategoryID == item.ID ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="PictureID" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.PictureID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.UrlPicture, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.NamePicture</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea cols="5" name="Description" id="Description" class="form-control ">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chi tiết</label>
+                            <div class="col-sm-10">
+                                <textarea cols="5" name="Details" id="Details" class="form-control ">@Model.Details</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow24hApp") Hiện thị 24h App
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

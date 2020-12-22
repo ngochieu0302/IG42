@@ -1,0 +1,65 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelNewsItem
+@{
+    var pageId = WebConfig.NewDetail;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn nhóm menu --</option>
+                    @foreach (var item in Model.LstCategoryItems)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="col-sm-6">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <h3 class="main__title"><a href="#">@Model.NewUrl</a></h3>
+        <div class="main__box">
+            <ul class="sb__list">
+                @foreach (var item in Model.ListItem)
+                {
+                    <li>
+                        <a href="@item.TitleAscii-p@(pageId)c@(item.ID)">@item.Title</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

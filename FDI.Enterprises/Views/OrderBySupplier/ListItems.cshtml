@@ -1,0 +1,106 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNRequestWareItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var ds = 0;
+    var dl = 0;
+    var ssc = 0;
+    var gt = 0;
+    var kh = 0;
+    var tt = 0;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th class="text-center">Ngày giao</th>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Khối lượng</th>
+                        <th>Thành tiền</th>
+                        <th>Hoa hồng</th>
+                        <th>Thanh toán</th>
+                       
+                        <th>Đại lý</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItems != null)
+                    {
+                        foreach (var item in Model.ListItems)
+                        {
+                    <tr data-id="@item.StorageProductID">
+                        <td>@item.StorageProductID</td>
+                        <td class="text-center">@item.Today.DecimalToString("dd/MM/yyyy")</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price.Money()</td>
+                        <td>@item.Quantity.Quantity() @item.UnitName</td>
+                        <td>@((item.Price* item.Quantity).Money())</td>
+
+                        <td>@item.Sale.Money()</td>
+                        <td>@item.TotalPrice.Money()</td>
+                       
+
+                        <td>@item.AgencyMobile</td>
+                        <td>@item.AgencyAddress</td>
+
+                        <td class="text-center">
+                            <!-- Single button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle bordernone" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @{
+                                        var statusenum = item.OrderStatus;
+
+                                        var statues = (StatusWarehouse[])Enum.GetValues(typeof(StatusWarehouse));
+                                    }
+                                    <label class="label @statusenum.GetCssClass()">@statusenum.GetDisplayName()</label>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach (var status in statues)
+                                    {
+                                        if (status != item.OrderStatus)
+                                        {
+                                            <li><a class="changestatus" href="#@((int)status)">@status.GetDisplayName()</a></li>
+                                        }
+                                    }
+
+                                </ul>
+                            </div>
+                        </td>
+
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".changestatus").click(function (e) {
+            e.preventDefault();
+            var orderId = $(this).closest('tr').attr('data-id');
+            var status = $(this).attr("href").substring(1);
+
+            $.post('@Url.Action("ChangeStatus")', { orderId, status }, function(data) {
+                if (data.Erros == true) {
+                    createMessage("error", data.Messages);
+                } else {
+                    window.location.reload();
+                }
+            });
+        });
+
+
+        registerGridView('#mygird');
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+    });
+</script>

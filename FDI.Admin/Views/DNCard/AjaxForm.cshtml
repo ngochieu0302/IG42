@@ -1,0 +1,101 @@
+﻿@using FDI.CORE
+@model FDI.Base.DN_Card
+@{
+    ViewBag.Title = ViewBag.ActionText + " Khách hàng";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CustomerForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                Serial:
+                {
+                    required: true
+                },
+                numberCard:
+                {
+                    required: true,
+                    number: 3
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Serial:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                numberCard:
+                {
+                    required: "Trường này là bắt buộc.",
+                    number: "Không đúng định dạng."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');}
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<form id="CustomerForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Code" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Thông tin thẻ
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Ghi chú</label>
+                            <div class="col-lg-10">
+                                <input name="Name" id="Name" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mã thẻ</label>
+                            <div class="col-lg-10">
+                                <input name="Serial" id="Serial" class="form-control" value="SSC"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số lượng</label>
+                            <div class="col-lg-10">
+                                <input name="numberCard" id="numberCard" class="form-control" value="0"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-10">
+                               @Html.CheckBox("IsActive") Kích hoạt
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>

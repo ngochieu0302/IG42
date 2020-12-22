@@ -1,0 +1,10 @@
+﻿@model List<FDI.Simple.ProductItem>
+
+<option value="">Chọn sản phẩm</option>
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+    <option value="@item.ID">@item.Name</option>
+    }
+}

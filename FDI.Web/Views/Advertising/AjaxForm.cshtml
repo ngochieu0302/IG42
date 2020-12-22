@@ -1,0 +1,167 @@
+﻿@using FDI.CORE
+@model FDI.Simple.AdvertisingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    
+    $(function () {
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                },
+
+                PositionID: {
+                    required: true
+                },
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+              
+                PositionID: {
+                    required: "Chọn vị trí banner."
+                }
+            },
+            submitHandler: function () {
+                var pictureId = $("#Value_DefaultImages").val();
+                if (pictureId == "" && $('#TypeID').val() == "1") {
+                    $("#errorPicture").show();
+                    return false;
+                }
+                var urlFlash = $("#UrlFlash").val();
+                if (urlFlash == "" && $('#TypeID').val() == "2") {
+                    $("#errorFlash").show();
+                    return false;
+                }
+                var urlVideo = $("#UrlVideo").val();
+                if (urlVideo == "" && $('#TypeID').val() == "3") {
+                    $("#errorVideo").show();
+                    return false;
+                }
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về thư viện banner
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên banner</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="Tên hình ảnh..." name="Name"  id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group" id="PicturePanel">
+                            <label class="col-md-2 control-label">Ảnh Banner</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureId" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                    @if (Model.PictureId > 0)
+                                    {
+                                            <div class="image-product" id="@Model.PictureId">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.PictureUrl, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureId" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                              @*  <span>@Model.GalleryPicture.Name</span>*@
+                                            </div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Link</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Link" id="Link" value="@Model.Link" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Vị trí</label>
+                            <div class="col-md-10">
+                                <select name="PositionID" id="PositionID" class="form-control">
+                                    <option value="">-- vị trí vùng --</option>
+                                    @foreach (var item in ViewBag.AdvertisingPositionID)
+                                {
+                                        <option value="@item.ID" @((Model.PositionID == item.ID) ? " selected" : string.Empty)>@item.Name</option>
+                                }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Sắp xếp</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Sort" id="Sort" value="@Model.Sort" class="form-control" />
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày bắt đầu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control date-picker" placeholder="..." name="_StartDate" id="_StartDate" data-date-format="dd/mm/yyyy" value="@Model.StartDate.DecimalToString("dd/MM/yyyy")" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày kết thúc</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control date-picker" placeholder="..." name="_EndDate" id="_EndDate" data-date-format="dd/mm/yyyy" value="@Model.EndDate.DecimalToString("dd/MM/yyyy")" />
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nội dung chi tiết</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Content" id="Content">@Model.Content</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("Show") Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

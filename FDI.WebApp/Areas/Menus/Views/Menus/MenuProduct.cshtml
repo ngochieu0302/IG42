@@ -1,0 +1,146 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.Product;
+    var pageSearchId = WebConfig.SearchId;
+    var lst = Model.ListItem.Where(c => c.ParentId != 1).ToList();
+    var lst1 = lst.Skip(0).Take(9).ToList();
+    var lst2 = lst.Skip(9).Take(9).ToList();
+    var lst3 = lst.Skip(18).Take(9).ToList();
+    var lst4 = lst.Skip(27).Take(9).ToList();
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <select name="value" class="form-control">
+                <option value="">-- Chọn nhóm menu --</option>
+                @foreach (var item in Model.ListItem)
+                {
+                    <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                }
+            </select>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Model.CtrId", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="sec-home">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="boxFindLink">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Tìm sim năm sinh</h3>
+                    <div class="boxSearchYear">
+                        <span>Bạn muốn tìm kiếm SIM năm sinh của bạn hoặc người thân ?</span>
+                        <form action="/search-nam-sinh-p@(pageSearchId)c1">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="day">
+                                        <option value="">Ngày</option>
+                                        @for (var i = 1; i <= 31; i++)
+                                        {
+                                            <option value="@i" @(Model.Day == i ? "selected" : "")>@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 npdl">
+                                    <select class="form-control" name="month">
+                                        <option value="">Tháng</option>
+                                        @for (var i = 1; i <= 12; i++)
+                                        {
+                                            <option value="@i" @(Model.Month == i ? "selected" : "")>@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 npdl">
+                                    <select class="form-control" name="year">
+                                        <option value="">Năm</option>
+                                        @for (var i = DateTime.Now.Year; i >= 1960; i--)
+                                        {
+                                            <option value="@i" @(Model.Year == i ? "selected" : "")>@i</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                </div>
+                                <div class="col-sm-5">
+                                    <button type="submit" title="" class="btn btn-success" style="cursor:pointer">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h3>Tìm sim theo danh mục</h3>
+                    <div class="boxLink">
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                                <ul>
+                                    @foreach (var item in lst1)
+                                    {
+                                        <li><a href="/@item.Slug" title="@item.Name">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                                <ul>
+                                    @foreach (var item in lst2)
+                                    {
+                                        <li><a href="/@item.Slug" title="@item.Name">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                                <ul>
+                                    @foreach (var item in lst3)
+                                    {
+                                        <li><a href="/@item.Slug" title="@item.Name">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                                <ul>
+                                    @foreach (var item in lst4)
+                                    {
+                                        <li><a href="/@item.Slug" title="@item.Name">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,92 @@
+﻿@model FDI.Admin.Models.IndexViewModel
+@{
+    ViewBag.Title = "Quản lý tài khoản quản trị";
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#gridItems');
+    });
+    urlFormRoleA = '@Url.Action("AjaxViewRoleActive")';
+    urlFormModule = '@Url.Action("AjaxViewModule")';
+</script>
+
+<div class="header-control">
+    @if (!Model.IsRolesEnabled)
+            {
+        <p class="CTS.MvcMembership-warning">Cơ chế membership chưa được bật.</p>
+    }
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Danh sách vai trò hệ thống </li>
+        </ul>
+    </div>
+    <div class="page-title"></div>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            @using (Html.BeginForm("CreateRole", "UserAdministration"))
+            {
+                <label for="id">Tên vai trò:</label>
+                <input type="text" class="form-control input-sm" id="id" name="id" />
+                <button class="btn btn-sm btn-primary" type="submit">Tạo Vai trò</button>
+            }
+        </form>
+    </div>
+</div>
+<div class="content-control">
+    <div class="box-control">
+        <div id="gridItems" class="scrollable box-control-content">
+            @if (Model.Roles.Any())
+            {
+                <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                    <colgroup>
+                        <col class="colgroup check" />
+                        <col />
+                        <col/>
+                        <col />
+                        <col />
+                        <col class="colgroup action" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th>Tên vai trò</th>
+                        <th class="text-center" colspan="3">Quản lý</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @{
+                        var stt = 1;
+                        foreach (var role in Model.Roles)
+                        {
+                            <tr>
+                                <td class="text-center">@(stt++)</td>
+                                <td>@role</td>
+                                <td class="text-center">@Html.ActionLink("Phân quyền", "Role", new {id = role}, new {@class = "btn btn-sm btn-primary"})</td>
+
+                                <td class="text-center">@Grid.ActionComplete(role, "")</td>
+
+                                <td class="text-center">@Grid.RoleModule(role)</td>
+
+                                <td class="text-center">
+                                    @using (Html.BeginForm("DeleteRole", "UserAdministration", new {id = role}))
+                                    {
+                                        <button class="btn btn-sm btn-danger" type="submit">Xóa</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+                            }
+                            else
+                            {
+                                <p>Chưa có vai trò nào.</p>
+                            }
+        </div>
+    </div>
+
+</div>

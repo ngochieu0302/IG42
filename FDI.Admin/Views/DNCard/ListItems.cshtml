@@ -1,0 +1,91 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNCardItem
+
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col/>
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll"/>
+                    </th>
+                    <th class="text-center"><a href="#Field=ID">ID</a></th>
+                    <th class="text-center"><a href="#Field=Serial">Mã từ</a></th>
+                    <th class="text-center"><a href="#Field=Serial">Mã thẻ</a></th>
+                    <th class="text-center"><a href="#Field=PinCode">Mã pin</a></th>
+                    <th class="text-center"><a href="#Field=CreateDate">Ngày tạo</a></th>
+                    <th class="text-center"><a href="#Field=Status">Trạng thái</a></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                @{
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr title="@item.Serial">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@item.ID</td>
+                            <td class="text-center">@item.Code</td>
+                            <td class="text-center">@item.Serial</td>
+                            <td class="text-center">@item.PinCard</td>
+                            <td class="text-center">@item.CreateDate.DecimalToString("dd/MM/yyyy")</td>
+                            @if (item.Status == (int) Card.Create)
+                            {
+                                <td class="text-center"><label class="label label-default"><b>Khởi tạo</b></label></td>
+                            }
+                            else if (item.Status == (int) Card.Excel)
+                            {
+                                <td class="text-center"><label class="label label-info"><b>Đã in thẻ</b></label></td>
+                            }
+                            else if (item.Status == (int) Card.Released)
+                            {
+                                <td class="text-center"><label class="label label-success"><b>Phát hành</b></label></td>
+                            }
+                            else if (item.Status == (int) Card.Lock)
+                            {
+                                <td class="text-center"><label class="label label-danger"><b>Đã khóa</b></label></td>
+                            }
+                                @*<td class="text-center">
+                                    @if (item.Status == (int)Card.Lock)
+                                    {
+                                        @Grid.ActionShow(item.ID, item.Serial, false)
+                                    }else if (item.Status == (int)Card.Released)
+                                    {
+                                        @Grid.ActionShow(item.ID, item.Serial, true)
+                                    }
+                                </td>*@
+                </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

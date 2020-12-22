@@ -1,0 +1,44 @@
+﻿@model FDI.Simple.AgencyItem
+
+
+<div id="BoxPrint" class="pr-total pagePrint">
+    <div class="box-pr-payment" style="height:500px !important">
+        <div class="pr-content" id="contentPrint">
+            <div class="pr-shop">
+                <strong>@Model.Name</strong>
+                <span>@Model.Phone</span>
+                <span>@Model.Address</span>
+            </div>
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN BÁN HÀNG</strong>
+                <i>QLBP/29 @DateTime.Now.ToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Thu ngân:</strong><span>@Model.UserName</span></li>
+                    <li><strong>Khách hàng:</strong><span id="printKH"></span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product pr-bookatable">
+                <div class="pr-head">
+                    <strong>Món</strong>
+                    <strong>SL</strong>
+                    <strong>Giá </strong>
+                    <strong>Tiền</strong>
+                </div>
+                <div class="pr-item" id="listboxprint"></div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng tiền:</strong><span id="prinPrice"></span></li>    
+                    <li><strong>Giảm giá(<b id="PrintDis"></b>%):</strong><span id="printDiscount"></span></li>    
+                    @*<li><strong>Tạm tính:</strong><span id="printPricetemp"></span></li>*@
+                    <li><strong>Tích lũy dùng:</strong><span id="printPrizeMoneyTotal"></span></li>
+                    <li><strong>Tích lũy còn lại:</strong><span id="printMoney"></span></li>
+                    <li><strong>Tiền thanh toán:</strong><span id="printPriceCusN"></span></li>
+                    <li><i>Ghi chú: </i><i id="printNote"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "ProductCategory")';
+    urlForm = '@Url.Action("AjaxForm", "ProductCategory")';
+    urlPostAction = '@Url.Action("Actions", "ProductCategory")';
+    urlView = '@Url.Action("AjaxView", "ProductCategory")';
+    //urlFormModule
+    formWidth = 960;
+    formHeight = $(window).height() - 24;
+    viewWidth = 960;
+    viewHeight = $(window).height() - 24;
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+        $(document).on('keyup', '.autoNameAscii', function (e) {
+            e.preventDefault();
+            $('#NameAscii').val(RemoveUnicode($(this).val()));
+        });
+
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+        $("#BrandID, #ProductTypeID").multiSelect({ selectAll: false, chooseOne: true });
+    });
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý sản phẩm</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#showAll" data-event="showAll" data-grid="#mygird"><i class="fa fa-check "></i>Hiển thị</a></li>
+                    <li><a href="#hideAll" data-event="hideAll" data-grid="#mygird"><i class="fa fa-times "></i>Ẩn</a></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o "></i>Xóa</a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Name">Tên sản phẩm</option>
+                </select>
+            </div>
+            @*<div class="form-group">
+                <select name="CateID" id="CateID" class="form-control input-sm">
+                    <option value="">-- Chọn chuyên mục ---</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                </select>
+            </div>*@
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>
+<div class="content-control" id="Griditems">
+</div>
+
+
+

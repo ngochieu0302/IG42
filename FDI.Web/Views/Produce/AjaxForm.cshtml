@@ -1,0 +1,102 @@
+﻿@using System.Web.Script.Serialization
+@using System.Web.UI.WebControls
+@using FDI.Simple
+@using FDI.CORE
+@model  List<FDI.Simple.StorageWarehouse.ProduceProductDetailItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+
+}
+    <form id="frm-modal">
+        <input type="hidden" name="do" id="do" value="Add" />
+        <input type="hidden" name="ProductId" id="ProductId" value="@ViewBag.ProductId" />
+        <input type="hidden" name="Quantity" id="Quantity" value="@ViewBag.Quantity" />
+        <input type="hidden" name="todayCode" id="todayCode" value="@ViewBag.todayCode" />
+        <div class="modal-body npd">
+            <div class="tabs-bookatable-popup">
+                <div class="box-a-table-wrap">
+                    <div class="user-order" style="width: 70%">
+                        <div class="input-group" style="margin-bottom: 5px;">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên sản phẩm">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày sản xuất</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control datetimepicker" name="DateProduce" id="DateProduce" value="">
+                            </div>                           
+                        </div>
+                        <br/>
+
+                        <div class="tab-content ct-tabs-bookatable">
+                            <div class="tab-pane fade active in" id="tab_1">
+                                <div class="select-order">
+                                    <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên SP</th>
+                                                <th class="text-center">Size</th>
+                                                <th class="text-center">Số lượng</th>
+                                                <th class="text-center">Khối lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>@(stt++)</td>
+                                                    <td>@item.ProductName</td>
+                                                    <td>@(string.IsNullOrEmpty(item.UnitName)? item.Weight.Quantity() +" Kg": item.UnitName)</td>
+                                                    <td>@(string.IsNullOrEmpty(item.UnitName)?"1": item.Quantity.Quantity())</td>
+                                                    <td>@item.Weight.Quantity()</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-primary" data-event="PrintNew" id="PrintNew"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+            <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+        </div>
+    </form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        $('.datetimepicker').datetimepicker({
+            format: 'DD/MM/YYYY h:mm A'
+        });
+
+        $("#frm-modal").validate({
+            
+               
+            submitHandler: function() { //onSubmit
+                $.post("@Url.Action("Actions")",
+                    $("#frm-modal").serialize(),
+                    function(data) {
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $(".modal").modal('hide');
+                            createCloseMessage("Thông báo",
+                                data.Message,
+                                '#Page=1&itemId=' + data.ID + '&temp=' + Math.floor(Math.random() * 11) + '');
+                        }
+                    });
+                return false;
+            }
+        });
+    });
+</script>

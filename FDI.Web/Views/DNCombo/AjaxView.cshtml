@@ -1,0 +1,82 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNComboItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về combo sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên combo</label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá bán</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.Price).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày bắt đầu</label>
+                        </td>
+                        <td>
+                            @Model.DateStart.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày Kết thúc</label>
+                        </td>
+                        <td>
+                            @Model.DateEnd.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Chi tiết danh sách sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>Giá bán</th>
+                    </tr>
+                    @foreach (var item in Model.LstProducts)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.Name</td>
+                            <td>@string.Format("{0:0,0}", item.PriceNew)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>	

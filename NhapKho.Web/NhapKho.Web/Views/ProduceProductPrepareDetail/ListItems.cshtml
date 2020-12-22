@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "ListItems";
+    var i = 1;
+}
+@model List<string>
+
+<table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+
+    <thead>
+        <tr>
+            <th class="act_roles">
+                <input value="" type="checkbox" />
+            </th>
+            <th class="text-center"><a href="#Field=ID">STT</a></th>
+            <th class="text-center">Mã</th>
+
+            <th class="text-center">Thao tác</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr title="">
+            <td class="act_roles">
+                <input type="checkbox" value="@item" class="check">
+            </td>
+            <td class="text-center">@(i++)</td>
+            <td class="text-center">@item</td>
+            <td class="text-center">
+                <a href="#@item" class="btn btn-sm btn-default" data-event="delete" title="Xóa: 123469"><i class="fa fa-trash-o" style="color: red;"></i></a>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    $(function() {
+        registerGridView('#Griditems');
+    })
+</script>

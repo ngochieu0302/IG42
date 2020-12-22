@@ -1,0 +1,119 @@
+﻿@model FDI.Simple.ModelAlbumItem
+@{
+    ViewBag.Title = "Quản lý hình ảnh đại diện";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        SelectContainer = "@Model.Container";
+        textContainer = "#Text_"+SelectContainer;
+        hiddenContainer = "#Value_"+SelectContainer;
+        var type = "@Model.Type";
+        selectMutil = @Model.SelectMutil.ToString().ToLower();
+        urlFormPicture = '@Url.Action("AjaxFormPicture", "GalleryPictureByModule")';
+        urlListPicture = '@Url.Action("ListItems", "GalleryPictureSelectByModule")';
+        
+        $("#btnAddPicture").attr("data-type", type);
+
+        $("#btnAddPicture").click(function () {
+            var categoryId = $("#TreePictureSelect .select").attr('id'); 
+            if (categoryId == '' || categoryId == null)
+                categoryId = 0;
+            urlLoadingForm = urlFormPicture + "?do=Add&CategoryID=" + categoryId + "&Type="+ $(this).data("type");
+            $("#dialog-form-3").dialog(
+                {
+                    title: "Thêm mới hình ảnh",
+                    width: formWidth,
+                    height: formHeight
+                }
+            ).load(encodeURI(urlLoadingForm)).dialog("open");
+            return false;
+        });
+
+        $("#TreePictureSelect").treeview({
+            collapsed: false,
+            animated: "medium",
+            control: "#TreePictureSelectcontrol",
+            persist: "location"
+        });
+
+        $("#TreePictureSelect a").click(function () {
+            $("#TreePictureSelect .select").removeClass("select");
+            $(this).parent().parent().removeClass("unselect").addClass("select"); 
+            var categoryId = $(this).data("id");
+            showPicture(urlListPicture + "&CategoryID=" + categoryId); 
+        });
+        
+        $("#TreePictureSelectcontrol > a").click(function() {
+            showPicture(urlListPicture);
+        });
+        
+        function showPicture(url) {
+            $("#PictureGriditems").html(imageLoading); 
+            $.post(url, function (data) {
+                $("#PictureGriditems").html(data);
+            });
+        }
+        
+        //initAjaxLoad(urlListPicture, "#PictureGriditems"); Khởi tạo
+        $.post(urlListPicture,{Container:'@Model.Container'}, function(data) {
+            $("#PictureGriditems").html(data);
+        });
+
+        
+        //tìm kiếm ảnh
+        $("#PictureGridSearch").submit(function () {
+            var fromSearch = $("#PictureGridSearch");
+            $.post(urlListPicture+"?"+getValueGalaryFormMutilSelect(fromSearch), function(data) {
+                $("#PictureGriditems").html(data);
+            });
+            return false;
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+    });
+    function AddPicture(controls) {
+        var row = $(controls).parent().parent();
+        var htmlValue = '<table class="gridView" cellspacing="1">';
+        htmlValue += $(textContainer + " table").html();
+        htmlValue += "<tr class='" + $(row).attr("class") + "' id='" + $(row).attr("id") + "'>" + $(row).html() + "</tr>";
+        htmlValue += "</table>";
+        $(textContainer).html(htmlValue).find(".delete").remove();
+        getValuePicture('@Model.Container');
+        $(row).remove();
+        return false;
+    }
+   
+</script>
+<link href="~/Content/Admin/css/gallery.css" rel="stylesheet" />
+<fieldset class="forms">
+    <div class="col-sm-12 wrapper-sm b-a clearfix">
+        <form id="PictureGridSearch">
+            <div class="form-inline">
+                <div class="pull-left">
+                    <input type="text" class="form-control input-sm" name="Keyword" id="Keyword" value="Từ khóa tìm kiếm" onfocus="if(this.value=='Từ khóa tìm kiếm') this.value='';" onblur="if(this.value=='') this.value='Từ khóa tìm kiếm';" />
+                </div>
+                <div class="pull-left">
+                    <select name="SearchIn" id="SearchIn" class="form-control input-sm">
+                        <option value="Name">Tên hình ảnh</option>
+                    </select>
+                </div>
+                <div class="pull-left m-l-sm">
+                    <button name="submit.Search" type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                    <button id="btnAddPicture" class="btn btn-sm btn-primary" data-type="">Thêm mới hình ảnh</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <form id="PictureSelect" style="clear: both;">
+        <table class="table table-bordered m-n">
+            <tr>
+                <td class="m-n no-padder">
+                    <div id="PictureGriditems" class="img-container-s">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</fieldset>

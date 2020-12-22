@@ -1,0 +1,52 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.CostProductCostUserItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin đặt hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Công việc</th>
+                        <th>Nhân viên</th>
+                        <th>Trạng thái</th>
+                        <th>Người Ktra</th>
+                        <th>Ngày duyệt</th>
+                        <th>Ghi chú</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SetupProductName</td>
+                            <td>@item.UserName</td>
+                            @if (item.Status == 0)
+                            {
+                            <td><label class="label label-danger">Chưa hoàn thành</label></td>
+                            }
+                            else
+                            {
+                            <td><label class="label label-info">Hoàn thành</label></td>
+                            }
+                            <td>@item.UserCreatedName</td>
+                            <td><b>@item.DateCreated.DecimalToString("dd/MM/yyyy")</b></td>
+                            <td>@item.Note</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

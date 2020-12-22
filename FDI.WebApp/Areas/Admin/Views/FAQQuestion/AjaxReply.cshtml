@@ -1,0 +1,158 @@
+﻿@model FDI.Base.FAQ_Question
+@{
+    ViewBag.Title = ViewBag.ActionText + " câu hỏi";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+       LoadCKEDITOR('Content', true);
+        $("#FAQQuestionForm").validate({
+            rules: {
+                Title:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Fullname:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Email:
+                {
+                    email: true,
+                    minlength: 3,
+                    maxlength: 150
+                },
+                Phone:
+                {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20,
+                    number: true
+                },
+              
+                CategoryID:
+                {
+                    required: true
+                }
+
+            },
+            messages: {
+                Title: {
+                    required: "Bạn phải nhập Tên câu hỏi ",
+                    minlength: jQuery.format("Tên câu hỏi phải có độ dài tối thiểu {0} ký tự"),
+                    maxlength: jQuery.format("Tên câu hỏi phải có độ dài không quá {0} ký tự")
+                },
+                Phone:
+                {
+                    required: "Bạn phải nhập số điện thoại",
+                    minlength: jQuery.format("Số điện thoại phải có độ dài tối thiểu {0} ký tự"),
+                    maxlength: jQuery.format("Số điện thoại phải có độ dài không quá {0} ký tự"),
+                    number: "Số điện thoại phải là kiểu số"
+                },
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $.post(urlPostAction, $("#FAQQuestionForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+        
+    });
+</script>
+
+<form id="FAQQuestionForm">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thông tin về câu hỏi</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    @* <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên câu hỏi</label>
+                        <div class="col-sm-10">
+                            @Model.Title
+                        </div>
+                    </div>*@
+                    
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">Nội dung câu hỏi</label>
+                        <div class="col-sm-10">
+                            <strong>@Html.Raw(Model.Content)</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Chuyên mục câu hỏi</label>
+                        <div class="col-sm-10">
+                             
+                                @foreach (var item in ViewBag.CategoryID)
+                                { 
+                                    
+                                    @((item.ID == Model.CategoryID) ? item.Name :"" )
+                                }
+                         
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Họ tên người gửi</label>
+                        <div class="col-sm-10">
+                            @Model.Fullname
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+                            @Model.Phone
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            @Model.Address
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            @Model.Email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Câu hỏi trả lời</label>
+                        <div class="col-sm-10">
+                            <textarea rows="10" class="form-control" placeholder="..." name="Content" id="Content">
+                               @if (Model.FAQ_Answer != null && Model.FAQ_Answer.FirstOrDefault() != null)
+                               {
+                                   @Model.FAQ_Answer.FirstOrDefault().Content
+                               }
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <div style="display: none;">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

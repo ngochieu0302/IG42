@@ -1,0 +1,20 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.RewardHistoryItem>
+@{
+    var stt = 1;
+}
+@if (Model.Any())
+{
+        foreach (var item in Model)
+        {
+            <tr class="odd gradeX">
+                <td class="text-center">@(stt++) </td>
+                <td class="text-center">@item.OrderID </td>
+                <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy") </td>
+                <td class="text-right">@string.Format("{0:0,0}", item.Price) </td>
+                <td class="text-center">
+                    <a data-event="Order" data-id="@item.OrderID" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                </td>
+            </tr>
+        }                              
+}

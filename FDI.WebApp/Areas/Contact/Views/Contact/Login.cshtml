@@ -1,0 +1,78 @@
+﻿<div class="popup-login white-popup mfp-with-anim mfp-hide" id="login-res-pop">
+    <div class="tab-log-res" id="tabsLogRes">
+        <div class="tab-nav">
+            <a href="#register">Đăng ký</a>
+            <a href="#login">Đăng nhập</a>
+        </div>
+        <div class="tab-content">
+            <div class="tab-content-item" id="register">
+                <strong>Đăng ký miễn phí</strong>
+                <form id="frmRegister">
+                    @*<div class="form-group ipt-firstname">
+                        <input type="text" class="form-control" name="FullName" placeholder="Họ của bạn (*)" />
+                    </div>
+                    <div class="form-group ipt-lastname">
+                        <input type="text" class="form-control" name="rgLastName" placeholder="Tên của bạn (*)" />
+                    </div>*@
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="FullName" placeholder="Họ tên của bạn (*)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="Email" placeholder="Địa chỉ Email (*)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="Mobile" placeholder="Nhập số điện thoại của bạn" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="Password" id="Password" placeholder="Mật khẩu (*)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="rePassword" placeholder="Nhập lại mật khẩu (*)" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btf bt-blue bt-block">Đăng ký</button>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-content-item" id="login">
+                <strong>Đăng nhập tài khoản</strong>
+                <form id="frmLogin">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="lgEmail" placeholder="Nhập địa chỉ Email (*)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="lgPasswold" placeholder="Nhập mật khẩu của bạn (*)" />
+                    </div>
+                    <a href="#recover-pass" title="" class="re-past call-inline-pop" data-effect="mfp-zoom-in">Quên mật khẩu ?</a>
+                    <div class="form-group">
+                        <button type="submit" class="btf bt-orange bt-block">Đăng Nhập</button>
+                    </div>
+                    <div class="login-other">
+                        <b>Đăng nhập bằng:</b>
+                        <a href="#" title="" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" title="" class="google"><i class="fa fa-google-plus"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup-login white-popup mfp-with-anim mfp-hide" id="recover-pass">
+    <div class="tab-log-res">
+        <div class="tab-content">
+            <div class="tab-content-item">
+                <strong>Lấy lại mật khẩu</strong>
+                <span>Nếu bạn quên mật khẩu, vui lòng cung cấp cho chúng tôi địa chỉ email của bạn đã đăng ký tài khoản để chúng tôi có thể cấp lại mật khẩu cho bạn :)</span>
+                <form id="frmRecoveryPass">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="rcvEmail" placeholder="Nhập địa chỉ Email của bạn" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btf bt-blue bt-block">Gửi yêu cầu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

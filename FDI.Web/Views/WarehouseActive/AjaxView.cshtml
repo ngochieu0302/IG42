@@ -1,0 +1,204 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.StorageWarehousingItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+
+<div class="modal-body">
+    <div id="PrintContent" class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về phiếu nhập
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mã phiếu</label>
+                        </td>
+                        <td>
+                            @Model.Code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Người nhập</label>
+                        </td>
+                        <td>
+                            @Model.UsernameCreate
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày nhập</label>
+                        </td>
+                        <td>
+                            @Model.DateImport.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.TotalPrice)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ghi chú</label>
+                        </td>
+                        <td>
+                            @Model.Note
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>In danh sách</label>
+                        </td>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i>In</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách sản phẩm yêu cầu
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã SP</th>
+                        <th>Tên SP</th>
+                        <th>Số lượng</th>
+                        <th>Giá nhập</th>
+                        <th>Thành tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    @foreach (var item in Model.LstImport)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.Code</td>
+                            <td>
+                                @if (item.IsDelete == true)
+                                {
+                                    <strike>@item.ProductName</strike>
+                                }
+                                else
+                                {
+                                    <span>@item.ProductName</span>
+                                }
+                            </td>
+                            <td>@string.Format("{0:0}", item.Quantity)</td>
+                            <td>@string.Format("{0:0,0}", item.Price)</td>
+                            <td>@string.Format("{0:0,0}", item.Price * (item.Quantity ?? 0))</td>
+                            <td>
+                                @if (item.IsDelete == true)
+                                {
+                                    <label class="label label-danger">Đã xóa</label>
+                                }
+                                else
+                                {
+                                    <label class="label label-success">Hoàn thành</label>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách sản phẩm đã nhập
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã SP</th>
+                        <th>Tên SP</th>
+                        <th>Số lượng</th>
+                        <th>Barcode</th>
+                        <th>Giá nhập</th>
+                        <th>Thành tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                    @foreach (var item in Model.LstImportActive)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.Code</td>
+                            <td>
+                                @if (item.IsDelete == true)
+                                {
+                                    <strike>@item.ProductName</strike>
+                                }
+                                else
+                                {
+                                    <span>@item.ProductName</span>
+                                }
+                            </td>
+                            <td>@string.Format("{0:0}", item.Quantity)</td>
+                            <td>@item.BarCode</td>
+                            <td>@string.Format("{0:0,0}", item.Price)</td>
+                            <td>@string.Format("{0:0,0}", item.Price * (item.Quantity ?? 0))</td>
+                            <td>
+                                @if (item.IsDelete == true)
+                                {
+                                    <label class="label label-danger">Đã xóa</label>
+                                }
+                                else
+                                {
+                                    <label class="label label-success">Hoàn thành</label>
+                                }
+                            </td>
+                            <td><a href="javascript;" data-id="@item.ID" class="ViewCate_Details">Xem chi tiết</a></td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+@* In phiếu *@
+<script>
+    $(function () {
+        $("body").on("click", ".ViewCate_Details", function () {
+            var id = $(this).data("id");
+            var urlform = '@Url.Action("ViewCateDetails")';
+            $.post(urlform, { id: id }, function (data) {
+                $("#dialog-form-3 .modal-title").html("Chi tiết sản phẩm");
+                $("#dialog-form-3 #dialog-form-ajax").html(data);
+                $('#dialog-form-3').modal('show');
+            });
+            return false;
+         });
+    });
+</script>

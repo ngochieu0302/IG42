@@ -1,0 +1,132 @@
+﻿
+
+@using FDI.CORE
+
+@using ConvertDate = FDI.CORE.ConvertDate
+@model FDI.Simple.ModelStorageWarehousingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+
+    var statues = (StatusWarehouse[])Enum.GetValues(typeof(StatusWarehouse));
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        @*<th class="text-center"><a href="#Field=Code">Mã phiếu</a></th>*@
+                        <th class="text-center"><a href="#Field=DateCreated">Ngày tạo</a></th>
+                        <th class="text-center"><a href="#Field=DateImport">Ngày giao</a></th>
+                        <th class="text-center"><a href="#Field=CustomerName">Đại lý</a></th>
+                        <th class="text-center"><a href="#Field=UsernameCreate">Người thực hiện</a></th>
+                        <th><a href="#Field=Note">Ghi chú</a></th>
+                        <th class="text-center">Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItems != null)
+                    {
+                        foreach (var item in Model.ListItems)
+                        {
+                            <tr data-id="@item.ID" title="@item.Code">
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td class="text-center"><a href="/WarehouseActive?orderId=@item.ID">@item.ID</a></td>
+                                @*<td class="text-center"><a href="/WarehouseActive?orderId=@item.ID">@Grid.DisplayShowStrike(item.Code, item.IsDelete == false)</a></td>*@
+
+                                <td class="text-center">@ConvertDate.DecimalToString(item.DateCreated, "dd/MM/yyyy")</td>
+                                <td class="text-center">@ConvertDate.DecimalToString(item.DateRecive, "dd/MM/yyyy")</td>
+                                <td class="text-center"><a href="#">@(item.AgencyName)</a></td>
+                                <td class="text-center"><a href="#" class="setUser" data-id="@item.ID">@(item.Users.Any()?string.Join(",",item.Users.Select(m=>m.UserName)): "...")</a></td>
+                                <td>@item.Note</td>
+                                <td class="text-center">
+                                    <!-- Single button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle bordernone" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            
+                                            @{
+                                                var statusenum=(StatusWarehouse) item.Status;
+                                            }
+                                            <label class="label @statusenum.GetCssClass()">@statusenum.GetDisplayName()</label>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @foreach (var status in statues)
+                                            {
+                                                if ((int)status != item.Status)
+                                                {
+                                                    <li><a class="changestatus" href="#@((int)status)">@status.GetDisplayName()</a></li>
+                                                    }
+                                                }
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    @Grid.ActionView(item.ID, item.Code)
+                                    @if (!item.IsActive.HasValue || item.IsActive == false)
+                                    {
+                                        <a data-id="@item.ID" class="btn btn-sm btn-default btn_Inport" data-action="Edit"><i class="fa fa-pencil-square-o" style="color: #04A827;"></i></a>
+                                        @Grid.ActionDelete(item.ID, item.Code)
+                                    }
+                                    @if (item.IsActive == true && item.Status == (int)StatusWarehouse.Complete)
+                                    {
+                                        <a data-id="@item.ID" class="btn btn-sm btn-default btn_Imported" data-action="usermodule"><i class="fa fa-clone"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Chỉnh sửa phiếu yêu cầu nhập kho");
+        });
+        $(".btn_Imported").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlFormModule + "?ItemId=" + id + "&do=" + action, "Nhận hàng vào kho");
+        });
+
+        $(".setUser").click(function() {
+            var id = $(this).attr("data-id");
+            FdiDialogView("@Url.Action("GetUser")" + "?orderId=" + id, "Chọn nhân viên");
+        });
+
+        $(".changestatus").click(function (e) {
+            e.preventDefault();
+            var orderId = $(this).closest('tr').attr('data-id');
+            var status = $(this).attr("href").substring(1);
+
+            $.post('@Url.Action("ChangeStatus")', { orderId, status }, function(data) {
+                if (data.Erros == true) {
+                    createMessage("error", data.Messages);
+                } else {
+                    window.location.reload();
+                }
+            });
+        });
+    });
+</script>

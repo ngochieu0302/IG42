@@ -1,0 +1,11 @@
+﻿@using FDI.CORE
+@model FDI.Simple.EnterprisesItem
+
+@{
+    var url = "https://fditech.vn/Content/Publishing/img/logo-full.svg";
+    if (Model != null && !string.IsNullOrEmpty(Model.PictureUrl))
+    {
+        url = Model.PictureUrl.ImageLogo();
+    }
+    <img src="@url" alt="" width="300" height="40" class="logo-default"/>
+}

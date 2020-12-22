@@ -1,0 +1,197 @@
+﻿@model FDI.Simple.ModelSimItem
+@using System.Web.Script.Serialization
+@using FDI.Utils
+@{ 
+    //var PriceNew = Model.obj!= null?(Model.KHDiscountItems.Where(m => m.PriceS <= Model.obj.PriceNew && m.PriceE > Model.obj.PriceNew).Select(m => (100 - m.Percent)).FirstOrDefault() ?? 100) / 100 * Model.obj.PriceNew: 0;
+    var stt = 1;
+    var check = Model.obj.PriceOld < 1000000;
+    }
+<div class="col-sm-8 col-md-9">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="ct-left">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đặt hàng</li>
+            </ol>
+        </nav>
+        <div class="boxOder">
+            <h1>Đặt mua Sim số đẹp @(Model.obj != null ? "0" + Model.obj.CodeSku : "")
+            </h1>
+            @if (!Model.obj.Active)
+            {
+                <div class="row">
+                    <div class="title-box">
+                        <h3>Sim <span style="color: red; font-weight: bold;">@("0" + Model.obj.CodeSku)</span> Đã bán
+                        </h3>
+                        <i>Mọi thông tin mua bán vui lòng liên hệ
+                            <a href="tel:0888123333" title="0888.12.3333">0888.12.3333</a> để đặt sim và mua sim đúng cách khách hàng vui lòng gọi điện trước khi đặt sim. Xin cảm
+                            ơn!
+                        </i>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                @if (Model.obj.Active)
+                {
+                    <div class="col-md-5">
+                        <div class="title-box">
+                            <h3>Thông tin giỏ hàng của bạn
+                            </h3>
+                            
+
+                        </div>
+                        <div class="tablePay">
+                            @if (Model.obj != null)
+                            {
+                                <table class="table table-bordered table-striped tbl-@Model.obj.CodeSku">
+                                    <colgroup>
+                                        <col style="width: 40%">
+                                        <col style="width: 60%">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <td>Sim số</td>
+                                            <td>
+                                                <b>@("0" + Model.obj.CodeSku)</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Giá bán</td>
+                                            <td>@((check ? (Model.obj.PriceNew + 200000) : Model.obj.PriceNew).Money()) đ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Loại Sim</td>
+                                            <td>@Model.obj.CateName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nhà mạng</td>
+                                            <td>
+                                                <span class="@Model.obj.Class"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tổng điểm</td>
+                                            <td>@Model.obj.Marks</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="text-right">
+                                                <button type="submit" data-id="@Model.obj.CodeSku" class="btn btn-sm btn-danger">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="title-box">
+                            <h3>Thông tin khách hàng đặt</h3>
+                           
+                        </div>
+                        <div class="formOder">
+                            <form id="modalForm">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4">Họ và tên (*)</div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="CustomerName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4">Địa chỉ (*)</div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="Address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4">Điện thoại (*)</div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="Mobile">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-4">Nội dung</div>
+                                        <div class="col-sm-8">
+                                            <textarea type="text" class="form-control" rows="6" name="Note"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boxNote">
+                                    <i>Lưu ý:</i>
+                                    <ul>
+                                        <li>(*) là bắt buộc nhập</li>
+                                        <li>Bạn vui lòng điền chính xác thông tin địa chỉ để nhận hàng</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group text-right">
+                                    <button type="submit" class="btn btn-lg btn-success">Đặt sim ngay</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="boxTutor">
+                <h2>Hướng dẫn cách thức đặt mua sim @("0" + Model.obj.CodeSku) :</h2>
+                <p>
+                        <strong>- Cách 1: </strong>Simso.vip giao sim và thu tiền tận nhà miễn phí (Áp dụng Hà Nội, Tp.HCM và các tỉnh/thành có đại lý).
+                </p>
+                <p>
+                        <strong>- Cách 2: </strong>Quý khách đến cửa hàng tại Hà Nội hoặc các tỉnh/thành có đại lý.
+                </p>
+                <p>
+                        <strong>- Cách 3: </strong>Đặt cọc và thanh toán tiền còn lại khi nhận sim (Áp dụng tại các tỉnh không có đại lý: Quý khách đảm bảo việc mua hàng bằng cách đặt cọc tối thiểu 10% giá trị sim qua chuyển khoản. Simso.vip sẽ gửi COD sim đến tay quý khách và thu tiền còn lại  
+                </p>
+                <strong>Chúc quý khách gặp nhiều may mắn khi sở hữu thuê bao @("0" + Model.obj.CodeSku)</strong>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="kk-star-ratings  bottom-right">
+                    <div class="rating">
+                        <input type="hidden" name="IdItem" id="IdItem" value="@Model.obj.ID" data-type="product"/>
+                        <label>
+                            <input type="radio" name="rating" value="5" title="5 stars">
+                            5
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="4" title="4 stars">
+                            4
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="3" title="3 stars">
+                            3
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="2" title="2 stars">
+                            2
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="1" title="1 star">
+                            1
+                        </label>
+                    </div>
+                    <!-- kksr-stars -->
+                    <div class="kksr-legend">
+                        @Html.Action("aggregateRating","Product",new {Area = "Product", id = Model.obj.ID,type = "product"})
+                    </div>
+                    <div class="thanks-rate" style="display: none;">
+                        <span>Thanks you for vote</span>
+                    </div>
+                    <!-- kksr-legend -->
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+<link href="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />

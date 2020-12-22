@@ -1,0 +1,10 @@
+﻿@using FDI.Utils
+@model FDI.Simple.AdvertisingItem
+@if (Model != null)
+{
+    <div class="list-news-other">
+    <a href="@Model.Link" title="@Model.Name">
+        <img src="@Model.PictureUrl.UploadPicture()" title="@Model.Name" class="img-responsive" alt="@Model.Name"/>
+    </a>
+</div>
+}

@@ -1,0 +1,158 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaTwoColumn.cshtml";
+}
+@model string
+
+@section columnOne{
+    <div class="portlet box purple ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i> Nhập SP
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div id="savePurchase" class="form-horizontal" disabled>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Mã sản phẩm</label>
+                        <div class="col-md-9">
+                            <input type="text" name="code" id="code" value="@Model" class="form-control input-sm" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Id thùng</label>
+                        <div class="col-md-9">
+                            <input type="text" name="idlog" id="idlog" value="" class="form-control input-sm" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="orderDetail"></div>
+}
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Content/socket/socket.io.js"></script>
+
+<script>
+   
+    var productid = 0;
+    function myFunction(event) {
+
+      //  console.log(event);
+        if (event && event.key) {
+            var x = event.key.toLowerCase();
+
+            if (x.indexOf('f') > -1) {
+                event.preventDefault();
+            }
+            $(".select_item").removeClass("active");
+                $(".active_" + x).addClass("active");
+        }
+    }
+    $(function () {
+        var socket = io("http://localhost:3000");
+        socket.on("calesvalue", function(data) {
+            console.log(data);
+            redirect("");
+        });
+        socket.on("pingScalesCate", function (data) {
+            console.log(data);
+            $("#valueping").text(data);
+        });
+
+        urlLists = '@Url.Action("ListItems", new{code= Model })';
+        loadHtml('@Url.Action("Detail", new { code = Model })', "#orderDetail");
+        urlPostAction = '@Url.Action("Actions", new {id = 1})';
+        $("#btn_update").click(function() {
+            var idlog = $("#idlog").val();
+            if (idlog == "") {
+                return;
+            }
+
+            $.post("@Url.Action("Actions")" + "?do=add&itemId=" + idlog,
+                function(data) {
+                    if (data.Erros==false) {
+                        createCloseMessage("Thông báo", "Cập nhật thành công");
+                    } else {
+                        ErrorMessage(data.Message);
+                    }
+                });
+        });
+     //   $(".active_" + list[model.Pi].Code).addClass("active");
+        //function myFunction(event) {
+        //    event.preventDefault();
+        //    var x = event.key.toLowerCase();
+        //    if (x.indexOf('f') > 0) {
+        //        event.preventDefault();
+        //    }
+        //    $(".select_item").removeClass("active");
+        //    $(".active_" + x).addClass("active");
+        //}
+        //$(document).keypress(function (event) {
+        //    debugger;
+        //    var x = event.key.toLowerCase();
+        //    if (x.indexOf('f') > 0) {
+        //        event.preventDefault();
+        //    }
+        //    $(".select_item").removeClass("active");
+        //    $(".active_" + x).addClass("active");
+
+        //});
+
+        $("#code").enterKey(function() {
+            window.location.href = "@Url.Action("Index")" + "?code=" + $("#code").val();
+            @*$.post("@Url.Action("Detail")" + "?code=" + $("#code").val(), {}, function(data) {
+                $("#orderDetail").html(data);
+            });*@
+        });
+
+        @*$("#btn_update").click(function() {
+            $.post("@Url.Action("Actions", new {id=Model})" +"?do=insert",
+                function(data) {
+                    if (data.Erros == false) {
+                        createCloseMessage("Thông báo", "Cập nhật thành công", "");
+                        $("#code").val("");
+                    } else {
+                        createMessage("error", data.Message);
+                    }
+                });
+        });
+
+        $("#savePurchase").validate({
+            rules: {
+                code: {
+                    required: true,
+                },
+
+            },
+            messages: {
+                code:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                var obj = {id:@Model,  code:$("#code").val()}
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify(obj),
+                    url: "@Url.Action("Add")" + "?do=add",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // code here
+                        if (data.Erros == false) {
+                            createCloseMessage("Thông báo", "Cập nhật thành công", "");
+                            $("#code").val("");
+                        } else {
+                            createMessage("error", data.Message);
+                        }
+                    }
+                });
+
+            }
+        });*@
+    })
+</script>

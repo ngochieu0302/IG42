@@ -1,0 +1,92 @@
+﻿@using FDI.CORE
+@model FDI.Simple.AssetsItem
+
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về tài sản
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên sản phẩm</label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Mã sản phẩm </label>
+                        </td>
+                        <td>
+                            @Model.Code
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày mua</label>
+                        </td>
+                        <td>
+                            @Model.DateBuy.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày hết hạn BH</label>
+                        </td>
+                        <td>
+                            @Model.DateGuarantee.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày thanh lý</label>
+                        </td>
+                        <td>
+                            @Model.DateLiquidation.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Mã Serial</label>
+                        </td>
+                        <td>
+                            @Model.Serial
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá trị</label>
+                        </td>
+                        <td>
+                            @Model.Price.Money()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Mô tá</label>
+                        </td>
+                        <td>
+                            @Model.Description
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>       
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

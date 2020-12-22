@@ -1,0 +1,74 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelAdvertisingItem
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn vị trí --</option>
+                    @foreach (var item in Model.ListPositionItem)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+   <section class="group-product-area section-padding">
+         @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    @if (Model.AdvertisingItem != null)
+                    {
+                        <div class="group-product-banner">
+                            <figure class="banner-statistics">
+                                <a href="@Model.AdvertisingItem.Link">
+                                    <img src="@Model.AdvertisingItem.PictureUrl.UploadPicture()" alt="@Model.AdvertisingItem.Name">
+                                </a>
+                                <div class="banner-content banner-content_style3 text-center">
+                                    <h6 class="banner-text1">@Model.AdvertisingItem.Content</h6>
+                                    <h2 class="banner-text2">@Model.AdvertisingItem.Name</h2>
+                                    <a href="@Model.AdvertisingItem.Link" class="btn btn-text">Shop Now</a>
+                                </div>
+                            </figure>
+                        </div>
+                    }
+                    
+                </div>
+                @Html.Action("ProductInCategoryHotHome","Product",new {Area="Product"})
+            </div>
+        </div>
+    </section>
+}

@@ -1,0 +1,73 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelOrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox"/>
+                        </th>
+                        <th>STT</th>
+                        <th><a href="#Field=ID">Số HD</a></th>
+                        <th><a href="#Field=CustomerName">Khách hàng</a></th>
+                        <th><a href="#Field=StartDate">Ngày bán</a></th>
+                        <th><a href="#Field=DateCreated">Ngày tạo</a></th>
+                        <th><a href="#Field=UserCreate">Thu ngân</a></th>
+                        <th><a href="#Field=TotalPrice">Tổng tiền</a></th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListOrderItem != null)
+                {
+                    foreach (var item in Model.ListOrderItem)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@(stt++)</td>
+                            <td>@item.ID</td>
+                            <td>@(item.CustomerName??"(Khách lẻ)")</td>
+                            <td>@item.StartDate.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.DateCreated.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.UserName</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.TotalPrice)</td>
+                            <td class="text-right">
+                                @Grid.ActionView(item.ID, item.CustomerName)
+                                @Grid.ActionDelete(item.ID, item.CustomerName)
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        @*var totalPrice = '@string.Format("{0:0,0}", Model.ListOrderItem.Sum(c => c.Price * (c.Quantity - c.QuantityOut)))';
+        var quantity = '@(string.Format("{0:0.##}", Model.Quantity))';
+        $('.bottom-pager').append('<span>Giá trị tồn : <i>' + totalPrice + '</i> VNĐ</span><span>- Số lượng tồn: <i>' + quantity + '</i></span>');*@
+        var total = '@(Model.Total.HasValue ? Model.Total.Value : 0)';
+        var totaldiscount = '@(Model.TotalDiscount.HasValue ? Model.TotalDiscount.Value : 0)';
+        var totalpay = '@(Model.TotalPay.HasValue ? Model.TotalPay.Value : 0)';
+        registerGridView('#mygird');
+        $('.bottom-pager').append('<span>Tổng : <i class="maskPrice">' + total + '</i>  vnđ</span><span>- Tổng TT: <i class="maskPrice">' + totalpay + '</i>  vnđ</span><span>- Tổng ĐC: <i class="maskPrice">' + totaldiscount + '</i>  vnđ</span>');
+        
+    });
+</script>

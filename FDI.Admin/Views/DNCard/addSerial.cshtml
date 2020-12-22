@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = ViewBag.ActionText + " Khách hàng";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<form id="frm-sendCard">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="Order" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Thông tin thẻ
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mã khách hàng</label>
+                            <div class="col-lg-10">
+                                <input id="Customer" class="form-control" value="" />
+                                <input type="hidden" name="CustomerID" id="CustomerID" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Họ tên</label>
+                            <div class="col-lg-10">
+                                <input id="CustomerName" class="form-control" readonly="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Địa chỉ</label>
+                            <div class="col-lg-10">
+                                <input name="CustomerID" id="CustomerAddress" class="form-control" readonly="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Điện thoại</label>
+                            <div class="col-lg-10">
+                                <input name="CustomerID" id="CustomerPhone" class="form-control" readonly="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mã thẻ</label>
+                            <div class="col-lg-10">
+                                <input name="Serial" id="Serial" class="form-control" />
+                                <input type="hidden" name="LstSerial" id="LstSerial"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Danh sách thẻ
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <table class="table table-striped table-bordered table-hover table-orimid" id="gridCard">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã thẻ</th>
+                                            <th>Mã pin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        var lstP = [];
+        var txt = '<tr><td>stt</td><td>Serial</td><td>PinCode</td></tr>';
+        var stt = 1;
+        $('#Customer').autocomplete({
+            serviceUrl: "/Customer/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#CustomerPhone').val(el.phone);
+                $('#CustomerAddress').val(el.code);
+            }
+        });
+        $('#Serial').autocomplete({
+            serviceUrl: "/DNCard/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                var add = 0;
+                lstP.forEach(function (entry) {
+                    if (entry === el.ID) {
+                        add = 1;
+                    }
+                });
+                if (add === 0) {
+                    lstP.push(el.ID);
+                    var ch = txt.replace("stt", stt++);
+                    ch = ch.replace("Serial", el.value);
+                    ch = ch.replace("PinCode", el.data);
+                    $("#gridCard tbody").prepend(ch);
+                    $("#Serial").val("");
+                    $("#LstSerial").val(lstP.toString());
+                }
+            }
+        });
+        $("#frm-sendCard").validate({
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#frm-sendCard").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+    })
+</script>

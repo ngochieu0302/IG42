@@ -1,0 +1,72 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelNewsItem
+@{
+    var pageId = WebConfig.NewDetail;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <select name="value" class="form-control">
+                <option value="">-- Chọn nhóm menu --</option>
+                @foreach (var item in Model.LstCategoryItems)
+                {
+                    <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                }
+            </select>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Model.CtrId", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="box-aside">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="title-box">
+            <a href="#" title="">Tin tức tiêu biểu</a>
+        </div>
+        <div class="body-box">
+            @foreach (var item in Model.ListItem)
+            {
+                <div class="item-news-aside item-ef">
+                    <div class="img">
+                        <a href="/@item.TitleAscii-p@(pageId)c@(item.ID)" title="@item.Title">
+                            <img src="@item.PictureUrl.UploadPicture()" alt="@item.Title" class="img-responsive">
+                            <span class="roll tie-news"></span>
+                        </a>
+                    </div>
+                    <div class="detail">
+                        <a href="/@item.TitleAscii-p@(pageId)c@(item.ID)" title="@item.Title">@item.Title</a>
+                        <time>@item.DateCreated.Value.Format("dd/MM/yyyy")</time>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,223 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DebtItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin phiếu chuyển
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    
+                    <tr>
+                        
+                        <th>Ngày tạo</th>
+                        <td>@Model.DateCreated.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền</th>
+                        <td>@string.Format("{0:0,0}", Model.Price)</td>
+                        <th>Hình thức thanh toán</th>                        
+                    </tr>
+                    <tr>
+                        <th>Ghi chú</th>
+                        <td colspan="3">@Model.Note</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label>In phiếu</label>
+                        </th>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i>In</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+
+<div id="BoxPrint" style="display: none;">
+    
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+                            <li><strong>Đơn vị:</strong><span></span></li>
+                            <li><strong>Địa chỉ:</strong><span></span></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <strong>Mẫu số 09 - TT</strong>
+                        <span>
+                            (Ban hành theo Thông tư số 200/2014/TT-BTC
+                            Ngày 22/12/2014 của Bộ Tài chính)
+                        </span>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="left">
+                        <h3>Phiếu Chuyển tiền</h3>
+                        <i> Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><b>Mã phiếu:</b><span>@Model.ID</span></li>
+                            <li><b>Quyển số:</b><span></span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <ul>
+                        <li><b>Người chuyển:</b><span>@Model.UserName</span></li>
+                        <li><b>Địa chỉ chuyển:</b></li>
+                        <li><b>Người nhận:</b><span>@Model.NameSupplier</span></li>
+                        <li><b>Địa chỉ nhận:</b><span>@Model.AddressSupplier</span></li>
+                        <li><b>Lý do chuyển:</b><span>@Model.Note</span></li>
+                        <li><b>Số tiền:</b><strong>@Model.Price.Money()</strong></li>
+                        <li><b>Viết bằng (chữ):</b><i>@Model.Price.NumberToWord(" đồng")</i></li>
+                    </ul>
+                </div>
+                <div class="pt-date">
+                    <i> Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                </div>
+                <div class="pt-sign item-sign-5">
+                    <div class="pt-item-sign">
+                        <strong>Giám đốc</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận tiền</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người lập phiếu</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+
+                        </div>
+                        <span>@Model.UserName</span>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Thủ quỹ</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+                            <li><strong>Đơn vị:</strong><span></span></li>
+                            <li><strong>Địa chỉ:</strong><span></span></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <strong>Mẫu số 09 - TT</strong>
+                        <span>
+                            (Ban hành theo Thông tư số 200/2014/TT-BTC
+                            Ngày 22/12/2014 của Bộ Tài chính)
+                        </span>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="left">
+                        <h3>Phiếu Chuyển tiền</h3>
+                        <i> Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><b>Mã phiếu:</b><span>@Model.ID</span></li>
+                            <li><b>Quyển số:</b><span></span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <ul>
+                        <li><b>Người chuyển:</b><span>@Model.UserName</span></li>
+                        <li><b>Địa chỉ chuyển:</b></li>
+                        <li><b>Người nhận:</b><span>@Model.NameSupplier</span></li>
+                        <li><b>Địa chỉ nhận:</b><span>@Model.AddressSupplier</span></li>
+                        <li><b>Lý do chuyển:</b><span>@Model.Note</span></li>
+                        <li><b>Số tiền:</b><strong>@Model.Price.Money()</strong></li>
+                        <li><b>Viết bằng (chữ):</b><i>@Model.Price.NumberToWord(" đồng")</i></li>
+                    </ul>
+                </div>
+                <div class="pt-date">
+                    <i> Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                </div>
+                <div class="pt-sign item-sign-5">
+                    <div class="pt-item-sign">
+                        <strong>Giám đốc</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận tiền</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người lập phiếu</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+
+                        </div>
+                        <span>@Model.UserName</span>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Thủ quỹ</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </page>
+</div>
+
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>

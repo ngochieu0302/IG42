@@ -1,0 +1,89 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelProductCodeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<style>
+    .label-info {
+    background-color: #5bc0de;
+}
+</style>
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll"/>
+                        </th>
+                        <th class="text-center">STT</th>
+                        <th><a href="#Field=OrderID">Mã sản phẩm</a></th>
+                        <th class="text-center"><a href="#Field=StartDate">Ngày bắt đầu</a></th>
+                        <th class="text-center"><a href="#Field=UserCreate">Ngày kết thúc</a></th>
+                        <th>Tình trạng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItems != null)
+                {
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@(stt++)</td>
+                            <td>@item.Code</td>
+                            <td class="text-center">@item.StartDate.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-center">@item.EndDate.DecimalToString("dd/MM/yyyy")</td>
+                            @if (item.Status == 0)
+                            {
+                                <td class="text-center"><label class="label label-default">Chờ duyệt</label></td>
+                            }
+                            else if (item.Status == 1)
+                            {
+                                <td class="text-center"><label class="label label-info">Hoàn thành</label></td>
+                            }else if (item.Status == 2)
+                            {
+                                <td class="text-center"><label class="label label-danger">Chưa hoàn thành</label></td>
+                            }
+                            <td class="text-right">
+                                <a data-id="@item.ID" data-BiasId="@item.BiasProduceID" class="btn btn-sm btn-default" data-event="editCode"><i class="fa fa-creative-commons" style="color: #04A827;"></i></a>
+                                @Grid.ActionView(item.ID,item.Code)
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $("[data-event='editCode']").click(function () {
+            var id = $(this).attr("data-id");
+            var biasId = $(this).attr("data-BiasId");
+            FdiOpenDialog("#dialog-form", "/ProductCode/AjaxForm?do=Add&itemId=" + id + "&biasId=" + biasId, "");
+        });
+    });
+</script>

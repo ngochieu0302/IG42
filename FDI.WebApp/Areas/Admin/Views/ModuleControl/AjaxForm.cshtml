@@ -1,0 +1,126 @@
+﻿@model FDI.Simple.ModelModuleControlItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Thêm mới cấu hình";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            rules: {
+                Module: { required: true },
+                Action: { required: true },
+                Section: { required: true }
+            },
+            messages: {
+                Module: { required: "Trường bắt buộc nhập!" },
+                Action: { required: "Trường bắt buộc nhập!" },
+                Section: { required: "Trường bắt buộc nhập!" }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#modalForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); 
+                    else {
+                        $("#dialog-form").modal('hide');
+                        createCloseMessage("Thông báo",data.Message,'');
+                    }
+                });
+                return false;
+            }
+        });
+
+        $("#PageID").change(function () {
+            var layout = $("#PageID :selected").data("layout");
+            $.post("@Url.Action("AjaxGetSection", "ModuleControl")", { layout: layout }, function (data) {
+                $("#Section").html(data);
+            });
+        });
+
+        $("#Module").change(function () {
+            $.post("@Url.Action("AjaxGetAction", "ModuleControl")", { name: $("#Module").val() }, function (data) {
+                $("#Action").html(data);
+            });
+        });
+
+    });
+</script>
+
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@Model.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ModuleControlItem.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-link"></i>Thông tin về vị trí menu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trang</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="PageID" id="PageID">
+                                    <option value="">-- Chọn trang --</option>
+                                    @foreach (var item in Model.SysPageItems)
+                                    {
+                                        <option value="@item.ID" data-layout="@item.Layout" @(item.ID == Model.ModuleControlItem.PageID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Vị trí</label>
+                            <div class="col-sm-10">
+                                <select name="Section" id="Section" class="form-control">
+                                    <option value="">-- Chọn vị trí --</option>
+                                    @foreach (var item in Model.LstSection)
+                                    {
+                                        <option value="@item" @(item == Model.ModuleControlItem.Section ? "selected" : "")>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Module</label>
+                            <div class="col-sm-10">
+                                <select name="Module" id="Module" class="form-control">
+                                    <option value="">-- Chọn Module --</option>
+                                    @foreach (var item in Model.LstModules)
+                                    {
+                                        <option value="@item" @(item == Model.ModuleControlItem.Module ? "selected" : "")>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Action</label>
+                            <div class="col-sm-10">
+                                <select name="Action" id="Action" class="form-control">
+                                    <option value="">-- Chọn Action --</option>
+                                    @foreach (var item in Model.LstAction)
+                                    {
+                                    <option value="@item" @(item == Model.ModuleControlItem.Action ? "selected" : "")>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự sắp xếp</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Sort" class="form-control" value="@Model.ModuleControlItem.Sort" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@Model.ActionText</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

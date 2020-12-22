@@ -1,0 +1,115 @@
+﻿@using FDI.CORE
+@model FDI.Simple.AssetsItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#modalForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                },
+                DateBuy_: {
+                    required: true,
+                }
+            },
+            messages: {
+                Name: {
+                    required: "Trường này bắt buộc nhập.",
+                },
+                DateBuy_: {
+                    required: "Trường này bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    })
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về Tài sản
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mã tài sản</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Code" id="Code" value="@(Model.Code)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên Tài sản</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày mua</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="DateBuy_" id="DateBuy" value="@Model.DateBuy.DecimalToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày hết BH</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="Guarantee_" id="Guarantee" value="@Model.DateGuarantee.DecimalToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày thanh lý (Nếu có)</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="Liquidation_" id="Liquidation" value="@Model.DateLiquidation.DecimalToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="Status" name="Status">
+                                    <option value="0" @(Model.Status == 0 ? "selected" : "")>Tốt</option>
+                                    <option value="1" @(Model.Status == 1 ? "selected" : "")>Bình thường</option>
+                                    <option value="2" @(Model.Status == 2 ? "selected" : "")>Hư hỏng nhẹ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá trị</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control maskPrice" name="Price" id="Price" value="@Model.Price.Money()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Khấu hao theo năm</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="Depreciation" id="Depreciation" value="@Model.Depreciation" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="3" class="form-control" name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

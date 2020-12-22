@@ -1,0 +1,123 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.DNCardItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var stt = 1;
+}
+<div class="page-head">
+    <div class="container">
+        <div class="page-title">
+            <h1>
+                Quản lý thẻ thành viên
+                <small>Quản lý, tích hợp thẻ của thành viên trong hệ thống</small>
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <div class="container">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <a href="/">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>Danh sách thẻ</span>
+            </li>
+        </ul>
+        <div class="page-content-inner">
+            <div class="portlet box blue select-card">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Thêm thẻ thành viên
+                    </div>
+                </div>
+                <div class="portlet-body form" style="">
+                    <form role="form" lpformnum="1">
+                        <div class="form-body">
+                            <div class="row">
+                                <label class="col-md-1 control-label">Mã thẻ:</label>
+                                <div class="col-md-4">
+                                    <input type="text" name="Serial" id="Serial" class="form-control valid">
+                                </div>
+                                <label class="col-md-1 control-label">Mã Pin:</label>
+                                <div class="col-md-4">
+                                    <input type="text" name="PinCode" id="PinCode" class="form-control valid">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-block green" id="AddCard">Cập nhật thẻ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+               
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-credit-card font-dark"></i>
+                                <span class="caption-subject font-dark sbold uppercase">Danh sách thẻ thành viên</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="table table-striped table-bordered table-hover table-checkable">
+                                <thead>
+                                <tr>
+                                    @*<th>
+                                            <input type="checkbox" class="group-checkable" />
+                                        </th>*@
+                                    <th class="text-center"> STT </th>
+                                    <th> Người dùng </th>
+                                    <th class="text-center"> Mã thẻ </th>
+                                    <th class="text-center"> Mã pin </th>
+                                    <th class="text-center"> Thời gian </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @*<td>
+                                                <input type="checkbox" class="checkboxes" value="1" />
+                                            </td>*@
+                                        <td class="text-center">@(stt++)</td>
+                                        <td>@item.CustomerName</td>
+                                        <td class="text-center">@item.Serial</td>
+                                        <td class="text-center">@item.PinCard</td>
+                                        <td class="text-center">@item.CreateDate.DecimalToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT INNER -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#AddCard").click(function () {
+            var card = $("#Serial").val();
+            var pinCode = $("#PinCode").val();
+            $.post("/Card/AddCard", { card: card, code: pinCode }, function (data) {
+                if (data.Erros) {
+                    toastr["error"](data.Message); // Tạo thông báo lỗi
+                }
+                else {
+                    toastr["success"](data.Message);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
+                }
+            });
+        });
+    })
+</script>

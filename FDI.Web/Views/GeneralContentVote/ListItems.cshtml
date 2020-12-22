@@ -1,0 +1,51 @@
+﻿@model FDI.Simple.ModelGeneralVoteItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var lst = Model.ListItems;
+    var lstM = Model.LstMonthItem;
+    var lstU = Model.ListUser;
+    decimal? TotalCash = 0;
+    var i = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th><strong class="text-center">STT</strong> </th>
+                        <th><strong class="text-center">Nhân viên</strong> </th>
+                        @foreach (var item in lstM)
+                        {
+                            <th><strong class="text-center">Tháng @item.Item.I</strong> </th>
+                        }
+                        <th><strong class="text-center">Tổng năm</strong> </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in lstU)
+                    {
+                        TotalCash = 0;
+                        <tr>
+                            <td class="text-center">@(i++)</td>
+                            <td class="text-center">@item.UserName</td>
+                            @foreach (var itemnew in lstM)
+                            {
+                                var total = lst.Where(c => c.Date >= itemnew.Item.S && c.Date <= itemnew.Item.E && c.GuiId == item.UserId).Sum(c => c.Value);
+                                TotalCash += total;
+                                <td class="text-center">@total</td>
+                            }
+                            <td class="text-center">@TotalCash</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

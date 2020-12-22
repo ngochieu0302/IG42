@@ -1,0 +1,56 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNUserItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col class="colgroup custommer" />
+                    <col class="colgroup custommer" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th><a href="#Field=CustomerName">Tên khách hàng</a></th>
+                        <th><a href="#Field=LoweredUserName">Tên nhân viên</a></th>
+                        <th class="text-center"><a href="#Field=UserName">UserName</a></th>
+                        <th style="text-align: right !important;"><a href="#Field=TotalReward">Tích lũy</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItem != null)
+                {
+                    foreach (var item in Model.ListItem)
+                    {
+                        <tr>
+                            <td class="text-center">@(stt++)</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.LoweredUserName</td>
+                            <td class="text-center">@item.UserName</td>
+                            <td class="text-right">@item.TotalReward.Money()</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

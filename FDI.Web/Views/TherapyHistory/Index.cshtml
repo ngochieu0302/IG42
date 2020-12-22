@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaCustom.cshtml";
+}
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+            <form id="gridSearch" class="form-inline" role="form">
+
+                <div class="form-group">
+                    <input type="date" class="form-control input-sm" name="fromDate" id="fromDate" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                </div>
+                <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            </form>
+        </div>
+</div>
+<div class="content-control content-sale" id="Griditems">
+</div>

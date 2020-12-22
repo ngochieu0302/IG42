@@ -1,0 +1,262 @@
+﻿
+@model FDI.Simple.ProductItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.LstRecipeItems != null ? string.Join(",", Model.LstRecipeItems.Where(c=>c.IsDelete == false).Select(c => c.ValueId)) : "";
+    var total = Model.LstRecipeItems != null ? Model.LstRecipeItems.Sum(c => c.Price * c.Quantity) : 0;
+}
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    $(function () {
+        registerGallery();
+
+        callSelect2("#ColorID", "100%");
+        callSelect2("#SizeID", "100%");
+        
+        $("#frm-Product").validate({
+            rules: {
+                Name: { required: true },
+                Code: {
+                    required: true,
+                    remote: "@Url.Action("CheckByCode", "ProductDetail", new { pId = Model.ID })"
+                },
+                PriceNew: { required: true },
+            },
+            messages: {
+                Name: "Trường này là bắt buộc.",
+                Code: {
+                    required: "Trường này là bắt buộc.",
+                    remote: "Mã sản phẩm đã tồn tại"
+                },
+                PriceNew: "Trường này là bắt buộc.",
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post("/Utility/DeleteRecipeItem?key=" + getCookie('CodeLogin'), function () {
+                    $('#ProductDetail .data').each(function() {
+                        var ret = [];
+                        $('.inputValue', this).each(function() {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        var item = {
+                            ValueId: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2].replace(/[,]+/g, '')
+                        }
+                        $.post("/Utility/AddRecipeItem?json=" + JSON.stringify(item), function () { });
+                    });
+                    $.post("/ProductDetail/Actions", $("#frm-Product").serialize(), function(data) {
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                            createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                });
+            }
+        });
+        var lstP = JSON.parse("[@(lst)]");
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/ProductDetail/Auto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var index = lstP.indexOf(el.ID);
+                if (index === -1) {
+                    lstP.push(el.ID);
+                    var txt = "<tr class='data'><td>stt</td><td>name</td><td align='center'><input type='hidden' class='inputValue' value='ValueId'/><input class='form-control text-right inputValue quantity' value='1'/></td><td class='text-center'>UnitName</td><td class='text-right inputValue'>PriceValue</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("stt", lstP.length);
+                    txt = txt.replace("name", el.value);
+                    txt = txt.replace("UnitName", el.data);
+                    txt = txt.replace("PriceValue", numeral(el.pricenew).format('0,0'));
+                    txt = txt.replace("dataPrice", el.pricenew);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#ProductDetail tbody").append(txt);
+                    fnPriceNew();
+                }
+                
+            }
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var price = parseInt($(this).attr("data-price"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        $("#ProductionCostID").change(function () {
+            fnPriceNew();
+        });
+        $("body").on("change", "#ProductDetail .data .quantity", function () {
+            fnPriceNew();
+        });
+    });
+   
+    function fnPriceNew() {
+        var per = $("#ProductionCostID option:selected").attr("data-Percent");
+        var totalper = $("#ProductionCostID option:selected").attr("data-Total");
+        var totalPrice = 0;
+        $('#ProductDetail .data').each(function () {
+            var ret = [];
+            $('.inputValue', this).each(function () {
+                var d = $(this).val() || $(this).text();
+                ret.push(d);
+            });
+            totalPrice += parseFloat(ret[2].replace(/[,]+/g, '')) * parseFloat(ret[1]);
+        });
+        var t = (totalPrice * 100) / (100 - parseFloat(per) - parseFloat(totalper));
+        $("#PriceNew").val(numeral(t).format('0,0'));
+    }
+</script>
+<form id="frm-Product">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="CreateBy" id="CreateBy" value="@ViewBag.CreateBy" />
+        <input type="hidden" name="AgencyID" id="AgencyID" value="@ViewBag.AgencyID" />
+        <input type="hidden" name="Code" id="Code" value="@ViewBag.Code" />
+        <input type="hidden" name="ProductDetailID" id="ProductDetailID" value="@Model.ProductDetailID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên SP</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                            <label class="col-sm-2 control-label">Mã SP</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="..." name="CodeSku" id="CodeSku" value="@Model.CodeSku" />
+                            </div>
+                        </div>
+                        <div class="form-group">  
+                            <label class="col-sm-2 control-label">Số lượng</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" name="Quantity" id="Quantity" min="0" value="@(Model.Quantity ?? 0)" />
+                            </div>                            
+                            <label class="col-sm-2 control-label">Giá trị</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="Value" id="Value" value="@Model.Value" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn màu</label>
+                            <div class="col-sm-4">
+                                <select class="select2" name="ColorID" id="ColorID">
+                                    <option value="" data-Percent="0" data-Total="0"> -- Chọn màu --</option>
+                                    @foreach (var item in ViewBag.ColorID)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.ColorID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Giá bán</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceNew" id="PriceNew" value="@Model.PriceNew" />
+                            </div>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="col-sm-2 control-label">Size</label>
+                            <div class="col-sm-4">
+                                <select class="select2" name="SizeID" id="SizeID">
+                                    <option value="" data-Percent="0" data-Total="0"> -- Chọn size --</option>
+                                    @foreach (var item in ViewBag.SizeID)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.SizeID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-4">
+                                @Html.CheckBox("IsShow")Hiển thị
+                            </div>
+                            
+                        </div>                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="true" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@(Model.LstShopProductPictureItem != null ? string.Join(",", Model.LstShopProductPictureItem.Select(m=> m.PictureID)) : string.Empty)" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.LstShopProductPictureItem != null)
+                                        {
+                                            foreach (var item in Model.LstShopProductPictureItem)
+                                            {
+                                                <div class="image-product" id="@item.PictureID">
+                                                    <div class="image">
+                                                        @Gallery.DisplayImage(item.UrlPicture, 120)
+                                                        <div>
+                                                            <input type="text" name="Sort" id="Sort" value="@item.Sort" />
+                                                        </div>
+                                                        <div class="option">
+                                                            <button type="button" class="btn red deleteImg" data-id="@item.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Công thức
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal" style="margin-bottom: 20px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                    </div>
+                    <table class="gridView table table-bordered table-striped" id="ProductDetail">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên SP</th>
+                                <th class='text-center' style="width: 100px;">Số lượng</th>
+                                <th class='text-center'>Đơn vị</th>
+                                <th class='text-center'>Giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

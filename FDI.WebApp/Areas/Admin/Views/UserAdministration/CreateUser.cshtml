@@ -1,0 +1,108 @@
+﻿@model Admin.Models.UserAdministration.CreateUserViewModel
+@{
+    ViewBag.Title = "Thêm mới quản trị viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<div class="view-noscroll">
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Thêm mới quản trị viên </li>
+            </ul>
+        </div>
+        <div class="page-title"></div>
+        <div class="group-form-control">
+            <form class="form-inline" role="form" style="float: left; margin-bottom: 10px;">
+                <div class="btn-group pull-left">
+                    @Html.ActionLink("Quay lại danh sách", "Index", "UserAdministration", new { }, new { @class = "btn btn-sm btn-success", @id = "btn_back" })
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="content-control">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-comments"></i>Thêm mới quản trị viên
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-horizontal">
+                    @using (Html.BeginForm("CreateUser", "UserAdministration"))
+                    {
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tài khoản</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Username" id="Username" class="form-control" value="@Model.Username" />
+                            </div>
+                        </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Mật khẩu</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="Password" id="Password" class="form-control" value="@Model.Password" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nhập lại mật khẩu</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" value="@Model.Password" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Câu hỏi bí mật</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="PasswordQuestion" id="PasswordQuestion" value="@Model.PasswordQuestion" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Câu trả lời</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="PasswordAnswer" id="PasswordAnswer" value="@Model.PasswordAnswer" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Gán quyền cho quản trị</label>
+                                <div class="col-sm-10">
+                                    @for (var i = 0; i < Model.InitialRoles.Count; i++)
+                                    {
+                                        var role = Model.InitialRoles.ElementAt(i);
+                                        <div>
+                                            <input name="InitialRoles[@i].Key" type="hidden" value="@role.Key" />
+                                            <span>@Html.CheckBox("InitialRoles[" + i + "].Value", role.Value) @role.Key</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-sm btn-success">Thêm mới tài khoản</button>
+                                </div>
+                            </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

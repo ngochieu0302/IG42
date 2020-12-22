@@ -1,0 +1,35 @@
+﻿@model FDI.Simple.HtmlMapItem
+<script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script>
+    $(function () {
+        var configDescription = {
+            height: 250
+        };
+        CKEDITOR.replace('editorHtml', configDescription);
+        $("#form-modal").submit(function () {
+            updateEditor();
+            $.post("/Html/Html/Save", $("#form-modal").serialize(), function (data) {
+                if (!data.Erros) {
+                    window.location.reload();
+                }
+            });
+            return false;
+        });
+
+    });
+    function updateEditor() {
+        for (var name in CKEDITOR.instances)
+            CKEDITOR.instances[name].updateElement();
+    }
+</script>
+<form id="form-modal">
+    <div class="modal-body">
+        <textarea id="editorHtml" name="editorHtml">@Model.Value</textarea>
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" name="ctrId" class="form-control" value="@Model.IdModule"/>
+        <input type="hidden" name="htmlId" class="form-control" value="@Model.IdHtml"/>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+    </div>
+</form>

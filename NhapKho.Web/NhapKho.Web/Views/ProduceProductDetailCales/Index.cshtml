@@ -1,0 +1,241 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaTwoColumn.cshtml";
+}
+@model string
+
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o icon-muted fa-fw"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="CategoryName">Tên sản phẩm</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            @*<button name="submit" type="submit" class="btn btn-sm btn-primary" id="btn_ExportExcel">Xuất Excel</button>*@
+            <div class="btn-group pull-right">
+                <button name="submit" type="submit" class="btn btn-sm btn-primary" id="btn_update">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section columnOne{
+    <div class="portlet box purple ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i> Nhập SP
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div id="savePurchase" class="form-horizontal" disabled>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Mã sản phẩm</label>
+                        <div class="col-md-9">
+                            <input type="text" name="code" id="code" value="@Model" class="form-control input-sm" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="orderDetail"></div>
+}
+<div id="BoxPrint" class="print" style="width: 11cm; height: 40mm;  display: none">
+    <style>
+        .print {
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+            .print .w100 {
+                width: 100%;
+                float: left;
+            }
+
+            .print p {
+                padding: 0;
+                margin: 0;
+            }
+
+        .w100 p {
+            padding: 0;
+            margin: 0;
+            line-height: 18px;
+        }
+    </style>
+    <div style="width:92mm; margin: 0 auto; height: 40mm;">
+        <p id="productname" style="padding: 0; margin: 0;font-weight: bold;"></p>
+        <div class="w100" style="text-align: center;">
+            <div style="margin: 0 auto; width:193px;">
+                <svg id="barcode" style="display: block; width: 193px; text-align: left; margin: 0; padding: 0; float: left; height: 85px"></svg>
+            </div>
+        </div>
+
+        <div class="w100">
+            <div style="width: 45%; display: inline-block;margin-right: 2px;border-right: 1px solid #777;">
+                <p>Đơn giá: <strong id="dg"></strong> đ</p>
+                <p>Số lượng: <strong id="kl"></strong> kg</p>
+                <p>Thành tiền: <strong id="price"></strong> đ</p>
+            </div>
+            <div style="width: 45%; display: inline-block;">
+                <p id="ndg">NĐG: 07/05/20 15:00</p>
+                <p id="dateexpire">HSD: 14/05/20 21:00</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Content/socket/socket.io.js"></script>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/JsBarcode.all.min.js"></script>
+
+<script>
+
+   
+    var productid = 0;
+    function myFunction(event) {
+
+        ////  console.log(event);
+        //  if (event && event.key) {
+        //      var x = event.key.toLowerCase();
+
+        //      if (x.indexOf('f') > -1) {
+        //          event.preventDefault();
+        //      }
+        //      $(".select_item").removeClass("active");
+        //          $(".active_" + x).addClass("active");
+        //  }
+    }
+    $(function () {
+        var socket = io("http://localhost:3000");
+        socket.on("calesDetailvalue", function(data) {
+            console.log(data);
+            redirect("");
+            JsBarcode("#barcode", data.Code, { format: "CODE128" });
+            $("#kl").text(data.Weight/1000);
+            $("#ndg").text("NĐG:" + data.DateStr);
+            $("#dateexpire").text("HSD:" + data.DateExpireStr);
+            $("#productname").text(data.Name);
+            $("#dg").text(data.PriceUnit.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+            $("#price").text(data.PriceStr);
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        
+        });
+        socket.on("pingScalesCate", function (data) {
+            $("#valueping").text(data);
+        });
+
+
+        urlLists = '@Url.Action("ListItems", new{code= Model })';
+        loadHtml('@Url.Action("Detail", new { code = Model })', "#orderDetail", function() {
+            redirect("");
+        });
+        urlPostAction = '@Url.Action("Actions", new {id = 1})';
+        $("#btn_update").click(function() {
+            var idlog = $("#idlog").val();
+            if (idlog == "") {
+                createShowMessage("Thông báo","Chưa chọn id thùng")
+                return;
+            }
+
+            $.post("@Url.Action("Actions")" + "?do=add&itemId=" + idlog,
+                function (data) {
+                    if (data.Erros == false) {
+                        createCloseMessage("Thông báo", "Cập nhật thành công");
+                    } else {
+                        ErrorMessage(data.Message);
+                    }
+                });
+        });
+        //   $(".active_" + list[model.Pi].Code).addClass("active");
+        //function myFunction(event) {
+        //    event.preventDefault();
+        //    var x = event.key.toLowerCase();
+        //    if (x.indexOf('f') > 0) {
+        //        event.preventDefault();
+        //    }
+        //    $(".select_item").removeClass("active");
+        //    $(".active_" + x).addClass("active");
+        //}
+        //$(document).keypress(function (event) {
+        //    debugger;
+        //    var x = event.key.toLowerCase();
+        //    if (x.indexOf('f') > 0) {
+        //        event.preventDefault();
+        //    }
+        //    $(".select_item").removeClass("active");
+        //    $(".active_" + x).addClass("active");
+
+        //});
+
+        $("#code").enterKey(function() {
+            window.location.href = "@Url.Action("Index")" + "?code=" + $("#code").val();
+            @*$.post("@Url.Action("Detail")" + "?code=" + $("#code").val(), {}, function(data) {
+                $("#orderDetail").html(data);
+            });*@
+        });
+
+        @*$("#btn_update").click(function() {
+            $.post("@Url.Action("Actions", new {id=Model})" +"?do=insert",
+                function(data) {
+                    if (data.Erros == false) {
+                        createCloseMessage("Thông báo", "Cập nhật thành công", "");
+                        $("#code").val("");
+                    } else {
+                        createMessage("error", data.Message);
+                    }
+                });
+        });
+
+        $("#savePurchase").validate({
+            rules: {
+                code: {
+                    required: true,
+                },
+
+            },
+            messages: {
+                code:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                var obj = {id:@Model,  code:$("#code").val()}
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify(obj),
+                    url: "@Url.Action("Add")" + "?do=add",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // code here
+                        if (data.Erros == false) {
+                            createCloseMessage("Thông báo", "Cập nhật thành công", "");
+                            $("#code").val("");
+                        } else {
+                            createMessage("error", data.Message);
+                        }
+                    }
+                });
+
+            }
+        });*@
+    })
+</script>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<FDI.Simple.DNUsersInRolesItem>
+@{
+    Layout = "~//Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2(".select2", "100%");
+        $('.select2').change(function () {
+            var id = $(this).attr("data-id");
+            var departmentid = $(this).val();
+            var url = '@Url.Action("UpdateDepartmentID")' + "?id=" + id + "&departmentid=" + departmentid;
+            $.post(url, function (data) {
+                if (data.Erros)
+                    createMessage("Đã có lỗi xảy ra", data.Message);
+                else {
+                    createShowMessage("Thông báo", data.Message);
+                }
+            });
+        });
+    });
+</script>
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Cấp bậc cho nhân viên phòng ban
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+
+                <div class="form-horizontal">
+                    @foreach (var item in Model)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">nhân viên: @item.DNUserItem.UserName</label>
+                            <div class="col-sm-10">
+                                <select id="GuiID" name="GuiID" data-id="@item.ID" class="select2">
+                                    <option value="0">--- Chọn cấp bậc ---</option>
+                                    @foreach (var item1 in ViewBag.Department)
+                                    {
+                                        <option value="@item1.ID" @(item.DepartmentID == item1.ID ? "selected" : string.Empty)>@item1.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+</div>
+

@@ -1,0 +1,117 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelCategoryItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var lst = new JavaScriptSerializer().Serialize(Model.ListItem);
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                @*<input type="hidden" id="lst_Cate" value="@{new JavaScriptSerializer().Serialize(Model.ListItems)}"/>*@
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th class="text-center" style="background: #f1f0f0;" colspan="8">Đầu ra</th>
+                        <th></th>
+                        <th class="text-center" style="background: #f1f0f0;" colspan="5">Đầu vào</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th class="act_roles"><input value="" type="checkbox" /></th>
+                        <th><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Name">Tên chuyên mục</a></th>
+                        <th class="text-center"><a href="#Field=WeightDefault">(kg)<br /> (A)</a></th>
+                        <th class="text-center"><a href="#Field=PriceOld">Giá Cost<br /> cũ</a></th>
+                        <th class="text-center"><a href="#Field=PriceCost">Giá Cost <br />(B)</a></th>
+                        <th class="text-center"><a href="#Field=Profit">Lợi nhuận<br />(C) </a></th>
+                        <th class="text-center"><a href="#Field=PercentLoss">Hao hụt <br />(%)</a></th>
+                        <th class="text-center"><a href="#Field=Incurred">Chi phí<br /> (D)</a></th>
+                        <th class="text-center">Giá ct<br /> (E)</th>
+                        <th class="text-center"><a href="#Field=Price">Giá bán<br /></a></th>
+                        <th class="text-center">Cảnh báo<br />(CT)</th>
+                        <th class="text-center">Lãi suất<br />(A*C*1000)</th>
+                        <th class="text-center">Hệ số</th>
+                        <th class="text-center">Chi phí</th>
+                        <th class="text-center">Giá CT</th>
+                        <th class="text-center">Giá bán</th>
+                        <th class="text-center">Cảnh báo</th>
+                        <th class="text-center">Lãi suất</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    
+            <tr title="@item.Name">
+                <td class="act_roles"><input type="checkbox" value="@item.ID" class="check"></td>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.WeightDefault</td>
+                <td>@item.PriceOld.Money()</td>
+                <td>@item.PriceCost.Money()</td>
+                <td>@item.Profit</td>
+                <td>@item.PercentLoss</td>
+                <td>@item.Incurred.Money()</td>
+                <td>@item.PriceRecipe.Money()</td>
+
+
+                <td>@item.Price.Money()</td>
+                <td class="text-center">
+                    @{
+                        var a = item.PriceRecipe * 2 / 100;
+                        if (item.Price > (item.PriceRecipe + a))
+                        {
+                            var temp = item.Price - item.PriceRecipe;
+                            <i title="Giá bán đang lớn hơn so với giá công thức ra @temp.Money()" style="color: red" class="fa fa-arrow-up" aria-hidden="true"></i>
+                        }
+                        if (item.Price < (item.PriceRecipe - a))
+                        {
+                            var temp = item.PriceRecipe - item.Price;
+                            <i title="Giá bán đang nhỏ hơn so với giá công thức ra @temp.Money()" style="color: red" class="fa fa-arrow-down" aria-hidden="true"></i>
+                        }
+                    }
+                </td>
+                <td style="font-weight: bold" class="text-center"></td>
+                <td>@item.Percent</td>
+                <td>@item.TotalIncurredFinal.Money()</td>
+                <td>@item.PriceRecipeFinal.Money()</td>
+                <td>@item.PriceFinal.Money()</td>
+                <td>
+                    @{
+                        var b = item.PriceRecipeFinal * 2 / 100;
+                        if (item.PriceFinal > (item.PriceRecipeFinal + b))
+                        {
+                            var temp = item.PriceFinal - item.PriceRecipeFinal;
+                            <i title="Giá bán đang lớn hơn so với giá công thức ra @temp.Money()" style="color: red" class="fa fa-arrow-up" aria-hidden="true"></i>
+                        }
+                        if (item.PriceFinal < (item.PriceRecipeFinal - b))
+                        {
+                            var temp = item.PriceRecipeFinal - item.PriceFinal;
+                            <i title="Giá bán đang nhỏ hơn so với giá công thức ra @temp.Money()" style="color: red" class="fa fa-arrow-down" aria-hidden="true"></i>
+                        }
+                    }
+                </td>
+                <td></td>
+
+
+            </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

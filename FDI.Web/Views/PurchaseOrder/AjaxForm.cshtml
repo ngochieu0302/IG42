@@ -1,0 +1,141 @@
+﻿@using FDI.CORE
+@using NPOI.SS.Formula.Functions
+@model FDI.Simple.Logistics.OrderCarModel
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+
+}
+<script type="text/javascript">
+
+    $(function () {
+
+        $('.datetimepicker').datetimepicker({
+            format: 'DD/MM/YYYY h:mm A'
+        });
+        urlPostAction = '@Url.Action("Actions")' +'?do=add'
+
+        $("#modalForm").validate({
+            rules: {
+                CateId:
+                {
+                    required: true,
+                },
+
+                Quantity: {
+                    required: true,
+                },
+                CarId: {
+                    required:true
+                }
+            },
+            messages: {
+                CateId:
+                {
+                    required: "Chọn sản phẩm."
+                },
+
+                Quantity: {
+                    required: "Nhập số lượng."
+                }
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ID" id="ID" value="@Model.OrderCar.ID" />
+        <input type="hidden" name="SupplierId" id="SupplierId" value="@Model.Supplier.ID" />
+        <input type="hidden" name="ProductId" id="ProductId" value="@Model.Category.ID" />
+        <input type="hidden" name="TodayCode" id="TodayCode" value="@Request.QueryString["TodayCode"]" />
+
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nhà  cung cấp</label>
+                            <div class="col-md-10">
+                                @Model.Supplier.Name
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                @Model.Supplier.Address
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Sản phẩm</label>
+                            <div class="col-md-10">
+                                @Model.Category.Name
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số lượng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control date-picker" name="Quantity" id="Quantity" value="@Model.OrderCar.Quantity" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Đơn vị</label>
+                            <div class="col-md-10">
+                                @Model.OrderCar.UnitName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giờ đi</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control datetimepicker" name="DepartureDate" id="DepartureDate" value="@Model.OrderCar.DepartureDate.DecimalToString("dd/MM/yyyy hh:mm tt")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giờ đến</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control datetimepicker" name="ReceiveDate" id="ReceiveDate" value="@Model.OrderCar.ReceiveDate.DecimalToString("dd/MM/yyyy hh:mm tt")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giờ về</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control datetimepicker" name="ReturnDate" id="ReturnDate" value="@Model.OrderCar.ReturnDate.DecimalToString("dd/MM/yyyy hh:mm tt")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Đơn giá</label>
+                            <div class="col-md-10">
+                                @Model.OrderCar.Price
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn xe</label>
+                            <div class="col-md-10">
+                                <select name="CarId" id="CarId" class="form-control" required>
+                                    <option value="">-- Chọn xe --</option>
+                                    @foreach (var item in Model.Cars)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

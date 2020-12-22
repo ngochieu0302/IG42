@@ -1,0 +1,88 @@
+﻿@model FDI.Simple.BedDeskItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+        $("#Value_CategoryValues").change(function () {
+            alert("The text has been changed.");
+        });
+    })
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@ViewBag.AgencyId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về giường hoặc bàn
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Sort" id="Sort" value="@Model.Sort" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số lượng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Quantity" id="Quantity" value="@Model.Quantity" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Vị trí</label>
+                            <div class="col-sm-10">
+                               <label>@Model.LevelName -  @Model.RoomName</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Gói</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="PacketId" id="PacketId">
+                                    @foreach (var item in ViewBag.Packet)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.PacketId ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                @Html.CheckBox("IsShow") Bán hàng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

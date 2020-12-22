@@ -1,0 +1,72 @@
+﻿@model FDI.Simple.ModelContactOrderItem
+
+@{
+    ViewBag.Title = "ListCity";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<section id="mygird" class="vbox">
+    <section class="scrollable wrapper w-f">
+        <section class="panel panel-default">
+            <table class="gridView" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Di động</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                        <th></th>
+                        <th colspan="2" style="width: 10%;">Thao tác</th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.FullName">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td>
+                            @item.FullName
+                        </td>
+                        <td>
+                            @item.Mobile
+                        </td>
+                        <td>
+                            @item.Phone
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td></td>
+                        <td class="btn-group">
+                            
+                            @Grid.ActionView(item.ID, item.FullName)
+                            
+                            @Grid.ActionDelete(item.ID, item.FullName)
+                            
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </section>
+    </section>
+    <footer class="footer bg-white b-t portlet">
+        <div class="row m-t-xs">
+            @Html.Raw(Model.PageHtml)
+        </div>
+    </footer>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

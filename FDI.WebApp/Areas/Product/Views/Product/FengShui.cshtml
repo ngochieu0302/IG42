@@ -1,0 +1,100 @@
+﻿@model FDI.Simple.ModelSimItem
+<div class="col-sm-8 col-md-9">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    @*<iframe frameborder="0" src="http://www.sieuthisimthe.com/xem-sim-phong-thuy.html" width="100%" height="2500"></iframe>*@
+    <div class="ct-left">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page" title="Tra cứu điểm sim phong thủy hợp tuổi, hợp mệnh">Tra cứu điểm sim phong thủy hợp tuổi, hợp mệnh</li>
+            </ol>
+        </nav>
+        <div class="tpPhongThuy">
+            <section class="header">
+                <section class="logo">
+                    <img src="/Content/Publishing/img/logo.gif" alt="Logo Phong Thủy">
+                </section>
+                <section class="slogan">
+                    <img src="/Content/Publishing/img/slogan.png" alt="Slogan Phong Thủy">
+                </section>
+            </section>
+            <form id="frmFengShui">
+                <h2 class="muc" align="center">Tra cứu điểm sim phong thủy hợp tuổi, hợp mệnh</h2>
+                <table cellpadding="5" class="table" cellspacing="0" align="center" width="100%">
+                    <tbody>
+                        <tr>
+                            <td><i>Nhập số điện thoại :</i></td>
+                            <td>
+                                <input type="text" name="sdt" id="sdt" value="" class="form width250">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i>Giờ sinh :</i> </td>
+                            <td>
+                                <select name="giosinh" id="giosinh" class="form">
+                                    <option value="">Giờ sinh</option>
+                                    <option value="1">23 giờ đến 1 giờ</option>
+                                    <option value="2">1 giờ đến 3 giờ</option>
+                                    <option value="3">3 giờ đến 5 giờ</option>
+                                    <option value="4">5 giờ đến 7 giờ</option>
+                                    <option value="5">7 giờ đến 9 giờ</option>
+                                    <option value="6">9 giờ đến 11 giờ</option>
+                                    <option value="7">11 giờ đến 13 giờ</option>
+                                    <option value="8">13 giờ đến 15 giờ</option>
+                                    <option value="9">15 giờ đến 17 giờ</option>
+                                    <option value="10">17 giờ đến 19 giờ</option>
+                                    <option value="11">19 giờ đến 21 giờ</option>
+                                    <option value="12">21 giờ đến 23 giờ</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i>Ngày sinh (D.Lịch) :</i> </td>
+                            <td>
+                                <select name="ngaysinh" id="ngaysinh" class="form">
+                                    <option selected="selected" value="">Ngày</option>
+                                    @for (var i = 1; i <= 31; i++)
+                                        {
+                                        <option>@i</option>
+                                        }
+                                </select>
+
+                                <select name="thangsinh" id="thangsinh" class="form">
+                                    <option selected="selected" value="">Tháng</option>
+                                    @for (var i = 1; i <= 12; i++)
+                                        {
+                                        <option>@i</option>
+                                        }
+                                </select>
+                                <select name="namsinh" id="namsinh" class="form">
+                                    <option selected="selected" value="">Năm</option>
+                                    @for (var i = DateTime.Now.Year; i >= 1960; i--)
+                                        {
+                                        <option>@i</option>
+                                        }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i>Giới tính :</i> </td>
+                            <td>
+                                <select name="gioitinh" id="gioitinh" class="form">
+                                    <option value="">Chọn</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" id="checkPhongThuy" style="cursor: pointer" value="Xem">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <section id="FengShui"></section>
+        </div>
+    </div>
+</div>

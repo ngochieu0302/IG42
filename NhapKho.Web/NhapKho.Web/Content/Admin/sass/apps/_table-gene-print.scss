@@ -1,0 +1,312 @@
+﻿@import '../global/_variables'; // global variables.
+@import '../global/components/_mixins'; // global mixings.
+
+
+.table-thongke-exel td {
+    font-size: 12px;
+    text-align: center;
+}
+
+
+.table-total {
+    background-color: #f4eebb;
+    font-weight: bold;
+}
+
+.table-total-all {
+    background-color: #ffd937;
+    font-weight: bold;
+}
+
+
+.table-head {
+    background-color: #f3f3f3;
+    font-size: 13px;
+}
+
+.table-head td {
+    vertical-align: middle;
+    font-weight: bold;
+    text-align: center;
+    font-size: 13px;
+}
+
+.table-head th {
+    vertical-align: middle !important;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.table-head-number td {
+    text-align: center;
+    vertical-align: middle;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.table-bangluong td {
+    text-align: right;
+}
+
+.table-bangluong .table-content td:nth-child(2) {
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.table-bangluong .table-content td:nth-child(1), .table-bangluong .table-content td:nth-child(3) {
+    text-align: center;
+}
+
+.table-luongnhanvien td {
+    text-align: left;
+}
+
+.table-luongnhanvien .text-bold {
+    font-weight: bold;
+}
+
+.table-luongnhanvien .text-middle {
+    vertical-align: middle;
+    text-align: left;
+}
+
+.table-luongnhanvien .table-content td:nth-child(2) {
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.table-luongnhanvien .table-content td:nth-child(1), .table-luongnhanvien .table-content td:nth-child(2) {
+    text-align: left;
+}
+
+.table-content td:nth-child(3), .table-content td:nth-child(2) {
+    text-align: left;
+}
+
+.printBangLuong {
+    float: left;
+    width: 100%;
+    padding-top: 10px;
+
+    .tt-company {
+        float: left;
+        width: 100%;
+
+        strong {
+            display: block;
+            width: 100%;
+            font-size: 12px;
+        }
+
+        span {
+            font-size: 10px;
+        }
+    }
+
+    .title-bangluong {
+        float: left;
+        width: 100%;
+        text-align: center;
+
+        h2 {
+            font-size: 15px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        i {
+            font-size: 10px;
+        }
+    }
+
+    .print-time {
+        text-align: right !important;
+        margin-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+        float: right;
+        font-size: 10px;
+        text-align: center;
+        
+    }
+
+    .print-sign {
+        width: 33.3333%;
+        float: left;
+        margin-top: 5px;
+        text-align: center;
+
+        strong {
+            font-size: 12px;
+        }
+
+        i {
+            display: block;
+            width: 100%;
+            font-size: 10px;
+        }
+    }
+
+    .body-sign {
+        height: 80px;
+        width: 100%;
+    }
+
+    .print-footer {
+        float: left;
+        width: 100%;
+    }
+}
+
+.left-tt-company {
+    float: left;
+    width: 50%;
+    text-align: center;
+
+    span {
+        display: block;
+    }
+}
+
+.right-tt-company {
+    float: right;
+    width: 50%;
+    text-align: center;
+}
+
+.user-print-single {
+    .printBangLuong {
+        height: 50vh;
+        float: left;
+        border-bottom: 1px solid #999;
+
+        &:nth-child(even) {
+            border-bottom: none !important;
+            height: calc(50vh - 30px);
+            margin-top: 30px;
+        }
+    }
+}
+
+@media print {
+    .printBangLuong {
+        font-size: 13px !important;
+
+        .table-calender {
+            border: 1px solid #333 !important;
+
+            th, td {
+                font-size: 9px !important;
+                padding: 4px !important;
+                border: 1px solid #333 !important;
+            }
+
+            thead {
+
+                tr {
+                    th {
+                        background-color: #bbb !important;
+                        -webkit-print-color-adjust: exact;
+                    }
+
+                    td {
+                        background-color: #888 !important;
+                        -webkit-print-color-adjust: exact;
+                    }
+
+                    td {
+                        padding: 5px !important;
+                    }
+
+                    &:last-child {
+                        td {
+                            font-size: 9px !important;
+                            width: 55px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .box-control, .box-control-content {
+            position: relative;
+            height: auto;
+            border-bottom: 0;
+            border-top: 0;
+        }
+    }
+
+    .user-print-single {
+
+        .printBangLuong {
+            padding-top: 0 !important;
+            margin-top: 0;
+        }
+    }
+
+    .table-luongnhanvien {
+        margin-top: 15px;
+        float: left;
+        width: 100%;
+        margin-bottom: 0;
+        border: 1px solid #333 !important;
+
+        td, th {
+            font-size: 10px !important;
+            padding: 5px !important;
+            border: 1px solid #333 !important;
+        }
+
+
+        tr {
+            th {
+                &:first-child {
+                    background-color: #ccc !important;
+                    -webkit-print-color-adjust: exact;
+                }
+
+                b {
+                    text-align: right !important;
+                    float: right !important;
+                }
+            }
+
+            td {
+
+                &:first-child {
+                    background-color: #ccc !important;
+                    -webkit-print-color-adjust: exact;
+                }
+
+                &:nth-child(2) {
+                    background-color: #ccc !important;
+                    -webkit-print-color-adjust: exact;
+                }
+
+                &:last-child {
+                    text-align: right;
+                    background-color: #fff !important;
+                    -webkit-print-color-adjust: exact;
+                }
+            }
+
+            &.bg-2td {
+                td {
+                    &:first-child {
+                        background-color: #ccc !important;
+                        -webkit-print-color-adjust: exact;
+                        text-align: left !important;
+                    }
+                }
+            }
+        }
+    }
+}

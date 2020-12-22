@@ -1,0 +1,439 @@
+﻿$primary-color: #007ebb;
+$hover-color: #fb9c00;
+
+
+#top-header-setting {
+    z-index: 1002;
+    position: relative;
+    background: $primary-color;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+a.btn-setting-edithtml {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    padding: 3px 4px;
+    color: #fff !important;
+    font-size: 13px;
+    cursor: pointer;
+    background: #ff0000;
+    float: right;
+    z-index: 800;
+    i {
+        padding-right:5px;
+    }
+}
+
+.mode-edit-page {
+    .wrapper {
+        margin-top: 34px;
+    }
+}
+
+.modeView {
+    float: right;
+    width: 200px;
+    text-align: right;
+
+    button {
+        padding-left: 10px;
+        padding-right: 14px;
+        background-color:$hover-color;
+        color: #fff;
+        height: 28px;
+        border-radius: 2px;
+        line-height: 24px;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 3px;
+        border: 1px solid $hover-color;
+        cursor:pointer;
+         i {
+              margin-right:5px;
+         }
+        &:hover {
+            background-color: $hover-color;
+        }
+    }
+
+    span {
+        line-height: 34px;
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+    select {
+        width: 100px;
+        float: right;
+        border-radius: 0;
+    }
+}
+
+.btn-show-pagesetting {
+    display: none;
+
+    &:hover, &:focus {
+        background-color: $hover-color !important;
+    }
+}
+
+.th-menu-setting {
+    > ul {
+        > li {
+            position: relative;
+            display: inline-block;
+            float: left;
+            border-left: 1px solid rgb(46, 156, 210);
+
+            > a {
+                display: block;
+                font-size: 13px;
+                color: #ffffff !important;
+                padding: 8px 20px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                i {
+                    font-size: 16px;
+                    margin-right:7px;
+                    line-height:0.8em;
+                    position:relative;
+                    top:1px;
+                }
+            }
+
+            &:last-child {
+                border-right: 1px solid #2e9cd2;
+            }
+
+            .body-menu-setting {
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                top: 68px;
+                width: 400px;
+                background: #fff;
+                z-index: 99;
+                padding: 10px 15px;
+                left: 0px;
+                transition: ease-in-out 0.1s;
+                box-shadow: 0 .5rem 1rem rgba(50,50,50,.35);
+                border-bottom: 3px solid $primary-color;
+            }
+
+            &:hover {
+
+                .body-menu-setting {
+                    visibility: visible;
+                    transform: translateY(-34px);
+                    transition: ease 0.4s;
+                    opacity: 1;
+                }
+
+                > a {
+                    background: $hover-color;
+                }
+            }
+        }
+    }
+}
+
+.body-menu-setting {
+    ul {
+        li {
+            span {
+                padding-right: 5px;
+                font-size: 14px;
+                height: 30px;
+                width: 30px;
+                border-radius: 15px;
+                background: #FFFFFF;
+                text-align: center;
+                line-height: 26px;
+                display: inline-block;
+                padding-right: 0;
+                color: $primary-color;
+                border: 2px solid $primary-color;
+                margin-right: 8px;
+            }
+
+            a {
+                font-size: 14px;
+                padding: 7px 0;
+                display: block;
+                color: #333333;
+                transition: ease 0.3s;
+                cursor:pointer;
+                &:hover {
+                    color: $primary-color;
+                    transition: ease 0.3s;
+
+                    span {
+                        background: $primary-color;
+                        color: #fff;
+                        transition: ease 0.3s;
+                    }
+                }
+            }
+
+            strong {
+                font-size: 13px;
+                font-weight: bold;
+                padding: 0 0 5px 0;
+                margin: 0;
+                margin-bottom: 0px;
+                color: $primary-color;
+                display: block;
+            }
+
+            select {
+                width: 70%;
+                border-radius: 0;
+                padding: 5px;
+
+                option {
+                    padding-top: 3px;
+                    padding-bottom: 3px;
+                }
+            }
+        }
+    }
+
+    > ul {
+        float: left;
+        width: 50%;
+        padding: 10px;
+
+        > li {
+            width: 100%;
+            float: left;
+
+            a {
+                font-weight: normal;
+            }
+        }
+    }
+}
+
+.select-skin {
+    select {
+        float: left;
+        width: calc(100% - 110px);
+    }
+
+    .btn {
+        float: right;
+        width: 100px;
+        margin-left: 10px;
+    }
+
+    .tbw-100 {
+        width: 100%;
+    }
+}
+
+.box-HTML {
+    float: left;
+    width: 100%;
+}
+
+ol {
+    padding-left: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.dropdown-settinh-module {
+    position: absolute;
+    width: 30px;
+    height: 25px;
+    right: 0;
+    top: 0;
+    z-index: 801;
+    color: #fff;
+
+    > li {
+        > a {
+            text-align: center;
+            line-height: 24px;
+            display: block;
+            background: $hover-color;
+            z-index: 998;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+
+            > span {
+                font-size: 16px;
+                color: #fff;
+            }
+        }
+
+        > ol {
+            width: 93px;
+            position: absolute;
+            transition: ease-in-out 0.2s;
+            display: none;
+            left: -61px;
+            z-index: 9999;
+            border-left: 1px solid $hover-color;
+            border-bottom: 1px solid $hover-color;
+            border-right: 1px solid $hover-color;
+
+            > li {
+                border-bottom: 1px solid #2e9cd2;
+
+                > a {
+                    padding: 7px;
+                    display: block;
+                    font-size: 13px;
+                    background: $primary-color;
+                    color: #fff;
+                    text-align: left;
+                    cursor: pointer;
+
+                    span {
+                        padding-right: 5px;
+                    }
+
+                    &:hover {
+                        background: $hover-color;
+                    }
+                }
+
+                &:last-child {
+                    border: none;
+                }
+            }
+        }
+
+
+
+        &:hover {
+            > ol {
+                transition: ease-in-out 0.2s;
+                display: block;
+            }
+        }
+    }
+}
+
+.mode-view-page {
+    .btn-show-pagesetting {
+        position: fixed;
+        top: 0;
+        right: 10px;
+        height: 32px;
+        width: 38px;
+        text-align:center;
+        background-color: $primary-color;
+        border-radius: 0 0 4px 4px;
+        line-height: 32px;
+        padding: 0 10px;
+        color: #fff;
+        font-weight: bold;
+        display: block;
+        cursor: pointer;
+
+        i {
+            font-size: 15px;
+          
+        }
+    }
+
+    #top-header-setting {
+        top: -44px;
+    }
+}
+
+.mode-edit-page {
+    #header-main {
+        top: 34px;
+    }
+}
+
+.box-edit-module {
+    border: 2px solid $hover-color;
+    position: relative;
+    min-height:140px;
+}
+
+.select2-container .select2-selection--single {
+    height: 34px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 32px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 32px;
+}
+
+.error {
+    color: red;
+}
+
+.HTML-box {
+    float: left;
+    width: 100%;
+}
+
+.editHtml {
+    position: relative;
+}
+
+#modalSettingModule {
+    .modal-header {
+        padding: 10px 15px;
+        background-color: $hover-color;
+
+        .modal-title {
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .close {
+            color: #fff;
+        }
+    }
+
+    .modal-content {
+        border: 0;
+        
+
+        
+    }
+
+    #modal-content {
+        position:relative;
+    }
+
+    .modal-dialog {
+        margin: 50px auto;
+    }
+
+    .modal-footer {
+        padding: 8px 15px;
+    }
+
+    .modal-body {
+        .form-group {
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .btn:hover {
+        cursor: pointer;
+    }
+}

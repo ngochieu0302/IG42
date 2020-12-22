@@ -1,0 +1,87 @@
+﻿@{
+	Layout =  "~/Views/Shared/_Meta.cshtml";
+	var datenow = DateTime.Now;
+}
+<div class="header-control">
+	<h3 class="page-title"></h3>
+	<div class="group-form-control">
+		<form id="gridSearch" class="form-inline" role="form">
+			<div class="form-group">
+				<select id="YearId" name="YearId" class="select2">
+					@for (var i = datenow.Year - 2; i < datenow.Year + 3; i++)
+					{
+						<option @(i == datenow.Year ? "selected" : "") value="@i">@i</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-sm btn-success" id="_back"><i class="fa fa-angle-left"></i></button>
+				<select id="ddlWeek" name="ddlWeek" class="select2">
+					@for (var i = 1; i < 13; i++)
+					{
+						<option @(i == datenow.Month ? "selected" : "") value="@i">Tháng @i</option>
+					}
+				</select>
+				<button class="btn btn-sm btn-success" type="button" id="_next"><i class="fa fa-angle-right"></i></button>
+			</div>
+			<div class="form-group">
+				<a href="#" class="btn btn-sm btn-success" id="_detailAll">Chi tiết tháng</a>
+			</div>
+			<div class="form-group">
+				<a href="#" class="btn btn-sm btn-success" id="_detail">Chi tiết nhân viên</a>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	Date.prototype.getWeek = function () {
+		var onejan = new Date(this.getFullYear(), 0, 1);
+		return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+	};
+	$(document).ready(function () {
+        callSelect2("#YearId", "70px");
+        callSelect2("#ddlWeek", "100px");
+        var year = $("#YearId").val();
+        var month = $("#ddlWeek").val();
+        var d = new Date();
+        var n = d.getFullYear();
+		setHrefDetail();
+		function setHrefDetail() {
+			 year = $("#YearId").val();
+			month = $("#ddlWeek").val();
+		}
+        $('body').on("change", "#YearId", function () {
+			setHrefDetail();
+            $.post(urlLists + "?&year=" + year + "&month=" + month, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+        $('body').on("change", "#ddlWeek", function () {
+			setHrefDetail();
+            $.post(urlLists + "?year=" + n + "&month=" + month, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+
+		$("#_back").click(function () {
+			month = $("#ddlWeek").val();
+			month = parseInt(month) - 1;
+			if (month > 0) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?year=" + year + "&month=" + month, function (data) {
+					$("#Griditems").html(data);
+				});
+			}
+        });
+		$("#_next").click(function () {
+			month = $("#ddlWeek").val();
+			month = parseInt(month) + 1;
+			if (month <= 12) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?year=" + year + "&month=" + month, function (data) {
+                    $("#Griditems").html(data);
+                });
+			}
+        });
+    });
+</script>

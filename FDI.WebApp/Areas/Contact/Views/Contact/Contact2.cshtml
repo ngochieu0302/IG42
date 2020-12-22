@@ -1,0 +1,86 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Liên hệ</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="map-area section-padding">
+    <div class="google-map">
+        @Html.Raw(Model.Item.Embedmaps)
+    </div>
+</div>
+<div class="contact-area section-padding pt-0">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contact-message">
+                    <h4 class="contact-title">Liên hệ với chúng tôi</h4>
+                    <form id="frmContact" class="contact-form">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input name="Name" placeholder="Họ tên *" type="text" required>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input name="Phone" placeholder="Phone *" type="text" required>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input name="Email" placeholder="Email *" type="text" required>
+                            </div>
+                            <div class="col-12">
+                                <div class="contact2-textarea text-center">
+                                    <textarea placeholder="Để lại lời nhắn cho chúng tôi..." name="message" class="form-control2" required=""></textarea>
+                                </div>
+                                <div class="contact-btn">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <input type="text" placeholder="Mã xác nhận *"  id="Capcha" name="Capcha" />
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <img id="imageRandom" src="/Contact/Contact/showCaptchaImage?width=120&amp;height=28" />
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-1">
+                                            <img onclick="ChangeRandom();" style="cursor: pointer; padding-top: 4px" src="/Images/refresh_01.gif" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contact-btn">
+                                    <button class="btn btn-sqr" type="submit" id="btn-send">Gửi</button>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <p class="form-messege"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="contact-info">
+                    <h4 class="contact-title">Thông tin</h4>
+                    <p>
+                        @Model.Item.Name
+                    </p>
+                    <ul>
+                        <li><i class="fa fa-fax"></i>Address : @Model.Item.Address</li>
+                        <li><i class="fa fa-phone"></i>E-mail: @Model.Item.Email</li>
+                        <li><i class="fa fa-envelope-o"></i>@Model.Item.Phone</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

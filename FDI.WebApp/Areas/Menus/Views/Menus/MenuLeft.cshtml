@@ -1,0 +1,107 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.Product;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <select name="value" class="form-control">
+                <option value="">-- Chọn nhóm menu --</option>
+                @foreach (var item in Model.ListItem)
+                {
+                    <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                }
+            </select>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Model.CtrId", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <aside class="sidebar-wrapper">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <!-- single sidebar start -->
+        <div class="sidebar-single">
+            <h5 class="sidebar-title">categories</h5>
+            <div class="sidebar-body">
+                <ul class="shop-categories">
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <li><a href="/@item.Slug-p@(pageId)c@(item.ID)">@item.Name <span>(@(item.Count))</span></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- single sidebar end -->
+
+        <!-- single sidebar start -->
+        @*<div class="sidebar-single">
+            <h5 class="sidebar-title">price</h5>
+            <div class="sidebar-body">
+                <div class="price-range-wrap">
+                    <div class="price-range" data-min="1" data-max="1000"></div>
+                    <div class="range-slider">
+                        <form action="#" class="d-flex align-items-center justify-content-between">
+                            <div class="price-input">
+                                <label for="amount">Price: </label>
+                                <input type="text" id="amount">
+                            </div>
+                            <button class="filter-btn">filter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <!-- single sidebar end -->
+        <!-- single sidebar start -->
+       @* <div class="sidebar-single">
+            <h5 class="sidebar-title">color</h5>
+            <div class="sidebar-body">
+                @Html.Action("GetListcolor","Product",new {Area = "Product"})
+            </div>
+        </div>*@
+        <!-- single sidebar end -->
+
+        <!-- single sidebar start -->
+        <div class="sidebar-single">
+            <h5 class="sidebar-title">size</h5>
+            <div class="sidebar-body">
+                @Html.Action("GetListProductSize","Product",new {Area = "Product"})
+            </div>
+        </div>
+        <!-- single sidebar end -->
+
+        <!-- single sidebar start -->
+        @Html.Action("BannerLeft", "Banner", new { Area = "Banner" })
+        <!-- single sidebar end -->
+    </aside>
+}
+

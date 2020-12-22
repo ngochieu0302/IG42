@@ -1,0 +1,53 @@
+﻿@model FDI.Simple.ExecuteQueryItem
+<script src="/Skin/js/jquery.min.js"></script>
+<form method="post" action="/Admin/Execute" id="formSubmit">
+    <div>
+        <select name="DropDownList" id="DropDownList">
+            <option value="1" @(ViewBag.type == "1" ? "selected" : "") >Return DataTable</option>
+            <option value="2" @(ViewBag.type == "2" ? "selected" : "")>Excute Query</option>
+        </select>
+        @if (!Model.Erros)
+        {
+            <span style="color: red;">@Model.Message</span>
+        }
+        else
+        {
+            <span style="color: red;">Kiểm tra lại cú pháp ...</span>
+        }
+        <textarea name="ExecuteQuery" id="ExecuteQuery" rows="2" cols="20"  style="height: 378px; width: 100%;">@Model.ExecuteItem.ExecuteQuery</textarea>
+        <input type="submit" name="btnexcute" value="Gửi" id="btnexcute" style="height: 47px; width: 172px;">
+        <br>
+        <div>
+            @if (Model.Erros)
+            {
+                <br>
+                <span id="Label1" style="color: red;">Error: @Model.Message</span>
+            }
+            @if (Model.DataTable != null)
+            {
+                <table border="1" cellpadding="0" cellspacing="0" style="border-color: grey;">
+                    <thead>
+                        <tr>
+                            @foreach (System.Data.DataColumn col in Model.DataTable.Columns)
+                            {
+                                <th>@col.Caption</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow row in Model.DataTable.Rows)
+                        {
+                            <tr>
+                                @foreach (var cell in row.ItemArray)
+                                {
+                                    <td>@cell.ToString()</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</form>
+

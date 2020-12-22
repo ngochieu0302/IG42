@@ -1,0 +1,190 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMSupermarketItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        callSelect2("#CityID", "100%");
+        callSelect2("#DistrictID", "100%");
+        callSelect2("#UtilitiesID", "100%");
+        $.post("/TMSupermarket/GetListDistrictByCity?cityId=" + '@(Model.CityID)', function (lstDistrict) {
+            $.each(lstDistrict, function (i, val) {
+                var districtId = '@(Model.DistrictID)';
+                $("#DistrictID").append("<option  value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                if (districtId == val.ID) {
+                    $("#DistrictID").append("<option selected value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                 }
+            });
+          });
+
+        $("#modalForm").validate({
+            submitHandler: function () {
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+        $("#CityID").change(function () {
+            $("#DistrictID").html("");
+            $("#DistrictID").append("<option  value='0'>--- Chọn Quận/Huyện ---</option>");
+            $("#DistrictID").val($("#DistrictID option:selected").text());
+            $.post("/TMSupermarket/GetListDistrictByCity?cityId=" + $(this).val(), function (lstDistrict) {
+                $.each(lstDistrict, function (i, val) {
+                    $("#DistrictID").append("<option  value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                });
+            });
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+         <input type="hidden" name="@(Model.ID > 0 ? "UserUpdated" : "UserCreated")" id="@(Model.ID > 0 ? "UserUpdated" : "UserCreated")" value="@(Model.ID > 0 ? Model.UserUpdated : Model.UserCreated)" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin siêu thị đại lý
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên siêu thị</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Name" name="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn TP</label>
+                            <div class="col-md-10">
+                                <select id="CityID" name="CityID" class="select2">
+                                    <option value="0">--- Chọn Tỉnh/TP ---</option>
+                                    @foreach (var item in Model.ListCity)
+                                    {
+                                        <option value="@item.ID" @(Model.CityItem.ID == item.ID ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn Quận/Huyện</label>
+                            <div class="col-md-10">
+                                <select id="DistrictID" name="DistrictID" class="select2">
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn Tiện Ích</label>
+                            <div class="col-md-10">
+                                <select id="UtilitiesID" name="UtilitiesID" class="select2" multiple>
+                                    <option value="0">--- Chọn Tiện Ích ---</option>
+                                    @foreach (var item in Model.ListUtilities)
+                                    {
+                                        <option value="@item.ID" @(Model.ListTmUtilities.Any(m=> m.ID == item.ID) ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Address" id="Address">@Model.Address</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Kinh độ</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Latitute" name="Latitute" value="@Model.Latitute" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Vĩ độ</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Longitude" name="Longitude" value="@Model.Longitude" />
+                            </div>
+                        </div>
+                        
+                             
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Điện thoại</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Phone" name="Phone" value="@Model.Phone" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giờ mở cửa</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="OpenHours" name="OpenHours" value="@Model.OpenHours" />
+                            </div>
+                        </div>
+
+                   
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Title</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEOTitle" name="SEOTitle" value="@Model.SEOTitle" />
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Description</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEODescription" name="SEODescription" value="@Model.SEODescription" />
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Keyword</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEOKeyword" name="SEOKeyword" value="@Model.SEOKeyword" />
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Thứ tự hiện thị</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="OrderBy" name="OrderBy" value="@Model.OrderBy" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

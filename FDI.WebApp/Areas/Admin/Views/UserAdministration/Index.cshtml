@@ -1,0 +1,86 @@
+﻿@*@using PagedList.Mvc*@
+@model Admin.Models.UserAdministration.IndexViewModel
+@{
+    ViewBag.Title = "Quản lý tài khoản quản trị";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+    var stt = 1;
+}
+<div class="header-control">
+    @if (!Model.IsRolesEnabled)
+    {
+        <p class="CTS.MvcMembership-warning">Cơ chế membership chưa được bật.</p>
+    }
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Danh sách người quản trị </li>
+        </ul>
+    </div>
+    <div class="page-title"></div>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <label for="search">Tên tài khoản hoặc email:</label>
+            <input type="text" name="search" class="form-control input-sm" value="@Model.Search"/>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+            @if (!string.IsNullOrWhiteSpace(Model.Search))
+            {
+                <label>(@Html.ActionLink("Xóa tìm kiếm", "Index"))</label>
+            }
+            <div class="btn-group pull-right">
+                <a class="btn btn-sm green" href="/Admin/UserAdministration/CreateUser" id="btn_addUser"><i class="fa fa-plus pdr5"></i>Thêm mới</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="content-control">
+    <div class="box-control">
+        <div id="gridItems" class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tài khoản</th>
+                    <th>Email</th>
+                    <th>Mô tả</th>
+                    <th>Duyệt</th>
+                    <th>Khóa</th>
+                    <th>Online</th>
+                    <th>Quản lý</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td class="text-center">@(stt++)</td>
+                        <td><b>@user.UserName</b></td>
+                        <td>@user.Email</td>
+                        <td>@user.Comment</td>
+                        <td>@Grid.DisplayShow(user.UserName, user.IsApproved)</td>
+                        <td>@Grid.DisplayShow(user.UserName, !user.IsLockedOut)</td>
+                        <td>@Grid.DisplayShow(user.UserName, user.IsOnline)</td>
+                        <td class="text-right">
+                            @Html.ActionLink("Chi tiết", "Details", new {id = user.ProviderUserKey}, new {@class = "btn btn btn-block btn-primary"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="footer-control">
+    </div>
+</div>
+    

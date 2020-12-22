@@ -1,0 +1,78 @@
+﻿@model FDI.Simple.DNRolesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về phòng ban
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên phòng ban</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.RoleName)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tầng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.LoweredRoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Dánh sách module</label>
+                        </td>
+                        <td>
+                            @string.Join(", ", Model.ModuleItems.Select(c => c.NameModule))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Dánh sách nhân viên</label>
+                        </td>
+                        <td>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Tên nhân viên</th>
+                                    <th>Chức vụ</th>
+                                </tr>
+                                @foreach (var item in Model.UserItems)
+                                {
+                                    <tr>
+                                        <td>@item.UserName</td>
+                                        <td>@item.LoweredUserName</td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

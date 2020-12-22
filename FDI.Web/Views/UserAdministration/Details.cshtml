@@ -1,0 +1,178 @@
+﻿@model Admin.Models.UserAdministration.DetailsViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+
+    <div class="header-control">
+        <h3 class="page-title">
+            Quản trị viên
+            <small>@Model.DisplayName [@Model.Status]</small>
+        </h3>
+        <div class="group-form-control">
+            <div class="searchbox pull-left">
+                @Html.ActionLink("Quay lại danh sách", "Index", "UserAdministration", new { }, new { @class = "btn btn-sm btn-default", @id = "btn_back" })
+            </div>
+            <div class="manage pull-right">
+                @Html.ActionLink("Đổi mật khẩu", "Password", "UserAdministration", new { id = Model.User.ProviderUserKey }, new { @class = "btn btn-sm btn-primary" })
+
+                @using (Html.BeginForm("DeleteUser", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+                {
+                    <button type="submit" class="btn btn-sm btn-danger">Xóa tài khoản</button>
+                }
+
+                @using (Html.BeginForm("Unlock", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+                {
+                    if (ViewBag.IsLockedOut == true)
+                    {
+                        <button type="submit" class="btn btn-sm btn-success">Khôi phục tài khoản</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-sm btn-warning">Khóa tài khoản</button>
+                    }
+                }
+
+                @using (Html.BeginForm("ChangeApproval", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+                {
+                    @Html.Hidden("isApproved", !Model.User.IsApproved)
+                    <button type="submit" class="btn btn-sm btn-warning">@(Model.User.IsApproved ? "Hủy duyệt" : "Duyệt") tài khoản</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="content-control">
+        <div class="row">
+            @using (Html.BeginForm("Details", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+            {
+
+                <div class="col-sm-6">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-comments"></i>Danh sách vai trò đang được sử dụng
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-scrollable">
+                                <table class="gridView table table-striped table-hover" role="grid">
+                                    <thead>
+                                    <tr>
+                                        <th>Trường</th>
+                                        <th>Thông tin</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <label>Tài khoản</label>
+                                        </td>
+                                        <td>@Model.User.UserName</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Email</label>
+                                        </td>
+                                        <td>@Model.User.Email</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Hoạt động cuối</label>
+                                        </td>
+                                        <td>@Model.User.LastActivityDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Đăng nhập cuối</label>
+                                        </td>
+                                        <td>@Model.User.LastLoginDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Ngày tạo</label>
+                                        </td>
+                                        <td>@Model.User.CreationDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Thay đổi email</label>
+                                        </td>
+                                        <td>@Html.TextBox("email", Model.User.Email, new {@class = "form-control"})</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <label>Ghi chú</label>
+                                        </td>
+                                        <td>@Html.TextArea("comments", Model.User.Comment, new {@class = "form-control Description valid"})</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="submit">
+
+                                            <button type="submit" class="btn btn-success pull-right">Lưu thông tin</button>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="col-sm-6">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-comments"></i>Danh sách vai trò đang được sử dụng
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên vai trò</th>
+                                        <th>Trạng thái</th>
+                                        <th class="text-right">Quản lý</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var role in Model.Roles)
+                                {
+                                <tr>
+                                    <td>@Html.ActionLink(role.Key, "Role", new { id = role.Key })</td>
+                                    <td>@((role.Value) ? "Đang sử dụng" : "Không sử dụng")</td>
+                                    <td class="text-right">
+
+                                        @if (role.Value)
+                                            {
+                                                using (Html.BeginForm("RemoveFromRole", "UserAdministration", new { id = Model.User.ProviderUserKey, role = role.Key }))
+                                                {
+                                            <button type="submit" class="btn btn-sm btn-danger">Xóa vai trò</button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                using (Html.BeginForm("AddToRole", "UserAdministration", new { id = Model.User.ProviderUserKey, role = role.Key }))
+                                                {
+                                            <button type="submit" class="btn btn-sm btn-primary">Thêm vai trò</button>
+                                                }
+                                            }
+
+                                    </td>
+                                </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

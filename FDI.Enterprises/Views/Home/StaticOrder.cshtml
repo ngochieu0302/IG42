@@ -1,0 +1,79 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelTotalItem
+@{
+    ViewBag.Title = "StaticOrder";
+    var a = Model.Items.TotalPrice ?? 0;
+    var b = Model.Item2.TotalReceipt ?? 0;
+    var c = a + b;
+    var d = Model.Item2.TotalPayment ?? 0;
+    var e = Model.Item2.TotalCash ?? 0;
+    var f = Model.Item2.TotalRepay ?? 0;
+    var g = e - f;
+    var h = c - d - g;
+}
+@if (Model != null)
+{
+  <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 margin-bottom-10">
+            <div class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-briefcase fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> @h.Money() vnđ</div>
+                    <div class="desc"> Tổng doanh thu </div>
+                </div>
+                <a class="more" href="/GeneralMonthAgency">
+                    View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> @Model.Items.TotalOrder </div>
+                    <div class="desc"> Tổng đơn hàng </div>
+                </div>
+                <a class="more" href="/OrderByAgency">
+                    View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-group fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> @Model.Items.TotalAgent </div>
+                    <div class="desc"> Tổng đại lý </div>
+                </div>
+                <a class="more" href="/DNAgency">
+                    View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-user fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@Model.Items.TotalCustomer </div>
+                    <div class="desc"> Tổng khách hàng </div>
+                </div>
+                @*<a class="more" href="javascript:;">
+                    View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>*@
+            </div>
+        </div>
+    </div>
+}
+

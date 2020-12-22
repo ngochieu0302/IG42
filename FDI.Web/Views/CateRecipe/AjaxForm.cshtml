@@ -1,0 +1,730 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CateRecipeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.LstCategoryRecipeItems != null ? string.Join(",", Model.LstCategoryRecipeItems.Where(c => c.IsDeleted == false && c.ProductId != null).Select(c => c.ProductId)) : "";
+    var lst1 = Model.LstMappingCategoryRecipeItems != null ? string.Join(",", Model.LstMappingCategoryRecipeItems.Where(c => c.IsDeleted == false && c.CategoryID != null).Select(c => c.CategoryID)) : "";
+    decimal? totalCate = 0;
+    decimal? PercentCate = 0;
+}
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin danh mục
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <legend>Thông tin cơ bản</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-4">
+                                <select name="CategoryID" id="CategoryID" class="form-control">
+                                    <option value="0">-- Chọn chuyên mục --</option>
+                                    @foreach (var item in ViewBag.lstcate)
+                                    {
+                                        <option data-weight="@item.WeightDefault" data-final="@item.PriceFinal" data-loss="@item.PercentLoss" data-price="@item.Price" value="@item.ID" @((item.ID == Model.CategoryID) ? " selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Mã Code</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Code" id="Code" value="@Model.Code" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Cân nặng/1con</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" readonly name="Weight" id="Weight" value="@Model.Weight" />
+                            </div>
+                            <label class="col-sm-2 control-label">Hao hụt %</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" readonly name="PercentLoss" id="PercentLoss" value="@Model.Loss" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Tổng %</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="TotalPercent" id="TotalPercent" value="@Model.TotalPercent" />
+                            </div>
+                            <label class="col-sm-2 control-label">Tổng số Kg</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Totalkg" id="TotalkgS" value="@Model.Totalkg" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tổng tiền (D)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="TotalPrice" id="TotalPrice" value="@Model.TotalPrice.Money()" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tổng chi phí (F)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="TotalIncurred" id="TotalIncurred" value="@Model.TotalIncurred.Money()" />
+                            </div>
+                            <label class="col-sm-2 control-label">Tổng tiền (H)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="TotalPriceFinal" id="TotalPriceFinal" value="@Model.TotalPriceFinal.Money()" />
+                            </div>
+                        </div>
+                        <legend>Thông tin so sánh</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán ra(đầu vào)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" readonly id="PriceGab" value="@Model.Price.Money()" />
+                            </div>
+                            <label class="col-sm-2 control-label">Giá bán ra(đầu ra)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" readonly id="PriceFinal" value="@Model.PriceFinal.Money()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-external-link-square"></i>Công thức sản phẩm
+                        <div class="right">
+                            Tổng số Kg: <span id="TotalKgC">@(Model.Totalkg)</span>
+                            Tổng %: <span id="totalpercent">@Model.TotalPercent</span>
+                            Tổng tiền(đâu vào): <span id="totalall">@Model.TotalPrice.Money()</span> -----
+                            Tổng tiền (đầu ra): <span id="totalproductFinal">@Model.TotalPriceFinal.Money()</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal" style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="autoProductDetail" placeholder="Nhập mã hoặc tên hàng hóa" />
+                            </div>
+                        </div>
+                        <table class="gridView table table-bordered table-striped" id="ProductDetail1">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th class='text-center' style="width: 100px">Số lượng <br />(A)</th>
+                                    <th class='text-center'>Đơn vị</th>
+                                    <th class='text-center'>Giá gốc <br />(B)</th>
+                                    <th class="text-center">Phần trăm(%) <br />(C)</th>
+                                    <th class='text-center'>Thành tiền <br />(D=A*B)</th>
+                                    <th class='text-center'>Hệ số <br />(E)</th>
+                                    <th class='text-center'>Chi phí <br />(F)</th>
+                                    <th class='text-center'>Giá bán <br />(G = B + E*1000 + F)</th>
+                                    <th class='text-center'>Thành tiền<br />(H=G*A)</th>
+                                    <th class="text-center">Chốt Giá</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LstCategoryRecipeItems != null)
+                                {
+                                    foreach (var item in Model.LstCategoryRecipeItems)
+                                    {
+                                        <tr class="data">
+                                            <td>@(stt++)</td>
+                                            <td>@item.ProductName</td>
+                                            <td align="center">
+                                                <input type="hidden" class="inputProduct" value="@item.ProductId">
+                                                <input type="number" step="0.1" class="form-control text-right inputProduct totalkg quanProduct quantity-@item.ProductId" data-pid="@item.ProductId" value="@item.Quantity.Quantity()">
+                                            </td>
+                                            <td class="text-center">@item.UnitName</td>
+                                            <td class="text-right"><input type="text" class="form-control pricecost price-@item.ProductId maskPrice inputProduct" data-pid="@item.ProductId" value="@item.Price.Money()" /></td>
+                                            <td class="text-right"><input type="text" class="form-control percent percent-@item.ProductId  inputProduct" value="@item.Percent.Quantity()" data-pid="@item.ProductId" /></td>
+                                            <td class="text-right total total-@item.ProductId">@item.TotalPrice.Money()</td>
+                                            <td class="text-right PercentProduct PercentProduct-@item.ProductId inputProduct">@item.PercentProduct</td>
+                                            <td class="text-right"><input type="text" class="form-control incurred incurred-@item.ProductId maskPrice inputProduct" value="@item.Incurred.Money()" data-pid="@item.ProductId" /></td>
+                                            <td class="text-right"><input type="text" class="form-control priceproduct priceproduct-@item.ProductId maskPrice inputProduct" value="@item.PriceProduct.Money()" data-pid="@item.ProductId" /></td>
+                                            <td class="text-right totalproduct totalproduct-@item.ProductId">@(item.Price == 0 ? "0" : ((item.Price + item.PercentProduct*1000)*item.Quantity + item.Incurred).Money())</td>
+                                            <td class="text-center"><input type="checkbox" name="ischeck" @(item.IsCheck == true ? "checked" : "") class="ischeck inputProduct" value="@((!item.IsCheck.HasValue || item.IsCheck == false) ? 0 : 1)" /></td>
+                                            <td class="text-right">
+                                                <button class="btn btn-default pdeleteD" data-pid="@item.ProductId" data-price="@(item.TotalPrice)"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-external-link-square"></i>Công thức sản phẩm
+                        <div class="right">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal" style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="autoCategory" placeholder="Nhập mã hoặc tên hàng hóa" />
+                            </div>
+                        </div>
+                        <table class="gridView table table-bordered table-striped" id="ProductDetail">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th class='text-center' style="width: 100px">(kg)<br />(A)</th>
+                                    <th class='text-center'>Đơn vị</th>
+                                    <th class='text-center'>Giá gốc <br />(B)</th>
+                                    <th class="text-center">Phần trăm(%) <br />(C)</th>
+                                    <th class='text-center'>Thành tiền <br />(D)</th>
+                                    <th class='text-center'>Hệ số <br />(E)</th>
+                                    <th class='text-center'>Chi phí <br />(F)</th>
+                                    <th class='text-center'>Giá bán <br />(G = B + E*1000 + F)</th>
+                                    <th class='text-center'>Thành tiền<br />(H = B + E*A*1000 + F)</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-center">Chốt Giá</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LstMappingCategoryRecipeItems != null)
+                                {
+                                    foreach (var item in Model.LstMappingCategoryRecipeItems)
+                                    {
+                                        totalCate += item.TotalPrice;
+                                        PercentCate += item.Percent;
+                                        <tr class="data">
+                                            <td>@(stt++)</td>
+                                            <td>@item.ProductName</td>
+                                            <td align="center">
+                                                <input type="hidden" class="inputCategory" value="@item.CategoryID">
+                                                <input type="number" step="0.1" class="form-control text-right inputCategory totalkgCate quanCate quantityCate-@item.CategoryID" readonly data-pid="@item.CategoryID" value="@item.Quantity.Quantity()">
+                                            </td>
+                                            <td class="text-center">@item.UnitName</td>
+                                            <td class="text-right"><input type="text" class="form-control pricecostCate pricecostCate-@item.CategoryID maskPrice inputCategory" data-pid="@item.CategoryID" value="@item.Price.Money()" /></td>
+                                            <td class="text-right"><input type="text" class="form-control percentCatekg percentCatekg-@item.CategoryID  inputCategory" value="@item.Percent.Quantity()" data-pid="@item.CategoryID" /></td>
+                                            <td class="text-right totalCate totalCate-@item.CategoryID">@item.TotalPrice.Money()</td>
+                                            <td class="text-right PercentCate PercentCate-@item.CategoryID inputCategory">@item.PercentProduct</td>
+                                            <td class="text-right"><input type="text" class="form-control incurredCate incurredCate-@item.CategoryID maskPrice inputCategory" value="@item.Incurred.Money()" data-pid="@item.CategoryID" /></td>
+                                            <td class="text-right"><input type="text" class="form-control pricepCate priceCate-@item.CategoryID maskPrice inputCategory" value="@item.PriceProduct.Money()" data-pid="@item.CategoryID" /></td>
+                                            <td class="text-right totalCateFinal totalCateFinal-@item.CategoryID">@((item.Price+ item.Quantity*item.PercentProduct*1000 + item.Incurred).Money())</td>
+                                            <td class="text-right inputCategory">@(item.Sl)</td>
+                                            <td class="text-center"><input type="checkbox" name="ischeckCate" @(item.IsCheck == true ? "checked" : "") class="ischeckCate inputCategory" value="@((!item.IsCheck.HasValue || item.IsCheck == false) ? 0 : 1)" /></td>
+                                            <td class="text-right">
+                                                <button class="btn btn-default pdeleteDCate" data-pid="@item.CategoryID" data-price="@(item.TotalPrice)"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script type="text/javascript">
+
+    var lstD = JSON.parse("[@(lst)]");
+    var lstC = JSON.parse("[@(lst1)]");
+    var cateId = $("#CategoryID option:selected").val();
+
+    $("#CategoryID").on("change",function () {
+        debugger;
+        var id = $(this).val();
+        cateId = parseInt(id);
+
+        var weight = $("#CategoryID option:selected").data("weight");
+        var per = $("#CategoryID option:selected").data("loss");
+        var price = $("#CategoryID option:selected").data("price");
+        $("#Weight").val(weight);
+        $("#PercentLoss").val(per);
+        $("#PriceGab").val(price);
+
+    });
+    registerGallery();
+    $("#modalForm").validate({
+        rules: {
+            Name:
+            {
+                required: true,
+                maxlength: 255
+            },
+            PriceCost:
+            {
+                required: true,
+            },
+            Incurred:
+            {
+                required: true,
+            },
+            Percent:
+            {
+                required: true,
+            },
+            Weight: {
+                required: true,
+            },
+            Type:
+            {
+                required: true
+            }
+        },
+        messages: {
+            Name:
+            {
+                required: "Trường này là bắt buộc."
+            },
+            Weight:
+            {
+                required: "Trường này là bắt buộc."
+            },
+            PriceCost:
+            {
+                required: "Trường này là bắt buộc."
+            },
+            Incurred:
+            {
+                required: "Trường này là bắt buộc."
+            },
+            Percent:
+            {
+                required: "Trường này là bắt buộc."
+            },
+            Type:
+            {
+                required: "Trường này là bắt buộc."
+            }
+        },
+        submitHandler: function () { //onSubmit
+            $('.maskPrice').each(function (i) {
+                $(this).val($(this).val().replace(/\,/g, ''));
+            });
+            var kg = $("#TotalKgC").html();
+            var weight = $("#Weight").val();
+            var haohut = weight - (weight * parseInt($("#PercentLoss").val()) / 100);
+            if (kg > haohut + 5 || kg < haohut - 5) {
+                toastr["error"]("Tổng số Kg phải bằng cân nặng của 1 sp - số % hao hụt.!");
+                return false;
+            }
+            //PostAction("#modalForm");
+            $.post("/Utility/DeleteCategoryRecipeItem?key=" + getCookie('CodeLogin'),
+                function () {
+                    $('#ProductDetail1 .data').each(function () {
+                        var ret = [];
+                        $('.inputProduct', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2].replace(/[,]+/g, ''),
+                            Percent: ret[3],
+                            PercentProduct: ret[4],
+                            Incurred: ret[5],
+                            PriceProduct: ret[6],
+                            IsCheck: ret[7],
+                            Key: getCookie('CodeLogin')
+                        };
+                        $.post("/Utility/AddCategoryRecipeItem?json=" + JSON.stringify(item), function () { });
+                    });
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputCategory', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        
+                        var item = {
+                            CategoryID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2].replace(/[,]+/g, ''),
+                            Percent: ret[3],
+                            PercentProduct: ret[4],
+                            Incurred: ret[5],
+                            PriceProduct: ret[6],
+                            Sl: ret[7],
+                            IsCheck: ret[8],
+                            Key: getCookie('CodeLogin')
+                        };
+                        $.post("/Utility/AddCategoryRecipeItem?json=" + JSON.stringify(item), function () { });
+                    });
+                    $.post("/CateRecipe/Actions", $("#modalForm").serialize(), function (data) {
+                        btnEnable("#btnSave");
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form").modal('hide');
+                            $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                            createCloseMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                });
+        }
+    });
+    //var url = '@Url.Action("AutoProductCate", "Product")' +"?cateId="+cateId;
+    $('#autoProductDetail').autocomplete({
+        serviceUrl: "/Product/AutoProductCate?cateId=" + cateId,
+        minChars: 1,
+        delimiter: /(;)\s*/,
+        maxHeight: 400,
+        onSelect: function (el) {
+            var weight = $("#Weight").val();
+            if (!weight) {
+                toastr["error"]("Hãy nhập cân nặng trước khi cấu hình.!");
+                return false;
+            }
+            var haohut = weight - (weight * parseInt($("#PercentLoss").val()) / 100);
+            debugger;
+            var tempa = parseFloat($("#TotalKgC").html());
+            if ((tempa + 1) > (haohut + 5)) {
+                toastr["error"]("Số sản phẩm đã vượt quá số Kg.!");
+                return false;
+            }
+
+            $('#autoProductDetail').val("");
+            var index = lstD.indexOf(el.ID);
+            if (index === -1) {
+                lstD.push(el.ID);
+                var text = $("#ProductDetail1 tbody").html();
+                var txt = "<tr class='data'>" +
+                    "<td>stt</td><td>name</td>" +
+                    "<td align='center'>" +
+                    "<input type='hidden' class='inputProduct' value='ValueId'/>" +
+                    "<input type='number' step='0.1' class='form-control text-right inputProduct totalkg quanProduct quantity-ValueId'  data-pid='ValueId'  value='1'/>" +
+                    "</td>" +
+                    "<td class='text-center'>UnitName</td>" +
+                    "<td class='text-right'><input type='text' class='form-control pricecost price-ValueId maskPrice inputProduct' data-pid='ValueId' value='PriceValue'/></td>" +
+                    "<td class='text-right'><input type='text' class='form-control percent percent-ValueId inputProduct' value='1'/></td>" +
+                    "<td class='text-right total total-ValueId'>PriceValue</td>" +
+                    "<td class='text-right PercentProduct PercentProduct-ValueId inputProduct'>PercentProductT</td>"+
+                    "<td class='text-right'><input type='text' class='form-control incurred incurred-ValueId maskPrice inputProduct' value='IncurredProduct' data-pid='ValueId' /></td>"+
+                    "<td class='text-right'><input type='text' class='form - control priceproduct priceproduct-ValueId maskPrice inputProduct' value='PriceProduct' data-pid='ValueId' /></td>" +
+                    "<td class='text-right totalproduct totalproduct-ValueId'>ProductPriceTotal</td>"+
+                    "<td class='text-center' ><input type='checkbox' name='ischeck' value='0' class='ischeck inputProduct'/></td>"+
+                    "<td class='text-right'><button class='btn btn-default pdeleteD' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-trash-o' style='color: red;'></i></button></td><" +
+                    "/tr>";
+                txt = txt.replace("stt", lstD.length);
+                txt = txt.replace("name", el.value);
+                txt = txt.replace("UnitName", el.data);
+                txt = txt.replace(/PriceValue/g, numeral(el.pricenew).format('0,0'));
+                txt = txt.replace("dataPrice", el.pricenew);
+
+                txt = txt.replace("PercentProductT", el.PercentProduct);
+                txt = txt.replace("PriceProduct", numeral(el.pricenew + el.PercentProduct * 1000 + el.Incurred).format('0,0'));
+                txt = txt.replace("ProductPriceTotal", numeral(el.pricenew + el.PercentProduct * 1000 + el.Incurred).format('0,0'));
+                txt = txt.replace("IncurredProduct", el.Incurred);
+                txt = txt.replace(/ValueId/g, el.ID);
+                txt += text;
+                $("#ProductDetail1 tbody").html(txt);
+                $(".maskPrice").mask('000,000,000', { reverse: true });
+                fnChange();
+            }
+        }
+    });
+    $('#autoCategory').autocomplete({
+        serviceUrl: "/Product/AutoCate?cateId=" + cateId,
+        minChars: 1,
+        delimiter: /(;)\s*/,
+        maxHeight: 400,
+        onSelect: function (el) {
+            var weight = $("#Weight").val();
+            if (!weight) {
+                toastr["error"]("Hãy nhập cân nặng trước khi cấu hình.!");
+                return false;
+            }
+            var haohut = weight - (weight * parseInt($("#PercentLoss").val()) / 100);
+            debugger;
+            var tempa = parseFloat($("#TotalKgC").html());
+            if ((tempa + 1) > (haohut + 5)) {
+                toastr["error"]("Số sản phẩm đã vượt quá số Kg.!");
+                return false;
+            }
+            $('#autoCategory').val("");
+            var index = lstC.indexOf(el.ID);
+            if (index === -1) {
+                lstC.push(el.ID);
+                var text = $("#ProductDetail tbody").html();
+                var txt = "<tr class='data'>" +
+                    "<td>stt</td><td>name</td>" +
+                    "<td align='center'>" +
+                    "<input type='hidden' class='inputCategory' value='ValueId'/>" +
+                    "<input type='number' step='0.1' class='form-control text-right inputCategory totalkgCate quanCate quantityCate-ValueId'  data-pid='ValueId' readonly  value='kgCateProduct'/>" +
+                    "</td>" +
+                    "<td class='text-center'>UnitName</td>" +
+                    "<td class='text-right'><input type='text' class='form-control pricecostCate pricecostCate-ValueId maskPrice inputCategory' data-pid='ValueId' value='PriceValue'/></td>" +
+                    "<td class='text-right'><input type='text' class='form-control percentCatekg percentCatekg-ValueId inputCategory' value='1'/></td>" +
+                    "<td class='text-right totalCate totalCate-ValueId'>PriceValue</td>" +
+                    "<td class='text-right PercentCate PercentCate-ValueId inputCategory'>PercentProductT</td>" +
+                    "<td class='text-right'><input type='text' class='form-control incurredCate incurredCate-ValueId maskPrice inputCategory' value='IncurredProduct' data-pid='ValueId' /></td>" +
+                    "<td class='text-right'><input type='text' class='form-control priceCate priceCate-ValueId maskPrice inputCategory' value='PriceProduct' data-pid='ValueId' /></td>" +
+                    "<td class='text-right totalCateFinal totalCateFinal-ValueId'>CateFinalPrice</td>" +
+                    "<td class='text-right inputCategory'>1</td>"+
+                    "<td class='text-center' ><input type='checkbox' name='ischeckCate' value='0' class='ischeckCate inputCategory'/></td>" +
+                    "<td class='text-right'><button class='btn btn-default pdeleteDCate' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-trash-o' style='color: red;'></i></button></td><" +
+                    "/tr>";
+                txt = txt.replace("stt", lstC.length);
+                txt = txt.replace("name", el.value);
+                txt = txt.replace("UnitName", el.data);
+                txt = txt.replace(/PriceValue/g, numeral(el.pricenew).format('0,0'));
+                txt = txt.replace("dataPrice", el.pricenew);
+                txt = txt.replace("PercentProductT", el.PercentProduct);
+                txt = txt.replace("PriceProduct", numeral(el.pricenew + el.PercentProduct * 1000 + el.Incurred).format('0,0'));
+                txt = txt.replace("CateFinalPrice", numeral(el.pricenew + (el.PercentProduct * 1000 * el.Quantity) + el.Incurred).format('0,0'));
+                txt = txt.replace("IncurredProduct", el.Incurred);
+                txt = txt.replace("kgCateProduct", el.Quantity);
+                txt = txt.replace(/ValueId/g, el.ID);
+                txt += text;
+                $("#ProductDetail tbody").html(txt);
+                $(".maskPrice").mask('000,000,000', { reverse: true });
+                fnChange();
+            }
+        }
+    });
+    $("body").on("change", ".quanProduct", function () {
+        debugger;
+        var pid = $(this).attr("data-pid");
+        var sl = parseFloat($(this).val() !== "" ? $(this).val() : "0");
+        var gia = $(".price-" + pid).val() !== "" ? $(".price-" + pid) : "0";
+        var price = parseFloat(gia.val().replace(/[,]+/g, ''));
+        $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+        var weight = $("#Weight").val();
+        var a = $(this).val();
+        $(this).attr("value",a);
+        var percent = parseFloat(a / weight * 100);
+        $(".percent-" + pid).val(percent);
+        
+        var cp = parseInt($(".incurred-"+pid).val().replace(/[,]+/g, ''));
+        var heso = parseInt($(".PercentProduct-" + pid).html());
+
+        var totalproduct = sl * (price + heso * 1000) + cp;
+        $(".totalproduct-" + pid).html(numeral(totalproduct).format('0,0'));
+
+        fnChange();
+    });
+    $("body").on("change", ".quanCate", function () {
+        var pid = $(this).attr("data-pid");
+
+        var sl = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+
+        var gia = parseFloat($(".pricecostCate-" + pid).val() !== "" ? $(".pricecostCate-" + pid).val().replace(/[,]+/g, '') : "0");
+        var heso = parseInt($(".PercentCate-" + pid).html());
+        var cp = parseInt($(".incurredCate-" + pid).val().replace(/[,]+/g, ''));
+        $(this).attr("value", $(this).val());
+        //var price = parseFloat(gia.replace(/[,]+/g, ''));pricecost
+        //$(".totalCate-" + pid).html(numeral(sl * price).format('0,0'));
+        //var weight = $("#Weight").val();
+        //var a = $(this).val();
+        //var percent = parseFloat(a / weight * 100);
+        //$(".percentCatekg-" + pid).val(percent);
+
+        var totalF = gia + (heso * 1000 * sl) + cp;
+        $(".totalCateFinal-" + pid).html(numeral(totalF).format('0,0'));
+        fnChange();
+    });
+    $("body").on("change", ".percent", function () {
+        var pid = $(this).attr("data-pid");
+        var weight = $("#Weight").val();
+        var a = $(this).val();
+        var quan = parseFloat(weight * a / 100);
+        var gia = $(".price-" + pid).val() !== "" ? $(".price-" + pid).val() : "0";
+        var price = parseFloat(gia.replace(/[,]+/g, ''));
+        $(".quantity-" + pid).val(quan);
+        $(".total-" + pid).html(numeral(quan * price).format('0,0'));
+
+        var cp = parseInt($(".incurred-" + pid).val().replace(/[,]+/g, ''));
+        var heso = parseInt($(".PercentProduct-" + pid).html());
+
+        var totalproduct = quan * (price + heso * 1000) + cp;
+        $(".totalproduct-" + pid).html(numeral(totalproduct).format('0,0'));
+        fnChange();
+    });
+    $("body").on("change", ".percentCatekg", function () {
+        fnChange();
+    });
+    $("body").on("change", ".incurred", function () {
+        var pid = $(this).attr("data-pid");
+        var cp = parseInt($(this).val().replace(/[,]+/g, ''));
+        var heso = parseInt($(".PercentProduct-"+pid).html());
+        var gia = parseFloat($(".price-" + pid).val() !== "" ? $(".price-" + pid).val().replace(/[,]+/g, '') : "0");
+        var total = cp + gia + heso*1000;
+        $(".priceproduct-" + pid).val(numeral(total).format('0,0'));
+        var sl = parseFloat($(".quantity-" + pid).val() !== "" ? $(".quantity-" + pid).val() : "0");
+        var totalproduct = sl * (gia + heso * 1000) + cp;
+        $(".totalproduct-" + pid).html(numeral(totalproduct).format('0,0'));
+        fnChange();
+    });
+    $("body").on("change", ".incurredCate", function () {
+        var pid = $(this).attr("data-pid");
+        var cp = parseInt($(this).val().replace(/[,]+/g, ''));
+        var heso = parseInt($(".PercentCate-" + pid).html());
+        var gia = parseFloat($(".pricecostCate-" + pid).val() !== "" ? $(".pricecostCate-" + pid).val().replace(/[,]+/g, '') : "0");
+        var total = cp + gia + heso * 1000;
+
+        $(".priceCate-" + pid).val(numeral(total).format('0,0'));
+        var sl = parseFloat($(".quantityCate-" + pid).val() !== "" ? $(".quantityCate-" + pid).val() : "0");
+
+
+        var totalproduct = sl *heso * 1000 + (gia) + cp;
+        $(".totalCateFinal-" + pid).html(numeral(totalproduct).format('0,0'));
+        fnChange();
+    });
+    $("body").on("change", ".priceproduct", function () {
+        var pid = $(this).attr("data-pid");
+        var price = parseInt($(this).val().replace(/[,]+/g, ''));
+        var sl = parseFloat($(".quantity-" + pid).val() !== "" ? $(".quantity-" + pid).val() : "0");
+        var totalproduct = (price)*sl;
+        $(".totalproduct-" + pid).html(numeral(totalproduct).format('0,0'));
+
+        fnChange();
+    });
+    $("body").on("change", ".pricecost", function () {
+
+        var pid = $(this).attr("data-pid");
+
+        var sl = parseFloat($(".quantity-" + pid).val() !== "" ? $(".quantity-" + pid).val() : "0");
+
+        var gia = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+        var total = sl * gia;
+        $(".total-" + pid).html(numeral(total).format('0,0'));
+
+        var heso = parseInt($(".PercentProduct-"+pid).html());
+        var cp = parseInt($(".incurred-" + pid).val().replace(/[,]+/g, ''));
+        var priceproduct = gia + (heso  * 1000) + cp;
+
+        $(".priceproduct-" + pid).val(numeral(priceproduct).format('0,0'));
+        var totalproduct = (gia + (heso * 1000))*sl + cp;
+        $(".totalproduct-" + pid).html(numeral(totalproduct).format('0,0'));
+        fnChange();
+    });
+    $("body").on("change", ".pricecostCate", function () {
+
+        var pid = $(this).attr("data-pid");
+
+        var sl = parseFloat($(".quantityCate-" + pid).val() !== "" ? $(".quantityCate-" + pid).val() : "0");
+
+        var gia = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+        var total = gia;
+        $(".totalCate-" + pid).html(numeral(total).format('0,0'));
+
+        var heso = parseInt($(".PercentCate-" + pid).html());
+
+        var cp = parseInt($(".incurredCate-" + pid).val().replace(/[,]+/g, ''));
+        var priceproduct = gia + (heso * 1000) + cp;
+
+        $(".priceCate-" + pid).val(numeral(priceproduct).format('0,0'));
+
+        var totalproduct = (gia) + (heso * 1000)*sl + cp;
+        $(".totalCateFinal-" + pid).html(numeral(totalproduct).format('0,0'));
+
+        fnChange();
+    });
+    $("body").on("click", ".pdeleteD", function () {
+        var pid = parseInt($(this).attr("data-pid"));
+        var index = lstD.indexOf(pid);
+        lstD.splice(index, 1);
+        $(this).parent().parent().remove();
+        fnChange();
+    });
+    $("body").on("click", ".pdeleteDCate", function () {
+        var pid = parseInt($(this).attr("data-pid"));
+        var index = lstC.indexOf(pid);
+        lstC.splice(index, 1);
+        $(this).parent().parent().remove();
+        fnChange();
+    });
+    $("body").on("click",".ischeck", function() {
+        if ($(this).is(':checked')) $(this).val(1); else $(this).val(0);
+    });
+    $("body").on("click", ".ischeckCate", function () {
+        if ($(this).is(':checked')) $(this).val(1); else $(this).val(0);
+    });
+    function fnChange() {
+        var total1 = 0;
+        var totalkd = 0;
+        var totalper = 0;
+        var totalproduct = 0;
+        var totalincurred = 0;
+        debugger;
+        $('#ProductDetail1 .data').each(function () {
+            $('.total', this).each(function () {
+                var d = $(this).text().replace(/[,]+/g, '');
+                total1 += parseFloat(d);
+            });
+            $('.totalkg', this).each(function () {
+                var h = $(this).val();
+                totalkd += parseFloat(h);
+            });
+            $('.percent', this).each(function () {
+                var g = $(this).val();
+                totalper += parseFloat(g);
+            });
+            $('.totalproduct', this).each(function () {
+                var g = $(this).text().replace(/[,]+/g, '');
+                totalproduct += parseFloat(g);
+            });
+            $('.incurred', this).each(function () {
+                var g = $(this).val().replace(/[,]+/g, '');
+                totalincurred += parseFloat(g);
+            });
+        });
+        $('#ProductDetail .data').each(function () {
+            $('.totalCate', this).each(function () {
+                var d = $(this).text().replace(/[,]+/g, '');
+                total1 += parseFloat(d);
+            });
+            $('.totalkgCate', this).each(function () {
+                var h = $(this).val();
+                totalkd += parseFloat(h);
+            });
+            $('.percentCatekg', this).each(function () {
+                var g = $(this).val();
+                totalper += parseFloat(g);
+            });
+            $('.totalCateFinal', this).each(function () {
+                var g = $(this).text().replace(/[,]+/g, '');
+                totalproduct += parseFloat(g);
+            });
+            $('.incurredCate', this).each(function () {
+                var g = $(this).val().replace(/[,]+/g, '');
+                totalincurred += parseFloat(g);
+            });
+        });
+        $("#PriceCost").val(numeral(total1).format('0,0'));
+        $("#TotalKgC").html(totalkd);
+        $("#TotalkgS").val(totalkd);
+        $("#totalall").html(numeral(total1).format('0,0'));
+        $("#TotalPrice").val(numeral(total1).format('0,0'));
+        $("#totalpercent").html(totalper);
+        $("#TotalPercent").val(totalper);
+        $("#TotalPriceFinal").val(numeral(totalproduct).format('0,0'));
+        $("#totalproductFinal").html(numeral(totalproduct).format('0,0'));
+        $("#TotalIncurred").val(numeral(totalincurred).format('0,0'));
+    }
+    $(".maskPrice").mask('000,000,000', { reverse: true });
+</script>

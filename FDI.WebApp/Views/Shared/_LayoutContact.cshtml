@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<!-- Open head page -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" sizes="16x16" href="/Content/Publishing/img/favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    @RenderSection("metas", false)
+    <meta name="robots" content="index, archive, follow, noodp" />
+    <meta name="googlebot" content="index,archive,follow,noodp" />
+    <meta name="msnbot" content="all,index,follow" />
+    <meta name='revisit-after' content='1 days' />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <!--Open CSS -->
+    <link rel="stylesheet" href="/Content/Publishing/css/bootstrap.min.css">
+    <link href="/Content/Publishing/css/styles.min.css" rel="stylesheet" />
+    <link href="~/Content/Publishing/css/Customer.css" rel="stylesheet" />
+    <link href="/Content/Publishing/css/plugins.min.css" rel="stylesheet" />
+    <link href="/Content/Publishing/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&amp;amp;subset=vietnamese">
+    <!-- Check browser not display in ie 9 -->
+    <!--[if lt IE 9]>
+        <meta http-equiv="refresh" content="0; url=detect.html"/>
+        <script type="text/javascript">
+            var regExp = / <![CDATA[ /;
+            window.top.location = 'detect.html';
+            var regExp = / ]]> /;
+        </script>
+    <![endif]-->
+    <!-- Check browser not display in ie 9 -->
+    <!--End CSS -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="/Content/Publishing/js/modernizr-cus.js"></script>
+        <script src="/Content/Publishing/js/html5shiv.js"></script>
+        <script src="/Content/Publishing/js/respond.min.js"></script>
+    <![endif]-->
+    <!--Open JavaScript Top -->
+
+    <!--End JavaScript Top -->
+    <!--[if (gte IE 6)&(lte IE 8)]>
+        <script type="text/javascript" src="/Content/Publishing/js/selectivizr-min.js"></script>
+        <noscript><link rel="stylesheet" href="css/styles.css"/></noscript>
+    <![endif]-->
+</head>
+<!-- End head page -->
+<body>
+    @if (IsSectionDefined("MenuAdmin"))
+    {
+        @RenderSection("MenuAdmin", false)
+    }
+    <div id="loading-wrap">
+        <div class="icon-loading-wrap"></div>
+    </div>
+    <div id="wrapper">
+
+        <div id="overlay"></div>
+        <div id="header-sidebar">
+            <div class="left-h-sidebar"><a class="sidebar-toggle js-mmenu" href="#my-mobile-menu"><span class="ion-navicon"></span></a></div>
+            <div class="right-h-sidebar">
+                <div class="logo-mobie">
+                    <a href="/" title="">
+                        <img class="img-responsive" src="/Content/Publishing/img/logo/logo-mobile.png" alt="" title=""></a>
+                </div>
+                <div class="cogLangguage">
+                    <a href="#" title=""><i class="ion-ios-gear-outline"></i></a>
+                    <div class="head-lang">
+                        <a href="#" title="">
+                            <img src="/Content/Publishing/img/flags/lang-en.png"><span>English</span></a><a href="#" title=""><img src="/Content/Publishing/img/flags/lang-vi.png"><span>Vietnamese</span></a>
+                    </div>
+                </div>
+                <div class="button-call-search"><span class="icon ion-ios-search-strong"></span></div>
+                <div class="boxMobieSearch">
+                    <form class="frMobie-search">
+                        <input class="ipt-search" id="iptSearchMobie" type="search" placeholder="Từ khóa tìm kiếm">
+                        <button class="bt-search-mb" type="button">Tìm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-main">
+            <header id="header-main">
+                <div class="container">
+                    <div class="header__wrap">
+                        <div class="header__logo">
+                            <a href="/">
+                                <img class="img-responsive" src="/Content/Publishing/img/logo/logo-group.png" alt="">
+                            </a>
+                        </div>
+                        <div class="header__main">
+                            @RenderSection("Header", false)
+                            @RenderSection("MainMenu", false)
+                        </div>
+                    </div>
+                </div>
+
+            </header>
+            <div class="sidepage page-stick-header">
+                @RenderSection("Banner", false)
+                @*<div class="bannerCate" style="background-image: url(/Content/Publishing/img/banner-cate-1.jpg)">
+                    <div class="container">
+                        <div class="bannerCate__wrap">
+                            <div class="bannerCate__title">
+                                <h2>Liên hệ</h2>
+                            </div>
+                            <div class="bannerCate__crumbar"><a class="item" href="#">Home</a><a class="item" href="#">Liên hệ</a></div>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="content__wrap">
+                    @RenderSection("Content", false)
+                </div>
+                
+            </div>
+            <footer class="divBlockL">
+                <div class="container">
+                    <div class="footer__wrap">
+                        @RenderSection("Footer", false)
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- Open content bottom pages -->
+    <!--Open JavaScript Bot -->
+    @RenderSection("Vendors", false)
+    @RenderBody()
+    <!-- End content bottom pages -->
+    <script type="text/javascript">
+        window.addEventListener('DOMContentLoaded', function () {
+            new QueryLoader2(document.querySelector("body"), {
+                barColor: "#d3bd2b",
+                backgroundColor: "#563836",
+                percentage: false,
+                barHeight: 0,
+                minimumTime: 300,
+                fadeOutTime: 0,
+                onComplete: function () {
+                    afterLoad()
+                }
+            });
+        });
+    </script>
+</body>
+</html>

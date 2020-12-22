@@ -1,0 +1,122 @@
+﻿@using FDI.CORE
+@model FDI.Simple.Logistics.OrderCarItem
+@{
+    Layout = "~/Views/Shared/_MetaTwoColumn.cshtml";
+    var date = DateTime.Now;
+}
+<script>
+    $(document).ready(function () {
+        urlLists = '@Url.Action("ListItems", new { ordercarId = Model.ID})';
+        urlForm = '@Url.Action("AjaxForm", new { ordercarId = Model.ID })';
+
+        initAjaxLoad('@Url.Action("Detail", new { ordercarId = Model.ID })', "#orderDetail");
+
+    })
+</script>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o icon-muted fa-fw"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="CategoryName">Tên sản phẩm</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            @*<button name="submit" type="submit" class="btn btn-sm btn-primary" id="btn_ExportExcel">Xuất Excel</button>*@
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>
+@section columnOne{
+    <div id="orderDetail"></div>
+    <div class="portlet yellow-crusta box" style="display: none">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Order Details
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row static-info">
+                <div class="col-md-5 name"> Order #: </div>
+                <div class="col-md-7 value">
+                    @Model.ID
+                </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Giờ đi: </div>
+                <div class="col-md-7 value"> @Model.DepartureDate.DecimalToString("dd/MM/yyyy HH:mm") </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Giờ đến: </div>
+                <div class="col-md-7 value">
+                    @Model.ReceiveDate.DecimalToString("dd/MM/yyyy HH:mm")
+                </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> giờ về Total: </div>
+                <div class="col-md-7 value">  @Model.ReturnDate.DecimalToString("dd/MM/yyyy HH:mm")  </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Số lượng: </div>
+                <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Số lần đã nhập: </div>
+                <div class="col-md-7 value"> @Model.CountReceived </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Tổng khối lượng: </div>
+                <div class="col-md-7 value"> @Model.QuantityReceived </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Nhà cung câp: </div>
+                <div class="col-md-7 value"> @Model.SupplierName </div>
+            </div>
+
+            @*<div class="row static-info">
+                <div class="col-md-5 name"> Số lượng: </div>
+                <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+            </div>
+
+            <div class="row static-info">
+                <div class="col-md-5 name"> Số lượng nhập vào: </div>
+                <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Tổng khối lượng cân ở trang trai: </div>
+                <div class="col-md-7 value"> @Model.QuantityReceived </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Nhà cung câp: </div>
+                <div class="col-md-7 value"> @Model.SupplierName </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Tổng khối lượng nhập vào kho: </div>
+                <div class="col-md-7 value"> @Model.SupplierName </div>
+            </div>*@
+        </div>
+    </div>
+}
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            var urlXuatExcel = '@Url.Action("ExportExcel", "Supplie")';
+            $("#btn_ExportExcel").click(function () {
+                var form = $("#gridSearch");
+                window.location.href = urlXuatExcel + '?' + getValueFormMutilSelect(form);
+                return false;
+            });
+        })
+    </script>*@

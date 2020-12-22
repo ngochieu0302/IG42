@@ -1,0 +1,69 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelMonthItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var ds = 0;
+    var dl = 0;
+    var ssc = 0;
+    var gt = 0;
+    var kh = 0;
+    var tt = 0;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="text-center">Tháng</th>
+                        <th>Tổng doanh số</th>
+                        <th>Tổng đại lý thu</th>
+                        <th>SSC (x % @Model.Item.Percent)</th>
+                        <th>Người giới thiệu (% @Model.BonusTypeItem.PercentParent)</th>
+                        <th>Tích lũy KH (% @Model.BonusTypeItem.Percent)</th>
+                        <th>Giảm giá trực tiếp (% @Model.Item.PercentOrder)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItem != null)
+                    {
+                        foreach (var item in Model.ListItem.Where(m => m.TotalPay > 0).OrderBy(m => m.Month))
+                        {
+                            <tr>
+                                <td class="text-center">@item.Month</td>
+                                <td class="text-right maskPrice">@((int)item.TotalPay)</td>
+                                <td class="text-right maskPrice">@((int)(item.TotalPay - (item.TotalPay * (Model.BonusTypeItem.PercentParent + Model.BonusTypeItem.Percent + Model.Item.Percent + Model.Item.PercentOrder) / 100)))</td>
+                                <td class="text-right maskPrice">@((int)(item.TotalPay * Model.Item.Percent / 100))</td>
+                                <td class="text-right maskPrice">@((int)(item.TotalPay * Model.BonusTypeItem.PercentParent / 100))</td>
+                                <td class="text-right maskPrice">@((int)(item.TotalPay * Model.BonusTypeItem.Percent / 100))</td>
+                                <td class="text-right maskPrice">@((int)(item.TotalPay * Model.Item.PercentOrder / 100))</td>
+                            </tr>
+                            ds += (int)item.TotalPay;
+                            dl += (int) (item.TotalPay - (item.TotalPay*(Model.BonusTypeItem.PercentParent + Model.BonusTypeItem.Percent + Model.Item.Percent + Model.Item.PercentOrder)/100));
+                            ssc += (int) (item.TotalPay*Model.Item.Percent/100);
+                            gt += (int) (item.TotalPay*Model.BonusTypeItem.PercentParent/100);
+                            kh += (int) (item.TotalPay*Model.BonusTypeItem.Percent/100);
+                            tt += (int) (item.TotalPay*Model.Item.PercentOrder/100);
+                        }
+                        <tr>
+                            <td class="text-center">Tổng:</td>
+                            <td class="text-right">@ds.Money()</td>
+                            <td class="text-right">@dl.Money()</td>
+                            <td class="text-right">@ssc.Money()</td>
+                            <td class="text-right">@gt.Money()</td>
+                            <td class="text-right">@kh.Money()</td>
+                            <td class="text-right">@tt.Money()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+    });
+</script>

@@ -1,0 +1,57 @@
+﻿@model FDI.Simple.ModelActiveRoleItem
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div id="mygird">
+    <div class="box-control">
+        <div id="gridItems" class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles text-center">
+                            <input type="checkbox" class="check" value="1">
+                        </th>
+                        <th class="text-center">ID</th>
+                        <th>Tên tính năng</th>
+                        <th>Thứ tự<span /></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <tr title="@item.ID @item.NameActive">
+                            <td class="act_roles text-center">
+                                <input type="checkbox" class="check" value="@item.ID">
+                            </td>
+                            <td class="text-center">@item.ID</td>
+                            <td>@item.NameActive</td>
+                            <td>@item.Ord</td>
+                            <td class="text-right">
+                                @Grid.ActionEdit(item.ID, item.NameActive)
+                                @Grid.ActionDelete(item.ID, item.NameActive)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @Html.Raw(Model.PageHtml)
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

@@ -1,0 +1,34 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.PartnerItem>
+@{
+    var pageId = WebConfig.PartnerDetail;
+}
+<div class="list-news-other">
+    <div class="title">
+        <h3>
+            <a title="">Bài viết liên quan</a>
+        </h3>
+        @*<a href="#" title="" class="view-more">Xem tất cả <i class="fa fa-angle-double-right"></i></a>*@
+    </div>
+    <div class="list-news grid type-bosuutap">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4 col-md-4">
+                    <div class="item-news item-ef">
+                        <div class="img">
+                            <a href="/@item.Slug-p@(pageId)c@(item.ID)" title="@item.Name">
+                                <img src="@item.PictureUrl.UploadPicture()" alt="@item.Name" class="img-responsive">
+                                <span class="roll tie-picture"></span>
+                            </a>
+                        </div>
+                        <h3>
+                            <a href="/@item.Slug-p@(pageId)c@(item.ID)" title="@item.Name">@item.Name</a>
+                        </h3>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

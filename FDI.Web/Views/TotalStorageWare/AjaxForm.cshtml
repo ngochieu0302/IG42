@@ -1,0 +1,390 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.TotalStorageWareItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var quantity = Model.Quantity;
+    var quantityout = Model.QuantityOut ?? 0;
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var quantity = parseFloat('@quantity');
+        var quantityuser = parseFloat('@quantityout');;
+        var lstP = [];
+        $("#modalForm").validate({
+            rules: {
+                DNSupplie_:
+                {
+                    required: true,
+                },
+                QuantityActive_:
+                {
+                    required: true,
+                },
+            },
+            messages: {
+                DNSupplie_:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+
+                QuantityActive_: {
+                    required: "Trường bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () {
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $("#btnSave").attr("disabled", true);
+                $.post("/TotalStorageWare/Actions", $("#modalForm").serialize(), function (data) {
+                    $("#btnSave").attr("disabled", false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        $('#BoxPrint').show();
+                        jQuery.print('#BoxPrint');
+                        $('#BoxPrint').hide();
+                        createCloseMessage("Thông báo", data.Message);
+
+                    }
+                });
+                return false;
+            }
+        });
+        var stt = 0;
+        $("#Add").click(function (e) {
+            e.preventDefault();
+            if (quantityuser > quantity) {
+                toastr["error"]("Số lượng cần chia đã đủ.");
+                return false;
+            }
+            stt++;
+            var totalq = 0;
+            $(".quantityQ").each(function () {
+                var qtt = $(this).val();
+                if (qtt == "") {
+                    qtt = 0;
+                }
+                totalq += parseFloat(qtt);
+            });
+            if (totalq >= quantity) {
+                toastr["error"]("Số lượng cần chia đã đủ.");
+                return false;
+            }
+            var item = {
+                stt: stt,
+                productname: '@Model.Catename',
+                price: parseFloat('@Model.Cateprice'),
+                quantity: parseFloat(quantity - quantityuser),
+                supplier: '',
+                phonenumber: '',
+                address: '',
+                totalprice: ''
+            };
+            lstP.push(item);
+            var html = '<div class="list-add-ncc" id="id_add_' + stt + '"">' +
+                '<div class="item"><select name="DNSupplie_add_' + stt + '"" id="DNSupplie_' + stt + '"" class="form-control"></select>' +
+                '</div>' +
+                '<div class="item"><input type="number" class="form-control quantityQ" placeholder="Số lượng" data-quan="0" value="' + parseFloat(quantity - quantityuser) + '" name="QuantityActive_add_' + stt + '" id="QuantityActive_' + stt + '"/>' +
+                '</div>' +
+                '<div class="item"><input type="text" class="form-control maskPrice" placeholder="Số tiền" name="Price_add_' + stt + '"" id="Price_' + stt + '"  value="' + '@Model.Cateprice.Money()' + '" /></div>' +
+                '<div class="item"><input type="date" class="form-control" placeholder="Ngày nhận" name="Date_add_' + stt + '"" id="Date_' + stt + '" value="@(DateTime.Today.ToString("yyyy-MM-dd"))" /></div>' +
+                '<div class="item"><input type="number" class="form-control" name="Hours_add_' + stt + '"" id="Hours_' + stt + '" value="" /></div>' +
+                '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div>';
+            $("#content-ncc").append(html);
+            $.post("/TotalStorageWare/GetListSupplie", function (data) {
+                $("#DNSupplie_" + stt).html(data);
+            });
+            $("body").on("click", "#Delete_" + stt, function (e) {
+                e.preventDefault();
+                var id = $(this).data("id");
+                for (var index = 0; index < lstP.length; index++) {
+                    if (lstP[index].stt === stt) {
+                        lstP.splice(index, 1);
+                        Addhtml(lstP);
+                        return;
+                    }
+                }
+                stt--;
+                $("#" + id).remove();
+                var total = 0;
+                $(".quantityQ").each(function () {
+                    var qtt = $(this).val();
+                    if (qtt == "") {
+                        qtt = 0;
+                    }
+                    total += parseFloat(qtt);
+                });
+                quantityuser = total;
+                $(".quantityout").html(parseFloat(quantityuser));
+                $(".quantityim").html(parseFloat(quantity - quantityuser));
+            });
+            $("#do_stt").val(stt);
+            callSelect2("#DNSupplie_" + stt, "100%");
+            $("#QuantityActive_" + stt).on("change", function () {
+                var id = $(this).val();
+                var qO = parseFloat($(this).data("quan"));
+                if (id == "") {
+                    id = 0;
+                }
+                var total = 0;
+                $(".quantityQ").each(function () {
+                    var qtt = $(this).val();
+                    if (qtt == "") {
+                        qtt = 0;
+                    }
+                    total += parseFloat(qtt);
+                });
+                if (total > quantity) {
+                    toastr["error"]("Vượt quá số lượng cần chia.");
+                    $(this).val("");
+                    return false;
+                }
+                quantityuser = total;
+                $(".quantityout").html(parseFloat(quantityuser));
+                $(".quantityim").html(parseFloat(quantity - quantityuser));
+                for (var n = 0; n < lstP.length; n++) {
+                    if (lstP[n].stt === stt) {
+                        lstP[n].quantity = $(this).val();
+                        break;
+                    }
+                }
+                Addhtml(lstP);
+            });
+            $("#DNSupplie_" + stt).on("change", function () {
+                debugger;
+                var sup = $("#DNSupplie_" + stt + " option:selected").data("sup");
+                var address = $("#DNSupplie_" + stt + " option:selected").data("add");
+                var phone = $("#DNSupplie_" + stt + " option:selected").data("phone");
+                for (var n = 0; n < lstP.length; n++) {
+                    if (lstP[n].stt == stt) {
+                        lstP[n].supplier = sup;
+                        lstP[n].phonenumber = phone;
+                        lstP[n].address = address;
+                        break;
+                    }
+                }
+                //debugger;
+                //var id = $(this).val();
+                //for (var h = 0; h < lstD.length; h++) {
+                //    if (lstD[h].stt === stt) {
+                //        lstD.splice(h, 1);
+                //        return;
+                //    }
+                //};
+                //var items = {
+                //    stt: stt,
+                //    value: parseInt(id)
+                //};
+                //lstD.push(items);
+                Addhtml(lstP);
+            });
+            Addhtml(lstP);
+        });
+        $(".C_Delete").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#" + id).remove();
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="do_stt" id="do_stt" value="0" />
+        @*<div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-picture-o"></i>Chia đơn nhập kho
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal">
+
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Chia đơn nhập kho
+                </div>
+                <div class="caption" style="float: right">
+                    <span>Tổng số lượng: <b style="margin-right: 15px">@Model.Quantity.Quantity()</b></span>
+                    <span>Đã chia: <b class="quantityout" style="margin-right: 15px">@Model.QuantityOut.Quantity()</b></span>
+                    <span>Còn lại: <b class="quantityim">@((quantity - quantityout).Quantity())</b></span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <a id="Add" href="#" class="btn btn-success" style="margin-bottom: 15px;"><span class="fa fa-plus"></span>Thêm</a>
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div id="content-ncc">
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model.StorageProducts)
+                                {
+                                    <div class="list-add-ncc" id="id_add_@(item.ID)">
+                                        <div class="item">
+                                            <select name="DNSupplie_old@(item.ID)" id="DNSupplie_old@(item.ID)" class="form-control">
+                                                @foreach (var item1 in ViewBag.listncc)
+                                                {
+                                                    <option value="@item1.ID" @(item1.ID == item.SupID ? "selected" : "")>@item1.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="item">
+                                            <input type="text" class="form-control quantityQ" name="QuantityActive_old_@(item.ID)" data-quan="0" id="QuantityActive_old_@(item.ID)" value="@item.Quantity" />
+                                        </div>
+                                        <div class="item">
+                                            <input type="text" class="form-control maskPrice" placeholder="Số tiền" name="Price_old@(item.ID)" id="Price_old@(item.ID)" value="@item.Price.Money()" />
+                                        </div>
+                                        <div class="item">
+                                            <input type="date" class="form-control" name="today_old@(item.ID)" id="today_old@(item.ID)" value="@item.DateImport.DecimalToString("yyyy-MM-dd")" />
+                                        </div>
+                                        <div class="item">
+                                            <input type="number" class="form-control" name="HourImport_old@(item.ID)" id="HourImport_old@(item.ID)" value="@item.HourImport" />
+                                        </div>
+                                        <div class="item-button"><a data-id="id_add_@(item.ID)" href="#" class="btn btn-sm btn-block btn-danger C_Delete">Xóa</a></div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnPrint" type="button" class="btn btn-sm btn-success">In test</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+                            <li><img src="https://fditech.vn/Content/Publishing/images/logo-foo.png" width="200px" height="90px" title="logo" /></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <div class="pt-name">
+                            <div class="center">
+                                <h3 style="font-size: 26px">DANH SÁCH HÀNG CẦN NHẬP</h3>
+                                <i> Ngày @Model.Today.DecimalToDate().Day tháng @Model.Today.DecimalToDate().Month năm @Model.Today.DecimalToDate().Year</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <table class="table table-bordered" id="box-print-detail">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá nhập</th>
+                                <th>Nhà cung cấp</th>
+                                <th>Điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td class="stt"></td>
+                                    <td>@Model.Catename</td>
+                                    <td>@Model.Cateprice</td>
+                                    <td class="supplier"></td>
+                                    <td class="phonenumber"></td>
+                                    <td class="address"></td>
+                                    <td class="quantity"></td>
+                                    <td class="totalprice"></td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Thủ kho</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người giao hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page>
+
+</div>
+<script>
+    $(function () {
+        $("#btnPrint").click(function () {
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    });
+    function Addhtml(lst) {
+        $("#box-print-detail tbody").html("");
+        var mystring = "";
+        var txt = "<tr>" +
+            "<td>stt</td>" +
+            "<td>productname</td>" +
+            "<td>price</td>" +
+            "<td>supplier</td>" +
+            "<td>phonenumber</td>" +
+            "<td>address</td>" +
+            "<td>quantity</td>" +
+            "<td>totalprice</td>" +
+            "</tr>";
+        lst.forEach(function (entry, i) {
+            var ch = txt.replace("stt", entry.stt);
+            ch = ch.replace("productname", entry.productname);
+            ch = ch.replace("price", numeral(entry.price).format('0,0'));
+            ch = ch.replace("quantity", Math.round(entry.quantity));
+            ch = ch.replace("supplier", entry.supplier);
+            ch = ch.replace("phonenumber", entry.phonenumber);
+            ch = ch.replace("address", entry.address);
+            ch = ch.replace("totalprice", numeral(entry.price * Math.round(entry.quantity)).format('0,0'));
+            mystring = ch + mystring;
+        });
+        $("#box-print-detail tbody").append(mystring);
+
+    }
+</script>

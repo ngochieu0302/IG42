@@ -1,0 +1,55 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Base.WalletCustomer
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin về khách hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.Customer.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số ĐT</label>
+                        </td>
+                        <td>@Model.Customer.Phone</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>@Model.Customer.Address</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số tiền nạp</label>
+                        </td>
+                        <td>@Model.TotalPrice.Money()</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày nạp</label>
+                        </td>
+                        <td>@Model.DateCreate.DecimalToString("dd/MM/yyyy HH:mm:ss")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

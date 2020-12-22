@@ -1,0 +1,16 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+
+<div class="box-left">
+    <div class="title-box-left">@Resource.Other.Resource.HITCOUNTER</div>
+    <div class="body-box-left box-thongketruycap">
+        @if (Model.Online > 0)
+        {
+             <span>@Resource.Other.Resource.Online <b>@Model.Online</b></span>
+        }
+         @if (Model.Visit > 0)
+        {
+             <span>@Resource.Other.Resource.Visit <b>@Model.Visit</b></span>
+        }
+    </div>
+</div>
+

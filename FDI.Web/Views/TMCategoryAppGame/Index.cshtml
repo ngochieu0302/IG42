@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var urlSelectImage = "/GalleryPictureSelect/?MutilFile=true&Container=NewsImages";
+        $("#selectImage").click(function () {
+            $.post(urlSelectImage, function (data) {
+                $("#dialog-form-2").dialog(
+				{
+				    title: "Chọn hình ảnh",
+				    width: 960,
+				    height: 600
+				}
+			).html(data).dialog("open");
+                return false;
+            });
+        });
+    });
+</script>
+
+    <div class="header-control"></div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <div class="btn-group">
+            @Grid.ActionAdd(Url.Action("Actions"))
+        </div>
+    </div>
+

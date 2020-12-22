@@ -1,0 +1,41 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelPartnerItem
+@{
+    var pageId = WebConfig.PartnerDetail;
+}
+    <div class="list-news list">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        @foreach (var item in Model.ListItem)
+        {
+            <div class="item-news item-ef">
+                <div class="img">
+                    <a href="/@item.Slug-p@(pageId)c@(item.ID)" title="@item.Name">
+                        <img src="@item.PictureUrl.UploadPicture()" alt="@item.Name" class="img-responsive">
+                        <span class="roll tie-picture"></span>
+                    </a>
+                </div>
+                <div class="detail">
+                    <h3>
+                        <a href="/@item.Slug-p@(pageId)c@(item.ID)" title="@item.Name">@item.Name</a>
+                    </h3>
+                    <div class="post-date">
+                        <span><i class="ion-clock"></i>@(item.DateCreated.HasValue ? item.DateCreated.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))</span>
+                    </div>
+                    <div class="text-news">
+                        @Html.Raw(item.Description)
+                    </div>
+                    <div class="option"><a class="bt-readmore" href="/@item.Slug-p@(pageId)c@(item.ID)">@Resources.Resource.xemhinhanh</a></div>
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.PageHtml))
+        {
+            <div class="div-phantrang">
+                <div class="dot-fillin">
+                    <ul>
+                        @Html.Raw(Model.PageHtml)
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>

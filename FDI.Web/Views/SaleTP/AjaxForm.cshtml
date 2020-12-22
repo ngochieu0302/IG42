@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+@*<script src="/Content/Admin/js/numeral.min.js"></script>*@
+@*<script src="/Areas/Admin/Content/js/order.js"></script>*@
+@*<script src="/Areas/Admin/Content/js/pyses-script.js"></script>*@
+@*<link href="/Areas/Admin/Content/css/style_hoadon.css" rel="stylesheet" />*@
+
+<script>
+    $("aside.hidden-print").addClass("nav-xs");
+    $('input[type=radio][name=PaymentMethodId]').change(function () {
+        if (this.value === '2') {
+            $("#BankId").removeClass("hiddensl");
+        } else {
+            $("#BankId").addClass("hiddensl");
+        }
+    });
+    $(function() {
+        $(".date-picker").datepicker({
+            //showOn: "button",
+            //buttonImageOnly: true,
+            //format: "dd/mm/yyyy"
+        }).mask('00/00/0000');
+    });
+</script>
+<style>
+    .hiddensl {
+        display: none !important;
+    }
+    .txtSweet {
+        display: block !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
+    }
+    .txtexcesscash {
+        color: red;
+        font-size: 22px !important;
+        font-weight: bold !important;
+    }
+    .sa-input-error {
+        display: none !important
+    }
+</style>
+<section class="vbox">
+   
+</section>
+<section id="BoxPrint" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-header">
+            <div class="pr-logo">
+                <img src="/Content/Publishing/Images/logo.png" />
+            </div>
+            <div class="pr-address">
+            </div>
+        </div>
+        <div class="pr-content">
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN BÁN HÀNG</strong>
+                <i id="printMP">PX1234456</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Ngày bán:</strong><span>@DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")</span></li>
+                    <li><strong>Khách Hàng</strong><span id="printKH">(Khách lẻ)</span></li>
+                    <li><strong>Nhân viên</strong><span id="printNV">Tạ Tầng - Cầu Giấy</span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product">
+                <div class="pr-head">
+                    <strong>Sản phẩm</strong>
+                    <strong>Nguyên giá</strong>
+                    <strong>% &darr;</strong>
+                    <strong>Giá bán</strong>
+                </div>
+                <div id="listboxprint">
+                </div>
+                @*<div class="pr-head"><strong>Tổng</strong><strong>1.000.000</strong><strong>&nbsp;</strong><strong>980.000</strong></div>*@
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng giảm giá/code giảm:</strong><span id="printSale">0</span></li>
+                    <li><strong><b>Tổng tiền thanh toán:</b></strong><span><b id="prinPrice">0</b></span></li>
+                    <li><strong>Số tiền khách đưa:</strong><span id="printPriceCus">0</span></li>
+                    <li><strong>Tiền thừa trả khách:</strong><span id="printPriceCusN">0</span></li>
+                    <li id="printNode">Ghi chú: 0</li>
+                    <li><strong><i>Giá bán đã bao gồm VAT</i></strong><span></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pr-footer">
+            <strong>Quý khách vui lòng kiểm tra hàng hóa</strong>
+            <strong>trước khi dời khỏi quầy</strong>
+            <strong>Xin cảm ơn và hẹn gặp lại</strong>
+        </div>
+    </div>
+</section>

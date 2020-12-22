@@ -1,0 +1,74 @@
+﻿@model FDI.Simple.AgencyItem
+<link href="~/Content/Admin/css/print_hoadon_a4.css" rel="stylesheet" />
+
+<page size="A4">
+    <div class="pagePrint">
+        <div class="shop-name">
+            <h1>@Model.Name</h1>
+       
+<ul>            
+<li>Địa chỉ: @Model.Address.</li>
+                <li>SĐT: @Model.Phone</li>
+                <li>Email: @Model.Email</li>
+            </ul>
+        </div>
+        <h1>Hóa đơn bán hàng</h1>
+        <span>Số: <b id="NumberOrder">0</b></span>
+        <ul class="name-cuss">
+            <li>Thời gian : <strong id="printTime"></strong></li>
+            <li>Khách hàng : <strong id="printKH">(Khách lẻ)</strong></li>
+            <li>Địa chỉ : <strong id="printAddress">Khoái Châu - Hưng yên</strong></li>
+        </ul>
+        <div class="tablePrint">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%">STT</th>
+                        <th style="width: 30%" class="text-center">Tên hàng</th>
+                        <th style="width: 10%" class="text-center">DVT</th>
+                        <th style="width: 15%" class="text-center">Số lượng</th>
+                        <th style="width: 15%" class="text-right">Đơn giá</th>
+                        <th style="width: 20%" class="text-right">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Đồ gia dụng</td><td class="text-center">1</td><td class="text-center">1</td><td class="text-right">2.300</td><td class="text-right">2.300</td></tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><b>Tổng cộng:</b></td>
+                        <td class="text-center"><b></b></td>
+                        <td class="text-center"><b></b></td>
+                        <td class="text-right"><b></b></td>
+                        <td class="text-right"><b id="prinPrice"></b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Chiết khấu:</b></td>
+                        <td class="text-center"><b></b></td>
+                        <td class="text-center"><b></b></td>
+                        <td class="text-right"><b></b></td>
+                        <td class="text-right"><b id="printDiscount">0</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Đặt trước:</b></td>
+                        <td class="text-right"><b id="printexcess">0</b></td>
+                         <td colspan="2"><b>Còn lại:</b></td>
+                       <td class="text-right"><b id="printSale">0</b></td>                        
+                    </tr>
+                </tfoot>
+            </table>
+            <strong class="total-price">Cộng thành tiền (bằng chữ): <span id="printChu"></span></strong>
+        </div>
+        <div class="optionPrint">
+            <div class="left">
+                <label>Khách hàng</label>
+            </div>
+            <div class="right">
+                <div class="date">
+                    Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i>
+                </div>
+                <span>Người viết hóa đơn</span>
+            </div>
+        </div>
+    </div>
+</page>

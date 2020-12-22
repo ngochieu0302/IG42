@@ -1,0 +1,117 @@
+﻿@model FDI.Base.System_Tag
+@{
+    ViewBag.Title = ViewBag.ActionText + " từ khóa";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    @*var urlAutocomplete = '@Url.Action("AutoNews", "NewsContent")';
+    var arrFileObj = new Array();
+    Array.prototype.remove = function (el) {
+        var idx = this.indexOf(el);
+        if (idx != -1) {
+            this.splice(idx, 1);
+        }
+        return this;
+    };
+
+    function removeTag(id) {
+        var arrId = $('#values-arr-tag').val();
+        var arrIds = arrId.split(',');
+        arrIds.remove(id);
+        $('#values-arr-tag').val(arrIds.toString());
+        $("#listNewsAttachRemove span[id='" + id + "']").parent().remove();
+    }*@
+
+    $(function () {
+        $("#SystemTagForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 1
+                }
+            },
+            messages: {
+                Name: {
+                    required: "Trường bắt buộc nhập !",
+                    minlength: "Độ dài quá ngắn !"
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#SystemTagForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });        
+
+        $("#Name").on('change', function (e) {
+            e.preventDefault();
+            $('#NameAscii').val(RemoveUnicode($(this).val()));
+            $('#SEOTitle').val($(this).val());
+            $('#SEODescription').val($(this).val());
+            $('#SEOKeyword').val($(this).val());
+        });
+    });
+</script>
+<form id="SystemTagForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-tags"></i>Thông tin về từ khóa
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên từ khóa</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">URL</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="NameAscii" id="NameAscii" value="@Model.NameAscii" class="form-control" placeholder="..." />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="SEOTitle" id="SEOTitle" value="@Model.SEOTitle" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Description</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="SEODescription" id="SEODescription" value="@Model.SEODescription" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Keyword</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="SEOKeyword" id="SEOKeyword" value="@Model.SEOKeyword" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

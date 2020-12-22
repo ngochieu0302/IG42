@@ -1,0 +1,29 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.Product;
+    var productId = WebConfig.Product;
+}
+<div class="banner-statistics-area">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="row row-20 mtn-20">
+            @foreach (var item in Model.ListItem)
+            {
+                var url = (item.Slug) + "-p"+pageId+"c" + (item.ID);
+                <div class="col-sm-6">
+                <figure class="banner-statistics mt-20">
+                    <a href="/@url">
+                        <img src="@(item.UrlPicture.UploadPicture())" alt="@item.Name" />
+                    </a>
+                    <div class="banner-content text-right">
+                        <h5 class="banner-text1">@Html.Raw(item.Description)</h5>
+                        <h2 class="banner-text2">@item.Name</h2>
+                        <a href="/@url" class="btn btn-text">Shop Now</a>
+                    </div>
+                </figure>
+            </div>
+            }
+        </div>
+    </div>
+</div>

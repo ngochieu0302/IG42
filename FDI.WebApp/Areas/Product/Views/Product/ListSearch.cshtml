@@ -1,0 +1,104 @@
+﻿@model FDI.Simple.ModelSimItem
+@using System.Web.Script.Serialization
+@using FDI.Utils
+@{
+    var stt = Model.Page + 1;
+    var page = WebConfig.Product;
+}
+<div class="col-sm-8 col-md-9">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="ct-left">
+        <div class="boxTableList">
+            <h2 class="nmgt">Kết quả tìm thấy (@Model.Total.Money()) @Model.Keywords</h2>
+            <div class="mess-search">
+                <span>Quý khách chọn sim bên dưới </span>
+                <span>Hoặc gọi trực tiếp đến Hotline <a href="tel:0888123333">0888.12.3333</a> - <a href="tel:0888113333 ">0888.11.3333 </a>để được phục vụ nhanh nhất!</span>
+            </div>
+
+            <div class="tableList">
+                @if (!string.IsNullOrEmpty(Model.PageHtml))
+                {
+                    <div class="first">
+                        <div class="row">
+                            <div class="col-sm-5 col-md-4">
+                                <div class="count-page">
+                                    <span>Trên tổng số: <b>@Model.Total.Money()</b></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-7 col-md-8">
+                                <div class="dot-fillin">
+                                    <ul>
+                                        @Html.Raw(Model.PageHtml)
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <table class="table table-bordered">
+                    <colgroup>
+                        <col style="width: 5%">
+                        <col style="width: 25%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="text-center hidden-xs">STT</th>
+                            <th class="text-center">Sim số đẹp </th>
+                            <th class="text-center hidden-xs">Mạng</th>
+                            <th class="text-center">Giá</th>
+                            <th class="text-center hidden-xs">Loại Sim</th>
+                            <th class="text-center hidden-xs">Tổng Điểm</th>
+                            <th class="text-center">Đặt mua</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListItem)
+                        {
+                            var CodeSku = ("0" + item.CodeSku);
+                            var check = item.PriceOld < 1000000;
+                            item.Price = (check ? (item.PriceNew + 200000) : item.PriceNew);
+                            var PriceOld = (check ? (item.PriceOld + 200000) : item.PriceOld);
+                            <tr>
+                                <td class="hidden-xs">@(stt++)</td>
+                                @*<td class="text-left"><a href="#" title="">@item.CodeSku</a></td>*@
+                                <td class="text-left"><a style="cursor:pointer" href="/dat-sim-sim-so-dep-@CodeSku" title="">@CodeSku </a></td>
+                                <td class="hidden-xs"><b class="@item.Class"></b></td>
+                                <td><span class="price-stock" style="@(PriceOld == item.Price ? "display:none" : "")">@PriceOld.Money()</span><span class="price-discount">@item.Price.Money()</span></td>
+                                <td class="hidden-xs"><a href="/@item.UrlCate" title="@item.CateName" class="nomer">@item.CateName</a></td>
+                                <td class="hidden-xs">@item.Marks</td>
+                                <td>
+                                    <a title="@CodeSku" style="cursor:pointer" href="/dat-sim-sim-so-dep-@CodeSku" class="btn btn-primary">Đặt</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @if (!string.IsNullOrEmpty(Model.PageHtml))
+                {
+                    <div class="first">
+                        <div class="row">
+                            <div class="col-sm-5 col-md-4">
+                                <div class="count-page">
+                                    <span>Trên tổng số: <b>@Model.Total.Money()</b></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-7 col-md-8">
+                                <div class="dot-fillin">
+                                    <ul>
+                                        @Html.Raw(Model.PageHtml)
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

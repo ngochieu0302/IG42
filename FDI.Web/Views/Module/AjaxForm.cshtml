@@ -1,0 +1,96 @@
+﻿@model FDI.Simple.ModuleItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#UserId", "100%");
+        callSelect2("#RoleId", "100%");
+        $("#modalForm").validate({
+            rules: {
+                NameModule:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Content:
+                {
+                    minlength: 3,
+                    maxlength: 500
+                }
+            },
+
+            submitHandler: function () { //onSubmit
+                $.post("/Utility/DeleteUser?key=" + getCookie('CodeLogin'), function (a) {
+                    $.post("/Utility/AddUser?lstUser=" + $("#UserId").val(), function () {
+                    });
+                    $.post("/Utility/AddRole?lstRole=" + $("#RoleId").val(), function () {
+                    });
+                    PostAction("#modalForm");
+                });
+
+                return false;
+            }
+        });
+
+    });
+</script>
+
+<form id="modalForm" class="form-horizontal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-newspaper-o"></i>Thông tin về Module
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên module</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="NameModule" id="NameModule" class="form-control" value="@Model.NameModule" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn nhân viên</label>
+                            <div class="col-sm-10">
+                                <select id="UserId" class="select2" multiple>
+                                    <option value="">--- Chọn nhân viên ---</option>
+                                    @foreach (var item in ViewBag.UserID)
+                                    {
+                                        <option  value="@item.UserId" @(Model.User_ModuleActive != null && Model.User_ModuleActive.Any(m => m.UserId == item.UserId) ? "selected" : string.Empty)>@item.UserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn nhóm</label>
+                            <div class="col-sm-10">
+                                <select id="RoleId" name="RoleId" class="select2" multiple>
+                                    <option value="">--- Chọn nhóm ---</option>
+                                    @foreach (var item in ViewBag.RoleId)
+                                    {
+                                        <option  value="@item.RoleId" @(Model.Role_ModuleActive != null && Model.Role_ModuleActive.Any(m => m.RoleId == item.RoleId) ? "selected" : string.Empty)>@item.RoleName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+

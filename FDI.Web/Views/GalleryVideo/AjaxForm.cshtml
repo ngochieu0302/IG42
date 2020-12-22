@@ -1,0 +1,131 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model FDI.Base.Gallery_Video
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var lstS = (List<SourceItem>) ViewBag.lstsource;
+}
+<script type="text/javascript">
+    
+    $(function () {
+        callSelect2("#SourceID", "100%");
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                },
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+            },
+            submitHandler: function () {
+                //updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về video
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên Video</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="Tên video..." name="Name"  id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group" id="PicturePanel">
+                            <label class="col-md-2 control-label">Ảnh đại diện</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                    @if (Model.PictureID > 0)
+                                    {
+                                            <div class="image-product" id="@Model.PictureID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                              @*  <span>@Model.GalleryPicture.Name</span>*@
+                                            </div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Url Youtube</label>
+                            <div class="col-md-10">
+                                <input type="text" name="UrlYoutube" id="UrlYoutube" value="@Model.UrlYoutube" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn bài viết</label>
+                            <div class="col-md-10">
+                                <select name="SourceID" id="SourceID" class="form-control">
+                                    <option value="">Chọn phiếu nhập</option>
+                                    @foreach (var item in lstS)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.SourceID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-md-2 control-label">Url File gốc</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Url" id="Url" value="@Model.Url" class="form-control" />
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chuyên mục</label>
+                            <div class="col-md-10">
+                                <select name="CategoryID" id="CategoryID" class="form-control">
+                                    <option value="">-- Chọn chuyên mục --</option>
+                                    @foreach (var item in ViewBag.CategoryID)
+                                    {
+                                        <option value="@item.ID" @((Model.CategoryID == item.ID) ? " selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

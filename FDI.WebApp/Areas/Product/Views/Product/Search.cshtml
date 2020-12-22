@@ -1,0 +1,109 @@
+﻿@model FDI.Simple.ModelSimItem
+@using FDI.Utils
+@{
+    var pageId = WebConfig.SearchId;
+}
+<div class="box-search">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="formSearch">
+        <form action="/search">
+            <div class="textSearch-wrap">
+            <div class="textSearch">
+                <input value="@Model.Keywords" name="Keywords" required maxlength="11" class="form-control pull-left popover-dismiss ipt-search" placeholder="Nhập số sim bạn cần tìm"
+                       data-container="body"
+                       data-toggle="popover"
+                       data-placement="bottom"
+                       data-content="Sử dụng dấu <span class='red'>x</span> đại điện cho 1 số và dấu <span class='red'>*</span> đại điện cho một chuỗi số. <br /> + Để tìm sim bắt đầu bằng 098, quý khách nhập vào 098*<br /> + Để tìm sim kết thúc bằng 888, quý khách nhập vào *888<br /> + Để tìm sim bắt đầu bằng 098 và kết thúc bằng 888, nhập vào 098*888<br /> + Để tìm sim bên trong có số 888, nhập vào 888<br /> + Để tìm sim bắt đầu bằng 098 và kết thúc bằng 808, 818, 828, 838, 848, 858, 868, 878, 888, 898 nhập vào 098*8x8<br /> " title="" data-original-title="Hướng dẫn tìm kiếm sim"/>
+                <button type="submit" class="bt-search hidden-xs">Tìm kiếm</button>
+              
+            </div>
+            </div>
+            <div class="findSearch">
+                <span><strong>Hot key: </strong> 09*9999, *9999, *6868, *1989</span>
+                <div class="row">
+                    <div class="col-md-8">
+                        <strong>Dãy số không gồm:</strong>
+                        <div class="boxCheckbox">
+                            @for (var i = 0; i < 10; i++)
+                            {
+                                <label class="itemCheckBox">
+                                    <input type="checkbox" name="notNumber" id="checkbox@(i)" value="@i">
+                                    <i for="checkbox@(i)" class="check-box"></i>
+                                    <span>@i</span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Loại sim:</strong>
+                        <div class="boxRadioCheck">
+                            <label class="radioPure"><input id="radio1" type="radio" name="length" value="10"><span class="outer"><span class="inner"></span></span><i>10 số</i></label>
+                            <label class="radioPure"><input id="radio2" type="radio" name="length" value="11"><span class="outer"><span class="inner"></span></span><i>11 số</i></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <select class="form-control" name="homeId">
+                            <option value="" selected="">Tất cả các mạng</option>
+                            @foreach (var item in Model.HomeNetworkItems)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <select class="form-control" name="priceTo">
+                            <option value="" selected="">Tất cả mệnh giá</option>
+                            <option value="0.1" @(Model.priceTo == "0" ? "selected" : "")>Dưới 1 triệu</option>
+                            <option value="1.2" @(Model.priceTo == "1" ? "selected" : "")>1 Triệu - 2 Triệu</option>
+                            <option value="2.5" @(Model.priceTo == "2" ? "selected" : "")>2 Triệu - 5 Triệu</option>
+                            <option value="5.10" @(Model.priceTo == "5" ? "selected" : "")>5 Triệu - 10 Triệu</option>
+                            <option value="10.30" @(Model.priceTo == "10" ? "selected" : "")>10 Triệu - 30 Triệu</option>
+                            <option value="30.50" @(Model.priceTo == "30" ? "selected" : "")>30 Triệu - 50 Triệu</option>
+                            <option value="50.100" @(Model.priceTo == "50" ? "selected" : "")>50 Triệu - 100 Triệu</option>
+                            <option value="100.300" @(Model.priceTo == "100" ? "selected" : "")>100 Triệu - 300 Triệu</option>
+                            <option value="300.500" @(Model.priceTo == "300" ? "selected" : "")>300 Triệu - 500 Triệu</option>
+                            <option value="500.1000" @(Model.priceTo == "500" ? "selected" : "")>Trên 500 triệu - 1 tỷ</option>
+                            <option value="1000.99999" @(Model.priceTo == "1000" ? "selected" : "")>Trên 1 tỷ</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" name="minPrice" class="form-control" placeholder="Giá từ"/>
+                            </div>
+                            <div class="col-sm-6 npdl">
+                                <input type="text" name="maxPrice" class="form-control" placeholder="Đến"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <select class="form-control" name="categoryId">
+                            <option value="" selected="">Chọn thể loại SIM</option>
+                            @foreach (var item in Model.CategoryItems.Where(c => c.ParentId != 1))
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <select class="form-control" name="buttom">
+                            <option value="" selected="">Tổng nút</option>
+                            @for (var i = 1; i < 10; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                            <option value="0">10</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <input type="number" name="marks" class="form-control" placeholder="Tổng điểm"/>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Tìm kiếm" class="btf-search hidden-md"/>
+        </form>
+    </div>
+</div>

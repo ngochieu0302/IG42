@@ -1,0 +1,45 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelNewsItem
+@{
+    var pageId = WebConfig.NewDetail;
+}
+<section class="latest-blog-area section-padding pt-0">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- section title start -->
+                <div class="section-title text-center">
+                    <h2 class="title">Featured News</h2>
+                    <p class="sub-title">There are featured news posts</p>
+                </div>
+                <!-- section title start -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="blog-carousel-active slick-row-10 slick-arrow-style">
+                    <!-- blog post item start -->
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <div class="blog-post-item">
+                            <figure class="blog-thumb">
+                                <a href="blog-details.html">
+                                    <img src="@item.PictureUrl.UploadPicture()" alt="@item.Title">
+                                </a>
+                            </figure>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <p>@item.DateCreated.Value.ToString("dd/MM/yyyy")</p>
+                                </div>
+                                <h5 class="blog-title">
+                                    <a href="blog-details.html">@item.Title</a>
+                                </h5>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FDI.Simple.WeeklyScheduleItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var listweek = Model.GroupBy(m => m.WeeklyID).Select(m => m.FirstOrDefault());
+    var listSchedule = Model.GroupBy(m => m.ScheduleID).Select(m => m.FirstOrDefault());
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <input type="hidden" name="do" id="do" value="View" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.ID"/>
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Lịch làm việc trong tuần
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <table class="table table-bordered" cellspacing="1">
+                        <tr>
+                            <th><strong class="text-center">Ca làm việc</strong> </th>
+                            @foreach (var item1 in listweek)
+                            {
+                                <th>@item1.WeeklyName</th>
+                            }
+                        </tr>
+                        @{
+                            foreach (var item2 in listSchedule)
+                            {
+                            <tr id ="line-@item2.ID">
+                                <td><strong class="text-center">@item2.ScheduleItem.Name</strong> (@item2.ScheduleItem.HoursStart:@(item2.ScheduleItem.MinuteStart > 10 ? item2.ScheduleItem.MinuteStart.ToString() : "0" + item2.ScheduleItem.MinuteStart) - @item2.ScheduleItem.HoursEnd:@(item2.ScheduleItem.MinuteEnd > 10 ? item2.ScheduleItem.MinuteEnd.ToString() : "0" + item2.ScheduleItem.MinuteEnd))</td>
+                                @foreach (var item3 in Model.Where(m => m.ScheduleID == item2.ScheduleID))
+                                {
+                                    <td><input type="checkbox"  data-id="@item3.ID" class="chkActiveRoles" name="WeeklySchedule" @(item3.IsCalender ? "checked" : string.Empty)  id="@item3.ID" value="@item3.ID"/></td>
+                                }
+                            </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+
+

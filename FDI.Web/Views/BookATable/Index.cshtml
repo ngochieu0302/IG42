@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaNodeCustom.cshtml";
+    var date = DateTime.Now.AddMinutes(5);
+}
+<script>
+    $(document).ready(function() {
+        callSelect2("#HoursStartAll", "70px");
+        callSelect2("#MinuteStartAll", "70px");
+    })
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb pull-right">
+            <li><span>Thời gian: </span><b id="timedatenow"></b></li>
+        </ul>
+    </div>
+</div>
+<form>
+    <div class="navi-page-bar bar-book-a-table">
+        <div class="navi-page-toolbar">
+            <div class="pull-left">
+                <a class="btn btn-sm btn-success Default" data-event="Default">Mặc định</a>
+            </div>
+            <input type="text" style="width: 85px; float: left; margin-left: 5px;" class="form-control input-sm" id="Keywordbed" name="Keywordbed" placeholder="Số bàn">
+            <div class="time-book-a-table">
+                <i class="fa fa-clock-o"></i>
+                <select name="HoursStartAll" id="HoursStartAll" class="select2">
+                    @for (int i = date.Hour; i <= 23; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <select name="MinuteStartAll" id="MinuteStartAll" class="select2">
+                    @for (int i = 0; i <= 59; i++)
+                    {
+                        <option value="@i" @(date.Minute == i ? "selected" : string.Empty)>@i</option>
+                    }
+                </select>
+            </div>
+
+            <div class="btn-group pull-right">
+                <a class="btn btn-sm btn-primary" data-event="OrderAll" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></a>
+                <a class="btn btn-sm btn-success" data-event="PayAll" style="margin-right: 5px;"><i class="fa fa-credit-card"></i></a>
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Tác vụ
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a data-event="view" title="Đơn hàng" href="/order" target="_blank">
+                            <i class="icon-bell"></i>Đơn hàng
+                        </a>
+                    </li>
+                    <li>
+                        <a data-event="view" title="Đơn đặt hàng" href="/contactorder" target="_blank">
+                            <i class="icon-shield"></i>Đơn đặt hàng
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-control content-box-a-table" id="Griditems">
+    </div>
+</form>

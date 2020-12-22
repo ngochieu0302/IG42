@@ -1,0 +1,125 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMProductsCommentItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về khách hàng comment sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên khách hàng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.TMCustomerItem.FullName)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Emai khách hàng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.TMCustomerItem.Email)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%">
+                            <label>SĐT khách hàng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.TMCustomerItem.Mobile)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Tên sản phẩm comment</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.ProductItem != null ? Model.ProductItem.Name : string.Empty)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Nội dung comment</label>
+                        </td>
+                        <td id="type">
+                            @Html.DisplayFor(model => model.Message)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Lượt thích</label>
+                        </td>
+                        <td>
+                            @Model.NumberLike
+                        </td>
+                    </tr>
+                    
+                     <tr>
+                        <td>
+                            <label>Không thích</label>
+                        </td>
+                        <td>
+                            @Model.NoLike
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày comment</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Ngày duyệt</label>
+                        </td>
+                        <td>
+                            @Model.DateActive.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Người duyệt</label>
+                        </td>
+                        <td>
+                            @Model.UserActive
+                        </td>
+                    </tr>
+                 
+                    <tr>
+                        <td>
+                            <label>Kích hoạt</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Message, Model.IsShow)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

@@ -1,0 +1,284 @@
+﻿@using FDI.CORE
+@model FDI.Base.DN_Enterprises
+@{
+    ViewBag.Title = ViewBag.ActionText + " Quản lý doanh nghiệp";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGallery();
+        LoadCKEDITOR('Content', true);
+        callSelect2("#GroupId", "100%");
+        var id = parseInt($("#ItemID").val());
+        if (id == 0) {
+            $.post("/Enterprises/GetCodeEnterprises", function (data) {
+                $('#Code').val(data);
+            });
+        }
+
+        $("#EnterprisesForm").validate({
+            rules: {
+                Name:
+                    {
+                        required: true
+                    },
+                Email:
+                    {
+                        required: true,
+                        email: true,
+                    },
+                DomainDN:
+                    {
+                        remote: "@Url.Action("CheckDomainDN", "Enterprises", new { id = Model.ID })"
+                    },
+                Url:
+                    {
+                        remote: "@Url.Action("CheckUrl", "Enterprises", new { id = Model.ID })"
+                    },
+                GroupId: { required: true, }
+            },
+            messages: {
+                Name:
+                    {
+                        required: "Xin mời nhập tên doanh nghiệp.",
+                    },
+                Email:
+                    {
+                        required: "Xin mời nhập Email.",
+                        email: "Email không đúng định dạng.",
+                    },
+                DomainDN:
+                    {
+                        remote: "Domain đã tồn tại"
+                    },
+                Url:
+                    {
+                        remote: "Domain đã tồn tại"
+                    },
+                GroupId:
+                  {
+                      required: "Xin mời chọn nhóm ngành.",
+                  },
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $.post(urlPostAction, $("#EnterprisesForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+
+<form id="EnterprisesForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về doanh nghiệp
+                </div>
+            </div>
+            <div class="form portlet-body" style="background: #fff">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Mã doanh nghiệp</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="Code" id="Code" value="@Model.Code" readonly="readonly"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tên doanh nghiệp</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Phần trăm SSC(1=1%)</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="Percent" id="Percent" value="@Model.Percent.Quantity()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Giảm giá trực tiếp(1=1%)</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="PercentOrder" id="PercentOrder" value="@Model.PercentOrder.Quantity()" />
+                                    </div>
+                                </div>
+                            </div>
+                            @if (ViewBag.BonusType != null)
+                            {
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Tích lũy khách hàng</label>
+                                        <div class="col-sm-8">
+                                            <label class="label label-success" >@string.Format("{0:0.##} %", ViewBag.BonusType.Percent)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Tích lũy người giới thiệu</label>
+                                        <div class="col-sm-8">
+                                            <label class="label label-success">@string.Format("{0:0.##} %", ViewBag.BonusType.PercentParent)</label>
+                                            <label></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            }
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tên người đăng ký</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="FullName" id="FullName" value="@Model.FullName" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Số điện thoại</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="Phone" id="Phone" value="@Model.Phone" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tài khoản</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="UserName" id="UserName" value="@Model.UserName" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">CMND</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="CMTND" id="CMTND" value="@Model.CMTND" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Mật Khẩu mới</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="PasswordNew" id="PasswordNew" value="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Địa chỉ</label>
+                                    <div class="col-sm-8">
+                                        <textarea rows="8" id="Address" name="Address" class="form-control">@Model.Address</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Ngày bắt đầu</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control" name="_DateStart" id="_DateStart"  value="@Model.DateStart.DecimalToString("yyyy-MM-dd")" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Ngày kết thúc</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control" name="_DateEnd" id="_DateEnd"  value="@Model.DateEnd.DecimalToString("yyyy-MM-dd")" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Domain Doanh nghiệp</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="DomainDN" id="DomainDN" value="@(string.IsNullOrEmpty(Model.DomainDN) ? ".sensuncode.vn" : Model.DomainDN)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Domain đại lý</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="..." name="Url" id="Url" value="@(string.IsNullOrEmpty(Model.Url) ? ".sensuncode.com" : Model.Url)"/>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>     
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nhóm ngành</label>
+                            <div class="col-sm-10">
+                                <select id="GroupId" name="GroupId" class="select2" multiple>
+                                    <option value="">--- Chọn nhóm ngành ---</option>
+                                    @foreach (var item in ViewBag.ST_Group)
+                                    {
+                                        <option value="@item.ID" @(Model.ST_Group != null && Model.ST_Group.Any(m => m.ID == item.ID) ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Logo</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Urllogo" id="Urllogo" value="@Model.Urllogo"/>
+                                @*@Gallery.DisplayImage(Model.Urllogo, 120)*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="4" id="Content" name="Content" class="form-control">@Model.Content</textarea>
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsLocked") Dừng hoạt động
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

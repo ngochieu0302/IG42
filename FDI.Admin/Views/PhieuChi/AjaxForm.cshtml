@@ -1,0 +1,182 @@
+﻿@using Admin
+@model FDI.Base.ThuChi
+@{
+    ViewBag.Title = ViewBag.ActionText + " sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<style>
+    .autocomplete-suggestions div {
+        border-bottom: rgba(204, 204, 204, 0.40) 1px solid;
+        padding: 10px !important;
+    }
+</style>
+<script>
+    $("#Price").focus();
+    registerDate();
+    Validate();
+    //$("#shopid").val($("#selectShop").val());
+
+    $('#customer').autocomplete({
+        serviceUrl: "/Customer/AutoName",
+        minChars: 1,
+        delimiter: /(;)\s*/,
+        maxHeight: 400,
+        autoSelectFirst: false,
+        onSelect: function (el) {
+            $('#customer').val(el.name);
+            $('#CustomerId').val(el.ID);
+        },
+    });
+    $('input[type=radio][name=PayMentMethodId]').change(function () {
+        if (this.value == '2') {
+            $("#BankId").removeClass("hiddensl");
+        } else {
+            $("#BankId").addClass("hiddensl");
+        }
+    });
+    $(".bankName").html($("#BankId option:selected").text());
+
+</script>
+<style>
+    .hiddensl {
+        display: none !important;
+    }
+</style>
+<form id="ActionsForm">
+    <input type="hidden"  name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+    @*<input type="hidden" name="shopid" id="shopid" />*@
+    <input type="hidden" id="listValueFileAttach" name="listValueFileAttach" />
+    <input type="hidden" id="listValueFileAttachRemove" name="listValueFileAttachRemove" />
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thêm mới phiếu chi</header>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Ngày chi</label>
+                        <div class="col-lg-4">
+                            <input class="input-sm input-s date-picker form-control" id="NgayChi" name="NgayChi" size="16" type="text" value="@(Model.DateCreated != null ? Model.DateCreated.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                        </div>
+                        <div class="col-lg-5">
+                            <select id="CostTypeId" name="CostTypeId" class="form-control">
+                                <option value="">--- Chọn chi phí ---</option>
+                                @foreach (var item in @ViewBag.Cost)
+                                {
+                                    <option value="@item.ID" @(item.ID == Model.CostTypeId ? "selected" : "")>@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-1">
+                            <input class="btn btn-info add-TypeCost" type="button" value="+">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Hình thức TT</label>
+                        <div class="col-lg-10">
+                            <div class="col-lg-2">
+                                <input name="PayMentMethodId" type="radio" value="1" @(Model.PayMentMethodId == (int)PmMethod.tm || Model.PayMentMethodId == null ? "checked" : "")>
+                                Tiền mặt
+                            </div>
+                            <div class="col-lg-2">
+                                <input name="PayMentMethodId" type="radio" value="3" @(Model.PayMentMethodId == (int)PmMethod.th ? "checked" : "")>
+                                Thẻ
+                            </div>
+                            <div class="col-lg-3">
+                                <input name="PayMentMethodId" type="radio" value="2" @(Model.PayMentMethodId == (int)PmMethod.ck ? "checked" : "")>
+                                Chuyển khoản
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-10">
+                            <select class="form-control @(Model.PayMentMethodId != (int)PmMethod.ck ? "hiddensl" : "")" id="BankId" name="BankId">
+                                <option value=""></option>
+                                @foreach (var item in ViewBag.Bank)
+                                {
+                                    <option value="@item.ID"  @(item.ID == Model.BankId ? "selected" : "")>@item.AccountNumber - @item.Name - @item.BankName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Khách hàng</label>
+                        <div class="col-lg-10">
+                            <input type="hidden" class="form-control" name="CustomerId" id="CustomerId" />
+                            <input type="text" class="form-control" id="customer" placeholder="Nhập mã hoặc tên khách hàng" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Số tiền (bắt buộc)</label>
+                        <div class="col-lg-3">
+                            <input name="Price" id="Price" class="form-control maskPrice text-right" style="width: 201px;" value="@Model.Price"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Kho chuyển tiền</label>
+                        <div class="col-lg-5">
+                            <select name="KeyId" id="KeyId" class="form-control input-sm mutil">
+                                @foreach (var item in ViewBag.ShopAll)
+                                {
+                                    <option value="@item.ID" >@item.TenCuaHang</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Kho phân bổ</label>
+                        <div class="col-lg-5">
+                            <select name="shopid" id="shopid" class="form-control input-sm mutil">
+                                @foreach (var item in ViewBag.Shop)
+                                {
+                                    <option value="@item.ID" @(ViewBag.shopid == item.ID?"selected":"") >@item.TenCuaHang</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Nội dung</label>
+                        <div class="col-lg-10">
+                            <textarea rows="3" name="Note" id="Note" class=" form-control">@Model.Note</textarea>
+                        </div>
+                    </div>
+                    @if ((ViewBag.Action.ToString() == "Edit" && Model.PayMentMethodId != (int)PmMethod.tm) || Model.CostTypeId == 1)
+                    {
+                        <div class="form-group">
+                            <section class="panel panel-default">
+                                <header class="panel-heading font-bold">Duyệt phiếu chi</header>
+                            </section>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số tiền nhận</label>
+                            <div class="col-lg-3">
+                                <input name="PriceOld" id="PriceOld" class="form-control maskPrice text-right" style="width: 201px;" value="@Model.PriceOld"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Ngày thu</label>
+                            <div class="col-lg-4">
+                                <input class="input-sm date-picker form-control" id="Date_Update" name="Date_Update" size="16" type="text" value="@(Model.DateUpdate != null ? Model.DateCreated.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số tk có</label>
+                            <div class="col-lg-10">
+                                <label class="control-label bankName"></label>
+                            </div>
+                        </div>
+                    }
+
+                    <div style="display: none;">
+                        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+                        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</form>
+

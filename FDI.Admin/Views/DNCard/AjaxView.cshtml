@@ -1,0 +1,31 @@
+﻿@model FDI.Base.DN_Card
+@{    
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin về khách hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.Serial</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

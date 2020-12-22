@@ -1,0 +1,64 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelProductExportItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup date" />
+                    <col class="colgroup custommer" />                    
+                    <col class="colgroup date" />
+                    <col class="colgroup date" />
+                    <col class="colgroup date" />
+                    <col class="colgroup date" />
+                    <col class="colgroup price" />    
+                    <col class="colgroup price" />
+                </colgroup>
+                <thead>
+                <tr>                    
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Mã SP</th>
+                    <th>Tên SP</th>
+                    <th>Đơn vị</th>
+                    <th>Giá bán</th>
+                    <th class="text-center">Màu</th>
+                    <th class="text-center">Size</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-center">Đã xuất</th>  
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItem != null)
+                {
+                    foreach (var item in Model.ListItem)
+                    {
+                        var lst = Model.LstExportItem.Where(c => c.ProductID == item.ID).ToList();
+                        <tr data-id="@item.ID">                            
+                            <td class="text-center">@(stt++)</td>
+                            <td class="text-center">@item.CodeSku</td>
+                            <td>@item.Name</td>
+                            <td>@item.UnitName</td>
+                            <td>@item.Price.Money()</td>
+                            <td class="text-center">@item.ColorName</td>
+                            <td class="text-center">@item.SizeName</td>
+                            <td class="text-center">@item.Quantity</td>  
+                            <td class="text-center">@(lst.Sum(c => c.Quantity).Quantity("0:0.####"))</td>  
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $("#fromDate").val('@ViewBag.date');
+    });
+</script>

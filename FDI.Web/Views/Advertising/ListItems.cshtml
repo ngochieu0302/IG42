@@ -1,0 +1,94 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelAdvertisingItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                <tr>
+                    <th class="act_roles" style="width: 2%;">
+                        <input value="" type="checkbox"/>
+                    </th>
+                    <th style="width: 55px;" class="text-center"><a href="#Field=ID">ID</a></th>
+                    <th style="width: 120px;" class="text-center">Hình Ảnh</th>
+                    <th class="text-center"><a href="#Field=Name">Tên Banner</a></th>
+                    <th class="text-center">Vị trí</th>
+                    <th class="text-center"><a href="#Field=Show">Hiển thị</a></th>
+                    <th style="width: 12%;" class="text-center">Thao tác</th>
+                </tr>
+                </thead>
+
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.Name">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td>
+                            <div class="imgThum">
+                                 @Gallery.DisplayImage(item.PictureUrl, 80)
+                            </div>
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.PositionName</td>
+                        <td class="text-center">@Grid.ActionShow(item.ID, item.Name, item.Show)</td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.ID, item.Name)
+                            @Grid.ActionEdit(item.ID, item.Name)
+                            @Grid.ActionDelete(item.ID, item.Name)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <script>
+                $(document).ready(function () {
+                    $('.call-images-root').magnificPopup({
+                        type: 'image',
+                        removalDelay: 500, //delay removal by X to allow out-animation
+                        callbacks: {
+                            beforeOpen: function () {
+                                // just a hack that adds mfp-anim class to markup 
+                                this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
+                                this.st.mainClass = this.st.el.attr('data-effect');
+                            }
+                        },
+                        closeOnContentClick: true,
+                        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                    });
+                    $('.popup-youtube').magnificPopup({
+                        disableOn: 700,
+                        type: 'iframe',
+                        mainClass: 'mfp-fade',
+                        removalDelay: 160,
+                        preloader: false,
+
+                        fixedContentPos: false
+                    });
+
+                });
+            </script>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>
+<style>
+    .imgThum img{
+        width: 80px;
+        height: 80px;
+    }
+</style>

@@ -1,0 +1,43 @@
+﻿@model FDI.Simple.DNMailSSCItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về mail nội bộ
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tiêu đề</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Title)
+                        </td>
+                    </tr>
+                  
+                    <tr>
+                        <td>
+                            <label>Nội dung</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Content)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

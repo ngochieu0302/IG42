@@ -1,0 +1,127 @@
+﻿@model FDI.Simple.DNRolesItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Quản lý phòng ban";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="~/Skin/js/select2/select2.min.js"></script>
+<link href="~/Skin/js/select2/select2.css" rel="stylesheet" />
+<link href="~/Skin/js/select2/theme.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(".select2").select2({
+        width: '100%',
+        maximumSelectionLeng: 1
+
+    });
+   
+    $(document).ready(function () {
+
+        // datepicker
+        $(".datepicker-input").each(function () { $(this).datepicker(); });
+        $(".datepicker-input").click(function () {
+            $(".datepicker-days .day").click(function () {
+                $('.datepicker').hide();
+            });
+        });
+
+        $("#DNUsersForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                Email:
+                {
+                    required: true,
+                    minlength: 3,
+                    email: true,
+                }
+
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#DNUsersForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+        $("#close").click(function () {
+            $("#dialog-form").modal('hide');
+        });
+
+    });
+</script>
+<style>
+    #Address {
+        display: block !important;
+    }
+</style>
+
+<form id="DNUsersForm">
+    <div class="modal-body">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.RoleId"/>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về phòng ban
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Tên phòng ban</label><div class="col-lg-10">
+                            <input type="text" class="form-control" placeholder="..." name="RoleName" id="RoleName" value="@Model.RoleName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Mô tả</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="Description" id="Description" value="@Model.Description" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Chọn Tầng</label>
+                        <div class="col-lg-10">
+                            <select id="LevelRoomId" name="LevelRoomId" class="select2">
+                                <option value="">--- Chọn Tầng ---</option>
+                                @foreach (var item in ViewBag.listroom)
+                                {
+                                    <option  value="@item.ID" @(item.ID == Model.LevelRoomId ? "selected" : string.Empty)>@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Chọn nhân viên</label>
+                        <div class="col-lg-10">
+                            <select id="GuiID" name="GuiID" class="select2" multiple>
+                                <option value="">--- Chọn nhân viên ---</option>
+                                @foreach (var item in ViewBag.listUser)
+                                {
+                                    <option  value="@item.UserId" @(Model.DN_UsersInRoles.Any(m=>m.UserId == item.UserId)? "selected" : string.Empty)>@item.UserName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

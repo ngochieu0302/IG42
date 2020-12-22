@@ -1,0 +1,29 @@
+﻿@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        urlLists = '@Url.Action("AjaxTreeSelect", "Category")';
+        var urlSelectImage = "/GalleryPictureSelect/?MutilFile=true&Container=NewsImages";
+        $("#selectImage").click(function () {
+            $.post(urlSelectImage, function (data) {
+                $("#dialog-form-2").dialog(
+				{
+				    title: "Chọn hình ảnh",
+				}
+			).html(data).dialog("open");
+                return false;
+            });
+        });
+    });
+</script>
+
+    <div class="header-control">
+       
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control" style="float:left">
+        <div class="btn-group pull-left">
+            @Grid.ActionAdd(Url.Action("Actions"))
+        </div>
+    </div>

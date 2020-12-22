@@ -1,0 +1,37 @@
+﻿@using FDI.Utils
+@model FDI.Simple.VideoItem
+<div class="list-product-wrap">
+    ﻿<div class="list-product-home type-list">
+        <div class="title">
+            <h3>
+                <a href="#" title="">Video công trình nổi bật</a>
+            </h3>
+        </div>
+         <div class="box-media">
+             @if (Model != null) {
+             <div class="video-live">
+                 <div class="video-screen">
+                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/@Model.Url" frameborder="0" allowfullscreen></iframe>
+                 </div>
+             </div>
+             <div class="detail-media">
+                 <h2>@Model.Name</h2>
+                 <div class="post-time">
+                     <span>@Model.DateCreated.Value.Format("dd/MM/yyyy")</span>
+                 </div>
+                 <div class="text-html">
+                     <p>
+                         @Model.Description
+                     </p>
+                 </div>
+             </div>
+             <div class="media-other">
+                 <strong class="title-other"><i class="fa fa-youtube-play"></i>Video Khác</strong>
+                 <div class="row">
+                     @Html.Action("VideoOther","Video",new {Area = "Video", videlId =Model.ID})
+                 </div>
+             </div>
+             }
+         </div>
+    </div>
+</div>

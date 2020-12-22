@@ -1,0 +1,160 @@
+﻿@model FDI.Simple.ModelPictureItem
+@{
+    ViewBag.Title = "AjaxFormPicture";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript" src="/Uploadify/swfobject.js"></script>
+<script type="text/javascript" src="/Uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+<link href="/Uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript">
+    var arrFileObj = new Array();
+    Array.prototype.remove = function (el) {
+        var idx = this.indexOf(el);
+        if (idx != -1) {
+            this.splice(idx, 1);
+        }
+        return this;
+    };
+
+    function removeFile(id) {
+        var lstFileRemove = $("#lstFile").val().split(',');
+        for (var index = 0; index < lstFileRemove.length; index++) {
+            var i = lstFileRemove.indexOf(id);
+            if (i != -1) {
+                lstFileRemove.splice(i, 1);
+            }
+        }
+
+        for (var j = 0; j <= arrFileObj.length - 1; j++) {
+            var file = arrFileObj[j].name;
+            if (file == id.toLowerCase()) {
+                arrFileObj.remove(arrFileObj[j]);
+            }
+        }
+
+        $("#lstFile").val(lstFileRemove.valueOf());
+        $("#fileData span[id='" + id + "']").parent().remove();
+    }
+
+    $(document).ready(function () {
+        function getJsonData() {
+            var jsonData = '';
+            var listfile = "";
+            for (var index = 0; index < arrFileObj.length; index++) {
+                var filename = arrFileObj[index].name;
+                jsonData += '<li data-id=' + filename + " class=\"fileUpload\">";
+                jsonData += '<span id=' + filename + '><b> Tên file: </b>';
+                jsonData += filename + ", ";
+                jsonData += " <b>Size: </b> (" + arrFileObj[index].size + " Kb) ";
+                jsonData += '</span>';
+                jsonData += "<a  title=\"Xóa file đính kèm\" href=\"javascript:removeFile('" + filename + "');\">";
+                jsonData += "<img border='0' src='/Content/Admin/Images/gridview/act_filedelete.png'></a>";
+                jsonData += '</li>';
+                listfile += filename + ",";
+            }
+            $("#lstFile").val(listfile);
+            return jsonData;
+        }
+        
+        $("#submitPicture").click(function () {
+            $.post("/Admin/GalleryPictureByModule/AjaxFormPictureSubmit?fileNameLocal=" + $("#lstFile").val(), $("#GalleryPictureForm").serialize(), function (data) {
+                if (data.Erros)
+                    createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                else {
+                    $("#dialog-form-3").dialog('close'); //Đóng form thêm mới - sửa
+                    var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                    createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                }
+            });
+            return false;
+        });
+
+        $('#file_upload').uploadify({
+            'buttonImage': '/content/mdland/images/chen-anh.png',
+            'uploader': '/Uploadify/uploadify.swf',
+            'script': '/Uploadify/uploadify.ashx',
+            'cancelImg': '/Uploadify/cancel.png',
+            'buttonText': 'Select File',
+            'folder': '/Temp',
+            'multi': true,
+            'queueSizeLimit': 50,
+            'auto': true,
+            'fileExt': '*.jpg;*.gif;*.png;*.jpeg',
+            'fileDesc': 'Image Files (.JPG, .GIF, .PNG, .JPEG)',
+            'removeCompleted': true,
+            'sizeLimit': (20480 * 1024), //20MB
+            'onCancel': function (event, ID) {
+                var fileNameCancel = $("#file_upload" + ID + " .fileName").text();
+                fileNameCancel = fileNameCancel.substring(0, fileNameCancel.indexOf('(') - 1);
+                for (i = 0; i < arrFileObj.length; i++) {
+                    if (arrFileObj[i].name == fileNameCancel) {
+                        arrFileObj.splice(i, 1);
+                        $("#file_upload" + ID).remove();
+                        break;
+                    }
+                }
+            },
+            'onComplete': function (event, ID, fileObj) {
+                arrFileObj.push(fileObj);
+            },
+
+            'onAllComplete': function (event, data) {
+                $("#submitPicture").show();
+                $("#fileData").html(getJsonData());
+                $('#status-message').html('<span class="message">' + data.filesUploaded + ' file đã upload thành công, ' + data.errors + ' file lỗi.</span>');
+            }
+        });
+
+        $("#closePicture").click(function () {
+            $("#dialog-form-3").html("").dialog('close');
+        });
+
+        $("#GalleryPictureForm").submit(function () {
+            $.post(urlFormPictureUpdate, $("#GalleryPictureForm").serialize(), function (data) {
+                $("#dialog-form-3").html(data).dialog(
+                    {
+                        title: "Cập nhật thông tin ảnh",
+                        width: formWidth,
+                        height: formHeight
+                    }).dialog("open");
+            });
+            return false;
+        });
+    });
+</script>
+
+<style>
+    #fileData {
+        margin-top: 10px;
+    }
+
+    #fileData li a img {
+        padding-left: 5px;
+    }
+</style>
+
+<form id="GalleryPictureForm">
+    <input type="hidden" name="do" id="do" value="@Model.Action"/>
+    <input type="hidden" name="type" id="type" value="@Model.Type "/>
+    <input id="lstFile" name="lstFile" type="hidden" />
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                <p><b>Click vào nút select file và chọn file cần upload</b></p>
+                <p></p>
+                <input id="file_upload" name="file_upload" type="file" />
+                <input id="lstFileAttachRemove" name="lstFileAttachRemove" type="hidden" value="" />
+                <ul id="fileData"></ul>
+                <p id="status-message"></p>
+            </td>
+        </tr>
+        <tr class="pull-right">
+            <td class="submit" colspan="2">
+                <button id="submitPicture" type="submit" class="btn btn-sm btn-primary" style="display: none;">Thêm mới</button>
+                <button id="closePicture" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+            </td>
+        </tr>
+    </table>
+</form>

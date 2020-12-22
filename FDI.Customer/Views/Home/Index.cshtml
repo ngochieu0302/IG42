@@ -1,0 +1,243 @@
+﻿@using FDI.Utils
+@model FDI.Simple.CustomerItem
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Trang chủ";
+    ViewBag.CountEmail = ViewBag.CountEmail;
+
+}
+<script>
+    $(function () {
+        $("#CustomerForm").validate({
+            rules: {
+                FullName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                UserName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                Email:
+                {
+                    //required: true,
+                    email: true,
+                    minlength: 3
+                },
+                Phone:
+                {
+                    minlength: 8,
+                    maxlength: 13,
+                    number: true
+                },
+                CardSerial:
+                {
+                    remote: "Account/CheckCardSerial?PinCard"
+                }
+            },
+            messages: {
+                FullName:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                UserName:
+                {
+                    required: "Trường này là bắt buộc",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Email:
+                {
+                    //required: "Trường này là bắt buộc.",
+                    email: "Vui lòng nhập một địa chỉ email hợp lệ.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Phone:
+                {
+                    minlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    maxlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    number: "Vui lòng nhập số điện thoại hợp lệ."
+                },
+                CardSerial:
+                {
+                    remote: "Mã thẻ hoặc mã pin không đúng."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/Customer/Actions", $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        toastr["error"](data.Message); // Tạo thông báo lỗi
+                    else {
+                        toastr["success"](data.Message);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 800);
+                    }
+                });
+                return false;
+            }
+        });
+        $("#CityID").change(function () {
+            var cityId = $(this).val();
+            $.post("@Url.Action("GetDistrict", "Home")", { "cityId": cityId }, function (data) {
+                $("#DistrictID").html("");
+                $.each(data, function (i, val) {
+                    $("#DistrictID").append("<option value='" + val.ID + "'>" + val.Name + "</option>");
+                });
+            });
+        });
+    });
+</script>
+
+    <div class="page-head">
+        <div class="container">
+            <!-- BEGIN PAGE TITLE -->
+            <div class="col-md-offset-2">
+                <div class="page-title">
+                    <h1>Thông tin cá nhân </h1>
+                </div>
+            </div>
+            <!-- END PAGE TITLE -->
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="container">
+            <div class="col-md-offset-2">
+                <ul class="page-breadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Trang chủ</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>Thông tin tài khoản</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-content-inner">
+                <div class="row">
+                    <form id="CustomerForm" method="POST">
+                        <input type="hidden" name="itemId" value="@Model.ID" />
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-settings font-dark"></i>
+                                        <span class="caption-subject font-dark sbold uppercase">Cập nhật thông tin tài khoản</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            @if (Model.CardID == null)
+                                            {
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Mã Pin</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="PinCard" id="PinCard" class="form-control" value="">
+                                                    </div>
+                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Mã thẻ</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" name="CardSerial" class="form-control" value="">
+                                                        </div>
+                                                    </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Mã thẻ</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" disabled value="@Model.CardSerial">
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Tên đăng nhập</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" disabled value="@Model.UserName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Họ tên</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="FullName" class="form-control" value="@Model.FullName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Điện thoại</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" disabled value="@Model.Phone">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="Email" class="form-control" value="@Model.Email">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Số CMND</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" disabled value="@Model.PeoplesIdentity">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Ngày sinh</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="Birthday_" class="form-control" value="@Model.Birthday.DecimalToString("dd/MM/yyyy")">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Giới tính</label>
+                                                <div class="col-sm-9 pull-right">
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            @Html.RadioButtonFor(model => model.Gender, true) Nam
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            @Html.RadioButtonFor(model => model.Gender, false) Nữ
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Tỉnh/Thành phố</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="CityID" id="CityID">
+                                                        @foreach (var item in ViewBag.City)
+                                                        {
+                                                            <option value="@item.ID" @(item.ID == Model.CityID ? "selected" : "")>@item.Name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Quận/ Huyện</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="DistrictID" id="DistrictID">
+                                                        @foreach (var item in ViewBag.District)
+                                                        {
+                                                            <option value="@item.ID" @(item.ID == Model.DistrictID ? "selected" : "")>@item.Name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions text-center">
+                                            <button type="submit" class="btn green">Cập nhật tài khoản</button></div>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

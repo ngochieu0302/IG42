@@ -1,0 +1,110 @@
+﻿@model List<FDI.Simple.CostProductUserItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () {
+                var lstRet = [];
+                $('#productCode .data').each(function () {
+                    var ret = [];
+                    $('.inputValue', this).each(function () {
+                        var d = $(this).val() || $(this).text();
+                        if (d === "status") {
+                            if (this.checked === true) {
+                                d = 1;
+                            } else
+                                d = 0;
+                        }
+                        ret.push(d);
+                    });
+
+                    var item = {
+                        CostUserID: ret[0],
+                        Status: ret[1],
+                        Note: ret[2]
+                    }
+                    lstRet.push(item);
+                });
+                var checked = $('#productCode tbody input:checkbox:checked').length;
+                var total = $('#productCode tbody input:checkbox').length;
+                var status = total > checked ? 2 : 1;
+                 PostAction("#modalForm");
+            }
+        });
+        $('.checkall').change(function () {
+            var checkboxes = $(this).closest('form').find(':checkbox');
+            if ($(this).is(':checked')) {
+                checkboxes.prop('checked', true);
+            } else {
+                checkboxes.prop('checked', false);
+            }
+        });
+
+        $('#productCode tbody input:checkbox').change(function () {
+            $('.checkall').prop('checked', false);
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" id="AgencyId" name="AgencyId" value="@ViewBag.AgencyId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Đánh giá chất lượng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <table class="gridView" style="width: 100%" id="productCode">
+                                    <thead>
+                                        <tr>
+                                            <th>Công việc</th>
+                                            <th>Nhân viên</th>
+                                            <th class="text-center"><input type="checkbox" class="checkall" /></th>
+                                            <th class="text-center">Ghi chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr class='data'>
+                                                    <td>@item.SetupProductName</td>
+                                                    <td>@item.UserName</td>
+                                                    <td class="text-center">
+                                                        <input type="hidden" class="inputValue" value="@item.ID" />
+                                                        <input type="checkbox" class="inputValue" value="status" />
+                                                    </td>
+                                                    <td><input class='form-control inputValue' value="@string.Format("{0:0.##}", item.Percent)" /></td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

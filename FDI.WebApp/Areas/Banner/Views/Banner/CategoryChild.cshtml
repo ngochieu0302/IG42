@@ -1,0 +1,13 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var p = "";
+}
+
+<div class="bannerCate__wrap">
+    <div class="bannerCate__title">
+        <h2>@Model.CategoryItem.Name</h2>
+    </div>
+    <div class="bannerCate__crumbar"><a class="item" href="/">Home</a><a class="item" href="">@Model.CategoryItem.Name</a></div>
+    
+</div>

@@ -1,0 +1,131 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model FDI.Simple.ModelWorkShopItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    //var lst = new List<CompanyItem>(ViewBag.company);
+}
+<script type="text/javascript">
+
+    $(function () {
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                },
+
+                Address: {
+                    required: true,
+                },
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập."
+                },
+
+                Address: {
+                    required: "Trường bắt buộc nhập."
+                }
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+        callSelect2('#lstCate', '100%');
+        callSelect2('#lstDetail', '100%');
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.WorkShopItem.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin xưởng chế biến
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên Xưởng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.WorkShopItem.Name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Address" id="Address" value="@Model.WorkShopItem.Address" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Công ty</label>
+                            <div class="col-md-4">
+                                <select name="CompanyID" class="form-control">
+                                    <option value="">Chọn Công ty</option>
+                                    @foreach (var item in Model.LstCompanyItems)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.WorkShopItem.CompanyID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Latitute</label>
+                            <div class="col-md-4">
+                                <input type="text" name="Latitute" id="Latitute" value="@Model.WorkShopItem.Latitute" class="form-control" />
+                            </div>
+                            <label class="col-md-2 control-label">Longitude</label>
+                            <div class="col-md-4">
+                                <input type="text" name="Longitude" id="Longitude" value="@Model.WorkShopItem.Longitude" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Công thức DM</label>
+                            <div class="col-md-4">
+                                <select name="lstCate" id="lstCate" class="form-control select2" multiple="multiple">
+                                    <option value="0">Chọn Công ty</option>
+                                    @foreach (var item in Model.LstCateRecipeItems)
+                                    {
+                                        <option value="@item.ID" @(Model.WorkShopItem.CateRecipeItems != null ? Model.WorkShopItem.CateRecipeItems.Any(c=>c.ID == item.ID) ? "selected" : "" : "")>@item.CateName</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 control-label">Công thức SP</label>
+                            <div class="col-md-4">
+                                <select name="lstDetail" id="lstDetail" class="form-control select2" multiple="multiple">
+                                    <option value="0">Chọn Công ty</option>
+                                    @foreach (var item in Model.LstRecipeItems)
+                                    {
+                                        <option value="@item.ID" @(Model.WorkShopItem.ProductDetailRecipeItems != null ? Model.WorkShopItem.ProductDetailRecipeItems.Any(c=>c.ID == item.ID) ? "selected" : "" : "")>@item.ProductName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsActive") Hoạt động
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

@@ -1,0 +1,134 @@
+﻿@model FDI.Simple.ModelCityItem
+<style>
+    .ViewGooglemap {
+        cursor: pointer;
+    }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBtArErgOqj-bygAyKG-k1P3FN6AKutecA"></script>
+<div class="box-contact">
+    <div class="wr-container">
+        <div class="row">
+            <div class="col-sm-7 col-md-8">
+                @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+                <div class="resutMaps" style="height: 500px">
+                    <div id="map-canvas" style="width: 100%; height: 100%"></div>
+                    <div id="markers"></div>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-4">
+                <div class="tabsLocation">
+                    <div class="tabsMap">
+                        <div class="tab-content">
+                            <div class="tab-content-item">
+                                <div class="itemLocation typeLocal">
+                                    @foreach (var item in Model.ListGoogleMapItem)
+                                    {
+                                        <span><strong style=""><a class="ViewGooglemap" data-id="@(item.ID)" data-content="@item.Address" data-longitude="@item.Longitude" data-latitude="@item.Latitude">@item.Name </a></strong></span>
+                                        <ul>
+                                            <li><span>@item.Address</span></li>
+                                            <li>Tel: @item.Tel</li>
+                                            <li>Fax: @item.Fax</li>
+                                            <li>Giờ làm việc: @item.Time</li>
+                                        </ul>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    google_map(0, 0);
+    var markers = [];
+    function google_map(cityId, districtId) {
+        markers = [];
+        function initialize() {
+            var locations = [];
+            var mapOptions = {
+                zoom: 12,
+                mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+                center: new window.google.maps.LatLng(21.031235, 105.779213)
+            };
+            var image = new window.google.maps.MarkerImage('/Areas/Other/Content/img/Cusor.png',
+                new window.google.maps.Size(30, 30),
+                new window.google.maps.Point(0, 0)
+            );
+            $.getJSON("/Other/Other/GetData?cityId=" + cityId + "&districtId=" + districtId, function (googleMaps) {
+                $.each(googleMaps, function (key, value) {
+                    locations.unshift([new window.google.maps.LatLng(value.latitude, value.longitude), value.infowindow, value.id]);
+                });
+                var map = new window.google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                var infowindow = new window.google.maps.InfoWindow();
+                for (var i = 0; i < locations.length; i++) {
+                    var marker = new window.google.maps.Marker({
+                        position: locations[i][0],
+                        map: map,
+                        icon: image,
+                        title: locations[i][1],
+                    });
+                    window.google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][1]);
+                            infowindow.open(map, marker);
+                        };
+                    })(marker, i));
+
+                    var obj = {
+                        id: locations[i][2],
+                        marker: marker
+                    }
+                    markers.push(obj);
+                }
+            });
+        }
+        initialize();
+    }
+    $('body').on("click", ".ViewGooglemap", function () {
+        var id = $(this).data('id');
+        markers.forEach(function (entry) {
+            if (entry.id === id) {
+                var marker = entry.marker;
+                window.google.maps.event.trigger(marker, 'click');
+                $('html, body').animate({ scrollTop: $('#map-canvas').position().bottom }, 'slow');
+                return;
+            }
+        });
+    });
+    $('body').on("change", "#GoogleMapCityID", function () {
+        if (this.value !== "0") {
+            google_map(this.value, 0);
+            $.get("/Other/Other/GetListGoogleMapByCityId?cityId=" + this.value, function (data) {
+                $('#box-address').html(data);
+            });
+            $.post("/Other/Other/GetDistrictItemByCityId?cityId=" + this.value, function (lstDistrict) {
+                $("#DistrictID").html("");
+                $("#DistrictID").append('<option value="0">--- Chọn quận huyện ---</option>');
+                $.each(lstDistrict, function (i, val) {
+                    $("#DistrictID").append("<option value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                });
+            });
+        } else {
+            google_map(0, 0);
+            $("#DistrictID").html("");
+            $("#DistrictID").append('<option value="0">--- Chọn quận huyện ---</option>');
+        }
+    });
+
+    $('body').on("change", "#DistrictID", function () {
+        if (this.value !== 0) {
+            google_map($("#GoogleMapCityID").val(), this.value);
+            $.get("/Other/Other/GetListGoogleMapByDistrictId?districtId=" + this.value, function (data) {
+                $('#box-address').html(data);
+            });
+        } else {
+            $.get("/Other/Other/GetListGoogleMapByCityId?cityId=" + $("#GoogleMapCityID").val(), function (data) {
+                $('#box-address').html(data);
+                google_map($("#GoogleMapCityID").val(), 0);
+            });
+        }
+    });
+</script>
+

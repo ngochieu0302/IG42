@@ -1,0 +1,96 @@
+﻿@model IEnumerable<FDI.Simple.ModuleItem>
+@{
+    ViewBag.Title = "Danh sách Module";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#gridItems');
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#TreeCategory").treeview({
+            collapsed: true,
+            animated: "medium",
+            control: "#treecontrol",
+            persist: "location"
+        });
+
+        $("a.tool").click(function () {
+            if ($(this).parent().parent().hasClass("unselect")) {
+                $(".filetree li").addClass("unselect").removeClass("select");
+                $(this).parent().parent().addClass("select").removeClass("unselect");
+            } else {
+                $(this).parent().parent().addClass("unselect").removeClass("select");
+            }
+            return false;
+        });
+
+    });
+</script>
+<div id="gridItems">
+
+    <div id="treecontrol" class="treeTool">
+        <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+        <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+    </div>
+    <ul id="TreeCategory" class="filetree gridView" style="border: 0;">
+        @foreach (var item in Model.Where(m => m.PrarentID == 1))
+                {
+                    var totalChild = Model.Count(m => m.PrarentID == item.ID);
+                <li title="@item.NameModule" class="unselect" id="@item.ID">
+                    <span class="file">
+                        @if (item.IsShow == true)
+                            {
+                        <a class="tool" href="javascript:;">@item.NameModule</a> <i>(@totalChild)</i>
+                            }
+                            else
+                            {
+                        <a class="tool" href="javascript:;"><strike>@item.NameModule</strike></a> <i>(@totalChild)</i>
+                            }
+                        <div class="quickTool">
+                            @Grid.RoleModule(item.ID.ToString())
+                            @Grid.UserModule(item.ID, item.NameModule)
+                            @Grid.ActionAdd(item.ID, item.NameModule)
+                            @Grid.ActionEdit(item.ID, item.NameModule,false)
+                            @Grid.ActionShow(item.ID, item.NameModule, item.IsShow)
+                            @Grid.ActionDelete(item.ID, item.NameModule,false)
+                            @Grid.ActionSort(item.ID, item.NameModule)
+                        </div>
+                    </span>
+                    @if (Model.Any(m => m.PrarentID == item.ID))
+                        {
+                    <ul>
+                        @foreach (var itemChild in Model.Where(m => m.PrarentID == item.ID))
+                                {
+                            <li title="" class="unselect" id="6">
+                                <span class="file">
+                                    @if (itemChild.IsShow == true)
+                                            {
+                                        <a class="tool" href="javascript:;">@itemChild.NameModule</a> <i>(0)</i>
+                                            }
+                                            else
+                                            {
+                                        <a class="tool" href="javascript:;"><strike>@itemChild.NameModule</strike></a> <i>(0)</i>
+                                            }
+                                    <div class="quickTool">
+                                        @Grid.RoleModule(itemChild.ID.ToString())
+                                        @Grid.UserModule(itemChild.ID, itemChild.NameModule)
+                                        @Grid.ActionAdd(itemChild.ID, itemChild.NameModule)
+                                        @Grid.ActionEdit(itemChild.ID, itemChild.NameModule)
+                                        @Grid.ActionShow(itemChild.ID, itemChild.NameModule, itemChild.IsShow)
+                                        @Grid.ActionDelete(itemChild.ID, itemChild.NameModule)
+                                        @Grid.ActionSort(itemChild.ID, itemChild.NameModule)
+                                    </div>
+                                </span>
+                            </li>
+                                }
+                    </ul>
+                        }
+                </li>
+                }
+    </ul>
+
+</div>
+

@@ -1,0 +1,132 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMSupermarketItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về siêu thị đại lý
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên siêu thị</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Điện thoại</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Phone)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Address)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Kinh độ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Latitute)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Vĩ độ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Longitude)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Description)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Thứ tự hiện thị</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.OrderBy)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Người tạo</label>
+                        </td>
+                        <td>
+                            @Model.UserCreated
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Ngày cập nhật</label>
+                        </td>
+                        <td>
+                            @Model.DateUpdated.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Người cập nhật</label>
+                        </td>
+                        <td>
+                            @Model.UserUpdated
+                        </td>
+                    </tr>
+                 
+                    <tr>
+                        <td>
+                            <label>Hiện thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

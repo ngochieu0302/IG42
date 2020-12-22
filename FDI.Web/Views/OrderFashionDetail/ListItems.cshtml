@@ -1,0 +1,71 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelOrderDetailItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup size" />
+                    <col class="colgroup price" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center">STT</th>
+                    <th class="text-center"><a href="#Field=OrderID">Số HD</a></th>
+                    <th><a href="#Field=CustomerName">Sản phẩm</a></th>
+                    <th class="text-center"><a href="#Field=StartDate">Số lượng SX</a></th>
+                    <th class="text-center"><a href="#Field=StartDate">Ngày bắt đầu</a></th>
+                    <th class="text-center"><a href="#Field=UserCreate">Ngày nhận</a></th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItems != null)
+                {
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@(stt++)</td>
+                            <td class="text-center">@item.OrderID</td>
+                            <td>@item.ProductName</td>
+                            <td class="text-center">@item.Quantity</td>
+                            <td class="text-center">@item.StartDate.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-center">@item.EndDate.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-right">
+                                @Grid.ActionEdit(item.ID, item.ProductName, "fa-cogs")
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

@@ -1,0 +1,30 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.NewsItem>
+@{
+    var pageId = WebConfig.NewDetail;
+    var NewsId = WebConfig.NewsId;
+}
+
+<div class="list-news-other">
+    <h3><strong>Có thể bạn quan tâm</strong></h3>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-xs-6 col-sm-6 col-md-3">
+                <div class="item item-ef">
+                    <div class="img">
+                        <a href="/@(item.TitleAscii).html" title="@item.Title">
+                            <img data-original="@item.PictureUrl.Picture()" alt="" class="img-responsive lazyImg" style="">
+                            <span class="roll tie-news"></span>
+                        </a>
+
+                    </div>
+                    <div class="detail">
+                        <a href="/@(item.TitleAscii).html" title="@item.Title">@item.Title.SubString(50)</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

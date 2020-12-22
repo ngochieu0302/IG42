@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FDI.Simple.PacketItem>
+@{
+    Layout = "~/Views/Shared/_MetaNodeCustom.cshtml";
+    var date = DateTime.Now.AddMinutes(5);
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".massage-time").appendTo(".tabs-menu");
+        //callSelect2("#PacketItem", "130px");
+        callSelect2("#MinuteStartAll", "60px");
+        callSelect2("#HoursStartAll", "60px");
+    });
+</script>
+<ul class="massage-time">
+     <li><span>Giá trị gói: </span><b id="valuepaketshow"></b>' </li>
+      <li><span>Thời gian: </span><b id="timedatenow"></b></li>
+</ul>
+    <div class="navi-page-bar bar-massage">
+        <div class="navi-page-toolbar">
+            <div class="pull-left">
+                <a class="btn btn-sm btn-success Default" data-event="Default">Mặc định</a>
+            </div>
+            @*<div style="width: 135px; float: left; margin-left: 5px;">
+                <select name="PacketItem" id="PacketItem" class="select2">
+                    <option value="0" data-id="0" data-val="0" data-price="0">Chọn dịch vụ</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID" data-id="@(string.Join(",",item.LstProduct.Select(c=>c.ID)))" data-val="@item.Time" data-early="@item.IsEarly" data-price="@item.LstProduct.Sum(c=>c.PriceNew)">@item.Name</option>
+                    }
+                </select>
+            </div>*@
+            <input type="text" style="width: 100px; float: left; margin-left: 5px;" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Nhân viên">
+            <input type="text" style="width: 85px; float: left; margin-left: 5px;" class="form-control input-sm" id="Keywordbed" name="Keywordbed" placeholder="Tên giường">
+            <input type="text" style="width: 80px; float: left; margin:0 5px;" class="form-control input-sm" id="Keywordquantity" name="Keywordquantity" placeholder="Số lượng">
+            @*<div style="float: left; margin-left: 5px;">
+                   <i class="fa fa-clock-o"></i>
+                    <select name="HoursStartAll" id="HoursStartAll" class="select2">
+                        @for (int i = date.Hour; i <= 23; i++)
+                        {
+                            <option value="@i" >@i</option>
+                        }
+                    </select>
+
+                    <select name="MinuteStartAll" id="MinuteStartAll" class="select2">
+                        @for (int i = 0; i <= 59; i++)
+                        {
+                            <option value="@i" @(date.Minute == i ? "selected" : string.Empty)>@i</option>
+                        }
+                    </select>
+                </div>*@
+            <div class="btn-group pull-right">
+                <input type="hidden" class="form-control input-sm" id="ValuePacket" name="ValuePacket">
+                <input type="text" style="width: 120px; float: left; margin: 0 4px;" class="form-control input-sm" id="QuantityPacket" name="QuantityPacket" placeholder="Số lượng giường">
+                <a class="btn btn-sm btn-primary" data-event="OrderAll" style="margin-right: 5px;"><i class="fa fa-shopping-cart"></i></a>
+               @* <a class="btn btn-sm btn-success" data-event="PayAll" style="margin-right: 5px;"><i class="fa fa-credit-card"></i></a>*@
+                  
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Tác vụ
+                <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a data-event="view" title="Đơn hàng" href="/order" target="_blank">
+                            <i class="icon-bell"></i>Đơn hàng
+                        </a>
+                    </li>
+                    @*<li>
+                        <a data-event="view" title="Đơn đặt hàng" href="/contactorder" target="_blank">
+                            <i class="icon-shield"></i>Đơn đặt hàng
+                        </a>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-control content-massage" id="Griditems"></div>

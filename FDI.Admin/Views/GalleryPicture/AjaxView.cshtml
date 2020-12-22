@@ -1,0 +1,98 @@
+﻿@using FDI.CORE
+@model FDI.Base.Gallery_Picture
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về hình ảnh
+            </div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <label>Tên hình ảnh</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Mô tả</label>
+                    </td>
+                    <td>
+                        @Html.Raw(Model.Description)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Hình ảnh đại diện</label>
+                    </td>
+                    <td>
+                        <img src="@((Model.Folder + Model.Url).Picture())" class="img-responsive" style="max-width: 200px;" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Chuyên mục thư viện</label>
+                    </td>
+                    <td>
+                        @((Model.CategoryID.HasValue) ? Model.Category.Name : "...")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Hiển thị</label>
+                    </td>
+                    <td>
+                        @Grid.DisplayShow(Model.Name, Model.IsShow)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Ngày thêm</label>
+                    </td>
+                    <td>
+                        @Model.DateCreated.Value.Format("dd/MM/yyyy")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Nhân viên thêm mới</label>
+                    </td>
+                    <td>
+                        @Model.CreateBy
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Nhân viên chỉnh sửa</label>
+                    </td>
+                    <td>
+                        @Model.UpdateBy
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

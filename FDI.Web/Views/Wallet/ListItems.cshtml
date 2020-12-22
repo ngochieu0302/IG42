@@ -1,0 +1,76 @@
+﻿@model FDI.Simple.ModelWalletItem
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup price" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry"/>
+                    <col class="colgroup salarry"/>
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center">ID</th>
+                    <th><a href="#Field=CustomerName">Khách hàng</a></th>
+                    <th class="text-center"><a href="#Field=Phone">Điện thoại</a></th>
+                    <th class="text-center">Ví nạp<br>(A)</th>
+                    <th class="text-center">Rút tiền<br>(B)</th>
+                    <th class="text-center">Hiện còn<br> (C = A - B)</th>
+                    <th class="text-right">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItems != null)
+                {
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@(stt++)</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.Customerphone</td>
+                            <td class="text-right"><a href="/WalletCustomerHistory?cusId=@(item.ID)" title="Xem chi tiết">@item.WalletCus.Money()</a></td>
+                            <td class="text-right"><a href="/WalletOrderHistory?cusId=@(item.ID)" title="Xem chi tiết">@item.WalletOrder.Money()</a></td>
+                            <td class="text-right">@((item.WalletCus - item.WalletOrder).Money())</td>
+                            <td class="text-center"><a class="btn btn-sm btn-primary" href="/WalletCustomerHistory?cusId=@(item.ID)">Chi tiết</a></td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".gridView thead a").click(function () {
+            window.location.href = $(this).attr("href") + "&" + getValueFormMutilSelect("#gridSearch");
+            return false;
+        });
+    });
+</script>

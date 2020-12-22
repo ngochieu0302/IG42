@@ -1,0 +1,185 @@
+﻿@using Admin
+@model FDI.Base.Order
+@{
+    ViewBag.Title = ViewBag.ActionText + " sản phẩm";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<script src="/Areas/Admin/Content/js/order.js"></script>
+<script>
+    $('input[type=radio][name=PaymentMethodId]').change(function () {
+        if (this.value == '2') {
+            $("#BankId").removeClass("hiddensl");
+        } else {
+            $("#BankId").addClass("hiddensl");
+        }
+    });
+    $(function () {
+        $("#submitForm").submit(function (e) {
+            $.post(urlPostAction, $("#submitForm").serialize(), function (data) {
+                if (data.Erros)
+                    createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                else {
+                    $("#dialog-form").dialog('close'); //Đóng form thêm mới - sửa
+                    var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                    createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<style>
+    .hiddensl {
+        display: none !important;
+    }
+
+    .autocomplete-suggestions div {
+        border-bottom: rgba(204, 204, 204, 0.40) 1px solid;
+        padding: 10px !important;
+    }
+</style>
+<form id="submitForm">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+    <input type="hidden" id="listValueFileAttach" name="listValueFileAttach" />
+    <input type="hidden" id="listValueFileAttachRemove" name="listValueFileAttachRemove" />
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thông tin đơn hàng</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    @*<div class="form-group">
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                        <div class="col-lg-12" style="margin-top: 10px">
+                            <table class="gridView" id="ProductDetail" cellspacing="1">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã hàng</th>
+                                        <th>Tên hàng</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá bán</th>
+                                        <th>Thành tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>*@
+                    @*<div class="form-group">
+                        <section class="panel panel-default">
+                            <header class="panel-heading font-bold">thông tin đơn hàng</header>
+                        </section>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Mã hóa đơn</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="OrderCode" id="OrderCode" class="form-control" readonly="" value="@Model.OrderCode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Khách hàng</label>
+                        <div class="col-lg-10">
+                            <input type="hidden" class="form-control" name="CustomerID" id="CustomerID" value="@Model.CustomerID"/>
+                            <input type="text" class="form-control" id="customer" placeholder="Nhập mã hoặc tên khách hàng" value="@(Model.Customer != null ? Model.Customer.FullName : "")"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Ngày bán</label>
+                        <div class="col-lg-3">
+                            <input class="input-sm date-picker form-control valid" id="NgayBan" name="NgayBan" size="16" type="text" value="@(Model.DateCreated == null?DateTime.Now.ToString("dd/MM/yyyy"):Model.DateCreated.Value.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                        </div>
+                        @*<label class="col-lg-2 control-label">Nhân viên</label>
+                        <div class="col-lg-4">
+                            <select class="form-control" id="UserID" name="UserID">
+                                @foreach (var item in ViewBag.lstUser)
+                                {
+                                    <option value="@item.UserName" @(item.UserName == Model.UserID ? "selected" : "")>@item.UserName</option>
+                                }
+                            </select>
+                        </div>*@
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Ghi chú</label>
+                        <div class="col-lg-10">
+                            <textarea name="Note" id="Note" rows="3" class=" form-control">@Model.Note</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Hình thức TT</label>
+                        <div class="col-lg-10">
+                            <div class="col-lg-2">
+                                <input name="PaymentMethodId" type="radio" @(Model.PaymentMethodId == (int)PmMethod.tm ? "checked" : "") value="@((int)PmMethod.tm)">
+                                Tiền mặt
+                            </div>
+                            <div class="col-lg-2">
+                                <input name="PaymentMethodId" type="radio" @(Model.PaymentMethodId == (int)PmMethod.th ? "checked" : "")  value="@((int)PmMethod.th)">
+                                Thẻ
+                            </div>
+                            <div class="col-lg-3">
+                                <input name="PaymentMethodId" type="radio" @(Model.PaymentMethodId == (int)PmMethod.ck ? "checked" : "")  value="@((int)PmMethod.ck)">
+                                Chuyển khoản
+                            </div>
+                            <div class="col-lg-5">
+                                <select class="form-control @(Model.PaymentMethodId != (int)PmMethod.ck ? "hiddensl" : "")" id="BankId" name="BankId">
+                                    <option value=""></option>
+                                    @foreach (var item in ViewBag.Bank)
+                                    {
+                                        <option value="@item.ID" @(Model.BankId==item.ID?"selected":"")>@item.AccountNumber - @item.Name - @item.BankName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Tổng nguyên giá</label>
+                        <div class="col-lg-10">
+                            <label class="control-label" id="OrderPrice" data-price="@Model.OrderDetails.Sum(c => c.Price * c.Quantity)">@string.Format("{0:0,0}", @Model.OrderDetails.Sum(c => c.Price * c.Quantity)).Replace(".",",")</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Giảm giá</label>
+                        <div class="col-lg-10">
+                            @*<input type="text" class="form-control maskPrice textright" name="giamgia" id="giamgia" value="0" />*@
+                            <label class="control-label">@string.Format("{0:0,0}", Model.OrderDetails.Sum(c => c.Price * c.Sale / 100)).Replace(".",",")</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"><b>Tiền thanh toán</b></label>
+                        <div class="col-lg-10">
+                            <label class="control-label" id="TotalPrice">@string.Format("{0:0,0}", Model.OrderDetails.Sum(c => c.Price * c.Quantity - c.Price * c.Quantity * c.Sale / 100)).Replace('.',',')</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Tiền khách đưa:</label>
+                        <div class="col-lg-4">
+                            <input type="text" id="excess-cash" name="excess" class="form-control maskPrice" value="@Model.PayMent" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Tiền Thừa:</label>
+                        <div class="col-lg-8">
+                            <label class="control-label" id="txtexcesscash">@string.Format("{0:0,0}",Model.PayMent - Model.OrderDetails.Sum(c => c.Price * c.Quantity - c.Price * c.Quantity * c.Sale / 100)).Replace(".",",")</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-8">
+                            @Html.CheckBox("IsActive") Duyệt hóa đơn
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+                        @*<button id="btn_Save" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>*@
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</form>
+

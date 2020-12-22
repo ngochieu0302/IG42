@@ -1,0 +1,20 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.ModelDNNewsCommentItem
+@foreach (var itemCommentChild in Model.ListItem.OrderBy(m => m.ID))
+{
+    <div class="media">
+        <div class="media-left">
+            <img class="media-object" alt="" src="/Content/Admin/images/avatar1.jpg">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a href="#">@itemCommentChild.UserName</a>
+                <span class="c-date"><i>@Utility.TimeAgo(ConvertDate.DecimalToDate(itemCommentChild.DateCreated))</i></span>
+            </h4>
+            @itemCommentChild.Message
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,235 @@
+﻿@model FDI.Base.Shop_Product
+@{
+    ViewBag.Title = ViewBag.ActionText + " sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    var urlAutocomplete = '@Url.Action("AutoSystemTag", "SystemTag")';
+    Array.prototype.remove = function (el) {
+        var idx = this.indexOf(el);
+        if (idx != -1) {
+            this.splice(idx, 1);
+        }
+        return this;
+    };
+    function removeTag(id) {
+        var arrId = $('#values-arr-tag').val();
+        var arrIds = arrId.split(',');
+        arrIds.remove(id);
+        $('#values-arr-tag').val(arrIds.toString());
+        $("#listTagAttachRemove span[id='" + id + "']").parent().remove();
+    }
+    $(function () {
+        registerGallery();
+        LoadCKEDITOR('Details', true);
+        var urlSelectCategory = '@Url.Action("AjaxTreeCategorySelect", "Category", new { pageId = (int)FDI.Utils.ModuleType.Product })';
+        $(".maskPrice").mask('000.000.000.000.000', { reverse: true });
+        $(".quantity").mask('00000', { reverse: true });
+        $("#tag").keypress(function (e) {
+            if (e.keyCode == 13) {
+                valuesAdd = trim12($(this).val());
+                if (valuesAdd == '')
+                    createMessage('Đã có lỗi xảy ra.', 'Bạn phải nhập vào từ khóa tìm kiếm');
+                return false;
+            }
+        });
+        $('#tag').autocomplete({
+            serviceUrl: urlAutocomplete,
+            minChars: 1,
+            delimiter: /(;)\s*/, // regex or character
+            maxHeight: 400,
+            onSelect: function (el) {
+                var arrId = $('#values-arr-tag').val();
+                var __arrID = [];
+                if (arrId.length > 0)
+                    __arrID = arrId.split(',');
+                __arrID.push(el.data);
+                $('#tag').val("");
+                $("#values-arr-tag").val(__arrID.join(","));
+                var _product = "<li><span class='label label-success' title=" + el.value + " id=" + el.data + ">" + el.value + " <a title=\"Xóa tag đính kèm: " + el.value + "\" href=\"javascript:removeTag(" + el.data + ");\"><img border=\"0\" src=\"/Content/Admin/Images/gridview/act_filedelete.png\"></a></span></li>";
+                $('#listTagAttachRemove').append(_product);
+            },
+        });
+        $("#selectCategory").click(function () {
+            var valuesSelected = $("#Value_CategoryValues").val();
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Chọn chuyên mục bài viết");
+            $("#dialog-form-2 #dialog-form-ajax").load(encodeURI(urlSelectCategory + "&valuesSelected=" + valuesSelected));
+            $('#dialog-form-2').modal('show');
+            return false;
+        });
+        $("#frm-modal").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    
+                },
+                NameAscii:
+                {
+                    minlength: 3,
+                    
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn.",
+                    
+                },
+                NameAscii:
+                {
+                    minlength: "Tên quá ngắn.",
+                    maxlength: 255,
+                    
+                }
+            },
+            submitHandler: function () { //onSubmit
+                //var cate = $("#Value_CategoryValues").val();
+                //if (cate === "") {
+                //    $("#errorCategory").show();
+                //    return false;
+                //}
+                //var pictureId = $("#Value_Images").val();
+                //if (pictureId === "") {
+                //    $("#errorPicture").show();
+                //    return false;
+                //}
+                updateEditor();
+                //$('.maskPrice').each(function (i) {
+                //    $(this).val($(this).val().replace(/\./g, ''));
+                //});
+                $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $('#dialog-form').modal('hide');
+                        $('#dialog-form #dialog-form-ajax').html('');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+       
+        $("#Name").on('keyup', function (e) {
+            e.preventDefault();
+            $('#NameAscii').val(RemoveUnicode($(this).val()));
+            $('#SEOTitle').val($(this).val());
+            $('#SEODescription').val($(this).val());
+            $('#SEOKeyword').val($(this).val());
+        });
+    });
+    //$.validator.addMethod('NumberNotZero', function (value) {
+    //    return Number(value) > 0;
+    //}, 'Cần chọn một giá trị.');
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" id="listValueFileAttach" name="listValueFileAttach" />
+        <input type="hidden" id="listValueFileAttachRemove" name="listValueFileAttachRemove" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>                            
+                        </div>      
+                        <div class="form-group">                           
+                            <label class="col-sm-2 control-label">Icon</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Code" id="Code" value="@Model.CodeSku" />
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Danh mục</label>
+                            <div class="col-sm-10">
+                                <button id="selectCategory" type="button" class="btn btn-sm btn-primary"><span class="fa fa-bars"></span>Chọn chuyên mục</button>
+                                <label id="errorCategory" class="error" style="display: none">Chưa chọn chuyên mục.</label>
+                                <input type="hidden" name="Value_CategoryValues" id="Value_CategoryValues" value="@string.Join(", ", Model.Categories.Select(c => c.Id))" />
+                                <div id="Text_CategoryValues" class="checkBoxValues">@string.Join(", ", Model.Categories.Select(c => c.Name))</div>
+                            </div>
+                        </div>*@
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" data-type="gallery" data-type-value="2" data-multi="false" data-container="Images" data-value="Value_Images"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_Images" id="Value_Images" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_Images">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.Gallery_Picture.ID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.Gallery_Picture.ID" data-ctn="Images"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.Gallery_Picture.Name</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Ảnh sản phẩm</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" data-type="gallery" data-type-value="2" data-multi="true" data-container="ImagesProducts" data-value="Value_ImagesProducts">
+                                    <span class="fa fa-camera-retro"></span>Chọn hỉnh ảnh sản phẩm
+                                </button>
+                                <input type="hidden" name="Value_ImagesProducts" id="Value_ImagesProducts" value="@string.Join(",", Model.Gallery_Picture1.Select(c => c.ID))" data-multi="true" />
+                                <div id="Text_ImagesProducts">
+                                    <div class="gridView list-images-popup">
+                                        @foreach (var item in Model.Gallery_Picture1)
+                                        {
+                                            <div class="image-product">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(item.Folder + item.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@item.ID" data-ctn="ImagesProducts"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@item.Name</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @Html.CheckBox("IsShow")Hiển thị
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

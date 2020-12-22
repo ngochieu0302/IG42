@@ -1,0 +1,128 @@
+﻿@model List<FDI.Simple.CategoryItem>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<link href="~/Content/Admin/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+<script src="~/Content/Admin/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="~/Content/Admin/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var st = 0;
+        var txt = '<tr><td class="text-center" class="stt-images">sttID</td><td class="image"><img src="urlimage"></td><td><input class="form-control itemValue" data-Root="imageRoot" value="imageName" ></td><td class="text-center"><a href="javascript:void(0)" class="btnDelete"><i class="fa fa-trash"></i></a></td></tr>';
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            url: '@Url.Action("UploadFiles", "GalleryVideo")',
+            autoUpload: true,
+            done: function (e, data) {
+                if (data.result.Error != true) {
+                    $("#txtError").html("");
+                    var ch = txt.replace("urlimage", data.result.Icon);
+                    ch = ch.replace("imageName", data.result.NameRoot);
+                    ch = ch.replace("sttID", st);
+                    ch = ch.replace("imageRoot", data.result.Name);
+                    $("#lstUpload tbody").append(ch);
+                } else {
+                    $("#txtError").html(data.result.Name);
+                }
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress .progress-bar').css('width', progress + '%');
+        });
+
+        $("#GalleryPictureFormUpdate").validate({
+            submitHandler: function () { //onSubmit
+                $('#submitPictureUpdate').prop('disabled', true);
+                var lstP = [];
+                $('.itemValue').each(function () {
+                    var item = {
+                        Url: $(this).attr("data-Root"),
+                        Name: $(this).val()
+                    }
+                    lstP.push(item);
+                    $("#lstFile").val(JSON.stringify(lstP));
+                });
+                if (lstP.length > 0) {
+                    $.post("@Url.Action("Actions", "DocumentFiles")", $("#GalleryPictureFormUpdate").serialize(), function (data) {
+                        debugger;
+                        $('#submitPictureUpdate').prop('disabled', false);
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form-4").modal("hide");
+                            $("#dialog-form-4 #dialog-form-ajax").html("");
+                            toastr["success"](data.Message);
+                        }
+                    });
+                } else {
+                    $('#submitPictureUpdate').prop('disabled', false);
+                    toastr["error"]("Chưa có hình ảnh nào được upload.");
+                }
+                return false;
+            }
+        });
+        $("#lstUpload").on("click", ".btnDelete", function () {
+            $(this).parent().parent().remove();
+        });
+    });
+</script>
+
+<form id="GalleryPictureFormUpdate">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="type" id="type" value="4" />
+        <input type="hidden" id="lstFile" name="lstFile" value="">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thêm mới file tài liệu
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-3 col-md-2">
+                            <span class="control-label">Chọn Files upload</span>
+                        </div>
+                        <div class="col-sm-9 col-md-10">
+                            <span class="btn btn-success fileinput-button">
+                                <i class="fa fa-upload"></i>
+                                <span>Chọn Files</span>
+                                <input id="fileupload" type="file" name="files[]" multiple>
+                            </span>
+                            <span style="color:red" id="txtError"></span>
+                            <div id="progressall" class="progress" style="margin-top: 10px;">
+                                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                    <span class="sr-only">0% complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped" id="lstUpload">
+                        <colgroup>
+                            <col style="width: 60px" />
+                            <col style="width: 96px" />
+                            <col />
+                            <col style="width: 72px" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="text-center">STT</th>
+                                <th>Loại file</th>
+                                <th>Tên file (<i>Có thể đổi tên file</i>)</th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="submitPictureUpdate" type="submit" class="btn btn-sm btn-success">Nhập file vào hệ thống</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

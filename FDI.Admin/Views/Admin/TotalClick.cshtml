@@ -1,0 +1,18 @@
+﻿@model @FDI.Simple.ModelNewsItem
+<div class="col-sm-6">
+    <section class="panel panel-default">
+        <div class="text-center wrapper bg-light lt">
+            <div class="sparkline inline" data-type="pie" data-height="165" data-slice-colors="['#77c587','#41586e','#f2f2f2']">45000,23200,15000</div>
+        </div>
+        <ul class="list-group no-radius">
+            @foreach (var item in Model.GetListTopClick.Take(3))
+            {
+                <li class="list-group-item">
+                    <span class="pull-right">@item.clicked</span>
+                    <span class="label bg-primary">@item.clicked</span>
+                    @item.Title
+                 </li>
+            }
+        </ul>
+    </section>
+</div>

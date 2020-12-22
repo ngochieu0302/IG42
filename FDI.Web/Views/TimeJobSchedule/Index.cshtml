@@ -1,0 +1,75 @@
+﻿@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+    var datenow = DateTime.Now;
+}
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <select id="YearId" name="YearId" class="select2">
+                    @for (var i = 2017; i < datenow.Year + 3; i++)
+                    {
+                        <option @(i == datenow.Year ? "selected" : "") value="@i">@i</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-sm btn-success" id="_back"><i class="fa fa-angle-left"></i></button>
+                <select id="MonthId" name="MonthId" class="select2">
+                    @for (var i = 1; i < 13; i++)
+                    {
+                        <option @(i == datenow.Month ? "selected" : "") value="@i">Tháng @i</option>
+                    }
+                </select>
+                <button class="btn btn-sm btn-success" type="button" id="_next"><i class="fa fa-angle-right"></i></button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        callSelect2("#YearId", '70px');
+        callSelect2("#MonthId", '90px');
+        var d = new Date();
+        var n = d.getFullYear();
+        var month = parseInt($("#MonthId").val());
+        function getMonth() {
+            month = parseInt($("#MonthId").val());}
+        $('body').on("change", "#YearId", function () {
+            var year = $("#YearId").val();
+            $.post(urlLists + "?&year=" + year + "&month=" + month, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+        $('body').on("change", "#MonthId", function () {
+            getMonth();
+            $.post(urlLists + "?year=" + n + "&month=" + month, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+
+        $("#_back").click(function () {
+            if (month > 0) {
+                month = month - 1;
+                $('#MonthId').val(month).trigger("change");
+                $.post(urlLists + "?year=" + n + "&month=" + month, function (data) {
+                    $("#Griditems").html(data);
+                });
+            }
+        });
+
+        $("#_next").click(function () {
+            if (month <= 12) {
+                month = month + 1;
+                $('#MonthId').val(month).trigger("change");
+                $.post(urlLists + "?year=" + n + "&month=" + month, function (data) {
+                    $("#Griditems").html(data);
+                });
+            }
+        });
+    });
+</script>

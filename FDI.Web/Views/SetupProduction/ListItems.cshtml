@@ -1,0 +1,64 @@
+﻿@model FDI.Simple.ModelSetupProductionItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col  />
+                    <col />
+                    <col class="colgroup size" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Name">Tên thiết lập</a></th>
+                        <th><a href="#Field=Description">Mô tả</a></th>
+                        <th><a href="#Field=Name">(%)</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItem != null)
+                    {
+                        foreach (var item in Model.ListItem)
+                        {
+                            <tr data-id="@item.ID" title="@item.Name">
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td class="text-center">@item.ID</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Percent</td>
+                                <td class="text-right">
+                                    @Grid.ActionEdit(item.ID, item.Name)
+                                    @Grid.ActionDelete(item.ID, item.Name)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

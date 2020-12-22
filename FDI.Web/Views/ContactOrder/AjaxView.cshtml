@@ -1,0 +1,100 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ContactOrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin đặt hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Khách hàng</label>
+                        </td>
+                        <td>
+                            @Model.CustomerName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số đt</label>
+                        </td>
+                        <td>
+                            @Model.CutomerPhone
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Model.CutomerAddress
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy HH:mm")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Vị trí</label>
+                        </td>
+                        <td>
+                            @Model.BedDeskName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.LstOrderDetailItems.Sum(c => c.Price * c.Quantity))
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cart-plus"></i>Chi tiết đơn hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    @foreach (var item in Model.LstOrderDetailItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(string.IsNullOrEmpty(item.ComboName) ? item.ProductName : item.ComboName)</td>
+                            <td>@string.Format("{0:0,0}", item.Price)</td>
+                            <td>@item.Quantity</td>
+                            <td>@string.Format("{0:0,0}", item.Price*item.Quantity)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>	

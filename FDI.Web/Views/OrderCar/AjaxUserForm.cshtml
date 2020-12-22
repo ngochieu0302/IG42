@@ -1,0 +1,114 @@
+﻿@using FDI.CORE
+@model IEnumerable<FDI.Simple.NCCDiscountItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        var count = parseInt('@Model.Count()');
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                },
+
+                Mobile: {
+                    required: true,
+                    minlength: 9
+                },
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+
+                Mobile: {
+                    required: "Nhập SĐT.",
+                    minlength: "Tên quá ngắn",
+                }
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+        var stt = 0;
+        $("#Add").click(function (e) {
+            e.preventDefault();
+            stt++;
+            var html = '<div class="list-add-ncc" id="id_add_' + stt + '"">' +
+                '<div class="item"><input type="text" class="form-control" placeholder="Tên chiết khấu" name="Name_add_' + stt + '" value="" /></div>' +
+                '<div class="item"><input type="text" class="form-control" placeholder="% Chiết khấu" name="Percent_add_' + stt + '"/></div>' +
+                '<div class="item"><input type="text" class="form-control" placeholder="Từ giá" name="PriceS_add_' + stt + '" /></div>' +
+                '<div class="item"><input type="text" class="form-control" placeholder="Đến giá" name="PriceE_add_' + stt + '" /></div>' +
+                '<div class="item"><input type="text" class="form-control" placeholder="Thứ tự" name="Soft_add_' + stt + '" value="' + (stt + count)+'" /></div>' +
+                '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div >';
+            $("#content-ncc").append(html);
+            $("#Delete_" + stt).click(function (e) {
+                e.preventDefault();
+                var id = $(this).data("id");
+                $("#" + id).remove();
+            });
+            $("#do_stt").val(stt);
+        })
+        $(".C_Delete").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#" + id).remove();
+        })
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.ItemId" />
+        <input type="hidden" name="do_stt" id="do_stt" value="0" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về Chiết khấu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <a id="Add" href="#" class="btn btn-success" style="margin-bottom: 15px;"><span class="fa fa-plus"></span>Thêm</a>
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div id="content-ncc">
+                            @foreach (var item in Model.OrderBy(m => m.Soft))
+                            {
+                                <div class="list-add-ncc" id="id_@item.ID">
+                                    <div class="item">
+                                        <input type="text" class="form-control" placeholder="Tên chiết khấu" name="Name_@item.ID" id="Name_@item.ID" value="@item.Name" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control" placeholder="% Chiết khấu" name="Percent_@item.ID" id="Percent_@item.ID" value="@item.Percent" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control" placeholder="Từ giá" name="PriceS_@item.ID" id="PriceS_@item.ID" value="@item.PriceS" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control" placeholder="Đến giá" name="PriceE_@item.ID" id="PriceE_@item.ID" value="@item.PriceE" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control" placeholder="Thứ tự" name="Soft_@item.ID" id="Soft_@item.ID" value="@item.Soft" />
+                                    </div>
+                                    <div class="item-button">
+                                        <a class="C_Delete btn btn-sm btn-block btn-danger" data-id="id_@item.ID" href="#">Xóa</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

@@ -1,0 +1,24 @@
+﻿@model FDI.Simple.ModelHtmlMapItem
+@{
+    var edit = (int?)Session["editPage"];
+    var admin = User.Identity.IsAuthenticated && User.IsInRole("Admin") && edit == 1;
+}
+
+@if (edit == 1 && admin)
+{
+    <div style="clear:both"></div>
+    <div class="box-HTML" >
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <a class="btn-setting-edithtml" data-toggle="modal" data-target="#modalSettingModule" data-id="@Model.HtmlMapItem.IdModule"><i class="ion-paintbrush"></i>HTML</a>
+        <div>
+            @if (Model != null)
+            {
+                @Html.Raw(Model.HtmlMapItem.Value)
+            }
+        </div>
+    </div>
+}
+else if (Model != null)
+{
+    @Html.Raw(Model.HtmlMapItem.Value)
+}

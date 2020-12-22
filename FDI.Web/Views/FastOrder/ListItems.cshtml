@@ -1,0 +1,101 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelOrderDetailItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+
+                        <th><a href="#Field=ID">Order ID</a></th>
+                        <th><a href="#Field=Name">Khách hàng</a></th>
+                        <th><a href="#Field=Address">SĐT</a></th>
+                        <th><a href="#Field=Address">Giờ nhận</a></th>
+                        <th><a href="#Field=Phone">Sản phẩm</a></th>
+                        <th>Trạng thái</th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var groups = Model.ListItems.GroupBy(m => new { m.OrderID, m.CustomerPhone, m.CustomerName });
+                    }
+                    @foreach (var group in groups)
+                    {
+                        var dateGroups = group.GroupBy(m => m.ReceiveDate);
+
+                        var dateGroupsCount = dateGroups.Count() + 1;
+                        var groupCount = group.Count();
+                        var rows = groupCount > 1 ? "rowspan=" + (groupCount + 1 + dateGroups.Count()) : "";
+                        if (groupCount == 1)
+                        {
+                            <tr>
+                                <td>@group.Key.OrderID</td>
+                                <td>@group.Key.CustomerName</td>
+                                <td>@group.Key.CustomerPhone</td>
+                                <td>@group.FirstOrDefault().ReceiveDate.DecimalToString("HH")</td>
+                                <td>@group.FirstOrDefault().ProductName</td>
+                                <td>@group.FirstOrDefault().Status</td>
+                                <td class="text-center">
+                                    @Grid.ActionDelete(group.FirstOrDefault().GID, "")
+                                </td>
+                            </tr>
+                            continue;
+                        }
+
+                        <tr>
+                            <td @rows>@group.Key.OrderID</td>
+                            <td @rows>@group.Key.CustomerName</td>
+                            <td @rows>@group.Key.CustomerPhone</td>
+                        </tr>
+
+                        foreach (var dateGroup in dateGroups)
+                        {
+                            <tr>
+
+                                @if (dateGroup.Count() > 1)
+                                {
+
+                                    <td rowspan="@(dateGroup.Count()+1)">@dateGroup.Key.DecimalToString("HH")</td>
+                                }
+                                else
+                                {
+                                    <td rowspan="2">@dateGroup.Key.DecimalToString("HH")</td>
+                                }
+                            </tr>
+
+
+
+                            foreach (var order in group.Where(m => m.ReceiveDate == dateGroup.Key))
+                            {
+                                <tr>
+                                    <td>@order.ProductName</td>
+                                    <td>@order.Status</td>
+                                    <td class="text-center">
+                                        @Grid.ActionDelete(order.GID, "")
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

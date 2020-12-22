@@ -1,0 +1,10 @@
+﻿@model List<FDI.Simple.VoteItem>
+@foreach (var item in Model)
+{
+	<b>ID tiêu chí: </b>  @item.ID<br />
+	<b>Tên tiêu chí: </b> @item.Name<br />
+	<b>Giá trị:</b> @item.Value<br />
+	<b>Tổng mọi giá trị: </b> @item.TotalValue<br />
+	<hr />
+	<hr />
+}

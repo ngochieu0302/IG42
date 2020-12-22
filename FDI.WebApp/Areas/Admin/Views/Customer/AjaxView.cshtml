@@ -1,0 +1,68 @@
+﻿@using FDI.Utils
+@model FDI.Base.Customer
+@{    
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin về khách hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tên đăng nhập</label>
+                        </td>
+                        <td>@Model.UserName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Email</label>
+                        </td>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giới tính</label>
+                        </td>
+                        <td>@(Model.Gender.HasValue ? Model.Gender.Value ? "Nam" : "Nữ" : "")</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày sinh</label>
+                        </td>
+                        <td>@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số điện thoại</label>
+                        </td>
+                        <td>@Model.Mobile</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Trạng thái</label>
+                        </td>
+                        <td>@(Model.IsActive == true ? "Đã kích hoạt" : "Chưa kích hoạt")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

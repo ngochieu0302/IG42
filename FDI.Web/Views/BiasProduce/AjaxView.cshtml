@@ -1,0 +1,65 @@
+﻿@model FDI.Simple.BiasProduceItem
+@using FDI.CORE
+@{
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin lệnh sản xuất
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 15%">Tên Lệnh sx</th>
+                        <td>@Model.Name</td>
+                        <th>Số lượng sx</th>
+                        <td>@Model.Quantity</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày bắt đầu</th>
+                        <td>@Model.StartDate.DecimalToString("dd/MM/yyyy")</td>
+                        <th>Ngày kết thúc</th>
+                        <td>@Model.EndDate.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>tên sản phẩm</th>
+                        <td>@Model.ProductName</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cart-plus"></i>Chi tiết công việc
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Công việc</th>
+                        <th>Người thực hiện</th>
+                        <th>Tên đăng nhập</th>
+                    </tr>
+                    @foreach (var item in Model.LstCostProductUserItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.SetupProductName</td>
+                            <td>@item.FullName</td>
+                            <td>@item.UserName</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

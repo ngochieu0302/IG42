@@ -1,0 +1,99 @@
+﻿@model FDI.Simple.ModelFileObj
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var indexOfFile = 0;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#GalleryPictureFormUpdate").validate({
+            rules: {
+                CategoryID: { required: true },
+                @for (var i = 0; i < Model.ListItem.Count; i++)
+                {
+                @Html.Raw("ImageName_" + i + " : {required: true, minlength: 3},")
+                @Html.Raw("ImageDescription_" + i + " : {minlength: 3},")
+                }
+            },
+            messages: {
+                CategoryID: "Bạn chưa chọn chuyên mục.",
+                @for (var i = 0; i < Model.ListItem.Count; i++)
+                {
+                @Html.Raw("ImageName_" + i + " : {required: 'Trường này là bắt buộc.', minlength: 'Tên quá ngắn.'},")
+                @Html.Raw("ImageDescription_" + i + " : {minlength: 'Mô tả quá ngắn.'},")
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlFormPictureSubmit, $("#GalleryPictureFormUpdate").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form-3").modal("hide");
+                        $("#dialog-form-3 #dialog-form-ajax").html("");
+                        var linkFW = "#Page=" + getParameters("Page", 1) + "&RowPerPage=" + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFW + "&itemId=" + data.ID + "&message=" + data.Message + "&temp=" + Math.floor(Math.random() * 11) + "");
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+<form id="GalleryPictureFormUpdate">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@Model.Action" />
+        <input type="hidden" name="NumberOfImage" value="@Model.ListItem.Count" />
+        <input type="hidden" name="type" id="type" value="@Model.Type" />
+        <h5><b>Cập nhật thông tin hình ảnh cho album.</b></h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 150px"><b>Chuyên mục ảnh</b></th>
+                    <th>
+                        <select name="CategoryID" id="CategoryID" class="form-control">
+                            <option value="">--- Chọn chuyên mục ---</option>
+                            @foreach (var item in Model.ListCategoryItem)
+                            {
+                                <option value="@item.ID" @((Model.CategoryId == item.ID) ? " selected" : string.Empty)>@item.Name</option>
+                            }
+                        </select>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var fileObj in Model.ListItem)
+                {
+                    var name = fileObj.Name.Split('.');
+                    var urlimage = FomatString.Slug(name[0]) + '.' + name[1];
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img title="@fileObj.Name.Replace(fileObj.Type, "")" src="@urlimage.TempPicture()" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input class="form-control" class="ImageName" type="text" value="@fileObj.Name.Replace(fileObj.Type, "")" name="ImageName_@(indexOfFile)" />
+                                <input type="hidden" value="@fileObj.Name" name="ImageFile_@(indexOfFile)" />
+                            </div>
+                        </td>
+                    </tr>
+                    indexOfFile++;
+                }
+                @foreach (var fileObj in ListFoder.Image())
+                {
+                    <label class="">
+                        <input type="checkbox" name="ckImage_@fileObj.Value" value="@fileObj.Value" @(fileObj.Value == 1 ? "checked" : "") />
+                        @fileObj.Key
+                    </label>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button id="submitPictureUpdate" type="submit" class="btn btn-sm btn-success">Nhập ảnh vào hệ thống</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

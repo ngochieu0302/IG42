@@ -1,0 +1,15 @@
+﻿@model dynamic
+
+@RenderBody()
+<script>
+    $(document).ready(function() {
+        mask();
+        $("#close").click(function() {
+            $("#dialog-form").modal('hide');
+        });
+    });
+    function mask() {
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+        $(".mask").mask('000,000,000', { reverse: true });
+    }
+</script>

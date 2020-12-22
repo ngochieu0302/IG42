@@ -1,0 +1,78 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.ModelWalletOrderHistoryItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Fullname">Họ tên</a></th>
+                        <th><a href="#Field=PeoplesIdentity">CMND</a></th>
+                        <th><a href="#Field=Phone">Số ĐT</a></th>
+                        <th><a href="#Field=TotalPrice">Số tiền</a></th>
+                        <th class="text-center"><a href="#Field=CreatedOnUtc">Ngày nạp</a></th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        if (Model.ListItem != null)
+                        {
+                            foreach (var item in Model.ListItem)
+                            {
+                        <tr title="@item.Name">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@item.ID</td>
+                            <td>@item.Name</td>
+                            <td>@item.CMTND</td>
+                            <td>@item.Phone</td>
+                            <td>@item.TotalPrice.Money()</td>
+                            <td>@item.DateCreate.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="text-center"><a class="btn btn-sm btn-primary" href="/WalletOrderHistory?cusId@(item.CustomerID)">Chi tiết</a></td>
+                        </tr>
+                            }
+                        }
+                        else
+                        {
+                        <tr title="Chưa có người nạp tiền trong hệ thống">
+                            <td colspan="8" style="color: red"><b>Chưa có người nạp tiền trong hệ thống</b></td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

@@ -1,0 +1,78 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModuleShopProductValueItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var i = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup price" />
+                    <col />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup date" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th><a href="#">STT</a></th>
+                    <th><a href="#Field=Name">Tên Nguyên liệu</a></th>
+                    <th><a href="#Field=UnitName">Đơn vị</a></th>
+                    <th><a href="#Field=Quantity">SL Nhập</a></th>
+                    <th><a href="#Field=QuantityOut">SL Xuất</a></th>
+                    <th>SL Tồn</th>
+                    <th class="text-right"><a href="#Field=Price">Giá nhập</a></th>
+                    <th class="text-right">Giá trị tồn</th>
+                    <th class="text-center"><a href="#Field=Date">Ngày nhập</a></th>
+                    <th><a href="#Field=DateEnd">HSD</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ListItems)
+                {
+                    <tr data-id="@item.ID" title="@item.Name">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td>@(i++)</td>
+                        <td>@item.Name</td>
+                        <td>@item.UnitName</td>
+                        <td>@string.Format("{0:0.##}", item.Quantity)</td>
+                        <td>@string.Format("{0:0.##}", item.QuantityOut ?? 0)</td>
+                        <td>@string.Format("{0:0.##}", item.Quantity - (item.QuantityOut ?? 0))</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.Price*(item.Quantity - (item.QuantityOut ?? 0)))</td>
+                        <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy")</td>
+                        <td>@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        var totalPrice = '@Model.TotalPrice.Money()';
+        var quantity = '@Model.Quantity.Quantity()';
+        $('.bottom-pager').append('<span>Giá trị tồn : <i>' + totalPrice + '</i></span><span>- Số lượng tồn: <i>' + quantity + '</i></span>');
+    });
+</script>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<!-- Open head page -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" sizes="16x16" href="/Content/Publishing/img/favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    @RenderSection("metas", false)
+    <meta name="robots" content="index, archive, follow, noodp" />
+    <meta name="googlebot" content="index,archive,follow,noodp" />
+    <meta name="msnbot" content="all,index,follow" />
+    <meta name='revisit-after' content='1 days' />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <!--Open CSS -->
+
+    @*<link href="/Content/Publishing/css/styles.min.css" rel="stylesheet" />*@
+    <link href="~/Content/Publishing/css/Customer.css" rel="stylesheet" />
+    <link href="/Content/Publishing/css/plugins.min.css" rel="stylesheet" />
+    <link href="/Content/Publishing/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&amp;amp;subset=vietnamese">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
+    <!-- Pe-icon-7-stroke CSS -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/vendor/pe-icon-7-stroke.css">
+    <!-- Font-awesome CSS -->
+    <!-- Slick slider css -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/plugins/slick.min.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/vendor/bootstrap.min.css">
+    <!-- Nice Select css -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/plugins/nice-select.css">
+    <!-- jquery UI css -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/plugins/jqueryui.min.css">
+    <!-- main style css -->
+    <link rel="stylesheet" href="/Content/Publishing/assets/css/style.css">
+    
+    <script src="~/Content/socket/socket.io.js"></script>
+
+</head>
+<!-- End head page -->
+<body>
+    @if (IsSectionDefined("MenuAdmin"))
+    {
+        @RenderSection("MenuAdmin", false)
+    }
+    <header class="header-area header-wide">
+        <!-- main header start -->
+        <div class="main-header d-none d-lg-block">
+            @RenderSection("MainMenu", false)
+        </div>
+    </header>
+    <main>
+         @RenderSection("Content", false)
+    </main>
+    <!-- Scroll to top start -->
+    <div class="scroll-top not-visible">
+        <i class="fa fa-angle-up"></i>
+    </div>
+    <!-- Scroll to Top End -->
+    <!-- footer area start -->
+    <footer class="footer-widget-area">
+        @RenderSection("Footer", false)
+    </footer>
+    @RenderBody()
+    @RenderSection("Vendors", false)
+    <!-- End content bottom pages -->
+
+</body>
+</html>

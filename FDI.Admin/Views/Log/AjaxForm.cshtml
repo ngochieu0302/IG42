@@ -1,0 +1,128 @@
+﻿@using FDI.CORE
+@model FDI.Base.Log
+@{
+    ViewBag.Title = ViewBag.ActionText + " Quản lý Log";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGallery();
+        LoadCKEDITOR('NoiDung', false);
+        registerDate();
+        var id = parseInt($("#ItemID").val());
+        if (id == 0) {
+            $.post("/Log/GetIDLog", function (data) {
+                $('#idLog').val(data);
+            });
+        }
+
+        $("#LogForm").validate({
+            rules: {
+                User:
+                    {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
+                    }
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $.post(urlPostAction, $("#LogForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+       
+    });
+</script>
+<style>
+    #Address {
+        display: block !important;
+    }
+</style>
+
+<form id="LogForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về doanh nghiệp
+                </div>
+            </div>
+            <div class="form" style="background: #fff">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Mã LOG</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" placeholder="..." name="idLog" id="idLog" value="" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Tên người dùng</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" placeholder="..." name="User" id="User" value="@Model.User" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Chức năng</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" placeholder="..." name="ChucNang" id="ChucNang" value="@Model.ChucNang" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Ngày tạo</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control date-picker" placeholder="..." name="datecreate" id="NgayTao" data-date-format="dd/mm/yyyy" value="@Model.NgayTao.Value.ToString("dd/MM/yyyy")" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">Cửa hàng</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" placeholder="..." name="CuaHang" id="CuaHang" value="@Model.CuaHang" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nội dung</label>
+                            <div class="col-lg-10">
+                                <textarea rows="4" id="NoiDung" name="NoiDung">@Model.NoiDung</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

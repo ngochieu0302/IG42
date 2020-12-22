@@ -1,0 +1,97 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ProductValueItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên sản phẩm </label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mã sản phẩm </label>
+                        </td>
+                        <td>
+                            @Model.Code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá sản phẩm</label>
+                        </td>
+                        <td>
+                            @Model.PriceCost.Money()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>khối lượng (Kg)</label>
+                        </td>
+                        <td> @Model.Value.Quantity()</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá bán</label>
+                        </td>
+                        <td>
+                            @Model.PriceNew.Money()
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Chi tiết
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>Mã SP</th>
+                        <th>Barcode</th>
+                        <th>Số lượng</th>
+                        <th>Kg</th>
+                        <th>Giá bán</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    @foreach (var item in Model.ListImportProductItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(item.ProductName)</td>
+                            <td>@(item.Code)</td>
+                            <td>@(item.BarCode)</td>
+                            <td>@(item.Quantity)</td>
+                            <td>@(item.Value.Quantity())</td>
+                            <td>@(item.Price)</td>
+                            <td>@(item.PriceNew)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

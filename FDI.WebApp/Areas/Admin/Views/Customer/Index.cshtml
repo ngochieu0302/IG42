@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Quản lý khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "Customer")';
+    urlForm = '@Url.Action("AjaxForm", "Customer")';
+    urlPostAction = '@Url.Action("Actions", "Customer")';
+    urlView = '@Url.Action("AjaxView", "Customer")';
+    @*urlEditPoint = '@Url.Action("AjaxForm", "CustomerPoint")';*@
+    formWidth = 960;
+    formHeight = $(window).height() - 24;
+    viewWidth = 960;
+    viewHeight = $(window).height() - 24;
+
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        //$("#btn_add").click(function (e) {
+        //    alert(1);
+        //    e.preventDefault();
+        //    var urlRequest = urlForm + "?do=Add";
+
+        //    $("#dialog-form").css("height", formHeight);
+        //    $.post(urlRequest, function (data) {
+        //        $("#dialog-form .modal-title").html("Thêm mới");
+        //        $("#dialog-form #dialog-form-ajax").html(data);
+        //    });
+        //    $("#dialog-form").modal("show");
+        //});
+
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+
+        //$("#btn_add").click(function () {
+        //    $("#dialog-form .modal-title").html("Thêm mới khách hàng");
+        //    $("#dialog-form #dialog-form-ajax").load(encodeURI(urlForm + "?do=Add"));
+        //    $("#dialog-form").modal("show");
+        //    return false;
+        //});
+
+        $(".fieldSearchDate").datepicker({
+            showOn: "button",
+            buttonImageOnly: true
+        }).mask('00/00/0000');
+
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+    });
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý khách hàng</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#showAll" data-event="showAll" data-grid="#mygird"><i class="fa fa-check icon-muted fa-fw"></i>Kích hoạt</a></li>
+                    <li><a href="#hideAll" data-event="hideAll" data-grid="#mygird"><i class="fa fa-times icon-muted fa-fw"></i>Khóa</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o icon-muted fa-fw"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="ID">ID</option>
+                    <option value="Fullname">Họ tên</option>
+                    <option value="Email">Email</option>
+                    <option value="Mobile">Số điện thoại</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="IsActive" id="IsActive" class="form-control">
+                    <option value="-1">Trạng thái</option>
+                    <option value="0">Khóa</option>
+                    <option value="1">Kích hoạt</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>
+<div class="content-control" id="Griditems">
+</div>
+

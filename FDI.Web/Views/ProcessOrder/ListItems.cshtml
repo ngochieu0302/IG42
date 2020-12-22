@@ -1,0 +1,108 @@
+﻿@using FDI.CORE
+@using NPOI.SS.Formula.Functions
+@model FDI.Simple.ModelOrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox"/>
+                        </th>
+                        <th>Mã Đơn</th>
+                        <th>Mã KH</th>
+                        <th>Tên KH</th>
+                        <th>SĐT</th>
+                        <th>Số phút</th>
+                        <th>Giờ bắt đầu</th>
+                        <th>Giờ kết thúc</th>
+                        <th>Tình trạng</th>
+                        <th>Đơn giá</th>
+                        <th>Tiền thanh toán</th>
+                        <th class="text-right" style="width: 12%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListOrderItem != null)
+                    {
+                        foreach (var item in Model.ListOrderItem.Where(m=> m.BedDeskID > 0))
+                        {
+                            var dateNow = ConvertDate.TotalSeconds(DateTime.Now);
+                            var minute = (int)((item.StartDate - dateNow) / 60);
+                     
+                            <tr data-id="@item.ID" @*title="@FDIUtils.RandomMaKh("HD", item.ID, 8)"*@>
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td>@item.ID</td>
+                                <td>@item.CustomerItem.CardSerial</td>
+                                @if (item.CustomerID > 0)
+                                {
+                                    <td>@item.CustomerItem.FullName</td>
+                                    <td>@item.CustomerItem.Phone</td>
+                                }
+                                else
+                                {
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.CutomerPhone</td>
+                                }
+                                <td>@((int)(((item.EndDate - item.StartDate) / 60)))</td>
+                                <td>@item.StartDate.DecimalToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>@item.EndDate.DecimalToString("dd/MM/yyyy HH:mm:ss")</td>
+                                @if (minute > 0 && minute <= 30 && dateNow < item.EndDate)
+                                {
+                                    <td><span class="label label-danger"> Sắp đến giờ (@minute phút)</span></td>
+                                }
+                                else if (minute < 0 &&  item.EndDate < dateNow)
+                                {
+                                    <td><span class="label label-success">Hoàn thành</span></td>
+                                }
+                                else 
+                                {
+                                    <td><span class="label label-primary">Đang đặt</span></td>
+                                }
+                                <td class="text-right">@item.TotalPrice.Money()</td>
+                                <td class="text-right">@(item.Payments > item.TotalPrice ? item.TotalPrice.Money() : item.Payments.Money())</td>
+                                <td class="text-right">
+                                    @Grid.ActionView(item.ID, item.CustomerName)
+                                    @if (dateNow < item.EndDate)
+                                    {
+                                        <a data-id="@item.ID" class="btn btn-sm btn-default btnProcess"><i class="fa fa-trash-o" style="color: red;"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script src="~/Content/socket/socket.io.js"></script>
+<script type="text/javascript">
+    var socket = io("http://192.168.100.16:3000");
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+    $(".btnProcess").click(function () {
+        var id = $(this).data("id");
+        $.post("/ProcessOrder/DeleteOrder?orderId=" + id, function(data) {
+            if (data.Erros == false) {
+                createShowMessage("Thông báo", data.Message);
+            } else {
+                createMessage("Thông báo", data.Message);
+            }
+        });
+    });
+</script>

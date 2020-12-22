@@ -1,0 +1,96 @@
+﻿@model FDI.Admin.Models.RoleViewModel
+@{
+    ViewBag.Title = "Quản lý vai trò " + Model.Role;
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý quản vai trò: @Model.Role</li>
+        </ul>
+    </div>
+    <h3 class="page-title">
+        Các tính năng
+        <small></small>
+    </h3>
+    <div class="group-form-control">
+        @Html.ActionLink("Quay lại danh sách", "Roles", "UserAdministration", new { }, new { @class = "btn btn-sm btn-default", @id = "btn_back" })
+    </div>
+</div>
+<div class="content-control">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Quản lý các tính năng vai trò
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <table class="gridView gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                        <colgroup>
+                            <col class="colgroup check" />
+                            <col />
+                            <col class="colgroup action-6" />
+                        </colgroup>
+                        <thead>
+                        <tr style="border-top: 1px solid #e7ecf1;">
+                            <th>STT</th>
+                            <th>Tên vai trò</th>
+                            <th>Quản lý</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @if (Model.Users.Any())
+                        {
+                            var stt = 1;
+                            foreach (var key in Model.Users.Keys)
+                            {
+                                var user = Model.Users[key];
+                                <tr>
+                                    <td class="text-center">@(stt++)</td>
+                                    <td>
+                                        @if (user == null)
+                                        {
+                                            <span>@key <em>(Deleted)</em></span>
+                                        }
+                                        else
+                                        {
+                                            <b>@Html.ActionLink(user.UserName, "Details", new {id = user.ProviderUserKey})</b>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user == null)
+                                        {
+                                            <span>@key <em>(Deleted)</em></span>
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("RemoveFromRole", "UserAdministration", new {id = user.ProviderUserKey, role = Model.Role}))
+                                            {
+                                                <button class="btn btn-sm btn-danger" type="submit">Xóa vai trò của <b>[ @user.UserName ]</b></button>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3">Không có tài khoản nào được sử dụng</td>
+                            </tr>
+                        }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

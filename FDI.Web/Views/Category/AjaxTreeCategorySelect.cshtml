@@ -1,0 +1,70 @@
+﻿@model FDI.Simple.ModelCategoryItem
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var textContainer = "#Text_CategoryValues";
+        var hiddenContainer = "#Value_CategoryValues";
+        $("#SelectTreeCategory input[type=checkbox]").click(function () {
+            var lastCheck = $(this).is(':checked');
+            $("#SelectTreeCategory input[type=checkbox]").attr('checked', false);
+            $(this).attr('checked', lastCheck);
+        });
+        var url = "@Url.Action("JsonGetListTreeByType", new { @pageId = Model.PageId })" + "&listid=" + "@Model.Listid";
+        $.getJSON(url, function (list) {
+            AjaxLoadTreeViewCheckBox(list, '#SelectTreeCategory');
+            $("#CategoryTreeSelectForm").validate({
+                rules: {
+                    Title:
+                      {
+                          required: true,
+                          minlength: 3,
+                          maxlength: 100
+                      },
+                    Description:
+                      {
+                          minlength: 15,
+                          maxlength: 2000
+                      }
+                },
+                submitHandler: function () { //onSubmit
+                    var values = '';
+                    var text = '';
+                    $("#SelectTreeCategory input[type=checkbox]:checked").each(function () {
+                        values += "," + $(this).val();
+                        text += ", " + $(this).attr("title");
+                    });
+                    if (values !== '') {
+                        $(textContainer).html(text.substring(1));
+                        $(hiddenContainer).val(values.substring(1));
+                        
+                        //$(".Allproduct").attr("disabled", true);
+                        //$("#autoProduct").attr("readonly", "readonly");
+                        $("#dialog-form-2").modal('hide');
+                    }
+                    else {
+                        //$(".Allproduct").removeAttr("disabled", true);
+                        //$("#autoProduct").removeAttr("readonly", "readonly");
+                        createMessage("Thông báo", "Chưa có chuyên mục nào được chọn"); // Tạo thông báo lỗi
+                    }
+                    return false;
+                }
+            });
+        });
+    });
+</script>
+
+<form id="CategoryTreeSelectForm">
+    <div class="modal-body">
+        <div id="gridItems">
+            <div id="treecontrol" class="treeTool">
+                <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+                <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+            </div>
+            <ul id="SelectTreeCategory" class="filetree" style="border: 0px;"></ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Chọn</button>
+        <button id="close" type="button" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

@@ -1,0 +1,449 @@
+﻿@model FDI.Simple.OrderGetItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="box-a-table-wrap box-sales">
+    <div class="box-order">
+        <div class="search-order">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="fa fa-search"></span></div>
+                <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+            </div>
+            
+        </div>
+        <div class="select-order">
+            <div class="tabbable-custom">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active"><a href="#tabs-hoadon1" data-key="HD1" data-toggle="tab">Hóa đơn</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active tab-scroll" id="tabs-hoadon1">
+                        <div class="form-horizontal">
+                            <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                <colgroup>
+                                    <col style="width: 10%" />
+                                    <col style="width: 20%" />
+                                    <col style="width: 22%" />
+                                    <col style="width: 13%" />
+                                    <col style="width: 20%" />
+                                    <col style="width: 15%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã hàng</th>
+                                        <th>Tên hàng</th>
+                                        <th class='text-center'>Số lượng</th>
+                                        <th class='text-center'>Giá bán</th>
+                                        <th class='text-right'>Thành tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="announce">
+                                        <td colspan="7" class="no-padding">
+                                            <div class="alert alert-block alert-success">Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-order">
+        <div class="title-box-order">
+            <i class="fa fa-user"></i>Thông tin đơn hàng
+        </div>
+        <div class="user-detail-order">
+            <form id="frm-modal">
+                <div class="form-group">
+                    <input type="hidden" name="do" id="do" value="Add"/>
+                    <input class="form-control input-sm" id="Customer" value="" placeholder="Khách hàng">
+                    <input type="hidden" id="CustomerID" name="CustomerID" value="">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="CustomerName" name="CustomerName" placeholder="Họ tên">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="Address" name="Address" placeholder="Địa chỉ">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="Mobile" name="Mobile" placeholder="Số điện thoại">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Điểm tích lũy</label>
+                        <div class="col-sm-9">
+                            <label class="label label-danger" id="Bonus">0</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Ngày bán:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control date-picker input-sm" id="DateOfSale_" name="DateOfSale_" value="@(DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy" placeholder="Ngày bán">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 control-label"><b>TỔNG TIỀN </b></label>
+                        <div class="col-sm-9">
+                            <label class="label label-danger" id="OrderPrice">0</label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Trừ tích lũy</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="PrizeMoney" name="PrizeMoney" class="form-control maskPrice" value="0" placeholder="Sử dụng tích lũy" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Chiết khấu</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="Discount" name="Discount" class="form-control maskPrice" value="0" placeholder="Chiết khấu" />
+                            </div>
+                        </div>
+                    </div>*@
+                @*<div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-3 control-label"><b>THANH TOÁN </b></label>
+                            <div class="col-sm-9">
+                                <label class="label label-danger" id="Payment">0</label>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Tiền tạm ứng</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="Payments" name="Payments" class="form-control maskPrice" value="0" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 control-label">Còn lại</label>
+                        <div class="col-sm-9">
+                            <label class="label txtexcesscash label-warning" id="txtexcesscash">0</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea name="Note" id="Note" rows="2" class="form-control" placeholder="Ghi chú"></textarea>
+                </div>
+            </form>
+            <input type="hidden" name="lstValue" id="lstValue" value="" />
+        </div>
+        <div class="box-a-table-button">
+            <button id="btn_SavePrint" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Lưu và In</button>
+            <button id="btn_Print" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> In</button>
+            <button class="btn btn-default btn-sm" id="btnResetPrint" type="reset" style="display: none"></button>
+            <button class="btn btn-default btn-sm" id="btnReset" type="reset">Hủy phiếu</button>
+        </div>
+    </div>
+</div>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none;">
+    @Html.Action("Report")
+</div>
+<script>
+    var lstP = [];
+    var requestList = requestList || {};
+    var prizeMoney = 0;
+    $(function () {
+        
+        var startlist = JSON.parse(localStorage.getItem("SaleFashion"));
+        if (startlist != null) {
+            requestList = startlist;
+            var lstOrder = startlist["Order"];
+            if (lstOrder != null && lstOrder.length > 0) {
+                lstP = lstOrder;
+                addHTML(lstP);
+            }
+            var itemCus = startlist["Customer"];
+            if (itemCus != null) {
+                $('#CustomerID').val(itemCus.ID);
+                $('#CustomerName').val(itemCus.Name);
+                $('#Mobile').val(itemCus.Phone);
+                $('#Bonus').html(itemCus.Bonus);
+                $('#Address').val(itemCus.Address);
+                $('#printKH').html(itemCus.Name);
+                $('#printAddress').html(itemCus.Address);
+            }
+        }
+        
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/SaleFashion/Auto?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/, // regex or character
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var add = 0;
+                lstP.forEach(function (entry) {
+                    if (entry.ProductID === el.ID) {
+                        add = 1;
+                        entry.Quantity = entry.Quantity + 1;
+                    }
+                });
+                if (add === 0) {
+                   
+                    var item = {
+                        ProductID: el.ID,
+                        Quantity: 1,
+                        Price: el.pricenew,
+                        title: el.title,
+                        value: el.value,
+                        Unit: el.Unit,
+                        Bonus: el.TotalPrice
+                    };
+                    lstP.push(item);
+                }
+                requestList["Order"] = lstP;
+                localStorage.setItem("SaleFashion", JSON.stringify(requestList));
+                addHTML(lstP);
+            }
+        });
+        $('#Customer').autocomplete({
+            serviceUrl: "/SaleFashion/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#Mobile').val(el.phone);
+                $('#Address').val(el.code);
+                $('#printKH').html(el.title);
+                $('#printAddress').html(el.code);
+                $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                var item = {
+                    ID: el.ID,
+                    Name: el.title,
+                    Phone: el.phone,
+                    Address: el.code
+                }
+                if (el.keword === el.value) {
+                    prizeMoney = el.TotalPrice;
+                } else {
+                    prizeMoney = 0;
+                }
+                $('#Customer').val("");
+                requestList["Customer"] = item;
+                localStorage.setItem("SaleFashion", JSON.stringify(requestList));
+            }
+        });
+       
+        $("body").on("keyup", "#Payments", function () {
+            var payment = $("#Payments").val() !== "" ? parseFloat($("#Payments").val().replace(/[,]+/g, '')) : 0;
+            var price = $("#OrderPrice").html() !== "" ? parseFloat($("#OrderPrice").html().replace(/[,]+/g, '')) : 0;
+            if (payment > price) {
+                swal({ title: "", text: "Vượt quá tiền hóa đơn.", type: "info", showCancelButton: false, closeOnCancel: false });
+                $("#Payments").val(numeral(price).format('0,0'));
+            }
+            Calculate();
+        });
+        
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            for (var index = 0; index < lstP.length; index++) {
+                if (lstP[index].ProductID === pid) {
+                    lstP.splice(index, 1);
+                    addHTML(lstP);
+                    localStorage.setItem("SaleFashion", JSON.stringify(lstP));
+                    return;
+                }
+            }
+        });
+        $("body").on("click", ".cdelete", function () {
+            $('#CustomerID').val("");
+            $('#txtCustomer').html("");
+            $('#printKH').html("");
+            $('#printAddress').html("");
+            delete requestList["Customer"];
+            localStorage.setItem("SaleFashion", JSON.stringify(requestList));
+        });
+        $("body").on("change", ".quantity", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var sl = $(this).val() !== "" ? $(this).val() : "0";
+            lstP.forEach(function (entry) {
+                if (entry.ProductID === pid) {
+                    entry.Quantity = parseInt(sl);
+                    requestList["Order"] = lstP;
+                    localStorage.setItem("SaleFashion", JSON.stringify(requestList));
+                    addHTML(lstP);
+                    return;
+                }
+            });
+        });
+        $("body").on("change", ".maskPrice", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var sl = $(this).val() !== "" ? $(this).val() : "0";
+            lstP.forEach(function (entry) {
+                if (entry.ProductID === pid) {
+                    entry.Price = parseInt(sl.replace(/[,]+/g, ''));
+                    requestList["Order"] = lstP;
+                    localStorage.setItem("SaleFashion", JSON.stringify(requestList));
+                    addHTML(lstP);
+                    return;
+                }
+            });
+        });
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $("#NumberOrder").html("0");
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+        $("#btn_SavePrint").click(function () {
+            btnDisabled("#btn_SavePrint");
+            $('.maskPrice').each(function (i) {
+                $(this).val($(this).val().replace(/\,/g, ''));
+            });
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            var lstvalue = $('#lstValue').val() !== "" ? $('#lstValue').val() : "[]";
+            var lst1 = JSON.parse(lstvalue);
+            if (lst1.length < 1) {
+                btnEnable("#btn_SavePrint");
+                ErrorMessage("Bạn chưa chọn sản phẩm.");
+                return false;
+            }
+            $.post("/Utility/Delete?key=" + getCookie('CodeLogin'), function (a) {
+                lst1.forEach(function (entry) {
+                    $.post("/Utility/Add?json=" + JSON.stringify(entry), function () {
+                    });
+                });
+                $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                    btnEnable("#btn_SavePrint");
+                    if (data.Erros)
+                        toastr["error"](data.Message);
+                    else {
+                        $("#NumberOrder").html(data.ID);
+                        toastr["success"](data.Message);
+                        $('#BoxPrint').show();
+                        jQuery.print('#BoxPrint');
+                        $('#BoxPrint').hide();
+                        $("#dialog-form-3 #dialog-form-ajax").html("");
+                        $("#dialog-form-3").modal('hide');
+                        fnReset();
+                    }
+                });
+            });
+        });
+        $("#btnReset").click(function () {
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn hủy hóa đơn.",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Tiếp tục",
+                cancelButtonText: "Hủy",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    fnReset();
+                }
+                swal.close();
+            });
+        });
+    });
+   
+    function fnReset() {
+        localStorage.removeItem("SaleFashion");
+        $('#Payments').val("0");
+        $('#Customer').val("");
+        $('#CustomerID').val("");
+        $('#CustomerName').val("");
+        $('#Mobile').val("");
+        //$("#PrizeMoney").val(0);
+        $('#Address').val("");
+        $('#printKH').html("");
+        $('#printAddress').html("");
+        $('#Bonus').html("");
+        lstP = [];
+        addHTML(lstP);
+    }
+    function Calculate() {
+        var price1 = parseFloat($("#Payments").val().replace(/[,]+/g, ''));
+        var price2 = parseFloat($("#OrderPrice").html().replace(/[,]+/g, ''));
+        //var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+        //var price5 = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+        //var price3 = price1 - price2 + price4 + price5;
+        var price3 = price1 - price2;
+        $("#txtexcesscash").html(numeral(price3).format('0,0'));
+        //$("#Payment").html(numeral(price2 - price4 - price5).format('0,0'));
+        $("#Payment").html(numeral(price2).format('0,0'));
+        if (price3 > 0) {
+            price3 = 0;
+        }
+        $("#printexcess").html(numeral(price1).format('0,0'));
+        $("#printSale").html(numeral(price3).format('0,0'));
+        //$("#printDiscount").html(numeral(price4).format('0,0'));
+
+
+    }
+    function addHTML(lst) {
+
+        var lstValue = [];
+        var price = 0;
+        var txt = "<tr><td>stt</td><td>code</td><td>name</td><td><input class='form-control input-sm text-right inputValue quantity' data-pid='IdProduct' value='pQuantity'/></td><td class='text-right'><input class='form-control input-sm text-right inputValue maskPrice pp-IdProduct' data-pid='IdProduct' value='price'/></td><td class='text-right total-IdProduct'>totalPrice</td><td><button class='btn btn-default pdelete' data-pid='IdProduct'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+        var mystring = "";
+        var txtprint = '<tr><td>stt</td><td>name</td><td class="text-center">Unit</td><td class="text-center">quantity</td><td class="text-right">price</td><td class="text-right">total</td></tr>';
+        var prinstring = '';
+        var stt = 1;
+        lst.forEach(function (entry) {
+            var item = {
+                ProductID: entry.ProductID,
+                Quantity: entry.Quantity,
+                Price: entry.Price,
+                Key: getCookie('CodeLogin')
+            };
+            lstValue.push(item);
+            price += entry.Quantity * entry.Price;
+            var ch = txt.replace("stt", stt);
+            ch = ch.replace("code", entry.value);
+            ch = ch.replace("name", entry.title);
+            ch = ch.replace("pQuantity", entry.Quantity);
+            ch = ch.replace("price", numeral(entry.Price).format('0,0'));
+            ch = ch.replace("totalPrice", numeral(entry.Price * entry.Quantity).format('0,0'));
+            ch = ch.replace(/IdProduct/g, entry.ProductID);
+            mystring = ch + mystring;
+
+            var ch1 = txtprint.replace("stt", stt++);
+            ch1 = ch1.replace("name", entry.title);
+            ch1 = ch1.replace("quantity", entry.Quantity);
+            ch1 = ch1.replace("Unit", entry.Unit);
+            ch1 = ch1.replace("price", numeral(entry.Price).format('0,0'));
+            ch1 = ch1.replace("total", numeral(entry.Price * entry.Quantity).format('0,0'));
+            prinstring += ch1;
+        });
+        $(".tablePrint tbody").html(prinstring);
+        $("#ProductDetail tbody").html(mystring);
+        $("#OrderPrice").html(numeral(price).format('0,0'));
+        $("#prinPrice").html(numeral(price).format('0,0'));
+        //$("#printSale").html(numeral(price).format('0,0'));
+        $("#printChu").html(DocTienBangChu(price));
+        $("#totalPrice").html('<strong>Tổng</strong><strong>' + numeral(price).format('0,0') + '</strong><strong>&nbsp;</strong><strong>' + numeral(price).format('0,0') + '</strong>');
+        $("#lstValue").val(JSON.stringify(lstValue));
+        
+        Calculate();
+    }
+
+</script>

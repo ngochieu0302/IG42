@@ -1,0 +1,309 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.Simple
+@using FDI.CORE
+@model ModelBedDeskItem
+@{
+    var check = Model.OrderItem != null && Model.OrderItem.LstOrderDetailItems != null && Model.OrderItem.LstOrderDetailItems.Any();
+    var top = true;
+    var id = 0;
+    var listp = new List<ProductItem>();
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+
+<div class="modal-body npd">
+    <div class="box-a-table-wrap">
+        <div class="box-order">
+            <div class="cate-order">
+                @foreach (var item in Model.CategoryItems)
+                {
+                    var classs = " ";
+                    if (top)
+                    {
+                        id = item.ID; classs = "active"; top = false;
+                    }
+                    <a href="#" class="@classs cate-product" data-id="@item.ID" title=""><i class="fa @item.Icon"></i>@item.Name</a>
+                }
+            </div>
+            <div class="search-order">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                </div>
+            </div>
+            <div class="product-order">
+                @foreach (var item in Model.CategoryItems)
+                {
+                    <div class="item-cate" style="display: @(item.ID == id ? "block" : "none")" id="c-@item.ID">
+                        @foreach (var itempd in item.ListProductItem)
+                        {
+                            <div class="item-default" id="pd-@itempd.ID">
+                                @foreach (var itemp in itempd.ListProductItem)
+                                {
+                                    itemp.UrlPicture = itempd.UrlPicture;
+                                    listp.Add(itemp);
+                                    var isactive = check && Model.OrderItem.LstOrderDetailItems.Any(m => m.ID == itemp.ID && m.Status < 3);
+                                    <div id="product-@itemp.ID" class="item-product @(isactive ? "active" : "")" data-id="@itemp.ID">
+                                        <div class="img">
+                                            <img src="@itempd.UrlPicture.Picture()" />
+                                        </div>
+                                        <span class="name">@itemp.Name - @itemp.CodeSku</span>
+                                        <span class="price">@itemp.PriceNew.Money()</span>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                <input type="hidden" name="lstProduct" id="lstProduct" value="@(new JavaScriptSerializer().Serialize(listp))" />
+            </div>
+        </div>
+        <div class="list-order">
+            <div class="about-order">
+                <label><span class="fa fa-table"></span></label>
+                <select id="Lstbed" name="Lstbed" multiple class="select2">
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <option value="@item.ID" @(Model.Listid.Any(c => c == item.ID) ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="select-order">
+                <table class="gridView table table-striped" id="ProductDetail">
+                    <colgroup>
+                        <col style="width: 15%"/>
+                        <col style="width: 15%" />
+                        <col style="width: 35%" />
+                        <col style="width: 10%" />
+                        <col style="width: 15%" />
+                        <col style="width: 10%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="text-center">Mã</th>
+                            <th class="text-center">Ảnh</th>
+                            <th class="text-center">Tên hàng</th>
+                            <th class="text-center">SL</th>
+                            <th class="text-center">Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="announce">
+                            @if (check)
+                            {
+                                <input type="hidden" name="OrderItem" id="OrderItem" value="@(new JavaScriptSerializer().Serialize(Model.OrderItem.LstOrderDetailItems.Where(m => m.Status < 3)))"/>
+                            }
+                            else
+                            {
+                                <td colspan="6">
+                                    <div class="alert alert-block alert-success" style="font-size: 15px">Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng</div>
+                                </td>
+                            }
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="price-order">
+                <strong>Tổng tiền: <b id="totalprice">0</b></strong>
+            </div>
+            <div class="option-order">
+                <form id="frm-modal">
+                    <textarea class="form-control" rows="3" name="Note" id="Note" placeholder="Ghi chú...">@Model.OrderItem.Note</textarea>
+                    <input type="hidden" name="do" id="do" value="Order" />
+                    <input type="hidden" name="itemId" id="itemId" value="@(new JavaScriptSerializer().Serialize(Model.Listid))" />
+                    <input type="hidden" name="ID" id="ID" value="@(Model.OrderItem != null ? Model.OrderItem.ID : 0)" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="btn_SavePrint" type="button" class="btn btn-sm btn-primary">Lưu</button>
+    <button class="btn btn-default btn-sm" id="btnReset" type="reset">Hủy</button>
+    <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+</div>
+<script>
+    callSelect2("#Lstbed", "100%");
+    var lstP = [];
+    var a = true;
+    var listbedid = [];
+    var text = "";
+    var check = '@check' == 'True';
+    var listp = JSON.parse($("#itemId").val());
+    var lstProduct = JSON.parse($("#lstProduct").val());
+    $("#lstProduct").val("");
+    var lstValue = [];
+    $("#itemId").val("");
+    $("#ListBoxPrint").html("");
+    if (check) {
+        lstP = JSON.parse($("#OrderItem").val());
+        addHTML(lstP);
+    }
+    $(".cate-product").click(function () {
+        $(".cate-product").removeClass("active");
+        $(this).addClass("active");
+        $(".item-cate").hide();
+        var id = $(this).data("id");
+        $("#c-" + id).show();
+    });
+    $(function () {
+        $(".item-product").click(function () {
+            var id = parseInt($(this).data("id"));
+            $("#product-" + id).addClass("active");
+            for (var i = 0; i < lstProduct.length; i++) {
+                if (lstProduct[i].ID === id) {
+                    var checkadd = true;
+                    for (var n = 0; n < lstP.length; n++) {
+                        if (lstP[n].ID == id) {
+                            lstP[n].Quantity = lstP[n].Quantity + 1;
+                            checkadd = false;
+                            break;
+                        }
+                    }
+                    if (checkadd) {
+                        var item = {
+                            ID: id,
+                            ProductCode: lstProduct[i].CodeSku,
+                            Quantity: 1,
+                            UrlImg: lstProduct[i].UrlPicture,
+                            Price: lstProduct[i].PriceNew,
+                            ProductName: lstProduct[i].Name,
+                            list: listp
+                        };
+                        lstP.push(item);
+                    }
+                    break;
+                }
+            }
+            addHTML(lstP);
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            $("#product-" + pid).removeClass("active");
+            for (var index = 0; index < lstP.length; index++) {
+                if (lstP[index].ID === pid) {
+                    lstP.splice(index, 1);
+                    addHTML(lstP);
+                    return;
+                }
+            }
+        });
+        $("#btnReset").click(function () {
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn hủy hóa đơn.",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Tiếp tục",
+                cancelButtonText: "Hủy",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    lstP = [];
+                    addHTML(lstP);
+                }
+                swal.close();
+            });
+        });
+        $("#btn_SavePrint").click(function () {
+            if (lstValue.length > 0) {
+                $.post("/Utility/Delete?key=" + getCookie('CodeLogin'), function (a) {
+                    $("#itemId").val($("#Lstbed").val());
+                    for (var o = 0; o < lstValue.length; o++) {
+                        var lst1 = JSON.stringify(lstValue[o]);
+                        $.post("/Utility/Add?json=" + lst1, function () {
+                        });
+                    }
+                    $.post("/BookATable/Actions", $("#frm-modal").serialize(), function (data) {
+                        if (data.Erros)
+                            toastr["error"](data.Message);
+                        else {
+                            toastr["success"](data.Message);
+                            $("[data-event='Default']").trigger("click");
+                            $("#dialog-form-4 .dialog-form-ajax").html("");
+                            $("#dialog-form-4").modal('hide');
+                        }
+                    });
+                });
+
+            } else {
+                toastr["error"]("Bạn chưa chọn món!");
+            }
+
+        });
+    });
+    $("#autoProduct").keyup(function () {
+        var search = $("#autoProduct").val().toLowerCase();
+        if (search.length) {
+            $(".item-cate").show();
+            $(".item-product").hide();
+        } else {
+            $(".item-cate").hide();
+            var id = $(".cate-product.active").data("id");
+            $("#c-"+id).show();
+            $(".item-product").show();
+        }
+        searchProduct(search);
+    });
+    function searchProduct(toSearch) {
+        var listn = lstProduct;
+        for (var i = 0; i < listn.length; i++) {
+            if (listn[i].Name.toLowerCase().indexOf(toSearch) != -1 || listn[i].CodeSku.toLowerCase().indexOf(toSearch) != -1) $("#product-" + listn[i].ID).show();
+        }
+    }
+    function addHTML(lst) {
+        var price = 0;
+        var txt = "<tr><td>code</td><td><img src='UrlImg'/></td><td>name</td><td class='text-center'><input type='text' data-id='dataid' name='Quantity' class='quantity-order' value='QuantityValue' /></td></td><td class='text-right' id='dataid'>price</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='IdProduct'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+        var mystring = "";
+        lstValue = [];
+        lst.forEach(function (entry, i) {
+            var item = {
+                ProductID: entry.ID,
+                UrlImg: entry.UrlImg,
+                Quantity: entry.Quantity,
+                Price: entry.Price,
+                Key: getCookie('CodeLogin')
+            };
+            lstValue.push(item);
+            price += entry.Quantity * entry.Price;
+            var ch = txt.replace("stt", i + 1);
+            ch = ch.replace("dataid", entry.ID);
+            ch = ch.replace("dataid", entry.ID);
+            ch = ch.replace("UrlImg","/Uploads/"+ entry.UrlImg);
+            ch = ch.replace("code", entry.ProductCode);
+            ch = ch.replace("name", entry.ProductName);
+            ch = ch.replace("QuantityValue", entry.Quantity);
+            ch = ch.replace("price", numeral(entry.Price * entry.Quantity).format('0,0'));
+            ch = ch.replace("IdProduct", entry.ID);
+            mystring = ch + mystring;
+        });
+        $("#totalprice").html(numeral(price).format('0,0'));
+        $("#ProductDetail tbody").html(mystring);
+        $(".quantity-order").change(function () {
+            var value = $(this).val();
+            if (value.length == 0) {
+                value = 0;
+            }
+            var id = parseInt($(this).data("id"));
+            var val = parseInt(value);
+            for (var n = 0; n < lstP.length; n++) {
+                if (lstP[n].ID === id) {
+                    lstP[n].Quantity = val;
+                    addHTML(lstP);
+                    break;
+                }
+            }
+            for (var i = 0; i < lstValue.length; i++) {
+                if (lstValue[i].ID == id) {
+                    lstValue[i].Quantity = val;
+                    break;
+                }
+            }
+        });
+    }
+</script>

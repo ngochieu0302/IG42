@@ -1,0 +1,38 @@
+﻿@using FDI.Utils
+<section class="latest-blog-area section-padding pt-0">
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-default" href="/">Trang chủ</a>
+            <button class="btn btn-default" id="prev">Previous</button>
+            <button class="btn btn-default" id="next">Next</button>
+            <button class="btn btn-default" id="fullscreen">FullSreen</button>
+            &nbsp; &nbsp;
+            <span>Page: <span id="page_num"></span>/ <span id="page_count"></span></span>
+        </div>
+    </div>
+    <div class="row">
+
+        <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
+        <canvas id="the-canvas" class="col-lg-6 col-md-12" style="display: block; margin: 0px auto;"></canvas>
+
+
+
+    </div>
+</section>
+<script src="/Content/Publishing/js/pdfclick.js"></script>
+<script>
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+    // The workerSrc property shall be specified.
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'http://mozilla.github.io/pdf.js/build/pdf.worker.js';
+    var pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.5,
+        canvas = document.getElementById('the-canvas'),
+        ctx = canvas.getContext('2d');
+    var urlnode = '@WebConfig.UrlNode' + ':5000';
+    LoadPdf('/Uploads/@Model.NewsItem.FilePdf', urlnode);
+</script>

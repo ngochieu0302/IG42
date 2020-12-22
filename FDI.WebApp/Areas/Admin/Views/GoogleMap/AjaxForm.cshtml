@@ -1,0 +1,166 @@
+﻿@model FDI.Base.GoogleMap
+@{
+    ViewBag.Title = ViewBag.ActionText + " Tọa độ";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $.post("/Admin/GoogleMap/GetDistrictItemByCityIdt?cityID=" + $("#CityID").val(), function (lstDistrict) {
+                $("#DistrictID").html("");
+                $.each(lstDistrict, function (i, val) {
+                    var districtID = '@Model.DistrictID';
+                    if (districtID == val.ID) {
+                        $("#DistrictID").append("<option selected='selected' value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                    } else {
+                        $("#DistrictID").append("<option  value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                    }
+
+                });
+            });
+        });
+        $("#GoogleMapForm").validate({
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#GoogleMapForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+     
+        $('body').on("change", "#CityID", function () {
+            if (this.value != "0") {
+                $.post("/Admin/GoogleMap/GetDistrictItemByCityIdt?cityID=" + this.value, function (lstDistrict) {
+                    $("#DistrictID").html("");
+                    $.each(lstDistrict, function (i, val) {
+                        $("#DistrictID").append("<option value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                    });
+                });
+            } else {
+                $("#DistrictID").html("");
+                $("#DistrictID").append('<option value="0">--- Chọn quận huyện ---</option>');
+            }
+        });
+    });
+</script>
+<form id="GoogleMapForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-map-marker"></i>Thông tin Google Map
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tiêu đề</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Thành Phố</label>
+                            <div class="col-sm-10">
+                                <select id="CityID" name="CityID" class="form-control">
+                                    <option value="0">--- Chọn Thành Phố ---</option>
+                                    @foreach (var itemCity in ViewBag.LstCity)
+                                    {
+                                        <option value="@itemCity.ID" @(itemCity.ID == Model.CityID ? "selected" : string.Empty)>@itemCity.Name.Trim()</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Quận/Huyên</label>
+                            <div class="col-sm-10">
+                                <select id="DistrictID" name="DistrictID" class="form-control">
+                                    <option value="">--- Chọn Quận Huyện ---</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Loại</label>
+                            <div class="col-sm-10">
+                                <select id="Type" name="Type" class="form-control">
+                                    <option value="1" @(Model.Type == 1 ? "selected" : string.Empty)>--- ATM ---</option>
+                                    <option value="2" @(Model.Type == 2 ? "selected" : string.Empty)>--- Chi nhánh ---</option>
+                                    <option value="3" @(Model.Type == 3 ? "selected" : string.Empty)>---  Điểm nhận tiền WU ---</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tel</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Tel" id="Tel" value="@Model.Tel" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Fax</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Fax" id="Fax" value="@Model.Fax" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giờ mở cửa</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Time" id="Time" value="@Model.Time" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Vĩ độ</label>
+                            <div class="col-sm-2">
+                                <input type="text" name="Latitude" id="Latitude" value="@Model.Latitude" class="form-control"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Kinh độ</label>
+                            <div class="col-sm-2">
+                                <input type="text" name="Longitude" id="Longitude" value="@Model.Longitude" class="form-control"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="http://www.latlong.net/" target="_blank"><b style="line-height: 35px; color: #0000ff; font-style: italic;">Tham khảo lấy Vĩ độ, Kinh độ</b></a>
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Địa chỉ</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="8" id="Address" name="Address" class="form-control">@Model.Address</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="checkbox col-md-6">
+                                        <label>
+                                            @Html.CheckBox("IsShow") Hiện thị
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

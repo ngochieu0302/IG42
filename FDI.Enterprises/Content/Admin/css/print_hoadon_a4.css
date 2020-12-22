@@ -1,0 +1,219 @@
+﻿body {
+  background: #cccccc; }
+
+page {
+  position: relative;
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); }
+
+page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm; }
+
+page[size="A4"][layout="portrait"] {
+  width: 29.7cm;
+  height: 21cm; }
+
+page[size="A3"] {
+  width: 29.7cm;
+  height: 42cm; }
+
+page[size="A3"][layout="portrait"] {
+  width: 42cm;
+  height: 29.7cm; }
+
+page[size="A5"] {
+  width: 14.8cm;
+  height: 21cm; }
+
+page[size="A5"][layout="portrait"] {
+  width: 21cm;
+  height: 14.8cm; }
+
+@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0; } }
+
+* {
+  box-sizing: border-box; }
+
+.pagePrint {
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fef3eb;
+  background-size: 4.95cm;
+  padding: 0.8cm 1cm; }
+  .pagePrint .iconPrint {
+    width: 190px;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0; }
+  .pagePrint .logo {
+    width: 100%;
+    float: left;
+    text-align: right;
+    margin-bottom: 1.3cm; }
+  .pagePrint .detail {
+    width: 100%;
+    float: left;
+    box-sizing: border-box; }
+    .pagePrint .detail .left {
+      width: 60%;
+      float: left;
+      box-sizing: border-box;
+      padding-right: 1cm; }
+    .pagePrint .detail .right {
+      width: 40%;
+      float: left;
+      box-sizing: border-box; }
+    .pagePrint .detail ul {
+      float: left;
+      width: 100%;
+      padding-left: 0; }
+      .pagePrint .detail ul li {
+        float: left;
+        width: 100%;
+        list-style: none;
+        font-weight: normal;
+        font-size: 0.5cm;
+        padding: 0.1cm 0; }
+        .pagePrint .detail ul li strong {
+          display: inline-block;
+          font-weight: normal;
+          color: #575656;
+          margin-bottom: 0.2cm; }
+        .pagePrint .detail ul li span {
+          line-height: 0.6cm;
+          border-bottom: 2px dotted #575656;
+          display: inline-block;
+          min-width: 6cm;
+          text-transform: uppercase;
+          padding-left: 1cm;
+          font-size: 0.45cm; }
+        .pagePrint .detail ul li b {
+          display: inline-block;
+          font-weight: normal;
+          color: #575656;
+          margin-bottom: 0.2cm; }
+        .pagePrint .detail ul li.name span {
+          width: 6cm; }
+        .pagePrint .detail ul li.date span {
+          width: 7.6cm; }
+        .pagePrint .detail ul li.cus span {
+          width: 6.1cm; }
+        .pagePrint .detail ul li.vocher span {
+          width: 6cm; }
+  .pagePrint h2 {
+    font-size: 0.45cm;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px; }
+  .pagePrint h1 {
+    font-size: 0.7cm;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 10px;
+    float: left;
+    text-align: center;
+    width: 100%; }
+    .pagePrint h1 span {
+      padding-left: 3cm;
+      font-size: 0.5cm;
+      font-weight: normal; }
+  .pagePrint a {
+    color: #f18b5d;
+    text-decoration: none; }
+  .pagePrint .tablePrint {
+    float: left;
+    width: 100%;
+    margin-top: 0.5cm; }
+    .pagePrint .tablePrint .table-bordered {
+      border-color: #000 !important; }
+    .pagePrint .tablePrint table {
+      font-size: 0.4cm;
+      border: 1px solid #000000; }
+      .pagePrint .tablePrint table thead {
+        border-top: 1px solid #000000;
+        border-bottom: 1px solid #000000; }
+        .pagePrint .tablePrint table thead th {
+          border-top: 1px solid #000000;
+          border-bottom: 1px solid #000000;
+          border-right: 1px solid #000000;
+          border: 1px solid #000; }
+      .pagePrint .tablePrint table tbody tr {
+        border-bottom: 1px solid #000000; }
+        .pagePrint .tablePrint table tbody tr td {
+          border: 1px solid #000; }
+      .pagePrint .tablePrint table tfoot tr {
+        border-bottom: 1px solid #000000; }
+        .pagePrint .tablePrint table tfoot tr td {
+          border: 1px solid #000; }
+      .pagePrint .tablePrint table .total {
+        font-weight: bold;
+        color: #000000; }
+  .pagePrint .optionPrint {
+    width: 100%;
+    margin-top: 10px;
+    float: left; }
+    .pagePrint .optionPrint .left {
+      width: 35%;
+      float: left; }
+    .pagePrint .optionPrint .right {
+      width: 35%;
+      float: right;
+      text-align: center; }
+      .pagePrint .optionPrint .right span {
+        width: 100%; }
+    .pagePrint .optionPrint label {
+      font-size: 0.45cm;
+      font-weight: normal;
+      font-weight: bold;
+      margin-top: 15px;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase; }
+    .pagePrint .optionPrint .box-ky {
+      width: 5cm;
+      height: 3cm;
+      background-color: #fff;
+      float: right;
+      border: 2px solid #f18b5d; }
+    .pagePrint .optionPrint span {
+      float: left;
+      font-size: 0.4cm;
+      font-weight: normal;
+      padding-top: 0.3cm; }
+    .pagePrint .optionPrint .date i {
+      font-weight: bold;
+      display: inline-block;
+      padding: 0 3px; }
+  .pagePrint ul {
+    list-style-type: none;
+    padding-left: 0; }
+    .pagePrint ul li {
+      padding: 3px 0;
+      display: block;
+      float: left;
+      width: 100%; }
+  .pagePrint strong span {
+    font-weight: normal; }
+  .pagePrint .total-price {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    float: left; }
+

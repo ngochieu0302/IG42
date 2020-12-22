@@ -1,0 +1,44 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.ReceiptPaymentItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th><a href="#Field=CostName">Tên nhân viên</a></th>
+                    <th><a href="#Field=UserCreate">UserName</a></th>
+                    <th><a href="#Field=UserName">Tổng thu</a></th>                    
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.UserName</td>
+                            <td>@item.TotalReceip.Money()</td>                           
+                        </tr>
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="3"><b>TỔNG</b></td>
+                        <td><b>@Model.Sum(c => c.TotalReceip).Money()</b></td>                        
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');        
+    });
+</script>

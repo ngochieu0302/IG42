@@ -1,0 +1,32 @@
+﻿@model FDI.Simple.ModelModuleadminItem
+
+@if (Model.check)
+{
+    <ul class="menu-main">
+        @foreach (var mc in Model.ListItem)
+        {
+            <li>
+                <a href="/@mc.Tag/p@(mc.ID)c@(mc.ID)" data-id="@mc.ID" class="link-menu nav-link nav-toggle">
+                    <strong class="icon"><i class="@mc.ClassCss"></i></strong>
+                    <h3 class="title">@mc.NameModule</h3>
+                    <span>@mc.Content</span>
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <ul class="nav-toogler-main">
+        @foreach (var mc in Model.ListItem)
+        {
+            <li>
+                <a href="/@mc.Tag/p@(mc.ID)c@(mc.ID)" data-id="@mc.ID" class="link-menu nav-link">
+                    <strong class="icon"><i class="@mc.ClassCss"></i></strong>
+                    <h3 class="title">@mc.NameModule</h3>
+                </a>
+            </li>
+        }
+    </ul>
+
+}

@@ -1,0 +1,9 @@
+﻿@model List<FDI.Simple.DNUsersInRolesItem>
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+@foreach (var item in Model)
+{
+    <option value="@item.ID" data-user="@item.DNUserItem.UserName"> @item.DNUserItem.LoweredUserName (@item.DNUserItem.UserName)</option>
+}

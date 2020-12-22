@@ -1,0 +1,194 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNComboItem
+@{
+	Layout = "~/Views/Shared/_Ajax.cshtml";
+	var lst = Model.LstProducts != null ? string.Join(",", Model.LstProducts.Select(c => c.ID)) : "";
+}
+<script>
+	$(document).ready(function () {
+		$('.form-control').keypress(function (event) {
+			if (event.keyCode === 10 || event.keyCode === 13) {
+				event.preventDefault();
+				$("#btnSave").click();
+			}
+		});
+	});
+	$(function () {
+		registerGallery();
+		var lstP = JSON.parse("[@(lst)]");
+		
+		
+		$('#autoProduct').autocomplete({
+			serviceUrl: "/Product/Auto",
+			minChars: 1,
+			delimiter: /(;)\s*/,
+			maxHeight: 400,
+			onSelect: function (el) {
+				$('#autoProduct').val("");
+				var index = lstP.indexOf(el.ID);
+				if (index === -1) {
+					lstP.push(el.ID);
+					var txt = "<tr class='data'><td>stt</td><td>ValueName</td><td align='center'>PriceValue</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='ValueId'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+					txt = txt.replace("stt", lstP.length);
+					txt = txt.replace("ValueName", el.title);
+					txt = txt.replace("PriceValue", el.pricenew);
+					txt = txt.replace(/ValueId/g, el.ID);
+					$("#ProductDetail tbody").append(txt);
+				}
+				
+			}
+		});
+		$("body").on("click", ".pdelete", function () {
+			var pid = parseInt($(this).attr("data-pid"));
+			var index = lstP.indexOf(pid);
+			lstP.splice(index, 1);
+			$(this).parent().parent().remove();
+		});
+ 
+		
+		$(".quantity").mask('0000', { reverse: true });
+		$("#modalForm").validate({
+			rules: {
+			    Name: { required: true },
+			    DateStart_: { required: true },
+			    DateEnd_: { required: true }
+			},
+			messages: {
+			    Name: "Mời bạn nhập Tên combo.",
+			    DateStart_: "Mời bạn chọn ngày bắt đầu.",
+			    DateEnd_: "Mời bạn chọn ngày kết thúc.",
+			},
+			submitHandler: function () { //onSubmit
+				$('.maskPrice').each(function (i) {
+					$(this).val($(this).val().replace(/\,/g, ''));
+				});
+				$("#lstRet").val(lstP.toString());
+				PostAction("#modalForm");
+			}
+		});
+	});
+	
+</script>
+<form id="modalForm">
+	<div class="modal-body">
+		<input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+		<input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+		<input type="hidden" name="AgencyId" id="AgencyId" value="@ViewBag.AgencyId" />
+		<input type="hidden" id="lstRet" name="lstRet" />
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-database"></i>Combo sản phẩm
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="form-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tên Combo</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+							</div>
+							<label class="col-sm-2 control-label">Giá bán</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control maskPrice" name="Price" id="Price" value="@Model.Price" />
+							</div>
+						</div>
+ 
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Từ ngày</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control date-picker" name="DateStart_" id="DateStart_" value="@(Model.DateStart != null ?Model.DateStart.DecimalToString("dd/MM/yyyy") : "")" />
+							</div>
+							<label class="col-sm-2 control-label">Đến ngày</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control date-picker" name="DateEnd_" id="DateEnd_" value="@(Model.DateEnd != null ? Model.DateEnd.DecimalToString("dd/MM/yyyy") : "")" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Ảnh đại diện</label>
+							<div class="col-sm-10">
+								<button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+								<label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+								<input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureId" data-multi="false" />
+								<div id="Text_DefaultImages">
+									<div class="gridView list-images-popup">
+										@if (Model.PictureId > 0)
+										{
+											<div class="image-product" id="@Model.PictureId">
+												<div class="image">
+													@Gallery.DisplayImage(Model.UrlPicture, 120)
+													<div class="option">
+														<button type="button" class="btn red deleteImg" data-id="@Model.PictureId" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+													</div>
+												</div>
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+ 
+				</div>
+			</div>
+		</div>
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-external-link-square"></i>Chi tiết sản phẩm
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="form-body">
+					<div class="form-horizontal" style="margin-bottom: 20px;">
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-search"></i>
+							</span>
+							<input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+						</div>
+					</div>
+					<table class="gridView table table-bordered table-striped" id="ProductDetail">
+						<thead>
+						<tr>
+							<th>STT</th>
+							<th>Tên SP</th>
+							<th class='text-center'>Giá bán</th>
+							<th></th>
+						</tr>
+						</thead>
+						<tbody>
+						@if (Model.LstProducts != null)
+						{
+							var stt = 1;
+							foreach (var item in Model.LstProducts)
+							{
+								<tr class="data">
+									<td>@(stt++)</td>
+									<td>@item.Name</td>
+									<td align="center">@item.PriceNew</td>
+									<td class="text-right">
+										<button class="btn btn-default pdelete" data-pid="@item.ID">
+											<i class="fa fa-times" style="color: red;"></i>
+										</button>
+									</td>
+								</tr>
+							}
+						}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+		<button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+	</div>
+</form>
+<style>
+	.quantity {
+		width: 200px;
+	}
+</style>

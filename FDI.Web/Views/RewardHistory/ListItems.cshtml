@@ -1,0 +1,68 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelRewardHistoryItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    //var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox"/>
+                        </th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center"><a href="#Field=Date">Thời gian</a></th>
+                        <th class="text-center"><a href="#Field=CustomerName">Khách hàng</a></th>
+                        <th class="text-center"><a href="#Field=OrderID">Số HD</a></th>
+                        <th class="text-right"><a href="#Field=Price">Số tiền</a></th>
+                        <th class="text-right"><a href="#Field=Price">Tổng HĐ</a></th>
+                        <th class="text-center"><a href="#Field=Type">Loại</a></th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItems != null)
+                {
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@item.ID</td>
+                            <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="text-center">@item.CustomerName</td>
+                            <td class="text-center">@item.OrderID</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.PriceOrder)</td>
+                            @if (item.Type == (int)Reward.Cus)
+                            {
+                                <td class="text-center">Thưởng trực tiếp</td>
+                            }else if (item.Type == (int)Reward.Parent)
+                            {
+                                <td class="text-center">Thưởng cha</td>
+                            }else if (item.Type == (int)Reward.Root)
+                            {
+                                <td class="text-center">thưởng ssc</td>
+                            }                            
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

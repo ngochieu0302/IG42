@@ -1,0 +1,100 @@
+﻿
+@using FDI.CORE
+@model FDI.Simple.ModelContactOrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup size"/>
+                    <col class="colgroup size" />
+                    <col class="colgroup size" />
+                    <col class="colgroup price" />
+                    <col class="colgroup date" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=Name">STT</a></th>
+                        <th class="text-center"><a href="#Field=ID">Số HD</a></th>
+                        <th><a href="#Field=CustomerName">Khách hàng</a></th>
+                        <th><a href="#Field=CustomerName">Đại lý</a></th>
+                        <th class="text-center"><a href="#Field=StartDate">Ngày đặt</a></th>
+                        <th class="text-center"><a href="#Field=DateCreated">Ngày tạo</a></th>
+                        <th><a href="#Field=UserCreate">Người tạo</a></th>
+                        <th class="text-right"><a href="#Field=Discount">Đặt cọc</a></th>
+                        @*<th><a href="#Field=TotalPrice">Tổng tiền</a></th>*@
+                        <th class="text-center"><a href="#Field=Status">Trạng thái</a></th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItem != null)
+                {
+                    foreach (var item in Model.ListItem)
+                    {
+                    <tr data-id="@item.ID">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@(stt++)</td>
+                        <td class="text-center">@item.ID</td>
+                        <td>@item.CustomerName</td>
+                        <td>@item.AgencyName</td>
+                        <td class="text-center">@ConvertDate.DecimalToString(item.StartDate, "dd/MM/yyyy HH:mm")</td>
+                        <td class="text-center">@ConvertDate.DecimalToString(item.DateCreated, "dd/MM/yyyy HH:mm")</td>
+                        <td>@item.UserName</td>
+                        <td class="text-right">@item.Discount.Money()</td>
+                        @*<td class="text-right">@item.TotalPrice.Money()</td>*@
+                        <td class="text-center">
+                            @switch (item.Status)
+                            {
+                                case ((int)OrderStatus.Pending):
+                                    <label class="label label-info">Đang chờ</label>
+                                    break;
+                                case ((int)OrderStatus.Processing):
+                                    <label class="label label-info">Chưa thanh toán</label>
+                                    break;
+                                case ((int)OrderStatus.Cancelled):
+                                    <label class="label label-danger">Đã hủy</label>
+                                    break;
+                                case ((int)OrderStatus.Complete):
+                                    <label class="label label-success">Đã hoàn thành</label>
+                                    break;
+                            }
+                        </td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.ID, item.CustomerName)
+                            @Grid.ActionDelete(item.ID, item.CustomerName)
+                        </td>
+                    </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        registerGridView('#mygird');
+    });
+</script>

@@ -1,0 +1,167 @@
+﻿@model FDI.Simple.MenusItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+        $("#GroupId").val($("#ipMenuGroup").val());
+        $("#modalForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Url: {
+                    minlength: 3,
+                    maxlength: 255
+                }
+            },
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+      
+        $("#CateId").on("change", function () {
+            var name = $("#Name").val();
+            if ($("#CateId").val() !== "1") {
+                name = $("#CateId option:checked").attr("data-name");
+                $("#Name").val(name);
+            }
+            var page = $("#PageId").val() === "1" ? "0" : $("#PageId").val();
+            var cate = $("#CateId").val() === "1" ? "0" : $("#CateId").val();
+            $('#Url').val(RemoveUnicode(name) + "-p" + page + "c" + cate);
+        });
+
+        $("#PageId").on("change", function () {
+            var name = $("#Name").val();
+            var page = $("#PageId").val() === "1" ? "0" : $("#PageId").val();
+            var cate = $("#CateId").val() === "1" ? "0" : $("#CateId").val();
+            $('#Url').val(RemoveUnicode(name) + "-p" + page + "c" + cate);
+        });
+
+        $("#Name").on('change', function (e) {
+            e.preventDefault();
+            var page = $("#PageId").val() === "1" ? "0" : $("#PageId").val();
+            var cate = $("#CateId").val() === "1" ? "0" : $("#CateId").val();
+            $('#Url').val(RemoveUnicode($(this).val()) + "-p" + page + "c" + cate);
+        });
+
+
+        $("#ParentId").change(function () {
+            var level = parseInt($("#ParentId option:checked").attr("data-level")) + 1;
+            $('#IsLevel').val(level);
+        });
+    });
+</script>
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="IsLevel" id="IsLevel" value="@(Model.IsLevel ?? 1)" />
+        <input type="hidden" name="GroupId" id="GroupId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-newspaper-o"></i>Thông tin về menu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Menu cha</label>
+                            <div class="col-sm-9">
+                                <select name="ParentId" id="ParentId" class="form-control w250">
+                                    <option value="1">--- Thư mục gốc ---</option>
+                                    @foreach (var item in ViewBag.ParentID)
+                                    {
+                                        <option data-level="@(item.IsLevel ?? 1)" value="@item.ID" @((item.ID == Model.ParentId) ? " selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Link tới chuyên mục</label>
+                            <div class="col-sm-9">
+                                <select name="CateId" id="CateId" class="form-control">
+                                    
+                                    @foreach (var item in ViewBag.CategoryID)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.CateId) ? " selected" : "") data-name="@item.Slug">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Link tới trang</label>
+                            <div class="col-sm-9">
+                                <select name="PageId" id="PageId" class="form-control">
+                                    <option value="1">--- Thư mục gốc ---</option>
+                                    @foreach (var item in ViewBag.PageID)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.PageId) ? " selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tên menu</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">URL</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.Url, new { @class = "form-control", @id = "Url" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Icon</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Thứ tự hiển thị</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.Sort, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Hiện thị
+                                    </label>
+                                </div>
+
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsNewTab") Hiện thị tab mới
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+

@@ -1,0 +1,726 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelBedDeskItem
+@{
+    var total = Model.OrderItem.LstOrderDetailItems.Where(m => m.Status < 4).Sum(m => m.Quantity * m.Price);
+    const int icd = (int)FDI.CORE.OrderStatus.Cancelled;
+    var pay = total - Model.OrderItem.Deposits;
+    //var discountKH = Model.DiscountKHItem;
+    //if (discountKH != null && discountKH.PriceS <= pay && discountKH.PriceE >= pay && discountKH.IsAll == true)
+    //{
+    //    pay = pay - (pay * (discountKH.Percent / 100));
+    //}
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+
+}
+<input type="hidden" id="DiscountKH" value="@(new JavaScriptSerializer().Serialize(Model.DiscountItems))" />
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<form id="frm-modal">
+    <div class="modal-body npd">
+        <div class="tabs-bookatable-popup">
+            <ul class="nav nav-tabs tabs-bookatable">
+                <li class="active">
+                    <a href="#tab_1" id="tab_One" data-toggle="tab">Hóa đơn</a>
+                </li>
+                <li data-id="2">
+                    <a href="#tab_2" id="tab_Ones" data-toggle="tab">Tách hóa đơn</a>
+                </li>
+            </ul>
+
+            <div class="box-a-table-wrap">
+                <div class="user-order">
+                    <div class="detail-pay-order">
+                        <strong>
+                            <label>Bàn đã chọn:</label>
+                            @string.Join(" ,", Model.OrderItem.DN_Bed_Desk1.Select(m => m.Name))
+                        </strong>
+                        <b>@DateTime.Now.ToString("dd/MM/yyyy - HH:mm")</b>
+                    </div>
+                    <div class="tab-content ct-tabs-bookatable">
+                        <div class="tab-pane fade active in" id="tab_1">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                    <colgroup>
+                                        <col style="width: 10%" />
+                                        <col style="width: 10%" />
+                                        <col style="width: 30%" />
+                                        <col style="width: 10%" />
+                                        <col style="width: 15%" />
+                                        <col style="width: 15%" />
+                                        <col style="width: 10%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Mã hàng</th>
+                                            <th class="text-center">Ảnh</th>
+                                            <th>Tên hàng</th>
+                                            <th class="text-center">SL</th>
+                                            <th class="text-right">Đơn giá</th>
+                                            <th class="text-right">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.OrderItem.LstOrderDetailItems.Any())
+                                        {
+                                            foreach (var item in Model.OrderItem.LstOrderDetailItems.Where(c => c.Status != icd))
+                                            {
+                                            <tr class="@(item.Status == icd ? "line-through" : "")">
+                                                <td class="text-center">@item.ProductCode</td>
+                                                <td class="text-center">
+                                                    <img src='@item.UrlImg.Picture()' /></td>
+                                                <td class="text-left">@item.ProductName</td>
+                                                <td class="text-center">@item.Quantity</td>
+                                                <td class="text-right">@item.Price.Money()</td>
+                                                <td class="text-right">@((item.Price * item.Quantity).Money())</td>
+                                            </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade in" id="tab_2">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered">
+                                    <colgroup>
+                                        <col style="width: 10%" />
+                                        <col style="width: 10%" />
+                                        <col style="width: 30%" />
+                                        <col style="width: 10%" />
+                                        <col style="width: 15%" />
+                                        <col style="width: 15%" />
+                                        <col style="width: 10%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Mã hàng</th>
+                                            <th class="text-center">Ảnh</th>
+                                            <th>Tên hàng</th>
+                                            <th class="text-center">SL</th>
+                                            <th class="text-right">Đơn giá</th>
+                                            <th class="text-right">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.OrderItem.LstOrderDetailItems.Where(m => m.Status != icd))
+                                        {
+                                            <tr id="productorder-@item.ID">
+                                                <td class="text-center">@item.ProductCode</td>
+                                                <td class="text-center">
+                                                    <img src='@item.UrlImg.Picture()' /></td>
+                                                <td class="text-left">@item.ProductName</td>
+                                                <td class="text-center">
+                                                    <input type="number" data-id='@item.ID' id="id-@item.ID" data-qantity="@item.Quantity" class='quantity-order' value='@item.Quantity' />
+                                                </td>
+                                                <td class="text-right">@item.Price.Money()</td>
+                                                <td class="text-right price-id" id="price-@item.ID">@((item.Price * item.Quantity).Money())</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="lstProduct" value="@(new JavaScriptSerializer().Serialize(Model.OrderItem.LstOrderDetailItems.Where(c=>c.Status != icd)))" />
+                <div class="pay-order">
+                    <div class="title-box-order">
+                        <i class="fa fa-user"></i>Thẻ thành viên/Thẻ VIP
+                        <a class="btn btn-info pull-right btn-sm" id="btn_NoteCare">Thêm sở thích</a>
+                    </div>
+                    <div class="user-detail-order">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-search"></i>
+                                        </div>
+                                        <input class="form-control" id="Customer" placeholder="Nhập tên hoặc số điện thoại" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-credit-card"></i>
+                                        </div>
+                                        <input class="form-control" id="CustomerCard" placeholder="Quẹt thẻ" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <input type="text" class="form-control" name="CustomerName" id="CustomerName" placeholder="Tên khách hàng" value="@Model.OrderItem.CustomerName" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <input type="text" class="form-control" name="Mobile" id="Mobile" placeholder="Số điện thoại" value="@Model.OrderItem.CutomerPhone" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-location-arrow"></i>
+                                </div>
+                                <textarea type="text" class="form-control" rows="2" name="Address" id="Address" placeholder="Địa chỉ" value="@Model.OrderItem.CutomerAddress"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="2" name="Note" id="Note" placeholder="Ghi chú...">@Model.OrderItem.Note</textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="NoteCate" rows="2" class="form-control" placeholder="Sở thích"></textarea>
+                        </div>
+                        <div class="form-group text-right">
+                        </div>
+                        <input type="hidden" name="ID" id="ID" value="@(Model.OrderItem != null ? Model.OrderItem.ID : 0)" />
+                        <input type="hidden" name="do" id="do" value="Complete" />
+                        <input type="hidden" name="CustomerID" id="CustomerID" value="@Model.OrderItem.CustomerID" />
+                    </div>
+                    <div class="marth-pay-order">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Tổng hóa đơn
+                                        </div>
+                                        <input type="text" id="totalprice" class="form-control text-right text-bold" disabled value="@total.Money()" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Đặt cọc
+                                        </div>
+                                        <input type="text" id="txtDeposits" class="form-control text-right  color-red" disabled value="@Model.OrderItem.Deposits.Money()" />
+                                        <input type="hidden" id="Deposits" name="Deposits" value="@Model.OrderItem.Deposits" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Điểm tích lũy
+                                        </div>
+                                        <input type="text" class="form-control text-right color-orange" disabled placeholder="Điểm tích lũy" id="Bonus" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Tích lũy dùng
+                                        </div>
+                                        <input type="text" id="PrizeMoney" name="PrizeMoney" class="maskPrice form-control text-right color-orange" value="0" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Giảm giá (<b class="dn_gg"></b>%)
+                                        </div>
+                                        <input type="text" id="DiscountPr" name="DiscountPr" class="maskPrice form-control text-right" value="0" readonly />
+                                        <input type="hidden" id="Discount" name="Discount" value="0" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Tiền thanh toán
+                                        </div>
+                                        <input type="text" id="totalend" class="form-control text-right text-bold color-red" value="@string.Format("{0:0,0}", pay > 0 ? pay : 0)" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Tiền khách đưa
+                                        </div>
+                                        <input type="text" id="Payments" name="Payments" class="maskPrice form-control text-right text-bold color-green" value="0" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            Tiền thừa
+                                        </div>
+                                        <input type="text" id="txtexcesscash" class="form-control text-right text-bold" value="0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-primary" data-event="PrintNew" id="PrintNew"><i class="fa fa-print"></i>In bếp</button>
+    <button type="button" class="btn btn-sm btn-primary" data-event="Print"><i class="fa fa-print"></i>In tách HĐ</button>
+    <button type="button" data-event="Pay" class="btn btn-sm btn-info"><i class="fa fa-dollar"></i>Thu tiền</button>
+    <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+</div>
+<script>
+    $(document).ready(function () {
+        var total = parseFloat('@total');
+        var payments = parseFloat('@Model.OrderItem.Payments');
+        var icd = parseInt('@icd');
+        var prizeMoney = 0;
+        var IsCus = false;
+        var lstProduct = JSON.parse($("#lstProduct").val());
+        var lstValue = [];
+        var totalcopy = 0;
+        var dngg = 0;
+        listproduct();
+        Calculate();
+        $(function () {
+            $('#Customer').autocomplete({
+                serviceUrl: "/BookATable/AutoCustomer",
+                minChars: 1,
+                delimiter: /(;)\s*/,
+                maxHeight: 400,
+                onSelect: function (el) {
+                    $('#CustomerID').val(el.ID);
+                    $('#CustomerName').val(el.title);
+                    $('#Mobile').val(el.phone);
+                    $('#Address').val(el.code);
+                    $('#printKH').html(el.title);
+                    $('#Bonus').val(numeral(el.TotalPrice).format('0,0'));
+                    $('#NoteCate').val(el.Unit);
+                    $('#Customer').val("");
+                    $('#PrizeMoney').val("0");
+                    if (el.value != "") IsCus = true;
+                    else {
+                        IsCus = false;
+                    }
+                    Calculate();
+                }
+            });
+
+
+            //quẹt thẻ khách hàng
+            $('#CustomerCard').keyup(function () {
+                var val = $(this).val()
+                val = val.replace("%", "").replace("?", "");
+                if (val.length == 32) {
+                    $.post("/Sales/AutoCustomerItem", { query: val }, function (el) {
+                        if (el != null) {
+                            $('#CustomerID').val(el.ID);
+                            $('#CustomerName').val(el.title);
+                            $('#Mobile').val(el.phone);
+                            $('#Address').val(el.code);
+                            $('#printKH').html(el.title);
+                            $('#Bonus').val(numeral(el.TotalPrice).format('0,0'));
+                            $('#NoteCate').val(el.Unit);
+                            if (el.keword.toLowerCase() === el.value.toLowerCase()) {
+                                IsCus = true;
+                                prizeMoney = el.TotalPrice;
+                                Calculate();
+                            } else {
+                                prizeMoney = 0;
+                            }
+                            $('#CustomerCard').val("");
+                            $('#PrizeMoney').val("0");
+                        }
+                    });
+                    $(this).val("");
+                }
+            });
+
+            $("#PrizeMoney").change(function () {
+                debugger;
+                var pr = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;//Tích lũy sử dụng
+                var priceDis = total * dngg / 100;
+                var tt = total - payments - priceDis;//Số tiền phải thanh toán
+                if (prizeMoney === 0) {
+                    toastr["error"]("Bạn chưa quẹt thẻ.");
+                    $("#PrizeMoney").val("0");
+                    return;
+                }
+                if (pr > prizeMoney && prizeMoney < tt) {
+                    toastr["error"]("Vượt quá tiền tích lũy.");
+                    $("#PrizeMoney").val(numeral(prizeMoney).format('0,0'));
+                }
+                if (pr > tt && tt < prizeMoney) {
+                    toastr["error"]("Vượt quá tiền hóa đơn.");
+                    $("#PrizeMoney").val(numeral(tt).format('0,0'));
+                }
+                Calculate();
+            });
+            $("#Payments").change(function () {
+                Calculate();
+            });
+            $("[data-event='PrintNew']").click(function () {
+                $.post("/BookATable/ProcessingRestaurant?id=" + '@Model.OrderItem.ID', function () { });
+                var note = $("#Note").val();
+                $("#lblNote1").html(note);
+                $("#listboxprint1").html("");
+                for (var i = 0; i < lstProduct.length; i++) {
+                    if (lstProduct[i].Quantity > 0 && (lstProduct[i].Status == 1 || lstProduct[i].Status == 4)) {
+                        var q = lstProduct[i].Quantity - lstProduct[i].QuantityOld;
+                        var cl = lstProduct[i].Status == icd || q < 0 ? "line-through" : "";
+                        var str = "<div class='pr-property " + cl + "'>" +
+                            "<span>" + lstProduct[i].ProductName + "</span>" +
+                            "<span>" + Math.abs(q) + "</span>" +
+                            "<span>" + numeral(lstProduct[i].Price).format('0,0') + "</span>" +
+                            "<span>" + lstProduct[i].CateName + "</span>" +
+                            "</div>";
+
+                        $("#listboxprint1").append(str);
+                    }
+                }
+                $("#printNote").html($("#Note").val());
+                $('#BoxPrint1').show();
+                jQuery.print('#BoxPrint1');
+                $('#BoxPrint1').hide();
+            });
+            $("[data-event='Print']").click(function () {
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                if ($("#tab_1").hasClass("active")) {
+                    $.post("/BookATable/ProcessingRestaurant?id=" + '@Model.OrderItem.ID', function () { });
+                    printOrder();
+                }
+                if ($("#tab_2").hasClass("active")) {
+                    $("#do").val("Edit");
+                    // đẩy lại dữ liệu qua lstValue
+                    if (lstValue.length > 0) {
+                        $.post("/Utility/Delete?key=" + getCookie('CodeLogin'), function (a) {
+                            var lst1 = JSON.stringify(lstValue);
+                            $.post("/Utility/AddList?json=" + lst1, function (b) {
+                                $.post("/BookATable/Actions", $("#frm-modal").serialize(), function (data) {
+                                    if (data.Erros)
+                                        toastr["error"](data.Message);
+                                    else {
+                                        toastr["success"](data.Message);
+                                        printOrder();
+                                        for (var i = 0; i < lstValue.length; i++) {
+                                            for (var n = 0; n < lstProduct.length; n++) {
+                                                if (lstProduct[n].ID == lstValue[i].ProductID) {
+                                                    lstProduct[n].Quantity = lstProduct[n].Quantity - lstValue[i].Quantity;
+                                                    if (lstProduct[n].Quantity == 0) {
+                                                        $("#productorder-" + lstProduct[n].ID).html("");
+                                                        $("#productorder-" + lstProduct[n].ID).hide();
+                                                    } else {
+                                                        $("#id-" + lstProduct[n].ID).val(lstProduct[n].Quantity);
+                                                        $("#price-" + lstProduct[n].ID).html(lstProduct[n].Quantity * lstProduct[n].Price);
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        listproduct();
+                                        addHTML(lstProduct);
+                                        if ($('#IsDeposit').is(':checked')) {
+                                            $("#txtDeposits").html("0");
+                                            $("#Deposits").val(0);
+                                            $('#IsDeposit').prop('checked', false);
+                                        }
+                                        Calculate();
+                                        fnReset();
+                                    }
+                                });
+                            });
+                        });
+                    }
+                }
+            });
+
+            $("[data-event='Pay']").click(function () {
+                $("#do").val("Complete");
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post("/BookATable/Actions", $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        toastr["error"](data.Message);
+                    else {
+                        toastr["success"](data.Message);
+                        $("[data-event='Default']").trigger("click");
+                        $("#dialog-form-4 .dialog-form-ajax").html("");
+                        $("#dialog-form-4").modal('hide');
+                    }
+                });
+                printOrder();
+            });
+
+            // Tách hóa đơn.
+            $("body").on("change", ".quantity-order", function () {
+                var toSearch = $(this).val();
+                if (toSearch.length == 0) {
+                    toSearch = "0";
+                } else {
+                    var num = parseInt(toSearch);
+                    if (num < 0) toSearch = "0";
+                }
+                var id = parseInt($(this).data("id"));
+                var qantity = parseInt($(this).data("qantity"));
+                var val = parseInt(toSearch);
+                for (var i = 0; i < lstValue.length; i++) {
+                    if (lstValue[i].ProductID == id) {
+                        if (qantity >= val) {
+                            lstValue[i].Quantity = val;
+                            $(this).val(val);
+                        } else {
+                            lstValue[i].Quantity = qantity;
+                            $(this).val(qantity);
+                        }
+                        $("#price-" + id).html(numeral(lstValue[i].Price * lstValue[i].Quantity).format('0,0'));
+                        findTotal();
+                        break;
+                    }
+                }
+                Calculate();
+            });
+            $("#IsDeposit").change(function () {
+                Calculate();
+            });
+            $("#tab_One").click(function () {
+                $('#IsDeposit').prop('checked', true);
+                Calculate();
+            });
+            $("#tab_Ones").click(function () {
+                $('#IsDeposit').prop('checked', false);
+                Calculate();
+            });
+
+            $("#btn_NoteCare").click(function () {
+                var id = $('#CustomerID').val();
+                var NoteCate = $("#NoteCate").val();
+                $.post("/Sales/AjaxNoteCate", { ItemID: id, NoteCate: NoteCate }, function (data) {
+                    if (data.Erros)
+                        toastr["error"](data.Message);
+                    else {
+                        toastr["success"](data.Message);
+                    }
+                });
+            });
+        });
+        function Calculate() {
+            debugger;
+            dngg = 0;
+            var discountKH = JSON.parse($("#DiscountKH").val());
+            for (var i = 0; i < discountKH.length; i++) {
+                if (discountKH[i].IsAll == true || ((discountKH[i].IsAll == false) && IsCus == true)) {
+                    dngg = dngg + discountKH[i].Percent;
+                }
+            }
+            var price2 = dngg * total / 100;
+            var price4 = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var price5 = $("#Payments").val() !== "" ? parseFloat($("#Payments").val().replace(/[,]+/g, '')) : 0;
+            var price6 = 0;
+            if ($('#IsDeposit').is(':checked')) {
+                price6 = parseFloat($('#Deposits').val());
+            }
+
+
+            $('#Discount').val(dngg);
+            $('#DiscountPr').val(numeral(price2).format('0,0'));
+            $(".dn_gg").html(dngg);
+            var totalpay = total - price2 - price4 - price6;
+            $("#totalend").val(numeral(totalpay).format('0,0'));
+            $("#Payments").val(numeral(totalpay > 0 ? totalpay : 0).format('0,0'));
+            var totalend = total - price2 - price4 - price5 - price6;
+            if (totalend > 0) {
+                $("#txtexcesscash").val(0);
+            } else {
+                $("#txtexcesscash").val(numeral(-totalend).format('0,0'));
+            }
+        }
+        function fnReset() {
+            $('#Payments').val("0");
+            $('#Customer').val("");
+            $('#CustomerID').val("");
+            $('#CustomerName').val("");
+            $('#Mobile').val("");
+            $("#PrizeMoney").val(0);
+            $('#Address').val("");
+            $('#printKH').html("");
+            $('#printAddress').html("");
+            $('#Bonus').val("0");
+            $('#Discount').val("0");
+            $('#DiscountPr').val("0");
+            $('#Note').val("");
+            prizeMoney = 0;
+        }
+        function addHTML(lst) {
+            var price = 0;
+            var txt = "<tr><td>code</td></td><td>name</td><td class='text-center'>QuantityValue</td></td><td class='text-right'>price</td><td class='text-right'>pricetotal</td></tr>";
+            var mystring = "";
+            lst.forEach(function (entry, i) {
+                if (entry.Quantity > 0) {
+                    if (entry.Status < 4) price += entry.Quantity * entry.Price;
+                    var ch = txt.replace("stt", i + 1);
+                    ch = ch.replace("code", entry.ProductCode);
+                    ch = ch.replace("name", entry.ProductName);
+                    ch = ch.replace("QuantityValue", entry.Quantity);
+                    ch = ch.replace("price", numeral(entry.Price).format('0,0'));
+                    ch = ch.replace("pricetotal", numeral(entry.Price * entry.Quantity).format('0,0'));
+                    mystring = ch + mystring;
+                }
+            });
+            $("#totalend").val(numeral(price - payments).format('0,0'));
+            $("#totalprice").val(numeral(price).format('0,0'));
+            $("#ProductDetail tbody").html(mystring);
+        }
+        function printOrder() {
+            var fn = $("#FullName").val();
+            var note = $("#Note").val();
+
+            $("#lblNote").html(note);
+            $("#printCK").html(numeral(dngg * total / 100).format('0,0'));
+            var pr = $("#PrizeMoney").val();
+            $("#listboxprint").html("");
+            var totaltach = 0;
+            for (var n = 0; n < lstValue.length; n++) {
+                for (var i = 0; i < lstProduct.length; i++) {
+                    if (lstValue[n].ProductID == lstProduct[i].ID && lstValue[n].Quantity > 0) {
+                        var cl = lstProduct[i].Status == icd ? "line-through" : "";
+                        var str = "<div class='pr-property " + cl + "'>" +
+                            "<span>" + lstProduct[i].ProductName + "</span>" +
+                            "<span>" + lstValue[n].Quantity + "</span>" +
+                            "<span>" + numeral(lstProduct[i].Price).format('0,0') + "</span>" +
+                            "<span>" + numeral(lstProduct[i].Price * lstValue[n].Quantity).format('0,0') + "</span>" +
+                            "</div>";
+                        totaltach = totaltach + lstProduct[i].Price * lstValue[n].Quantity;
+                        $("#listboxprint").append(str);
+                        break;
+                    }
+                }
+            }
+            $("#printKH").html(fn);
+            $("#printPrizeMoneyTotal").html(numeral(pr).format('0,0'));
+            $("#printMoney").html(numeral(prizeMoney - pr).format('0,0'));
+            $("#prinPrice").html(numeral(totaltach).format('0,0'));
+            $("#printPayments").html(numeral(payments).format('0,0'));
+            $("#printPriceCusN").html(numeral(totaltach - payments - pr - (dngg * total / 100)).format('0,0'));
+            $("#printPricetemp").html(numeral(totaltach - payments - (dngg * total / 100)).format('0,0'));
+            $("#PriceVND").html(DocTienBangChu(totaltach - payments - pr - dngg));
+            $("#printNote").html($("#Note").val());
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        }
+        function listproduct() {
+            lstValue = [];
+            lstProduct.forEach(function (entry, i) {
+                if (entry.Status < 4) {
+                    var item = {
+                        ProductID: entry.ID,
+                        Quantity: entry.Quantity,
+                        Price: entry.Price,
+                        Key: getCookie('CodeLogin')
+                    };
+                    lstValue.push(item);
+                }
+            });
+        }
+
+        function findTotal() {
+            var sum = 0;
+            $('.price-id').each(function () {
+                sum += parseFloat($(this).val().replace(/[,]+/g, ''));
+            });
+            $('#totalprice').val(numeral(sum).format('0,0'));
+        }
+    });
+</script>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<div id="BoxPrint" class="pr-total" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-content" id="contentPrint">
+            <div class="pr-shop">
+                <strong>@Model.NameAgency</strong>
+                <span>@Model.AddressAgency</span>
+            </div>
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN KHÁCH HÀNG</strong>
+                <i id="printMP">QLBP/29 @DateTime.Now.ToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Thu ngân:</strong><span id="printNV">@Model.UserName</span></li>
+                    <li><strong>Khách hàng:</strong><span id="printKH">@Model.OrderItem.CustomerName</span></li>
+                    <li><strong>Bàn:</strong><span><small> @string.Join(" ,", Model.OrderItem.DN_Bed_Desk1.Select(m => m.Name))</small></span></li>
+                    <li><strong>Ghi chú:</strong><span><small id="lblNote">@Model.OrderItem.Note</small></span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product pr-bookatable">
+                <div class="pr-head">
+                    <strong>Món</strong>
+                    <strong>SL</strong>
+                    <strong>Giá </strong>
+                    <strong>Tiền</strong>
+                </div>
+                <div class="pr-item" id="listboxprint">
+                </div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng tiền:</strong><span id="prinPrice"></span></li>
+                    <li><strong>Giảm giá (<b class="dn_gg"></b>%):</strong><span id="printCK"></span></li>
+                    <li><strong>Tạm tính</strong><span id="printPricetemp"></span></li>
+                    <li><strong>Đặt cọc:</strong><span id="printPayments"></span></li>
+                    <li><strong>Tích lũy dùng:</strong><span id="printPrizeMoneyTotal"></span></li>
+                    <li><strong>Tích lũy còn lại:</strong><span id="printMoney"></span></li>
+                    <li><strong>Tiền thanh toán:</strong><span id="printPriceCusN"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="BoxPrint1" class="pr-total" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-content">
+            <div class="pr-shop">
+                <strong>@Model.NameAgency</strong>
+                <span>@Model.AddressAgency</span>
+            </div>
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN PHỤC VỤ</strong>
+                <i>QLBP/29 @DateTime.Now.ToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Thu ngân:</strong><span>@Model.UserName</span></li>
+                    <li><strong>Bàn:</strong><span><small> @string.Join(" ,", Model.OrderItem.DN_Bed_Desk1.Select(m => m.Name))</small></span></li>
+                    <li><strong>Ghi chú:</strong><span><small id="lblNote1">@Model.OrderItem.Note</small></span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product pr-bookatable">
+                <div class="pr-head">
+                    <strong>Món</strong>
+                    <strong>SL</strong>
+                    <strong>Giá </strong>
+                    <strong>Đồ</strong>
+                </div>
+                <div class="pr-item" id="listboxprint1">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@model List<FDI.Simple.DNTreeItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").on("click", ".AddTree", function () {
+            var id = $(this).attr("data-id");
+            FdiOpenDialog("#dialog-form",  "/DNtree/AjaxForm?do=Add&itemId=" + id, "Nhập kho");
+        });
+    });
+</script>
+<div class="tree-wrap">
+    <div class="tree tree-user" id="mygird">
+        <ul>
+            @Html.Raw(ViewBag.tree)
+        </ul>
+        <a href="" data-event="delete" title="Xóa" style="display:none"></a>
+    </div>
+</div>
+<link href="~/Content/Web/jquery.contextMenu.min.css" rel="stylesheet" />
+<script src="~/Content/Web/jquery.contextMenu.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $.contextMenu({
+            selector: '.AddTree',
+            callback: function (key) {
+                var id = parseInt($(this).data("id"));
+                if (key == "add") ajaxForm(id, "Add");
+                if (key == "edit") ajaxForm(id, "Edit");
+                if (key == "delete") {
+                    $('[data-event="delete"]').attr("href","#"+ id);
+                    $('[data-event="delete"]').click();
+                }
+            },
+            items: {
+                "add": { name: "Thêm mới", icon: "fa-plus", accesskey: "a" },
+                "edit": { name: "Chỉnh sửa", icon: "fa-pencil-square-o", accesskey: "e" },
+                "delete": { name: "Xóa", icon: "fa-trash-o", accesskey: "d" },
+            }
+        });
+    });
+    function ajaxForm(id, action) {
+        FdiOpenDialog("#dialog-form","/DNtree/AjaxForm?do=" + action + "&itemId=" + id, "Nhập kho");
+    }
+</script>

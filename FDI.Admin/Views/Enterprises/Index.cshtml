@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản trị doanh nghiệp</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Name">Tên DN</option>
+                    <option value="Email">Email</option>
+                    <option value="Phone">Phone</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <select name="isstatus" id="isstatus" class="form-control input-sm">
+                    <option value="1">Đang đùng</option>
+                    <option value="2">Hết hạn</option>
+                    <option value="3">Dùng thử</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>

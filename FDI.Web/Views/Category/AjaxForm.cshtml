@@ -1,0 +1,260 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CategoryItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    
+}
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" value="@Model.AgencyId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin danh mục
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <legend>Thông tin cơ bản</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên chuyên mục</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-4">
+                                <select name="ParentId" id="ParentId" class="form-control">
+                                    <option value="1" data-IsLv="0">-- Chọn chuyên mục cha --</option>
+                                    @foreach (var item in ViewBag.lstCate)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.ParentId) ? " selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Cân nặng</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="WeightDefault" id="WeightDefault" value="@Model.WeightDefault" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu Module</label>
+                            <div class="col-sm-4">
+                                <select name="Type" id="Type" class="form-control w250">
+                                    <option value="" @((0 == Model.Type) ? " selected" : string.Empty)>--- Chọn kiểu module ---</option>
+                                    <option value="1" @((1 == Model.Type) ? " selected" : string.Empty)>Tin tức</option>
+                                    <option value="2" @((2 == Model.Type) ? " selected" : string.Empty)>Sản phẩm</option>
+                                    <option value="3" @((3 == Model.Type) ? " selected" : string.Empty)>Tài liệu</option>
+                                    <option value="4" @((4 == Model.Type) ? " selected" : string.Empty)>Thư viện ảnh</option>
+                                    <option value="5" @((5 == Model.Type) ? " selected" : string.Empty)>Video</option>
+                                    <option value="6" @((6 == Model.Type) ? " selected" : string.Empty)>Hỏi đáp</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Đơn vị</label>
+                            <div class="col-sm-4">
+                                <select name="UnitID" id="UnitID" class="form-control">
+                                    <option value="">Chọn đơn vị</option>
+                                    @foreach (var item in ViewBag.lstUnit)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.UnitID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages">Chọn hỉnh ảnh đại diện</button>
+                                <input type="hidden" name="PictureID" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.PictureID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.UrlPicture, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Icon</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự hiển thị</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Sort, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="4" id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShowApp") Hiện thị trên App
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <legend>Dành cho đầu vào</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá Cost</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceOld" id="PriceOld" value="@Model.PriceOld.Money()" />
+                            </div>
+                            <label class="col-sm-2 control-label">Giá Cost (Trung bình)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceCost" id="PriceCost" value="@Model.PriceCost.Money()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lãi suất (Giá)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Profit" id="Profit" value="@Model.Profit" />
+                            </div>
+                            <label class="col-sm-2 control-label">Chi phí</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Incurred" id="Incurred" value="@Model.Incurred" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tỉ lệ hao hụt(%)</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="PercentLoss" id="PercentLoss" value="@Model.PercentLoss" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="Price" id="Price" value="@Model.Price.Money()" />
+                            </div>
+                            <label class="col-sm-2 control-label">Giá bán Ct</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceRecipe" id="PriceRecipe" value="@Model.PriceRecipe.Money()" />
+                            </div>
+                        </div>
+                        <legend>Dành cho đầu ra</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hệ số</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Percent" id="Percent" value="@Model.Percent" />
+                            </div>
+                            <label class="col-sm-2 control-label">Chi phí</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="TotalIncurredFinal" id="TotalIncurredFinal" value="@Model.TotalIncurredFinal.Money()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán Ct</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceRecipeFinal" id="PriceRecipeFinal" value="@Model.PriceRecipeFinal.Money()" />
+                            </div>
+                            <label class="col-sm-2 control-label">Giá bán ra</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="PriceFinal" id="PriceFinal" value="@Model.PriceFinal.Money()" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script type="text/javascript">
+    
+    registerGallery();
+    
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    maxlength: 255
+                },
+                PriceCost:
+                {
+                    required: true,
+                },
+                Incurred:
+                {
+                    required: true,
+                },
+                Percent:
+                {
+                    required: true,
+                },
+                WeightDefault: {
+                    required: true,
+                },
+                Type:
+                {
+                    required: true
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                WeightDefault:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                PriceCost:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Incurred:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Percent:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Type:
+                {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");                
+            }
+        });
+    
+</script>

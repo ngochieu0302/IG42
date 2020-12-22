@@ -1,0 +1,98 @@
+﻿@model FDI.Base.Document
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">Thông tin về tài liệu</header>
+        <table class="table table-hover">
+            <tr>
+                <td class="col-sm-2">
+                    <label>Tên tài liệu</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Số/Kí hiệu</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.Symbol)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Trích yếu</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.ShortDescription)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Ngày ban hành</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.PublishedDate)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Nơi ban hành</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.NoiBanHanh)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Người ký</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.NguoiKy)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Mô tả</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>File đính kèm</label></td>
+                <td class="col-sm-10">
+                   
+                            <table class="gridView" id="listFileAttachRemove" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Tên file</th>
+                                        <th>Size</th>
+                                        <th>Kiểu file</th> 
+                                    </tr>
+                                </thead>
+                                @foreach (var file in Model.DocumentFiles)
+                                {
+                                    var icon = "/Images/Icons/file/" + file.TypeFile + ".png";
+                                    <tr title="@file.Name" id="@file.Id">
+                                        <td>@file.Name.@file.TypeFile</td>
+                                        <td style="text-align: right;">@FDI.Utils.MyFiles.ChangeFileSize(file.FileSize ?? 0)</td>
+                                        <td>
+                                            <img src="@icon"/></td>                                        
+                                    </tr>
+                                }
+                            </table>
+                </td>
+            </tr>
+
+
+        </table>
+    </section>
+
+
+

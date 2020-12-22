@@ -1,0 +1,15 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.SimItem>
+@if (Model.Any())
+{
+    foreach (var items in Model)
+    {
+    <div class="col-sm-3 col-md-3">
+        <div class="boxSimvip">
+            <span class="nha-mang-@(items.Name) spritestlvn"></span>
+            <span class="sim">@items.CodeSku</span>
+            <span class="SimPrice">@(string.IsNullOrEmpty(items.PriceNew.ToString()) ? "Liên hệ" : items.PriceNew.Money()) đ</span>
+        </div>
+    </div>
+    }
+}

@@ -1,0 +1,146 @@
+﻿@using FDI.CORE
+@model FDI.Simple.RewardHistoryItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Lịch sử rút tiền
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Người trả</label>
+                        </td>
+                        <td>
+                            @Model.FullName
+                        </td>
+                        |
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Khách hàng</label>
+                        </td>
+                        <td>
+                            @Model.CustomerName
+                        </td>
+                        |
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Số điện thoại</label>
+                        </td>
+                        <td>
+                            @Model.Phone
+                        </td>
+                        |
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Số CMTND</label>
+                        </td>
+                        <td>
+                            @Model.CMND
+                        </td>
+                        |
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày Trả</label>
+                        </td>
+                        <td>
+                            @(Model.Date.DecimalToString("dd/MM/yyyy"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.PriceOrder)
+                        </td>
+                    </tr>
+                    <tr></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    <button id="btn_Print" type="button" class="btn btn-sm btn-primary"><i class="fa fa-print"></i>In hóa đơn</button>
+</div>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" class="pr-total" style="display: none;">
+    <link href="~/Content/Admin/css/print_hoadon_a4.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pagePrint">
+            <h1>Hóa đơn trả thưởng</h1>
+            <table>
+                <tr>
+                    <td colspan="2"><strong>Người trả</strong></td>
+                    <td><span>@Model.FullName</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Người nhận</strong></td>
+                    <td><span>@Model.CustomerName</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số điện thoại:</strong></td>
+                    <td><span>@Model.Phone</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số CMTND</strong></td>
+                    <td><span>@Model.CMND</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong><strong>Ngày trả:</strong></strong></td>
+                    <td><span>@Model.Date.DecimalToString("dd/MM/yyyy")</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số tiền trả:</strong></td>
+                    <td><span>@string.Format("{0:0,0}", Model.PriceOrder) vnđ</span></td>
+                </tr>
+            </table>
+            @*<ul class="name-cuss">
+                <li><strong>Người trả:</strong><span>@Model.FullName</span></li>
+                <li><strong>Người nhận:</strong><span>@Model.CustomerName</span></li>
+                <li><strong>Số điện thoại:</strong><span>@Model.Phone</span></li>
+                <li><strong>Số CMTND:</strong><span>@Model.CMND</span></li>
+                <li><strong>Ngày trả:</strong><span>@Model.Date.DecimalToString("dd/mm/yyyy")</span></li>
+                <li><strong>Số tiền trả:</strong><span>@string.Format("{0:0,0}", Model.PriceOrder) vnđ</span></li>
+            </ul>*@
+            <div class="tablePrint">
+                <strong class="total-price">Cộng thành tiền (bằng chữ): <span>@FDIUtils.NumberToWord(Model.PriceOrder ?? 0, " đồng")</span></strong>
+            </div>
+            <div class="optionPrint">
+                <div class="left">
+                    <label>Khách hàng</label>
+                </div>
+                <div class="right">
+                    <div class="date">
+                        Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i>
+                    </div>
+                    <span>Người viết hóa đơn</span>
+                </div>
+
+            </div>
+        </div>
+    </page>
+</div>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>

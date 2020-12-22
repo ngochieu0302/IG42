@@ -1,0 +1,78 @@
+﻿@using FDI.CORE
+@model List<FDI.Base.DN_ImportProduct>
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    decimal total = 0;
+}
+
+<div class="modal-body">
+    <div id="PrintContent" class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách sản phẩm đã nhập
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã SP</th>
+                            <th>Tên SP</th>
+                            <th>Số lượng</th>
+                            <th>Kg</th>
+                            <th>NSX</th>
+                            <th>HSD</th>
+                            <th>Barcode</th>
+                            <th>Giá nhập</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(stt++)</td>
+                                <td>@item.Shop_Product.Shop_Product_Detail.Code</td>
+                                <td>
+                                    @if (item.IsDelete == true)
+                                    {
+                                        <strike>@item.Shop_Product.Shop_Product_Detail.Name</strike>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Shop_Product.Shop_Product_Detail.Name</span>
+                                    }
+                                </td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Value.Quantity()</td>
+                                <td>@item.Date.DecimalToString("dd/MM/yyyy")</td>
+                                <td>@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                <td>@item.BarCode</td>
+                                <td>@string.Format("{0:0,0}", item.Price)</td>
+                                <td>@string.Format("{0:0,0}", item.Price * (item.Quantity ?? 1) * item.Value)</td>
+
+                            </tr>
+                                    total += (item.Price * (item.Quantity ?? 1) * item.Value) ?? 0;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="10">Tổng tiền: @total.Money()</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" onclick="printDiv('PrintContent')" class="btn btn-primary btn-sm">In phiếu</button>
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>

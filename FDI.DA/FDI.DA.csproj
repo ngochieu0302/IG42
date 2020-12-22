@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FDI.DA</RootNamespace>
+    <AssemblyName>FDI.DA</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FDI.Memcached">
+      <HintPath>..\..\LASEN\FDI.Web\bin\FDI.Memcached.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\Code cu\tps\FDI.Web\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BL\BaseBL.cs" />
+    <Compile Include="BL\CategoryBL.cs" />
+    <Compile Include="BL\CityBL.cs" />
+    <Compile Include="BL\ContactBL.cs" />
+    <Compile Include="BL\CustomerBL.cs" />
+    <Compile Include="BL\GalleryBL.cs" />
+    <Compile Include="BL\GalleryPictureBL.cs" />
+    <Compile Include="BL\GoogleMapBL.cs" />
+    <Compile Include="BL\HtmlSettingBL.cs" />
+    <Compile Include="BL\MenuBL.cs" />
+    <Compile Include="BL\ModulePageBL.cs" />
+    <Compile Include="BL\ModuleSettingBL.cs" />
+    <Compile Include="BL\NewsBL.cs" />
+    <Compile Include="BL\ProductBL.cs" />
+    <Compile Include="BL\ProductDetailBL.cs" />
+    <Compile Include="BL\SeoBL.cs" />
+    <Compile Include="BL\VideoBL.cs" />
+    <Compile Include="DA\ActiveRoleDA.cs" />
+    <Compile Include="DA\BannerDA.cs" />
+    <Compile Include="DA\PolicyAgencyDA.cs" />
+    <Compile Include="DA\AdminDA.cs" />
+    <Compile Include="DA\AdvertisingDA.cs" />
+    <Compile Include="DA\Advertising_PositionDA.cs" />
+    <Compile Include="DA\Advertising_TypeDA.cs" />
+    <Compile Include="DA\AnalysisDA.cs" />
+    <Compile Include="DA\AppCustomer\CateAppDA.cs" />
+    <Compile Include="DA\AppCustomer\CheckSouceAppDA.cs" />
+    <Compile Include="DA\AppCustomer\AgencyAppDA.cs" />
+    <Compile Include="DA\AppCustomer\ProductCusAppDA.cs" />
+    <Compile Include="DA\AppCustomer\NewsCusAppDA.cs" />
+    <Compile Include="DA\AppSales\OrderCusAppSaleDA.cs" />
+    <Compile Include="DA\AppCustomer\OrderCustomerDA.cs" />
+    <Compile Include="DA\AppCustomer\CusLoginAppDA.cs" />
+    <Compile Include="DA\AppSales\DocumentsAppDA.cs" />
+    <Compile Include="DA\AppSales\OrderAppDA.cs" />
+    <Compile Include="DA\AppSales\DNLoginAppDA.cs" />
+    <Compile Include="DA\AppSales\DNSalesAppDA.cs" />
+    <Compile Include="DA\AppSales\TokenDeviceDA.cs" />
+    <Compile Include="DA\AppSales\UserAppDA.cs" />
+    <Compile Include="DA\CateRecipeDA.cs" />
+    <Compile Include="DA\CheckOrigin\SourceDA.cs" />
+    <Compile Include="DA\Location\AreaDA.cs" />
+    <Compile Include="DA\AttributesDA.cs" />
+    <Compile Include="DA\BiasProduceDA.cs" />
+    <Compile Include="DA\BonusTypeDA.cs" />
+    <Compile Include="DA\ContentVoteDa.cs" />
+    <Compile Include="DA\CashAdvanceDA.cs" />
+    <Compile Include="DA\AddMinuteDA.cs" />
+    <Compile Include="DA\CateValueDA.cs" />
+    <Compile Include="DA\DN_Sales\DNDiscountDA.cs" />
+    <Compile Include="DA\DN_Sales\DNPromotionDA.cs" />
+    <Compile Include="DA\DN_Sales\DNSalesDA.cs" />
+    <Compile Include="DA\Location\CityDA.cs" />
+    <Compile Include="DA\Location\DistrictDA.cs" />
+    <Compile Include="DA\Location\MarketDA.cs" />
+    <Compile Include="DA\Location\WardsDA.cs" />
+    <Compile Include="DA\Logistics\OrderCarProductDetailDA.cs" />
+    <Compile Include="DA\Logistics\CarDA.cs" />
+    <Compile Include="DA\Logistics\OrderCarDA.cs" />
+    <Compile Include="DA\ModuleControlDA.cs" />
+    <Compile Include="DA\PaymentOrderDA.cs" />
+    <Compile Include="DA\ProductTypeDA.cs" />
+    <Compile Include="DA\ProductValueDA.cs" />
+    <Compile Include="DA\StackDA.cs" />
+    <Compile Include="DA\CustomerPointDA.cs" />
+    <Compile Include="DA\CustomerQuestionDA.cs" />
+    <Compile Include="DA\CustomerReviewDA.cs" />
+    <Compile Include="DA\CustomerRewardDA.cs" />
+    <Compile Include="DA\DebtDA.cs" />
+    <Compile Include="DA\DNExportDA.cs" />
+    <Compile Include="DA\DNExportProductDA.cs" />
+    <Compile Include="DA\DNTotalSalaryMonthDA.cs" />
+    <Compile Include="DA\ImportProductDA.cs" />
+    <Compile Include="DA\DiscountDA.cs" />
+    <Compile Include="DA\OrderDebtDA.cs" />
+    <Compile Include="DA\ProductDA.cs" />
+    <Compile Include="DA\ReceiptPaymentDA.cs" />
+    <Compile Include="DA\ReceiveHistoryDA.cs" />
+    <Compile Include="DA\SetupProductionDA.cs" />
+    <Compile Include="DA\StorageProductDA.cs" />
+    <Compile Include="DA\StorageWarehouse\ProduceProduceCatogoryDA.cs" />
+    <Compile Include="DA\StorageWarehouse\ProduceDA.cs" />
+    <Compile Include="DA\StorageWarehouse\PurchaseOrderDA.cs" />
+    <Compile Include="DA\StorageWarehouse\RequestWareDA.cs" />
+    <Compile Include="DA\StorageWarehouse\StorageFreightWarehouseDA.cs" />
+    <Compile Include="DA\StorageWarehouse\StorageWareHouseDA.cs" />
+    <Compile Include="DA\StorageWarehouse\StorageWareHouseLogDA.cs" />
+    <Compile Include="DA\StorageWarehouse\TotalProductToDayDA.cs" />
+    <Compile Include="DA\StorageWarehouse\TotalStorageWareDA.cs" />
+    <Compile Include="DA\SupplierDA.cs" />
+    <Compile Include="DA\Supplier\SupplierAmountProductDA.cs" />
+    <Compile Include="DA\System_TagDA.cs" />
+    <Compile Include="DA\NewsDA.cs" />
+    <Compile Include="DA\TemplateDocumentDA.cs" />
+    <Compile Include="DA\TherapyHistoryDA.cs" />
+    <Compile Include="DA\TotalSalaryMonthDA.cs" />
+    <Compile Include="DA\DNMailStatusDA.cs" />
+    <Compile Include="DA\LevelVoteDa.cs" />
+    <Compile Include="DA\LogDA.cs" />
+    <Compile Include="DA\MenuDA.cs" />
+    <Compile Include="DA\SystemMessageTemplateDA.cs" />
+    <Compile Include="DA\DNTreeDA.cs" />
+    <Compile Include="DA\DNDocumentDA.cs" />
+    <Compile Include="DA\DNDrawerDA.cs" />
+    <Compile Include="DA\DocumentFilesDA.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DA\OrderDetailDA.cs" />
+    <Compile Include="DA\DNRoomDA.cs" />
+    <Compile Include="DA\DNExchangeDA.cs" />
+    <Compile Include="DA\ProductSizeDA.cs" />
+    <Compile Include="DA\SendCardDA.cs" />
+    <Compile Include="DA\RewardHistoryDA.cs" />
+    <Compile Include="DA\DNCardDA.cs" />
+    <Compile Include="DA\BankDA.cs" />
+    <Compile Include="DA\CategoryDA.cs" />
+    <Compile Include="DA\ContactOrderDA.cs" />
+    <Compile Include="DA\DNFileMailDA.cs" />
+    <Compile Include="DA\DNNewsCommentDA.cs" />
+    <Compile Include="DA\DNNewsSSCDA.cs" />
+    <Compile Include="DA\CostTypeDA.cs" />
+    <Compile Include="DA\DNBedDeskDA.cs" />
+    <Compile Include="DA\DNComboDA.cs" />
+    <Compile Include="DA\DNGroupMailSSCDA.cs" />
+    <Compile Include="DA\DNImportDA.cs" />
+    <Compile Include="DA\DNLevelRoomDA.cs" />
+    <Compile Include="DA\DNMailSSCDA.cs" />
+    <Compile Include="DA\DNSalaryDA.cs" />
+    <Compile Include="DA\DNCriteriaDA.cs" />
+    <Compile Include="DA\DNTimeJobDA.cs" />
+    <Compile Include="DA\DNCalendarWeeklyScheduleDA.cs" />
+    <Compile Include="DA\DNCalendarDA.cs" />
+    <Compile Include="DA\DNUnitDA.cs" />
+    <Compile Include="DA\DNUserBedDeskDA.cs" />
+    <Compile Include="DA\DNUsersInRolesDA.cs" />
+    <Compile Include="DA\DNLoginDA.cs" />
+    <Compile Include="DA\DN_WeeklyScheduleDA.cs" />
+    <Compile Include="DA\EditScheduleDA.cs" />
+    <Compile Include="DA\DNWeeklyDA.cs" />
+    <Compile Include="DA\DNActiveRoleDA.cs" />
+    <Compile Include="DA\DNAdminDA.cs" />
+    <Compile Include="DA\DNModuleDA.cs" />
+    <Compile Include="DA\DNRoleDA.cs" />
+    <Compile Include="DA\DNRoleModuleActiveDA.cs" />
+    <Compile Include="DA\DNUserDA.cs" />
+    <Compile Include="DA\DN_ScheduleDA.cs" />
+    <Compile Include="DA\DayOffDA.cs" />
+    <Compile Include="DA\CustomerContactDA.cs" />
+    <Compile Include="DA\CustomerDA.cs" />
+    <Compile Include="DA\CustomerGroupDA.cs" />
+    <Compile Include="DA\DocumentDA.cs" />
+    <Compile Include="DA\AgencyDA.cs" />
+    <Compile Include="DA\DepartmentDA.cs" />
+    <Compile Include="DA\FAQQuestionDA.cs" />
+    <Compile Include="DA\FAQ_AnswerDA.cs" />
+    <Compile Include="DA\ModuleDA.cs" />
+    <Compile Include="DA\HtmlDA.cs" />
+    <Compile Include="DA\Gallery_PictureDA.cs" />
+    <Compile Include="DA\Gallery_VideoDA.cs" />
+    <Compile Include="DA\GoogleMapDA.cs" />
+    <Compile Include="DA\LanguagesDA.cs" />
+    <Compile Include="DA\LogProductDa.cs" />
+    <Compile Include="DA\MenuGroupsDA.cs" />
+    <Compile Include="DA\OrdersDA.cs" />
+    <Compile Include="DA\PacketDA.cs" />
+    <Compile Include="DA\PromotionDA.cs" />
+    <Compile Include="DA\ShopProductDetailDA.cs" />
+    <Compile Include="DA\ShopProductPictureDA.cs" />
+    <Compile Include="DA\ShopProductValueDA.cs" />
+    <Compile Include="DA\Shop_BrandDA.cs" />
+    <Compile Include="DA\SizeDA.cs" />
+    <Compile Include="DA\EnterprisesDA.cs" />
+    <Compile Include="DA\STGroupDA.cs" />
+    <Compile Include="DA\TreeViewDA.cs" />
+    <Compile Include="DA\UserDA.cs" />
+    <Compile Include="DA\WallerOrderDA.cs" />
+    <Compile Include="DA\WalletCustomerDA.cs" />
+    <Compile Include="DA\Workshop\CompanyDA.cs" />
+    <Compile Include="DA\Workshop\WorkShopDA.cs" />
+    <Compile Include="DL\CategoryDL.cs" />
+    <Compile Include="DL\CityDL.cs" />
+    <Compile Include="DL\ContactDL.cs" />
+    <Compile Include="DL\CustomerDL.cs" />
+    <Compile Include="DL\GalleryDL.cs" />
+    <Compile Include="DL\GalleryPictureDL.cs" />
+    <Compile Include="DL\GoogleMapDL.cs" />
+    <Compile Include="DL\HtmlSettingDL.cs" />
+    <Compile Include="DL\MenuDL.cs" />
+    <Compile Include="DL\ModuleControlDL.cs" />
+    <Compile Include="DL\ModulePageDL.cs" />
+    <Compile Include="DL\ModuleSettingDL.cs" />
+    <Compile Include="DL\NewsDL.cs" />
+    <Compile Include="DL\ProductDetailDL.cs" />
+    <Compile Include="DL\ProductDL.cs" />
+    <Compile Include="DL\SeoDL.cs" />
+    <Compile Include="DL\VideoDL.cs" />
+    <Compile Include="DA\PaymentMethodDA.cs" />
+    <Compile Include="ProductDetailRecipeDA.cs" />
+    <Compile Include="QueryExtensions.cs" />
+    <Compile Include="DA\RoleDA.cs" />
+    <Compile Include="DA\RoleModuleActiveDA.cs" />
+    <Compile Include="DA\ModulePageDA.cs" />
+    <Compile Include="DA\SystemConfigDA.cs" />
+    <Compile Include="DA\System_ColorDA.cs" />
+    <Compile Include="DA\System_CountryDA.cs" />
+    <Compile Include="DA\System_FileDA.cs" />
+    <Compile Include="DA\VoteDA.cs" />
+    <Compile Include="DA\VoteTypeDA.cs" />
+    <Compile Include="BaseDA.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DA\WalletsDA.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FDI.Base\FDI.Base.csproj">
+      <Project>{689f0818-80d1-4e5c-a498-806c59e25a3a}</Project>
+      <Name>FDI.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FDI.CORE\FDI.CORE.csproj">
+      <Project>{2C81F539-50E6-47BF-BC49-54DAF90867B9}</Project>
+      <Name>FDI.CORE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FDI.Simple\FDI.Simple.csproj">
+      <Project>{187fd03c-2a93-4881-9b02-9e7a80f54f7f}</Project>
+      <Name>FDI.Simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FDI.Utils\FDI.Utils.csproj">
+      <Project>{b34b3278-35a8-4426-9564-f148f5220f09}</Project>
+      <Name>FDI.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

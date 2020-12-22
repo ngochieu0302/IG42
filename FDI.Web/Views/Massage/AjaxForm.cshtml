@@ -1,0 +1,178 @@
+﻿@model FDI.Simple.ModelOrderGetItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var date = DateTime.Now.AddMinutes(2);
+}
+<script>
+    $(function () {
+        callSelect2("#HoursStart", "80px");
+        callSelect2("#MinuteStart", "80px");
+        var a = true;
+        
+        $('#Customer').autocomplete({
+            serviceUrl: "/BookATable/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerID').val(el.ID);
+                $('#FullName').val(el.title);
+                $('#Phone').val(el.phone);
+                $('#Address').val(el.code);
+                $('#printKH').html(el.title);
+            }
+        });
+
+        $("#frm-modal").validate({
+            rules: {
+                FullName:
+                {
+                    required: true,
+                },
+                ProductID:
+                {
+                    required: true,
+                }
+            },
+            submitHandler: function () { //onSubmit
+                var d = $("#SetDate_").val();
+                var h = $("#HoursStart").val();
+                var m = $("#MinuteStart").val();
+                var date = intGetTimeByDate(d, h, m);
+                var datenow = intDateNow();
+                if (datenow < date && a) {
+                    a = false;
+                    $('#printTime').html(h + ":" + m + " " + d);
+                    $("#printNode").html("Ghi chú: " + $("#Note").val());
+                    var price = $("#ProductID option:selected").attr("data-Price");
+                    $("#listboxprint").html("<div class='pr-item'><b>1. " + $("#ProductID option:selected").text() + "</b><div class='pr-property'><span>&nbsp;</span><span>" + price + "</span><span>0%</span><span>" + $("#ProductID option:selected").attr("data-Price") + "</span></div></div>");
+                    $("#prinPrice").html(price);
+                    $("#printPriceCus").html(price);
+                    $("#totalPrice").html('<strong>Tổng</strong><strong>' + price + '</strong><strong>&nbsp;</strong><strong>' + price + '</strong>');
+                    $.post(urlPostAction + "?StartDate=" + date, $("#frm-modal").serialize(), function (data) {
+                        if (data.Erros)
+                            toastr["error"](data.Message);
+                        else {
+                            createShowMessage("Thông báo", data.Message);
+                            $(".modal").modal('hide');
+                        }
+                        a = true;
+                    });
+                } else if (!a) {
+                    createMessage("Thông báo", "Sever đang xử lý bạn hãy chờ!", ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                } else {
+                    createMessage("Thông báo", "Thời gian bắt đầu nhỏ hơn thời gián hiện tại", ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                }
+            }
+        });
+        $("#ProductID").change(function () {
+            $("#Value").val($("#ProductID option:selected").attr("data-Value"));
+            $("#Price").val($("#ProductID option:selected").attr("data-Price"));
+        });
+    })
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="Add" />
+        <input type="hidden" name="itemId" id="itemId" value="@Model.BedDeskID" />
+        <input type="hidden" name="IsEarly" id="IsEarly" value="@Model.IsEarly.ToString()" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Đặt phòng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Customer" name="Customer" value="">
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Họ Tên</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="FullName" name="FullName" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Address" name="Address" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số điện thoại</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Phone" name="Phone" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Thời gian</label>
+                            <div class="col-md-5">
+                                <input class="form-control date-picker" id="SetDate_" name="SetDate_" value="@(date.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Giờ bắt đầu</label>
+                                    <div class="col-sm-8">
+                                        <select name="HoursStart" id="HoursStart" class="select2">
+                                            @for (int i = 0; i <= 23; i++)
+                                            {
+                                                <option value="@i" @(date.Hour == i ? "selected" : string.Empty)>@i</option>
+                                            }
+                                        </select>
+
+                                        <select name="MinuteStart" id="MinuteStart" class="select2">
+                                            @for (int i = 0; i <= 59; i++)
+                                            {
+                                                <option value="@i" @(date.Minute == i ? "selected" : string.Empty)>@i</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Gói dịch vụ</label>
+                            <div class="col-md-10">
+                                <select class="form-control" id="ProductID" name="ProductID">
+                                    <option value="" data-value="0">-- Chọn gói --</option>
+                                    @foreach (var item in Model.ListItem)
+                                    {
+                                        <option value="@item.ID" data-Value="@item.Value" data-Price="@string.Format("{0:0,0}", item.PriceNew)">@item.Name</option>
+                                    }
+                                </select>
+                                <input type="hidden" name="Value" id="Value" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" id="Note" name="Note" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Price" name="Price" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Lưu lại</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>

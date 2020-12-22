@@ -1,0 +1,162 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMNewsAppGameItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        registerGallery();
+
+        var urlSelectCategory = '@Url.Action("AjaxTreeCategorySelect", "TMCategoryAppGame", new { @pageId = 2 })';
+
+        $("#selectCategory").click(function () {
+            var valuesSelected = $("#Value_CategoryValues").val();
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Chọn chuyên mục bài viết");
+            $("#dialog-form-2 #dialog-form-ajax").load(encodeURI(urlSelectCategory + "&valuesSelected=" + valuesSelected));
+            $('#dialog-form-2').modal('show');
+            return false;
+        });
+
+        $("#modalForm").validate({
+            submitHandler: function () {
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+      
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+          <input type="hidden" name="@(Model.ID > 0 ? "UserUpdate" : "UserCreate")" id="@(Model.ID > 0 ? "UserUpdate" : "UserCreate")" value="@(Model.ID > 0 ? Model.UserUpdate : Model.UserCreate)" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin tin tức ứng dụng, game
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tiêu đề</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Title" name="Title" value="@Model.Title" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục</label>
+                            <div class="col-sm-10">
+                                <button id="selectCategory" type="button" class="btn btn-sm btn-primary"><span class="fa fa-bars"></span>Chọn chuyên mục tin tức</button>
+                                <label id="errorCategory" class="error" style="display: none">Chưa chọn chuyên mục.</label>
+                                <input type="hidden" name="Value_CategoryValues" id="Value_CategoryValues" value="@(Model.ListTMCategoryAppGame != null ? string.Join(", ", Model.ListTMCategoryAppGame.Select(c => c.ID)) : string.Empty)" />
+                                <div id="Text_CategoryValues" class="checkBoxValues">@(Model.ListTMCategoryAppGame != null ? string.Join(", ", Model.ListTMCategoryAppGame.Select(c => c.Name)) : string.Empty)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="PicturePanel">
+                            <label class="col-md-2 control-label">Ảnh đại diện</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.PictureID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.PictureUrl, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chi tiết</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Details" id="Details">@Model.Details</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ngày hiện thị</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="_StartDateDisplay" name="_StartDateDisplay" value="@Model.StartDateDisplay" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">URL </label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Slug" name="Slug" value="@Model.Slug" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Title</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEOTitle" name="SEOTitle" value="@Model.SEOTitle" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Keyword</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEOKeyword" name="SEOKeyword" value="@Model.SEOKeyword" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SEO Description</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="SEODescription" name="SEODescription" value="@Model.SEODescription" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Hiện thị
+                                    </label>
+                                </div>
+                                
+                                 <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsHot") Hiện thị Hot
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

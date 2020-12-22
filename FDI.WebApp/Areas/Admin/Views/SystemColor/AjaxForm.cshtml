@@ -1,0 +1,105 @@
+﻿@model FDI.Base.System_Color
+@{
+    ViewBag.Title = ViewBag.ActionText + " màu sắc";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script src="~/Content/Admin/js/ColorPicker/colorpicker.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/eye.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/layout.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/utils.js"></script>
+<link href="~/Content/Admin/css/colorpicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+
+        $("#SystemColorForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 50
+                },
+                Value:
+                {
+                    required: true,
+                    minlength: 7,
+                    maxlength: 7
+                }
+
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#SystemColorForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+<form id="SystemColorForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" id="listValueFileAttach" name="listValueFileAttach" />
+        <input type="hidden" id="listValueFileAttachRemove" name="listValueFileAttachRemove" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên màu</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name"  value="@Model.Name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Mã màu</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="Value" id="Value" style="background-color:@Model.Value" value="@Model.Value" class="form-control"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="lb-color" style="padding-top: 10px; font-weight: bold; font-style: italic;">@Model.Value</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Mô tả</label>
+                        <div class="col-sm-10">
+                            <textarea rows="8" id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox col-md-6">
+                                <label>
+                                    @Html.CheckBox("IsShow") Hiện thị
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

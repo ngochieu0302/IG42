@@ -1,0 +1,105 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.FormReceiptPaymentItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        callSelect2("#UserId", "100%");
+        callSelect2("#CostTypeId", "100%");
+        $(".customer").hide();
+        $("#modalForm").validate({
+            rules: {
+                Price: { required: true },
+                UserId: { required: true },
+                Note: { required: true }
+            },
+            messages: {
+                Price: "Trường bắt buộc nhập.",
+                UserId: "Trường bắt buộc nhập.",
+                Note: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () { //onSubmit
+                $(".maskPrice").each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    })
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@Model.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ObjItem.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@Model.AgencyId" />
+        <input type="hidden" name="UserCashier" id="UserCashier" value="@(Model.ObjItem.UserCashier??Model.UserId)" />
+        <input type="hidden" name="Status" id="Status" value="@((int)Vouchers.Payment)" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về phiếu chi
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label user">Người duyệt</label>
+                            <div class="col-sm-4 user">
+                                <select class="form-control select2" name="UserId" id="UserId">
+                                    <option value="">Người duyệt</option>
+                                    @foreach (var item in Model.Users)
+                                    {
+                                        <option value="@item.UserId" @(Model.ObjItem.UserID == item.UserId ? "selected":"")>@item.UserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày chi</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="DateReturn_" name="DateReturn_" value="@(Model.ObjItem.DateReturn != null ? Model.ObjItem.DateReturn.DecimalToString("yyyy-MM-dd") : DateTime.Now.Format("yyyy-MM-dd"))">
+                            </div>
+                            <label class="col-sm-2 control-label">Loại phiếu chi</label>
+                            <div class="col-sm-4">
+                                <select id="CostTypeId" name="CostTypeId" class="select2">
+                                    @foreach (var item in Model.CostTypeItems)
+                                    {
+                                        <option value="@item.ID" @(Model.ObjItem.ID == item.ID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số tiền</label>
+                            <div class="col-sm-4">
+                                <input id="Price" name="Price" class="form-control maskPrice text-right" value="@Model.ObjItem.Price">
+                            </div>
+                            <label class="col-sm-2 control-label">Thanh toán</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="PaymentMethodId">
+                                    <option value="@((int)PaymentMethod.Cash)">Tiền mặt</option>
+                                    <option value="@((int)PaymentMethod.Transfer)">Chuyển khoản</option>
+                                    <option value="@((int)PaymentMethod.Other)">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ghi chú</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" name="Note" id="Note">@Model.ObjItem.Note</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

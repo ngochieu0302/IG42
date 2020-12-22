@@ -1,0 +1,49 @@
+﻿@model FDI.Base.BonusType
+@{    
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Xem chi tiết loại thưởng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <label>Mổ tả</label>
+                        </td>
+                        <td>@Model.Description</td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <label>Mức thưởng</label>
+                        </td>
+                        <td>@string.Format("{0:0,0}", Model.Price)</td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <label>(%)</label>
+                        </td>
+                        <td>@Model.Percent</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

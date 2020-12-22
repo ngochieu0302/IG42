@@ -1,0 +1,16 @@
+﻿@model FDI.Simple.ModelModuleItem
+@if (Model.ListItem != null && Model.ListItem.Any())
+{
+    var i = 1;
+    var obj = Model.ListItem.FirstOrDefault(m => m.ID == Model.PrarentID);
+    <div class="tabs-menu">
+        @if (obj != null)
+        {
+            <strong>@obj.NameModule</strong>
+        }
+        @foreach (var item in Model.ListItem.Where(c => c.ID != Model.PrarentID).OrderBy(m=>m.Ord))
+        {
+            <a class="link-menu1 @item.Tag @(item.Tag.ToLower() == Model.Container.ToLower() ? "active" : "")" href="/@item.Tag/p@(item.ID)c@(item.PrarentID)">@(i++). @item.NameModule<span><i class="fa fa-arrow-right"></i></span></a>
+        }
+    </div>
+}

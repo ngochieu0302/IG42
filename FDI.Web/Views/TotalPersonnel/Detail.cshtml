@@ -1,0 +1,156 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model ModelUserSalaryMonthDetailItem
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+	int? totalDateCC = 0;
+	decimal? thucLinh = 0;
+	var listday = ConvertDate.ListDayInMonth(Model.DateStart);
+	var listGroup = new List<DNCriteriaTotalitem>();
+	decimal? tienThuong = 0;
+	if (Model.UserSalaryMonthItem != null)
+	{
+		var listc = Model.UserSalaryMonthItem.CalendarItems.ToList();
+		listc.AddRange(Model.UserSalaryMonthItem.RCalendarItems.Select(rcalendarItem => new CalendarItem
+		{
+			DateStart = rcalendarItem.DateStart,
+			DateEnd = rcalendarItem.DateEnd,
+			ID = rcalendarItem.ID,
+			DNCalendarWeeklySchedule = rcalendarItem.DNCalendarWeeklySchedule.Select(m => new CalendarWeeklyScheduleItem
+			{
+				MWSID = m.MWSID,
+				Weekid = m.Weekid
+			})
+		}));
+		var totalday = listday.Count(dayitem => listc.Any(calendarItem => calendarItem.DateStart <= dayitem.Totals && calendarItem.DateEnd > dayitem.Totals && calendarItem.DNCalendarWeeklySchedule.Any(m => m.Weekid == dayitem.Thu)));
+		
+		var totalDate = listday.Count(m => Model.UserSalaryMonthItem.DN_Time_Job.Any(t => t.DateCreated >= m.Totals && t.DateCreated < m.Totals1));
+
+		totalDateCC = totalDate + Model.UserSalaryMonthItem.TotalDateCC;
+
+        thucLinh = (totalDateCC * Model.UserSalaryMonthItem.FixedSalary / totalday);
+		var tongThuongDoanhSoDH = (Model.UserSalaryMonthItem.CriteriaList.Sum(y => y.Value));
+		listGroup = Model.UserSalaryMonthItem.CriteriaList.OrderBy(x => x.Id).ToList();
+
+	}
+}
+
+<div class="content-control">
+	<div class="box-control">
+		<div class="scrollable box-control-content">
+			<div class="printBangLuong">
+				<div class="tt-company">
+					<div class="left-tt-company">
+						<strong id="nameagency"></strong>
+						<strong>Mã đơn vị:...............</strong>
+					</div>
+					<div class="right-tt-company">
+						<strong>Mẫu số: C30 - BB</strong>
+						<span>Ban hành ngày: 30 tháng 03 năm 2006</span>
+					</div>
+				</div>
+				<div class="title-bangluong">
+					<h2>Bảng tính - Thanh toán tiền lương</h2>
+					<i>Tháng <span id="monthToShow">@DateTime.Now.Month</span> năm <span id="yearToShow">@DateTime.Now.Year</span></i>
+				</div>
+				@if (Model.UserSalaryMonthItem != null)
+				{
+					<div class="print-table">
+						<table class="table-thongke-exel table-luongnhanvien table table-bordered" id="BoxPrint">
+							<tr>
+								<th colspan="2">Họ tên</th>
+								<th>@Model.UserSalaryMonthItem.LoweredUserName</th>
+							</tr>
+							<tr>
+								<td colspan="2">Phòng ban</td>
+								<td>@Model.UserSalaryMonthItem.RolesUserItems.Select(x => x.DepartmentName).FirstOrDefault()</td>
+							</tr>
+							<tr>
+								<td colspan="2">Số ngày công</td>
+								<td>@totalDateCC</td>
+							</tr>
+							<tr>
+								<td colspan="2">Số ngày làm việc</td>
+								<td>@totalDateNLV</td>
+							</tr>
+							<tr>
+								<td colspan="2">Ngày nghỉ tính phép</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td colspan="2">Mức lương</td>
+								<td>@Model.UserSalaryMonthItem.FixedSalary.Money()</td>
+							</tr>
+							<tr>
+								<td rowspan="7" class="text-middle text-bold">Chi tiết các khoản</td>
+								<td>Thực lĩnh</td>
+								<td>@thucLinh.Money()</td>
+							</tr>
+
+							@foreach (var item in listGroup)
+							{
+								tienThuong += item.Value;
+								<tr>
+									<td>@item.Name</td>
+									<td>@item.Value.Money()</td>
+								</tr>
+							}
+							
+							<tr>
+								<td >Thưởng phạt</td>
+								<td>@Model.UserSalaryMonthItem.SalaryAward.Money()</td>
+							</tr>
+							<tr>
+								<td class="text-bold">Tổng</td>
+								<td>@((tienThuong + thucLinh + Model.UserSalaryMonthItem.SalaryAward).Money())</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" class="text-bold">Tổng lương</td>
+								<td class="text-bold">@((tienThuong + thucLinh + Model.UserSalaryMonthItem.SalaryAward).Money())</td>
+							</tr>
+							<tr>
+								<td class="text-bold">Ghi chú</td>
+								<td colspan="2" class="text-bold">@Model.UserSalaryMonthItem.Note</td>
+							</tr>
+						</table>
+					</div>
+				}
+				
+				<div class="print-time">
+					<i>Hà Nội , Ngày <span id="dNow"></span> tháng <span id="mNow"></span> năm <span id="yNow"></span></i>
+				</div>
+
+				<div class="print-footer">
+					<div class="print-sign">
+						<strong>Thủ trưởng đơn vị</strong>
+						<i>Ký, họ tên, đóng dấu</i>
+						<div class="body-sign"></div>
+					</div>
+					<div class="print-sign">
+						<strong>Người lập</strong>
+						<i>Ký, họ tên, đóng dấu</i>
+						<div class="body-sign"></div>
+					</div>
+					<div class="print-sign">
+						<strong>Người nộp</strong>
+						<i>Ký, họ tên, đóng dấu</i>
+						<div class="body-sign"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+    $("#nameagency").html($("#AgencyName").html());
+    $(function setFooterTime() {
+        var d = new Date();
+        $('#dNow').html(d.getDate());
+        $('#mNow').html(d.getMonth() + 1);
+        $('#yNow').html(d.getFullYear());
+    });
+</script>

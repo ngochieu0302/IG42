@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    var i = 1;
+}
+@model List<FDI.Simple.CategoryRecipeItem>
+
+<table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+
+    <thead>
+        <tr>
+            <th class="act_roles">
+                <input value="" type="checkbox" />
+            </th>
+            <th class="text-center"><a href="#Field=ID">STT</a></th>
+            <th class="text-center">Mã</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr title="" class="@(i==1?"active":"") select_item active_f@(i)" data-id="@item.ProductId">
+            <td class="act_roles">
+                <input type="checkbox" value="@item.ID" class="check">
+            </td>
+            <td class="text-center">@(i++)</td>
+            <td class="text-center">@item.ProductName</td>
+
+        </tr>
+    }
+</table>
+<script>
+    $(function () {
+        productid = @(Model.Count>0?Model[0].ProductId:0);
+        $.post("@Url.Action("SetProduct")" + "?id=" + productid);
+        $(".select_item").click(function() {
+            $(".select_item").removeClass("active");
+            $(this).addClass("active");
+            productid = $(this).data("id");
+            $.post("@Url.Action("SetProduct")" + "?id=" + productid, function() {
+                redirect("");
+            });
+
+        });
+    })
+</script>

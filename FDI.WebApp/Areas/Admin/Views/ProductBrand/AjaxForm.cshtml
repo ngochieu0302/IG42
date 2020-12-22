@@ -1,0 +1,111 @@
+﻿@model FDI.Base.Shop_Brand
+@{
+    ViewBag.Title = ViewBag.ActionText + " thương hiệu sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        registerGallery();
+        $("#ProductBrandForm").validate({
+            rules: {
+                Name:{required: true}
+            },
+            messages: {
+                Name: { required: "Trường bắt buôc nhập" }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#ProductBrandForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
+
+<form id="ProductBrandForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về Nhãn sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên thương hiệu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages">Chọn hỉnh ảnh đại diện</button>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+
+                                            <div class="image-product" id="@Model.Gallery_Picture.ID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.Gallery_Picture.ID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.Gallery_Picture.Name</span>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ liên kết</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Link" value="@Model.Link" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                @Html.CheckBox("IsShow", true)Hiển thị
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Sort" value="@Model.Sort" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="8" class="form-control" name="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+
+</form>

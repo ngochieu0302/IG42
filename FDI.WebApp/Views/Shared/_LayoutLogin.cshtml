@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" sizes="16x16" href="/Content/Publishing/img/favicon/favicon-16x16.png" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    @RenderSection("metas", false)
+    <meta name="robots" content="index, archive, follow, noodp" />
+    <meta name="googlebot" content="index,archive,follow,noodp" />
+    <meta name="msnbot" content="all,index,follow" />
+    <meta name='revisit-after' content='1 days' />
+    <meta property="og:site_name" content="@Request.Url.Host" />
+    <meta property="og:url" content="@Request.RawUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/Content/Publishing/js/modernizr-cus.js?v=1"></script>
+      <script src="~/Content/Publishing/js/html5shiv.js?v=1"></script>
+      <script src="~/Content/Publishing/js/respond.min.js?v=1"></script>
+    <![endif]-->
+    <!-- Check browser not display in ie 9  -->
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0; url=~/Content/Publishing/detect.html" />
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        window.top.location = '~/Content/Publishing/detect.html';
+    /* ]]> */
+    </script>
+    <![endif]-->
+    <!-- Check browser not display in ie 9 -->
+    <script src="~/Content/Publishing/js/vendors.min.js"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+          <script type="text/javascript" src="~/Content/Publishing/js/selectivizr-min.js?v=1"></script>
+          <noscript><link rel="stylesheet" href="~/Content/Publishing/css/styles.css?v=1" /></noscript>
+    <![endif]-->
+</head>
+<body>
+    @if (IsSectionDefined("MenuAdmin"))
+    {
+        @RenderSection("MenuAdmin", false)
+    }
+    <div class="wrapper">
+        <div id="header-sidebar" class="hidden-md hidden-lg hidden-sm">
+            <div class="left-h-sidebar">
+                <a href="#my-mobile-menu" class="sidebar-toggle"><span class="fa fa-bars"></span></a>
+            </div>
+            <div class="right-h-sidebar">
+                <div class="logo-mobie">
+                    <a href="/" title="fditech.vn">
+                        <img src="~/Content/Publishing/img/logo-mobie.png" alt="Sim đẹp trả góp" class="img-responsive" />
+                    </a>
+                </div>
+                <div class="boxMobieSearch">
+                    <form class="frMobie-search" action="/search-p5">
+                        <input type="search" name="keyword" placeholder="Từ khóa..." class="ipt-search" id="iptSearchMobie">
+                        <button type="button" class="bt-search-mb"><span class="fa fa-search"></span></button>
+                        <button type="button" class="bt-close-search-mb"><span class="fa fa-remove"></span></button>
+                    </form>
+                </div>
+                <div class="button-call-search"><span class="fa fa-search"></span></div>
+            </div>
+        </div>
+        <div id="wrapper-main">
+            <div id="overlay"></div>
+            <header id="header-main">
+                @RenderSection("header", false)
+            </header>
+            <div id="content-main">
+                @RenderSection("banner", false)
+                <div class="box-account">
+                    <div class="container">
+
+                        <div class="box-title">
+                            <h1>Quản lý tài khoản của bạn</h1>
+                            <span>Quản lý các thông tin liên kết với tài khoản của bạn!</span>
+                        </div>
+                        <div class="tabbable tabs-horizontal tabs-customer">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#a" data-toggle="tab">Thông tin tài khoản</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="tab-content">
+                                        <div class="tab-pane " id="a">
+                                            <h2>Thông tin tài khoản</h2>
+                                            <div class="account-user">
+                                                <form action="/" method="post">
+                                                    <div class="avartar">
+                                                        <div class="img-avartar"></div>
+                                                        <a href="#" title="">Cập nhật ảnh đại diện</a>
+                                                        <a href="#" title="">Xóa ảnh đại diện</a>
+                                                    </div>
+                                                    <div class="detail-user">
+                                                        <ul>
+                                                            <li><strong>Họ và tên:</strong><b>Nguyễn Văn A</b><a href="#" title="">Chỉnh sửa</a></li>
+                                                            <li><strong>Email:</strong><b>nguyenvana@gmail.com</b><a href="#" title="">Chỉnh sửa</a></li>
+                                                            <li><strong>Số điện thoại:</strong><b>0123 456 789</b><a href="#" title="">Chỉnh sửa</a></li>
+                                                            <li><strong>Ngày sinh:</strong><b>10/10/1965</b><a href="#" title="">Chỉnh sửa</a></li>
+                                                            <li>
+                                                                <strong>Giới tính:</strong>
+                                                                <b>
+                                                                    <div class="boxRadioCheck">
+                                                                        <label class="radioPure">
+                                                                            <input id="radio1" type="radio" name="radios" checked><span class="outer"><span class="inner"></span></span><i>Nam</i>
+                                                                        </label>
+                                                                        <label class="radioPure">
+                                                                            <input id="radio2" type="radio" name="radios"><span class="outer"><span class="inner"></span></span><i>Nữ</i>
+                                                                        </label>
+                                                                    </div>
+                                                                </b>
+                                                            </li>
+                                                        </ul>
+                                                        <a href="#" title="" class="btn btn-primary">Cập nhật</a>
+                                                        <a href="#" title="" class="btn btn-default">Hủy</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="b">
+                                            <h2>Đổi Password của bạn</h2>
+                                            <form class="form-horizontal form-contact">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label class="control-label">Mật khẩu hiện tại:</label>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <input type="password" class="form-control" id="contact-name">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label class="control-label">Mật khẩu mới:</label>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <input type="password" class="form-control" id="contact-name">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label class="control-label">Nhập lại mật khẩu mới:</label>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <input type="password" class="form-control" id="contact-name">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label class="control-label">Nhập mã xác nhận:</label>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group code-contact">
+                                                                                <input type="text" class="form-control" id="contact-code" placeholder="Mã xác nhận *">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="code-contact">
+                                                                                <img src="img/img-code.png" class="img-responsive" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                                                                </div>
+                                                                <div class="col-sm-3 text-right">
+                                                                    <a href="#" title="">Quên mật khẩu ?</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="f">
+                                            <h2>Gửi cho chúng tôi ý kiến của bạn</h2>
+                                            <form class="form-horizontal form-contact">
+                                                <div class="row">
+                                                    <div class="col-md-6 no-pd-r">
+                                                        <div class="form-group">
+
+                                                            <input type="text" class="form-control" id="contact-name" placeholder="Nguyễn Văn A">
+                                                        </div>
+
+                                                        <div class="form-group">
+
+                                                            <input type="text" class="form-control" id="contact-email" placeholder="abc@gmail.com">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="contact-phone" placeholder="Nhập số điện thoại">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="contact-subject" placeholder="Tiêu đề">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <textarea rows="9" type="text" class="form-control" id="contact-title" placeholder="Nhập tiêu đề"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group code-contact">
+                                                                    <input type="text" class="form-control" id="contact-code" placeholder="Mã xác nhận *">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="code-contact">
+                                                                    <img src="img/img-code.png" class="img-responsive" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="text-right">
+                                                            <button type="submit">Gửi yêu cầu</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @RenderSection("content-bottom", false)
+                <footer id="footer-main">
+                    @RenderSection("footer", false)
+                </footer>
+
+            </div>
+        </div>
+        <a href="#" id="scrollTop"><span class="fa fa-angle-up"></span></a>
+        <!--Open JavaScript Bot -->
+        @RenderSection("jsend", false)
+        <!--End JavaScript Bot -->
+    </div>
+    @Html.Partial("~/Areas/Contact/Views/Contact/Login.cshtml")
+    @RenderBody()
+</body>
+</html>

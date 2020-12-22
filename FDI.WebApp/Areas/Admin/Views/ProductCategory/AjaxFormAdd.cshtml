@@ -1,0 +1,138 @@
+﻿@using FDI.Utils
+@model FDI.Base.Shop_Product_Detail
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    
+    $(function () {
+        $("#modalForm").validate({
+            rules: {
+                Color_add_:
+                {
+                    required: true,
+                },
+                Size_add_:
+                {
+                    required: true,
+                },
+            },
+            messages: {
+                Color_add_:
+                {
+                    required: "Trường bắt buộc nhập.",
+                },
+
+                Size_add_: {
+                    required: "Trường bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () {
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $("#btnSave").attr("disabled", true);
+                $.post(urlPostAction, $("#modalForm").serialize(), function (data) {
+                    $("#btnSave").attr("disabled", false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        createCloseMessage("Thông báo", data.Message);
+
+                    }
+                });
+                return false;
+            }
+        });
+        var stt = 0;
+        $("#Add").click(function (e) {
+            e.preventDefault();
+            stt++;
+            var html = '<div class="list-add-ncc" id="id_add_' + stt + '"">' +
+                //'<div class="item"><select name="Color_add_' + stt + '"" id="Color_' + stt + '"" class="form-control"></select>' +
+                '</div>' +
+                '<div class="item"><select name="Size_add_' + stt + '"" id="Size_' + stt + '"" class="form-control"></select>' +
+                '</div>' +
+                
+                '<div class="item"><input type="text" class="form-control maskPrice" placeholder="Giá cũ" name="PriceNew_add_' + stt + '"" id="PriceNew_' + stt + '"  value="' + '' + '" /></div>' +
+                '<div class="item"><input type="text" class="form-control maskPrice" placeholder="Giá mới" name="PriceOld_add_' + stt + '"" id="PriceOld_' + stt + '"  value="' + '' + '" /></div>' +
+                
+                '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div>';
+            $("#content-ncc").append(html);
+            var urlcolor = '@*@Url.Action("GetListColor","ProductCategory")*@';
+            var urlsize = '@Url.Action("GetListSize","ProductCategory")';
+            //$.post(urlcolor, function (data) {
+            //    $("#Color_" + stt).html(data);
+            //});
+            $.post(urlsize, function (data) {
+                $("#Size_" + stt).html(data);
+            });
+            $("body").on("click", "#Delete_" + stt, function (e) {
+                e.preventDefault();
+                stt--;
+                $("#" + id).remove();
+               
+            });
+            $("#do_stt").val(stt);
+            //callSelect2("#Color_" + stt, "100%");
+        });
+        $(".C_Delete").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#" + id).remove();
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="do_stt" id="do_stt" value="0" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Tạo mới sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <button id="Add"  class="btn btn-success" style="margin-bottom: 15px;"><span class="fa fa-plus"></span>Thêm</button>
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div id="content-ncc">
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model.Shop_Product)
+                                {
+                                <div class="list-add-ncc" id="id_add_@(item.ID)">
+                                    <div class="item">
+                                        <select name="Size_old@(item.ID)" id="Size_old@(item.ID)" class="form-control">
+                                            @foreach (var item1 in ViewBag.listSize)
+                                            {
+                                                <option value="@item1.ID" @(item1.ID == item.SizeID ? "selected" : "")>@item1.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control maskPrice" placeholder="Số tiền" name="PriceNew_old@(item.ID)" id="PriceNew_old@(item.ID)" value="@item.PriceNew.Money()" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control maskPrice" placeholder="Số tiền" name="PriceOld_old@(item.ID)" id="PriceOld_old@(item.ID)" value="@item.PriceOld.Money()" />
+                                    </div>
+                                    <div class="item-button"><a  data-id="id_add_@(item.ID)" href="#" class="btn btn-sm btn-block btn-danger C_Delete">Xóa</a></div>
+                                </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+@* In phiếu *@
+

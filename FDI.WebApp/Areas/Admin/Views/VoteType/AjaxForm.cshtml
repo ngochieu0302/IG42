@@ -1,0 +1,100 @@
+﻿@model FDI.Base.Vote_Type
+@{
+    ViewBag.Title = ViewBag.ActionText + " Danh mục Thăm dò ý kiến";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#SurveyTypeForm").validate({
+            rules: {
+                Title:
+                    {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 255
+                    },
+
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#SurveyTypeForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+      
+    });
+</script>
+
+
+<form id="SurveyTypeForm">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+ 
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thông tin về thăm dò ý kiến</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="..." name="Title"  id="Title"  value="@Model.Title"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kiểu lựa chọn</label>
+                        <div class="col-sm-10">
+                            <select name="Type" id="Type" class="form-control">
+                                <option value="0"@((Model.Type == 0) ? " selected" : string.Empty)>--- Chọn một ---</option>
+                                <option value="1"@((Model.Type == 1) ? " selected" : string.Empty)>--- Chọn nhiều ---</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Số thứ tự</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="Sort" id="Sort" value="@Model.Sort" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Mô tả</label>
+                        <div class="col-sm-10">
+                            <textarea rows="8" id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox col-md-6">
+                                <label>
+                                    @Html.CheckBox("IsShow") Hiện thị
+                                </label>
+                            </div>
+                            <div class="checkbox col-md-6">
+                                <label>
+                                    @Html.CheckBox("IsHome") Hiện thị trang chủ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+  
+
+    <div style="display: none;">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

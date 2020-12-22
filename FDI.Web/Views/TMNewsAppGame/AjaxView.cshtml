@@ -1,0 +1,105 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMNewsAppGameItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về tin tức ứng dụng, game
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tiêu đề</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Title)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Chuyên mục</label>
+                        </td>
+                        <td>
+                            @string.Join(",", Model.ListTMCategoryAppGame.Select(m=> m.Name))
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Description)
+                        </td>
+                    </tr>
+
+                   <tr>
+                        <td style="width: 15%">
+                            <label>Chi tiết</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Details)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.CreatedDate.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Người tạo</label>
+                        </td>
+                        <td>
+                            @Model.UserCreate
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Ngày cập nhật</label>
+                        </td>
+                        <td>
+                            @Model.DateUpdated.DecimalToString("dd/MM/yyyy HH:ss:mm")
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Người cập nhật</label>
+                        </td>
+                        <td>
+                            @Model.UserUpdate
+                        </td>
+                    </tr>
+                 
+                    <tr>
+                        <td>
+                            <label>Hiện thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Title, Model.IsShow)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

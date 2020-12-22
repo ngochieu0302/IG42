@@ -1,0 +1,213 @@
+﻿@model FDI.Simple.OrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<script>
+    var prizeMoney = 0;
+    var discount = 0;
+    $(function () {
+        
+        $('#Customer').autocomplete({
+            serviceUrl: "/OrderFashion/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                prizeMoney = el.TotalPrice;
+                $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                $('#Customer').val("");
+            }
+        });
+
+        $("body").on("keyup", "#Payments", function () {
+            Calculate();
+        });
+
+        $("body").on("keyup", "#Discount", function () {
+            var price = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var price2 = parseFloat($("#OrderPrice").html().replace(/[,]+/g, ''));
+            var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+            if (price4 > (price2 - price)) {
+                swal({ title: "", text: "Vượt quá tiền hóa đơn.", type: "info", showCancelButton: false, closeOnCancel: false });
+                $("#Discount").val(numeral(price2 - price).format('0,0'));
+            }
+            Calculate();
+        });
+
+        $("body").on("keyup", "#PrizeMoney", function () {
+            var price = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var price2 = parseFloat($("#OrderPrice").html().replace(/[,]+/g, ''));
+            var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+            var price24 = price2 - price4;
+            if (prizeMoney === 0) {
+                toastr["error"]("Bạn chưa quẹt thẻ.");
+                $("#PrizeMoney").val("0");
+            }
+            if (price > prizeMoney && prizeMoney < price24) {
+                toastr["error"]("Vượt quá tiền tích lũy.");
+                $("#PrizeMoney").val(numeral(prizeMoney).format('0,0'));
+            }
+            if (price > price24 && price24 < prizeMoney) {
+                toastr["error"]("Vượt quá tiền hóa đơn.");
+                $("#PrizeMoney").val(numeral(price2 - price4).format('0,0'));
+            }
+            Calculate();
+        });
+
+        $("#modalForm").validate({
+            rules: {
+                Payments: { required: true }
+            },
+            messages: {
+                Payments: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    });
+
+    function Calculate() {
+        var price2 = $("#OrderPrice").html() !== "" ? parseFloat($("#OrderPrice").html().replace(/[,]+/g, '')) : 0;
+        if (discount > 0) {
+            $('#Discount').val((discount * price2) / 100);
+        }
+        var price1 = parseFloat($("#Payments").val().replace(/[,]+/g, ''));
+        var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+        var price5 = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+        var price3 = price1 - price2 + price4 + price5;
+        $("#txtexcesscash").html(numeral(price3).format('0,0'));
+        $("#Payment").html(numeral(price2 - price4 - price5).format('0,0'));
+       
+    }
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ tên</label>
+                            <label class="col-sm-2 ">@Model.CustomerName</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Điện thoại</label>
+                            <label class="col-sm-2 ">@Model.CutomerPhone</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ</label>
+                            <label class="col-sm-2 ">@Model.CutomerAddress</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Điểm tích lũy</label>
+                            <div class="col-sm-10">
+                                <label class="label label-info" id="Bonus">0</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>TỔNG TIỀN </b></label>
+                            <div class="col-sm-4">
+                                <label class="label label-danger">@string.Format("{0:0,0}", Model.TotalPrice)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đã thanh toán</label>
+                            <label class="col-sm-4">@string.Format("{0:0,0}", Model.Payments)</label>
+                            <label class="col-sm-2 control-label">Quẹt thẻ</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Customer" class="form-control" placeholder="Quẹt thẻ"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Còn lại</label>
+                            <label class="col-sm-4" id="OrderPrice">@string.Format("{0:0,0}", Model.TotalPrice - Model.Payments)</label>
+                            <label class="col-sm-2 control-label">Trừ tích lũy</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="PrizeMoney" name="PrizeMoney" class="form-control maskPrice" value="0" placeholder="Sử dụng tích lũy" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>Thanh toán </b></label>
+                            <div class="col-sm-4">
+                                <label class="label label-danger" id="Payment">@string.Format("{0:0,0}", Model.TotalPrice - Model.Payments)</label>
+                            </div>
+                            <label class="col-sm-2 control-label">Chiết khấu</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Discount" name="Discount" class="form-control maskPrice" value="0" placeholder="Chiết khấu" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tiền thừa</label>
+                            <div class="col-sm-4">
+                                <label class="label txtexcesscash label-warning" id="txtexcesscash">0</label>
+                            </div>
+                            <label class="col-sm-2 control-label">Tiền khách đưa</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Payments" name="Payments" class="form-control maskPrice" value="0" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ghi chú</label>
+                            <div class="col-sm-10">
+                                <textarea name="Note" id="Note" rows="2" class="form-control" placeholder="Ghi chú">@Model.Note</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Chi tiết đơn hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th>DVT</th>
+                                    <th>Giá bán</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                @foreach (var item in Model.LstOrderDetailItems)
+                                {
+                                    <tr>
+                                        <td>@(stt++)</td>
+                                        <td>@(string.IsNullOrEmpty(item.ComboName) ? item.ProductName : item.ComboName)</td>
+                                        <td>@item.UnitName</td>
+                                        <td>@string.Format("{0:0,0}", item.Price)</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

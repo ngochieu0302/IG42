@@ -1,0 +1,86 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNExportProductItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center"><a href="#Field=ID">ID</a></th>
+                    <th class="text-center"><a href="#Field=ValueName">Mã phiếu</a></th>
+                    <th class="text-center"><a href="#Field=DateCreated">Ngày tạo</a></th>
+                    <th class="text-center"><a href="#Field=DateExport">Ngày nhập</a></th>
+                    <th><a href="#Field=Note">Ghi chú</a></th>
+                    <th class="text-right"><a href="#Field=TotalPrice">Tổng tiền</a></th>
+                    <th class="text-center"><a href="#Field=IsDeleted">Trạng thái</a></th>
+                    <th class="text-right">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ListItems)
+                {
+                    <tr data-id="@item.ID" title="@item.Code">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td class="text-center">@Grid.DisplayShowStrike(@item.Code, item.IsDeleted == false)</td>
+                        <td class="text-center">@item.DateCreated.DecimalToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@item.DateExport.DecimalToString("dd/MM/yyyy")</td>
+                        <td>@item.Note</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.TotalPrice)</td>
+                        <td class="text-center">
+                            @if (item.IsDeleted == true)
+                            {
+                                <label class="label label-danger">Đã xóa</label>
+                            }
+                        </td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.ID, item.Code)
+                            @if (item.IsDeleted == false)
+                            {
+                                <a data-id="@item.ID" class="btn btn-sm btn-default btn_Inport" data-action="Edit"><i class="fa fa-pencil-square-o" style="color: #04A827;"></i></a>
+                                @Grid.ActionDelete(item.ID, item.Code)
+                            }
+
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Chỉnh sửa phiếu xuất");
+        });
+    });
+</script>

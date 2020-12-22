@@ -1,0 +1,82 @@
+﻿@model FDI.Simple.ModelCustomerRewardItem
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup price" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry"/>
+                    <col class="colgroup salarry"/>
+                    <col class="colgroup salarry" />
+                    <col class="colgroup salarry" />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center">ID</th>
+                    <th><a href="#Field=CustomerName">Khách hàng</a></th>
+                    <th class="text-center"><a href="#Field=Phone">Điện thoại</a></th>
+                    <th class="text-center"><a href="#Field=PricePersonal">TL cá nhân<br>(A)</a></th>
+                    <th class="text-center"><a href="#Field=PriceParent">TL giới thiệu<br>(B)</a></th>
+                    <th class="text-center"><a href="#Field=TotalReward">Tổng TL<br> (C = A + B)</a></th>
+                    <th class="text-center"><a href="#Field=TotalReward">Tổng TL đã rút<br> (D)</a></th>
+                    <th class="text-center"><a href="#Field=PriceReward">TL hiện còn<br> (E = C - D)</a></th>
+                    <th class="text-center"><a href="#Field=Count">Giới thiệu<br> (F)</a></th>
+                    <th class="text-right">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListItems != null)
+                {
+                    foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@(stt++)</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.Phone</td>
+                            <td class="text-right">@item.PricePersonal.Money()</td>
+                            <td class="text-right">@item.PriceParent.Money()</td>
+                            <td class="text-right">@item.TotalReward.Money()</td>
+                            <td class="text-right">@item.TotalReceipt.Money()</td>
+                            <td class="text-right">@item.PriceReward.Money()</td>
+                            <td class="text-center">@item.Count</td>
+                            <td class="text-center"><a class="btn btn-sm btn-primary" href="/RewardHistory#cusId=@item.ID">Chi tiết</a></td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".gridView thead a").click(function () {
+            window.location.href = $(this).attr("href") + "&" + getValueFormMutilSelect("#gridSearch");
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.StorageWarehouse.ProduceModel
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    
+}
+
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="4"><a href="#Field=Code">Tổng đơn hàng</a></th>
+                        <th class="text-center" colspan="5"><a href="#Field=Code">Chi tiết</a></th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>STT</td>
+                    <td>Sản phẩm</td>
+                    <td>Số lượng</td>
+                    <td>Đơn vị</td>
+                    <td>Khối lượng</td>
+                    <td>Thao tác</td>
+                    <td>Sản phẩm</td>
+                    <td>Khối lượng</td>
+                    <td>Size</td>
+                    <td>Số lượng</td>
+                    <td>Khối lượng</td>
+                </tr>
+                @{ var i = 1;}
+                @foreach (var cate in Model.CategorysDetail)
+                {
+                    var isCateFirst = true;
+                    var groups = Model.RequestWareItems.Where(m => m.CateID == cate.CateID).GroupBy(m => new { m.ProductName, m.CateID }).ToList();
+                    var countitems = Model.RequestWareItems.Count(m => m.CateID == cate.CateID);
+                    var rowspanCate = countitems > 1 ? "rowspan=" + countitems : "";
+                    foreach (var group in groups)
+                    {
+                        var rowspan = group.ToList().Count() > 1 ? ("rowspan=" + group.Count()) : "";
+                        var childfirst = true;
+                        foreach (var item in group.ToList())
+                        {
+                            <tr>
+                                @if (isCateFirst)
+                                {
+
+                                    <td @rowspanCate>@(i++)</td>
+
+                                    <td @rowspanCate>@cate.ProductName</td>
+                                    <td @rowspanCate>@cate.Quantity.Quantity()</td>
+                                    <td @rowspanCate>@cate.UnitName</td>
+
+                                    <td @rowspanCate></td>
+                                    <td @rowspanCate>@Grid.ActionEdit(item.CateID, new Dictionary<string, object>() { { "Quantity", cate.Quantity } }, "Tạo lệnh sản xuất")</td>
+                                    isCateFirst = false;
+                                }
+
+                                @if (childfirst)
+                                {
+                                    <td @rowspan>@group.Key.ProductName</td>
+                                    <td @rowspan>@group.Sum(m => m.Quantity * m.UnitValue)</td>
+                                    childfirst = false;
+                                }
+
+                                <td>@item.UnitName</td>
+                                <td>@item.Quantity</td>
+                                <td>@(item.Quantity * item.UnitValue)</td>
+                            </tr>
+                        }
+                    }
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        registerGridView('#mygird');
+       
+
+    });
+</script>
+

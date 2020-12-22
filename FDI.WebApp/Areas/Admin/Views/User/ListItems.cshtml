@@ -1,0 +1,51 @@
+﻿@model List<FDI.Base.aspnet_Users>
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="box-control" id="mygird">
+    <div class="scrollable box-control-content">
+        <table class="gridView gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+            <thead>
+                <tr>
+                    <th><a href="#Field=Fullname">Tên User</a></th>
+
+                    <th><a href="#Field=Link">Quyền</a></th>
+                    <th colspan="2">Thao tác</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr title="@item.UserId @item.UserName">
+
+                        <td>@item.UserName</td>
+                        <td>
+                            @foreach (var role in item.aspnet_Roles)
+                        {
+                            <span>@role.RoleName, </span>
+                        }
+                    </td>
+                    <td class="act_hide">
+                        @Grid.ActionView(item.UserId, item.UserName)
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<div class="footer-control">
+    @Html.Raw(ViewBag.PageHtml)
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

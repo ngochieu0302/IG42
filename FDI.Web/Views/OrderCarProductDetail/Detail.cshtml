@@ -1,0 +1,73 @@
+﻿@using FDI.CORE
+@model FDI.Simple.Logistics.OrderCarItem
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="portlet yellow-crusta box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Order Details
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row static-info">
+            <div class="col-md-5 name"> Order #: </div>
+            <div class="col-md-7 value">
+                @Model.ID
+            </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Giờ đi: </div>
+            <div class="col-md-7 value"> @Model.DepartureDate.DecimalToString("dd/MM/yyyy HH:mm") </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Giờ đến: </div>
+            <div class="col-md-7 value">
+                @Model.ReceiveDate.DecimalToString("dd/MM/yyyy HH:mm")
+            </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> giờ về Total: </div>
+            <div class="col-md-7 value">  @Model.ReturnDate.DecimalToString("dd/MM/yyyy HH:mm")  </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Số lượng: </div>
+            <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Số lần đã nhập: </div>
+            <div class="col-md-7 value"> @Model.CountReceived </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Tổng khối lượng: </div>
+            <div class="col-md-7 value"> @Model.QuantityReceived </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Nhà cung cấp: </div>
+            <div class="col-md-7 value"> @Model.SupplierName </div>
+        </div>
+
+        @*<div class="row static-info">
+                <div class="col-md-5 name"> Số lượng: </div>
+                <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+            </div>
+
+            <div class="row static-info">
+                <div class="col-md-5 name"> Số lượng nhập vào: </div>
+                <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Tổng khối lượng cân ở trang trai: </div>
+                <div class="col-md-7 value"> @Model.QuantityReceived </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Nhà cung câp: </div>
+                <div class="col-md-7 value"> @Model.SupplierName </div>
+            </div>
+            <div class="row static-info">
+                <div class="col-md-5 name"> Tổng khối lượng nhập vào kho: </div>
+                <div class="col-md-7 value"> @Model.SupplierName </div>
+            </div>*@
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@using FDI.CORE
+@model FDI.Simple.StorageWarehouse.PurchaseOrderModel
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var i = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-4" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">STT</a></th>
+                        <th class="text-center">Mã phiếu</th>
+                        <th class="text-center">Ngày nhập</th>
+                        <th class="text-center">Người nhập</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.Items)
+                {
+            <tr title="@item.ID">
+                <td class="act_roles">
+                    <input type="checkbox" value="@item.ID" class="check">
+                </td>
+                <td class="text-center">@(i++)</td>
+                <td class="text-center">@item.ID</td>
+                <td class="text-center">@item.CreateDate.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                <td class="text-center">@item.UserCreate</td>
+                <td class="text-center">
+                    @Grid.ActionView(item.ID, "")
+
+                </td>
+            </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

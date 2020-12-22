@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#showAll" data-event="showAll" data-grid="#mygird"><i class="icon-lock-open"></i>Hiển thị</a></li>
+                    <li><a href="#hideAll" data-event="hideAll" data-grid="#mygird"><i class="icon-lock"></i>Ẩn</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control input-sm" name="fromDate" id="fromDate" placeholder="Từ ngày" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            <button name="submit" type="submit" id="btn_ExportExcel" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Xuất Excel</button>
+            <div class="pull-right">
+                <a class="btn btn-sm btn-primary btn_Inport" data-action="Add"><span class="fa fa-plus"></span>Xuất kho</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".btn_Inport").click(function () {
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?do=Add&fromDate=" + $("#fromDate").val(), "Tạo phiếu xuất kho");
+        });
+        var urlXuatExcel = '@Url.Action("ExportExcel", "OrderDetail")';
+        $("#btn_ExportExcel").click(function () {
+            var form = $("#gridSearch");
+            window.location.href = urlXuatExcel + '?' + getValueFormMutilSelect(form);
+            return false;
+        });
+    })
+</script>

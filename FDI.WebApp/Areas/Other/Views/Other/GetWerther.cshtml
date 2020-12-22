@@ -1,0 +1,84 @@
+﻿@model FDI.Simple.WertherItem
+
+@if (Model != null)
+{
+    <div class="weatherItems">
+        <img src="@Model.Images"/>
+        <span>@Model.Temperature</span>
+        <span>@Resource.Other.Resource.Sunrise: @Model.Sunrise</span>
+        <span>@Resource.Other.Resource.Sunset: @Model.Sunset</span>
+        <span>@Resource.Other.Resource.Humidity: @Model.Humidity%</span>
+        <span>@Resource.Other.Resource.Direction: 
+            @{
+                if (Convert.ToInt32(Model.Direction) == 0)
+                {
+                    <text>@Resource.Other.Resource.None</text>
+                }
+                else if ((Convert.ToInt32(Model.Direction) >= 355 && Convert.ToInt32(Model.Direction) < 360) || (Convert.ToInt32(Model.Direction) > 0 && Convert.ToInt32(Model.Direction) <= 5))
+                {
+                    <text>@Resource.Other.Resource.North</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 5 && Convert.ToInt32(Model.Direction) <= 40)
+                {
+                     <text>@Resource.Other.Resource.NorthNortheast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 40 && Convert.ToInt32(Model.Direction) <= 50)
+                {
+                     <text>@Resource.Other.Resource.Northeast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 50 && Convert.ToInt32(Model.Direction) <= 85)
+                {
+                     <text>@Resource.Other.Resource.NorthNortheast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 85 && Convert.ToInt32(Model.Direction) <= 95)
+                {
+                     <text>@Resource.Other.Resource.East</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 95 && Convert.ToInt32(Model.Direction) <= 130)
+                {
+                     <text>@Resource.Other.Resource.EastSoutheast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 130 && Convert.ToInt32(Model.Direction) <= 140)
+                {
+                     <text>@Resource.Other.Resource.Southeast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 140 && Convert.ToInt32(Model.Direction) <= 175)
+                {
+                     <text>@Resource.Other.Resource.SouthSoutheast</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 175 && Convert.ToInt32(Model.Direction) <= 185)
+                {
+                     <text>@Resource.Other.Resource.South</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 185 && Convert.ToInt32(Model.Direction) <= 220)
+                {
+                     <text>@Resource.Other.Resource.SouthSouthwest</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 220 && Convert.ToInt32(Model.Direction) <= 230)
+                {
+                     <text>@Resource.Other.Resource.Southwest</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 230 && Convert.ToInt32(Model.Direction) <= 265)
+                {
+                     <text>@Resource.Other.Resource.WestSouthwest</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 265 && Convert.ToInt32(Model.Direction) <= 275)
+                {
+                     <text>@Resource.Other.Resource.West</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 275 && Convert.ToInt32(Model.Direction) <= 310)
+                {
+                     <text>@Resource.Other.Resource.WestNorthwest</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 310 && Convert.ToInt32(Model.Direction) <= 320)
+                {
+                     <text>@Resource.Other.Resource.Northwest</text>
+                }
+                else if (Convert.ToInt32(Model.Direction) > 320 && Convert.ToInt32(Model.Direction) < 355)
+                {
+                     <text>@Resource.Other.Resource.NorthNorthwest</text>
+                }
+            }
+             @Model.Speed</span>
+    </div>
+}

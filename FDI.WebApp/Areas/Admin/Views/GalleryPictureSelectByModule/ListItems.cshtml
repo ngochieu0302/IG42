@@ -1,0 +1,114 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelPictureItem
+
+@{
+    ViewBag.Title = "ListPicture";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //registerGridView('#gridItems');
+        // chuyển phân trang
+        $(".bottom-pager a").click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr("href").replace("#","?");
+            $.post(urlListPicture + url, function (data) {
+                $("#PictureGriditems").html(data);
+            });
+
+        });
+
+        $('input[name="page"]').keypress(function (e) {
+            if (e.which == 13) {
+                var url = urlListPicture + "?" + getValueGalaryFormMutilSelect('#PictureGridSearch') + "&RowPerPage=" + $('select[name="RowPerPage"]').val() + "&page=" + $(this).val();
+                $.post(url, function (data) {
+                    $("#PictureGriditems").html(data);
+                });
+                return false;
+            }
+        });
+
+        $('select[name="RowPerPage"]').change(function () {
+            var fromSearch = $("#PictureGridSearch");
+            var url = urlListPicture + "?" + getValueGalaryFormMutilSelect(fromSearch) + "&RowPerPage=" + $(this).val();
+            $.post(url, function (data) {
+                $("#PictureGriditems").html(data);
+            });
+        });
+
+        $("#PictureGriditems .submit #close").click(function () {
+            $("#dialog-form-2").html("").dialog('close');
+        });
+        $("#btnPictureSelectSubmit").one("click", function () {
+            $("#dialog-form-2").dialog('close');
+            var lengthCheck = $("#PictureSelect input[type='checkbox']:checked").size();
+            $("#PictureSelect .hidden").removeClass("hidden");
+            var htmlValue = '';
+            var arrRowId = [];
+            $("#PictureSelect input[type='checkbox']:checked").each(function (index) {
+                htmlValue += '<tr>';
+                if (selectMutil == true) {
+                    arrRowId.push($(this).val());
+                    htmlValue += '<td><img src="/Uploads/'+$(this).data("url")+'"></td>';
+                    htmlValue += '<td><p>Tên ảnh: <b>' + $(this).data("name") + '</b></p></td>';
+                    htmlValue += '<td><button type="button" class="btn btn-sm btn-primary deleteImg" data-id="' + $(this).val() + '" data-ctn="' + SelectContainer + '">Xóa</button></td>';
+                } else {
+                    if (index == lengthCheck - 1) {
+                        arrRowId.push($(this).val());
+                        htmlValue += '<td><img src="/Uploads/' + $(this).data("url") + '"></td>';
+                        htmlValue += '<td><p>Tên ảnh: <b>' + $(this).data("name") + '</b></p></td>';
+                        htmlValue += '<td><button type="button" class="btn btn-sm btn-primary deleteImg" data-id="' + $(this).val() + '" data-ctn="' + SelectContainer + '">Xóa</button></td>';
+                    }
+                }
+                htmlValue += '</tr>';
+            });
+            $(textContainer + " .gridView").html(htmlValue);
+            $(hiddenContainer).val(arrRowId);
+            $("#PictureSelect .hidden").removeClass("hidden");
+            return false;
+        });
+
+        // Sự kiện chọn hình ảnh
+        $(".my-gallery > .item").click(function () {
+            if (selectMutil == false) {
+                $(".my-gallery > .item").removeClass("active");
+                $("#PictureSelect input[type='checkbox']:checked").prop('checked', false);
+            }
+            var obj = $(this).children("input[type='checkbox']");
+            if (obj.prop('checked')) {
+                $(this).removeClass("active");
+                obj.prop('checked', false);
+            }
+            else {
+                $(this).addClass("active");
+                obj.prop('checked', true);
+            }
+        });
+
+        // Sự kiện double click để chọn ảnh
+        $(".my-gallery > .item").dblclick(function () {
+            $("#btnPictureSelectSubmit").click();
+        });
+
+    });
+</script>
+<div class="grid-container" id="gridItems">
+    <div class="bg-light dk clearfix b-b" style="padding: 5px 5px 0px 5px;">
+        @Html.Raw(Model.PageHtml)
+    </div>
+    <div class="my-gallery">
+        @foreach (var item in Model.ListItem)
+        {
+            <div class="item">
+                <img src="@item.Url.Picture()" />
+                <div class="clearBoth"></div>
+                <input type="checkbox" id="@item.ID" value="@item.ID" data-url="@item.Url" data-name="@item.Name"/>@item.Name
+            </div>
+        }
+    </div>
+</div>
+<div style="display: none;">
+    <button id="btnPictureSelectSubmit" type="submit" class="btn btn-sm btn-success">Chọn ảnh</button>
+    <button id="btnPictureSelectreset" type="reset" class="btn btn-sm btn-success">Chọn lại</button>
+</div>

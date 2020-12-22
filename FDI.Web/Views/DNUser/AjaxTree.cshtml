@@ -1,0 +1,53 @@
+﻿@model FDI.Simple.ModelCategoryItem
+<script type="text/javascript">
+    $(document).ready(function () {
+        var textContainer = "#Text_CategoryValues";
+        var hiddenContainer = "#Value_CategoryValues";
+        $("#SelectTreeCategory input[type=checkbox]").click(function () {
+            var lastCheck = $(this).is(':checked');
+            $("#SelectTreeCategory input[type=checkbox]").attr('checked', false);
+            $(this).attr('checked', lastCheck);
+        });
+        var url = "@Url.Action("JsonGetListTree", "DNUser", new { listid = Model.Listid })";
+        $.getJSON(url, function (list) {
+            AjaxLoadTreeViewCheckBox(list, '#SelectTreeCategory');
+        });
+        $("#modalFormRole").validate({
+            submitHandler: function () {
+                $("#btnSave").prop("disabled", true);
+                var selected = [];
+                $("#SelectTreeCategory input[type=checkbox]:checked").each(function () {
+                    selected.push($(this).val())
+                });
+                $.post(urlPostAction, { listInt: selected.join(","), userId: $("#ItemID").val(), do: "Active" }, function (data) {
+                    $("#btnSave").prop("disabled", false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, "");
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
+
+<form id="modalFormRole">
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.UserId" />
+    <input type="hidden" name="do" id="do" value="Active" />
+    <div class="modal-body">
+        <div id="gridItems">
+            <div id="treecontrol" class="treeTool">
+                <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+                <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+            </div>
+            <ul id="SelectTreeCategory" class="filetree" style="border: 0px;"></ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Chọn</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

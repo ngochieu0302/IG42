@@ -1,0 +1,98 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelPolicyAgenciesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#CustomerForm").validate({
+            rules: {
+               
+            },
+            messages: {
+             
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/PolicyAgency/Actions",$("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, "&categoryId=@Model.CategoryId"); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+
+    });
+    </script>
+<form id="CustomerForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Chính sách đại lý
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sản phẩm<font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                <select name="categoryId" class="form-control">
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <option @(category.ID==Model.CategoryId?"selected":"") value="@category.ID">@category.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Cấp đại lý <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.LevelAgency, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Cách tính <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số lượng<font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hệ số <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Profit, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lợi nhuận <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.PercentProfit, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+<script type="text/javascript">
+
+</script>

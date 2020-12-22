@@ -1,0 +1,386 @@
+﻿@using FDI.CORE
+@*@using FDI.Utils*@
+@model FDI.Simple.DNSalesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.ListProductDetailItems != null ? string.Join(",", Model.ListProductDetailItems.Select(c => c.ID)) : "";
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+    <input type="hidden" name="values-arr-product" id="values-arr-product" value="@(lst)" />
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên Khuyến mãi</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Name" value="@(Model.Name)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @*<label class="col-sm-2 control-label">Số lượng Code</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="QuantityCode" value="@(Model.QuantityCode)" />
+                                </div>*@
+                            <label class="col-sm-2 control-label">Tiền sử dụng</label>
+                            <div class="col-sm-4">
+                                <input class="form-control maskPrice" type="text" name="PriceLimit" value="@Model.PriceLimit">
+                            </div>
+                            <label class="col-sm-2 control-label">Người tạo</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" disabled value="@ViewBag.User" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giảm theo %</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Percent" placeholder="Phần trăm (%)" value="@Model.Percent" />
+
+                            </div>
+                            <label class="col-sm-2 control-label">Giảm theo tiền</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" name="Price" placeholder="Số tiền (vnđ)" value="@Model.Price.Money()" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày bắt đầu</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="date" name="DateStart_" value="@(Model.DateStart != null ? Model.DateStart.DecimalToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))">
+                            </div>
+                            <label class="col-sm-2 control-label">Ngày kết thúc</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="date" name="DateEnd_" value="@(Model.DateEnd != null ? Model.DateEnd.DecimalToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu giảm giá</label>
+                            <div class="col-sm-4">
+                                <select name="Type" class="form-control" id="type_Sale" @(ViewBag.Action == FDI.Utils.ActionType.Edit ? "disabled='true'" : "")>
+                                    <option value="">Chọn kiểu giảm giá</option>
+                                    @foreach (var item in FDI.Utils.TypeSale.Image())
+                                    {
+                                        <option value="@item.Value" @(item.Value == Model.Type ? "selected" : "")>@item.Key</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group @(!Model.TotalOrder.HasValue || Model.TotalOrder == 0 ? "hidden" : "")" id="total_order">
+                            <label class="col-sm-2 control-label">Tổng đơn hàng</label>
+                            <div class="col-sm-4">
+                                <input class="form-control maskPrice" type="text" name="TotalOrder" id="TotalOrder" value="@Model.TotalOrder">
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="voucher">
+                            <label class="col-sm-2 control-label">Số lượng Code</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="QuantityCode" id="QuantityCode" value="@(Model.QuantityCode)" />
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="birthday">
+                            <label class="col-sm-2 control-label">Km Tháng sinh nhật</label>
+                            <div class="col-sm-4">
+                                @Html.CheckBox("IsMonth", new { @class = "ismonth" }) Tháng sinh
+                            </div>
+                            <label class="col-sm-2 control-label">Km Ngày sinh nhật</label>
+                            <div class="col-sm-4">
+                                @Html.CheckBox("IsDay", new { @class = "isday" }) Ngày sinh
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Chuyên mục</label>
+                            <div class="col-sm-10">
+                                <button id="selectCategory" type="button" class="btn btn-sm btn-primary"><span class="fa fa-bars"></span>Chọn chuyên mục</button>
+                                <label id="errorCategory" class="error" style="display: none">Chưa chọn chuyên mục.</label>
+                                <input type="hidden" name="ListCateId" id="Value_CategoryValues" value="@(Model.LstCategoryItems != null ? string.Join(", ", Model.LstCategoryItems.Select(c => c.ID)) : string.Empty)" />
+                                <div id="Text_CategoryValues" class="checkBoxValues">@(Model.LstCategoryItems != null ? string.Join(", ", Model.LstCategoryItems.Select(c => c.Name)) : string.Empty)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-4">
+                                @Html.CheckBox("IsAll", new { @class = "CheckIsall" }) Tất cả sản phẩm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Sản phẩm được giảm giá
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal" style="margin-bottom: 20px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                    </div>
+                    <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                        @*<colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 30%" />
+                                <col style="width: 15%" />
+                                <col style="width: 10%" />
+                                <col style="width: 15%" />
+                                <col style="width: 15%" />
+                                <col style="width: 10%" />
+                                <col style="width: 15%" />
+                            </colgroup>*@
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Mã Sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th class='text-center'>Đơn giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListProductDetailItems != null)
+                            {
+                                foreach (var item in Model.ListProductDetailItems)
+                                {
+                                    <tr class="data">
+                                        <td>@(stt++)</td>
+                                        <td>
+                                            <img class="img-responsive" src="@(string.IsNullOrEmpty(item.UrlPicture) ? "/Content/Admin/images/auto-default.jpg" : item.UrlPicture.UploadPicture())" />
+                                        </td>
+                                        <td>@item.Code</td>
+                                        <td>@item.Name</td>
+                                        <td class='text-center'>@item.Price.Money()</td>
+                                        <td class="text-right">
+                                            <button class="btn btn-default pdelete" data-pid="@item.ID">
+                                                <i class="fa fa-times" style="color: red;"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" data-event="btnSave" id="btnSave"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    function checkType(lstP) {
+        var checkall = $(".CheckIsall").is(":checked");
+        var lstIdcate = $("#ListCateId").val();
+        var total = $("#TotalOrder").val();
+        var quantitycode = $("#QuantityCode").val();
+        var birth = !$(".ismonth").is(":checked") ? $(".isday").is(":checked") : $(".ismonth").is(":checked");
+
+        if (total > 0) {
+            $("#TotalOrder").removeClass("hidden");
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+            $(".CheckIsall").attr("disabled", true);
+
+        }
+        if (quantitycode > 0) {
+            $("#QuantityCode").removeClass("hidden");
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+            $(".CheckIsall").attr("disabled", true);
+
+        }
+        if (birth) {
+            $("#birthday").removeClass("hidden");
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+            $(".CheckIsall").attr("disabled", true);
+        }
+        if (checkall) {
+
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+        }
+        if (lstIdcate != null && lstIdcate != "") {
+            $(".CheckIsall").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+        }
+        if (lstP.length > 0) {
+            $(".CheckIsall").attr("disabled", true);
+            $("#selectCategory").attr("disabled", true);
+        }
+
+    }
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        checkType(lstP);
+        var urlSelectCategory = '@Url.Action("AjaxTreeCategorySelect", "Category", new { @pageId = 2 })';
+        $("#selectCategory").click(function () {
+            var valuesSelected = $("#Value_CategoryValues").val();
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Chọn chuyên mục");
+            $("#dialog-form-2 #dialog-form-ajax").load(encodeURI(urlSelectCategory + "&valuesSelected=" + valuesSelected));
+            $('#dialog-form-2').modal('show');
+            return false;
+        });
+        $("#type_Sale").change(function() {
+            var type = $(this).val();
+            if (type == 1) {
+                $("#total_order").removeClass("hidden");
+                $("#voucher").addClass("hidden");
+                $("#birthday").addClass("hidden");
+                $("#selectCategory").attr("disabled", "disabled");
+                $(".CheckIsall").attr("disabled", "disabled");
+                $("#autoProduct").attr("readonly", "readonly");
+            }
+            if (type == 2) {
+                $("#total_order").addClass("hidden");
+                $("#voucher").addClass("hidden");
+                $("#birthday").addClass("hidden");
+                $("#selectCategory").removeAttr("disabled");
+                $(".CheckIsall").removeAttr("disabled");
+                $("#autoProduct").removeAttr("readonly");
+            }
+            if (type == 3) {
+                $("#total_order").addClass("hidden");
+                $("#voucher").removeClass("hidden");
+                $("#birthday").addClass("hidden");
+                $("#selectCategory").attr("disabled", "disabled");
+                $(".CheckIsall").attr("disabled", "disabled");
+                $("#autoProduct").attr("readonly", "readonly");
+            }
+            if (type == 4) {
+                $("#total_order").addClass("hidden");
+                $("#voucher").addClass("hidden");
+                $("#birthday").removeClass("hidden");
+                $("#selectCategory").attr("disabled", "disabled");
+                $(".CheckIsall").attr("disabled", "disabled");
+                $("#autoProduct").attr("readonly", "readonly");
+            }
+
+        });
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/Sales/Auto?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var index = lstP.indexOf(el.IdDetail);
+                if (index === -1) {
+                    lstP.push(el.IdDetail);
+                    var txt = "<tr class='data'><td>stt</td>" +
+                        "<td><img class='img-responsive' src='urlimage'/></td>" +
+                        "<td>name</td>" +
+                        "<td>Codesp</td>" +
+                        "<td class='text-center'>price</td>" +
+                        "<td class='text-right'><button class='btn btn-default pdelete' data-pid='Idproduct'><i class='fa fa-times' style='color: red;'></i></button></td>" +
+                        "</tr>";
+                    txt = txt.replace("stt", lstP.length);
+                    txt = txt.replace("urlimage", el.UrlImg);
+                    txt = txt.replace("name", el.name);
+                    txt = txt.replace("Codesp", el.code);
+                    txt = txt.replace("price", numeral(el.data).format('0,0') + " đ");
+                    txt = txt.replace('Idproduct', el.IdDetail);
+                    $("#ProductDetail tbody").append(txt);
+                    $("#values-arr-product").val(lstP);
+                }
+                $("#QuantityCode").attr("readonly", "readonly");
+                $(".CheckIsall").attr("disabled", "disabled");
+            }
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+            $("#values-arr-product").val(lstP);
+            if (lstP.length < 1) {
+
+            }
+        });
+        $(".CheckIsall").change(function () {
+            var check = $(this).is(":checked");
+            if (check) {
+                $("#selectCategory").attr("disabled", "disabled");
+                $("#autoProduct").attr("readonly", "readonly");
+            } else {
+                $("#selectCategory").removeAttr("disabled");
+                $("#autoProduct").removeAttr("readonly");
+            }
+        });
+        //$("#QuantityCode").keyup(function () {
+        //    var key = $(this).val();
+        //    if (parseInt(key) > 0) {
+        //        $(".user-order").hide();
+        //        $(".CheckIsall").attr("disabled", "disabled");
+        //    } else {
+        //        $(".user-order").show();
+        //        $(".CheckIsall").removeAttr("disabled");
+        //    }
+        //});
+        $("#frm-modal").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                Note: {
+                    required: true
+                },
+                Quantity: { required: true },
+                DateStart_: { required: true },
+                DateEnd_: { required: true },
+                Percent: { required: true },
+            },
+            messages: {
+                Name: {
+                    required: "Trường này là bắt buộc."
+                },
+                Quantity: {
+                    required: "Trường này là bắt buộc."
+                },
+                DateStart_: {
+                    required: "Trường này là bắt buộc."
+                },
+                DateEnd_: {
+                    required: "Trường này là bắt buộc."
+                },
+                Percent: {
+                    required: "Trường này là bắt buộc."
+                },
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post("/DNSales/Actions", $("#frm-modal").serialize(), function (data) {
+                    $("#btnSave").prop('disabled', false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+            }
+        });
+    });
+</script>

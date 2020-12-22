@@ -1,0 +1,214 @@
+﻿@model FDI.Base.Customer_Review
+@{
+    ViewBag.Title = "ListItems";
+}
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'>
+</script>
+<link href="~/Content/Admin/css/review.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("body").on("click",".nextBtnEase", function () {
+            
+            var id = $("#point-review").val();
+            if (id < 1) {
+                createShowMessage("", "Hãy chọn mức độ yêu thích của bạn.!");
+                return;
+            }
+            if (id <= 3) {
+                $("#quest-review").val(1);
+                $.post("/CustomerReview/htmlPart2", function(data) {
+                    $(".box-part2").html(data);
+                });
+            }
+            if (id > 3) {
+                 $("#quest-review").val(2);
+                $.post("/CustomerReview/htmlPart4", function (data) {
+                    $(".box-part2").html(data);
+                });
+            }
+            goRightEase();
+        });
+        $("body").on("click",".backBtnEase",function (){
+            goLeftEase();
+        });
+        $(".box-icon .item-icon").click(function () {
+            $(".item-icon").each(function (i) {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            $("#point-review").val($(this).data("id"));
+        });
+        $("body").on("click", "#btn-reviewsuccess", function () {
+            var rep = '';
+            rep = $("#frm-modal input[name='survey']:checked").val();
+            
+            if (rep == '' || rep == undefined) {
+                rep = "";
+                $("#frm-modal input[type=checkbox]:checked").each(function (i) {
+                    rep += $(this).val() + '-';
+                });
+            }
+            $("#Rep").val(rep);
+            $.post("/CustomerReview/Actions", $("#frm-modal").serialize(), function(msg) {
+                if (msg.Erros) {
+                    createMessage("Erros", msg.Message);
+                } else {
+                    createShowMessage("", msg.Message);
+                    window.location.href("/");
+                }
+            });
+        });
+        $("body").on("click", "#frm-modal input[type=radio]", function () {
+            $("#Rep").val($(this).val());
+        });
+        
+    });
+    var i = 1;
+    var total = $(".mycontainer").width();
+    function goRightEase() { // inner stuff slides left
+        if (i == 1) {
+            $(".box").width((total) + "px");
+            var initalLeftMargin = $(".innerLiner").css('margin-left').replace("px", "") * 1;
+            var width = $(".box").width();
+            var newLeftMargin = (initalLeftMargin - width - 4); // extra 2 for border
+            $(".innerLiner").animate({ marginLeft: newLeftMargin }, 500);
+        }
+        if (i == 2) {
+            $(".box").width((total) + "px");
+            var initalLeftMargin = $(".innerLiner").css('margin-left').replace("px", "") * 1;
+            var width = $(".box").width();
+
+            var newLeftMargin = (initalLeftMargin - width - 4); // extra 2 for border
+            $(".innerLiner").animate({ marginLeft: newLeftMargin }, 500);
+        }
+        i++;
+    }
+    function goLeftEase() { // inner stuff slides right
+        i--;
+        var width = $(".box").width();
+        var initalLeftMargin = $(".innerLiner").css('margin-left').replace("px", "") * 1;
+        var newLeftMargin = (initalLeftMargin + width + 4); // extra 2 for border
+        $(".innerLiner").animate({ marginLeft: newLeftMargin }, 500);
+    }
+</script>
+<div class="box-a-table-wrap box-sales scrollable">
+    <div class="title-box-order">
+        <i class="fa fa-user"></i>Thông tin khách hàng
+    </div>
+    <div class="mycontainer">
+        <form id="frm-modal">
+            <input type="hidden" name="do" id="do" value="Add" />
+            <input type="hidden" value="0" id="point-review" name="PointID" />
+            <input type="hidden" value="0" id="quest-review" name="QuestionID" />
+            <input type="hidden" value="@ViewBag.agencyId"  name="AgencyID" />
+            <input type="hidden" value=""  name="Rep" id="Rep"/>
+            <div class="innerLiner">
+                <div class="box">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <input class="form-control" id="Name" name="Name" placeholder="Họ tên">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    <input class="form-control" id="Phone" name="Phone" placeholder="Số điện thoại">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <input class="form-control" id="Address" name="Address" placeholder="Địa chỉ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <textarea id="Note" rows="3" class="form-control" name="Note" placeholder="Sở thích"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="box-icon">
+                            <span>Bạn có hài lòng với dịch vụ của SENGARDEN SPA không ?</span>
+                            <div class="row">
+                                <div class=" col-sm-2 col-md-2">
+                                    <div class="item-icon" data-id="1">
+                                        <div class="img">
+                                            <a href="#">
+                                                <img src="~/Content/Admin/img/that-vong.png" />
+                                            </a>
+                                        </div>
+                                        <div class="box-title"><span>Thất vọng</span></div>
+                                    </div>
+                                </div>
+                                <div class=" col-sm-2 col-md-2">
+                                    <div class="item-icon" data-id="2">
+                                        <div class="img">
+                                            <a href="#">
+                                                <img src="~/Content/Admin/img/chua-tot.png" />
+                                            </a>
+                                        </div>
+                                        <div class="box-title"><span>Chưa tốt</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <div class="item-icon" data-id="3">
+                                        <div class="img">
+                                            <a href="#">
+                                                <img src="~/Content/Admin/img/chap-nhan.png" />
+                                            </a>
+                                        </div>
+                                        <div class="box-title"><span>Chấp nhận</span></div>
+                                    </div>
+                                </div>
+                                <div class=" col-sm-2 col-md-2">
+                                    <div class="item-icon" data-id="4">
+                                        <div class="img">
+                                            <a href="#">
+                                                <img src="~/Content/Admin/img/tot.png" />
+                                            </a>
+                                        </div>
+                                        <div class="box-title"><span>Tốt</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <div class="item-icon" data-id="5">
+                                        <div class="img">
+                                            <a href="#">
+                                                <img src="~/Content/Admin/img/yeu-thich.png" />
+                                            </a>
+                                        </div>
+                                        <div class="box-title"><span>Yêu thích</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-a-table-button">
+                        <input class="btn btn-sm btn-primary nextBtnEase" type="button" value="Next >>">
+                    </div>
+                </div>
+                <div class="box box-part2">
+                </div>
+                @*<div class="box box-success">
+                    
+                </div>*@
+            </div>
+        </form>
+    </div>
+</div>

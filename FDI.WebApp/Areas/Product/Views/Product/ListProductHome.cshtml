@@ -1,0 +1,27 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.ShopProductDetailItem>
+@{
+    var pageId = WebConfig.ProductDetail;
+}
+@if (Model != null && Model.Any())
+{
+    <div class="productList">
+        @foreach (var item in Model)
+        {
+            <div class="productList__item">
+                <div class="productList__item__view">
+                    <div class="img">
+                        <a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">
+                            <img src="@(item.UrlPicture.UploadPicture())" alt="@item.Name"></a>
+                    </div>
+                    <div class="preview">
+                        @Html.Raw(item.Description)
+                        <a class="preview__link" href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">@Resources.Resource.xemthem<i class="ion-chevron-right"></i></a>
+                    </div>
+                </div>
+                <div class="productList__item__title"><a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">@item.Name</a></div>
+            </div>
+        }
+    </div>
+}
+

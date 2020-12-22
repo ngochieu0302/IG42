@@ -1,0 +1,72 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelTMSupermarketItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                <tr>
+                    <th class="act_roles" style="width: 2%;">
+                        <input value="" type="checkbox"/>
+                    </th>
+                    <th style="width: 55px;" class="text-center">ID</th>
+                    <th style="width: 120px;" class="text-center">Tên siêu thị</th>
+                    <th style="width: 120px;" class="text-center">Điện thoại</th>
+                    <th style="width: 120px;" class="text-center">Tỉnh/TP</th>
+                    <th style="width: 120px;" class="text-center">Quận/Huyện</th>
+                    <th style="width: 120px;" class="text-center">Địa chỉ</th>
+                    <th style="width: 120px;" class="text-center">Kinh độ</th>
+                    <th style="width: 120px;" class="text-center">Vĩ độ</th>
+                    <th style="width: 120px;" class="text-center">Ngày tạo</th>
+                    <th class="text-center">Người tạo</th>
+                    <th class="text-center">Ngày cập nhật</th>
+                    <th class="text-center">Người cập nhật</th>
+                    <th class="text-center"><a href="#Field=Show">Hiển thị</a></th>
+                    <th style="width: 12%;" class="text-center">Thao tác</th>
+                </tr>
+                </thead>
+
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.ID">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td>@item.Name</td>
+                        <td>@item.Phone</td>
+                        <td>@item.CityItem.Name</td>
+                        <td>@item.DistrictItem.Name</td>
+                        <td>@item.Address</td>
+                        <td>@item.Latitute</td>
+                        <td>@item.Longitude</td>
+                        <td>@item.DateCreated.DecimalToString("dd/MM/yyyy HH:ss:mm")</td>
+                        <td>@item.UserCreated</td>
+                        <td>@item.DateUpdated.DecimalToString("dd/MM/yyyy HH:ss:mm")</td>
+                        <td>@item.UserUpdated</td>
+                        <td class="text-center">@Grid.ActionShow(item.ID, item.Name, item.IsShow)</td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.ID, item.Name)
+                            @Grid.ActionEdit(item.ID, item.Name)
+                            @Grid.ActionDelete(item.ID, item.Name)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

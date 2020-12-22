@@ -1,0 +1,27 @@
+﻿@using FDI.Utils
+@helper DisplayImage(string url, int width)
+{
+    <img src="@(string.IsNullOrEmpty(url) ? "/Content/Admin/images/no_image.gif" : @url.UploadPicture())" />
+}
+
+@helper ModuleSys(string url, int id)
+{
+var edit = (int?)Session["editPage"];
+var admin = User.Identity.IsAuthenticated && User.IsInRole("Admin") && edit == 1;
+if (admin && edit == 1)
+{
+        <ol class="dropdown-settinh-module">
+            <li>
+                <a title="Menu setting" href="javascript:"><span class="ion-navicon"></span></a>
+                <ol>
+                    <li><a data-toggle="modal" data-target="#modalSettingModule" data-id="@id" class="edit-module"><span class="ion-edit"></span>Edit</a></li>
+                    <li><a data-toggle="modal" data-target="#modalSettingModule" data-id="@id" class="copy-module"><span class="ion-ios-copy"></span>Copy</a></li>
+                    <li><a data-toggle="modal" data-target="#modalSettingModule" data-id="@id" class="delete-module"><span class="ion-ios-trash"></span>Delete</a></li>
+                    <li>
+                        <a data-toggle="modal" data-target="#modalSettingModule" data-id="@id" class="setting-module" data-url="@url"><span class="ion-ios-gear-outline"></span>Setting</a>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+}
+}

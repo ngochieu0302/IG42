@@ -1,0 +1,123 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.ModelDNTimeJobItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" /></th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th class="text-center">Tên nhân viên</th>
+                        <th class="text-center">Giờ đến</th>
+                        <th class="text-center">Giờ về</th>
+                        <th class="text-center">Ca đến</th>
+                        <th class="text-center">Ca về</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Đi(Sớm/Muộn)</th>
+                        <th class="text-center">Về(Sớm/Muộn)</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.ID">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check"></td>
+                        <td>@item.ID</td>
+                        <td class="text-center">@item.DNUserItem.UserName</td>
+                        <td class="text-center">@(item.DateCreated > 0 ? ConvertDate.DecimalToDate(item.DateCreated).ToString("dd/MM/yyyy HH:mm:ss") : string.Empty)</td>
+                        <td class="text-center">@(item.DateEnd > 0 ? ConvertDate.DecimalToDate(item.DateEnd).ToString("dd/MM/yyyy HH:mm:ss") : string.Empty)</td>
+                        <td class="text-center">
+                            @{
+                            switch (item.ScheduleID)
+                            {
+                                case 1:
+                                        <text>Ca 1</text>
+                                    break;
+                                case 2:
+                                        <text>Ca 2</text>
+                                    break;
+                                case 3:
+                                        <text>Ca 3</text>
+                                    break;
+                                case 4:
+                                        <text>Ca 4</text>
+                                    break;
+                                case 5:
+                                        <text>Ca 5</text>
+                                    break;
+                                case 6:
+                                        <text>Ca 6</text>
+                                    break;
+                            }
+                            }
+                        </td>
+                        <td>@{
+                            switch (item.ScheduleEndID)
+                            {
+                                case 1:
+                                    <text>Ca 1</text>
+                                    break;
+                                case 2:
+                                    <text>Ca 2</text>
+                                    break;
+                                case 3:
+                                    <text>Ca 3</text>
+                                    break;
+                                case 4:
+                                    <text>Ca 4</text>
+                                    break;
+                                case 5:
+                                    <text>Ca 5</text>
+                                    break;
+                                case 6:
+                                    <text>Ca 6</text>
+                                    break;
+                            }
+                        }</td>
+                        <td class="text-center" style="color: red; font-weight: bold;">@(item.ScheduleEndID == null ? "Đi" : "Hết ca")</td>
+                        <td>@{
+                    if (item.MinutesLater < 0)
+                    {
+                            <text>Muộn @(item.MinutesLater * -1) phút</text>
+                    }
+                    else
+                    {
+                            <text>Sớm @(item.MinutesLater) phút</text>
+                    }
+                        }</td>
+                        <td>@{
+                    if (item.ScheduleEndID > 0)
+                    {
+                        if (item.MinutesEarly < 0)
+                        {
+                            <text>Muộn @(item.MinutesEarly * -1) phút</text>
+                        }
+                        else
+                        {
+                            <text>Sớm @(item.MinutesEarly) phút</text>
+                        }
+                    }
+                        }</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

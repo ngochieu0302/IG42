@@ -1,0 +1,154 @@
+﻿@using FDI
+@model FDI.Base.ModulePage
+@{
+    ViewBag.Title = ViewBag.ActionText + " chuyên mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<link href="/Content/Admin/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+<script src="/Content/Admin/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".select2").select2({
+                width:"200px",
+            });
+        $("#SysPageForm").validate({
+            rules: {
+                Name: { required: true, minlength: 3, maxlength: 255 }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Không được để trống.",
+                    minlength: "Tên quá ngắn.",
+                    maxlength: "Tên quá dài."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#SysPageForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');//Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+        //$("#Name").on('keyup', function (e) {
+        //    e.preventDefault();
+        //    $('#SEOTitle').val($(this).val());
+        //    $('#SEODescription').val($(this).val());
+        //    $('#SEOKeyword').val($(this).val());
+        //});      
+    });
+</script>
+<form id="SysPageForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Id" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin danh mục
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên chuyên mục</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Key</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Key" id="Key" value="@Model.Key" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-10">
+                                <select name="ParentID" id="ParentID" class="select2" style="width: 100%">
+                                    <option value="1">-- Chuyên mục gốc --</option>
+                                    @foreach (var item in ViewBag.ParentID)
+                                        {
+                                        <option value="@item.ID" @((item.ID == Model.ParentId) ? " selected" : string.Empty)>@item.Name</option>
+                                        }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Layout</label>
+                            <div class="col-sm-5">
+                                <select name="Layout" id="Layout" class="select2">
+                                    @foreach (var item in Config.GetLayout("/Views/Shared"))
+                                        {
+                                        <option value="@item" @((item == Model.Layout) ? " selected" : string.Empty)>@item</option>
+                                        }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự hiển thị</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Sort, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-table"></i>Hỗ trợ SEO
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thẻ H1</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="FeUrl" id="FeUrl" value="@Model.FeUrl" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="SEOTitle" id="SEOTitle" value="@Model.SEOTitle" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Keyword</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="SEOKeyword" id="SEOKeyword" value="@Model.SEOKeyword" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="3" class="form-control" name="SEODescription" id="SEODescription">@Model.SEODescription</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

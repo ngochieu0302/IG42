@@ -1,0 +1,135 @@
+﻿@using FDI.CORE
+@model FDI.Simple.Supplier.SupplierAmountProductItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#modalForm").validate({
+            rules: {
+                CateId:
+                {
+                    required: true,
+                },
+
+                Quantity: {
+                    required: true,
+                },
+            },
+            messages: {
+                CateId:
+                {
+                    required: "Chọn sản phẩm."
+                },
+
+                Quantity: {
+                    required: "Nhập số lượng."
+                }
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nhà cung cấp</label>
+                            <div class="col-md-10">
+                                <select name="SupplierId" id="SupplierId" class="form-control">
+                                    <option value="1" data-IsLv="0">-- Chọn nhà cung cấp --</option>
+                                    @foreach (var item in ViewBag.lstSupplier)
+                                    {
+                                        <option @(item.ID == Model.SupplierId ? "selected" : "") value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sản phẩm</label>
+                            <div class="col-sm-10">
+                                <select name="ProductID" id="ProductID" class="form-control">
+                                    <option value="1" data-IsLv="0">-- Chọn sản phẩm --</option>
+                                    @foreach (var item in ViewBag.lstCate)
+                                    {
+                                        <option @(item.ID == Model.ProductID ? "selected" : "") value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ngày xuất</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" name="PublicationDate" value="@( Model.PublicationDate.DecimalToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Hạn xuất</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" name="ExpireDate" value="@( Model.ExpireDate.DecimalToString("yyyy-MM-dd"))">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Luôn có hàng</label>
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(m => m.IsAlwayExist, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số lượng</label>
+                            <div class="col-md-10">
+                                <input type="text" name="AmountEstimate" id="AmountEstimate" value="@Model.AmountEstimate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số lượng đã bán</label>
+                            <div class="col-md-10">
+                                <input type="text" name="AmountPayed" id="AmountPayed" value="@Model.AmountPayed" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ngày gọi</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" name="CallDate" value="@( Model.CallDate.DecimalToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Note" id="Note" value="@Model.Note" class="form-control" />
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

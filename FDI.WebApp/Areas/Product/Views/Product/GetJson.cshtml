@@ -1,0 +1,25 @@
+﻿@model FDI.Simple.ModelSimItem
+@using System.Web.Script.Serialization
+@using FDI.Utils
+@{
+    var stt = Model.TotalPage + 1;
+    var page = Model.Page + 1;
+}
+@foreach (var item in Model.ListItem.OrderByDescending(m => m.PriceNew))
+{
+    var CodeSku = ("0" + item.CodeSku);
+    var check = item.PriceOld < 1000000;
+    item.Price = (check ? (item.PriceNew + 200000) : item.PriceNew);
+    var PriceOld = (check ? (item.PriceOld + 200000) : item.PriceOld);
+    <tr>
+        <td class="hidden-xs">@(stt++)</td>
+        <td class="text-left"><a style="cursor:pointer" href="/dat-sim-sim-so-dep-@CodeSku" title="">@CodeSku </a></td>
+        <td class="hidden-xs"><b class="@item.Class"></b></td>
+        <td><span class="price-stock" style="@(PriceOld == item.Price ? "display:none" : "")">@PriceOld.Money()</span><span class="price-discount">@item.Price.Money()</span></td>
+        <td class="hidden-xs"><a href="/@item.UrlCate" title="@item.CateName" class="nomer">@item.CateName</a></td>
+        <td class="hidden-xs">@item.Marks</td>
+        <td>
+            <a title="@CodeSku" style="cursor:pointer" href="/dat-sim-sim-so-dep-@CodeSku" class="btn btn-primary">Đặt</a>
+        </td>
+    </tr>
+}

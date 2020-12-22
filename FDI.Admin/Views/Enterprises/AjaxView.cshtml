@@ -1,0 +1,169 @@
+﻿@model FDI.Base.DN_Enterprises
+@using FDI.CORE
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về doanh nghiệp
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                   <colgroup>
+                        <col style="width: 25%"/>
+                        <col style="width:75%" />
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>Tên doanh nghiệp</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Domain Doanh nghiệp</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.DomainDN)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Domain Đại lý</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Url)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Nhóm ngành</label>
+                        </td>
+                        <td>
+                            <label>@string.Join(", ", Model.ST_Group.Select(m => m.Name))</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Phần trăm</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Percent)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày bắt đầu</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày kết thúc</label>
+                        </td>
+                        <td>
+                            @Model.DateEnd.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Dừng Hoạt động</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsLocked.HasValue && Model.IsLocked.Value)
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin chủ sở hữu
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <colgroup>
+                        <col style="width: 25%"/>
+                        <col style="width:75%" />
+                    </colgroup>
+                   
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>Người đăng ký</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.FullName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tên tài khoản</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.UserName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>CMTND</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CMTND)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Email</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Số điện thoại</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Phone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Address)
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" sizes="16x16" href="/Content/Publishing/img/favicon/favicon-16x16.png" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    @RenderSection("metas", false)
+    <meta name="robots" content="index, archive, follow, noodp" />
+    <meta name="googlebot" content="index,archive,follow,noodp" />
+    <meta name="msnbot" content="all,index,follow" />
+    <meta name='revisit-after' content='1 days' />
+    <meta property="og:site_name" content="@Request.Url.Host" />
+    <meta property="og:url" content="@Request.RawUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <!--Open CSS -->
+    @*<link href="~/Content/Publishing/css/styles.min.css?v=1" rel="stylesheet" />*@
+    @*<link href="~/Content/Publishing/css/customs.css" rel="stylesheet" />*@
+    <!--End CSS -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/Content/Publishing/js/modernizr-cus.js?v=1"></script>
+      <script src="~/Content/Publishing/js/html5shiv.js?v=1"></script>
+      <script src="~/Content/Publishing/js/respond.min.js?v=1"></script>
+    <![endif]-->
+    <!-- Check browser not display in ie 9  -->
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0; url=~/Content/Publishing/detect.html" />
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        window.top.location = '~/Content/Publishing/detect.html';
+    /* ]]> */
+    </script>
+    <![endif]-->
+    <!-- Check browser not display in ie 9 -->
+    <!--[if (gte IE 6)&(lte IE 8)]>
+          <script type="text/javascript" src="~/Content/Publishing/js/selectivizr-min.js?v=1"></script>
+          <noscript><link rel="stylesheet" href="~/Content/Publishing/css/styles.css?v=1" /></noscript>
+    <![endif]-->
+
+</head>
+<body>
+    @if (IsSectionDefined("MenuAdmin"))
+    {
+        @RenderSection("MenuAdmin", false)
+    }
+    <div class="wrapper">
+        <div id="header-sidebar" class="hidden-md hidden-lg hidden-sm">
+            <div class="left-h-sidebar">
+                <a href="#my-mobile-menu" class="sidebar-toggle"><span class="fa fa-bars"></span></a>
+            </div>
+            <div class="right-h-sidebar">
+                <div class="logo-mobie">
+                    <a href="/" title="fditech.vn">
+                        <img src="~/Content/Publishing/img/logo-mobie.png" alt="Sim đẹp trả góp" class="img-responsive" />
+                    </a>
+                </div>
+                <div class="boxMobieSearch">
+                    <form class="frMobie-search" action="/search-p5">
+                        <input type="search" name="keyword" placeholder="Từ khóa..." class="ipt-search" id="iptSearchMobie">
+                        <button type="button" class="bt-search-mb"><span class="fa fa-search"></span></button>
+                        <button type="button" class="bt-close-search-mb"><span class="fa fa-remove"></span></button>
+                    </form>
+                </div>
+                <div class="button-call-search"><span class="fa fa-search"></span></div>
+            </div>
+        </div>
+        <div id="wrapper-main">
+            <div id="overlay"></div>
+            <header id="header-main">
+                @RenderSection("header", false)
+            </header>
+            <div id="content-main">
+                @RenderSection("content", false)
+                <footer id="footer-main">
+                    @RenderSection("footer", false)
+                </footer>
+            </div>
+        </div>
+        <a href="#" id="scrollTop"><span class="fa fa-angle-up"></span></a>
+        <!--Open JavaScript Bot -->
+        @RenderSection("Vendors", false)
+        <!--End JavaScript Bot -->
+    </div>
+    @Html.Partial("~/Areas/Contact/Views/Contact/Login.cshtml")
+    @RenderBody()
+</body>
+</html>

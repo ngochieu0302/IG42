@@ -1,0 +1,197 @@
+﻿@model FDI.Simple.ModelShopProductDetailItem
+@using FDI.Utils
+@{
+    var page = WebConfig.Product;
+    var pagedetails = WebConfig.ProductDetail;
+    var date = DateTime.Now.TotalSeconds() - DateTime.Now.AddDays(-30).TotalSeconds();
+    var sort = Request["sort"];
+}
+@if (Model.ListItem.Any())
+{
+    <div class="shop-product-wrapper">
+        <!-- shop product top wrap start -->
+        <div class="shop-top-bar">
+            <div class="row align-items-center">
+                <div class="col-lg-7 col-md-6 order-2 order-md-1">
+                    <div class="top-bar-left">
+                        <div class="product-view-mode">
+                            <a class="active" href="#" data-target="grid-view" data-toggle="tooltip" title="Grid View"><i class="fa fa-th"></i></a>
+                            <a href="#" data-target="list-view" data-toggle="tooltip" title="List View"><i class="fa fa-list"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 order-1 order-md-2">
+                    <div class="top-bar-right">
+                        <div class="product-short">
+                            <p>Sort By : </p>
+                            <select class="nice-select" name="sortby" id="sortby">
+                                <option value="">Sắp xếp</option>
+                                <option @(!string.IsNullOrEmpty(sort) ? sort == "az" ? "selected" : "" : "") value="az">Name (A - Z)</option>
+                                <option @(!string.IsNullOrEmpty(sort) ? sort == "za" ? "selected" : "" : "") value="za">Name (Z - A)</option>
+                                <option @(!string.IsNullOrEmpty(sort) ? sort == "lh" ? "selected" : "" : "") value="lh">Price (Low &gt; High)</option>
+                                <option @(!string.IsNullOrEmpty(sort) ? sort == "hl" ? "selected" : "" : "") value="hl">Price (High &gt; Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- shop product top wrap start -->
+
+        <!-- product item list wrapper start -->
+        <div class="shop-product-wrap grid-view row mbn-30">
+            <!-- product single item start -->
+            @foreach (var item in Model.ListItem)
+            {
+                <div class="col-md-4 col-sm-6">
+
+                    <!-- product grid start -->
+                    <div class="product-item">
+                        <figure class="product-thumb">
+                            <a href="/@(item.NameAscii)-p@(pagedetails)c@(item.ID)">
+                                <img class="pri-img" src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+
+                                <img class="sec-img" src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+                            </a>
+                            <div class="product-badge">
+                                @if ((DateTime.Now.TotalSeconds() - item.DateCreate) < date)
+                                {
+                                    <div class="product-label new">
+                                        <span>new</span>
+                                    </div>
+                                }
+                                @if (item.Sale > 0)
+                                {
+                                    <div class="product-label discount">
+                                        <span>@item.Sale%</span>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="button-group">
+                                <a href="wishlist.html" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i class="pe-7s-like"></i></a>
+                                <a href="compare.html" data-toggle="tooltip" data-placement="left" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="pe-7s-search"></i></span></a>
+                            </div>
+                            <div class="cart-hover">
+                                <button class="btn btn-cart" data-id="@item.ID">Thêm vào giỏ hàng</button>
+                                <input type="hidden" class="ShopId-@(item.ID)" value="@item.ListProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                                @*<input type="hidden" class="colorId-@(item.ID)" value="@item.ListColorProductItem.Select(c=>c.ID).FirstOrDefault()"/>*@
+                                <input type="hidden" class="sizeId-@(item.ID)" value="@item.ListSizeProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                            </div>
+                        </figure>
+                        <div class="product-caption text-center">
+                            @*<ul class="color-categories">
+                                @foreach (var items in item.ListProductItem)
+                                {
+                                    <li>
+                                        <a style="background-color: @(items.ColorCode)" href="javascript:void(0)" title="@items.ColorName"></a>
+                                    </li>
+                                }
+                            </ul>*@
+                           @* <ul class="color-categories">
+                                     @foreach (var items in item.ListColorProductItem)
+                                    {
+                                        <li>
+                                            <a style="background-color: @(items.Value)"  href="javascript:void(0)" title="@items.Name"></a>
+                                        </li>
+                                    }
+                                </ul>*@
+                            <h6 class="product-name">
+                                <a href="/@(item.NameAscii)-p@(pagedetails)c@(item.ID)">@item.Name</a>
+                            </h6>
+                            <div class="price-box">
+                                <span class="price-regular">@item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money()</span>
+                                @if (item.Sale > 0 && item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                {
+                                    <span class="price-old"><del>@item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money()</del></span>
+  
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product grid end -->
+
+                    <!-- product list item end -->
+                    <div class="product-list-item">
+                        <figure class="product-thumb">
+                            <a href="/@(item.NameAscii)-p@(pagedetails)c@(item.ID)">
+                                <img class="pri-img" src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+
+                                <img class="sec-img" src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+                            </a>
+                            <div class="product-badge">
+                                @if ((DateTime.Now.TotalSeconds() - item.DateCreate) < date)
+                                {
+                                    <div class="product-label new">
+                                        <span>new</span>
+                                    </div>
+                                }
+                                @if (item.Sale > 0)
+                                {
+                                    <div class="product-label discount">
+                                        <span>@item.Sale%</span>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="button-group">
+                                <a href="wishlist.html" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i class="pe-7s-like"></i></a>
+                                <a href="compare.html" data-toggle="tooltip" data-placement="left" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="pe-7s-search"></i></span></a>
+                            </div>
+                            <div class="cart-hover">
+                                <button class="btn btn-cart" data-id="@item.ID">Thêm vào giỏ hàng</button>
+                                <input type="hidden" class="ShopId-@(item.ID)" value="@item.ListProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                                @*<input type="hidden" class="colorId-@(item.ID)" value="@item.ListColorProductItem.Select(c=>c.ID).FirstOrDefault()"/>*@
+                                <input type="hidden" class="sizeId-@(item.ID)" value="@item.ListSizeProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                            </div>
+                        </figure>
+                        <div class="product-content-list">
+                            @*<ul class="color-categories">
+                                @foreach (var items in item.ListProductItem)
+                                {
+                                    <li>
+                                        <a style="background-color: @(items.ColorCode)" href="javascript:void(0)" title="@items.ColorName"></a>
+                                    </li>
+                                }
+                            </ul>*@
+                            @*<ul class="color-categories">
+                                    @foreach (var items in item.ListColorProductItem)
+                                    {
+                                        <li>
+                                            <a style="background-color: @(items.Value)"  href="javascript:void(0)" title="@items.Name"></a>
+                                        </li>
+                                    }
+                                </ul>*@
+                            <h5 class="product-name">
+                                <a href="/@(item.NameAscii)-p@(pagedetails)c@(item.ID)">@item.Name</a>
+                            </h5>
+                            <div class="price-box">
+                                <span class="price-regular">@item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money()</span>
+                                @if (item.Sale > 0 && item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                {
+                                    <span class="price-old"><del>@item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money()</del></span>
+  
+                                }
+                            </div>
+                            @Html.Raw(item.Description)
+                        </div>
+                    </div>
+                    <!-- product list item end -->
+                </div>
+            }
+        </div>
+        <!-- product item list wrapper end -->
+        <!-- start pagination area -->
+        @if (!string.IsNullOrEmpty(Model.PageHtml))
+        {
+            <div class="paginatoin-area text-center">
+                <ul class="pagination-box">
+                    @Html.Raw(Model.PageHtml)
+                </ul>
+            </div>
+        }
+        <!-- end pagination area -->
+    </div>
+}

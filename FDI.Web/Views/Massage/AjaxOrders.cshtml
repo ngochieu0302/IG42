@@ -1,0 +1,557 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelOrderGetItem
+@{
+    var day = DateTime.Today;
+    var tday = day.TotalSeconds();
+    var date = DateTime.Now.AddMinutes(5);
+    var price = Model.ListItem.Sum(c => c.PriceNew);
+    var hour = Model.StartDate.DecimalToString("HH");
+    var min = Model.StartDate.DecimalToString("mm");
+    hour = string.IsNullOrEmpty(hour) ? date.Hour.ToString() : hour;
+    min = string.IsNullOrEmpty(min) ? date.Minute.ToString() : min;
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<form id="frm-Orders">
+    <div class="modal-body">
+        <input type="hidden" name="itemId" id="itemId" value="" />
+        <input type="hidden" name="ContactId" id="ContactId" value="@Model.ID" />
+        <input type="hidden" id="DiscountKH" value="@(new JavaScriptSerializer().Serialize(Model.DiscountItems))" />
+        <input type="hidden" name="jsonBedUser" id="jsonBedUser" value="" />
+        <input type="hidden" name="do" id="do" value="Edit" />
+        <input type="hidden" name="ProductID" id="ProductID" value="0" />
+        <input type="hidden" name="StartDate" id="StartDate" value="" />
+        <input type="hidden" name="EndDate" id="EndDate" value="" />
+        <input type="hidden" name="Value" id="Value" value="" />
+        <input type="hidden" name="Price" id="Price" value="@(price)" />
+        <input type="hidden" name="IsEarly" id="IsEarly" value="@(Model.IsEarly == true ? "True" : "false")" />
+        <input type="hidden" name="TimeEarly" id="TimeEarly" value="@(Model.TimeEarly)" />
+        <input type="hidden" name="TimeWait" id="TimeWait" value="@(Model.TimeWait)" />
+        @Html.Action("GetAllStackByToday", "Utility", new { key = "checkinfdi", agencyid = Model.AgencyID })
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="Customer" name="Customer" value="">
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="">
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="input-group col-md-4">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                    <input class="form-control" id="CustomerCard" placeholder="Quẹt thẻ" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Họ Tên</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="CustomerName" name="CustomerName" value="@Model.CustomerName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Address" name="Address" value="@Model.Address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số điện thoại</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Mobile" name="Mobile" value="@Model.Mobile">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Điểm tích lũy</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static" id="Bonus"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thanh toán
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn sản phẩm</label>
+                            <div class="col-sm-10">
+                                <select name="LstProductID" id="LstProductID" multiple class="select2">
+                                    @foreach (var item in Model.ListItem)
+                                    {
+                                        if (Model.Listproduct != null && Model.Listproduct.Any())
+                                        {
+                                        <option value="@item.ID" @(Model.Listproduct.Any(c => c.ProductId == item.ID) ? "selected" : "") data-name="@item.Name" data-price="@item.PriceNew" data-val="@item.Value">@item.Name</option>
+                                        }
+                                        else if (Model.LstProductPacketItems != null && Model.LstProductPacketItems.Any())
+                                        {
+                                        <option value="@item.ID" @(Model.LstProductPacketItems.Any(c => c.ProductId == item.ID) ? "selected" : "") data-name="@item.Name"  data-price="@item.PriceNew" data-val="@item.Value">@item.Name</option>
+                                        }
+                                        else
+                                        { 
+                                        <option value="@item.ID"  data-price="@item.PriceNew" data-name="@item.Name" data-val="@item.Value">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Thời gian</label>
+                            <div class="col-sm-4">
+                                <select name="HoursStartAllAjax" id="HoursStartAllAjax" class="form-control select2">
+                                    @for (int i = date.Hour; i <= 23; i++)
+                                    {
+                                        <option value="@i" @(i == int.Parse(hour) ? "selected" : "") >@i</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="MinuteStartAllAjax" id="MinuteStartAllAjax" class="form-control select2">
+                                    @for (int i = 0; i <= 59; i++)
+                                    {
+                                        <option value="@i" @(int.Parse(min) == i ? "selected" : string.Empty)>@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group product">
+                            <label class="col-md-2 control-label">Gói</label>
+                            <div class="col-md-5 productall" id="SetPacketOrder">
+                                @Model.Time '
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Danh sách giường</label>
+                            <div class="col-md-10">
+                                <ul class="listb"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" id="Note" name="Note" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>TỔNG TIỀN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Prices">@Model.Price</p>
+                            </div>
+                            <label class="col-sm-2 control-label"><b>THANH TOÁN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Payment">@Model.Price</p>
+                                <input type="hidden" name="Payments" id="Payments" value="0" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sử dụng tích lũy:</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="PrizeMoney" name="PrizeMoney" class="form-control maskPrice" value="0" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giảm giá (<span id="dn_gg"></span>%)</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="DiscountMoney" name="DiscountMoney" readonly="readonly" class="form-control maskPrice" value="0" />
+                                <input type="hidden" id="Discount" name="Discount" readonly="readonly" class="form-control maskPrice" value="0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">In và Lưu lại</button>
+        <button id="btnPrint" type="button" class="btn btn-sm btn-primary">Xem trước</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<form id="frm-Stack">
+    <input type="hidden" name="key" value="checkinfdi" />
+    <input type="hidden" name="agencyid" value="@Model.AgencyID" />
+    <input type="hidden" name="jsonUser" id="jsonUser" value="" />
+</form>
+<script>
+    $(function () {
+        var prizeMoney = 0;
+        var discount = 0;
+        var dngg = 0;
+        var isCus = false;
+        var timeearly = parseInt('@Model.TimeEarly') * 60;
+        var listbedid = [];
+        var listbedUser = [];
+        var price = parseInt('@Model.Price');
+        var td = parseInt('@tday');
+        var lists = JSON.parse($("#listbed").val());
+        var count = lists.length;
+        var m = parseInt($("#MinuteStartAllAjax").val());
+        var h = parseInt($("#HoursStartAllAjax").val());
+        var listUser = JSON.parse($("#DNUserItems").val());
+        var timeuo;
+        var k;
+        var tE;
+        var tdn = td + parseInt(h) * 3600 + parseInt(m) * 60;
+        if (count == 1) {
+            debugger;
+            var counta = 0;
+            for (var a = 0; a < listUser.length; a++) {
+                timeuo = listUser[a].Times;
+                for (k = 0; k < timeuo.length; k++) {
+                    if (timeuo[k].BId == lists[0].ID) {
+                        tE = timeuo[k].E - timeearly;
+                        if (counta == 0 && tdn < tE) {
+                            h = tE - td;
+                            debugger;
+                            $("#MinuteStartAllAjax").val(parseInt((h % 3600) / 60)).trigger("change");
+                            $("#HoursStartAllAjax").val(parseInt(h / 3600)).trigger("change");
+                        }
+                        counta = 1;
+                    }
+                }
+            }
+        }
+
+        var time = parseInt('@Model.Time');
+        var ed = tdn + time * 60;
+        callSelect2("#LstProductID", "100%");
+        $('#Customer').autocomplete({
+            serviceUrl: "/BookATable/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#Mobile').val(el.phone);
+                $('#Address').val(el.code);
+                $('#printKH').html(el.title);
+                $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                $('#Customer').val("");
+                $('#PrizeMoney').val("0");
+                discount = el.pricenew;
+                if (el.value != "") isCus = true;
+                else isCus = false;
+                calculate();
+            }
+        });
+        $('#CustomerCard').keyup(function () {
+            var val = $(this).val();
+            val = val.replace("%", "");
+            val = val.replace("?", "");
+            if (val.length == 32) {
+                $.post("/Sales/AutoCustomerItem", { query: val }, function (el) {
+                    if (el != null) {
+                        $('#CustomerID').val(el.ID);
+                        $('#CustomerName').val(el.title);
+                        $('#Mobile').val(el.phone);
+                        $('#Address').val(el.code);
+                        $('#printKH').html(el.title);
+                        $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                        if (el.keword.toLowerCase() === el.value.toLowerCase()) {
+                            isCus = true;
+                            prizeMoney = el.TotalPrice;
+                            calculate(prizeMoney);
+                        } else prizeMoney = 0;
+                        $('#Customer').val("");
+                        $('#PrizeMoney').val("0");
+                    }
+                });
+                $(this).val("");
+            }
+        });
+        $("body").on("keyup", "#frm-Orders #PrizeMoney", function () {
+            var pr = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var tt = totalPrice - (dngg * totalPrice / 100);
+            if (prizeMoney === 0) {
+                toastr["error"]("Bạn chưa quẹt thẻ.");
+                $("#PrizeMoney").val("0");
+            }
+            if (tt < pr && prizeMoney >= pr) {
+                ErrorMessage("Bạn dùng quá số tiền cần thanh toán.");
+                $("#PrizeMoney").val(tt);
+            }
+            if (tt > pr && pr > prizeMoney) {
+                ErrorMessage("Vượt quá tiền tích lũy.");
+                $("#PrizeMoney").val(prizeMoney);
+            }
+        });
+
+        $("#itemId").val("");
+        $("#ListBoxPrint").html("");
+        $("#listbed").html("");
+        $("#DNUserItems").html("");
+        var countUser = listUser.length;
+        var totalPrice = 0;
+        var text = "";
+        var checke = false;
+        debugger;
+        if (countUser > 0 && countUser >= count) {
+            totalPrice = price * count;
+            for (var i = 0; i < count; i++) {
+                var selectUser = "";
+                if (countUser > 0 && i < countUser) {
+                    selectUser += '<div style="width: 30%; float:left; margin-right: 20px"><select data-id="' + lists[i].ID + '" class="SelectUserId form-control select2">';
+                    var cs = 0;
+                    for (var j = 0; j < countUser; j++) {
+                        timeuo = listUser[j].Times;
+                        checke = true;
+                        for (k = 0; k < timeuo.length; k++) {
+                            tE = timeuo[k].E - timeearly;
+                            if ((timeuo[k].S <= tdn && tdn < tE) || (timeuo[k].S <= ed && ed <= timeuo[k].E)) {
+                                checke = false;
+                                break;
+                            }
+                        }
+                        if (checke) if (!listUser[j].IsOnline && cs == 0) {
+                            var obj = { idbed: lists[i].ID, RoomName: lists[i].RoomName, Name: lists[i].Name, userid: listUser[j].UserId, UserName: listUser[j].UserName, c: listUser[j].CodeCheckIn, PacketName: lists[i].PacketName };
+                            listbedUser.push(obj);
+                            listUser[j].IsOnline = true;
+                            cs++;
+                            selectUser += '<option data-c="' + listUser[j].CodeCheckIn + '" value="' + listUser[j].UserId + '" ' + "selected" + ' >' + listUser[j].UserName + '</option>';
+                        } else selectUser += '<option data-c="' + listUser[j].CodeCheckIn + '" value="' + listUser[j].UserId + '" >' + listUser[j].UserName + '</option>';
+                    }
+                    selectUser += '</select></div>';
+                }
+                text = text + "<li id='obj-" + lists[i].ID + "'><span class='namebed'> " + lists[i].Name + " " + lists[i].RoomName + "</span> " + selectUser + " <a class=\"btn btn-default bdelete\" data-pid='" + lists[i].ID + "'><i class=\"fa fa-times\" style=\"color: red;\"></i></a></li>";
+            }
+        }
+        if (!checke || listbedUser.length < count) {
+            text = "Hiện tại không đủ nhân viên online!"; lists = []; count = 0;
+            listbedUser = [];
+        }
+        $(".listb").html(text);
+        calculate(0, 0, totalPrice, prizeMoney);
+        $("#Prices").html(numeral(totalPrice).format('0,0'));
+        $("#Payment").html(numeral(totalPrice).format('0,0'));
+        $("#Payments").val(totalPrice);
+        $('#LstProductID').on('change', function () {
+            var priceproduct = 0;
+            time = 0;
+            $('#LstProductID').find(":selected").each(function () {
+                priceproduct += parseInt($(this).data("price"));
+                var tg = $(this).data("val");
+                time += parseInt(tg);
+                $("#ProductID").val($(this).val());
+            });
+            totalPrice = priceproduct * count;
+            $("#SetPacketOrder").html(time);
+            ed = tdn + time * 60;
+            $("#Prices").html(numeral(priceproduct * count).format("0,0"));
+            calculate(0, 0, totalPrice, prizeMoney);
+        });
+        $(".SelectUserId").change(function () {
+            var userid = $(this).val();
+            var userc = $(this).find(':selected').data('c');
+            var id = parseInt($(this).data("id"));
+            var lenu = listbedUser.length;
+            for (var t = 0; t < lenu; t++) {
+                if (listbedUser[t].idbed == id) {
+                    listbedUser[t].userid = userid;
+                    listbedUser[t].c = userc;
+                }
+            };
+        });
+        callSelect2(".SelectUserId", "100%");
+        $("body").on("click", ".bdelete", function () {
+            var id = parseInt($(this).data("pid"));
+            if (count > 1) {
+                for (var i = 0; i < count; i++) {
+                    if (lists[i].ID == id) {
+                        lists.splice(i, 1);
+                        $("#obj-" + id).hide();
+                        break;
+                    }
+                    var lenu = listbedUser.length;
+                    for (var t = 0; t < lenu; t++) {
+                        if (listbedUser[t].idbed == id) {
+                            listbedUser.splice(i, 1);
+                            break;
+                        }
+                    };
+                }
+                count = lists.length;
+            } else {
+                ErrorMessage("Đơn hàng phải lớn hơn 1 giường!");
+            }
+            $("#Prices").html(numeral(price * count).format('0,0'));
+            $("#Payment").html(numeral(price * count).format('0,0'));
+            $("#Payments").val(price * count);
+        });
+        $("#frm-Orders").validate({
+            rules: {
+                CustomerName:
+                {
+                    required: true,
+                }
+            },
+            submitHandler: function () { //onSubmit
+                if (count > 0 && checke) {
+                    var json = JSON.stringify(listbedUser);
+                    $("#jsonBedUser").val(json);
+                    $("#jsonUser").val(json);
+                    $("#btnSave").prop('disabled', true);
+                    $("#StartDate").val(tdn);
+                    $("#EndDate").val(ed);
+                    for (var i = 0; i < count; i++) {
+                        listbedid.push(lists[i].ID);
+                    }
+                    //note
+                    $("#Value").val(time);
+                    $("#itemId").val(listbedid.join(", "));
+                    $.post(urlPostAction, $("#frm-Orders").serialize(), function (data) {
+                        $("#btnSave").prop('disabled', false);
+                        if (data.Erros)
+                            createMessage("Thông báo", data.Message);
+                        else {
+                            $.post("/Utility/UpdateUserStack", $("#frm-Stack").serialize(), function (d) { });
+                            $("[data-event='Default']").trigger("click");
+                            printOrder();
+                            $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                            createShowMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                } else {
+                    createMessage("Thông báo", "Hiện tại không đủ nhân viên online!");
+                }
+
+            }
+        });
+        function calculate(end, pr, tt) {
+            dngg = 0;
+            var discountKH = JSON.parse($("#DiscountKH").val());
+            for (var i = 0; i < discountKH.length; i++) {
+                if (discountKH[i].IsAll == true || ((discountKH[i].IsAll == false) && isCus == true)) {
+                    dngg = dngg + discountKH[i].Percent;
+                }
+            }
+            var price2 = dngg * totalPrice / 100;
+            $("#Price").val(totalPrice);
+            $('#Discount').val(dngg);
+            $('#DiscountMoney').val(price2);
+            $("#dn_gg").html(dngg);
+            $("#Payment").html(numeral(totalPrice - price2).format('0,0'));
+            $("#Payments").val(totalPrice - price2);
+            $("#printDiscountTotal").html(price2);
+            $("#printSaleTotal").html(numeral(tt).format('0,0'));
+            $("#printPriceCusNTotal").html(numeral(totalPrice - price2).format('0,0'));
+            $("#TotalPriceVND").html(DocTienBangChu(totalPrice - price2));
+            $("#printSale").html(numeral(totalPrice - price2).format('0,0'));
+            $("#PriceVND").html(DocTienBangChu(totalPrice - price2));
+            $("#printDis").html(dngg);
+        }
+        function printOrder() {
+            var fn = $("#CustomerName").val();
+
+            var bounus = $("#Bonus").html().replace(/[,]+/g, '');
+            var pr = $("#PrizeMoney").val().replace(/[,]+/g, '');
+            $("#printPrizeMoneyTotal").html(numeral(pr).format('0,0'));
+            $("#printMoney").html(numeral(bounus - pr).format('0,0'));
+            $("#TotalPriceVND").html(DocTienBangChu(totalPrice));
+            $("#printSaleTotal").html(numeral(totalPrice).format('0,0'));
+            var html = "";
+            var totalp = 0;
+            $('#LstProductID').find(":selected").each(function () {
+                totalp += parseInt($(this).data("price"));
+                html += "<div class='pr-item'><div class='pr-property'><span><b>" + $(this).data("name") + "</b></span><span>" + numeral($(this).data("price")).format('0,0') + "</span></div></div>";
+            });
+            $("#listprint").html(html);
+
+            $("#prinPrice").html(numeral(price).format('0,0'));
+            $("#printPriceCusN").html(numeral(price).format('0,0'));
+            var names = '<li><strong>Thu ngân:</strong><span>' + '@Model.UserName' + '</span></li><li><strong>Khách hàng:</strong><span>' + fn + '</span></li>';
+            var timeshow = '<li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(tdn) + ' - ' + hhmmss(ed) + '</b></span></li>';
+            var totals = names + $('#TotalPrice').html() + timeshow;
+            if (count > 1) {
+                $('#TotalPrice').html(totals);
+                var tex = $("#TotalOrder").html();
+                $("#TotalOrder").html("");
+                $("#ListBoxPrint").append(tex);
+                $('#BoxPrint #ObjPrice').html(totals);
+                $.each(listbedUser, function (i, val) {
+                    var sshow = names + '<li><strong>NVPV:</strong><span>' + val.UserName + '</span></li><li><strong>Tầng/Giường</strong><span>' + val.RoomName + ' / G ' + val.Name + '</span></li><li><strong>Nhân viên:</strong><span>' + val.UserName + '</span> </li><li><strong>Gói</strong><span>' + val.PacketName + '</span></li>' + timeshow;
+                    $('#BoxPrint #ObjPrice').html(sshow);
+                    $('#BoxPrint #printSale').html(numeral(totalp).format('0,0'));
+                    $('#BoxPrint #PriceVND').html(DocTienBangChu(totalp));
+                    $("#ListBoxPrint").append($("#BoxPrint").html());
+                });
+
+            } else {
+                timeshow = '<li><strong>NVPV:</strong><span>' + listbedUser[0].UserName + '</span></li><li><strong>Tầng/Giường</strong><span>' + listbedUser[0].RoomName + ' / G ' + listbedUser[0].Name + '</span></li><li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(tdn) + ' - ' + hhmmss(ed) + '</b></span></li>';
+                totals = names + $('#TotalPrice').html() + timeshow;
+                $('#TotalPrice').html(totals);
+                $('#BoxPrint #ObjPrice').html(totals);
+                $("#ListBoxPrint").append($("#BoxPrint").html());
+            }
+            jQuery.print('#ListBoxPrint');
+            $(".modal").modal('hide');
+        }
+        function printOrderPreView() {
+            debugger;
+            var fn = $("#CustomerName").val();
+            var lstprint = "";
+            var tempt = $('#TotalPrice').html();
+            var bounus = $("#Bonus").html().replace(/[,]+/g, '');
+            var pr = $("#PrizeMoney").val().replace(/[,]+/g, '');
+            $("#printPrizeMoneyTotal").html(numeral(pr).format('0,0'));
+            $("#printMoney").html(numeral(bounus - pr).format('0,0'));
+            $("#TotalPriceVND").html(DocTienBangChu(totalPrice));
+            $("#printSaleTotal").html(numeral(totalPrice).format('0,0'));
+            $('#LstProductID').find(":selected").each(function () {
+                lstprint += "<div class='pr-item'><div class='pr-property'><span><b>" + $(this).data("name") + "</b></span><span>" + numeral($(this).data("price")).format('0,0') + "</span></div></div>";
+            });
+            $("#listprint").html(lstprint);
+            $("#prinPrice").html(numeral(price).format('0,0'));
+            $("#printPriceCusN").html(numeral(price).format('0,0'));
+            var names = '<li><strong>Thu ngân:</strong><span>' + '@Model.UserName' + '</span></li><li><strong>Khách hàng:</strong><span>' + fn + '</span></li>';
+            var timeshow = '<li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(tdn) + ' - ' + hhmmss(ed) + '</b></span></li>';
+            var totals = names + tempt + timeshow;
+            if (count > 1) {
+                $('#TotalPrice').html(totals);
+                var tex = $("#TotalOrder").html();
+                $("#TotalOrder").html("");
+                $("#ListBoxPrint").append(tex);
+                $('#BoxPrint #ObjPrice').html(totals);
+                $.each(listbedUser, function (i, val) {
+                    var sshow = names + '<li><strong>Tầng/Giường</strong><span>' + val.RoomName + ' / G ' + val.Name + '</span></li><li><strong>Nhân viên:</strong><span>' + val.UserName + '</span> </li><li><strong>Gói</strong><span>' + val.PacketName + '</span></li>' + timeshow;
+                    $('#BoxPrint #ObjPrice').html(sshow);
+                    $("#ListBoxPrint").append($("#BoxPrint").html());
+                });
+            } else {
+                timeshow = '<li><strong>Tầng/Giường</strong><span>' + listbedUser[0].RoomName + ' / G ' + listbedUser[0].Name + '</span></li><li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(tdn) + ' - ' + hhmmss(ed) + '</b></span></li>';
+                totals = names + $('#TotalPrice').html() + timeshow;
+                $('#TotalPrice').html(totals);
+                $('#BoxPrint #ObjPrice').html(totals);
+                $("#ListBoxPrint").append($("#BoxPrint").html());
+            }
+            jQuery.print('#ListBoxPrint');
+            $('#BoxPrint #ObjPrice').html("");
+            $('#TotalPrice').html(tempt);
+            $('#ListBoxPrint').html("");
+        }
+        $("#btnPrint").click(function () {
+            printOrderPreView();
+        });
+    })
+</script>
+@Html.Action("AjaxPrint")

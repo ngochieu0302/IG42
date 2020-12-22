@@ -1,0 +1,126 @@
+﻿@using FDI.CORE
+@model FDI.Simple.StorageWarehouse.ProduceModel
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+
+<div class="modal-body">
+    <div id="PrintContent" class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về phiếu nhập
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mã phiếu</label>
+                        </td>
+                        <td>
+                            @Model.Produce.ID
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Giờ sản xuất</label>
+                        </td>
+                        <td>
+                            @Model.Produce.DateProduce.DecimalToString("dd/MM/yyyy HH:mm")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Sản phẩm</label>
+                        </td>
+                        <td>
+                            @Model.Produce.ProductName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Số lượng</label>
+                        </td>
+                        <td>
+                            @Model.Produce.Quantity.Quantity()
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách sản phẩm yêu cầu
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                    </tr>
+                    @foreach (var item in Model.CategoryRecipe)
+                    {
+                        <tr>
+                            <td> @(stt++)</td>
+                            <td>@item.ProductName</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách sản phẩm chi tiết
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã SP</th>
+                        <th>Tên SP</th>
+                        <th>Số lượng</th>
+                        <th>Khối lượng</th>
+
+                    </tr>
+                    @{ stt = 1;}
+                    @foreach (var item in Model.RequestWareItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.ProductName</td>
+
+                            <td>@(item.SizeId == null? item.Quantity.Quantity() + " Kg" : item.UnitName)</td>
+                            <td>@(item.SizeId == null? "1" : item.Quantity.Quantity())</td>
+
+                            <td>@item.Weight.Quantity()</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" onclick="printDiv('PrintContent')" class="btn btn-primary btn-sm">In phiếu</button>
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+
+<script>
+    function printDiv() {
+        $("#PrintContent").print();
+    }
+    $(function () {
+      
+    });
+</script>

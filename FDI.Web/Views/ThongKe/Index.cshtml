@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <input type="date" class="form-control input-sm" name="fromDate" id="fromDate" value="@ViewBag.ds.ToString("yyyy-MM-dd")">
+                <input type="date" class="form-control input-sm" name="toDate" id="toDate" value="@ViewBag.de.ToString("yyyy-MM-dd")">
+                <input type="hidden" name="userid" value="@ViewBag.userid"/>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+        </form>
+    </div>
+</div>

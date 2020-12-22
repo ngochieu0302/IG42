@@ -1,0 +1,46 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.ShopProductValueItem>
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Công thức
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th class="text-center">Tên Nguyên liệu</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Đơn vị</th>
+                        <th class="text-center">Ngày nhập</th>
+                        <th class="text-center">Giá</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@(stt++)</td>
+                            <td class="text-center">@item.Name</td>
+                            <td class="text-center">@(string.Format("{0:0.##}", item.Quantity - item.QuantityOut))</td>
+                            <td class="text-center">@item.UnitName</td>
+                            <td class="text-center">@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-center">@item.Price</td>
+                        </tr>
+                        
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

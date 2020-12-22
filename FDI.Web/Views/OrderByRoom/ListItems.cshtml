@@ -1,0 +1,66 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNRoomItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên phòng</th>
+                        <th>Tên Tầng</th>
+                        <th>Tổng tiền</th>
+                        <th>Đặt cọc</th>
+                        <th>Thanh toán</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItems != null)
+                    {
+                        foreach (var item in Model.ListItems.OrderByDescending(m => m.Total))
+                        {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.NameLevel</td>
+                            <td class="text-right maskPrice">@item.Total</td>
+                            <td class="text-right maskPrice">@item.TotalDisCount</td>
+                            <td class="text-right maskPrice">@item.TotalPay</td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        <div class="bottom-pager">
+            <div class="left">
+                <a href="javascript:;" class="first-disable" title="Trang đầu"><span class="fa fa-step-backward"></span></a>
+                <a href="javascript:;" class="pre-disable" title="Trang trước"><span class="fa fa-caret-left"></span></a>
+                <span>Trang</span>
+                <input type="text" name="page" value="1">
+                <input type="hidden" value="1">
+                <span>/1</span>
+                <a href="javascript:;" class="first-disable" title="Trang tiếp"><span class="fa fa-caret-right"></span></a>
+                <a href="javascript:;" class="first-disable" title="Trang cuối"><span class="fa fa-step-forward"></span></a>
+            </div>
+            <div class="right">
+                <span>Tổng số: @Model.ListItems.Count()</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var total = '@(Model.Total.HasValue ? Model.Total.Value : 0)';
+        var totaldiscount = '@(Model.TotalDisCount.HasValue ? Model.TotalDisCount.Value : 0)';
+        var totalpay = '@(Model.TotalPay.HasValue ? Model.TotalPay.Value : 0)';
+        registerGridView('#mygird');
+        $('.bottom-pager').append('<span>Tổng : <i class="maskPrice">' + total + '</i>  vnđ</span><span>- Tổng TT: <i class="maskPrice">' + totalpay + '</i>  vnđ</span><span>- Tổng ĐC: <i class="maskPrice">' + totaldiscount + '</i>  vnđ</span>');
+    });
+</script>

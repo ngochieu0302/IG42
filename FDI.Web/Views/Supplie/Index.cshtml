@@ -1,0 +1,42 @@
+﻿@model FDI.Simple.ModelAdvertisingItem
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+    var date = DateTime.Now;
+}
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o icon-muted fa-fw"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Name">Tên NCC</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            @*<button name="submit" type="submit" class="btn btn-sm btn-primary" id="btn_ExportExcel">Xuất Excel</button>*@
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        var urlXuatExcel = '@Url.Action("ExportExcel", "Supplie")';
+        $("#btn_ExportExcel").click(function () {
+            var form = $("#gridSearch");
+            window.location.href = urlXuatExcel + '?' + getValueFormMutilSelect(form);
+            return false;
+        });
+    })
+</script>*@

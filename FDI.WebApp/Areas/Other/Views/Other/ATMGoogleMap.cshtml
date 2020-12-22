@@ -1,0 +1,207 @@
+﻿@model FDI.Simple.ModelCityItem
+<link href="/Areas/Other/Content/css/Utilities.css" rel="stylesheet" />
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+@{
+    var index = -1;
+}
+
+<script type="text/javascript">
+    google_map(0, 0, 1);
+
+    function google_map(cityId, districtId, type) {
+        var markers = new Array();
+        function initialize() {
+            var locations = [];
+            var mapOptions = {
+                zoom: 12,
+                mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+                center: new window.google.maps.LatLng(21.027821, 105.833873)
+            };
+            var urlImagesAtm = '';
+            if (type == 1) {
+                urlImagesAtm = '/Areas/Other/Content/images/Map_pin3.png';
+            } else {
+                urlImagesAtm = '/Areas/Other/Content/images/Map_pin3.png';
+            }
+            var image = new window.google.maps.MarkerImage(urlImagesAtm,
+                new window.google.maps.Size(42, 52),
+                new window.google.maps.Point(0, 0)
+            );
+            $.getJSON("/Other/Other/GetData?cityID=" + cityId + "&districtID=" + districtId + "&type=" + type, function (googleMaps) {
+                $.each(googleMaps, function (key, value) {
+                    locations.unshift([new window.google.maps.LatLng(value.latitude, value.longitude), value.infowindow]);
+                });
+                //var locations = [
+                //    [new window.google.maps.LatLng(0, 0), 'Marker 1', 'Infowindow content for Marker 1'],
+                //    [new window.google.maps.LatLng(0, 1), 'Marker 2', 'Infowindow content for Marker 2'],
+                //    [new window.google.maps.LatLng(0, 2), 'Marker 3', 'Infowindow content for Marker 3'],
+                //    [new window.google.maps.LatLng(1, 0), 'Marker 4', 'Infowindow content for Marker 4'],
+                //    [new window.google.maps.LatLng(1, 1), 'Marker 5', 'Infowindow content for Marker 5'],
+                //    [new window.google.maps.LatLng(1, 2), 'Marker 6', 'Infowindow content for Marker 6']
+                //];
+                var map = new window.google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                var infowindow = new window.google.maps.InfoWindow();
+                for (var i = 0; i < locations.length; i++) {
+                    // Append a link to the markers DIV for each marker
+                    //$('#markers').append('<a class="marker-link" data-markerid="' + i + '" href="#">a'+i+ '</a> ');
+                    var marker = new window.google.maps.Marker({
+                        position: locations[i][0],
+                        map: map,
+                        icon: image,
+                        title: locations[i][1],
+                    });
+                    // Register a click event listener on the marker to display the corresponding infowindow content
+                    window.google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][1]);
+                            infowindow.open(map, marker);
+                        };
+                    })(marker, i));
+                    // Add marker to markers array
+                    markers.push(marker);
+                }
+            });
+            // Trigger a click event on each marker when the corresponding marker link is clicked
+            $('body').on("click", ".ViewGooglemap", function () {
+                var markerid = $(this).data('markerid');
+                window.google.maps.event.trigger(markers[markerid], 'click');
+                $('html, body').animate({ scrollTop: $('#map-canvas').position().bottom }, 'slow');
+            });
+        }
+        initialize();
+    }
+
+    $('body').on("change", "#GoogleMapCityID", function () {
+        var type = $(".tab-current").attr("data-type");
+        if (this.value != "0") {
+            $.get("/Other/Other/GetListGoogleMapByFilter?cityID=" + $(this).val() + "&districtID=" + $("#DistrictID").val() + "&type=" + type, function (data) {
+                if (type == 1) {
+                    $('#tabATM').html(data);
+                } else {
+                    $('#tabLocation').html(data);
+                }
+            }).done(function () {
+                $.get("/Other/Other/GetDistrictItemByCityId?cityID=" + $('#GoogleMapCityID').val(), function (lstDistrict) {
+                    $("#DistrictID").html("");
+                    $("#DistrictID").append('<option value="0">--- Chọn quận huyện ---</option>');
+                    $.each(lstDistrict, function (i, val) {
+                        $("#DistrictID").append("<option value='" + val.ID + "'>" + val.Name.trim() + "</option>");
+                    });
+                });
+            });
+        } else {
+            google_map(0, 0, 1);
+            $("#DistrictID").html("");
+            $("#DistrictID").append('<option value="0">--- Chọn quận huyện ---</option>');
+        }
+    });
+
+    $('body').on("change", "#DistrictID", function () {
+        var type = $(".tab-current").attr("data-type");
+        google_map($("#GoogleMapCityID").val(), $(this).val(), type);
+        $.get("/Other/Other/GetListGoogleMapByFilter?cityID=" + $("#GoogleMapCityID").val() + "&districtID=" + $(this).val() + "&type=" + type, function (data) {
+            if (type == 1) {
+                $('#tabATM').html(data);
+            } else {
+                $('#tabLocation').html(data);
+            }
+        });
+    });
+
+    $('body').on("click", ".tabType", function () {
+        var type = $(".tab-current").attr("data-type");
+        $.post("/Other/Other/GetListGoogleMapByFilter?cityID=" + $("#GoogleMapCityID").val() + "&districtID=" + $("#DistrictID").val() + "&type=" + type, function (data) {
+            if (type == 1) {
+                $('#tabATM').html(data);
+            } else {
+                $('#tabLocation').html(data);
+            }
+        }).done(function () {
+            google_map($("#GoogleMapCityID").val(), $("#DistrictID").val(), type);
+        });
+    });
+</script>
+
+<div class="contentBox">
+    <div class="networkATM">
+        <div class="searchATM">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-5 no-pd-l">
+                            <select id="GoogleMapCityID" name="GoogleMapCityID" class="form-control">
+                                <option value="0">--- Chọn TP ---</option>
+                                @foreach (var item in Model.ListItem)
+                                {
+                                    <option value="@item.ID">@item.Name.Trim()</option>
+                                }
+                            </select>
+
+                        </div>
+                        <div class="col-md-4 no-pd-l">
+                            <select id="DistrictID" name="DistrictID" class="form-control">
+                                <option value="0">--- Quận/Huyện ---</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-3 no-pd-l">
+                            <button type="button" class="bt-search">Tìm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-md-8">
+                <div id="map"></div>
+                <div id="map-canvas"></div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="tabsLocation">
+                    <div class="tabsMap">
+                        <div class="tab-nav">
+                            <a href="#tabATM" class="tabType" title="ATM" data-type="1">ATM</a>
+                            <a href="#tabLocation" class="tabType" title="Các chi nhánh" data-type="2">Các chi nhánh</a>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-content-item" id="tabATM">
+                                @foreach (var item in Model.ListGoogleMapItem.Where(m => m.Type == 1).OrderBy(m => m.ID))
+                                {
+                                    index = index + 1;
+                                    <div class="itemLocation typeATM">
+                                        <strong><a class="ViewGooglemap" data-markerid="@index" data-id="@item.ID" data-content="@item.Address" data-longitude="@item.Longitude" data-latitude="@item.Latitude">@item.Name </a></strong>
+                                        <ul>
+                                            <li>@item.Address</li>
+                                            <li>Tel: @item.Tel - Fax: @item.Fax</li>
+                                            <li>Giờ mở cửa: @item.Time</li>
+                                        </ul>
+                                    </div>
+                                    
+                                }
+                            </div>
+                            <div class="tab-content-item" id="tabLocation">
+                                @foreach (var item in Model.ListGoogleMapItem.Where(m => m.Type == 2).OrderBy(m => m.ID))
+                                {
+                                    index = index + 1;
+                                    <div class="itemLocation typeLocal">
+                                        <strong><a class="ViewGooglemap" data-markerid="@index" data-id="@item.ID" data-content="@item.Address" data-longitude="@item.Longitude" data-latitude="@item.Latitude">@item.Name </a></strong>
+                                        <ul>
+                                            <li>@item.Address</li>
+                                            <li>Tel: @item.Tel - Fax: @item.Fax</li>
+                                            <li>Giờ mở cửa: @item.Time</li>
+                                        </ul>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="Type" name="Type" value="1" />
+                    <button class="bt-location-now" type="button">Tìm Điểm gần nhất</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

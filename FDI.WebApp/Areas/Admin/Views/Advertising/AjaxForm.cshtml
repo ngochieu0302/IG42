@@ -1,0 +1,256 @@
+﻿@model FDI.Base.Advertising
+@{
+    ViewBag.Title = ViewBag.ActionText + " banner";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        registerGallery();
+        //LoadCKEDITOR('Content', true);
+        if ($('#TypeID').find('option:selected').val() != 0) {
+            var selectedText = $('#TypeID').find('option:selected').text();
+            switch (selectedText) {
+                case 'Picture':
+                    $('#PicturePanel').show();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').hide();
+                    break;
+                case 'Video':
+                    $('#PicturePanel').hide();
+                    $('#VideoPanel').show();
+                    $('#FlashPanel').hide();
+                    break;
+                case 'Flash':
+                    $('#PicturePanel').hide();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').show();
+                    break;
+                default:
+                    $('#PicturePanel').show();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').hide();
+                    break;
+            }
+        }
+        $('#TypeID').change(function () {
+            var typeid = $(this).val();
+            switch (typeid) {
+                case "1":
+                    $('#PicturePanel').show();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').hide();
+                    break;
+                case "2":
+                    $('#PicturePanel').hide();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').show();
+                    break;
+                case "3":
+                    $('#PicturePanel').hide();
+                    $('#VideoPanel').show();
+                    $('#FlashPanel').hide();
+                    break;
+                default:
+                    $('#PicturePanel').show();
+                    $('#VideoPanel').hide();
+                    $('#FlashPanel').hide();
+                    break;
+            }
+        });
+        $("#AdvertisingForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                TypeID: {
+                    required: true
+                },
+                PositionID: {
+                    required: true
+                },
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+                TypeID: {
+                    required: "Chọn loại banner."
+                },
+                PositionID: {
+                    required: "Chọn vị trí banner."
+                }
+            },
+            submitHandler: function () {
+                var pictureId = $("#Value_DefaultImages").val();
+                if (pictureId == "" && $('#TypeID').val() === "1") {
+                    $("#errorPicture").show();
+                    return false;
+                }
+                var urlFlash = $("#UrlFlash").val();
+                if (urlFlash == "" && $('#TypeID').val() === "2") {
+                    $("#errorFlash").show();
+                    return false;
+                }
+                var urlVideo = $("#UrlVideo").val();
+                if (urlVideo == "" && $('#TypeID').val() === "3") {
+                    $("#errorVideo").show();
+                    return false;
+                }
+                //updateEditor();
+                $.post(urlPostAction, $("#AdvertisingForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+        $("#selectclose").click(function () {
+            $("#dialog-form").html("").modal('hide');
+        });
+    });
+</script>
+<form id="AdvertisingForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về thư viện banner
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên banner</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="Tên hình ảnh..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chiều rộng Banner</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Width" id="Width" value="@Model.Width" class="form-control" placeholder="...px" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chiều cao Banner</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Height" id="Height" value="@Model.Height" class="form-control" placeholder="...px" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Loại Banner</label>
+                            <div class="col-md-10">
+                                <select name="TypeID" id="TypeID" class="form-control valid">
+                                    <option value="">-- Loại Banner --</option>
+                                    <option value="1" @(Model.TypeID == 1 ? "selected" : "")>Picture</option>
+                                    <option value="2" @(Model.TypeID == 2 ? "selected" : "")>Flash</option>
+                                    <option value="3" @(Model.TypeID == 3 ? "selected" : "")>Video</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="PicturePanel" style="display: @(Model.TypeID == 1?"block":"none");">
+                            <label class="col-md-2 control-label">Ảnh Banner</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.Gallery_Picture != null && Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.Gallery_Picture.ID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.Gallery_Picture.ID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.Gallery_Picture.Name</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="VideoPanel" style="display: @(Model.TypeID == 3?"block":"none");">
+                            <label class="col-md-2 control-label">Đường dẫn Video</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="UrlVideo" id="UrlVideo" value="" />
+                                <label id="errorVideo" class="error" style="display: none">Trường bắt buộc nhập.</label>
+                                <p>
+                                    Nếu link youtube là: <b>http://www.youtube.com/watch?v=OW3aE5vw8Vg</b>, nhập link
+                                    vào ô Link youtube là: <b>OW3aE5vw8Vg</b>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" id="FlashPanel" style="display: @(Model.TypeID == 2?"block":"none");">
+                            <label class="col-md-2 control-label">Đường dẫn Flash</label>
+                            <div class="col-md-10">
+                                <input type="text" name="UrlFlash" id="UrlFlash" value="" class="form-control" />
+                                <label id="errorFlash" class="error" style="display: none">Trường bắt buộc nhập.</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Link</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Link" id="Link" value="@Model.Link" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Vị trí</label>
+                            <div class="col-md-10">
+                                <select name="PositionID" id="PositionID" class="form-control">
+                                    <option value="">-- vị trí vùng --</option>
+                                    @foreach (var item in ViewBag.AdvertisingPositionID)
+                                    {
+                                        <option value="@item.ID" @((Model.PositionID == item.ID) ? " selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Sắp xếp</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Sort" id="Sort" value="@Model.Sort" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="5" class="form-control" name="Content" id="Content">@Model.Content</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("Show") Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

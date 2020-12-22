@@ -1,0 +1,52 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.NewDetail;
+    var newsId = WebConfig.NewsId;
+}
+@if (Request["doAction"] == "setting")
+{
+
+}
+else
+{
+    <div class="sec-home sec-bg sec-home-news sec-bg-image">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="container">
+            <div class="row">
+                @if (Model.ListItem.Any())
+                {
+                    foreach (var item in Model.ListItem.OrderByDescending(c => c.CreatedDate).Take(3))
+                    {
+                    <div class="col-sm-6 col-md-4">
+                        <div class="newsHome">
+                            <div class="newsHome__title">
+                                <h2>@item.Name</h2>
+                            </div>
+                            <div class="newsHome__img item-ef">
+                                <a class="img" href="/@item.Slug-p@(pageId)c@(item.ID)">
+                                    <img class="img-responsive" src="@item.UrlPicture.UploadPicture()" alt=""><span class="roll tie-news"></span></a>
+                            </div>
+                            @if (item.ListNewsItem.Any())
+                            {
+                                <div class="newsHome__list">
+                                <ul>
+                                    @foreach (var items in item.ListNewsItem.OrderByDescending(c => c.ID).Take(5))
+                                    {
+                                        <li><a href="/@items.TitleAscii-p@(pageId)c@(items.ID)">@items.Title</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="newsHome__read"><a href="/@item.Slug-p@(newsId)c@(item.ID)"><span>@Resources.Resource.xemthem</span><i class="ion-chevron-right"></i></a></div>
+                            }
+                            
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+}
+

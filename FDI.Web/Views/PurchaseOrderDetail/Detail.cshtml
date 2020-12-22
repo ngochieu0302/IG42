@@ -1,0 +1,155 @@
+﻿@using FDI.CORE
+@model FDI.Simple.Logistics.OrderCarItem
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="portlet yellow-crusta box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Chi tiết xe
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row static-info">
+            <div class="col-md-5 name"> Order #: </div>
+            <div class="col-md-7 value">
+                @Model.ID
+            </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Giờ đi: </div>
+            <div class="col-md-7 value"> @Model.DepartureDate.DecimalToString("dd/MM/yyyy HH:mm") </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Giờ đến: </div>
+            <div class="col-md-7 value">
+                @Model.ReceiveDate.DecimalToString("dd/MM/yyyy HH:mm")
+            </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> giờ về Total: </div>
+            <div class="col-md-7 value">  @Model.ReturnDate.DecimalToString("dd/MM/yyyy HH:mm")  </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Số lượng: </div>
+            <div class="col-md-7 value"> @Model.Quantity @Model.UnitName </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Số lần đã nhập: </div>
+            <div class="col-md-7 value"> @Model.CountReceived </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Tổng khối lượng: </div>
+            <div class="col-md-7 value"> @Model.QuantityReceived </div>
+        </div>
+        <div class="row static-info">
+            <div class="col-md-5 name"> Nhà cung cấp: </div>
+            <div class="col-md-7 value"> @Model.SupplierName </div>
+        </div>
+    </div>
+</div>
+<div class="portlet box purple ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i> Nhập kho
+        </div>
+
+    </div>
+    <div class="portlet-body form">
+        <form id="savePurchase" class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Số lượng:</label>
+                    <div class="col-md-9">
+                        <input type="text" id="amount" name="amount" class="form-control" placeholder="0" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Khối lượng</label>
+                    <div class="col-md-9">
+                        <input type="text" name="Weight" id="Weight" class="form-control input-sm" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Ghi chú</label>
+                    <div class="col-md-9">
+                        <textarea name="Note" id="Note" class="form-control input-sm"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-actions right">
+                <button type="submit" class="btn green">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        function countproduct() {
+            var count = 0;
+            $('.table-product tbody  input:checkbox').each(function (item) {
+                if ($(this).is(":checked")) {
+                    count++;
+                };
+            });
+            $("#amount").val(count);
+        }
+        $('.table-product  input:checkbox').change(function (e) {
+            countproduct();
+        });
+        countproduct();
+
+        $("#savePurchase").validate({
+            rules: {
+                Weight: {
+                    required: true,
+                },
+                amount: {
+                    required: true,
+                    min: 1
+                }
+            },
+            messages: {
+                amount:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                },
+                Weight:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                var obj = { OrderCarID:@Model.ID, Quantity: $("#amount").val(), Weight: $("#Weight").val(), ItemID: [], Note: $("#Note").val() }
+
+                $('.table-product tbody  input:checkbox').each(function (item) {
+                    if ($(this).is(":checked")) {
+                        obj.ItemID.push($(this).val());
+                        }
+                });
+                console.log(obj); $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify(obj),
+                    url: "@Url.Action("Actions", "PurchaseOrderDetail")" + "?do=add",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // code here
+                        if (data.Erros == false) {
+                            window.location.reload();
+                            createCloseMessage("", "Cập nhật thành công", "");
+                        } else {
+                            createMessage("error", data.Message);
+                        }
+
+                    }
+                });
+
+            }
+        });
+
+    });
+</script>

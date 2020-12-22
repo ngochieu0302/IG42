@@ -1,0 +1,99 @@
+﻿@model FDI.Simple.DNUserItem
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về nhân viên
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Họ và tên</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.LoweredUserName)
+                        </td>
+                    </tr>
+                    
+                      <tr>
+                        <td>
+                            <label>Tên đăng nhập</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.UserName)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Email</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Số điện thoại</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mobile)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Address)
+                        </td>
+                    </tr>
+                    
+                      <tr>
+                        <td>
+                            <label>Lương</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.FixedSalary)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <label>Khóa tạm thời</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.UserName, Model.IsLockedOut.HasValue && Model.IsLockedOut.Value)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Dừng hoạt động</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.UserName, Model.IsOut.HasValue && Model.IsOut.Value)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

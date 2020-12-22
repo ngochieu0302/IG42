@@ -1,0 +1,57 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model ModelMonthEItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var obj = Model.ListItem.FirstOrDefault() ?? new MonthEItem
+    {
+        Percent = 0
+    };
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="text-center">Tháng</th>
+                        <th>Tổng doanh số</th>
+                        <th>SSC (x % @obj.Percent)</th>
+                        <th>Tích lũy KH (@Model.BonusTypeItem.Percent % /GT @Model.BonusTypeItem.PercentParent %)</th>
+                        <th>Rút tích lũy</th>
+                        <th>Tổng tích lũy còn lại</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItem != null)
+                    {
+                        foreach (var item in Model.ListItem.OrderBy(m => m.T))
+                        {
+                        <tr>
+                            <td class="text-center">@item.T</td>
+                            <td class="text-right">@(item.Total.Money())</td>
+                            <td class="text-right">@(item.TotalSSC.Money())</td>
+                            <td class="text-right">@(item.TotalAward.Money())</td>
+                            <td class="text-right">@(item.TotalPay.Money())</td>
+                            <td class="text-right">@((item.TotalAward - item.TotalPay).Money())</td>
+                        </tr>
+                        }
+                        <tr>
+                            <td class="text-center">Tổng:</td>
+                            <td class="text-right maskPrice">@(Model.ListItem.Sum(m=>m.Total))</td>
+                            <td class="text-right maskPrice">@(Model.ListItem.Sum(m=>m.TotalSSC))</td>
+                            <td class="text-right maskPrice">@(Model.ListItem.Sum(m=>m.TotalAward))</td>
+                            <td class="text-right maskPrice">@(Model.ListItem.Sum(m=>m.TotalPay))</td>
+                            <td class="text-right maskPrice">@(Model.ListItem.Sum(m=>m.TotalAward) - Model.ListItem.Sum(m=>m.TotalPay) )</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<FDI.Simple.WeeklyScheduleItem>
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var listweek = Model.GroupBy(m => m.WeeklyID).Select(m => m.FirstOrDefault());
+    var listSchedule = Model.GroupBy(m => m.ScheduleID).Select(m => m.FirstOrDefault());
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <input type="hidden" name="do" id="do" value="View"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.ID"/>
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về lịch làm việc
+                </div>
+            </div>
+            <div class="portlet-body form">
+        
+          
+                <div class="form-body">
+                    <table class="gridView gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                        <tr>
+                            <th><strong class="text-center">Ca làm việc</strong> </th>
+                            @foreach (var item1 in listweek)
+                            {
+                                <th>@item1.WeeklyName</th>
+                            }
+                        </tr>
+
+                        @{
+                            foreach (var item2 in listSchedule)
+                            {
+                                <tr id ="line-@item2.ID" style="height: 20px;">
+                                    <td><strong class="text-center">@item2.ScheduleName</strong></td>
+                                    @foreach (var item3 in Model.Where(m => m.ScheduleID == item2.ScheduleID))
+                                    {
+                                        <td>
+
+                                            <i style="color: #04A827;" class="@(item3.IsCalender == true ? "fa fa-check" : "fa fa-minus-circle text-default")"> @item3.ScheduleItem.HoursStart - @item3.ScheduleItem.HoursEnd</i>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+         
+        
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+
+

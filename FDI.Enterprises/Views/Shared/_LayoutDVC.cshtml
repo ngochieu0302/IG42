@@ -1,0 +1,215 @@
+﻿@model dynamic
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>
+    <meta charset="utf-8" />
+    <title>HTECH | Web Admin</title>
+    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+    <script src="/Skin/js/jquery.min.js"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.address-1.6.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery-ui-1.11.4.custom/jquery-ui.min.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="/Scripts/dialogextend/build/jquery.dialogextend.js"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.mask.js")"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.multiselect.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.treeview.js")" type="text/javascript"></script>
+    <script src="~/Content/Admin/js/jquery.autocomplete.js"></script>
+    <script src="@Url.Content("~/Content/Admin/js/GridView.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/ckeditor/ckeditor.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/ckfinder/ckfinder.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Admin/js/CarMarket.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Admin/js/admin.js")"></script>
+    <script src="@Url.Content("~/Content/Admin/js/Load.js")"></script>
+
+    <link href="/Scripts/AlertsNotify/notify.css" rel="stylesheet" />
+    <script src="/Content/Admin/jquery-timepicker/jquery.timepicker.min.js"></script>
+    <link href="/Content/Admin/jquery-timepicker/jquery.timepicker.css" rel="stylesheet" />
+    <link href="/Content/Admin/css/jquery.multiSelect.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/dvctructuyen/css/style_admin_dvc.css" rel="stylesheet" />
+    <link href="/Content/Admin/css/jquery.treeview.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/js/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="/Content/Admin/css/gridview.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/Admin/js/jquery.clock.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/Skin/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/Skin/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="/Skin/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/Skin/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="/Skin/js/datepicker/datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="/Skin/css/app.css" type="text/css" />
+    <!--[if lt IE 9]>
+        <script src="/Skin/js/ie/html5shiv.js"></script>
+        <script src="/Skin/js/ie/respond.min.js"></script>
+        <script src="/Skin/js/ie/excanvas.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/Content/Admin/Common.css" type="text/css" />
+    <style>
+        .vbox > header ~ section {
+            top: 15px;
+        }
+
+        label.error {
+            color: red;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: none;">
+        <div id="dialog-confirm">
+        </div>
+        <div id="dialog-message">
+        </div>
+        <div id="dialog-form">
+        </div>
+        <div id="dialog-form-2">
+        </div>
+        <div id="dialog-form-3">
+        </div>
+    </div>
+    <div id="dialog-alert" style="position: absolute; right: 0; top: 0; background-color: red;">
+    </div>
+    <section class="vbox">
+        <section>
+            <section class="hbox stretch content-main-dvc">
+                <div class="header-dcv">
+                    <div class="col-md-7">
+                        <p>
+                            <a href="/dich-vu-cong-truc-tuyen" title="">
+                                <img alt="" class="img-responsive" src="/Content/Publishing/img/banner-header.png"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="button-acc-top">
+                            <a href="/tro-giup" title="">Trợ giúp</a>
+                            <a href="/lien-he" title="">Liên hệ</a>
+
+                            <ul class="sub-account">
+                                <li><a href="#" title=""><span class="fa fa-bars"></span>Quản lý tài khoản</a><ul class="sub-account-2">
+                                    <li><strong>Xin chào: @User.Identity.Name</strong></li>
+                                    <li><a href="/Admin/AccountAdmin/LogOff" title=""><span class="fa fa-sign-out"></span>Thoát</a></li>
+                                </ul>
+                                </li>
+                                <li><a href="/Admin/AccountAdmin/LogOff" title="">Thoát</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="box-nav-main">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div id="nav-main">
+                                <ul>
+                                    <li><a href="/Admin/HoSo" title=""></a></li>
+                                    <li><a href="/Admin/HoSo" title="">Dịch vụ công</a></li>
+                                    @{
+                                        var membershipUser = Membership.GetUser();
+                                        var role = Roles.GetRolesForUser(membershipUser.UserName);
+                                        if (role.Contains("ThuPhi"))
+                                        {
+                                        <li><a href="/Admin/thuphi" title="">Nộp phí</a></li>
+                                        }
+                                    }
+                                    <li><a href="/Admin/HoSosearch" title="">Tìm hồ sơ đã đăng ký</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="search-box">
+                                <form id="fdvc_search">
+                                    <input class="ipt-search" id="txtdvc" placeholder="Nhập thông tin tìm kiếm" type="search">
+                                    <button class="btn-search" type="submit"><span class="fa fa-search"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @RenderBody()
+
+            </section>
+
+        </section>
+        <footer id="footer-main">
+
+            <div class="container">
+                <div class="box-contact-foo">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="contact-foo text-left">
+                                <h3>Sở Kế hoạch &amp; Đầu tư Hà Tĩnh</h3>
+                                <ul>
+                                    <li>Địa chỉ: Số 14 Đường Xô Viết Nghệ Tĩnh - Thành phố Hà Tĩnh - tỉnh Hà Tĩnh</li>
+                                    <li><i class="fa fa-phone-square"></i>(0393) 882 231</li>
+                                    <li><i class="fa fa-envelope-o"></i>sokehoach@hatinh.gov.vn</li>
+                                    <li><i class="fa fa-globe"></i>www.hatinh.gov.vn</li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    @*<script src="/Skin/js/jquery.min.js"></script>*@
+
+    <!-- Bootstrap -->
+    <script src="/Skin/js/bootstrap.js"></script>
+    <script src="/Scripts/AlertsNotify/notify.js"></script>
+    <!-- App -->
+    <script src="/Skin/js/app.js"></script>
+    <script src="/Skin/js/app.plugin.js"></script>
+    <script src="/Skin/js/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- datepicker -->
+    <script src="/Skin/js/datepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Scripts/showLoading/js/jquery.showLoading.js"></script>
+    <script src="/Content/Admin/js/Common.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(function () {
+            $('.clock').clock();
+            $(".menu-admin.menu h3").expandoControl();
+            $('.sidebar-collapse').click(function () {
+                $('#menu').toggleClass('menu-min');
+                $('#layout-content').toggleClass('layout-min');
+                if ($(this).hasClass('show-sidebar')) {
+                    $(this).removeClass('show-sidebar');
+                    $('.showing').css({ 'display': 'block' });
+                } else {
+                    $(this).addClass('show-sidebar');
+                    $('.showing').removeAttr('style');
+                }
+            });
+
+            $('.more-search').click(function () {
+                $('.advance-search').slideToggle();
+            });
+
+            $(".dialog-form").on("dialogcreate", function (event, ui) {
+                $("body").css({ overflow: 'hidden' });
+            });
+
+            $(".dialog-form").on("dialogbeforeclose", function (event, ui) {
+                $("body").css({ overflow: 'inherit' });
+            });
+
+            $("#fdvc_search").submit(function (e) {
+                e.preventDefault();
+                var txt = $("#txtdvc").val();
+                window.location.href = "/Admin/HoSosearch?#Keyword=" + txt + "&SearchIn=MaHoSo";
+            });
+
+        })
+        //]]>
+
+    </script>
+
+</body>
+</html>

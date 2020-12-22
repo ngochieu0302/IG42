@@ -1,0 +1,84 @@
+﻿@using FDI.Utils
+@model FDI.Simple.CategoryItem
+@{
+    var pageId = WebConfig.ProductDetail;
+}
+
+<div class="col-lg-3">
+    <div class="categories-group-wrapper">
+        <!-- section title start -->
+        <div class="section-title-append">
+            <h4>Latest product</h4>
+            <div class="slick-append"></div>
+        </div>
+        <!-- section title start -->
+
+        <!-- group list carousel start -->
+        <div class="group-list-item-wrapper">
+            <div class="group-list-carousel">
+                @foreach (var item in Model.ListProductItem.OrderByDescending(c => c.ID).Take(20))
+                {
+                    <div class="group-slide-item">
+                        <div class="group-item">
+                            <div class="group-item-thumb">
+                                <a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">
+                                    <img src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+                                </a>
+                            </div>
+                            <div class="group-item-desc">
+                                <h5 class="group-product-name"><a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">@item.Name</a></h5>
+                                <div class="price-box">
+                                    <span class="price-regular">@item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money()</span>
+                                    @if (item.Sale > 0 && item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                    {
+                                        <span class="price-old"><del>@item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money()</del></span>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- group list carousel start -->
+    </div>
+</div>
+<div class="col-lg-3">
+    <div class="categories-group-wrapper">
+        <!-- section title start -->
+        <div class="section-title-append">
+            <h4>on-sale product</h4>
+            <div class="slick-append"></div>
+        </div>
+        <!-- group list carousel start -->
+        <div class="group-list-item-wrapper">
+            <div class="group-list-carousel">
+                @foreach (var item in Model.ListProductItem.Where(c => c.Sale > 0).OrderByDescending(c => c.ID).Take(20))
+                {
+                    <div class="group-slide-item">
+                        <div class="group-item">
+                            <div class="group-item-thumb">
+                                <a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">
+                                    <img src="@(Utility._dimg)@item.UrlPicture.UploadPicture()" alt="@item.Name" />
+                                </a>
+                            </div>
+                            <div class="group-item-desc">
+                                <h5 class="group-product-name"><a href="/@(item.NameAscii)-p@(pageId)c@(item.ID)">@item.Name</a></h5>
+                                <div class="price-box">
+                                    <span class="price-regular">@item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money()</span>
+                                    @if (item.Sale > 0 && item.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                    {
+                                        <span class="price-old"><del>@item.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money()</del></span>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- group list carousel start -->
+    </div>
+</div>

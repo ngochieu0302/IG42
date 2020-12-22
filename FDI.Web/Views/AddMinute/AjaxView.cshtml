@@ -1,0 +1,62 @@
+﻿@model FDI.Simple.AddMinuteItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Phút</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Minute)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá</label>
+                        </td>
+                        <td id="type">
+                            @Html.DisplayFor(model => model.Price)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Kiểu</label>
+                        </td>
+                        <td>
+                            @(Model.Type == 1 ? "Thêm phút chờ" : "Mua Thêm")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

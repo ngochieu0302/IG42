@@ -1,0 +1,74 @@
+﻿@model FDI.Simple.ModelDNRolesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var index = 0;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col class="colgroup category" />
+                    <col class="colgroup action-6" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        <th class="text-center"><a href="#Field=ID">STT</a></th>
+                        <th>Tên phòng ban</th>
+                        <th>Mô tả phòng ban</th>
+                        <th class="text-center">Tầng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    index = index + 1;
+                    <tr title="@item.RoleName">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.RoleId" class="check">
+                        </td>
+                        <td class="text-center">@index</td>
+                        <td>@item.RoleName</td>
+                        <td>@item.Description</td>
+                        <td class="text-center">@item.LoweredRoleName</td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.RoleId, item.RoleName)
+                            @Grid.UserModule(item.RoleId, "Gán chức vụ cho nhân viên")
+                            <a data-RoleId="@item.RoleId" data-moduleId="@string.Join(",",item.ListModuleID)" class="btn btn-sm btn-default" data-event="AddModule" title="Gán chức năng cho user"><i class="fa fa-user"></i></a>
+                            @Grid.RoleModule(item.RoleId, item.RoleName)
+                            @Grid.ActionEdit(item.RoleId, item.RoleName)
+                            @Grid.ActionDelete(item.RoleId, item.RoleName)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        var urlSelectCategory = '@Url.Action("AjaxTree", "DNRole")';
+        $('[data-event="AddModule"]').click(function () {
+            var RoleId = $(this).attr("data-RoleId");
+            var lstInt = $(this).attr("data-moduleId");
+            $('body').modalmanager('loading');
+            $("#dialog-form .modal-title").html("Phân quyền module cho phòng ban");
+            $("#dialog-form #dialog-form-ajax").load(encodeURI(urlSelectCategory + "?RoleId=" + RoleId + "&lstInt=" + lstInt));
+            $('#dialog-form').modal('show');
+            return false;
+        });
+    });
+</script>

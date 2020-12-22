@@ -1,0 +1,222 @@
+﻿@using FDI.CORE
+@model FDI.Simple.OrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+                                //var date = @Model.DateCreated.DecimalToString("dd/MM/yyyy").Split('/');
+                                //var day = date[0];
+                                //var month = date[1];
+                                //var year = date[2];
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin đặt hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Khách hàng</label>
+                        </td>
+                        <td>
+                            @Model.CustomerName
+                        </td>
+                        <td>
+                            <label>Điện thoại</label>
+                        </td>
+                        <td>
+                            @Model.CutomerPhone
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td colspan="3">
+                            @Model.CutomerAddress
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy HH:mm")
+                        </td>
+                        <td>
+                            <label>Vị trí</label>
+                        </td>
+                        <td>
+                            @Model.BedDeskName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.TotalPrice)
+                        </td>
+                        <td>
+                            <label>Tiền thanh toán</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.Payments)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Chiết khấu (@Model.SalePercent.Money() % + @Model.SalePrice.Money() vnđ)</label>
+                        </td>
+                        <td>
+                            @Model.Discount.Money() vnđ
+                        </td>
+                        @*<td>
+                            <labe</label>
+                        </td>
+                        <td>
+                            @Model.SalePercent.Money()
+                        </td>*@
+                    </tr>
+
+                    <tr>
+                         <td>
+                            <label>In hóa đơn</label>
+                        </td>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i>In</button>
+                        </td>
+                        <td>
+                            <label>Mã giảm giá</label>
+                        </td>
+                        <td>
+                            <strong style="color: red">@Model.SaleCode</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cart-plus"></i>Chi tiết đơn hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>DVT</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Giảm giá</th>
+                        <th>Khuyến mãi</th>
+                        <th>Thành tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    @foreach (var item in Model.LstOrderDetailItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(string.IsNullOrEmpty(item.ComboName) ? item.ProductName : item.ComboName)</td>
+                            <td>@item.UnitName</td>
+                            <td class="maskPrice">@item.Price</td>
+                            <td>@item.Quantity</td>
+                            <td><span style="color: red" class="maskPrice">@item.Discount</span></td>
+                            <td><span style="color: red">@item.ContentPromotion</span></td>
+                            <td class="maskPrice">@item.TotalPrice</td>
+                            <td>
+                                @if (item.Status == (int)FDI.CORE.OrderStatus.Cancelled)
+                                {
+                                    <label class="label label-danger">Đã hủy</label>
+                                }
+                                @if (item.Status == (int)FDI.CORE.OrderStatus.Complete)
+                                {
+                                    <label class="label label-success">Hoàn thành</label>
+                                }
+                                @if (item.Status == (int)FDI.CORE.OrderStatus.Pending || item.Status == (int)FDI.CORE.OrderStatus.Processing)
+                                {
+                                    <label class="label label-info">Chưa hoàn thành</label>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+@*<link href="~/Content/Admin/css/print_hoadon_a4.css" rel="stylesheet" />*@
+<div id="BoxPrint" class="pr-total pagePrint" style="display: none;">
+    <div class="box-pr-payment" style="height:500px !important">
+        <div class="pr-content" id="contentPrint">
+            <div class="pr-shop">
+                <strong>@ViewBag.Agency.Name</strong>
+                <span>@ViewBag.Agency.Phone</span>
+                <span>@ViewBag.Agency.Address</span>
+            </div>
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN BÁN HÀNG</strong>
+                <i>QLBP/29 @Model.DateCreated.DecimalToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Thu ngân:</strong><span>@Model.UserName</span></li>
+                    <li><strong>NVPV:</strong><span>@Model.UserName2</span></li>
+                    <li><strong>Khách hàng:</strong><span id="printKH">@Model.CustomerName</span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product pr-bookatable">
+                <div class="pr-head">
+                    <strong>Món</strong>
+                    <strong>SL</strong>
+                    <strong>Giá </strong>
+                    <strong>Tiền</strong>
+                </div>
+                <div class="pr-item" id="listboxprint">
+                    @foreach (var item in Model.LstOrderDetailItems)
+                    {
+                        <div class='pr-property'>
+                            <span>@item.ProductName</span>
+                            <span>@item.Quantity</span>
+                            <span class="maskPrice">@item.Price</span>
+                            <span class="maskPrice">@((item.Price*item.Quantity))</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng tiền:</strong><span id="prinPrice">@Model.TotalPrice.Money()</span></li>    
+                    <li><strong>Giảm giá(<b id="PrintDis">@Model.Discount</b>%):</strong><span id="printDiscount">@((Model.TotalPrice*Model.Discount/100).Money())</span></li>    
+                    <li><strong>Tạm tính:</strong><span id="printPricetemp">@((Model.TotalPrice - (Model.TotalPrice*Model.Discount/100)).Money())</span></li>
+                    <li><strong>Dùng tích lũy:</strong><span id="printPrizeMoneyTotal">@Model.PrizeMoney.Money()</span></li>
+                    <li><strong>Tiền thanh toán:</strong><span id="printPriceCusN">@Model.Payments.Money()</span></li>
+                    <li><i>Ghi chú: </i><i id="printNote">@Model.Note</i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+    })
+</script>

@@ -1,0 +1,169 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmail.cshtml";
+}
+@model FDI.Simple.ModelDNMailSSCItem
+<link rel="stylesheet" src="/Content/Admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" type="text/css" />
+<link rel="stylesheet" src="/Content/Admin/plugins/bootstrap-wysihtml5/wysiwyg-color.css" type="text/css" />
+<link href="/Content/Admin/css/jquery.fileupload.css" rel="stylesheet" />
+<script src="/Content/Admin/js/jquery.ui.widget.js"></script>
+<script src="/Content/Admin/js/jquery.fileupload.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#UserReceiveId", "100%");
+        var arrFileObj = new Array();
+        Array.prototype.remove = function (el) {
+            var idx = this.indexOf(el);
+            if (idx !== -1) {
+                this.splice(idx, 1);
+            }
+            return this;
+        };
+        itemValue = [];
+
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            url: '/DNMailSSC/UploadFiles',
+            autoUpload: true,
+            done: function (e, data) {
+                arrFileObj.push(data.result.name);
+                $("#lstImages").val(arrFileObj);
+                var jsonData = "<span id=\"" + data.result.name + "\" class=\"item-upload\">";
+                jsonData += "<div class=\"img\"><img src=\"/Uploads/Mail/" + data.result.name + "\" alt=\"Smiley face\" height=\"100\"></div>" +
+                    "<a href=\"javascript:void(0)\" class=\"btnDelete\" data-name=\"" + data.result.name + "\"><i class=\"fa fa-trash\"></i></a>" + "<strong>Tên ảnh</strong></span>";
+                $("#lstFileUpload").append(jsonData);
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress .progress-bar').css('width', progress + '%');
+        });
+        LoadCKEDITOR('ContentE', true);
+        $("body").on("click", ".btnDelete", function () {
+            $('.progress .progress-bar').css('width', '0%');
+            var id = $(this).data('name');
+            $("#lstFileUpload span[id='" + id + "']").remove();
+            // xóa các phần tử trong mảng
+            for (var j = 0; j <= arrFileObj.length - 1; j++) {
+                var name = arrFileObj[j];
+                if (name === id.toLowerCase()) {
+                    arrFileObj.remove(arrFileObj[j]);
+                }
+            }
+            $("#lstImages").val(arrFileObj.valueOf());
+        });
+
+        $("body").on("click", "#fileupload", function () {
+            $('.progress .progress-bar').css('width', '0%');
+        });
+
+        $("#DNMailSSCForm").validate({
+            submitHandler: function () { //onSubmit
+                $.post("/DNMailSSC/SendMail", $("#DNMailSSCForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        socket.emit("client-send-mail", { userId: $("#UserReceiveId").val(), type: 1 });
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        setTimeout(function () { window.location.href = "/DNMailSSC?type=1"; }, 2000);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div class="inbox">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Action("BoxMail", "DNMailSSC")
+        </div>
+        <div class="col-md-9">
+            <div class="inbox-body">
+                <h3 class="page-title">Thư mới
+                </h3>
+                <form class="inbox-compose form-horizontal" id="DNMailSSCForm" enctype="multipart/form-data">
+                    <input name="Type" id="Type" type="hidden" />
+                    <input name="ID" id="ID" type="hidden" value="0" />
+
+                    <div class="inbox-compose-btn">
+                        <button class="btn green btnSend" type="submit" id="btnSend" data-status="1">
+                            <i class="fa fa-check"></i>Gửi
+                        </button>
+                        <a class="btn default inbox-discard-btn" href="/DNMailSSC?type=1">Hủy</a>
+                        <button class="btn default btnDrafts" type="submit" id="btnDrafts" data-status="3">Lưu thư nháp</button>
+                    </div>
+                    <div class="inbox-form-group mail-to">
+                        <label class="control-label">Tới:</label>
+                        <div class="controls controls-to">
+                            <select class="select2" name="ListUserReceiveIds" id="UserReceiveId" multiple>
+                                @foreach (var item in Model.ListDNUserItem)
+                                {
+                                    <option value="@item.UserId" @(item.UserId == (Model.UserReceiveId != null ? Guid.Parse(Model.UserReceiveId) : Guid.Empty) ? "selected" : string.Empty)>@item.UserName</option>
+                                }
+                                @foreach (var item in Model.ListDNGroupMailSSCItem)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                            <span class="inbox-cc-bcc">
+                                <span class="inbox-cc">Cc </span>
+                                <span class="inbox-bcc">Bcc </span>
+                            </span>
+                        </div>
+                    </div>
+                    @* <div class="inbox-form-group input-cc display-hide">
+                        <a href="javascript:;" class="close"></a>
+                        <label class="control-label">Cc:</label>
+                        <div class="controls controls-cc">
+                            <input type="text" name="cc" class="form-control">
+                        </div>
+                    </div>
+                    <div class="inbox-form-group input-bcc display-hide">
+                        <a href="javascript:;" class="close"></a>
+                        <label class="control-label">Bcc:</label>
+                        <div class="controls controls-bcc">
+                            <input type="text" name="bcc" class="form-control">
+                        </div>
+                    </div>*@
+                    <div class="inbox-form-group">
+                        <label class="control-label">Tiêu đề:</label>
+                        <div class="controls">
+                            <input type="text" class="form-control" name="Title" id="TitleE" value=""/>
+                        </div>
+                    </div>
+
+                    <div class="inbox-form-group">
+                        <textarea cols="7"name="ContentE" id="ContentE" class="form-control" ></textarea>
+                    </div>
+                    <div class="inbox-compose-attachment">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>File đính kèm</span>
+                            <input id="fileupload" type="file" name="files[]" multiple>
+                        </span>
+                        <br />
+                        <div class="progress" style="margin-top: 10px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                <span class="sr-only">0% complete</span>
+                            </div>
+                        </div>
+                        <br />
+                        <input type="hidden" id="lstImages" name="lstImages" />
+                        <div id="lstFileUpload"></div>
+                    </div>
+
+                    <div class="inbox-compose-btn">
+                        <button class="btn green" type="submit" id="btnSend" data-status="1">
+                            <i class="fa fa-check"></i>Gửi
+                        </button>
+                        <a class="btn default" href="/DNMailSSC?type=1">Hủy</a>
+                        <button class="btn default" type="submit" id="btnDrafts" data-status="3">Lưu thư nháp</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Content/Admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
+<script src="/Content/Admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+<script src="/Content/Admin/assets/apps/scripts/inbox.js" type="text/javascript"></script>

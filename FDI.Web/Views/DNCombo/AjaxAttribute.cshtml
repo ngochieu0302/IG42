@@ -1,0 +1,60 @@
+﻿@model IEnumerable<FDI.Simple.AttributeDynamicItem>
+@{
+    var count = Model.Count();
+    var index = 1;
+}
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="productId" id="productId" value="@ViewBag.productId" />
+        <input type="hidden" name="CountAttr" id="CountAttr" value="@Model.Count()" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm thuộc tính sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        @foreach (var item in Model)
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-offset-2 control-label">@item.Name</label>
+                                <div class="col-sm-6">
+                                    <input type="hidden" name="AttrValue_@(index)" value="@item.ID" />
+                                    <input type="hidden" name="AttrId_@(index)" value="@item.ProductId" />
+                                    <input type="text" class="form-control" name="Attribute_@(index++)" value="@item.Value" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        $("#frm-modal").validate({
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                updateEditor();
+                $.post("/Product/AddAttribute", $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $('#dialog-form-2').modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 20);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,92 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TemplateDocumentItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Cơ quan lưu trữ";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<link href="~/ckeditor/contents.css" rel="stylesheet" />
+<script>
+    $(function () {
+        LoadCKEDITOR('Content', true);
+        $("#frm-ShopBrand").validate({
+            rules: {
+                Name: { required: true },
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập.",
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").attr("disabled", true);
+                updateEditor();
+                $.post(urlPostAction, $("#frm-ShopBrand").serialize(), function (data) {
+                    $("#btnSave").attr("disabled", false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+            }
+        });
+        $("#Value_CategoryValues").change(function () {
+            alert("The text has been changed.");
+        });
+    })
+</script>
+<form id="frm-ShopBrand">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" id="AgencyId" name="AgencyId" value="@ViewBag.AgencyId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm mới mẫu hợp đồng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tên mẫu <font color="red">(*)</font></label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mô tả</label>
+                            <div class="col-lg-10">
+                                <textarea rows="3" class="form-control" name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mẫu</label>
+                            <div class="col-lg-10">
+                                <textarea rows="3" class="form-control" name="Content" id="Content">@Model.Content</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-6 classview">
+                                <label class="col-lg-4 control-label">Loại hợp đồng</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Type" name="Type">
+                                        <option value="">Chọn Loại hợp đồng</option>
+                                        @foreach (var item in TypeDocument.Document())
+                                        {
+                                            <option value="@item.Value" @(item.Value == Model.Type ? "selected" : "")>@item.Key</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

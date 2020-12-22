@@ -1,0 +1,51 @@
+﻿@using FDI.CORE
+@model  List<FDI.Simple.PolicyAgenciesItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+              
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center"><a href="#Field=ID">Cấp đại lý</a></th>
+                    <th class="text-center"><a href="#Field=Code">Số lượng</a></th>
+                    <th class="text-center"><a href="#Field=DateCreated">Lợi nhuật</a></th>
+                    
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr data-id="@item.ID" title="@item.CategoryId" class="text-center">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td>@item.LevelAgency</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Profit</td>
+                        <td class="text-center">@Grid.ActionEdit(item.ID,"") @Grid.ActionDelete(item.ID,"")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Chỉnh sửa phiếu nhập");
+        });
+    });
+</script>

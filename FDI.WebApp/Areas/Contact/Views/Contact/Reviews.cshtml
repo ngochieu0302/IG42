@@ -1,0 +1,24 @@
+﻿@model FDI.Simple.ModelCustomerReviewsItem
+@using FDI.Utils
+<div class="sec-home">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="boxComment">
+        <h3>Ý kiến khách hàng</h3>
+        <div class="listComment slideComment owl-carousel" id="js-slider-carousel">
+            @foreach (var item in Model.ListItems)
+            {
+                <div class="itemComment">
+                    <div class="img">
+                        <img src="@item.UrlPicture.Picture()" alt="@item.Name" title="@item.Name" class="img-responsive"/>
+                    </div>
+                    <div class="detail">
+                        <strong>@item.Name</strong>
+                        <div class="text-html">
+                            <p>@item.Note</p>
+                        </div>
+                    </div>
+                </div>
+            }            
+        </div>
+    </div>
+</div>

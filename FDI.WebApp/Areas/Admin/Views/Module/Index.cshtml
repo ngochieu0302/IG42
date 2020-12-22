@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Quản lý gán quyền Module";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+
+    urlLists = '@Url.Action("ListItems", "Module")';
+    urlForm = '@Url.Action("AjaxForm", "Module")';
+    urlViewRole = '@Url.Action("AjaxUserForm", "Module")';
+    urlFormModule = '@Url.Action("AjaxRoleForm", "Module")';
+    urlSort = '@Url.Action("AjaxSort", "Module")';
+    urlPostAction = '@Url.Action("Actions", "Module")';
+    urlPostAction1 = '@Url.Action("Actions", "Module", new { @do = "Update", @abc = "True" })';
+    urlPostAction2 = '@Url.Action("Actions", "Module", new { @do = "usermodule", @a = "True" })';
+    urlPostAction3 = '@Url.Action("Actions", "Module", new { @do = "rolemodule", @a = "True" })';
+
+    formWidth = 960;
+    formHeight = $(window).height() - 24;
+    viewWidth = 960;
+    viewHeight = $(window).height() - 24;
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+    });
+</script>
+
+<div class="view-noscroll" data-view="true">
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Quản trị module </li>
+            </ul>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <div class="btn-group">
+            @Grid.ActionAdd(Url.Action("Actions"))
+        </div>
+    </div>
+</div>
+<div class="content-control" style="margin-top: 5px !important;">
+    <div id="Griditems"></div>
+</div>
+
+
+
+
+

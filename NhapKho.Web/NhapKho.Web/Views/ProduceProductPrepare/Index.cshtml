@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaCustom.cshtml";
+}
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>Form Actions On Bottom
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
+                <a href="javascript:;" class="reload" data-original-title="" title=""> </a>
+                <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="@Url.Action("Index","ProduceProductPrepareDetail")" class="form-horizontal">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Mã phiếu sản xuất</label>
+                        <div class="col-md-4">
+                            <input type="text" name="id" class="form-control input-circle" placeholder="Enter text">
+                            
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn btn-circle green">Nhập</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/jquery.js"></script>
+    <script src="/socket.io.js"></script>
+    <script type="text/javascript">
+         var socket = io("http://192.168.100.16:3000");
+         socket.emit("client-check-in",{ 1 });
+    </script>
+    </script>
+  </head>
+  <body onload="f1()">
+    <input type="text" name="" value="<%- id %>">
+  </body>
+</html>

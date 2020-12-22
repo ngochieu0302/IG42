@@ -1,0 +1,46 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNUserAddItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                <tr>
+                    <th><a href="#Field=Name">STT</a></th>
+                    <th><a href="#Field=LoweredUserName">Tên nhân viên</a></th>
+                    <th><a href="#Field=UserName">Tên đăng nhập</a></th>
+                    <th><a href="#Field=StartDate">Vị trí</a></th>
+                    <th><a href="#Field=TotalPrice">Tổng điểm</a></th>
+                    <th class="text-right"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.UserId">
+                            <td>@(stt++)</td>
+                            <td>@item.LoweredUserName</td>
+                            <td>@item.UserName</td>
+                            <td>@string.Join(",", item.ListTree)</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.TotalValue)</td>
+                            <td class="text-right">
+                                        <a href="/thongke#fromDate=@Model.Dates&toDate=@Model.Datee&userid=@item.UserId" class="btn btn-sm btn-default"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

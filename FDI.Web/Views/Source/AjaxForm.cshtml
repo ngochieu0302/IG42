@@ -1,0 +1,126 @@
+﻿@using FDI.Base
+@using FDI.Simple
+@using FDI.CORE
+@model FDI.Base.Source
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var lstst = (List<StorageProductItem>)ViewBag.lstStoraproduct;
+}
+<script type="text/javascript">
+    $(function () {
+        LoadCKEDITOR("Details", true);
+        registerGallery();
+        callSelect2("#StorageProductID", "100%");
+        $("#GalleryVideoForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $.post(urlPostAction, $("#GalleryVideoForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 20);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<form id="GalleryVideoForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-youtube-play"></i>Thông tin về bài viết
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên bài viết</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mã</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..." name="Code" id="Code" value="@Model.Code" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chọn phiếu nhập</label>
+                            <div class="col-md-10">
+                                <select name="StorageProductID" id="StorageProductID" class="form-control">
+                                    <option value="">Chọn phiếu nhập</option>
+                                    @foreach (var item in lstst)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.StorageProductID ? "selected" : "")>Mã: @item.Code - NCC: @item.Suppliername - Ngày: @item.DateCreated.DecimalToString("dd/MM/yyyy")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="3" name="Description" class="form-control" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Hình ảnh đại diện</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.Gallery_Picture.ID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.Gallery_Picture.ID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.Gallery_Picture.Name</span>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Chi tiết bài viết</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" name="Details" class="form-control" id="Details">@Model.Details</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

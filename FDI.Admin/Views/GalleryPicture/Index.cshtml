@@ -1,0 +1,68 @@
+﻿@model IEnumerable<FDI.Simple.CategoryItem>
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var urlFormPicture = '@Url.Action("AjaxFormPicture", "GalleryPicture")';
+        var urlFormPictureUpdate = '@Url.Action("AjaxFormPictureUpdate", "GalleryPicture")';
+        var urlFormPictureSubmit = '@Url.Action("AjaxFormPictureSubmit", "GalleryPicture")';
+        $("#btnAddPicture").click(function () {
+            var categoryId = $("#TreePictureSelect .select").attr('id');
+            if (categoryId == '' || categoryId == null)
+                categoryId = 0;
+            var urlLoadingForm = urlFormPicture + "?do=Add&CategoryID=" + categoryId;
+            $.post(urlLoadingForm, function (data) {
+                $("#dialog-form-3 .modal-title").html("Chọn files");
+                $("#dialog-form-3 #dialog-form-ajax").html(data);
+                $('#dialog-form-3').modal('show');
+            });
+            return false;
+        });
+    });
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý hình ảnh</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#showAll" data-event="showAll" data-grid="#mygird"><i class="fa fa-check"></i>Hiển thị</a></li>
+                    <li><a href="#hideAll" data-event="hideAll" data-grid="#mygird"><i class="fa fa-times"></i>Ẩn</a></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o"></i>Xóa</a></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Name">Tên hình ảnh</option>
+                    <option value="Description">Mô tả</option>
+                    <option value="AlbumName">Tên album ảnh</option>
+                </select>
+                <label>Chuyên mục:</label>
+                <select name="CategoryID" id="CategoryID" class="form-control input-sm">
+                    <option value="0">-- Tất cả --</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            <div class="btn-group pull-right">
+                <a class="btn btn-sm btn-primary" id="btnAddPicture"><span class="fa fa-plus"></span>Thêm mới</a>
+            </div>
+        </form>
+    </div>
+</div>

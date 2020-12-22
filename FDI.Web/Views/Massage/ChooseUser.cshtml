@@ -1,0 +1,8 @@
+﻿@model List<FDI.Simple.DNUserItem>
+<select class='form-control' name='ChooseUser' id='ChooseUser'>
+    <option value=''>Chọn nhân viên</option>
+    @foreach (var item in Model)
+    {
+        <option value='@item.UserId'>@item.LoweredUserName</option>
+    }
+</select>

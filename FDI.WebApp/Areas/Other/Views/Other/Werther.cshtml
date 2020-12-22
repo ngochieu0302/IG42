@@ -1,0 +1,41 @@
+﻿@model List<FDI.Simple.CityItem>
+@{
+    ViewBag.Title = "Werther";
+}
+<link href="~/Areas/Other/Content/css/Utilities.css" rel="stylesheet" />
+<div class="werther-left">
+    <div class="title-werther">
+        <h3>@Resource.Other.Resource.Werther</h3>
+    </div>
+    <div class="body-werther-left">
+        <select class="form-control" id="CityID" name="CityID">
+            
+            @foreach (var item in Model)
+            {
+                if (item.CodeWerther == "1252422")
+                {
+                    <option value="@item.CodeWerther" selected="selected">@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.CodeWerther">@item.Name</option>
+                }
+            }
+        </select>
+        <div class="main">
+            <div id="ContentWeather">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#ContentWeather').load("@Url.Action("GetWerther", "Other")?locationId=1252422");
+    $("#CityID").on("change", function () {
+        $('#ContentWeather').load("@Url.Action("GetWerther", "Other")?locationId=" + $(this).val());
+       @* $.get("@Url.Action("GetWerther", "Other")?locationId=" + $(this).val(), function (data) {
+            $("#ContentWeather").html("");
+            $("#ContentWeather").html(data);
+        });*@
+    });
+</script>

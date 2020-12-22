@@ -1,0 +1,70 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelAdvertisingItem
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn vị trí --</option>
+                    @foreach (var item in Model.ListPositionItem)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{<section class="slider-area">
+     @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+     <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
+         @foreach (var item in Model.ListItem)
+         {
+             <div class="hero-single-slide hero-overlay">
+                 <div class="hero-slider-item bg-img" data-bg="@item.PictureUrl.UploadPicture()">
+                     <div class="container">
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <div class="hero-slider-content slide-1">
+                                     <h2 class="slide-title">@item.Name</h2>
+                                     <h4 class="slide-desc">@item.Content</h4>
+                                     <a href="@item.Link" class="btn btn-hero" title="@item.Name">Read More</a>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         }
+     </div>
+ </section>
+}

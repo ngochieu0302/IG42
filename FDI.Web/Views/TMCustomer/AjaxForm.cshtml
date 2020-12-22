@@ -1,0 +1,131 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMCustomerItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    
+    $(function () {
+        
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                FullName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+              Email:
+               {
+                   required: true,
+               },
+              Mobile:
+              {
+                  required: true,
+              },
+            },
+            messages: {
+                FullName:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+                Email:
+                 {
+                     required: true,
+                 },
+                Mobile:
+                 {
+                     required: true,
+                 },
+            },
+            submitHandler: function () {
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên khách hàng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..." name="FullName"  id="FullName" value="@Model.FullName" />
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Email</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Email" id="Email" placeholder="..."  value="@Model.Email" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số điện thoại</label>
+                            <div class="col-md-10">
+                                 <input type="text" name="Mobile" id="Mobile" placeholder="..."  value="@Model.Mobile" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Address" id="Address" placeholder="..."  value="@Model.Address" class="form-control" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ngày sinh</label>
+                            <div class="col-md-10">
+                                 <input type="text" class="form-control date-picker" placeholder="..." name="_Birthday" id="_Birthday" data-date-format="dd/mm/yyyy" value="@Model.Birthday.DecimalToString("dd/MM/yyyy")" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mật khẩu</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" placeholder="..." name="Password" id="Password"  value="@Model.Password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsActive") Kích hoạt
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsAdmin") Quản trị viên
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

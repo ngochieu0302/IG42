@@ -1,0 +1,35 @@
+﻿@model CTS.Base.Shop_Brand
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="col-sm-12">
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">Thông tin về NCC</header>
+        <table class="table table-bordered">
+            <tr>
+                <td><label>Tên NCC</label></td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td><label>Mã NCC</label></td>
+                <td>@Model.Code</td>
+            </tr>
+            <tr>
+                <td><label>Điện thoại</label></td>
+                <td>@Model.Phone</td>
+            </tr>
+            <tr>
+                <td><label>Email</label></td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td><label>Địa chỉ</label></td>
+                <td>@Model.Address</td>
+            </tr>
+            <tr>
+                <td><label>Mã số thuế</label></td>
+                <td>@Model.TaxCode</td>
+            </tr>
+        </table>
+    </section>
+</div>

@@ -1,0 +1,15 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+
+<div class="contact-foo">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="text-foo">
+            <h2>@Model.Item.Name</h2>
+            <ul>
+                <li>Người chịu trách nhiệm chính: Văn phòng Tỉnh ủy</li>
+                <li>Địa chỉ: @Model.Item.Address</li>
+                <li>Email: @Model.Item.Email - ĐT: @Model.Item.Phone</li>
+            </ul>
+        </div>
+    </div>
+</div>

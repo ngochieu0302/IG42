@@ -1,0 +1,78 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ReceiptPaymentItem
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin phiếu chuyển
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 150px;">Đối tượng</th>
+                        @if (Model.Type == 0)
+                        {
+                            <td>Nhân viên</td>
+                            <th style="width: 150px;">Tên nhân viên:</th>
+                            <td>@Model.UserName</td>
+                        }
+                        else if (Model.Type == 1)
+                        {
+                            <td>Khách hàng</td>
+                            <th style="width: 150px;">Tên Khách hàng:</th>
+                            <td>@Model.CustomerName</td>
+                        }
+                        else
+                        {
+                            <td colspan="3">Đối tượng khác</td>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Loại phiếu thu</th>
+                        @if (Model.CostTypeID != null)
+                        {
+                            <td>@Model.CostTypeName</td>
+                        }
+                        else
+                        {
+                            <td>Tự động</td>
+                        }
+                        <th>Ngày ghi nhận</th>
+                        <td>@Model.DateReturn.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền</th>
+                        <td>@string.Format("{0:0,0}", Model.Price)</td>
+                        <th>Hình thức thanh toán</th>
+                        @if (Model.PaymentMethodId == (int)PaymentMethod.Transfer)
+                        {
+                            <td>Chuyển khoản</td>
+                        }
+                        else if (Model.PaymentMethodId == (int)PaymentMethod.Cash)
+                        {
+                            <td>Tiền mặt</td>
+                        }
+                        else
+                        {
+                            <td>Khác</td>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Ghi chú</th>
+                        <td colspan="3">@Model.Note</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

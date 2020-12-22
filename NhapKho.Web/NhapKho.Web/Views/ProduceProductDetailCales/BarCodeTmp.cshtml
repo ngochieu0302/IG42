@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+@model List<FDI.Simple.ImportProductItem>
+<script src="~/Scripts/jquery-1.7.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Content/socket/socket.io.js"></script>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/JsBarcode.all.min.js"></script>
+
+<style>
+   body {
+       font-size: 11px;
+   }
+</style>
+@foreach (var product in Model)
+{
+    <div style="width:30mm; float: left; padding-right: 15px">
+        <p id="productname" style="padding: 0; margin: 0;font-weight: bold;">@product.Name</p>
+        <div class="w100" style="text-align: center;">
+            <div style="margin: 0 auto; width:193px;">
+                <svg id="barcode_@product.GID" style="display: block; width: 193px; text-align: left; margin: 0; padding: 0; float: left; height: 85px"></svg>
+            </div>
+        </div>
+
+        <div class="w100">
+            <div style="width: 45%; display: inline-block;margin-right: 2px;border-right: 1px solid #777;">
+                <p>Đơn giá: <strong id="dg"></strong> đ</p>
+                <p>Số lượng: <strong id="kl"></strong> kg</p>
+                <p>Thành tiền: <strong id="price"></strong> đ</p>
+            </div>
+            <div style="width: 45%; display: inline-block;">
+                <p id="ndg">NĐG: 07/05/20 15:00</p>
+                <p id="dateexpire">HSD: 14/05/20 21:00</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        JsBarcode("#barcode_@product.GID", "@product.BarCode", { format: "CODE128" });
+    </script>
+}
+
+
+

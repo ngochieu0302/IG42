@@ -1,0 +1,94 @@
+﻿@model FDI.Simple.ModelDNTreeItem
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+    var date = DateTime.Now.ToString("yyyy-MM-dd");
+}
+<style>
+    #vote .active {
+        background-color: #ffb900;
+        border: 0
+    }
+</style>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <select name="UserTree" id="UserTree" class="form-control">
+                <option value="">-- Chọn vị trí đánh giá --</option>
+                @while (Model.ListItem.Any())
+                {
+                    var item = Model.ListItem.FirstOrDefault();
+                    <option @(Model.UserID == item.UserID ? "selected" : "") value="@item.ID" data-user="@item.UserID">@item.FullName - @item.UserName</option>
+                    Model.ListItem.RemoveAll(m => m.UserID == item.UserID);
+                }
+            </select>
+            <div class="form-group">
+                <input type="date" class="form-control input-sm" name="fromDate" id="fromDate" placeholder="Ngày" value="@date">
+            </div>
+
+            <div class="form-group" id="vote">
+                <a href="#" title="" class="btn btn-sm btn-success votebtn active" id="btn-vote"><span class="fa fa-check"></span>Đánh giá</a>
+                <a href="#" title="" class="btn btn-sm btn-success votebtn" data-id="2" id="btn-viewvote"><span class="fa fa-search"></span>Xem đánh giá</a>
+            </div>
+            <div class="form-group list-total-votepa" id="sumwmy">
+                @Html.Action("SumWMY", "VotePA")
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var treeid = $("#UserTree").val();
+        var date = $("#fromDate").val();
+        var ischeck = true;
+        urlLists = '@Url.Action("ListItems")' + "?date=" + '@date' + '&treeid=' + treeid, "#Griditems";
+        ListVote = '@Url.Action("ListVote")';
+
+        $("#UserTree").change(function () {
+            if (ischeck)
+                viewshow();
+            else
+                viewvote();
+            //var a = $(this).val();
+            //if (treeid != $(this).val()) {
+            //    treeid = $(this).val();
+
+            //}
+        });
+        $("#fromDate").change(function () {
+            if (date != $(this).val()) {
+                date = $(this).val();
+                if (ischeck) viewshow();
+                else viewvote();
+            }
+        });
+        $("#btn-vote").click(function (e) {
+            e.preventDefault();
+            ischeck = true;
+            $(".votebtn").removeClass("active");
+            $(this).addClass("active");
+            viewshow();
+        });
+        $("#btn-viewvote").click(function (e) {
+            e.preventDefault();
+            ischeck = false;
+            $(".votebtn").removeClass("active");
+            $(this).addClass("active");
+            viewvote();
+        });
+        function viewshow() {
+            var treeid = $("#UserTree").val();
+            var date = $("#fromDate").val();
+            $.post("@Url.Action("ListItems")", { date: date, treeid: treeid }, function (data) {
+                $("#Griditems").html(data);
+            });
+        }
+        function viewvote() {
+            var date = $("#fromDate").val();
+            var user = $("#UserTree :selected").data("user");
+            $.post("@Url.Action("ListVote")",{date:date,userid:user}, function (data) {
+                $("#Griditems").html(data);
+        });
+    }
+    });
+</script>

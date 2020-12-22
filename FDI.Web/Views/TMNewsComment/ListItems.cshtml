@@ -1,0 +1,77 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelTMNewsCommentItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                <tr>
+                    <th class="act_roles" style="width: 2%;">
+                        <input value="" type="checkbox"/>
+                    </th>
+                    <th style="width: 55px;" class="text-center"><a href="#Field=ID">ID</a></th>
+                    <th style="width: 120px;" class="text-center">Nội dung</th>
+                    <th style="width: 120px;" class="text-center">Họ và Tên</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">SĐT</th>
+                    <th class="text-center">Bài viết comment</th>
+                    <th class="text-center"><i class="fa fa-thumbs-up"></i></th>
+                    <th class="text-center"><i class="fa fa-thumbs-down"></i></th>
+                    <th class="text-center">Ngày comment</th>
+                    <th class="text-center">Ngày duyệt</th>
+                    <th class="text-center">Người duyệt</th>
+                    <th class="text-center">Hiển thị</th>
+                    <th style="width: 12%;" class="text-center">Thao tác</th>
+                </tr>
+                </thead>
+
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.ID">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td>@item.Message</td>
+                        <td><a href="#">@(item.TMCustomerItem != null ? item.TMCustomerItem.FullName : string.Empty)</a></td>
+                        <td>@(item.TMCustomerItem != null ? item.TMCustomerItem.Email : string.Empty)</td>
+                        <td>@(item.TMCustomerItem != null ? item.TMCustomerItem.Mobile : string.Empty)</td>
+                        <td><a href="#">@(item.NewsItem != null ? item.NewsItem.Title : string.Empty)</a></td>
+                        <td>@(item.NumberLike)</td>
+                        <td>@(item.NumberLike)</td>
+                        <td>@item.DateCreated.DecimalToString("dd/MM/yyyy HH:ss:mm")</td>
+                        <td>@item.DateActive.DecimalToString("dd/MM/yyyy HH:ss:mm")</td>
+                        <td>@item.UserActive</td>
+                        <td class="text-center">@Grid.ActionShow(item.ID, item.Message, item.IsShow)</td>
+                        <td class="text-right">
+                            @Grid.ActionView(item.ID, item.Message)
+                            @Grid.ActionEdit(item.ID, item.Message)
+                            @Grid.ActionDelete(item.ID, item.Message)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>
+<style>
+    .imgThum img{
+        width: 80px;
+        height: 80px;
+    }
+</style>

@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+    var date = DateTime.Now;
+}
+<script type="text/javascript">  
+    $(document).ready(function() {
+        callSelect2("#MonthId", "90px");
+    });
+</script>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <select id="MonthId" name="year" class="select2 form-control">
+                    @for (var i = 2017; i <= date.Year; i++)
+                    {
+                        <option @(i == date.Year ? "selected" : "") value="@i">@i</option>
+                    }
+                </select>
+            </div>            
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+        </form>
+    </div>
+</div>

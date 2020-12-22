@@ -1,0 +1,68 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.ReceiptPaymentItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup color" />
+                    <col />
+                    <col class="colgroup custommer" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                    <col class="colgroup price" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th><a href="#Field=CostName">Tên nhân viên</a></th>
+                    <th><a href="#Field=UserCreate">UserName</a></th>
+                    <th class="text-right"><a href="#Field=UserName">Chuyển TN</a></th>
+                    <th class="text-right"><a href="#Field=UserName">Khác ĐH</a></th>
+                    <th class="text-right"><a href="#Field=UserName">Tổng thu</a></th>
+                    <th class="text-right"><a href="#Field=PaymentMethodId">Chi KT</a></th>
+                     <th class="text-right"><a href="#Field=TotalCashAdvance">Ứng</a></th>
+                    <th class="text-right"><a href="#Field=PaymentMethodId">Còn lại</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(stt++)</td>
+                        <td>@item.Name</td>
+                        <td>@item.UserName</td>
+                        <td class="text-right">@item.TotalOrder.Money()</td>
+                        <td class="text-right">@item.TotalReceip.Money()</td>
+                        <td class="text-right">@(((item.TotalOrder ?? 0) + (item.TotalReceip ?? 0)).Money())</td>
+                        <td class="text-right">@item.TotalPayment.Money()</td>
+                        <td class="text-right">@item.TotalCashAdvance.Money()</td>
+                        <td class="text-right">@(((item.TotalOrder ?? 0) + (item.TotalReceip ?? 0) - (item.TotalPayment ?? 0)).Money())</td>
+                    </tr>
+                }
+                </tbody>
+                <thead>
+                <tr>
+                    <td colspan="3"><b>TỔNG</b></td>
+                    <td class="text-right"><b>@Model.Sum(c => c.TotalOrder).Money()</b></td>
+                    <td class="text-right"><b>@Model.Sum(c => c.TotalReceip).Money()</b></td>
+                    <td class="text-right"><b>@((Model.Sum(c => c.TotalOrder ?? 0) + Model.Sum(c => c.TotalReceip ?? 0)).Money())</b></td>
+                    <td class="text-right"><b>@Model.Sum(c => c.TotalPayment).Money()</b></td>
+                    <td class="text-right"><b>@Model.Sum(c => c.TotalCashAdvance).Money()</b></td>
+                    <td class="text-right"><b>@((Model.Sum(c => c.TotalOrder ?? 0) + Model.Sum(c => c.TotalReceip ?? 0) - Model.Sum(c => c.TotalPayment ?? 0)).Money())</b></td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');       
+    });
+</script>

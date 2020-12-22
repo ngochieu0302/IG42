@@ -1,0 +1,53 @@
+﻿@model List<FDI.Simple.ShopStatusItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#frm-modal").validate({
+            submitHandler: function () {
+                $.post("/Massage/ChangeStatus", $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        toastr["error"](data.Message);
+                    else {
+                        toastr["success"](data.Message);
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Đổi trạng thái
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Đặt trạng thái</label>
+                            <div class="col-sm-6">
+                                <select id="StatusID" name="StatusID" class="form-control">
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Lưu lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>

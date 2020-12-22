@@ -1,0 +1,186 @@
+﻿@model FDI.Simple.DocumentItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Tài liệu";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-type="gallery"]').click(function () {
+            var multi = $(this).attr('data-multi');
+            var value = $(this).attr('data-value');
+            var types = $(this).data('type-value');
+            var container = $(this).attr('data-container');
+            var urlSelectImage = "/Admin/DocumentSelect/?MutilFile=" + multi + "&Container=" + container + "&ValuesSelected=" + value
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Chọn File");
+            $("#dialog-form-2 #dialog-form-ajax").load(encodeURI(urlSelectImage));
+            $('#dialog-form-2').modal('show');
+        });
+        $("body").on("click", ".pdelete", function () {
+            $(this).parent().parent().remove();
+            var arrRowId = [];
+            $("#getFiles").each(function () {
+                var val = $(this).val();
+                arrRowId.push(val);
+            });
+            $("#Value_Files").val(arrRowId);
+        });
+
+        $("#frm-modal").validate({
+            rules: {
+                Name:
+                {
+                    required: true
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        debugger;
+                        $('#dialog-form').modal('hide'); //Đóng form thêm mới - sửa
+                        $('#dialog-form #dialog-form-ajax').html('');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-newspaper-o"></i>Thông tin về tài liệu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên tài liệu</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số hiệu</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="Number" id="Number" value="@Model.Number" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Cơ quan ban hành</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="AgencyIssued" id="AgencyIssued" value="@Model.AgencyIssued" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Phạm vi</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="Range" id="Range" value="@Model.Range" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày ban hành</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="DateCreated_" id="DateCreated_" value="@(Model.DateCreated!=null? Model.DateCreated.Value.ToString("yyyy-MM-dd"):"")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày hiệu lực</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="DateStart" id="DateStart" value="@(Model.DateStart!=null? Model.DateStart.Value.ToString("yyyy-MM-dd"):"")" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option value="0" @(Model.Status == 0 ? "selected" : "")>Chưa có hiệu lực</option>
+                                    <option value="1" @(Model.Status == 1 ? "selected" : "")>Đã có hiệu lực</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Loại tài liệu</label>
+                            <div class="col-sm-10">
+                                <select name="CategoryID" id="CategoryID" class="form-control">
+                                    <option value="">-- Chọn loại tài liệu --</option>
+                                    @foreach (var item in ViewBag.CategoryId)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.CategoryID) ? "selected" : "") data-IsLv="@item.IsLevel">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Người ký</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="Signature" id="Signature" value="@Model.Signature" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-multi="false" data-container="DefaultFiles"><span class="fa fa-picture-o"></span>Chọn file tài liệu</button>
+                                <input type="hidden" name="DocumentFileID" id="Value_Files" value="@Model.DocumentFileID" />
+                                <div id="Text_DefaultImages">
+                                    <table id="DefaultFiles" class="table table-striped table-bordered table-hover table-orimid" role="grid">
+                                        <thead>
+                                            <tr>
+                                                <th>Loại file</th>
+                                                <th>Tên File</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.DocumentFileID != null)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" class="hidden" checked="" name="getFiles" id="getFiles" value="@Model.DocumentFileID">
+                                                        <img src="/Images/Icons/file/@(Model.FileType).png">
+                                                    </td>
+                                                    <td>@Model.FileName</td>
+                                                    <td class="text-center"><a class="pdelete"><i class="fa fa-trash-o" style="color: red;"></i></a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

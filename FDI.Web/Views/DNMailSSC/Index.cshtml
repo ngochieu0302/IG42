@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmail.cshtml";
+}
+@using FDI.CORE
+@model FDI.Simple.ModelDNMailSSCItem
+
+<div class="inbox">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Action("BoxMail","DNMailSSC")
+        </div>
+        <div class="col-md-9">
+            <div class="inbox-body">
+                <h3 class="page-title">
+                    @{
+                        switch (Model.Type)
+                        {
+                            case 1:
+                                <text>Hộp thư đến</text>
+                                break;
+                            case 2:
+                                <text>Thư đã gửi</text>
+                                break;
+                            case 3:
+                                <text>Thư nháp</text>
+                                break;
+                            case 4:
+                                <text>Spam</text>
+                                break;
+                            case 5:
+                                <text>Thùng rác</text>
+                                break;
+                        }
+                    }
+                    
+                </h3>
+                <div class="inbox-content" id="inbox-content">
+                    <input type="hidden"  value="" id="lstID">
+                    <input type="hidden" name="Type" id="Type" value="@Model.Type"/>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="4">
+                                    <input type="checkbox" class="mail-group-checkbox">
+                                    <div class="btn-group input-actions">
+                                        <a class="btn btn-sm blue btn-outline dropdown-toggle sbold" href="javascript:;" data-toggle="dropdown">
+                                            Thao tác
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                          
+                                                @{
+                                                    var textSpam = "";
+                                                    var idSpam = "";
+                                                    var textDelete = "";
+                                                    var idDelete = "";
+                                                    var dataAction = 0;
+                                                    switch (Model.Type)
+                                                    {
+                                                        case 1:
+                                                            textSpam = "Báo cáo Spam";
+                                                            idSpam = "reportSpam";
+                                                            textDelete = "Xóa";
+                                                            idDelete = "reportDelete";
+                                                            dataAction = 1;
+                                                            break;
+                                                        case 2:
+                                                            textSpam = "Báo cáo Spam";
+                                                            idSpam = "reportSpam";
+                                                            textDelete = "Xóa";
+                                                            idDelete = "reportDelete";
+                                                            dataAction = 2;
+                                                            break;
+                                                        case 3:
+                                                            textSpam = "Chuyển tới Hộp thư đến";
+                                                            idSpam = "MoveMailbox";
+                                                            textDelete = "Hủy thư nháp";
+                                                            idDelete = "btnDeleteDrafts";
+                                                            dataAction = 3;
+                                                            break;
+                                                        case 4:
+                                                            textSpam = "Không phải Spam";
+                                                            idSpam = "NoReportSpam";
+                                                            textDelete = "Xóa vĩnh viễn";
+                                                            idDelete = "btnDelete";
+                                                            dataAction = 4;
+                                                            break;
+                                                        case 5:
+                                                            textSpam = "Không phải Spam";
+                                                            idSpam = "NoReportSpam";
+                                                            textDelete = "Xóa vĩnh viễn";
+                                                            idDelete = "btnDelete";
+                                                            dataAction = 5;
+                                                            break;
+                                                    }
+                                                    <li>
+                                                        <a href="javascript:;" id="@idSpam" data-type="@(Model.Type == 4 ? 0 : 1)" data-status="@dataAction">
+                                                            <i class="fa fa-ban"></i>@textSpam
+                                                        </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                        <a href="javascript:;" id="@idDelete" data-type="@(Model.Type == 5 ? 0 : 1)" data-status="@dataAction">
+                                                            <i class="fa fa-trash-o"></i>@textDelete
+                                                        </a>
+                                                    </li>
+                                                }
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th class="pagination-control" colspan="3">
+                                    <span class="pagination-info" >Tổng: <span id="TotalRecord">@(Model.ListItem != null ? Model.ListItem.Count() : 0)</span> </span>
+                                    <a class="btn btn-sm blue btn-outline">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                    <a class="btn btn-sm blue btn-outline">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentEmail">
+                            @if (Model.ListItem != null)
+                            {
+                                 foreach (var item in Model.ListItem)
+                                {
+                                    <tr class="@(item.Status == 0 && Model.Type == 1 ? "unread" : string.Empty)" data-id="@item.ID">
+                                        <td>
+                                            <input type="checkbox" class="chkEmail" value="@item.ID">
+                                   
+                                        </td>
+                                        <td class="inbox-small-cells">
+                                            <i class="fa fa-star"></i>
+                                        </td>
+                                        <td class="view-message hidden-xs"><a data-id="@item.ID" class="titleEmail">@item.UserSendName</a></td>
+                                        <td class="view-message "><a data-id="@item.ID" class="titleEmail">@item.Title</a></td>
+                                        <td class="view-message inbox-small-cells">
+                                            <i class="fa fa-paperclip"></i>
+                                        </td>
+                                        <td class="view-message text-right"><a data-id="@item.ID" class="titleEmail">@item.CreateDate.DecimalToString("dd/MM/yyyy HH:mm")</a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

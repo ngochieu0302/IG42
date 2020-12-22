@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Quản lý chuyên mục";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "SysPage")';
+    urlForm = '@Url.Action("AjaxForm", "SysPage")';
+    urlSort = '@Url.Action("AjaxSort", "SysPage")';
+    urlPostAction = '@Url.Action("Actions", "SysPage")';
+    formWidth = 900;
+    formHeight = $(window).height() - 24;
+    viewWidth = 900;
+    viewHeight = $(window).height() - 24;
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+        var urlSelectImage = "/Admin/GalleryPictureSelect/?MutilFile=true&Container=NewsImages";
+        $("#selectImage").click(function () {
+            $.post(urlSelectImage, function (data) {
+                $("#dialog-form-2").dialog(
+                    {
+                        title: "Chọn hình ảnh",
+                        width: 960,
+                        height: 600
+                    }
+                ).html(data).dialog("open");
+                return false;
+            });
+        });
+    });
+</script>
+<div class="view-noscroll" data-view="true">
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Quản lý trang</li>
+            </ul>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <div class="btn-group">
+            @Grid.ActionAdd(Url.Action("Actions"))
+        </div>
+    </div>
+</div>
+<div class="content-control" style="margin-top: 5px !important;">
+    <div id="Griditems"></div>
+</div>

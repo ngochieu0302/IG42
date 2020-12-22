@@ -1,0 +1,108 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ShopProductDetailItem
+
+@{
+ 
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên sản phẩm</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                  
+                    <tr>
+                        <td>
+                            <label>Mã sản phẩm</label>
+                        </td>
+                        <td>
+                           @Model.Code
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Hạn sử dụng</label>
+                        </td>
+                        <td>
+                            @Model.QuantityDay ngày
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Giá bán</label>
+                        </td>
+                        <td>
+                            @Model.Price.Money()  vnđ
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Ảnh đại diện</label>
+                        </td>
+                        <td>
+                            @Gallery.DisplayImage(Model.UrlPicture, 120)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Đơn vị</label>
+                        </td>
+                        <td>
+                            @Model.UnitName
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Model.Description
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Chi tiết</label>
+                        </td>
+	                    <td>
+		                    @Html.Raw(Model.Details)
+	                    </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow.HasValue && Model.IsShow.Value)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

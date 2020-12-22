@@ -1,0 +1,202 @@
+﻿@model FDI.Simple.OrderGetItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+        <div class="box-a-table-wrap">
+            <div class="box-order">
+                <div class="cate-order">
+                    <a href="#" title=""><i class="fa fa-heart"></i>Hay dùng</a>
+                    <a href="#" title=""><i class="fa fa-star-o"></i>Đặc trưng</a>
+                    <a href="#" title=""><i class="fa fa-ship"></i>Món ăn</a>
+                    <a href="#" title=""><i class="fa fa-coffee"></i>Đồ uống</a>
+                    <a href="#" title=""><i class="fa fa-cutlery"></i>Combo</a>
+                    <a href="#" title=""><i class="fa fa-puzzle-piece"></i>Khác</a>
+                </div>
+                <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa"/>
+                <select class="form-control">
+                    <option value="1">Hay dùng</option>
+                    <option value="2">Giá cao - thấp</option>
+                    <option value="3">Giá thấp - cao</option>
+                </select>
+            </div>
+            <div class="list-order">
+                <table class="gridView" id="ProductDetail">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã hàng</th>
+                        <th>Tên hàng</th>
+                        <th class='text-center'>Số lượng</th>
+                        <th class='text-center'>Đơn vị tính</th>
+                        <th class='text-center'>Giá bán</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="announce">
+                        <td colspan="7">
+                            <div class="alert alert-block alert-success m-t-lg" style="font-size: 15px">Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" name="lstValue" id="lstValue" />
+            </div>
+        </div>
+</div>
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="Order" />
+    <input type="hidden" name="ID" id="ID" value="@Model.ID"/>
+    <input type="hidden" name="BedDeskID" id="BedDeskID" value="@Model.BedDeskID"/>
+    <input type="hidden" name="Status" id="Status" value="@Model.Status"/>
+</form>
+<div class="modal-footer">
+    <button id="btn_SavePrint" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>Lưu</button>
+    <button class="btn btn-default btn-sm" id="btnReset" type="reset">Hủy</button>
+</div>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+
+<script>
+    var lstP = [];
+    var listp = [];
+    var requestList = requestList || {};
+    $(function () {
+        var idbed = '@(Model.BedDeskID)';
+        var keyOrder = "HD" + idbed;
+        var start = JSON.parse(localStorage.getItem("lstOrderTable"));
+        var lstOrdern = start[keyOrder];
+        if (lstOrdern != null && lstOrdern.length > 0) {
+            listp = lstOrdern[0].list;
+        }
+        var startlist = JSON.parse(localStorage.getItem("lstOrderTable"));
+        if (startlist != null) {
+            requestList = startlist;
+            var lstOrder = startlist[keyOrder];
+            if (lstOrder != null && lstOrder.length > 0) {
+                lstP = lstOrder;
+                addHTML(lstP);
+            }
+        }
+       
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/BookATable/AutoProduct",
+            minChars: 1,
+            delimiter: /(;)\s*/, // regex or character
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var add = 0;
+                var lst1 = requestList[keyOrder];
+                if (lst1 != null)
+                    lstP = lst1;
+                lstP.forEach(function (entry) {
+                    if (entry.ProductID === el.ID) {
+                        add = 1;
+                        entry.Quantity = entry.Quantity + 1;
+                    }
+                });
+                if (add === 0) {
+                    var item = {
+                        ProductID: el.ID,
+                        Quantity: 1,
+                        Price: el.pricenew,
+                        title: el.title,
+                        value: el.value
+                    };
+                    lstP.push(item);
+                }
+                addHTML(lstP);
+                for (var i = 0; i < listp.length; i++) {
+                    keyOrder = "HD" + listp[i];
+                    requestList[keyOrder] = lstP;
+                    localStorage.setItem("lstOrderTable", JSON.stringify(requestList));
+                }
+            }
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            for (var index = 0; index < lstP.length; index++) {
+                if (lstP[index].ProductID === pid) {
+                    lstP.splice(index, 1);
+                    addHTML(lstP);
+                    for (var i = 0; i < listp.length; i++) {
+                        keyOrder = "HD" + listp[i];
+                        requestList[keyOrder] = lstP;
+                        localStorage.setItem("lstOrderTable", JSON.stringify(requestList));
+                    }
+                    return;
+                }
+            }
+        });
+        $("body").on("click", ".cdelete", function () {
+            localStorage.setItem("lstOrderTable", JSON.stringify(requestList));
+        });
+        $("#btnReset").click(function () {
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn hủy, hủy sẽ hủy tất cả các bàn cùng đơn hàng.",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Tiếp tục",
+                cancelButtonText: "Hủy",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    for (var i = 0; i < listp.length; i++) {
+                        keyOrder = "HD" + listp[i];
+                        requestList[keyOrder] = [];
+                        localStorage.setItem("lstOrderTable", JSON.stringify(requestList));
+                    }
+                    lstP = [];
+                    addHTML(lstP);
+                }
+                swal.close();
+            });
+        });
+        $("#btn_SavePrint").click(function () {
+            var lst1 = JSON.parse($('#lstValue').val());
+            lst1.forEach(function (entry) {
+                $.post("/Utility/Add?json=" + JSON.stringify(entry), function () {
+                });
+            });
+            $.post("/BookATable/Actions", $("#frm-modal").serialize(), function (data) {
+                if (data.Erros)
+                    toastr["error"](data.Message);
+                else {
+                    toastr["success"](data.Message);
+                    $("#dialog-form-4 .dialog-form-ajax").html("");
+                    $("#dialog-form-4").modal('hide');
+                }
+            });
+        });
+    });
+    function addHTML(lst) {
+        var lstValue = [];
+        var price = 0;
+        var txt = "<tr><td>stt</td><td>code</td><td>name</td><td class='text-center'>Quantity</td><td class='text-right'>price</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='IdProduct'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+        var mystring = "";
+        var stt = 1;
+        lst.forEach(function (entry) {
+            var item = {
+                ProductID: entry.ProductID,
+                Quantity: entry.Quantity,
+                Price: entry.Price,
+                Key: getCookie('CodeLogin')
+            };
+            lstValue.push(item);
+            price += entry.Quantity * entry.Price;
+            var ch = txt.replace("stt", stt++);
+            ch = ch.replace("code", entry.value);
+            ch = ch.replace("name", entry.title);
+            ch = ch.replace("Quantity", entry.Quantity);
+            ch = ch.replace("price", entry.Price.toString());
+            ch = ch.replace("IdProduct", entry.ProductID);
+            mystring = ch + mystring;
+        });
+        $("#ProductDetail tbody").html(mystring);
+        $("#lstValue").val(JSON.stringify(lstValue));
+    }
+</script>

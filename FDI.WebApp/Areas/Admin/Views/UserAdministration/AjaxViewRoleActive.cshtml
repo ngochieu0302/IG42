@@ -1,0 +1,76 @@
+﻿@model FDI.Simple.ModelAspnetRolesItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Module";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ModuleForm").validate({
+            rules: {
+                NameModule:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Content:
+                {
+                    minlength: 3,
+                    maxlength: 500
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post('/Admin/UserAdministration/RoleAction', $("#ModuleForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+<div id="Order">
+    <form id="ModuleForm">
+        <div class="modal-body">
+            <input type="hidden" name="ItemID" id="ItemID" value="@Model.Roles.RoleId" />
+            <input type="hidden" name="ItemNameRole" id="ItemNameRole" value="@Model.Roles.RoleName" />
+            <table class="gridView table table-bordered table-striped" cellspacing="1">
+                <tr>
+                    <td>
+                        <label>Tên chuyên mục </label>
+                    </td>
+                    <td>
+                        <label>@Model.Roles.RoleName</label>
+                    </td>
+                </tr>
+
+                @foreach (var item in Model.ListActiveRoleItem)
+                {
+                    <tr>
+                        <td>
+                            <label>@item.NameActive</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="@item.NameActive" id="@item.NameActive" value="@item.ID" @(Model.Roles.ActiveRoles.Any(m => m.Id == item.ID) ? "checked" : "") />
+
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button id="Update" type="submit" class="btn btn-sm btn-primary">Xong</button>
+            <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+        </div>
+    </form>
+</div>
+

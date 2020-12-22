@@ -1,0 +1,137 @@
+﻿@using FDI.Utils
+@model FDI.Base.Advertising
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về banner quảng cáo
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên banner</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    @switch (Model.TypeID)
+                    {
+                        case 1: //Picture
+                            <tr id="PicturePanel">
+                                <td>
+                                    <label>Hình ảnh đại diện</label>
+                                </td>
+                                <td>
+                                    <img class="img-responsive" src="@((Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url).Picture())" style="width: 125px;height: 125px" />
+                                </td>
+                            </tr>
+                            break;
+                        case 3: //Video
+                            <tr id="VideoPanel">
+                                <td>
+                                    <label>Video</label>
+                                </td>
+                                <td>
+                                    <iframe width="420" height="315" src="//www.youtube.com/embed/@Model.UrlVideo" frameborder="0" allowfullscreen></iframe>
+                                </td>
+                            </tr>
+                            break;
+                        case 2: //Flash
+                            <tr id="FlashPanel">
+                                <td>
+                                    <label>Flash</label>
+                                </td>
+                                <td>
+                                    <embed width="420" height="315" type="application/x-shockwave-flash" src="@Model.UrlVideo"></embed>
+                                </td>
+                            </tr>
+                            break;
+                    }
+
+                    <tr>
+                        <td>
+                            <label>Link</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Link)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Loại banner</label>
+                        </td>
+                        <td id="type">
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tên vị trí banner</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Advertising_Position.Name)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Width</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Width)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Height</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Height)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Thứ tự</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Sort)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.Show)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Nội dung chi tiết</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Content)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

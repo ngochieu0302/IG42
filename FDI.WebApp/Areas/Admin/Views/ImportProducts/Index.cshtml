@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Import data Products";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<style>
+    .cl-row {
+        margin: 20px 0px;
+    }
+
+</style>
+<script>
+    $("#ImportExcel").validate({
+         submitHandler: function () { //onSubmit
+             var formData = new FormData();
+             formData.append('file', $('#FileUpload')[0].files[0]);
+             $.ajax({
+                 url: "/Admin/ImportProducts/ImportExcel",
+                 type: 'POST',
+                 data: formData,
+                 async: false,
+                 success: function (data) {
+                     if (data.Erros) {
+                         $("#FileUpload").val("");
+                         createMessage("Có lỗi xảy ra", "<b>Lỗi được thông báo:</b><br/>" + data.Message);
+                     } else {
+                         createMessage("Thông báo", data.Message);
+                     }
+                 },
+                 cache: false,
+                 contentType: false,
+                 processData: false
+             });
+         }
+     });
+</script>
+<h2>Import sản phẩm</h2>
+<div class="cl-row"></div>
+@using (Html.BeginForm("ImportExcel", "ImportProducts", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <table>
+        <tr>
+            <td>Excel file</td>
+            <td>
+                <input type="file" id="FileUpload" name="FileUpload" class="add"/></td>
+            <td>
+                <input type="submit" id="Submit" name="Submit" value="Submit" class="btn btn-sm btn-primary"/></td>
+        </tr>
+    </table>
+}

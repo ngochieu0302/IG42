@@ -1,0 +1,64 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+@if (Model.Item != null)
+{   
+    <div class="sec-home sec-gray" id="lienhe">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="container">
+            <div class="title-sec">
+                Để được hỗ trợ, giải đáp thắc mắc
+                <span>Xin vui lòng để lại thông tin, chúng tôi sẽ liên hệ với bạn ngay.</span>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 col-md-6 center-col">
+                    <form class="form-supprot" id="form-supprot">
+                        <input type="text" name="Name" placeholder="Tên của bạn" class="ipt" />
+                        <input type="email" name="Email" placeholder="Email của bạn" class="ipt" />
+                        <button type="submit" class="bt">Gửi thông tin</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+<link href="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#form-supprot").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                Email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                Name: {
+                    required: "Mời nhập tên của bạn."
+                },
+                Email: {
+                    required: "Mời nhập Email của bạn.",
+                    email: "Không đúng định dạng."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post("@Url.Action("SendEmail", "Contact",new {Area= "Contact" })", $("#form-supprot").serialize(), function (msg) {
+                    if (!msg.Erros) {
+                        swal({
+                            title: "Thành công !",
+                            text: "Cảm ơn bạn đã để lại thông tin, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất!",
+                            type: "success",
+                            confirmButtonText: "Ok"
+                        }, function () {
+                            $(".ipt").val("");
+                        });
+                    } else {
+                        swal({ title: "Có lỗi xảy ra !", text: msg.Message, type: "error", confirmButtonText: "Ok" });
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,103 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelMenusItem
+@{
+    var pageId = WebConfig.Product;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn nhóm menu --</option>
+                    @foreach (var item in Model.ListMenuGroupsItem)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="footer__top">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="row">
+            <div class="col-sm-4 col-md-3">
+                <div class="footer__logo">
+                    <a href="/">
+                        <img class="img-responsive" src="/Content/Publishing/img/logo/logo-foo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-9">
+                <div class="footer__link">
+                    <div class="footer__menu">
+                        <div class="row">
+                            @foreach (var item in Model.ListItem.Where(c => c.ParentId == 1))
+                            {
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <h2>@item.Name</h2>
+                                    @if (Model.ListItem.Any(c => c.ParentId == item.ID))
+                                    {
+                                        <ul>
+                                            @foreach (var items in Model.ListItem.Where(c => c.ParentId == item.ID))
+                                            {
+                                                <li><a href="/@(items.Url)">@items.Name</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+        <div class="footer__social">
+            <div class="footer__social__page">
+                @*<a href="#"><i class="ion-social-facebook"></i></a>
+                <a href="#"><i class="ion-social-twitter"></i></a>
+                <a href="#"><i class="ion-social-instagram"></i></a>
+                <a href="#"><i class="ion-social-googleplus"></i></a>
+                <a href="#"><i class="ion-social-youtube"></i></a>*@
+            </div>
+                        <div class="footer__social__follow">
+                            <form class="newletter" id="frmSendEmail" method="POST">
+                                <i class="ion-ios-email"></i>
+                                <input class="newletter__ipt" type="text" name="Email" placeholder="Đăng ký nhận thông tin">
+                                <button class="newletter__btn" type="submit"><i class="ion-ios-arrow-thin-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
+    </div>
+}

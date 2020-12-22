@@ -1,0 +1,497 @@
+﻿@using System.Globalization
+@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelOrderGetItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var day = DateTime.Today;
+    var date = DateTime.Now.AddMinutes(5);
+    var tday = day.TotalSeconds();
+    var hour = Model.StartDate.DecimalToString("HH");
+    var min = Model.StartDate.DecimalToString("mm");
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<form id="frm-Orders">
+    <div class="modal-body">
+        <input type="hidden" name="itemId" id="itemId" value="" />
+        <input type="hidden" name="ContactId" id="ContactId" value="@Model.ID" />
+        <input type="hidden" id="DiscountKH" value="@(new JavaScriptSerializer().Serialize(Model.DiscountItems))" />
+        <input type="hidden" name="do" id="do" value="Edit" />
+        <input type="hidden" name="ProductID" id="ProductID" value="0" />
+        <input type="hidden" name="StartDate" id="StartDate" value="" />
+        <input type="hidden" name="EndDate" id="EndDate" value="" />
+        <input type="hidden" name="Value" id="Value" value="" />
+        <input type="hidden" name="Price" id="Price" value="" />
+        <input type="hidden" name="IsEarly" id="IsEarly" value="" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="Customer" name="Customer" value="">
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="">
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="input-group col-md-4">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                    <input class="form-control" id="CustomerCard" placeholder="Quẹt thẻ" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Họ Tên</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="CustomerName" name="CustomerName" value="@Model.CustomerName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Address" name="Address" value="@Model.Address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số điện thoại</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Mobile" name="Mobile" value="@Model.Mobile">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Điểm tích lũy</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static" id="Bonus"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thanh toán
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn sản phẩm</label>
+                            <div class="col-sm-10">
+                                <select name="LstProductID" id="LstProductID" multiple class="select2">
+                                    @foreach (var item in Model.ListItem)
+                                    {
+                                        if (Model.Listproduct != null && Model.Listproduct.Any())
+                                        {
+                                        <option value="@item.ID" @(Model.Listproduct.Any(c => c.ProductId == item.ID) ? "selected" : "") data-price="@item.PriceNew" data-val="@item.Value">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@item.ID" data-price="@item.PriceNew" data-val="@item.Value">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Thời gian</label>
+                            <div class="col-sm-10">
+                                <select name="HoursStartAll" id="HoursStartAll" class="select2">
+                                    @for (int i = date.Hour; i <= 23; i++)
+                                    {
+                                        <option value="@i" @(i == int.Parse(hour) ? "selected" : "") >@i</option>
+                                    }
+                                </select>
+                                <select name="MinuteStartAll" id="MinuteStartAll" class="select2">
+                                    @for (int i = 0; i <= 59; i++)
+                                    {
+                                        <option value="@i" @(int.Parse(min) == i ? "selected" : string.Empty)>@i</option>
+                                    }
+                                </select>
+                            </div>
+
+                            @*<label class="col-md-2 control-label">Thời gian</label>
+                            <div class="col-md-5 timeall" id="SetDateOrder">
+                            </div>*@
+                        </div>
+                        <div class="form-group product">
+                            <label class="col-md-2 control-label">Gói</label>
+                            <div class="col-md-5 productall" id="SetPacketOrder">@Model.Time</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Danh sách giường</label>
+                            <div class="col-md-10">
+                                <ul class="listb"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" id="Note" name="Note" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>TỔNG TIỀN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Prices">@Model.Price</p>
+                            </div>
+                            <label class="col-sm-2 control-label"><b>THANH TOÁN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Payment">@Model.Price</p>
+                                <input type="hidden" name="Payments" id="Payments" value="0" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sử dụng tích lũy:</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="PrizeMoney" name="PrizeMoney" class="form-control maskPrice" value="0" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giảm giá (<span id="dn_gg"></span>%)</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="DiscountMoney" name="DiscountMoney" readonly="readonly" class="form-control maskPrice" value="0" />
+                                <input type="hidden" id="Discount" name="Discount" readonly="readonly" class="form-control maskPrice" value="0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">In và Lưu lại</button>
+        <button id="btnPrint" type="button" class="btn btn-sm btn-primary">Xem trước</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        var prizeMoney = 0;
+        var ListUser = [];
+        var discount = 0;
+        var dngg = 0;
+        var IsCus = false;
+        var aid = '@Model.AgencyID';
+        var totalPrice = 0;
+        var listbedid = [];
+        $('#Customer').autocomplete({
+            serviceUrl: "/BookATable/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#Mobile').val(el.phone);
+                $('#Address').val(el.code);
+                $('#printKH').html(el.title);
+                $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                $('#Customer').val("");
+                $('#PrizeMoney').val("0");
+                discount = el.pricenew;
+                if (el.value != "") IsCus = true;
+                else {
+                    IsCus = false;
+                }
+                calculate();
+            }
+        });
+
+        $.post("/Utility/GetAllStackByToday?key=checkinfdi&agencyid=" + aid, function (json) {
+            ListUser = JSON.parse(json);
+            var lists = JSON.parse($("#listbed").val());
+           
+            var text = "";
+            $("#itemId").val("");
+            $("#ListBoxPrint").html("");
+            $("#listbed").html("");
+            var price = $("#Prices").html();
+            var td = parseInt('@tday');
+        var count = lists.length;
+        totalPrice = price * count;
+        calculate(0, 0, totalPrice, prizeMoney);
+        for (var i = 0; i < count; i++) {
+            var selectUser = "";
+            var len = ListUser.length;
+            if (len > 0 && i < len) {
+                selectUser += '<select name="HoursStartAll" id="HoursStartAll" class="select2">';
+                for (var j = 0; j < len; j++) {
+                    selectUser += '<option value="' + ListUser[i].UserId + '" ' + (i == j ? "selected" : "") + ' >' + ListUser[i].UserName + '</option>';
+                }
+                selectUser += '</select>';
+            }
+            text = text + "<li id='obj-" + lists[i].ID + "'><span> " + lists[i].Name + " " + lists[i].RoomName + "</span> " + selectUser + " <a class=\"btn btn-default bdelete\" data-pid='" + lists[i].ID + "'><i class=\"fa fa-times\" style=\"color: red;\"></i></a></li>";
+        }
+        $(".listb").html(text);
+        });
+        //function selectBoxUser(ci) {
+
+        //    }
+        $('#CustomerCard').keyup(function () {
+            var val = $(this).val();
+            val = val.replace("%", "");
+            val = val.replace("?", "");
+            if (val.length == 32) {
+                $.post("/Sales/AutoCustomerItem", { query: val }, function (el) {
+                    if (el != null) {
+                        $('#CustomerID').val(el.ID);
+                        $('#CustomerName').val(el.title);
+                        $('#Mobile').val(el.phone);
+                        $('#Address').val(el.code);
+                        $('#printKH').html(el.title);
+                        $('#Bonus').html(numeral(el.TotalPrice).format('0,0'));
+                        if (el.keword.toLowerCase() === el.value.toLowerCase()) {
+                            IsCus = true;
+                            prizeMoney = el.TotalPrice;
+                            calculate(prizeMoney);
+                        } else {
+                            prizeMoney = 0;
+                        }
+                        $('#Customer').val("");
+                        $('#PrizeMoney').val("0");
+                    }
+                });
+                $(this).val("");
+            }
+        });
+        callSelect2("#MinuteStartAll", "60px");
+        callSelect2("#HoursStartAll", "60px");
+        callSelect2("#LstProductID", "100%");
+        $('#LstProductID').on('change', function () {
+            var priceproduct = 0;
+            var time = 0;
+            $('#LstProductID').find(":selected").each(function () {
+                priceproduct += parseInt($(this).data("price"));
+                var tg = $(this).data("val");
+                time += parseInt(tg);
+                $("#ProductID").val($(this).val());
+            });
+            totalPrice = priceproduct * count;
+            $("#SetPacketOrder").html(time);
+            $("#Prices").html(priceproduct * count);
+            calculate(0, 0, totalPrice, prizeMoney);
+        });
+        $("body").on("keyup", "#frm-Orders #PrizeMoney", function () {
+            var pr = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var tt = totalPrice;
+            if (prizeMoney === 0) {
+                toastr["error"]("Bạn chưa quẹt thẻ.");
+                $("#PrizeMoney").val("0");
+            }
+            if (prizeMoney >= pr && pr <= tt) {
+                $("#PrizeMoney").val(pr);
+            }
+            if (prizeMoney < pr && tt > prizeMoney) {
+                ErrorMessage("Vượt quá tiền tích lũy.");
+                $("#PrizeMoney").val(prizeMoney);
+            }
+        });
+        
+        $("body").on("click", ".bdelete", function () {
+            var id = parseInt($(this).data("pid"));
+            if (lists.length > 1) {
+                for (i = 0; i < lists.length; i++) {
+                    if (lists[i].ID == id) {
+                        lists.splice(i, 1);
+                        $("#obj-" + id).hide();
+                        break;
+                    }
+                }
+            } else {
+                ErrorMessage("Đơn hàng phải lớn hơn 1 giường!");
+            }
+            $("#Prices").html(numeral(price * lists.length).format('0,0'));
+            $("#Payment").html(numeral(price * lists.length).format('0,0'));
+            $("#Payments").val(numeral(price * lists.length).format('0,0'));
+        });
+        $("#frm-Orders").validate({
+            rules: {
+                CustomerName:
+                {
+                    required: true,
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+
+                var h = $("#HoursStartAll").val();
+                var m = $("#MinuteStartAll").val();
+                td = td + parseInt(h) * 3600 + parseInt(m) * 60;
+                $("#StartDate").val(td);
+                for (i = 0; i < lists.length; i++) {
+                    listbedid.push(lists[i].ID);
+                }
+                $("#itemId").val(listbedid.join(", "));
+                $.post(urlPostAction, $("#frm-Orders").serialize(), function (data) {
+                    $("#btnSave").prop('disabled', false);
+                    if (data.Erros)
+                        createMessage(data.Message);
+                    else {
+                        $("[data-event='Default']").trigger("click");
+                        printOrder();
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createShowMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+            }
+        });
+
+        function calculate(end, pr, tt) {
+            dngg = 0;
+            var discountKH = JSON.parse($("#DiscountKH").val());
+            for (var i = 0; i < discountKH.length; i++) {
+                if (discountKH[i].IsAll == true || ((discountKH[i].IsAll == false) && IsCus == true)) {
+                    dngg = dngg + discountKH[i].Percent;
+                }
+            }
+
+            var price2 = dngg * totalPrice / 100;
+            var v = parseInt($("#SetPacketOrder").html());
+            $("#Value").val(v);
+            var ed = td + v * 60;
+            $("#EndDate").val(ed);
+            $("#Price").val(totalPrice);
+
+            $('#Discount').val(dngg);
+            $('#DiscountMoney').val(price2);
+            $("#dn_gg").html(dngg);
+            $("#Payment").html(numeral(totalPrice - price2).format('0,0'));
+            $("#Payments").val(numeral(totalPrice - price2).format('0,0'));
+            //$("#printDiscountTotal").html(price2);
+            $("#printSaleTotal").html(numeral(tt).format('0,0'));
+            //$("#printPriceCusNTotal").html(numeral(totalPrice - price2).format('0,0'));
+            //$("#TotalPriceVND").html(DocTienBangChu(totalPrice - price2));
+            //$("#printSale").html(numeral(totalPrice - price2).format('0,0'));
+            //$("#PriceVND").html(DocTienBangChu(totalPrice - price2));
+            //$("#printDis").html(dngg);
+        }
+
+        function printOrder() {
+            count = lists.length;
+            var fn = $("#CustomerName").val();
+            if (count > 1) {
+                totalPrice = totalPrice / count;
+            }
+            var price2 = dngg * totalPrice / 100;
+            $("#printKH").html(fn);
+            $("#printDiscountTotal").html(price2);
+            $("#printSaleTotal").html(numeral(totalPrice).format('0,0'));
+            $("#printPriceCusNTotal").html(numeral(totalPrice - price2).format('0,0'));
+            $("#PriceVND").html(DocTienBangChu(totalPrice - price2));
+            $("#printDis").html(dngg);
+            var bounus = $("#Bonus").html().replace(/[,]+/g, '');
+            var pr = $("#PrizeMoney").val().replace(/[,]+/g, '');
+            $("#printPrizeMoneyTotal").html(numeral(pr).format('0,0'));
+            $("#printMoney").html(numeral(bounus - pr).format('0,0'));
+            $("#printSale").html(numeral(totalPrice - price2).format('0,0'));
+            var html = "";
+            $('#LstProductID').find(":selected").each(function () {
+
+                html += '<li><strong>' + $(this).data("val") + ' Phút</strong><strong>' + $(this).data("price") + '</strong><strong>' + $(this).data("price") + '</strong></li>';
+            });
+
+
+            $("#listprint").html(html);
+
+
+            $("#prinPrice").html(numeral(price).format('0,0'));
+            $("#printPriceCusN").html(numeral(price).format('0,0'));
+            var v = parseInt($("#SetPacketOrder").html());
+            var ed = td + v * 60;
+            var names = '<li><strong>Thu ngân:</strong><span>' + '@Model.UserName' + '</span></li><li><strong>Khách hàng:</strong><span>' + fn + '</span></li>';
+            var timeshow = '<li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(td) + ' - ' + hhmmss(ed) + '</b></span></li>';
+            var totals = names + $('#TotalPrice').html() + timeshow;
+            //$('#TotalPrice').html(totals);
+            //if (count > 1) {
+            var tex = $("#TotalOrder").html();
+            $("#TotalOrder").html("");
+            $("#ListBoxPrint").append(tex);
+            $('#BoxPrint #ObjPrice').html(totals);
+            $.each(lists, function (i, val) {
+                var sshow = names + '<li><strong>Tầng/Giường</strong><span>' + val.RoomName + ' / G ' + val.Name + '</span></li><li><strong>Nhân viên:</strong><span>' + val.DN_User_BedDesk.FullName + '</span> </li><li><strong>Gói</strong><span>' + val.PacketName + '</span></li>' + timeshow;
+                $('#BoxPrint #ObjPrice').html(sshow);
+                $("#ListBoxPrint").append($("#BoxPrint").html());
+            });
+            jQuery.print('#ListBoxPrint');
+            //$('#ListBoxPrint').html("");
+            $(".modal").modal('hide');
+        }
+
+        function printOrderPreView() {
+            count = lists.length;
+            var fn = $("#CustomerName").val();
+            if (count > 1) {
+                totalPrice = totalPrice / count;
+            }
+            var price2 = dngg * totalPrice / 100;
+            $("#printKH").html(fn);
+            $("#printDiscountTotal").html(price2);
+            $("#printSaleTotal").html(numeral(totalPrice).format('0,0'));
+            $("#printPriceCusNTotal").html(numeral(totalPrice - price2).format('0,0'));
+            $("#PriceVND").html(DocTienBangChu(totalPrice - price2));
+            $("#printDis").html(dngg);
+            var bounus = $("#Bonus").html().replace(/[,]+/g, '');
+            var pr = $("#PrizeMoney").val().replace(/[,]+/g, '');
+            $("#printPrizeMoneyTotal").html(numeral(pr).format('0,0'));
+            $("#printMoney").html(numeral(bounus - pr).format('0,0'));
+            $("#printSale").html(numeral(totalPrice - price2).format('0,0'));
+            var html = "";
+            $('#LstProductID').find(":selected").each(function () {
+
+                html += '<li><strong>' + $(this).data("val") + ' Phút</strong><strong>' + $(this).data("price") + '</strong><strong>' + $(this).data("price") + '</strong></li>';
+            });
+
+
+            $("#listprint").html(html);
+
+
+            $("#prinPrice").html(numeral(price).format('0,0'));
+            $("#printPriceCusN").html(numeral(price).format('0,0'));
+            var v = parseInt($("#SetPacketOrder").html());
+            var ed = td + v * 60;
+            var names = '<li><strong>Thu ngân:</strong><span>' + '@Model.UserName' + '</span></li><li><strong>Khách hàng:</strong><span>' + fn + '</span></li>';
+            var timeshow = '<li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(td) + ' - ' + hhmmss(ed) + '</b></span></li>';
+            var totals = names + $('#TotalPrice').html() + timeshow;
+            //$('#TotalPrice').html(totals);
+            //if (count > 1) {
+            var tex = $("#TotalOrder").html();
+            $("#TotalOrder").html("");
+            $("#ListBoxPrint").append(tex);
+            $('#BoxPrint #ObjPrice').html(totals);
+            $.each(lists, function (i, val) {
+                var sshow = names + '<li><strong>Tầng/Giường</strong><span>' + val.RoomName + ' / G ' + val.Name + '</span></li><li><strong>Nhân viên:</strong><span>' + val.DN_User_BedDesk.FullName + '</span> </li><li><strong>Gói</strong><span>' + val.PacketName + '</span></li>' + timeshow;
+                $('#BoxPrint #ObjPrice').html(sshow);
+                $("#ListBoxPrint").append($("#BoxPrint").html());
+            });
+            //} else {
+            //    $('#BoxPrint #ObjPrice').html(totals);
+            //    $("#ListBoxPrint").append($("#BoxPrint").html());
+            //}
+            jQuery.print('#ListBoxPrint');
+            $('#BoxPrint #ObjPrice').html("");
+            $('#ListBoxPrint').html("");
+            //$(".modal").modal('hide');
+        }
+
+        $("#btnPrint").click(function () {
+            printOrderPreView();
+
+        });
+    });
+</script>
+@Html.Action("AjaxPrint")

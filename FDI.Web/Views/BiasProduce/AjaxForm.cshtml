@@ -1,0 +1,109 @@
+﻿@model FDI.Simple.BiasProduceItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";   
+}
+<script>
+
+    $(function () {
+        $("#frm-Production").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $.post("/Utility/DeleteCostProductUser?key=" + getCookie('CodeLogin'), function () {
+                    $('#UserCost .data').each(function () {                        
+                        var user = $(this).attr("data-guid");
+                        var id = $(this).attr("data-id");
+                        if (user != "") {
+                            var item = {
+                                SetupProductId: id,
+                                UserId: user,
+                                Key: getCookie('CodeLogin')
+                            }
+                            $.post("/Utility/AddCostProductUser?json=" + JSON.stringify(item), function () { });
+                        }
+                    });
+                    $.post("/BiasProduce/Actions", $("#frm-Production").serialize(), function (data) {
+                        $("#btnSave").prop('disabled', false);
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                            createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                });
+            }
+        });
+       
+        fnAuto(".useritem");
+    });
+    
+    function fnAuto(parameters) {
+        $(parameters).autocomplete({
+            serviceUrl: "/BiasProduce/AutoUser",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $(this).attr("data-guid", el.GuiID);
+            }
+        });
+    }
+</script>
+<form id="frm-Production">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" id="AgencyId" name="AgencyId" value="@ViewBag.AgencyId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Nhân công sản xuất
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">                        
+                        <div class="form-group">
+                            <div class="col-sm-8 col-md-offset-2">
+                                <table class="gridView" style="width: 100%" id="UserCost">
+                                    @if (Model.SetupProductionItems != null)
+                                    {
+                                        foreach (var item in Model.SetupProductionItems)
+                                        {
+                                            var t = Model.LstCostProductUserItems.FirstOrDefault(c => c.SetupProductID == item.ID);
+                                            <tr>
+                                                @if (t != null)
+                                                {
+                                                    <td>@item.Name</td>
+                                                    <td>
+                                                        <input class='form-control useritem data' data-id='@item.ID' data-guid='@t.UserId' value="@t.UserName" />
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Name</td>
+                                                    <td>
+                                                        <input class='form-control useritem data' data-id='@item.ID' data-guid='' value="" />
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

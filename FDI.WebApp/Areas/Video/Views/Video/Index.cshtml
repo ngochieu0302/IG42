@@ -1,0 +1,50 @@
+﻿@model FDI.Simple.ModelVideoItem
+@using FDI.Utils
+@{
+    var pageId = WebConfig.VideoId;
+}
+<div class="list-product-wrap">
+    ﻿<div class="list-product-home type-list">
+        <div class="title">
+            <h3>
+                <a href="#" title="">Video công trình nổi bật</a>
+            </h3>
+        </div>
+        <div class="list-media grid">
+            <div class="row">
+                @foreach (var item in Model.ListItem)
+                {
+                    <div class="col-sm-6 col-md-4">
+                        <div class="item-media item-media-ef">
+                            <div class="img">
+                                <a href="/@FomatString.Slug(item.Name)-p@(pageId)c@(item.ID)" title="@item.Name">
+                                    <img src="@item.UrlPicture.UploadPicture()" alt="@item.Name" class="img-responsive">
+                                    <span class="roll tie-video"></span>
+                                </a>
+                            </div>
+                            <div class="detail">
+                                <h2>
+                                    <a href="/@FomatString.Slug(item.Name)-p@(pageId)c@(item.ID)" title="">@item.Name</a>
+                                </h2>
+                                <div class="post-date">
+                                    <span><i class="fa fa-user"></i>Admin</span>
+                                    <span><i class="fa fa-clock-o"></i>@item.DateCreated.Value.Format("dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.PageHtml))
+        {
+            <div class="div-phantrang">
+                <div class="dot-fillin">
+                    <ul>
+                        @Html.Raw(Model.PageHtml)
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>

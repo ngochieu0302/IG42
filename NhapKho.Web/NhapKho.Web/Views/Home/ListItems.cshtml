@@ -1,0 +1,379 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.CateValueAddItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<link href="~/Content/Admin/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+<script src="~/Content/Admin/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="~/Content/Admin/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+<style>
+    #announce tr {
+        cursor: pointer;
+    }
+    .btn-success h4 {
+        float: left;
+    }
+</style>
+
+<div class="box-a-table-wrap box-sales">
+    <div class="box-order">
+        <div class="select-order">
+            <div class="class-wrap" style="font-size: 14px">
+                <div class="btn btn-sm btn-success" style="float: left; width: 50%">
+                    <h4>Giá trị cân:</h4>
+                    <h4 id="ValueCan"></h4>
+                    <h4>. Kg</h4>
+                </div>
+                <div class="btn btn-sm btn-success" style="float: left; width: 50%">
+                    <h4>Tổng KL:</h4>
+                    <h4 id="totalkl">@(Model.ListProductValueItems.Sum(m => m.ListImportProductItems.Sum(l => l.Value)))</h4>
+                    <h4>. Kg</h4>
+                    <h4>Tổng tiền:</h4>
+                    <h4 id="totalprice">@(Model.ListProductValueItems.Sum(m => m.ListImportProductItems.Sum(l => l.PriceNew)).Money())</h4>
+                    <h4>. Vnđ</h4>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active tab-scroll" id="tabs-hoadon1">
+                    <div class="form-horizontal">
+                        <span id="KTu"></span>
+                        <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="ListProduct" value="@(new JavaScriptSerializer().Serialize(Model))">
+</div>
+@Html.Action("Inmavach")
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script src="~/Content/Admin/js/JsBarcode.all.min.js"></script>
+<script>
+    var price = 0;
+    var quantity = 0;
+    var model = JSON.parse($('#ListProduct').val());
+    var list = model.ListProductValueItems;
+    var count = list.length;
+    ViewList();
+    var totalvalue = parseFloat('@Model.ListProductValueItems.Sum(m => m.ListImportProductItems.Sum(l => l.PriceNew)).Money()');
+    var totalprice = 0;
+    var click = true;
+    function myFunction(event) {
+        event.preventDefault();
+        var x = event.key.toLowerCase();
+        // Xử lý sản phẩm đc cân
+        for (var i = 0; i < count; i++) {
+            if (list[i].Code == x) {
+                model.Pi = i;
+                model.Stt = list[i].ListImportProductItems.length;
+                $(".select_item").removeClass("active");
+                $(".select_itemc").removeClass("active");
+                $(".active_" + list[model.Pi].Code).addClass("active");
+                $("." + model.Stt + "_active_" + x).addClass("active");
+                break;
+            }
+        }
+        var x1 = event.which || event.keyCode;
+       
+        //$("#KTu").html(x1);
+        if (count > 0) {
+            // In barcode cho SP
+            if (x1 == 73) {
+                var listp = list[model.Pi].ListImportProductItems;
+                var obj = [];
+                for (var t = 0; t < listp.length; t++) {
+                    if (listp[t].Stt == model.Stt) {
+                        obj = listp[t];
+                        break;
+                    }
+                }
+                if (obj.IsIn) {
+                    $("#namesp").html(list[model.Pi].Name);
+                    $("#klin").html(obj.Value / 1000);
+                    $("#totalpricein").html(numeral(obj.PriceNew).format('0,0') + " vnđ");
+                    $("#pricein").html(numeral(obj.Price).format('0,0'));
+                    JsBarcode("#barcode", obj.BarCode, { format: "CODE128" });
+                    $('#BoxPrint').show();
+                    jQuery.print('#BoxPrint');
+                    $('#BoxPrint').hide();
+                } else {
+                    if (obj.Value == 0) SetKl();
+                    $.post("/Home/ActionsIn?codep=" + list[model.Pi].Barcode + "&codei=" + obj.BarCode + "&pi=" + model.Pi, function (data) {
+                        if (data == 1) {
+                            obj.IsIn = true;
+                            JsBarcode("#barcode", obj.BarCode, { format: "CODE128" });
+                            $('#BoxPrint').show();
+                            jQuery.print('#BoxPrint');
+                            $('#BoxPrint').hide();
+                            $("#" + model.Stt + "_in_" + list[model.Pi].Code).remove();
+                        }
+                    });
+                }
+            }
+            // In Barcode hộp
+            if (x1 == 80) {
+                $("#namesp").html(list[model.Pi].Name);
+                var totalkl = 0;
+                var totalprice = 0;
+                var listi = list[model.Pi].ListImportProductItems;
+                var counta = listi.length;
+                for (var i = 0; i < counta; i++) {
+                    if (listi[i].IsIn) {
+                        totalkl += listi[i].Value;
+                        totalprice += listi[i].PriceNew;
+                    }
+                }
+                $("#klin").html(totalkl / 1000);
+                $("#totalpricein").html(numeral(totalprice).format('0,0') + " vnđ");
+                $("#pricein").html(numeral(list[model.Pi].Price).format('0,0'));
+                JsBarcode("#barcode", list[model.Pi].Barcode, { format: "CODE128" });
+                $('#BoxPrint').show();
+                jQuery.print('#BoxPrint');
+                $('#BoxPrint').hide();
+            }
+            // In Barcode thùng
+            if (x1 == 13 && totalvalue > 0) {
+                swal({
+                    title: "",
+                    text: "Bạn có chắc chắn muốn lưu lại?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-success",
+                    confirmButtonText: "Lưu lại",
+                    cancelButtonText: "Quay lại",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $.post("/Home/ActionsSave", function (data) {
+                            if (data != 0) {
+                                $("#namesp").html("Thịt Heo");
+                                $("#klin").html($("#totalkl").html());
+                                $("#totalpricein").html($("#totalprice").html() + " vnđ");
+                                $("#pricein").html("0");
+                                JsBarcode("#barcode", model.Barcode, { format: "CODE128" });
+                                $('#BoxPrint').show();
+                                jQuery.print('#BoxPrint');
+                                $('#BoxPrint').hide();
+                                model = data;
+                                list = model.ListProductValueItems;
+                                ViewList();
+                            }
+                        });
+                    }
+                    swal.close();
+                });
+            }
+            // Thêm dòng cho hộp
+            if (x1 == 32) {
+                if (click) click = false;
+                $.post("/Home/ActionsAdd?codep=" + list[model.Pi].Barcode + "&pi=" + model.Pi, function (data) {
+                    if (data.Quantity > 0) {
+                        list[model.Pi].ListImportProductItems.push(data);
+                        $("#namesp").html(list[model.Pi].Name);
+                        $("#klin").html(data.Value / 1000);
+                        $("#totalpricein").html(numeral(data.PriceNew).format('0,0') + " vnđ");
+                        $("#pricein").html(numeral(data.Price).format('0,0'));
+                        JsBarcode("#barcode", data.BarCode, { format: "CODE128" });
+                        $('#BoxPrint').show();
+                        jQuery.print('#BoxPrint');
+                        $('#BoxPrint').hide();
+                        click = true;
+                        model.Stt = data.Stt;
+                        if ($('#BoxPrint').hide()) {
+                            ViewList();
+                        }
+
+                    }
+                });
+            }
+        }
+        // Set khối lượng
+        if (x1 == 83) {
+            SetKl();
+        }
+        // Xóa đối tượng.
+        if (x1 == 88) {
+            var listdp = list[model.Pi].ListImportProductItems;
+            var td = listdp.length;
+            if (td > 1) {
+                while (td--) {
+                    if (listdp[td].Stt == model.Stt) {
+                        $.post("/Home/ActionsDelete?codep=" + list[model.Pi].Barcode + "&codei=" + listdp[td].BarCode, function (data) {
+                        });
+                        listdp.splice(td, 1);
+                        break;
+                    }
+                }
+                ViewList();
+            }
+        }
+
+        // Xóa All.
+        if (x1 == 46) {
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn xóa?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Quay lại",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.post("/Home/ActionsDeleteAll", function (data) { });
+                    model = [];
+                    list = [];
+                    location.reload();
+                }
+                swal.close();
+            });
+        }
+    }
+
+    function SetKl() {
+        var x = list[model.Pi].Code;
+        var kl = quantity;
+        var listp = list[model.Pi].ListImportProductItems;
+        var obj = [];
+        for (var t = 0; t < listp.length; t++) {
+            if (listp[t].Stt == model.Stt) {
+                obj = listp[t];
+                break;
+            }
+        }
+        if (obj.IsIn) kl = obj.Value;
+        else {
+            totalvalue += (kl - obj.Value);
+            obj.Value = kl;
+            var pr = Math.round(kl * obj.Price / 500000) * 500;
+            totalprice += (pr - obj.PriceNew);
+            obj.PriceNew = pr;
+            $("#" + model.Stt + "_kl_" + x).html(kl / 1000);
+            price = list[model.Pi].Price;
+            $("#" + model.Stt + "_totalprice_" + x).html(numeral(obj.PriceNew).format('0,0'));
+        }
+        $("#namesp").html(list[model.Pi].Name);
+        $("#klin").html(kl / 1000);
+        $("#pricein").html(numeral(price).format('0,0'));
+        $("#totalpricein").html(numeral(obj.PriceNew).format('0,0') + " vnđ");
+        $("#totalkl").html((totalvalue / 1000).toFixed(3));
+        $("#totalprice").html(numeral(totalprice).format('0,0'));
+    }
+
+    setInterval(function () {
+        $.post("/Home/KLKG", function (data) {
+            var klcan = JSON.parse(data);
+            if (parseFloat(klcan) > 0 && parseFloat(klcan) < 1) createMessage("Đã có lỗi xảy ra", "Kiểm tra định dạng Cân: Chuyển về đơn vị g!"); // Tạo thông báo lỗi
+            else {
+                quantity = parseFloat(klcan);
+                $("#ValueCan").html(quantity / 1000);
+
+            }
+        });
+    }, 500);
+
+    function ViewList() {
+        var stta = 1;
+        var stringa = "<td class='text-center select_item text1' data-f='Code' data-stt='Stt' data-value='text1' id='text1'>Stt</td>" +
+            "<td class='text-center select_item text1' data-f='Code' data-stt='Stt' data-value='text1' id='text2'>Value</td>" +
+            "<td class='text-center select_item text1' data-f='Code' data-stt='Stt' data-value='text1' id='text3'>Price</td>" +
+            "<td class='text-center select_item text1' data-f='Code' data-stt='Stt' data-value='text1' id='text4'>PriceNew</td>" +
+            "<td class='text-center select_item text1' data-f='Code' data-stt='Stt' data-value='text1' id='text5'>" +
+            "text6 x</td></tr>";
+        var thtxt = "<tr style='background-color: #007ebb; color: white'><th class='text-center'>STT</th>" +
+            "<th class='text-center'>Sản phẩm</th><th class='text-center'>Barcode</th><th class='text-center'>Phím tắt</th>" +
+            "<th class='text-center'>STT</th><th class='text-center'>SL(kg)</th><th class='text-center'>Giá bán</th>" +
+            "<th class='text-center'>Thành tiền</th><th class='text-center'></th></tr>";
+        totalvalue = 0;
+        totalprice = 0;
+        list.forEach(function (item) {
+            var lisst = item.ListImportProductItems;
+            lisst.sort(function (x1, y) { return y.Stt - x1.Stt });
+            var countl = lisst.length;
+            var obj1 = item.ListImportProductItems[0];
+            totalvalue += obj1.Value;
+            totalprice += obj1.PriceNew;
+            var textc1 = "active_" + item.Code;
+            var text1 = obj1.Stt + "_active_" + item.Code;
+            var text2 = obj1.Stt + "_kl_" + item.Code;
+            var text3 = obj1.Stt + "_price_" + item.Code;
+            var text4 = obj1.Stt + "_totalprice_" + item.Code;
+            var text5 = obj1.Stt + "_action_" + item.Code;
+            var text6 = '<span id="' + obj1.Stt + "_in_" + item.Code + '">in</span>';
+            var ch = stringa.replace(/Stt/g, obj1.Stt);
+            ch = ch.replace(/Code/g, item.Code);
+            ch = ch.replace(/Value/g, obj1.Value / 1000);
+            ch = ch.replace(/PriceNew/g, numeral(obj1.PriceNew).format('0,0'));
+            ch = ch.replace(/Price/g, numeral(obj1.Price).format('0,0'));
+            ch = ch.replace(/text1/g, text1);
+            ch = ch.replace(/text2/g, text2);
+            ch = ch.replace(/text3/g, text3);
+            ch = ch.replace(/text4/g, text4);
+            ch = ch.replace(/text5/, text5);
+            if (!obj1.IsIn) ch = ch.replace(/text6/g, text6);
+            else ch = ch.replace(/text6/, " ");
+            var string = "<tr>";
+            string += "<td class='text-center select_itemc " + textc1 + "' id='rowspan_" + countl + "' rowspan='" + countl + "'>" + stta + "</td>";
+            string += "<td class='text-center select_itemc " + textc1 + "' rowspan='" + countl + "'>" + item.Name + "</td>";
+            string += "<td class='text-center select_itemc " + textc1 + "' rowspan='" + countl + "'>" + item.Barcode + "</td>";
+            string += "<td class='text-center select_itemc " + textc1 + "' rowspan='" + countl + "'>F" + stta + " : Chọn.   ---   p : In hộp.</td>";
+            string += ch;
+            stta++;
+            if (countl > 1) {
+                for (var a = 1; a < countl; a++) {
+                    obj1 = item.ListImportProductItems[a];
+                    totalvalue += obj1.Value;
+                    totalprice += obj1.PriceNew;
+                    text1 = obj1.Stt + "_active_" + item.Code;
+                    text2 = obj1.Stt + "_kl_" + item.Code;
+                    text3 = obj1.Stt + "_price_" + item.Code;
+                    text4 = obj1.Stt + "_totalprice_" + item.Code;
+                    text5 = obj1.Stt + "_action_" + item.Code;
+                    text6 = '<span id="' + obj1.Stt + "_in_" + item.Code + '">(i)in</span>';
+                    ch = stringa.replace(/Stt/g, obj1.Stt);
+                    ch = ch.replace(/Code/g, item.Code);
+                    ch = ch.replace(/Value/g, obj1.Value / 1000);
+                    ch = ch.replace(/PriceNew/g, numeral(obj1.PriceNew).format('0,0'));
+                    ch = ch.replace(/Price/g, numeral(obj1.Price).format('0,0'));
+                    ch = ch.replace(/text1/g, text1);
+                    ch = ch.replace(/text2/g, text2);
+                    ch = ch.replace(/text3/g, text3);
+                    ch = ch.replace(/text4/g, text4);
+                    ch = ch.replace(/text5/g, text5);
+                    if (!obj1.IsIn) ch = ch.replace(/text6/g, text6);
+                    else ch = ch.replace(/text6/g, " ");
+                    string += "<tr>" + ch + "</tr>";
+                }
+            }
+            thtxt += string;
+        });
+        $("#ProductDetail").html(thtxt);
+        $("." + model.Stt + "_active_" + list[model.Pi].Code).addClass("active");
+        $(".active_" + list[model.Pi].Code).addClass("active");
+        $("#totalkl").html((totalvalue / 1000).toFixed(3));
+        $("#totalprice").html(numeral(totalprice).format('0,0'));
+        $(".select_item").click(function () {
+            var cla = $(this).data("value");
+            var code = $(this).data("f");
+            model.Stt = $(this).data("stt");
+            $(".select_item").removeClass("active");
+            $(".select_itemc").removeClass("active");
+            $("." + cla).addClass("active");
+            $(".active_" + code).addClass("active");
+            for (var i = 0; i < count; i++) {
+                if (list[i].Code == code) {
+                    model.Pi = i;
+                    break;
+                }
+            }
+        });
+    }
+</script>

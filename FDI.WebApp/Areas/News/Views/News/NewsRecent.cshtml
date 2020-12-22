@@ -1,0 +1,29 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.NewsItem>
+@{
+    var pageId = WebConfig.NewDetail;
+}
+@if (Model.Any())
+{
+    <div class="blog-sidebar">
+        <h5 class="title">Bài viết gần đây</h5>
+        <div class="recent-post">
+            @foreach (var item in Model.Take(4))
+            {
+                <div class="recent-post-item">
+                    <figure class="product-thumb">
+                        <a href="/@(item.TitleAscii)-p@(pageId)c@(item.ID)">
+                            <img src="@item.PictureUrl.UploadPicture()" alt="@item.Title">
+                        </a>
+                    </figure>
+                    <div class="recent-post-description">
+                        <div class="product-name">
+                            <h6><a href="/@(item.TitleAscii)-p@(pageId)c@(item.ID)">@item.Title</a></h6>
+                            <p>@item.DateCreated.Value.ToShortDateString()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

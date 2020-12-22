@@ -1,0 +1,102 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.ShopProductCartItem>
+@{
+    var pageid = WebConfig.ProductDetail;
+}
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Gửi đơn hàng</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<!-- checkout main wrapper start -->
+<div class="checkout-page-wrapper section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Checkout Billing Details -->
+            <div class="col-lg-6">
+                <div class="checkout-billing-details-wrap">
+                    <h5 class="checkout-title">Thông tin yêu cầu</h5>
+                    <div class="billing-form-wrap">
+                        <form id="frm-Order">
+                            <div class="single-input-item">
+                                <label for="fullname" class="required">Họ và tên</label>
+                                <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" required />
+                            </div>
+                            <div class="single-input-item">
+                                <label for="email" class="required">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Địa chỉ email" required />
+                            </div>
+
+                            <div class="single-input-item">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" id="address" name="address" placeholder="Địa chỉ" />
+                            </div>
+                            <div class="single-input-item">
+                                <label for="phone">Điện thoại</label>
+                                <input type="text" id="phone" name="phone" placeholder="Điện thoại" />
+                            </div>
+                            <div class="single-input-item">
+                                <label for="ordernote">Ghi chú</label>
+                                <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Ghi chú về đơn hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng"></textarea>
+                            </div>
+                            <div class="single-input-item">
+                                <button type="submit" class="btn btn-sqr">Gửi đơn</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Summary Details -->
+            <div class="col-lg-6">
+                <div class="order-summary-details">
+                    <h5 class="checkout-title">Đơn hàng của bạn</h5>
+                    <div class="order-summary-content">
+                        <!-- Order Summary Table -->
+                        <div class="order-summary-table table-responsive text-center">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                        <td><a href="/@(item.NameAscii)-p@(pageid)c@(item.ProductId)"> @item.Name <strong>× @item.Quantity</strong></a>
+                                        </td>
+                                        <td>@item.Total.Money()</td>
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Tổng tiền</td>
+                                        <td><strong>@(Model.Sum(a=>a.Total).Money())</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- Order Payment Method -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- checkout main wrapper end -->

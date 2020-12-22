@@ -1,0 +1,33 @@
+﻿@model List<FDI.Simple.WebsiteItem>
+@{
+    ViewBag.Title = "LinkWebsite";
+}
+    
+<div class="box-home-right">
+    <div class="box-home-right">
+        <div class="title-box-right">
+            <h3>@Resource.Other.Resource.LinkWebsite</h3>
+        </div>
+        <div class="body-box-right lienket-ws">
+              <select id="LinkWebsite" name="LinkWebsite" class="form-control"> 
+            <option value="#">--- @Resource.Other.Resource.LinkWebsite ---</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.Link" >@item.Name</option>
+            }
+        </select>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var urlmenu = document.getElementById('LinkWebsite');
+    urlmenu.onchange = function () {
+        if (this.options[this.selectedIndex].value == '#' || this.options[this.selectedIndex].value == '' || this.options[this.selectedIndex].value == null) {
+            return;
+        } else {
+            window.open(this.options[this.selectedIndex].value, '_blank');
+        }
+    };
+</script>

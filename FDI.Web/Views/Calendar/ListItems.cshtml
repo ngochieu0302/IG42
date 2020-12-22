@@ -1,0 +1,87 @@
+﻿@model FDI.Simple.ModeWeeklyScheduleItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var listweek = Model.ListItem.GroupBy(m => m.WeeklyID).Select(m => m.FirstOrDefault());
+    var listSchedule = Model.ListItem.GroupBy(m => m.ScheduleID).Select(m => m.FirstOrDefault());
+    var datenow = DateTime.Today;
+}
+<div id="mygird">
+    <div class="box-control no-footer">
+        <div class="scrollable box-control-content">
+
+            <table class="table table-bordered table-calender" cellspacing="1">
+                <colgroup>
+                    <col style="width: 10%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                    <col style="width: 12.85%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th><strong class="text-center">Ca làm việc</strong> </th>
+                        @foreach (var item1 in listweek)
+                        {
+                            var date = Model.DateStart.AddDays(item1.WeeklyID.Value - 1);
+                            <th>@item1.WeeklyName (@date.ToString("dd/MM/yyyy"))</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item2 in listSchedule)
+                        {
+                            var hstart = (int)((item2.ScheduleTimeStart % 86400) / 3600);
+                            var mstart = (int)((item2.ScheduleTimeStart % 3600) / 60);
+                            var hend = (int)((item2.ScheduleTimeEnd % 86400) / 3600);
+                            var mend = (int)((item2.ScheduleTimeEnd % 3600) / 60);
+                        <tr id="line-@item2.ID">
+                            <td><strong class="text-center">@item2.ScheduleName (@(hstart)h@(mstart > 10 ? mstart.ToString() : "0" + mstart) - @(hend)h@(mend > 10 ? mend.ToString() : "0" + mend))</strong></td>
+                            @foreach (var item3 in Model.ListItem.Where(m => m.ScheduleID == item2.ScheduleID))
+                            {
+                                var date = Model.DateStart.AddDays(item3.WeeklyID.Value - 1);
+                                if (item3.IsCalender && item3.IsDayOff == false)
+                                {
+                                <td @(date == datenow ? "style=background-color:#ffdca8" : "")>
+                                    <div class="cell-calender">
+                                        <div class="top">@Html.Raw(item3.CalendarName)</div>
+                                        <div class="bot">
+                                            <div class="left">
+                                                @if (item3.DNUserBedDeskItem != null)
+                                                {
+                                                    @item3.DNUserBedDeskItem.NameBed
+                                                }
+                                            </div>
+                                            <div class="right">@(item3.DNUserBedDeskItem != null ? Grid.ActionEdit(item3.DNUserBedDeskItem.ID, item3.DNUserBedDeskItem.NameBed) : Grid.ActionEdit(item3.ID, Model.UserID, "Thêm giường hoặc bàn"))</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                }
+                                else
+                                {
+                                <td @(item3.IsDayOff ? "style=background-color:#00bfff" : (date == datenow ? "style=background-color:#ffdca8" : ""))>@Html.Raw(item3.NameDayOff) @Html.Raw((item3.IsCalender ? "<i>" + item3.CalendarName + "</i>" : ""))
+                                    <div class="left">
+                                                @if (item3.DNUserBedDeskItem != null)
+                                                {
+                                                    @item3.DNUserBedDeskItem.NameBed
+                                                }
+                                            </div>
+                                </td>
+                                }
+                            }
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

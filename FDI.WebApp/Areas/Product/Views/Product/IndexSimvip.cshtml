@@ -1,0 +1,32 @@
+﻿@model FDI.Simple.ModelSimvipItem
+@if (Model.ListItems.Any())
+{
+    <div class="sec-home">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        @foreach (var item in Model.ListItems)
+        {
+            <div class="tile-simvip">
+                <i class="spritestlvn sprite-@(item.Icon)"></i>
+                <a href="#">@item.Name</a>
+            </div>
+            <div class="boxTableList">
+                <div class="row">
+                    @Html.Action("ListSimvip","Product",new {Area = "Product", list = item.Categories})
+                    @*@foreach (var items in item.ShopProduct)
+            {
+                <div class="col-sm-3 col-md-3">
+                <div class="boxSimvip">
+                    <span class="nha-mang-@(items.Name) spritestlvn"></span>
+                    <span class="sim">@items.CodeSku</span>
+                    <span class="SimPrice">@items.PriceNew đ</span>
+                </div>
+            </div>
+            }*@
+
+                </div>
+            </div>
+        }
+    
+    </div>
+}
+

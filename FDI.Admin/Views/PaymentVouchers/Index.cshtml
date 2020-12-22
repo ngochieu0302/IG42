@@ -1,0 +1,78 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@{
+    ViewBag.Title = "Phiếu chi";
+    Layout = "~/Views/Shared/_Meta.cshtml";
+    var date = DateTime.Now;
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "PaymentVouchers")';
+    urlForm = '@Url.Action("AjaxForm", "PaymentVouchers")';
+    urlPostAction = '@Url.Action("Actions", "PaymentVouchers")';
+    urlView = '@Url.Action("AjaxView", "PaymentVouchers")';
+   
+    $(document).ready(function() {
+        initAjaxLoad(urlLists, "#Griditems");
+        $(".date-picker").datepicker({
+            showOn: "button",
+            buttonImageOnly: true,
+            format: "dd/mm/yyyy"
+        }).mask('00/00/0000').on('changeDate', function (e) {
+            $(this).datepicker('hide');
+        });
+        $("#gridSearch").submit(function() {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+        $("[data-event='CostType']").click(function () {
+            FdiOpenDialog("#dialog-form-4", "/CostType/AjaxForm?do=Add&type=@((int)Vouchers.Payment)", "Thêm loại thu chi");
+        });
+    });
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i>Admin</a><i class="fa fa-circle"></i></li>
+            <li>Sổ quỹ<i class="fa fa-circle"></i></li>
+            <li class="active">Phiếu chi</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#activeAll" data-event="activeAll" data-grid="#mygird"><i class="fa fa-check-square-o"></i>Duyệt phiếu</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Hủy phiếu</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="ID">Mã phiếu</option>
+                    <option value="Note">Ghi chú</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control date-picker input-sm" name="fromDate" id="fromDate" placeholder="Từ ngày" value="@date.ToString("dd/MM/yyyy")">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control date-picker input-sm" name="toDate" id="toDate" placeholder="Đến ngày" value="@date.AddDays(1).ToString("dd/MM/yyyy")">
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            <div class="pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+                <a class="btn btn-sm btn-success" data-event="CostType"><span class="fa fa-plus"></span>Loại thu chi</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="content-control" id="Griditems">
+</div>

@@ -1,0 +1,87 @@
+﻿@using FDI.CORE
+@{
+    ViewBag.Title = ViewBag.ActionText + " Trạng thái";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<form id="frm-Status">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="Active" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Thay đổi trạng thái
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Từ thẻ</label>
+                            <div class="col-lg-10">
+                                <input id="firstCard" name="firstCard" class="form-control" type="text" maxlength="12" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Đến thẻ</label>
+                            <div class="col-lg-10">
+                                <input id="oldCard" name="oldCard" class="form-control" type="text" maxlength="12" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Chọn trạng thái</label>
+                            <div class="col-lg-10">
+                                <select name="Status" class="form-control">
+                                    <option value="@((int)Card.Create)">Khởi tạo</option>
+                                    <option value="@((int)Card.Excel)">In thẻ</option>
+                                    <option value="@((int)Card.Released)">Phát hành</option>
+                                    <option value="@((int)Card.Lock)">Khóa thẻ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Xác nhận</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        $("#frm-Status").validate({
+            rules: {
+                firstCard:
+                {
+                    required: true
+                },
+                oldCard:
+                {
+                    required: true
+                }
+            },
+            messages: {
+                firstCard:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                oldCard:
+                {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#frm-Status").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');                       
+                        createCloseMessage("Thông báo", data.Message, "");
+                    }
+                });
+                return false;
+            }
+        });
+    })
+</script>

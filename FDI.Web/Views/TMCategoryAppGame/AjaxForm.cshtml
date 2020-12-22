@@ -1,0 +1,192 @@
+﻿@model FDI.Simple.TMCategoryAppGameItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="~/Content/Admin/js/ColorPicker/colorpicker.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/eye.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/layout.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/utils.js"></script>
+<link href="~/Content/Admin/css/colorpicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {       
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Type:
+                {
+                    required: true
+                },
+                Description:
+                {
+                    minlength: 10
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Type:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Description:
+                {
+                    minlength: "Vui lòng nhập ít nhất 10 ký tự."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+        $('body').on('click', '#btn_editascii', function () {
+            $('#Slug' + '').removeAttr('readonly');
+        });
+        $("#Name").on('keyup', function (e) {
+            e.preventDefault();
+            $('#SEOTitle').val($(this).val());
+            $('#SEODescription').val($(this).val());
+            $('#SEOKeyword').val($(this).val());
+            $('#Slug').val(RemoveUnicode($(this).val()));
+        });
+
+        $("#ParentId").change(function (e) {
+            var lv = $(this).find(":selected").attr("data-IsLv");
+            $("#IsLevel").val(parseInt(lv) + 1);
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />     
+        <input type="hidden" name="IsLevel" id="IsLevel" value="@(Model.IsLevel ?? 1)" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin danh mục
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên chuyên mục</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name"  id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-10">
+                                <select name="ParentId" id="ParentId"   class="form-control">
+                                    <option value="1" data-IsLv="0">-- Chọn chuyên mục cha --</option>
+                                    @foreach (var item in ViewBag.lstCate)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.ParentId) ? " selected" : string.Empty) data-IsLv="@item.IsLevel">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                   
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages">Chọn hỉnh ảnh đại diện</button>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.PictureID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.UrlPicture, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự hiển thị</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Sort, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Icon</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Icon" id="Icon" value="@Model.Icon" style="background-color:@Model.Icon" class="form-control w250" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="padding-top: 10px; font-weight: bold; font-style: italic;">@Model.Icon</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đường dẫn URL</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Slug, new { @class = "form-control", @id = "Slug" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Title</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEOTitle, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Description</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEODescription, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Keywords</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEOKeyword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="8" id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsHome") Hiện thị trang chủ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

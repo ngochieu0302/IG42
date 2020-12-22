@@ -1,0 +1,80 @@
+﻿@model FDI.Simple.ModelDNRolesItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Quản lý nhân viên";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    var unique = function(xs) {
+        return xs.filter(function(x, i) {
+            return xs.indexOf(x) === i;
+        });
+    };
+    
+    $(document).ready(function () {
+        $("#RoleModuleForm").validate({
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#RoleModuleForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+        $("#close").click(function () {
+            $("#dialog-form").modal('hide');
+        });
+
+    });
+</script>
+
+<form id="RoleModuleForm">
+    <div class="modal-body">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Item.RoleId"/>
+        <input type="hidden" name="NameRole" id="NameRole" value="@Model.Item.RoleName"/>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Gán tính năng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="form-horizontal">
+                        <table class="gridView" cellspacing="1">
+                            <tr>
+                                <td style="width: 15%;">
+                                    <label>Tên nhóm quyền </label>
+                                </td>
+                                <td>
+                                    <label>@Model.Item.RoleName</label>
+                                </td>
+                            </tr>
+
+                            @foreach (var item in Model.ActiveRoleItems)
+                            {
+                                <tr>
+                                    <td>
+                                        <label>@item.NameActive</label></td>
+                                    <td>
+                                        <input type="checkbox" class="chkActiveRoles" name="chkActiveRoles" data-id="@item.ID" id="@item.NameActive" value="@item.ID" @(Model.Item.ActiveRoles.Any(m => m.ID == item.ID) ? "checked" : "")/>
+                                    </td>
+                                </tr>            
+                            }
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

@@ -1,0 +1,26 @@
+﻿[
+  {
+    "outputFile": "Content/Admin/css/layout.css",
+    "inputFile": "Content/Admin/sass/layouts/layout/layout.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/bootstrap.css",
+    "inputFile": "Content/Admin/sass/bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/custom.css",
+    "inputFile": "Content/Admin/sass/layouts/layout/custom.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/plugins.css",
+    "inputFile": "Content/Admin/sass/global/plugins.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/components.css",
+    "inputFile": "Content/Admin/sass/global/components.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/login.css",
+    "inputFile": "Content/Admin/sass/pages/login-3.scss"
+  }
+]

@@ -1,0 +1,182 @@
+﻿body {
+  background: #cccccc; }
+
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); }
+
+page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm; }
+
+page[size="A4"][layout="portrait"] {
+  width: 29.7cm;
+  height: 21cm; }
+
+page[size="A3"] {
+  width: 29.7cm;
+  height: 42cm; }
+
+page[size="A3"][layout="portrait"] {
+  width: 42cm;
+  height: 29.7cm; }
+
+page[size="A5"] {
+  width: 14.8cm;
+  height: 21cm; }
+
+page[size="A5"][layout="portrait"] {
+  width: 21cm;
+  height: 14.8cm; }
+
+@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0; } }
+
+.pt-box {
+  width: 100%;
+  font-size: 13px; }
+  .pt-box ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 0; }
+
+.pt-head {
+  width: 100%;
+  float: left; }
+  .pt-head .left {
+    width: 50%;
+    float: left;
+    padding-right: 30px;
+    padding-top: 10px; }
+    .pt-head .left ul {
+      display: block; }
+      .pt-head .left ul li {
+        display: block;
+        margin-bottom: 6px; }
+        .pt-head .left ul li strong {
+          padding-right: 5px;
+          display: inline-block; }
+  .pt-head .right {
+    width: 50%;
+    float: right;
+    padding: 0 15px;
+    text-align: center; }
+    .pt-head .right strong {
+      display: block; }
+
+.pt-name {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px; }
+  .pt-name .left {
+    width: 75%;
+    float: left;
+    text-align: center;
+    padding-top: 15px; }
+    .pt-name .left h3 {
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-top: 0; }
+  .pt-name .right {
+    text-align: right;
+    float: right;
+    width: 25%;
+    padding-top: 25px; }
+    .pt-name .right li {
+      margin-bottom: 4px;
+      display: block; }
+    .pt-name .right span {
+      width: 100px;
+      display: inline-block;
+      margin-left: 10px; }
+    .pt-name .right b {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 5px; }
+
+.pt-detail {
+  float: left;
+  width: 100%;
+  margin-top: 30px; }
+  .pt-detail ul {
+    display: block; }
+    .pt-detail ul li {
+      display: block;
+      margin-bottom: 6px; }
+      .pt-detail ul li b {
+        font-weight: normal;
+        display: inline-block;
+        margin-right: 5px; }
+  .pt-detail .table span, .pt-detail .table strong, .pt-detail .table b, .pt-detail .table i {
+    display: block;
+    height: 24px;
+    width: 100%;
+    float: left; }
+  .pt-detail .table b {
+    padding-left: 15px; }
+  .pt-detail .table i {
+    padding-left: 30px; }
+
+.pt-date {
+  width: 100%;
+  float: left;
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.pt-sign {
+  width: 100%;
+  text-align: center; }
+  .pt-sign .pt-item-sign {
+    float: left; }
+    .pt-sign .pt-item-sign strong {
+      display: block; }
+  .pt-sign span {
+    text-align: center;
+    display: block; }
+  .pt-sign .pt-wirte-sign {
+    height: 40px;
+    width: 100%;
+    float: left; }
+
+.item-sign-5 .pt-item-sign {
+  width: 20%;
+  text-align: center;
+  padding: 10px; }
+
+.item-sign-4 .pt-item-sign {
+  width: 25%;
+  text-align: center;
+  padding: 10px; }
+
+.item-sign-3 .pt-item-sign {
+  width: 33%;
+  text-align: center;
+  padding: 10px; }
+
+.item-sign-2 .pt-item-sign {
+  width: 50%;
+  text-align: center;
+  padding: 10px; }
+
+.pt-exchang {
+  float: left;
+  width: 100%; }
+  .pt-exchang ul {
+    display: block;
+    text-align: left; }
+    .pt-exchang ul li {
+      display: block;
+      margin-bottom: 6px; }
+      .pt-exchang ul li b {
+        font-weight: normal;
+        padding-right: 5px;
+        display: inline-block; }
+

@@ -1,0 +1,49 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelSaleCodeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+               <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll" />
+                    </th>
+                    <th class="text-center"><a href="#Field=ID">ID</a></th>
+                    <th><a href="#Field=Name">Mã giảm giá</a></th>
+                    <th><a href="#Field=DateUser">Ngày sử dụng</a></th>
+                    <th><a href="#Field=IsUser">Trạng thái</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ListItems)
+                {
+                    <tr data-id="@item.ID" title="@item.Code">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td class="text-center">@Grid.DisplayShowStrike(item.Code, item.IsUser == false)</td>
+                        <td class="text-center">@item.DateUser.DecimalToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@(item.IsUser == true ? "Đã sử dụng" : "Chưa sử dụng")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

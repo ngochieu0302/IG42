@@ -1,0 +1,47 @@
+﻿@using FDI.CORE
+@model IEnumerable<FDI.Simple.StaticDocumentItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var a = Model.Sum(m => m.TotalDoc);
+    var b = Model.Sum(m => m.TotalValue);
+    var c = Model.Sum(m => m.TotalDeposit);
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th><strong class="text-center">Tháng</strong> </th>
+                        <th><strong class="text-center">Tổng hợp đồng<br />(A)</strong></th>
+                        <th><strong class="text-center">Giá trị HĐ<br />(B)</strong> </th>
+                        <th><strong class="text-center">Đặt Cọc<br />(C)</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.Month</td>
+                            <td class="text-right ">@item.TotalDoc</td>
+                            <td class="text-right ">@item.TotalValue.Money()</td>
+                            <td class="text-right ">@((item.TotalDeposit).Money())</td>
+
+                        </tr>
+                    }
+                    <tr>
+                        <td>TỔNG</td>
+                        <td class="text-right ">@(a.Money())</td>
+                        <td class="text-right ">@(b.Money())</td>
+                        <td class="text-right ">@(c.Money())</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

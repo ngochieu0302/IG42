@@ -1,0 +1,63 @@
+﻿@model FDI.Simple.DNAgencyItem
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<div class="print-wrap">
+    <div id="TotalOrder" class="pr-total" style="display: none;height: 100vh">
+        <div class="box-pr-payment">
+            <div class="pr-shop">
+                <strong>@Model.NameAgency</strong>
+                <span>@Model.AddressAgency</span>
+            </div>
+            <div class="pr-title-code" id="titleTotal">
+                <strong>HÓA ĐƠN PHỤC VỤ</strong>
+                <i>QLBP/29 @DateTime.Now.ToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-pay">
+                <ul id="TotalPrice">
+                    <li><strong>Tổng tiền:</strong><span id="printSaleTotal">0</span></li>
+                    <li><strong><b>Giảm giá(<b id="printDis"></b>%)</b></strong><span><b id="printDiscountTotal"></b></span></li>
+                    <li><strong>Tổng phải trả:</strong><span id="printPriceCusNTotal">0</span></li>
+                    <li><strong><b>Tích lũy dùng:</b></strong><span><b id="printPrizeMoneyTotal">0</b></span></li>
+                    <li><strong>còn lại:</strong><span id="printMoney">0</span></li>
+                </ul>
+                <strong id="TotalPriceVND"></strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="BoxPrint" class="pr-total" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-content" id="contentPrint">
+            <div class="pr-shop">
+                <strong>@Model.NameAgency</strong>
+                <span>@Model.AddressAgency</span>
+            </div>
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN PHỤC VỤ</strong>
+                <i>QLBP/29 @DateTime.Now.ToString("dd/MM/yyyy hh:mm")</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul id="ObjPrice"></ul>
+            </div>
+            <div class="pr-list-product">
+                <div class="pr-head">
+                    <strong>Thời gian</strong>
+                    <strong>Nguyên giá</strong>
+                    <strong>Giá bán</strong>
+                </div>
+                <div id="listprint">
+                </div>
+                <div class="pr-head" id="totalPrice">
+                </div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng tiền:</strong><span id="printSale">0</span></li>
+                    <li><strong>Bằng chữ:</strong><span class="italic" id="PriceVND">0</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ListBoxPrint">
+</div>

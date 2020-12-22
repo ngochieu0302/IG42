@@ -1,0 +1,82 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.NewDetail;
+    var NewsId = WebConfig.NewsId;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn nhóm menu --</option>
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <aside class="blog-sidebar-wrapper">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        @*<div class="blog-sidebar">
+                                <h5 class="title">search</h5>
+                                <div class="sidebar-serch-form">
+                                    <form action="#">
+                                        <input type="text" class="search-field" placeholder="search here">
+                                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div> <!-- single sidebar end -->*@
+        <div class="blog-sidebar">
+            <h5 class="title">categories</h5>
+            <ul class="blog-archive blog-category">
+                @foreach (var item in Model.ListItem)
+                {
+                    <li><a href="/@(item.Slug)-p@(pageId)c@(item.ID)">@item.Name (@item.CountNews)</a></li>
+                }
+            </ul>
+        </div>
+        <!-- single sidebar end -->
+
+        <!-- single sidebar end -->
+        @Html.Action("NewsRecent","News",new {Area="News"})
+        
+        <!-- single sidebar end -->
+        @Html.Action("BannerLeft","Banner",new {Area="Banner"})
+        
+        <!-- single sidebar end -->
+    </aside>
+}
+

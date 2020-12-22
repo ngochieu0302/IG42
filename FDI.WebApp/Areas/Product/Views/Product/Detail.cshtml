@@ -1,0 +1,187 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelShopProductDetailItem
+@{
+    var stt = 1;
+}
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/san-pham-p4c83">Sản phẩm</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shop-main-wrapper section-padding pb-0">
+    <div class="container">
+        <div class="row">
+            <!-- product details wrapper start -->
+            <div class="col-lg-12 order-1 order-lg-2">
+                <!-- product details inner end -->
+                <div class="product-details-inner">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="product-large-slider">
+                                @foreach (var item in Model.Items.ListGalleryPictureItems)
+                                {
+                                    <div class="pro-large-img img-zoom">
+                                        <img src="@(Utility._dimg)@item.Url.UploadPicture()" alt="@Model.Items.Name" />
+                                    </div>
+                                }
+                            </div>
+                            <div class="pro-nav slick-row-10 slick-arrow-style">
+                                @foreach (var item in Model.Items.ListGalleryPictureItems)
+                                {
+                                    <div class="pro-nav-thumb">
+                                        <img src="@(Utility._dimg)@item.Url.UploadPicture()" alt="@Model.Items.Name" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="product-details-des">
+                                <h3 class="product-name">@Model.Items.Name</h3>
+                                <div class="price-box">
+                                    <span class="price-regular">@Model.Items.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money()</span>
+                                    @if (Model.Items.Sale > 0 && Model.Items.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < Model.Items.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                    {
+                                        <span class="price-old"><del>@Model.Items.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money()</del></span>
+                                    }
+                                    <input type="hidden" id="ShopproducId" name="ShopproducId" value="@Model.Items.ListProductItem.Select(c => c.ID).FirstOrDefault()"/>
+                                </div>
+                                @*<h5 class="offer-text"><strong>Hurry up</strong>! offer ends in:</h5>
+                                        <div class="product-countdown" data-countdown="2019/09/20"></div>
+                                        <div class="availability">
+                                            <i class="fa fa-check-circle"></i>
+                                            <span>200 in stock</span>
+                                        </div>*@
+                                @if (Model.Items.Sale > 0)
+                                {
+                                    <div class="availability">
+                                        <i class="fa fa-check-circle"></i>
+                                        <span>Giảm giá: @Model.Items.Sale %</span>
+                                    </div>
+                                }
+
+                                <p class="pro-desc">@Html.Raw(Model.Items.Description)</p>
+                                <div class="quantity-cart-box d-flex align-items-center">
+                                    <h6 class="option-title">Số lượng:</h6>
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" name="Quantity" id="Quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="action_link">
+                                        <a class="btn btn-cart2" href="javascript:void(0)" id="Addtocart" data-id="@Model.Items.ID">Thêm vào giỏ hàng</a>
+                                    </div>
+                                </div>
+                                <div class="pro-size">
+                                    <h6 class="option-title">size :</h6>
+                                    <select class="nice-select" id="ChangeSize_Product" name="ChangeSize_Product">
+                                        @foreach (var item in Model.Items.ListSizeProductItem)
+                                        {
+                                            <option value="@item.ID" data-id="@Model.Items.ID">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                @*<div class="color-option">
+                                    <h6 class="option-title">color :</h6>
+                                    <ul class="color-categories" id="Color_Product">
+                                        @foreach (var item in Model.Items.ListColorProductItem)
+                                        {
+                                            <li class="@(stt == 1 ? "active" : "")" data-id="@item.ID" data-pId="@Model.Items.ID">
+                                                <a style="background-color: @(item.Value)"  href="javascript:void(0)" title="@item.Name"></a>
+                                            </li>
+                                            stt++;
+                                        }
+                                    </ul>
+                                </div>*@
+                                @*<div class="useful-links">
+                                            <a href="#" data-toggle="tooltip" title="Compare"><i
+                                                    class="pe-7s-refresh-2"></i>compare</a>
+                                            <a href="#" data-toggle="tooltip" title="Wishlist"><i
+                                                    class="pe-7s-like"></i>wishlist</a>
+                                        </div>*@
+                                <div class="like-icon">
+
+                                    <div class="social-like">
+                                        <div class="social-like">
+                                            <div id="fb-root"></div>
+                                            <div>
+                                                <div class="fb-like" style="float: left; padding-top: -10px; margin-right: 5px;" data-href="@Request.Url" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                                                <div style="margin-top: 2px; float: left">
+                                                    <a class="twitter-share-button" style="margin-right: 5px;padding-top: -10px;" href="@Request.Url">Tweet</a>
+                                                    <div  class="zalo-share-button" data-href="@Request.Url" data-oaid="291158372821215385" data-layout="1" data-color="blue" data-customize=false></div>
+                                                    <g:plus action="share" data-href="@Request.Url" data-annotation="bubble"></g:plus>
+                                                </div>
+                                                <div class="zalo-follow-only-button" style="margin-top: 2px" data-oaid="291158372821215385"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- product details inner end -->
+
+                <!-- product details reviews start -->
+                <div class="product-details-reviews section-padding pb-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="product-review-info">
+                                <ul class="nav review-tab">
+                                    <li>
+                                        <a class="active" data-toggle="tab" href="#tab_one">Mô tả</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#tab_two">Thông tin</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#tab_three">Bình luân</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content reviews-tab">
+                                    <div class="tab-pane fade show active" id="tab_one">
+                                        <div class="tab-one">
+                                            @Html.Raw(Model.Items.Description)
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab_two">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td>color</td>
+                                                    <td>black, blue, red</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>size</td>
+                                                    <td>L, M, S</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab_three">
+                                        <div class="fb-comments" data-href="@Request.Url" data-width="1086" data-numposts="10"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- product details reviews end -->
+            </div>
+            <!-- product details wrapper end -->
+        </div>
+    </div>
+</div>
+@Html.Action("ProductRelate", "Product", new { Area = "Product", lstCateId = Model.Items.ListCategoryItem.Select(c => c.ID).FirstOrDefault() })

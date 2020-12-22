@@ -1,0 +1,292 @@
+﻿<text>
+    @model FDI.Simple.StorageWarehouse.PurchaseOrderModel
+    @using FDI.CORE
+   
+    @{
+        var i = 1;
+        var total = Model.ListItems.Sum(m => m.Price).Quantity();
+
+    }
+</text>
+
+<div id="Print_trichluc" style="width: 21cm;display: block; margin: 0px auto">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td colspan="2" style="width:234px;">
+                    <p><strong>Đơn vị:...................</strong></p>
+                </td>
+                <td style="width:312px;">
+                    <p align="center"><strong>Mẫu số 01 - VT </strong></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:197px;">
+                    <p><strong>Bộ phận:................</strong></p>
+                </td>
+                <td style="width:37px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:312px;">
+                    <p align="center">(Ban hành theo Thông tư số 200/2014/TT-BTC</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:197px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:37px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:312px;">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ngày 22/12/2014 của Bộ Tài chính)</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+
+    <p>&nbsp;</p>
+
+    <p>&nbsp;</p>
+
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width:181px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:277px;">
+                    <p align="center"><strong>PHIẾU NHẬP KHO</strong></p>
+                </td>
+                <td style="width:141px;">
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:181px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:277px;">
+                    <p align="center"><em>Ngày....tháng....năm ....... </em></p>
+                </td>
+                <td style="width:141px;">
+                    <p>Nợ .........................</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:181px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:277px;">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Số: .................................</p>
+                </td>
+                <td style="width:141px;">
+                    <p>Có .........................</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+
+    <p>- Họ và tên người giao: .......................................................................................</p>
+
+    <p>- Theo .................. số ........... ngày ..... tháng ..... năm ..... của ...........................</p>
+
+    <p>Nhập tại kho: ...........................................địa điểm.............................................</p>
+
+    <p>&nbsp;</p>
+
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width:38px;">
+                    <p align="center">STT</p>
+                </td>
+                <td style="width:181px;">
+                    <p align="center">Tên, nhãn hiệu, quy cách, phẩm chất vật tư, dụng cụ sản phẩm, hàng hoá</p>
+                </td>
+                <td style="width:44px;">
+                    <p align="center">Mã số</p>
+                </td>
+                <td style="width:43px;">
+                    <p align="center">Đơn vị tính</p>
+                </td>
+                <td style="width:130px;">
+                    <p align="center">Số lượng</p>
+                </td>
+                <td style="width:52px;">
+                    <p align="center">Đơn giá</p>
+                </td>
+                <td style="width:61px;">
+                    <p align="center">Thành tiền</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:38px;">
+                    <p align="center">A</p>
+                </td>
+                <td style="width:181px;">
+                    <p align="center">B</p>
+                </td>
+                <td style="width:44px;">
+                    <p align="center">C</p>
+                </td>
+                <td style="width:43px;">
+                    <p align="center">D</p>
+                </td>
+                <td style="width:52px;">
+                    <p align="center">1</p>
+                </td>
+                <td style="width:52px;">
+                    <p align="center">2</p>
+                </td>
+                <td style="width:61px;">
+                    <p align="center">3</p>
+                </td>
+            </tr>
+            <text>
+                @foreach (var item in Model.ListItems)
+                {
+                    <tr>
+                        <td style="width: 38px;">
+                            <p>@(i++)</p>
+                        </td>
+                        <td style="width: 181px;">
+                            <p>@item.ProductName</p>
+                        </td>
+                        <td style="width: 44px;">
+                            <p>@item.Code</p>
+                        </td>
+                        <td style="width: 43px; text-align: center">
+                            <p>Kg</p>
+                        </td>
+                        <td style="width: 78px; text-align: center">
+                            <p>@item.Quantity.Quantity()</p>
+                        </td>
+
+                        <td style="width: 52px; text-align: center">
+                            <p>@item.PriceUnit</p>
+                        </td>
+                        <td style="width: 61px;">
+                            <p>@item.Price.Quantity()</p>
+                        </td>
+                    </tr>
+                }
+            </text>
+            <tr>
+                <td style="width:38px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:181px;">
+                    <p><strong>Cộng</strong></p>
+                </td>
+                <td style="width:44px;">
+                    <p align="center"><strong>x</strong></p>
+                </td>
+                <td style="width:78px;">
+                    <p align="center"><strong>x</strong></p>
+                </td>
+                <td style="width:52px;">
+                    <p align="center"><strong>x</strong></p>
+                </td>
+                <td style="width:52px;">
+                    <p align="center"><strong>x</strong></p>
+                </td>
+                <td style="width:61px;">
+                    <p align="center">@total</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+
+    <p>- Tổng số tiền (viết bằng chữ):.......................................................................................</p>
+
+    <p>- Số chứng từ gốc kèm theo:..........................................................................................</p>
+
+    <p>&nbsp;</p>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="601">
+        <tbody>
+            <tr>
+                <td style="width:140px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:158px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width:104px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:198px;">
+                    <p><em>Ngày ... tháng...&nbsp; năm...</em></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">
+                    <p align="center"><strong>&nbsp;Người lập phiếu </strong></p>
+                </td>
+                <td style="width:158px;">
+                    <p align="center"><strong>Người giao hàng </strong></p>
+                </td>
+                <td style="width:104px;">
+                    <p align="center"><strong>Thủ kho</strong></p>
+                </td>
+                <td style="width:198px;">
+                    <p align="center"><strong>Kế toán trưởng </strong></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">
+                    <p align="center"><em>(Ký, họ tên)</em></p>
+                </td>
+                <td style="width:158px;">
+                    <p align="center"><em>(Ký, họ tên)</em></p>
+                </td>
+                <td style="width:104px;">
+                    <p align="center"><em>(Ký, họ tên)</em></p>
+                </td>
+                <td style="width:198px;">
+                    <p align="center">(Hoặc bộ phận</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:158px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:104px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:198px;">
+                    <p align="center">có nhu cầu nhập)</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:140px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td style="width:158px;">
+                    <p align="center">&nbsp;</p>
+                </td>
+                <td colspan="2" style="width:302px;">
+                    <p align="center"><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Ký, họ tên)</em><strong></strong></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style type="text/css">
+    @@media print {
+
+        #BoxPrint table {
+            margin: 0 auto;
+        }
+    }
+</style>

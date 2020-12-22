@@ -1,0 +1,131 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.Simple
+@model IEnumerable<BedDeskItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var com = Model.OrderByDescending(m => m.Row).Select(m => m.Row).FirstOrDefault();
+}
+<input type="hidden" id="list" value="@(new JavaScriptSerializer().Serialize(Model.Select(m => new ShowDeskItem
+                                  {
+                                      ID = m.ID,
+                                      Q = m.Quantity,
+                                      S = m.IsShow
+                                  })))"/>
+<form id="DNCalendarForm">
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về phòng
+                </div>
+            </div>
+            <input type="hidden" id="RoomId" name="RoomId" value="@Model.Select(m => m.RoomId).FirstOrDefault()"/>
+
+            <div class="portlet-body form">
+                <div class="form-body list-desk">
+                    @foreach (var item in Model)
+                    {
+                        <div style="width: calc((100%/@com) - 6px);" class="item-box-desk">
+                            <div  id="item-desk-@item.ID" class="item-desk desk-@item.Quantity @(!item.IsShow.HasValue || item.IsShow == false ? "disable-desk" : "")" data-id="@item.ID">
+                                <div class="icon-desk">
+                                    <div class="number-desk">@item.Name</div>
+                                </div>
+                            </div>
+                            <input type="text" id="bed-@item.ID" data-id="@item.ID" style="z-index: 1;display: @(!item.IsShow.HasValue || item.IsShow == false ? "none" : "block")" class="quantitybed" value="@item.Quantity"/>
+                        </div>
+                    }
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Lưu</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        var list = JSON.parse($('#list').val());
+        var listsave = [];
+        $('#list').val("");
+        var roomid = $("#RoomId").val();
+        $('#RoomId').val("");
+        $(".item-box-desk").css("height", (910 / parseInt('@com') - 6));
+        $(".item-desk").click(function () {
+            var id = $(this).data("id");
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].ID == parseInt(id)) {
+                    if ($(this).hasClass("disable-desk")) {
+                        $(this).removeClass("disable-desk");
+                        list[i].S = true;
+                        $("#bed-" + id).show();
+                    }
+                    else {
+                        list[i].S = false;
+                        $("#bed-" + id).hide();
+                        $(this).addClass("disable-desk");
+                    }
+                    var check = true;
+                    for (var n = 0; n < listsave.length; n++) {
+                        if (listsave[n].ID == parseInt(id)) {
+                            listsave[n].S = list[i].S;
+                            check = false;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        list[i].Key = getCookie('CodeLogin');
+                        listsave.push(list[i]);
+                    }
+                    break;
+                }
+            }
+        });
+        $(".quantitybed").change(function () {
+            var id = $(this).data("id");
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].ID == parseInt(id)) {
+                    $("#item-desk-" + id).removeClass("desk-" + list[i].Q);
+                    list[i].Q = parseInt($(this).val());
+                    $("#item-desk-" + id).addClass("desk-" + $(this).val());
+                    var check = true;
+                    for (var n = 0; n < listsave.length; n++) {
+                        if (listsave[n].ID == parseInt(id)) {
+                            listsave[n].Q = list[i].Q;
+                            check = false;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        list[i].Key = getCookie('CodeLogin');
+                        listsave.push(list[i]);
+                    }
+                    break;
+                }
+            }
+        });
+        $("#DNCalendarForm").validate({
+            submitHandler: function () { //onSubmit
+                $.post("/Utility/DeleteDesk?key=" + getCookie('CodeLogin'), function (a) {
+                    debugger;
+                    for (var i = 0; i < listsave.length; i++) {
+                        var json = JSON.stringify(listsave[i]);
+                        $.post("/Utility/AddDesk?json=" + json, function (b) { });
+                    }
+                    debugger;
+                    $.post(urlPostAction + "?do=View&id=" + roomid, function (data) {
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                            createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                    return false;
+                });
+
+            }
+        });
+    });
+</script>

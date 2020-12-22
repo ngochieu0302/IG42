@@ -1,0 +1,80 @@
+﻿@model FDI.Base.ActiveRole
+@{
+    ViewBag.Title = "AjaxForm";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#RoleForm").validate({
+            rules: {
+                NameActive:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+
+                Ord:
+                {
+                    required: true,
+                    maxlength: 255,
+                    number: true
+                }
+            },
+            messages: {
+
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#RoleForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+<form id="RoleForm" class="form-horizontal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Id" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-comments"></i>Thông tin về tính năng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">Tên quyền</label>
+                        <div class="col-sm-9 col-md-8">
+                            <input type="text" class="form-control" placeholder="..." name="NameActive" id="NameActive" value="@Model.NameActive" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">Thứ tự</label>
+                        <div class="col-sm-9 col-md-8">
+                            <input type="text" class="form-control" placeholder="..." name="Ord" id="Ord" value="@Model.Ord" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

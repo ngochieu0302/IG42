@@ -1,0 +1,111 @@
+﻿@model FDI.Simple.ModelAlbumItem
+@using FDI.Utils
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        SelectContainer = "#@Model.Container";        
+        selectMutil = '@Model.SelectMutil.ToString().ToLower()';
+
+        urlFormFiles = '@Url.Action("AjaxFormFiles", "DocumentFiles")';        
+        urlListPicture = '@Url.Action("ListNewItems", "DocumentFiles")';
+
+
+        $("#btnAddPicture").click(function () {
+            urlLoadingForm = urlFormFiles + "?do=Add";
+            $("#dialog-form-4").css("height", formHeight);
+            $.post(urlLoadingForm, function (data) {
+                $("#dialog-form-4 .modal-title").html("Thêm mới hình ảnh");
+                $("#dialog-form-4 #dialog-form-ajax").html(data);
+                $('#dialog-form-4').modal('show');
+            });
+            return false;
+        });
+        $.getJSON("@Url.Action("JsonTreeCategorySelect", "Category")", { type: "@((int)ModuleType.Document)" }, function (list) {
+            AjaxLoadTreeView(list, '#TreePictureSelect');
+            registerGridView('#gridItems');
+            function showPicture(url) {
+                $("#PictureGriditems").html(imageLoading);
+                $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                    $("#PictureGriditems").html(data);
+                });
+            }
+            $("#TreePictureSelect a").click(function () {
+                $("#TreePictureSelect .select").removeClass("select");
+                $(this).parent().parent().removeClass("unselect").addClass("select");
+                var categoryId = $(this).attr("id");
+                $("#CategoryID").val(categoryId);
+                showPicture(urlListPicture + "&CategoryID=" + categoryId);
+            });
+
+            $("#chooseall").click(function () {
+                $("#CategoryID").val("0");
+                showPicture(urlListPicture);
+            });
+        });
+
+        $.post(urlListPicture, function (data) {
+            $("#PictureGriditems").html(data);
+        });
+
+
+        //tìm kiếm ảnh
+        $("#PictureGridSearch").submit(function () {
+            var fromSearch = $("#PictureGridSearch");
+            $.post(urlListPicture + "&" + getValueGalaryFormMutilSelect(fromSearch), $("#PictureGridSearch").serialize(), function (data) {
+                $("#PictureGriditems").html(data);
+            });
+            return false;
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+    });
+    function AddPicture(controls) {
+        var row = $(controls).parent().parent();
+        var htmlValue = '<table class="gridView" cellspacing="1">';
+        htmlValue += $(textContainer + " table").html();
+        htmlValue += "<tr class='" + $(row).attr("class") + "' id='" + $(row).attr("id") + "'>" + $(row).html() + "</tr>";
+        htmlValue += "</table>";
+        $(textContainer).html(htmlValue).find(".delete").remove();
+        getValuePicture(SelectContainer);
+        $(row).remove();
+        return false;
+    }
+    function fnInitAjaxLoad(controls) {
+        var row = $(controls).parent().parent();
+        var htmlValue = '<table class="gridView" cellspacing="1">';
+        htmlValue += $(textContainer + " table").html();
+        htmlValue += "<tr class='" + $(row).attr("class") + "' id='" + $(row).attr("id") + "'>" + $(row).html() + "</tr>";
+        htmlValue += "</table>";
+        $(textContainer).html(htmlValue).find(".delete").remove();
+        getValuePicture(SelectContainer);
+        $(row).remove();
+        return false;
+    }
+
+</script>
+<div class="modal-body">
+    <form id="PictureGridSearch">
+        <input type="text" class="form-control search-images" name="Keyword" id="Keyword" value="" placeholder="Nhập tên hình ảnh" />
+        <input type="hidden" name="SearchIn" id="SearchIn" value="Name" />
+        <input type="hidden" name="CategoryID" id="CategoryID" value="0" />
+        <button name="submit.Search" type="submit" class="btn btn-sm btn-primary bt-search"><i class="fa fa-search"></i></button>
+        <button id="btnAddPicture" class="btn btn-sm btn-primary" data-type="4"><span class="fa fa-plus"></span>Thêm mới</button>
+        <button id="chooseall" class="btn btn-sm btn-danger" data-type="4"><i class="fa fa-refresh"></i></button>
+    </form>
+    <form id="PictureSelect">
+        <div id="gridItems" class="treePicture scrollable">
+            <div id="treecontrol" class="treeTool">
+                <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+                <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+            </div>
+            <ul id="TreePictureSelect" class="filetree gridView treeview"></ul>
+        </div>
+        <div id="PictureGriditems" class="listPicture">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnPictureSelectSubmit" type="button" class="btn btn-sm btn-success">Chọn file</button>
+    <button type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+</div>

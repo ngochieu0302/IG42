@@ -1,0 +1,18 @@
+﻿@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+    var date = DateTime.Now;
+}
+
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="keyword">Tên đăng nhập</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Tên đăng nhập">
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+        </form>
+    </div>
+</div>

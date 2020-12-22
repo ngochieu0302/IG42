@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "ProductConfirmedWithSupplier";
+}
+@using FDI.CORE
+@model List<FDI.Simple.StorageWarehouse.TotalProductToDayItem>
+
+<div class="portlet box purple ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i> Số lượng đã chốt với nhà cung cấp
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-horizontal" role="form" novalidate="novalidate">
+            <div class="form-body">
+                @foreach (var item in Model)
+                {
+                    <div class="row static-info">
+                        <div class="col-md-5 name">   @item.ProductName: </div>
+                        <div class="col-md-7 value">
+                            @item.Quantity.Quantity()
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model FDI.Simple.ModelDNUserItem
+@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+    var datenow = DateTime.Now;
+}
+<script type="text/javascript">
+    Date.prototype.getWeek = function () {
+        var onejan = new Date(this.getFullYear(), 0, 1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    };
+    urlLists = '@Url.Action("ListItems", "Calendar")';
+    $(document).ready(function () {
+        callSelect2("#YearId", "70px");
+        callSelect2("#ddlWeek", "235px");
+        var d = new Date();
+        var n = d.getFullYear();
+        $('body').on("change", "#YearId", function () {
+            var year = $("#YearId").val();
+            $.post("@Url.Action("WeekByYear", "Calendar")?year=" + year + "", function (data) {
+                var da = "";
+                $.each(data, function (a, b) {
+                    da = da + "<option value='" + b.ID + "'>" +
+                        "Tuần " + b.ID +
+                        " - (" + b.MonToSunView + ")" +
+                        "</option>";
+                });
+                $("#ddlWeek").html(da);
+                $('#ddlWeek').val(1).trigger("change");
+            });
+
+            $.post("@Url.Action("ListItems", "Calendar")?year=" + year + "&weekNumber=" + 1, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+
+        $('body').on("change", "#ddlWeek", function () {
+            var numberWeek = $("#ddlWeek").val();
+            $.post("@Url.Action("ListItems", "Calendar")?year=" + n + "&weekNumber=" + numberWeek, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+
+        $('body').on("change", "#UserId", function () {
+            var numberWeek = $("#ddlWeek").val();
+            $.post("@Url.Action("ListItems", "Calendar")?year=" + n + "&weekNumber=" + numberWeek, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+
+        $("#_back").click(function () {
+            var numberWeek = $("#ddlWeek").val();
+            numberWeek = parseInt(numberWeek) - 1;
+            if (numberWeek > 0) {
+                $('#ddlWeek').val(numberWeek).trigger("change");
+                var userId = $("#UserId").val();
+                $.post("@Url.Action("ListItems", "Calendar")?year=" + n + "&weekNumber=" + numberWeek, function (data) {
+                    $("#Griditems").html(data);
+                });
+            }
+        });
+        var listWeekOfYear = '@Model.ListWeekItems.Count()';
+        $("#_next").click(function () {
+            var numberWeek = $("#ddlWeek").val();
+            numberWeek = parseInt(numberWeek) + 1;
+            if (numberWeek <= parseInt(listWeekOfYear)) {
+                $('#ddlWeek').val(numberWeek).trigger("change");
+                $.post("@Url.Action("ListItems", "Calendar")?year=" + n + "&weekNumber=" + numberWeek, function (data) {
+                    $("#Griditems").html(data);
+                });
+            }
+        });
+    });
+
+
+</script>
+<div class="header-control">
+
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <select id="YearId" name="YearId" class="select2">
+                    @for (var i = datenow.Year - 2; i < datenow.Year + 3; i++)
+                    {
+                        <option @(i == datenow.Year ? "selected" : "") value="@i">@i</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-sm btn-success" id="_back"><i class="fa fa-angle-left"></i></button>
+                <select id="ddlWeek" name="ddlWeek" class="select2">
+                    @foreach (var itemWeek in Model.ListWeekItems)
+                    {
+                        <option value="@itemWeek.ID" @(itemWeek.MonToSun.Any(m => m == DateTime.Today) ? "selected" : string.Empty)>@("Tuần " + itemWeek.ID) - (@itemWeek.MonToSunView)</option>
+                    }
+                </select>
+                <button class="btn btn-sm btn-success" type="button" id="_next"><i class="fa fa-angle-right"></i></button>
+            </div>
+            <div class="btn-group pull-right">
+                <a href="/CalenderByUser" title="" class="btn btn-sm btn-success">Xem lịch theo danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>

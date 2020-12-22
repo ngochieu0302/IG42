@@ -1,0 +1,148 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ProductItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.LstRecipeItems != null ? string.Join(",", Model.LstRecipeItems.Where(c => c.IsDelete == false).Select(c => c.ValueId)) : "";
+}
+<form id="frm-Recipe">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="View" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"> @Model.Name - Giá:@Model.PriceNew.Money() @(!string.IsNullOrEmpty(Model.ColorName) ? " - Màu sắc: " + Model.ColorName : "")@(!string.IsNullOrEmpty(Model.ColorName) ? " - Kích thước: " + Model.SizeName : "")</i>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal" style="margin-bottom: 20px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                    </div>
+                    <table class="gridView table table-bordered table-striped" id="ProductDetail">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên SP</th>
+                                <th class='text-center' style="width: 20%">Số lượng</th>
+                                <th class='text-center'>Đơn vị</th>
+                                <th class='text-center'>Giá</th>
+                                <th class='text-center'>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.LstRecipeItems != null)
+                            {
+                                foreach (var item in Model.LstRecipeItems.Where(c => c.IsDelete == false))
+                                {
+                                    <tr class="data">
+                                        <td>@(stt++)</td>
+                                        <td>@item.ValueName</td>
+                                        <td align="center">
+                                            <input type="hidden" class="inputValue" value="@item.ValueId">
+                                            <input type="number" step="0.0001" class="form-control text-right inputValue quan" data-pid="@item.ValueId" value="@item.Quantity.Quantity("0:0.######")">
+                                        </td>
+                                        <td class="text-center">@item.UnitName</td>
+                                        <td class="text-right inputValue price-@item.ValueId">@string.Format("{0:0,0}", item.Price)</td>
+                                        <td class="text-right total total-@item.ValueId">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                                        <td class="text-right">
+                                            <button class="btn btn-default pdelete" data-pid="@item.ValueId" data-price="@(item.Price * item.Quantity)"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        $("#frm-Recipe").validate({
+            submitHandler: function () { //onSubmit
+                btnDisabled("#btnSave");
+                if (lstP.length < 1) {
+                    btnEnable("#btnSave");
+                    ErrorMessage("Bạn chưa chọn nguyên liệu.");
+                    return false;
+                }
+                $.post("/Utility/DeleteRecipeItem?key=" + getCookie('CodeLogin'), function () {
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        var item = {
+                            ValueId: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2].replace(/[,]+/g, ''),
+                            Key: getCookie('CodeLogin')
+                        };
+                        $.post("/Utility/AddRecipeItem?json=" + JSON.stringify(item), function () { });
+                    });
+                    $.post("/Product/Actions", $("#frm-Recipe").serialize(), function (data) {
+                        btnEnable("#btnSave");
+                        if (data.Erros)
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        else {
+                            $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                            var pid = getParameters("productDetailId", "");
+                            createCloseMessage("Thông báo", data.Message, "&productDetailId=" + pid); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                        }
+                    });
+                });
+            }
+        });
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/Product/AutoValue",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                console.log(el);
+                $('#autoProduct').val("");
+                var index = lstP.indexOf(el.ID);
+                if (index === -1) {
+                    lstP.push(el.ID);
+                    var txt = "<tr class='data'><td>stt</td><td>name</td><td align='center'><input type='hidden' class='inputValue' value='ValueId'/><input type='number' step='0.0001' class='form-control text-right inputValue quan' data-pid='ValueId'  value='1'/></td><td class='text-center'>UnitName</td><td class='text-right inputValue  price-ValueId'>PriceValue</td><td class='text-right total total-ValueId'>PriceValue</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-trash-o' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("stt", lstP.length);
+                    txt = txt.replace("name", el.value);
+                    txt = txt.replace("UnitName", el.data);
+                    txt = txt.replace(/PriceValue/g, numeral(el.pricenew).format('0,0'));
+                    txt = txt.replace("dataPrice", el.pricenew);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#ProductDetail tbody").append(txt);
+                }
+            }
+        });
+        $("body").on("change", ".quan", function () {
+            var pid = $(this).attr("data-pid");
+            var sl = parseFloat($(this).val() !== "" ? $(this).val() : "0");
+            var gia = $(".price-" + pid).html() !== "" ? $(".price-" + pid).html() : "0";
+            var price = parseFloat(gia.replace(/[,]+/g, ''));
+            $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+    });
+
+</script>

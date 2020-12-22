@@ -1,0 +1,68 @@
+﻿@model FDI.Simple.ModelDNRolesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    var unique = function (xs) {
+        return xs.filter(function (x, i) {
+            return xs.indexOf(x) === i;
+        });
+    };
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Item.RoleId" />
+        <input type="hidden" name="NameRole" id="NameRole" value="@Model.Item.RoleName" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Gán tính năng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <table class="gridView" cellspacing="1">
+                                <tr>
+                                    <td style="width: 15%;">
+                                        <label>Tên nhóm quyền </label>
+                                    </td>
+                                    <td>
+                                        <label>@Model.Item.RoleName</label>
+                                    </td>
+                                </tr>
+
+                                @foreach (var item in Model.ActiveRoleItems)
+                                {
+                                    <tr>
+                                        <td>
+                                            <label>@item.NameActive</label>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="chkActiveRoles" name="chkActiveRoles" data-id="@item.ID" id="@item.NameActive" value="@item.ID" @(Model.Item.ActiveRoles.Any(m => m.ID == item.ID) ? "checked" : "") />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>        
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

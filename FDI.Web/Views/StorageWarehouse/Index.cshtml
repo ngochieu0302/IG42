@@ -1,0 +1,69 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    var urlXuatExcel = '@Url.Action("ProcessExportFile", "StorageWarehouse")';
+    urlFormModule = '@Url.Action("AjaxFormImport")';
+    $(document).ready(function () {
+        $("#btnExportExcel").click(function () {
+            var form = $("#gridSearch");
+            window.location.href = urlXuatExcel + "?" + getValueFormMutilSelect(form);
+            return false;
+        });
+    });
+</script>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                   <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Code">Mã phiếu</option>
+                    <option value="Note">Ghi chú</option>
+                    <option value="CustomerName">Khách hàng</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control input-sm" name="fromDate" id="fromDate">
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control input-sm" name="toDate" id="toDate" >
+            </div>
+            <div class="form-group">
+                <select name="IsDelete" class="form-control">
+                    <option value="">-- Trạng thái --</option>
+                    <option value="@((int)StatusWarehouse.Complete)">Đã duyệt</option>
+                    <option value="@((int)StatusWarehouse.Imported)">Đã nhập</option>
+                    <option value="@((int)StatusWarehouse.Pending)">Đang xử lý</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            @*<button type="submit" class="btn btn-sm btn-primary" id="btnExportExcel"><span class="fa fa-file-excel-o"></span>Xuất Excel</button>*@
+            <div class="pull-right">
+                <a class="btn btn-sm btn-primary btn_Inport" data-action="Add"><span class="fa fa-plus"></span>Thêm mới</a>
+                
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function() {
+        $(".btn_Inport").click(function() {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Tạo phiếu yêu cầu phập kho");
+        });
+    });
+</script>

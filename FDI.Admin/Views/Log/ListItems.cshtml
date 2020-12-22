@@ -1,0 +1,57 @@
+﻿@model FDI.Simple.ModelLogItem
+@{
+	ViewBag.Title = "ListLog";
+	Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+	<div class="box-control">
+		<div class="scrollable box-control-content">
+			<table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+				<thead>
+					<tr>
+						<th class="act_roles">
+							<input value="" type="checkbox" />
+						</th>
+						<th class="text-center"><a href="#Field=ID">ID</a></th>
+						<th class="text-center"><a href="#Field=User">Tên người dùng</a></th>
+						<th class="text-center">Chức năng</th>
+						<th class="text-center">Ngày tạo</th>
+						<th class="text-center">Cửa hàng</th>
+						<th class="text-center">Nội dung</th>
+						<th class="text-center">Thao tác</th>
+					</tr>
+				</thead>
+				@foreach (var item in Model.ListItem)
+				{
+					<tr title="@item.User">
+						<td class="act_roles">
+							<input type="checkbox" value="@item.ID" class="check">
+						</td>
+						<td>@item.ID</td>
+						<td>@item.User</td>
+						<td>@item.ChucNang</td>
+						<td>@item.NgayTao.Value.ToString("dd/MM/yyyy")</td>
+						<td>@item.CuaHang</td>
+						<td>@item.NoiDung</td>
+						<td class="text-right" style="width: 12%">
+							@Grid.ActionView(item.ID, item.User)
+							@Grid.ActionEdit(item.ID, item.User)
+							@Grid.ActionDelete(item.ID, item.User)
+						</td>
+					</tr>
+				}
+			</table>
+		</div>
+	</div>
+	<div class="footer-control">
+		@if (Model.PageHtml != null)
+			{
+			@Html.Raw(Model.PageHtml)
+			}
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		registerGridView('#mygird');
+	});
+</script>

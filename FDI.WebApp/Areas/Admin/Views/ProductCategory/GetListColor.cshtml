@@ -1,0 +1,6 @@
+﻿@model List<FDI.Simple.ColorItem>
+<option value="">Chọn Màu</option>
+@foreach (var item in Model)
+{
+    <option value="@item.ID" >@item.Name</option>
+}

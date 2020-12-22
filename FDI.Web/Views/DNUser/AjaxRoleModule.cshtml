@@ -1,0 +1,70 @@
+﻿@model FDI.Simple.ModelDNUserItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Item.UserId"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Gán tính năng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-horizontal">
+                    <div id="mygird">
+                        <div class="box-control" style="width: 97%">
+
+                            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                                <thead>
+                                    <tr>
+                                        <th>Tên Module</th>
+                                        @foreach (var item1 in Model.ActiveRoleItems)
+                                        {
+                                            <th>@item1.NameActive</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.Item.DN_Module)
+                                {
+                                    var lstActive = Model.Item.DN_User_ModuleActive.Where(c => c.ModuleId == item.ID);
+                                    <tr id ="line-@item.ID">
+                                        <td>@item.NameModule</td>
+                                        @foreach (var i in Model.ActiveRoleItems)
+                                        {
+                                            var itemnew = lstActive.Where(c => c.ActiveRoleId == i.ID).FirstOrDefault();
+                                            <td>
+                                                @if (itemnew != null)
+                                                {
+                                                    <input type="checkbox" class="chkActiveRoles" name="chkActiveRoles" value="@itemnew.ID" @(itemnew.Active == true ? "checked" : "") title="@itemnew.ActiveName"/>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

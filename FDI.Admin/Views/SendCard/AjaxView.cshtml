@@ -1,0 +1,70 @@
+﻿@using FDI.CORE
+@model FDI.Base.Send_Card
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Lịch sử phát thẻ
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.Customer.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày phát</label>
+                        </td>
+                        <td>@Model.DateCreate.DecimalToString("d/MM/yyyy")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Danh sách thẻ đã phát
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã thẻ</th>
+                            <th>Mã pin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var stt = 1;
+                            foreach (var item in Model.Card_Customer)
+                            {
+                                <tr>
+                                    <td>@(stt++)</td>
+                                    <td>@item.DN_Card.Serial</td>
+                                    <td>@item.DN_Card.PinCode</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

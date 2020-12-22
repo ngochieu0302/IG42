@@ -1,0 +1,54 @@
+﻿
+<form class="search-form" action="" method="GET">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="query">
+        <span class="input-group-btn">
+            <a href="javascript:;" class="btn submit">
+                <i class="icon-magnifier"></i>
+            </a>
+        </span>
+    </div>
+</form>
+<div class="hor-menu">
+    <ul class="nav navbar-nav">
+        <li class="menu-dropdown classic-menu-dropdown">
+            <a href="/">
+                Trang chủ
+            </a>
+        </li>
+        <li class="menu-dropdown">
+            <a href="/thong-tin-tai-khoan">
+                Thông tin tài khoản
+            </a>
+        </li>
+        <li class="menu-dropdown classic-menu-dropdown">
+            <a href="/cay-he-thong">Thành viên</a>
+        </li>
+        <li class="menu-dropdown classic-menu-dropdown">
+            <a href="/danh-sach-the">Quản lý thẻ</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    $(function () {
+        setNavigation();
+    });
+    function setNavigation() {
+        var path = window.location.pathname;
+        path = path.replace(/\/$/, "");
+        path = decodeURIComponent(path);
+       
+        $(".hor-menu .navbar-nav a").each(function () {
+           
+            var href = $(this).attr('href');
+            if (path === href) {
+                $(this).parents('li').addClass('active');
+                $(".hor-menu .navbar-nav li:first-child").removeClass("active");
+            }
+            else if ($(this).attr('href') === "/") {
+                $(".hor-menu .navbar-nav li:first-child").addClass('active');
+             }
+        });
+    }
+</script>

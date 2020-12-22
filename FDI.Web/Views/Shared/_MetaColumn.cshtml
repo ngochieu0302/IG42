@@ -1,0 +1,33 @@
+﻿@using FDI.Web.Controllers
+@{
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    var t = BaseController.Title;
+}
+<script>
+    $(document).ready(function () {
+        urlLists = '@Url.Action("ListItems")';
+        urlSort = '@Url.Action("AjaxSort")';
+        urlForm = '@Url.Action("AjaxForm")';
+        urlPostAction = '@Url.Action("Actions")';
+        urlView = '@Url.Action("AjaxView")';
+    })
+</script>
+@section metas
+{
+    <title>@t</title>
+}
+<div class="row">
+    @RenderBody()
+</div>
+
+<script>
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+    })
+</script>

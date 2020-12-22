@@ -1,0 +1,202 @@
+﻿@model FDI.Simple.ModelMenusItem
+@using FDI.Utils
+@{
+    var date = DateTime.Now;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <select name="value" class="form-control">
+                <option value="">-- Chọn nhóm menu --</option>
+                @foreach (var item in Model.ListMenuGroupsItem)
+                {
+                    <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                }
+            </select>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        debugger;
+                        if (!data.Erros) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="main-header d-none d-lg-block">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <!-- header middle area start -->
+        <div class="header-main-area sticky">
+            <div class="container">
+                <div class="row align-items-center position-relative">
+
+                    <!-- start logo area -->
+                    <div class="col-lg-2">
+                        <div class="logo">
+                            <a href="/">
+                                <img src="/Content/Publishing/img/logo/logo-mobie.png" alt="Brand Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- start logo area -->
+
+                    <!-- main menu area start -->
+                    <div class="col-lg-6 position-static">
+                        <div class="main-menu-area">
+                            <div class="main-menu">
+                                <!-- main menu navbar start -->
+                                <nav class="desktop-menu">
+                                    <ul>
+                                        @foreach (var item in Model.ListItem.Where(c => c.ParentId == 1))
+                                        {
+                                            <li class="@(Model.Url.ToLower().StartsWith(item.Url.ToLower()) ? "active" : "")"><a href="@item.Url" title="@item.Name">@item.Name @(Model.ListItem.Any(c => c.ParentId == item.ID) ? Html.Raw("<i class='fa fa-angle-down'></i>") : Html.Raw(""))</a>
+                                                @if (Model.ListItem.Any(c => c.ParentId == item.ID))
+                                                {
+                                                 
+                                                    <ul class="dropdown">
+                                                        @foreach (var items in Model.ListItem.Where(c => c.ParentId == item.ID))
+                                                        {
+                                                            <li><a href="@items.Url" title="@items.Name">@items.Name</a></li>
+                                                        }
+                                                    </ul>
+                                                }
+                                        
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                                <!-- main menu navbar end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- main menu area end -->
+
+                    <!-- mini cart area start -->
+                    <div class="col-lg-4">
+                        <div class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">
+                            <div class="header-search-container">
+                                <button class="search-trigger d-xl-none d-lg-block"><i class="pe-7s-search"></i></button>
+                                <form class="header-search-box d-lg-none d-xl-block animated jackInTheBox" action="/tim-kiem-san-pham-p1003c0">
+                                    <input type="text" placeholder="Search entire store hire" class="header-search-field" name="keyword" />
+                                    <button class="header-search-btn"><i class="pe-7s-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="header-configure-area">
+                                <ul class="nav justify-content-end">
+                                    <li>
+                                        <a href="/gio-hang-cua-ban-p1001c0" class="minicart-btn">
+                                            <i class="pe-7s-shopbag"></i>
+                                            <div class="notification" id="countcart">@Model.CountCart</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- mini cart area end -->
+
+                </div>
+            </div>
+        </div>
+        <!-- header middle area end -->
+        <!-- mobile header start -->
+        
+    </div>
+    <div class="mobile-header d-lg-none d-md-block sticky">
+            <!--mobile header top start -->
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <div class="mobile-main-header">
+                            <div class="mobile-logo">
+                                <a href="/">
+                                    <img src="/Content/Publishing/img/logo/logo-mobie.png" alt="Brand Logo">
+                                </a>
+                            </div>
+                            <div class="mobile-menu-toggler">
+                                <div class="mini-cart-wrap">
+                                    <a href="/gio-hang-cua-ban-p1001c0">
+                                        <i class="pe-7s-shopbag"></i>
+                                        <div class="notification">@Model.CountCart</div>
+                                    </a>
+                                </div>
+                                <button class="mobile-menu-btn">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- mobile header top start -->
+        </div>
+        <!-- mobile header end -->
+        <aside class="off-canvas-wrapper">
+            <div class="off-canvas-overlay"></div>
+            <div class="off-canvas-inner-content">
+                <div class="btn-close-off-canvas">
+                    <i class="pe-7s-close"></i>
+                </div>
+                <div class="off-canvas-inner">
+                    <!-- search box start -->
+                    <div class="search-box-offcanvas">
+                        <form action="/tim-kiem-san-pham-p1003c0" method="POST">
+                            <input type="text" placeholder="Search Here..." name="keyword">
+                            <button class="search-btn"><i class="pe-7s-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- search box end -->
+                    <!-- mobile menu start -->
+                    <div class="mobile-navigation">
+                        <!-- mobile menu navigation start -->
+                        <nav>
+                            <ul class="mobile-menu">
+                                @foreach (var item in Model.ListItem.Where(c => c.ParentId == 1))
+                                {
+                                    <li class="menu-item-has-children"><a href="@item.Url" title="@item.Name">@item.Name</a>
+                                        @if (Model.ListItem.Any(c => c.ParentId == item.ID))
+                                        {
+                                            <ul class="dropdown">
+                                                @foreach (var items in Model.ListItem.Where(c => c.ParentId == item.ID))
+                                                {
+                                                    <li><a href="@items.Url" title="@items.Name">@items.Name</a></li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                        <!-- mobile menu navigation end -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+}
+

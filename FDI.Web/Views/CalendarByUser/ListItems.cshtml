@@ -1,0 +1,142 @@
+﻿@using FDI.Simple
+@using FDI.CORE
+@model ModelDNUserCalendarItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var listweek = Model.WeeklyScheduleItems.GroupBy(m => m.WeeklyID).Select(m => m.FirstOrDefault());
+    var lists = Model.WeeklyScheduleItems.GroupBy(m => m.ScheduleID).Select(m => m.FirstOrDefault());
+    var datenow = DateTime.Today;
+}
+<style>
+    .status-normal {
+        background: #008080;
+        color: #fff;
+        display: inline-block;
+        float: left;
+    }
+    .status-off {
+        background: #c0c0c0;
+        color: #000;
+    }
+    .status-fromexchange {
+        background: red;
+        color: #fff;
+    }
+    .online {
+        color: blue;
+    }
+    .offline {
+        color: #000;
+    }
+    .status-toexchange {
+        background: #ffb900;
+        color: #fff;
+    }
+</style>
+@foreach (var item2 in lists.OrderBy(m => m.ScheduleItem.Soft))
+{
+    <label class="ScheduleItemName">@item2.ScheduleItem.Name (@item2.ScheduleItem.HoursStart:@(item2.ScheduleItem.MinuteStart > 10 ? item2.ScheduleItem.MinuteStart.ToString() : "0" + item2.ScheduleItem.MinuteStart) - @item2.ScheduleItem.HoursEnd:@(item2.ScheduleItem.MinuteEnd > 10 ? item2.ScheduleItem.MinuteEnd.ToString() : "0" + item2.ScheduleItem.MinuteEnd))</label>
+}
+<div id="mygird">
+    <div class="box-control no-footer">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th><strong class="text-center">STT</strong> </th>
+                        <th><strong class="text-center">Tên NV</strong> </th>
+                        <th><strong class="text-center">Phòng ban</strong> </th>
+                        <th><strong class="text-center">Chức vụ</strong> </th>
+                        @foreach (var item1 in listweek)
+                        {
+                            var date = Model.DateStart.AddDays(item1.WeeklyID.Value - 1);
+                            <th>@item1.WeeklyName (@date.ToString("dd/MM/yyyy"))</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var stt = 1;
+                        var text = "";
+                        int check = 0;
+                        foreach (var item2 in Model.ListItems.OrderBy(m => m.NameRole))
+                        {
+                            check = item2.NameRole == text ? check : check + 1;
+                            text = item2.NameRole;
+                        <tr id="line-@item2.UserId" style="@(check%2 != 0?"background:#e6e6e6":"")">
+                            <td class="text-center">@(stt++)</td>
+                            <td class="text-center"><b id="on-@item2.UserId" class="@(item2.IsOnline ? "online" : "offline")">@item2.UserName</b></td>
+                            <td class="text-center">@item2.NameRole</td>
+                            <td class="text-center"><div class="top">@string.Join(",", item2.ListNameTree)</div></td>
+                            @foreach (var item3 in listweek)
+                            {
+                                var date = Model.DateStart.AddDays(item3.WeeklyID.Value - 1);
+                                var dates = ConvertDate.TotalSeconds(date);
+                                if (item3.IsDayOff == false)
+                                {
+                                <td @(date == datenow ? "style=background-color:#ffdca8" : "")>
+                                    <div class="cell-calender">
+                                        @{var list = Model.WeeklyScheduleItems.Where(m => m.WeeklyID == item3.WeeklyID && (item2.CalendarItems.Any(c => c.DNCalendarWeeklySchedule.Any(d => d.MWSID == m.ID)) || item2.RCalendarItems.Any(c => c.DNCalendarWeeklySchedule.Any(d => d.MWSID == m.ID)))).OrderBy(m => m.ScheduleItem.Name);
+                                          var listcalendar = item2.CalendarItems.Where(m => m.DNCalendarWeeklySchedule.Any(d => list.Any(l => l.ID == d.MWSID))).ToList();
+                                          var listrcalendar = item2.RCalendarItems.Where(m => m.DNCalendarWeeklySchedule.Any(d => list.Any(l => l.ID == d.MWSID)));
+                                          listcalendar.AddRange(listrcalendar.Select(dnCalendarItem => new CalendarItem { ID = dnCalendarItem.ID, Name = dnCalendarItem.Name }));
+                                          var lc = listcalendar.GroupBy(m => m.ID).Select(m => m.FirstOrDefault());          
+                                            <div class="top">@string.Join(",", lc.Select(m => m.Name))</div>
+                                          foreach (var ca in list)
+                                          {
+                                              var obj = item2.EditScheduleItems.FirstOrDefault(m => m.Date >= dates && m.Date < dates + 2000 && m.ScheduleID == ca.ScheduleID);
+                                              var Class = obj != null ? (obj.UserChangeId.HasValue ? "status-toexchange" : "status-off") : "status-normal";
+                                            <a href="#" class="@(date == datenow ? item2.UserId.ToString() : "") btn btn-sm btn-default btn-click @Class" data-id="@(obj != null ? obj.ID : 0)" data-sid="@ca.ScheduleID" data-user="@item2.UserId" data-date="@dates" title="Trạng thái">@ca.ScheduleItem.Name</a>
+                                          }
+                                          foreach (var ca in item2.EditScheduleItems.Where(m => m.UserChangeId == item2.UserId && m.Date >= dates && m.Date < dates + 2000))
+                                          {
+                                              const string Class = "status-fromexchange";
+                                            <a href="#" class="@(date == datenow ? item2.UserId.ToString() : "") btn btn-sm btn-default btn-click @Class" data-id="@ca.ID" data-sid="@ca.ScheduleID" data-user="@item2.UserId" data-date="@dates" title="Trạng thái">@ca.Name</a>
+                                          }
+                                        }
+                                    </div>
+                                </td>
+                                }
+                                else
+                                {
+                                    <td @(item3.IsDayOff ? "style=background-color:#00bfff" : (date == datenow ? "style=background-color:#ffdca8" : ""))>@Html.Raw(item3.NameDayOff)</td>
+                                }
+                            }
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+       registerGridView('#mygird');
+        var urlnode = '@WebConfig.UrlNode' + ':3000';
+        var socket = io(urlnode);
+        socket.emit("client-load-main");
+        socket.on('server-schedulein-main', function (data) {
+            if (data.ds.length > 0) {
+                if (data.ds[1] == "1") {
+                    $("#on-" + data.ds[0]).removeClass("offline");
+                    $("#on-" + data.ds[0]).addClass("online");
+                } else {
+                    $("#on-" + data.ds[0]).removeClass("online");
+                    $("#on-" + data.ds[0]).addClass("offline");
+                }
+            }
+        });
+        $(".btn-click").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var sid = $(this).data("sid");
+            var user = $(this).data("user");
+            var date = $(this).data("date");
+            FdiDialog('@Url.Action("AjaxForm", "CalendarByUser")?userid=' + user + "&sid=" + sid + "&date=" + date + "&id=" + id, "Thông tin đổi ca");
+            return false;
+        });
+        $("#ScheduleItems").html("");
+        $(".ScheduleItemName").appendTo("#ScheduleItems");
+    });
+</script>

@@ -1,0 +1,85 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelReceiptPaymentItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center">STT</th>
+                        <th><a href="#Field=Code">Mã phiếu</a></th>
+                        <th><a href="#Field=CostName">Loại phiếu</a></th>
+                        <th><a href="#Field=UserName">Kế toán</a></th>
+                        <th class="text-center"><a href="#Field=DateCreate">Ngày tạo</a></th>
+                        <th class="text-center"><a href="#Field=DateReturn">Ngày thu</a></th>
+                        <th><a href="#Field=DateActive">Nội dung</a></th>
+                        <th class="text-right"><a href="#Field=Price">Số tiền thu</a></th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.ListItem != null)
+                    {
+                        foreach (var item in Model.ListItem)
+                        {
+                        <tr data-id="@item.ID" title="@item.Code">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@(stt++)</td>
+                            <td>@item.Code</td>
+                            <td>@(item.CostTypeID.HasValue ? item.CostTypeName : "Tự động")</td>
+                            <td>@item.FullNameCashier (@item.UserNameCashier)</td>
+                            <td>@item.DateCreated.DecimalToString("dd/MM/yyyy")</td>
+                            <td>@item.DateReturn.DecimalToString("dd/MM/yyyy")</td>
+                            <td>@item.Note</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                            <td>
+                                @Grid.ActionView(item.ID, item.Code)
+                                @if (Model.IsAdmin)
+                                {
+                                    @Grid.ActionEdit(item.ID, item.Code)
+                                    @Grid.ActionDelete(item.ID, item.Code, item.IsDelete)
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        var total = '@Model.TotalPrice';
+        $('.bottom-pager').append('<span class="footer-control-view">Tổng : <i class="maskPrice">' + total + ' - </i></span>');
+    });
+</script>

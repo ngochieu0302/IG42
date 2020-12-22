@@ -1,0 +1,455 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNPromotionItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.ListProductDetailItems != null ? string.Join(",", Model.ListProductDetailItems.Select(c => c.ID)) : "";
+    var lstm = Model.ListPromotionDetailItems != null ? string.Join(",", Model.ListPromotionDetailItems.Select(c => c.ID)) : "";
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên Khuyến mãi</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Name" value="@(Model.Name)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số lượng</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Quantity" value="@(Model.Quantity)" />
+                            </div>
+                            <label class="col-sm-2 control-label">Người tạo</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" disabled value="@ViewBag.User" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày bắt đầu</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="date" name="DateStart_" value="@(Model.DateStart != null ? Model.DateStart.DecimalToString("yyyy-MM-dd") : DateTime.Now.Format("yyyy-MM-dd"))">
+                            </div>
+                            <label class="col-sm-2 control-label">Ngày kết thúc</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="date" name="DateEnd_" value="@(Model.DateEnd != null ? Model.DateEnd.DecimalToString("yyyy-MM-dd") : DateTime.Now.Format("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ghi chú</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5" id="Note" name="Note" class="form-control">@Model.Note</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu khuyến mãi</label>
+                            <div class="col-sm-4">
+                                <select name="Type" id="Select_type" class="form-control" @(ViewBag.Action == ActionType.Edit ? "disabled='true'" :"")>
+                                    <option value="">Chọn kiểu khuyến mãi</option>
+                                    @foreach (var item in TypePromotion.Image())
+                                    {
+                                        <option value="@item.Value" @(item.Value == Model.Type ? "selected" : "")>@item.Key</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group @(!Model.TotalOrder.HasValue ||Model.TotalOrder == 0 ? "hidden" : "") TotalOrder" >
+                            <label class="col-sm-2 control-label">Tổng tiền ĐH</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="TotalOrder" name="TotalOrder" class="form-control maskPrice" value="@(Model.TotalOrder ?? 0)" placeholder="Tổng tiền ĐH" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Chuyên mục</label>
+                            <div class="col-sm-10">
+                                <button id="selectCategory" type="button" class="btn btn-sm btn-primary"><span class="fa fa-bars"></span>Chọn chuyên mục</button>
+                                <label id="errorCategory" class="error" style="display: none">Chưa chọn chuyên mục.</label>
+                                <input type="hidden" name="ListCateId" id="Value_CategoryValues" value="@(Model.LstCategoryItems != null ? string.Join(", ", Model.LstCategoryItems.Select(c => c.ID)) : string.Empty)" />
+                                <div id="Text_CategoryValues" class="checkBoxValues">@(Model.LstCategoryItems != null ? string.Join(", ", Model.LstCategoryItems.Select(c => c.Name)) : string.Empty)</div>
+                            </div>
+                        </div>
+                        <div class="form-group" title="Tất cả sản phẩm">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                            @Html.CheckBox("IsAll", new {@class ="Allproduct"}) Tất cả sản phẩm
+                            @Html.CheckBox("IsOnly") Khuyến mãi 1 sp
+                            @Html.CheckBox("IsEnd") Tạm Dừng
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Sản phẩm được khuyến mãi
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal" style="margin-bottom: 20px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                    </div>
+                    <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Mã Sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th class='text-center'>Đơn giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListProductDetailItems != null)
+                            {
+                                foreach (var item in Model.ListProductDetailItems)
+                                {
+                                <tr class="data">
+                                    <td>@(stt++)
+                                        <input type='hidden' class='inputValue' value='@item.ID'/>
+                                    </td>
+                                    <td>
+                                        <img class="img-responsive" src="@(string.IsNullOrEmpty(item.UrlPicture) ? "/Content/Admin/images/auto-default.jpg" : item.UrlPicture.UploadPicture())"/></td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Name</td>
+                                    <td class='text-center'>
+                                        <input type='number' min='0' class='form-control text-right inputValue'  value='@item.Quantity' /></td>
+                                    <td class='text-center'>@item.Price.Money()</td>
+                                    <td class="text-right">
+                                        <button class="btn btn-default pdelete" data-pid="@item.ID">
+                                            <i class="fa fa-times" style="color: red;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Sản phẩm đính kèm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal" style="margin-bottom: 20px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="autoPromotion" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                    </div>
+                    <table class="gridView table table-striped table-bordered" id="PromotionDetail">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Mã Sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giảm %</th>
+                                <th class='text-center'>Giảm tiền</th>
+                                <th>Ghi chú</th>
+                                <th>Dừng KM</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ListPromotionDetailItems != null)
+                            {
+                                foreach (var item in Model.ListPromotionDetailItems)
+                                {
+                                <tr class="data">
+                                    <td>@(stt++)
+                                        <input type='hidden' class='inputValue' value='@item.ID'/>
+                                    </td>
+                                    <td>
+                                        <img class="img-responsive" src="@(string.IsNullOrEmpty(item.UrlPicture) ? "/Content/Admin/images/auto-default.jpg" : item.UrlPicture.UploadPicture())"/></td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Name</td>
+                                    <td class='text-center'>
+                                        <input type='number' min='0' class='form-control text-right inputValue'  value='@item.Quantity' /></td>
+                                    <td class='text-center'>
+                                        <input type='number' min='0' class='form-control text-right inputValue'  value='@item.Percent' /></td>
+                                    <td class='text-center'><input type='text' class='form-control inputValue maskPrice'  value='@item.Price.Money()' /></td>
+                                    <td class='text-center'><input type='text' class='form-control inputValue'  value='@item.Note' /></td>
+                                    <td class='text-center'><input type='checkbox' class='inputValue' @(!item.IsEnd.HasValue || item.IsEnd == false ? "" : "checked") value="@(item.IsEnd.HasValue && item.IsEnd.Value)" />Dừng</td>
+                                    <td class="text-right">
+                                        <button class="btn btn-default pdelete" data-pid="@item.ID">
+                                            <i class="fa fa-times" style="color: red;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" data-event="btnSave" id="btnSave"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    function checkType(lstP) {
+        var checkall = $(".Allproduct").is(":checked");
+        var lstIdcate = $("#ListCateId").val();
+        var total = $("#TotalOrder").val();
+        if (total > 0) {
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+            $(".Allproduct").attr("disabled", true);
+        }
+        if (checkall) {
+            $("#selectCategory").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+        }
+        if (lstIdcate != null && lstIdcate != "") {
+            $(".Allproduct").attr("disabled", true);
+            $("#autoProduct").attr("readonly", "readonly");
+        }
+        if (lstP.length > 0) {
+            $(".Allproduct").attr("disabled", true);
+            $("#selectCategory").attr("disabled", true);
+        }
+    }
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        var lstm = JSON.parse("[@(lstm)]");
+        checkType(lstP);
+        var urlSelectCategory = '@Url.Action("AjaxTreeCategorySelect", "Category", new { @pageId = 2 })';
+        $("#selectCategory").click(function () {
+            var valuesSelected = $("#Value_CategoryValues").val();
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Chọn chuyên mục");
+            $("#dialog-form-2 #dialog-form-ajax").load(encodeURI(urlSelectCategory + "&valuesSelected=" + valuesSelected));
+            $('#dialog-form-2').modal('show');
+            return false;
+        });
+        $("#Select_type").change(function() {
+            var type = $(this).val();
+            if (parseInt(type) == 2) {
+                $(".TotalOrder").addClass("hidden");
+                $(".Allproduct").removeAttr("disabled", true);
+                $("#selectCategory").removeAttr("disabled", true);
+                $("#autoProduct").removeAttr("readonly", "readonly");
+            }if (parseInt(type) == 1) {
+                 $(".TotalOrder").removeClass("hidden");
+                 $(".Allproduct").attr("disabled", true);
+                 $("#selectCategory").attr("disabled", true);
+                 $("#autoProduct").attr("readonly", "readonly");
+             }
+        });
+        $(".Allproduct").change(function () {
+            var check = $(this).is(":checked");
+            if (check) {
+                $("#autoProduct").attr("readonly", "readonly");
+                $("#selectCategory").attr("disabled", true);
+            } else {
+                $("#selectCategory").removeAttr("disabled", true);
+                $("#autoProduct").removeAttr("readonly", "readonly");
+            }
+        });
+        
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/Sales/Auto?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var index = lstP.indexOf(el.IdDetail);
+                if (index === -1) {
+                    lstP.push(el.IdDetail);
+                    var txt = "<tr class='data'><td>stt</td>" +
+                        "<td><img class='img-responsive' src='urlimage'/></td>" +
+                        "<input type='hidden' class='inputValue' value='Idproduct'/>" +
+                        "<td>name</td>" +
+                        "<td>Codesp</td>" +
+
+                        "<td class='text-center'><input type='number' min='0' class='form-control text-right changeValue inputValue'  value='1' /></td>" +
+                        "<td class='text-center'>priceproduct</td>" +
+                        "<td class='text-right'><button class='btn btn-default pdelete' data-pid='Idproduct'><i class='fa fa-times' style='color: red;'></i></button></td>" +
+                        "</tr>";
+                    txt = txt.replace("stt", lstP.length);
+                    txt = txt.replace("urlimage", el.UrlImg);
+                    txt = txt.replace("name", el.name);
+                    txt = txt.replace("Codesp", el.code);
+                    txt = txt.replace("priceproduct", numeral(el.data).format('0,0'));
+                    txt = txt.replace('Idproduct', el.IdDetail);
+                    $("#ProductDetail tbody").append(txt);
+                }
+
+            }
+        });
+        $('#autoPromotion').autocomplete({
+            serviceUrl: "/Sales/Auto?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoPromotion').val("");
+                var index = lstm.indexOf(el.ID);
+                if (index === -1) {
+                    lstm.push(el.ID);
+                    var txt = "<tr class='data'><td>stt</td>" +
+                        "<td><img class='img-responsive' src='urlimage'/></td>" +
+                        "<input type='hidden' class='inputValue' value='Idproduct'/>" +
+                        "<td>name</td>" +
+                        "<td>Codesp</td>" +
+
+                        "<td class='text-center'><input type='number' min='0' class='form-control text-right changeValue inputValue'  value='1' /></td>" +
+                         "<td class='text-center'><input type='text' class='form-control inputValue '  value='' /></td>" +
+                        "<td class='text-center'><input type='text' class='form-control inputValue maskPrice'  value='priceproduct' /></td>" +
+                        "<td class='text-center'><input type='text' class='form-control inputValue'  value='' /></td>" +
+                        "<td class='text-center'><input type='checkbox' class='inputValue isend'  value='' />Dừng</td>" +
+                        "<td class='text-right'><button class='btn btn-default pdeletem' data-pid='Idproduct'><i class='fa fa-times' style='color: red;'></i></button></td>" +
+                        "</tr>";
+                    txt = txt.replace("stt", lstm.length);
+                    txt = txt.replace("urlimage", el.UrlImg);
+                    txt = txt.replace("name", el.name);
+                    txt = txt.replace("Codesp", el.code);
+                    txt = txt.replace("priceproduct", numeral(el.data).format('0,0'));
+                    txt = txt.replace('Idproduct', el.ID);
+                    $("#PromotionDetail tbody").append(txt);
+                }
+
+            }
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        $("body").on("click", ".pdeletem", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstm.indexOf(pid);
+            lstm.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        $("#frm-modal").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                Note: {
+                    required: true
+                },
+                Quantity: { required: true },
+                DateStart_: { required: true },
+                DateEnd_: { required: true }
+
+            },
+            messages: {
+                Name: {
+                    required: "Trường này là bắt buộc."
+                },
+                Quantity: {
+                    required: "Trường này là bắt buộc."
+                },
+                DateStart_: {
+                    required: "Trường này là bắt buộc."
+                },
+                DateEnd_: {
+                    required: "Trường này là bắt buộc."
+                },
+                Note: {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                var check = false;
+                $.post("/Utility/DeleteImportPp?key=" + getCookie('CodeLogin'), function () {
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Key: getCookie('CodeLogin')
+                        };
+                        console.log(item);
+                        check = true;
+                        $.post("/Utility/AddImportPp?json=" + JSON.stringify(item), function () {});
+                    });
+                });
+                $.post("/Utility/DeleteImportPm?key=" + getCookie('CodeLogin'), function () {
+                    $('#PromotionDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            var temp = $(this).is(":checked");
+                            d = temp ? temp : d;
+                            debugger;
+                            ret.push(d);
+                        });
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Percent: ret[2],
+                            Price: ret[3],
+                            Note: ret[4],
+                            IsEnd: ret[5] ,
+                            Key: getCookie('CodeLogin')
+                        };
+                        console.log(item);
+                        check = true;
+                        $.post("/Utility/AddImportPm?json=" + JSON.stringify(item), function () {});
+                        
+                    });
+                    if (check) {
+                        $.post("/DNPromotion/Actions", $("#frm-modal").serialize(), function (data) {
+                            $("#btnSave").prop('disabled', false);
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                                createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    } else {
+                        $("#btnSave").prop('disabled', false);
+                        toastr["error"]("Chưa có sản phẩm nào nhập kho");
+                    }
+                });
+
+            }
+        });
+    });
+</script>

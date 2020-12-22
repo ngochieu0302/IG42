@@ -1,0 +1,75 @@
+﻿@using FDI.CORE
+@model FDI.Simple.Logistics.OrderCarProductDetailModel
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#modalForm").validate({
+            rules: {
+                Quantity:
+                {
+                    required: true,
+                },
+
+                Code: {
+                    required: true,
+                },
+            },
+            messages: {
+                CateId:
+                {
+                    required: "Chọn sản phẩm."
+                },
+
+                Quantity: {
+                    required: "Nhập số lượng."
+                }
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ID" id="ID" value="@Model.Item.ID" />
+        <input type="hidden" name="OrderCarId" id="OrderCarId" value="@Model.Order.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khối lượng</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Quantity" id="Quantity" value="@Model.Item.Quantity" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Code</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Code" id="Code" value="@Model.Item.Code" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

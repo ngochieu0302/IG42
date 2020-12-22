@@ -1,0 +1,66 @@
+﻿@model FDI.Simple.ModelCustomerRewardItem
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>
+                        <th>ID</th>
+                        <th><a href="#Field=CustomerName">Tên nhân viên</a></th>
+                        <th><a href="#Field=Phone">Số ĐT</a></th>
+                        <th><a href="#Field=CMND">Số CMND</a></th>
+                        <th class="text-center"><a href="#Field=TotalReward">Tích lũy</a></th>
+                        <th class="text-center"><a href="#Field=TotalReceipt">Đã trả thưởng</a></th>
+                        <th><a href="#Field=CMND">Còn lại</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItems != null)
+                    {
+                        foreach (var item in Model.ListItems)
+                        {
+                            var totalRewar = item.TotalReward ?? 0;
+                            var totalRecive = item.TotalReceipt ?? 0;
+                            <tr data-id="@item.ID">
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td>@(stt++)</td>
+                                <td>@item.CustomerName</td>
+                                <td>@item.Phone</td>
+                                <td>@item.CMND</td>
+                                <td class="text-center">@(item.TotalReward.Money())</td>
+                                <td class="text-center">@item.TotalReceipt.Money()</td>
+                                <td class="text-center">@((totalRewar - totalRecive).Money())</td>
+                                <td class="text-center">
+                                <a class="btn btn-sm btn-primary" href="/RewardHistory#cusId=@item.CustomerID">Chi tiết</a>
+                                @Grid.ActionEdit(item.CustomerID, item.CustomerName)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

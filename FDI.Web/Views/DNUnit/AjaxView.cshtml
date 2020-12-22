@@ -1,0 +1,272 @@
+﻿@model FDI.Simple.OrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 0;
+    decimal price = 0;
+    decimal priceold = 0;
+}
+<link href="/Content/css/style_hoadon.css" rel="stylesheet" />
+<script>
+    $(".maskPercent").mask('000', { reverse: true });
+    $("#printOrder").click(function () {
+        $('#BoxPrint').show();
+        jQuery.print('#BoxPrint');
+        $("#btnResetPrint").click();
+        $('#BoxPrint').hide();
+    });
+    $(".pr-address").html($("#dcShop").val());
+
+
+
+    $("#updateOrder").click(function () {
+        var lstChuyen = [];
+        $("table#requestForm tbody tr input").each(function () {
+            var item = {
+                ID: $(this).attr("data-id"),
+                Sale: $(this).val() == "" ? 0 : parseInt($(this).val())
+            }
+            lstChuyen.push(item);
+        });
+        $.post("@Url.Action("UpdateDetail", "Order")", { lstDetail: JSON.stringify(lstChuyen) }, function (data) {
+            swal({ title: "", text: "Cập nhật thành công !" });
+        });
+    });
+
+    $('a.popup-ajax').popover({
+        "html": true,
+        "content": function () {
+            //var div_id = "tmp-id-" + $.now();
+            var url = $(this).data('picture');
+            return "<img src = '/Uploads/Avatar/" + url + "' style='width:150px;height:150px'>";
+        }
+    });
+
+    function details_in_popup(link, div_id) {
+        $.ajax({
+            url: link,
+            success: function (response) {
+                $('#' + div_id).html(response);
+            }
+        });
+        return '<div id="' + div_id + '">Loading...</div>';
+    }
+
+</script>
+<div class="col-sm-12">
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold" style="height: 50px;">
+            Chi tiết hóa đơn
+            <button class="btn btn-success" id="printOrder" style="float: right">In hóa đơn</button>
+            @if (ViewBag.Admin == true)
+            {
+                <button class="btn btn-success" id="updateOrder" style="float: right; margin-right: 5px">Cập nhật</button>
+            }
+        </header>
+        <table class="table table-bordered" id="requestForm">
+            <tr>
+                <td style="width: 20%">
+                    <label>Mã đơn hàng</label></td>
+                <td>@Utility.RandomMaKh(WebConfig.txtHD,Model.OrderCode,WebConfig.numHD)</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Khách hàng</label></td>
+                <td>@(Model.CustomerName ?? "Khách lẻ")</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Ngày bán</label></td>
+                <td>@Model.DateCreated.Value.ToString("dd/MM/yyyy hh:mm")</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>NV bán hàng</label></td>
+                <td>@Model.UserID</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>NV thu ngân</label></td>
+                <td>@Model.UserCreate</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Hình thức thanh toán</label></td>
+                <td>@Model.Httt</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Trạng thái</label></td>
+                @if (Model.IsActive != true && Model.PayMentMethodId != (int)PmMethod.tm)
+                {
+                    <td><span class="label label-default">Chờ duyệt</span></td>
+                }
+                else if (Model.PayMent == 0)
+                {
+                    <td><span class="label label-default">Chưa thanh toán</span></td>
+                }
+                else if (Model.PayMent < Model.OrderTotal)
+                {
+                    <td><span class="label label-default">Thanh toán thiếu</span></td>
+                }
+                else
+                {
+                    <td><span class="label label-success">Hoàn thành</span></td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    <label>Tiền hàng</label></td>
+                <td>@string.Format("{0:0,0} đ", Model.OrderTotal).Replace(".",",")</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Khuyến mại</label></td>
+                @if (Model.Mode == "m")
+                {
+                    <td>@string.Format("{0:0,0} đ", Model.Sale).Replace(".",",")</td>
+                }
+                else
+                {
+                    <td>@string.Format("{0} %", Model.Sale)</td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    <label><b>TỔNG CỘNG</b></label></td>
+                @if (Model.Mode == "m")
+                {
+                    <td>@string.Format("{0:0,0} đ", Model.OrderTotal - Model.Sale).Replace(".",",")</td>
+                }
+                else
+                {
+                    <td>@string.Format("{0:0,0} đ", Model.OrderTotal - Model.OrderTotal * Model.Sale / 100).Replace(".",",")</td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    <label>Tiền khách đưa</label></td>
+                <td>@string.Format("{0:0,0} đ", Model.PayMent)</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Ghi chú</label></td>
+                <td>@Model.Note</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label><b>Chi tiết đơn hàng</b></label></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="gridView" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>Mã hàng</th>
+                                <th>Tên hàng</th>
+                                <th>Nguyên giá</th>
+                                <td class="text-center"><b>(% ↓)</b></td>
+                                <th>Giá bán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetail)
+                            {
+                                <tr>
+                                    <td><a class="popup-ajax" style="cursor: pointer" data-picture="@item.UrlPicture">@item.ProductCode</a></td>
+                                    <td>@item.ProductName</td>
+                                    <td>@string.Format("{0:0,0}", item.Price)</td>
+                                    @if (ViewBag.Admin == true)
+                                    {
+                                        <td class="text-center">
+                                            <input  class="text-center maskPercent" data-id="@item.ID" value="@item.Sale" style="width: 50px"/>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">@(item.Sale)%</td>
+                                    }
+
+                                    <td class="text-right">@string.Format("{0:0,0}", item.Price - item.Price * item.Sale / 100).Replace(".",",")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tr>
+                            <td colspan="4" class="text-right"><b>Tổng tiền:</b></td>
+                            <td class="text-right">@string.Format("{0:0,0}", Model.OrderTotal).Replace(".",",")</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+
+<section id="BoxPrint" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-header">
+            <div class="pr-logo">
+                <img src="/Content/Publishing/Images/logo.png" />
+            </div>
+            <div class="pr-address">
+            </div>
+        </div>
+        <div class="pr-content">
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN BÁN HÀNG</strong>
+                <i id="printMP">@Model.OrderCode</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Ngày bán:</strong><span>@Model.DateCreated.Value.ToString("dd/MM/yyyy")</span></li>
+                    <li><strong>Khách Hàng</strong><span>@(Model.CustomerName ?? "(Khách lẻ)")</span></li>
+                    <li><strong>Nhân viên</strong><span>@Model.UserID</span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product">
+                <div class="pr-head">
+                    <strong>Sản phẩm</strong>
+                    <strong>Nguyên giá</strong>
+                    <strong>% &darr;</strong>
+                    <strong>Giá bán</strong>
+                </div>
+                <div id="listboxprint">
+                    @foreach (var item in Model.OrderDetail)
+                    {
+                        price += (decimal)(item.Price - item.Price * item.Sale / 100);
+                        priceold += (decimal)(item.Price);
+                        <div class='pr-item'>
+                            <b>@(++stt). @item.ProductCode - @item.ProductName</b>
+                            <div class='pr-property'>
+                                <span>&nbsp;</span>
+                                <span>@string.Format("{0:0,0}", item.Price).Replace(".", ",")</span>
+                                <span>@item.Sale %</span>
+                                <span>@string.Format("{0:0,0}", item.Price - item.Price * item.Sale / 100).Replace(".", ",")</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="pr-head">
+                    <strong>Tổng</strong>
+                    <strong>@string.Format("{0:0,0}", @Model.OrderDetail.Sum(c => c.Price)).Replace(".", ",")</strong>
+                    <strong>&nbsp;</strong><strong>@string.Format("{0:0,0}", Model.OrderDetail.Sum(c => c.Price - c.Price * c.Sale / 100)).Replace(".", ",")</strong>
+                </div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng giảm giá/code giảm:</strong><span>@string.Format("{0:0,0}", priceold - price).Replace(".", ",")</span></li>
+                    <li><strong><b>Tổng tiền thanh toán:</b></strong><span><b>@string.Format("{0:0,0}", price).Replace(".", ",")</b></span></li>
+                    <li><strong>Số tiền khách đưa:</strong><span>@string.Format("{0:0,0}", Model.PayMent).Replace(".", ",")</span></li>
+                    <li><strong>Tiền thừa trả khách:</strong><span>@string.Format("{0:0,0}", Model.PayMent - price)</span></li>
+                    <li><strong><i>Giá bán đã bao gồm VAT</i></strong><span></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pr-footer">
+            <strong>Quý khách vui lòng kiểm tra hàng hóa</strong>
+            <strong>trước khi dời khỏi quầy</strong>
+            <strong>Xin cảm ơn và hẹn gặp lại</strong>
+        </div>
+    </div>
+</section>

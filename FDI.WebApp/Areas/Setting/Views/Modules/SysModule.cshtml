@@ -1,0 +1,70 @@
+﻿@using FDI
+<link href="/Content/Admin/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<script src="/Content/Admin/plugins/select2/js/select2.full.min.js"></script>
+<div id="top-header-setting">
+    <div class="container th-menu-setting">
+        <ul>
+            <li>
+                <a><i class="ion-ios-gear-outline"></i>Admin</a>
+                <div class="body-menu-setting">
+                    <ul>
+                        <li><a href="/Admin/Languages" target="_blank"><span class="ion-android-globe"></span>Ngôn ngữ</a></li>
+                        <li><a href="/Admin/Roles" target="_blank"><span class="ion-android-list"></span>Nhóm quyền</a></li>
+                        <li><a href="/Admin/UserAdministration" target="_blank"><span class="ion-person"></span>Quản trị viên</a></li>
+                        <li><a href="/Admin/SysPage" target="_blank"><span class="ion-ios-list-outline"></span>Quản lý trang</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/Admin/Category" target="_blank"><span class="ion-stats-bars"></span>Quản lý danh mục</a></li>
+                        <li><a href="/Admin/Menu" target="_blank"><span class="ion-ios-keypad"></span>Quản lý menu</a></li>
+                        <li><a href="/Admin/NewsContent" target="_blank"><span class="ion-document-text"></span>Quản lý tin tức</a></li>
+                        <li><a href="/Admin/SystemConfig" target="_blank"><span class="ion-gear-a"></span>Quản trị cấu hình</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a title=""><i class="ion-archive"></i>Modules</a>
+                <div class="body-menu-setting">
+                    <ul>
+                        <li><a id="btnAddModule" data-toggle="modal" data-target="#modalSettingModule"><span class="ion-plus"></span>Thêm mới module</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a><i class="ion-paintbrush"></i>Theme</a>
+                <div class="body-menu-setting select-skin">
+                    <select class="form-control" id="LayoutNew">
+                        <option value="">-- Chọn Layout --</option>
+                        @foreach (var item in Config.GetLayout("/Views/Shared"))
+                        {
+                            <option value="@item" @((item == Model) ? " selected" : string.Empty)>@item</option>
+                        }
+                    </select>
+                    <div class="btn btn-primary" id="btnSaveLayout">Lưu lại</div>
+                </div>
+            </li>
+            <li>
+                <a><i class="ion-ios-cog-outline"></i>Tools</a>
+                <div class="body-menu-setting">
+                    <ul>
+                        <li><a href="#"><span class="ion-trash-a"></span>Clear Cache</a></li>
+                    </ul>
+                </div>
+            </li>
+            @*<li>
+                <a><i class="ion-help-circled"></i>Help</a>
+                <div class="body-menu-setting">
+                    <ul>
+                        <li><a href="http://fditech.vn/lien-he" target="_blank"><span class="ion-ios-location-outline"></span>View Help</a></li>
+                        <li><a href="http://fditech.vn/" target="_blank"><span class="ion-ios-flower-outline"></span>About fditech.vn</a></li>
+                    </ul>
+                </div>
+            </li>*@
+        </ul>
+        <div class="modeView">
+            <button type="button" id="btnViewPage"><i class="ion-eye"></i>Xem</button>
+        </div>
+    </div>
+    <div id="btnEditPage" class="btn-show-pagesetting">
+        <i class="ion-ios-gear"></i>
+    </div>
+</div>

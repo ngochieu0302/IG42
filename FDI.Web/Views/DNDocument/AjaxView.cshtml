@@ -1,0 +1,96 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DocumentItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="col-sm-12">
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">Thông tin về hợp đồng</header>
+        <table class="table table-hover">
+            <tr>
+                <td class="col-sm-2">
+                    <label>Tên hợp đồng</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>Số hợp đồng</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.Numberbill)
+                </td>
+            </tr>
+            <tr>
+                <td class="col-sm-2">
+                    <label>Giá trị hợp đồng</label></td>
+                <td class="col-sm-10">
+                    @Model.Value.Money()
+                </td>
+            </tr>
+            <tr>
+                <td class="col-sm-2">
+                    <label>đặt cọc</label></td>
+                <td class="col-sm-10">
+                    @Model.Deposit.Money()
+                </td>
+            </tr>
+            <tr>
+                <td class="col-sm-2">
+                    <label>Loại tài liệu</label></td>
+                <td class="col-sm-10">
+                    @foreach (var item in TypeDocument.Document().Where(item => item.Value == Model.Type))
+                    {
+                        @item.Key
+                    }
+                </td>
+            </tr>
+             <tr>
+                <td class="col-sm-2">
+                    <label>Ngăn tài liệu</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.DrawerName)
+                </td>
+            </tr>
+            <tr>
+                <td class="col-sm-2">
+                    <label>Người ký</label></td>
+                <td class="col-sm-10">
+                    @Html.DisplayFor(model => model.NguoiKy)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-sm-2">
+                    <label>File đính kèm</label></td>
+                <td class="col-sm-10">
+                   @if (Model.DocumentFilesItem != null)
+                   {
+                       <table class="gridView" id="listFileAttachRemove" width="100%">
+                           <thead>
+                               <tr>
+                                   <th>Tên file</th>
+                                   <th>Size</th>
+                                   <th>Kiểu file</th> 
+                               </tr>
+                           </thead>
+                           @foreach (var file in Model.DocumentFilesItem)
+                           {
+                               var icon = "/Images/Icons/file/" + file.TypeFile + ".png";
+                               <tr title="@file.Name" id="@file.ID">
+                                   <td>@file.Name.@file.TypeFile</td>
+                                   @*   <td style="text-align: right;">@FDI.Utils.ChangeFileSize(file.FileSize ?? 0)</td>*@
+                                   <td>
+                                       <img src="@icon"/></td>                                        
+                               </tr>
+                           }
+                       </table>
+                   }
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+
+

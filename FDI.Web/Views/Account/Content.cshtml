@@ -1,0 +1,11 @@
+﻿@model FDI.Simple.EnterprisesItem
+<div class="copyright">
+    @if (Model != null && !string.IsNullOrEmpty(Model.Content))
+    {
+        <span>@Html.Raw(Model.Content)</span>
+    }
+    else
+    {
+        <strong>-- CMS FDI 2018 --</strong>
+    }
+</div>

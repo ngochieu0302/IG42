@@ -1,0 +1,101 @@
+﻿@model FDI.Simple.DNRolesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#LevelRoomId", "100%");
+        callSelect2("#GuiID", "100%");
+        GuiID
+        $("#modalForm").validate({
+            rules: {
+                RoleName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                LevelRoomId:
+                {
+                    required: true,
+                }
+            },
+            messages: {
+                RoleName:
+                {
+                    required: "Nhập tên phòng ban.",
+                    minlength: "Độ dài tối thiểu 3 ký tự."
+                },
+                LevelRoomId:"Xin mời chọn tầng"
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/Utility/DeleteUser?key=" + getCookie('CodeLogin'), function (a) {
+                    $.post("/Utility/AddUser?lstUser=" + $("#GuiID").val(), function () {
+                    });
+                    PostAction("#modalForm");
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.RoleId" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về phòng ban
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên phòng ban</label><div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="RoleName" id="RoleName" value="@Model.RoleName" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="2" name="Description" id="Description" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn Tầng</label>
+                            <div class="col-sm-10">
+                                <select id="LevelRoomId" name="LevelRoomId" class="select2">
+                                    <option value="">--- Chọn Tầng ---</option>
+                                    @foreach (var item in ViewBag.listroom)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.LevelRoomId ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn nhân viên</label>
+                            <div class="col-sm-10">
+                                <select id="GuiID" class="select2" multiple>
+                                    <option value="">--- Chọn nhân viên ---</option>
+                                    @foreach (var item in ViewBag.listUser)
+                                    {
+                                        <option value="@item.UserId" @(Model.DN_UsersInRoles != null && Model.DN_UsersInRoles.Any(m => m.UserId == item.UserId) ? "selected" : string.Empty)>@item.UserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

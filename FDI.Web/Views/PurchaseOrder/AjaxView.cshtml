@@ -1,0 +1,117 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@using ConvertDate = FDI.Utils.ConvertDate
+@model FDI.Simple.StorageWarehouse.PurchaseOrderModel
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var i = 1;
+}
+
+
+    <div class="modal-body">
+        <div class="portlet yellow-crusta box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>Chi tiết xe
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Order #: </div>
+                    <div class="col-md-7 value">
+                        @Model.OrderCar.ID
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Giờ đi: </div>
+                    <div class="col-md-7 value"> @ConvertDate.DecimalToString(Model.OrderCar.DepartureDate, "dd/MM/yyyy HH:mm") </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Giờ đến: </div>
+                    <div class="col-md-7 value">
+                        @ConvertDate.DecimalToString(Model.OrderCar.ReceiveDate, "dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> giờ về Total: </div>
+                    <div class="col-md-7 value">  @ConvertDate.DecimalToString(Model.OrderCar.ReturnDate, "dd/MM/yyyy HH:mm")  </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Số lượng: </div>
+                    <div class="col-md-7 value"> @Model.OrderCar.Quantity @Model.OrderCar.UnitName </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Số lần đã nhập: </div>
+                    <div class="col-md-7 value"> @Model.OrderCar.CountReceived </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Tổng khối lượng: </div>
+                    <div class="col-md-7 value"> @Model.OrderCar.QuantityReceived </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> Nhà cung cấp: </div>
+                    <div class="col-md-7 value"> @Model.OrderCar.SupplierName </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet yellow-crusta box">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>Khối lượng
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="scrollable box-control-content">
+                    <table class="gridView table table-striped table-bordered table-hover table-product" role="grid">
+                        <colgroup>
+                       
+                            <col class="colgroup indentity" />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col class="colgroup action-4" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                      
+                                <th class="text-center"><a href="#Field=ID">STT</a></th>
+                                <th class="text-center">Tên</th>
+                                <th class="text-center">Khối lượng</th>
+                                <th class="text-center"><a href="#Field=Name">Code</a></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.ListItems.OrderByDescending(m=>m.Status))
+                            {
+                                <tr title="@item.ProductName">
+                            
+                                    <td class="text-center">@(i++)</td>
+                                    
+                                    <td>@Grid.DisplayShowStrike(item.ProductName, item.Status != CateValueStatus.NoneActive)</td>
+                                    <td class="text-center">@item.Quantity.Quantity("0:0.####")</td>
+                                    <td class="text-center">
+                                        @item.Code
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

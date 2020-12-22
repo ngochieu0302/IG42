@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FDI.Simple.AgencyItem>
+@{
+    ViewBag.Title = "Thống kê đơn hàng theo đại lý";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    var date = DateTime.Now;
+}
+
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i>Admin</a><i class="fa fa-circle"></i></li>
+            <li>Giao dịch<i class="fa fa-circle"></i></li>
+            <li class="active">Thống kê đơn hàng theo đại lý</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+
+            <div class="form-group">
+                <select name="id" id="Enterprises" class="form-control input-sm">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="year" id="Year" class="form-control input-sm">
+                    @for (var i = date.Year; i >= date.Year - 3; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+        </form>
+    </div>
+</div>
+<div class="content-control" id="Griditems">
+</div>
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "OrderByAgency")';
+    $(document).ready(function () {
+        initAjaxLoad(urlLists + "?id=" + $("#Enterprises").val() + "&year=" + $("#Year").val(), "#Griditems");
+        $("#gridSearch").submit(function (e) {
+            e.preventDefault();
+            $.post(urlLists + "?id=" + $("#Enterprises").val() + "&year=" + $("#Year").val(), function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+        $(document).on('keyup', '.autoNameAscii', function (e) {
+            e.preventDefault();
+            $('#NameAscii').val(RemoveUnicode($(this).val()));
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+        $("#BrandID, #ProductTypeID").multiSelect({ selectAll: false, chooseOne: true });
+    });
+</script>

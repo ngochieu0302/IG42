@@ -1,0 +1,71 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CityItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#DistrictID").select2({
+            width: '100%',
+            maximumSelectionLeng: 1,
+        });
+        $("#frm-ShopBrand").validate({
+            rules: {
+                Name: { required: true },
+            },
+            messages: {
+                Name: "Trường bắt buộc nhập.",
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").attr("disabled", true);
+                $.post(urlPostAction, $("#frm-ShopBrand").serialize(), function (data) {
+                    $("#btnSave").attr("disabled", false);
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+            }
+        });
+        $("#Value_CategoryValues").change(function () {
+            alert("The text has been changed.");
+        });
+    })
+</script>
+<form id="frm-ShopBrand">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm mới Tỉnh/Thành phố
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tỉnh/Thành phố<font color="red">(*)</font></label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mô tả</label>
+                            <div class="col-lg-10">
+                                <textarea rows="3" class="form-control" name="Description" id="Description"> @Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">@ViewBag.ActionText</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FDI.Simple.ModeItem>
+@using FDI.Utils
+@foreach (var item in Model)
+{
+    var url = "/" + item.Area + "/" + item.Module + "/" + item.Action;
+    try
+    {
+        @Html.Action(item.Action, item.Module, new { item.Area, ctrId = item.ID, url })
+    }
+    catch (Exception ex)
+    {
+        Log2File.LogExceptionToFile(ex);
+        <label>@item.Module/@item.Action</label>
+    }
+}

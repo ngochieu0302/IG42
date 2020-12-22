@@ -1,0 +1,31 @@
+﻿@model FDI.Simple.ModelDNUserItem
+@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <select id="UserId" name="UserId" class="select2">
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <option @(item.UserId == Model.UserID ? "selected" : "") value="@item.UserId">@item.UserName</option>
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#UserId", "200px");
+        $('body').on("change", "#UserId", function () {
+            urlLists = '@Url.Action("ListItems")' + '?userid=' + $(this).val();
+            $.post(urlLists, function (data) {
+                $("#Griditems").html(data);
+            });
+        });
+    });
+</script>

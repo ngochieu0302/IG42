@@ -1,0 +1,254 @@
+﻿@model FDI.Base.Category
+@{
+    ViewBag.Title = ViewBag.ActionText + " chuyên mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+
+}
+@*<script src="~/Content/Admin/js/ColorPicker/colorpicker.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/eye.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/layout.js"></script>
+<script src="~/Content/Admin/js/ColorPicker/utils.js"></script>
+<link href="~/Content/Admin/css/colorpicker.css" rel="stylesheet" />*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#Icon').ColorPicker({
+        //    color: '#0000ff',
+        //    onShow: function (colpkr) {
+        //        $(colpkr).fadeIn(500);
+        //        return false;
+        //    },
+        //    onHide: function (colpkr) {
+        //        $(colpkr).fadeOut(500);
+        //        return false;
+        //    },
+        //    onChange: function (hsb, hex, rgb) {
+        //        $('#Icon').css('backgroundColor', '#' + hex);
+        //        $('#Icon').val('#' + hex);
+        //    }
+        //});
+        registerGallery();
+        LoadCKEDITOR('Description', true);
+        $("#CategoryForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Type:
+                {
+                    required: true
+                },
+                Slug:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255,
+                    @*remote: "@Url.Action("CheckNameAsciiExits", "Category", new { id = Model.Id,type = Model.Type })"*@
+                },
+                Description:
+                {
+                    minlength: 10
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Type:
+                {
+                    required: "Trường này là bắt buộc."
+                },
+                Slug:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự.",
+                    remote: "Url đã tồn tại."
+                },
+                Description:
+                {
+                    minlength: "Vui lòng nhập ít nhất 10 ký tự."
+                }
+            },
+            submitHandler: function () { //onSubmit      
+                updateEditor();
+                $.post(urlPostAction, $("#CategoryForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+        
+       
+        $("#Name").on('keyup', function (e) {
+            e.preventDefault();
+            $('#SEOTitle').val($(this).val());
+            $('#SEODescription').val($(this).val());
+            $('#SEOKeyword').val($(this).val());
+            $('#Slug').val(RemoveUnicode($(this).val()));
+        });       
+    });
+</script>
+<form id="CategoryForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Id" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin danh mục
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên chuyên mục</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-10">
+                                <select name="ParentId" id="ParentId" class="select2">
+                                    <option value="1" data-IsLv="0">-- Chọn chuyên mục cha --</option>
+                                    @foreach (var item in ViewBag.lstCate)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.ParentId) ? " selected" : string.Empty) data-IsLv="@item.IsLevel">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu Module</label>
+                            <div class="col-sm-10">
+                                <select name="Type" id="Type" class="form-control w250">
+                                    <option value="" @((0 == Model.Type) ? " selected" : string.Empty)>--- Chọn kiểu module ---</option>
+                                    <option value="1" @((1 == Model.Type) ? " selected" : string.Empty)>Tin tức</option>
+                                    <option value="2" @((2 == Model.Type) ? " selected" : string.Empty)>Sản phẩm</option>
+                                    <option value="3" @((3 == Model.Type) ? " selected" : string.Empty)>Tài liệu</option>
+                                    <option value="4" @((4 == Model.Type) ? " selected" : string.Empty)>Thư viện ảnh</option>
+                                    <option value="5" @((5 == Model.Type) ? " selected" : string.Empty)>Video</option>
+                                    <option value="6" @((6 == Model.Type) ? " selected" : string.Empty)>Hỏi đáp</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages">Chọn hỉnh ảnh đại diện</button>
+                                <input type="hidden" name="PictureID" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.PictureID > 0)
+                                        {
+                                            <div class="image-product" id="@Model.Gallery_Picture.ID">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.Gallery_Picture.ID" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span>@Model.Gallery_Picture.Name</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự hiển thị</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Sort, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Icon</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="Icon" id="Icon" value="@Model.Icon" style="background-color:@Model.Icon" class="form-control w250" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="padding-top: 10px; font-weight: bold; font-style: italic;">@Model.Icon</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đường dẫn URL</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Slug, new { @class = "form-control", @id = "Slug" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Title</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEOTitle, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Description</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEODescription, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">SEO Keywords</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SEOKeyword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="8" id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-4">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-4">
+                                    <label>
+                                        @Html.CheckBox("IsMenu") Nổi bật
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-4">
+                                    <label>
+                                        @Html.CheckBox("IsDoFollow") NoFollow
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-4">
+                                    <label>
+                                        @Html.CheckBox("IsShowhome") hiển thị trang chủ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>
+<link href="/Content/Admin/select2/select2.css" rel="stylesheet" />
+<script src="/Content/Admin/select2/select2.min.js"></script>
+<link href="/Content/Admin/select2/theme.css" rel="stylesheet" />
+<script>
+    $('.select2').select2();
+</script>

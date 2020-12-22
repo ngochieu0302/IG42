@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("@Url.Action("JsonTreeCategorySelect", "CustomerTree")", function (list) {
+            AjaxLoadTreeView(list, '#TreeCategory');
+            registerGridView('#gridItems');
+            $("#TreeCategory a.tool").click(function () {
+                if ($(this).parent().parent().hasClass("unselect")) {
+                    $(".filetree li").addClass("unselect").removeClass("select");
+                    $(this).parent().parent().addClass("select").removeClass("unselect");
+                } else {
+                    $(this).parent().parent().addClass("unselect").removeClass("select");
+                }
+                return false;
+            });
+            //$(".expand").click();
+        });
+    });
+</script>
+<div id="gridItems">
+    <div id="treecontrol" class="treeTool">
+        <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+        <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+    </div>
+    <ul id="TreeCategory" class="filetree gridView treeview" style="border: 0px;"></ul>
+</div>
+@*<div id="quickToolvalue" style="display: none">
+    @Grid.ActionView("idvalue", "titlevalue")
+</div>*@

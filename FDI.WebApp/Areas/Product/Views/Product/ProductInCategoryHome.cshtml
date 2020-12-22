@@ -1,0 +1,122 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.ProductDetail;
+    var stt = 1;
+    var stt1 = 1;
+    var date = DateTime.Now.TotalSeconds() - DateTime.Now.AddDays(-30).TotalSeconds();
+}
+<section class="product-area section-padding">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- section title start -->
+                <div class="section-title text-center">
+                    <h2 class="title">Our products</h2>
+                    <p class="sub-title">Add our products to your cart</p>
+                </div>
+                <!-- section title start -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="product-container">
+                    <!-- product tab menu start -->
+                    <div class="product-tab-menu">
+                        <ul class="nav justify-content-center">
+                            @foreach (var item in Model.ListItem)
+                            {
+                                
+                                <li><a href="#tab@(item.ID)" class="show @(stt == 1 ? "active" : "")" data-toggle="tab">@item.Name</a></li>
+                                stt++;
+                            }
+                        </ul>
+                    </div>
+                    <!-- product tab menu end -->
+                    <!-- product tab content start -->
+                    <div class="tab-content">
+                        @foreach (var item in Model.ListItem)
+                        {
+                            <div class="tab-pane fade  @(stt1 == 1 ? "show active" : "")" id="tab@(item.ID)">
+                                <div class="product-carousel-4 slick-row-10 slick-arrow-style">
+                                    @foreach (var items in item.ListProductItem.OrderByDescending(c => c.ID))
+                                    {
+                                        <!-- product item start -->
+                                        <div class="product-item">
+                                            <figure class="product-thumb">
+                                                <a href="/@(items.NameAscii)-p@(pageId)c@(items.ID)">
+                                                    <img class="pri-img" src="@(Utility._dimg)@(items.UrlPicture.UploadPicture())" alt="@items.Name" /> 
+
+                                                    <img class="sec-img" src="@(Utility._dimg)@(items.UrlPicture.UploadPicture())" alt="@items.Name" />
+                                                </a>
+                                                <div class="product-badge">
+                                                    @if ((DateTime.Now.TotalSeconds() - items.DateCreate) < date)
+                                                    {
+                                                        <div class="product-label new">
+                                                            <span>new</span>
+                                                        </div>
+                                                    }
+                                                    @if (items.Sale > 0)
+                                                    {
+                                                        <div class="product-label discount">
+                                                            <span>@items.Sale%</span>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                                <div class="button-group">
+                                                    <a href="wishlist.html" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i class="pe-7s-like"></i></a>
+                                                    <a href="compare.html" data-toggle="tooltip" data-placement="left" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                    <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="pe-7s-search"></i></span></a>
+                                                </div>
+                                                <div class="cart-hover">
+                                                    <button class="btn btn-cart" data-id="@items.ID">Thêm vào giỏ hàng</button>
+                                <input type="hidden" class="ShopId-@(items.ID)" value="@items.ListProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                                @*<input type="hidden" class="colorId-@(items.ID)" value="@items.ListColorProductItem.Select(c=>c.ID).FirstOrDefault()"/>*@
+                                <input type="hidden" class="sizeId-@(items.ID)" value="@items.ListSizeProductItem.Select(c=>c.ID).FirstOrDefault()"/>
+                                                </div>
+                                            </figure>
+                                            <div class="product-caption text-center">
+                                                @*<ul class="color-categories">
+                                                    @foreach (var color in items.ListProductItem)
+                                                    {
+                                                        <li>
+                                                            <a style="background-color: @(color.ColorCode)" href="javascript:void(0)" title="@(color.ColorCode)"></a>
+                                                        </li>
+                                                    }
+                                                </ul>*@
+                                               @* <ul class="color-categories">
+                                                    @foreach (var color in items.ListColorProductItem)
+                                                    {
+                                                        <li>
+                                                            <a style="background-color: @(color.Value)"  href="javascript:void(0)" title="@color.Name"></a>
+                                                        </li>
+                                                    }
+                                                </ul>*@
+                                                <h6 class="product-name">
+                                                    <a href="/@(items.NameAscii)-p@(pageId)c@(items.ID)">@items.Name</a>
+                                                </h6>
+                                                <div class="price-box">
+                                                    <span class="price-regular">@items.ListProductItem.Select(c => c.PriceNew).FirstOrDefault().Money() đ</span>
+                                                    @if (items.Sale > 0 && items.ListProductItem.Select(c => c.PriceNew).FirstOrDefault() < items.ListProductItem.Select(c => c.PriceOld).FirstOrDefault())
+                                                    {
+                                                        <span class="price-old"><del>@items.ListProductItem.Select(c => c.PriceOld).FirstOrDefault().Money() đ</del></span>
+                                                        
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- product item end -->
+                                    }
+                                </div>
+                            </div>
+                                    stt1++;
+                        }
+                    </div>
+                    <!-- product tab content end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

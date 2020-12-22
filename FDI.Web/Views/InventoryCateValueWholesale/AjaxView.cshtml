@@ -1,0 +1,111 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CateValueItem
+
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên sản phẩm </label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Mã sản phẩm </label>
+                        </td>
+                        <td>
+                            @Model.Code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá sản phẩm</label>
+                        </td>
+                        <td>
+                            @Model.PriceCost.Money()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số lượng (Con)</label>
+                        </td>
+                        <td> @Model.Quantity</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giá bán</label>
+                        </td>
+                        <td>
+                            @Model.PriceNew.Money()
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Chi tiết
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>Mã SP</th>
+                        <th>Barcode</th>
+                        <th>Kg</th>
+                        <th>Giá bán</th>
+                        <th>Thành tiền</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                    @foreach (var item in Model.ListProductValueItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(item.Name)</td>
+                            <td>@(item.Code)</td>
+                            <td>@(item.Barcode)</td>
+                            <td>@(item.Value.Quantity())</td>
+                            <td>@(item.PriceCost)</td>
+                            <td>@(item.PriceNew)</td>
+                            <td><a href="#" data-id="@item.ID" class="Viewdetail">Xem chi tiết</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+<script>
+    $(function () {
+        $(".Viewdetail").click(function () {
+            var id = $(this).data("id");
+            var urlform = '@Url.Action("Viewdetai","StorageWarehouse")';
+            $.post(urlform, { id: id }, function (data) {
+                $("#dialog-form-3 .modal-title").html("Chi tiết sản phẩm");
+                $("#dialog-form-3 #dialog-form-ajax").html(data);
+                $('#dialog-form-3').modal('show');
+            });
+            return false;
+        });
+     });
+</script>

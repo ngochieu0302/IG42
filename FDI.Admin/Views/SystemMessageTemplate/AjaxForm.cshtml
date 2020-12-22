@@ -1,0 +1,165 @@
+﻿@model FDI.Base.System_MessageTemplate
+@{
+    ViewBag.Title = ViewBag.ActionText + " Cấu hình";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        LoadCKEDITOR('BodyContent', true);
+        $("#SystemMessageTemplateForm").validate({
+            rules: {
+                Name:
+                    {
+                        required: true
+                    },
+                Subject:
+                    {
+                        required: true
+                    }
+
+            },
+            messages: {
+                Name: "Xin mời nhập tên template email",
+                Subject:"Xin mời nhập tiêu đề"
+            },
+            submitHandler: function () { //onSubmit
+                updateEditor();
+                $.post(urlPostAction, $("#SystemMessageTemplateForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+     
+    });
+</script>
+<style>
+    #Address {
+        display: block !important;
+    }
+</style>
+
+<form id="SystemMessageTemplateForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về tin tức cho thành viên
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tên template</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" @(ViewBag.Action.ToString().Equals("Add") ? "class=autoPermalink" : "") id="Name"  value="@Model.Name"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tiêu đề</label>
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nội dung</label>
+                            <div class="col-lg-10">
+                                <textarea rows="8" id="BodyContent" name="BodyContent" class="form-control">@Model.BodyContent</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Gửi theo tiêu chí</label>
+                            <div class="col-lg-10">
+                                <select id="Type" name="Type" class="form-control">
+                                    <option value="0" @((0 == Model.Type) ? " selected" : string.Empty)>Chọn tiêu chí</option>
+                                    <option value="1" @((1 == Model.Type) ? " selected" : string.Empty)>Gửi đơn hàng cho admin</option>
+                                    <option value="2" @((2 == Model.Type) ? " selected" : string.Empty)>Gửi đơn hàng cho khách hàng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">SMTP</label>
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(model => model.SMTP, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Port</label>
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(model => model.Port, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email gửi</label>
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(model => model.EmailSend, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mật khẩu email gửi</label>
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" id="PassEmailSend"  name="PassEmailSend" value="@Model.PassEmailSend"/>
+                            </div>
+                        </div>
+
+                        @* <div class="form-group">
+                        <label class="col-lg-2 control-label">Phòng ban nhận email</label>
+                        <div class="col-lg-10">
+                            <select id="DepartmentID" name="DepartmentID" class="form-control">
+                                @foreach (var item in ViewBag.LstDepartment)
+                                {
+                                      <option value="@item.ID" @((item.ID == Model.DepartmentID) ? " selected" : string.Empty)>@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>*@
+
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email nhận từ quản trị</label>
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(model => model.EmailReceive, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsActive") Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

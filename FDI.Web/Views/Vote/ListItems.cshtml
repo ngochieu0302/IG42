@@ -1,0 +1,52 @@
+﻿@model List<FDI.Simple.VoteItem>
+@{
+  Layout = "~/Views/Shared/_Ajax.cshtml";
+    var i = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col />
+                    <col />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th><a href="#">STT</a></th>
+                        <th><a href="#Field=Name">Tên tiêu chí</a></th>
+                        <th><a href="#Field=Value">Giá trị</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.ID" title="@item.Name">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@(i++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.Value</td>
+                            <td class="text-right">
+                                @Grid.ActionEdit(item.ID, item.Name)
+                                @Grid.ActionDelete(item.ID, item.Name)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

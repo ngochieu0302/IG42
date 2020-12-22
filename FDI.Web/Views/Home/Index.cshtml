@@ -1,0 +1,128 @@
+﻿@using FDI.Simple
+@model SysPageItem
+
+@{
+//Layout = string.Format("~/Views/Shared/{0}.cshtml", Model.Layout);
+//var lst = Model.LstModeItems.GroupBy(c => c.Section).Select(c => c.Key).ToList();
+//var admin = User.Identity.IsAuthenticated && User.IsInRole("Admin");
+}
+<h1>PHAN MỀM BÁN HÀNG</h1>
+@*@section metas{
+    @if (Model != null)
+    {
+        <title>@Model.SeoTitle</title>
+        <meta name="description" content="@Model.SeoDescription" />
+        <meta name="keywords" content="@Model.SeoKeyword" />
+        <meta property="og:title" content="@Model.SeoTitle" />
+        <meta property="og:image" content="@(!string.IsNullOrEmpty(Model.SeoPicture) ? Model.SeoPicture.Picture() : "")" />
+        <meta property="og:keywords" content="@Model.SeoKeyword" />
+        <meta property="og:description" content="@Model.SeoDescription" />
+        <link href="@("Content/Publishing/css/" + Model.FeUrl + ".min.css?v=1")" rel="stylesheet" />
+    }
+}
+@section MenuAdmin{
+    @if (admin)
+    {
+        <script src="~/Content/Publishing/js/vendor.min.js?v=1"></script>
+        @Html.Partial("~/Areas/Setting/Views/Modules/SysModule.cshtml", Model.Layout)
+        @Html.Partial("~/Views/Shared/Popup.cshtml")
+        <link rel="stylesheet" href="~/Content/Publishing/css/_setting_module.min.css" type="text/css" />
+        <script src="/Areas/Setting/Content/js/module.js"></script>
+        <script type="text/javascript">
+            pageId = "@Model.ID";
+            layoutName = "@Model.Layout";
+            var sessionValue = '@Session["editPage"]';
+            if (sessionValue == 1) {
+                $('body').addClass("mode-edit-page");
+                $('body').removeClass("mode-view-page");
+            } else if (sessionValue = 2) {
+                $('body').addClass("mode-view-page");
+                $('body').removeClass("mode-edit-page");
+            }
+            $(function () {
+                ModuleSetting("");
+            });
+        </script>
+    }
+}
+@{
+    if (Model.ID == 2)
+    {
+        <h1 class="h1page">Công ty Thiết kế Website Fditech.vn uy tín chất lượng số 1 việt nam</h1>
+        <div id="popupLoadBeforePage" class="animated flipInX white-popup mfp-with-anim mfp-hide">
+            <a href="/thiet-ke-website-theo-module-p5c27"><img src="/Content/Publishing/img/FDI-Popup.jpg" alt="Thiết kế website theo module" class="img-responsive" /></a>
+        </div>
+        <script>
+            (function ($) {
+                setTimeout(function () {
+                    $.magnificPopup.open({
+                        removalDelay: 500, //delay removal by X to allow out-animation
+                        items: {
+                            src: '#popupLoadBeforePage'
+                        },
+                        type: 'inline'
+                    });
+                }, 5000);  // equals 100 seconds
+            })(jQuery);
+
+        </script>
+    }
+    var lstLayoutNews = Config.GetSectsion(Model.Layout);
+    var lstSection = lstLayoutNews.Intersect(lst).ToList();
+    foreach (var item in lstSection)
+    {
+        var lstModule = Model.LstModeItems.Where(c => c.Section == item).OrderBy(c => c.Sort).ToList();
+        DefineSection(item, () =>
+        Write(@Html.Action("ReWrite", "Modules", new { Area = "Setting", model = lstModule })));
+    }
+}
+@section jsend{
+    <link href="~/Content/Publishing/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    @if (!admin)
+    {
+        <script src="~/Content/Publishing/js/vendor.min.js?v=1"></script>
+    }
+    <span onclick="openPupUpChat()" class="call-support-online">Hỗ trợ trực tuyến</span>
+     <div class="sticker-page">
+            <div class="left">
+                <a href="/lien-he" title=""><span class="fa fa-envelope-o"></span></a>
+            </div>
+            <div class="center">
+                <a class="phone" href="tel:0949699396" title=""><span class="fa fa-phone"></span>0949.699.396</a>
+            </div>
+            <div class="right">
+                <span onclick="openPupUpChat()"><span class="fa fa-comments-o"></span></span>
+            </div>
+        </div>
+    <script src="~/Content/Publishing/js/plugins.min.js?v=1"></script>
+    <script src="~/Content/Publishing/js/main.min.js?v=1"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments);
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g;
+            m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'http://fditech.vn/Content/Publishing/js/analytics.js?v=1', 'ga');
+        ga('create', 'UA-84801089-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = 870518710;
+        var google_custom_params = window.google_tag_params;
+        var google_remarketing_only = true;
+        /* ]]> */
+    </script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/870518710/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+}*@

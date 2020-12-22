@@ -1,0 +1,101 @@
+﻿@using Admin
+@model FDI.Simple.ModelOrderItem
+
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $('.fnView').click(function () {
+        var id = $(this).data('id');
+        fn_view('/Admin/Customer', id);
+    });
+</script>
+<section id="mygird" class="vbox">
+    <section class="scrollable wrapper">
+        <section class="panel panel-default">
+            <table class="gridView" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th><a href="#Field=DateCreated">Ngày bán<span></span></a></th>
+                        <th><a href="#Field=OrderCode">Mã ĐH<span></span></a></th>
+                        <th>Cửa hàng</th>
+                        <th><a href="#Field=CustomerName">Khách hàng<span></span></a></th>
+                        <th>NV thu ngân</th>
+                        <th>NV bán hàng</th>
+                        <th><a href="#Field=OrderTotal">Tổng tiền<span></span></a></th>
+                        <th>Trạng thái</th>
+                        <th style="width:  8%;">Thao tác</th>
+                    </tr>
+                </thead>
+                @if (Model.SystemActionItem.ViewFull)
+                {
+                    var stt = 1;
+                    foreach (var item in Model.ListOrderItem)
+                    {
+                        var key =  Utility.RandomMaKh(WebConfig.txtHD,item.OrderCode,WebConfig.numHD);
+                    <tr title="@item.OrderCode">
+                        <td>@(stt++)</td>
+                        <td>@item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@key</td>
+                        <td>@item.ShopName</td>
+                        @if (item.CustomerID != null)
+                        {
+                            <td><a class="fnView" style="cursor: pointer" data-id ="@item.CustomerID">@item.CustomerName</a></td>
+                        }
+                        else
+                        {
+                            <td><span class='label label-default'>Không nhập</span></td>
+                        }
+                        <td>@item.UserID</td>
+                        <td>@item.UserCreate</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.OrderTotal).Replace(".", ",")</td>
+                        @if (item.IsActive != true && item.PayMentMethodId != (int)PmMethod.tm)
+                        {
+                            <td><span class="label label-default">Chờ duyệt</span></td>
+                        }
+                        else if (item.PayMent == 0)
+                        {
+                            <td><span class="label label-default">Chưa thanh toán</span></td>
+                        }
+                        else if (item.PayMent < item.OrderTotal)
+                        {
+                            <td><span class="label label-default">Thanh toán thiếu</span></td>
+                        }
+                        else
+                        {
+                            <td><span class="label label-success">Hoàn thành</span></td>
+                        }
+                        <td class="btn-group">
+                            @if (Model.SystemActionItem.View)
+                            {
+                                @Grid.ActionView(item.ID, key)
+                            }
+                            @if (ViewBag.Admin)
+                            {
+                                @Grid.ActionEdit(item.ID, key)
+                                @*@Grid.ActionDelete(item.ID, key)*@
+                            }
+                        </td>
+                    </tr>
+                    }
+                }
+            </table>
+        </section>
+    </section>
+    <footer class="footer bg-white m-t-xs">
+        <div>
+            <b>TỔNG TIỀN: </b><span style="color: red">@string.Format("{0:0,0} VNĐ", Model.ListOrderItem.Sum(c => c.OrderTotal))</span>
+        </div>
+        <div class="row b-t portlet">
+            @Html.Raw(Model.PageHtml)
+        </div>
+    </footer>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

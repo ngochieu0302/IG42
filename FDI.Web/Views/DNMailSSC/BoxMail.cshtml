@@ -1,0 +1,74 @@
+﻿@model FDI.Simple.ModelDNMailSSCItem
+
+<div class="inbox-sidebar">
+    <a href="/DNMailSSC/Compose" data-title="Compose" class="btn red compose-btn btn-block"><i class="fa fa-edit"></i> Soạn thư</a>
+    <ul class="inbox-nav">
+        <li class="@(Model.Type == 1 ? "active" : string.Empty)">
+            <a href="/DNMailSSC?type=1">
+                <span class="badge badge-success" id="MailInbox">@if (Model.TotalMailInbox > 0)
+                                                                 {
+                    <text>@Model.TotalMailInbox</text>
+                                                                 }</span>
+                <i class="fa fa-fw fa-inbox"></i>
+                Hộp thư đến
+            </a>
+        </li>
+
+        <li class="@(Model.Type == 2 ? "active" : string.Empty)">
+            <a href="/DNMailSSC?type=2">
+                <i class="fa fa-fw fa-envelope-o"></i>
+                Thư đã gửi
+            </a>
+        </li>
+
+       @* <li >
+            <a href="#">
+                <span class="badge badge-important pull-right"></span>
+                <i class="fa fa-fw fa-bookmark-o"></i>
+                Quan trọng
+            </a>
+        </li>*@
+
+        <li class="@(Model.Type == 3 ? "active" : string.Empty)">
+            <a href="/DNMailSSC?type=3">
+                @if (Model.TotalMailDrafts > 0)
+                {
+                        <span class="badge badge-primary pull-right" id="MailDrafts">@Model.TotalMailDrafts</span>
+                }
+                <i class="fa fa-fw fa-pencil"></i>
+                Thư nháp
+            </a>
+        </li>
+
+        <li class="@(Model.Type == 4 ? "active" : string.Empty)">
+            <a href="/DNMailSSC?type=4">
+                <span class="badge badge-hollow pull-right" id="MailSpam">@if (Model.TotalMailSpam > 0)
+                                                            {
+                                                                 <text>@Model.TotalMailSpam</text>
+                                                            }</span>
+                <i class="fa fa-fw fa-star-o"></i>
+                Spam
+            </a>
+        </li>
+
+        <li class="@(Model.Type == 5 ? "active" : string.Empty)">
+            <a href="/DNMailSSC?type=5">
+                <span class="badge badge-hollow pull-right" id="MailRecycleBin"></span>
+                <i class="fa fa-trash-o"></i>
+                Thùng rác
+            </a>
+        </li>
+         <li class="@(Model.Type == 6 ? "active" : string.Empty)">
+            <a href="/DNNewsSSC?type=6">
+                <span class="badge-hollow @(Model.TotalNewsSsc > 0 ? "badge  pull-right" : string.Empty)" id="MailNews">
+                    @if (Model.TotalNewsSsc > 0)
+                    {
+                         <text>@Model.TotalNewsSsc</text>
+                    }
+                </span>
+                <i class="fa fa-newspaper-o"></i>
+                Tin tức nội bộ
+            </a>
+        </li>
+    </ul>
+</div>

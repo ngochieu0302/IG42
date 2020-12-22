@@ -1,0 +1,209 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelOrderItem
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<form id="frm-Orders">
+    <div class="modal-body">
+        <input type="hidden" name="itemId" id="itemId" value="@Model.OrderItem.ID" />
+        <input type="hidden" name="do" id="do" value="Order" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-4">
+                                @Model.OrderItem.CustomerName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số ĐT</label>
+                            <div class="col-md-4">
+                                @Model.OrderItem.CutomerPhone
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thanh toán
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nhân viên</label>
+                            <div class="col-sm-10">
+                                @Model.OrderItem.UserName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thời gian vào</label>
+                            <div class="col-sm-10">
+                                @Model.OrderItem.StartDate.DecimalToString("HH:mm")
+                                <input type="hidden" name="StartDate" id="StartDate" value="@Model.OrderItem.StartDate" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thời gian ra</label>
+                            <div class="col-sm-10">
+                                @Model.OrderItem.EndDate.DecimalToString("HH:mm")
+                                <input type="hidden" name="EndDate" id="EndDate" value="@Model.OrderItem.EndDate" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giường</label>
+                            <div class="col-md-10">
+                                @Model.OrderItem.BedDeskName
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" id="Note" name="Note" rows="3">@Model.OrderItem.Note</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>Giảm giá</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger">@Model.OrderItem.Discount %</p>
+                            </div>
+                            <label class="col-sm-2 control-label"><b>Rút tích lũy</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger">@Model.OrderItem.PrizeMoney.Money()</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><b>TỔNG TIỀN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Prices">@Model.OrderItem.TotalPrice.Money()</p>
+                                <input type="hidden" name="TotalPrice" id="TotalPriceOrder" value="0" />
+                            </div>
+                            <label class="col-sm-2 control-label"><b>THANH TOÁN</b></label>
+                            <div class="col-sm-4">
+                                <p class="form-control-statics label label-danger" id="Payment">@Model.OrderItem.Payments.Money()</p>
+                                <input type="hidden" name="Payments" id="Payments" value="0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm thời gian
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thời gian vào</label>
+                            <div class="col-sm-10">
+                                <select name="AddMinuteID" id="AddMinuteID" class="select2">
+                                    <option value="0" data-type="0" data-minute="0" data-price="0">Chọn phút</option>
+                                    @foreach (var item in Model.ListAddMinuteItem)
+                                    {
+                                        <option value="@item.ID" @(Model.OrderItem.AddMinuteID == item.ID ? "selected" : "") data-type="@item.Type" data-minute="@item.Minute" data-price="@item.Price">@item.Name  @(item.Type == 1 ? "Thêm phút chờ" : "Mua Thêm") @item.Price.Money() vnđ</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">In và Lưu lại</button>
+        <button id="btnPrint" type="button" class="btn btn-sm btn-primary">Xem trước</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-info">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        var dates = parseInt('@Model.OrderItem.StartDate');
+        var datee = parseInt('@Model.OrderItem.EndDate');
+        var total = parseInt('@Model.OrderItem.TotalPrice');
+        var payments = parseInt('@Model.OrderItem.Payments');
+        var discount = parseInt('@Model.OrderItem.Discount');
+        var totalnew = total;
+        var totaltt = payments;
+        var tdn = dates;
+        var ed = datee;
+        //ban hang spa
+        callSelect2("#AddMinuteID", "100%");
+        $("#AddMinuteID").change(function () {
+            var price = parseInt($(this).find(':selected').data('price'));
+            var minute = parseInt($(this).find(':selected').data('minute'));
+            var type = parseInt($(this).find(':selected').data('type'));
+            if (type == 1) tdn = dates + minute * 60;
+            ed = datee + minute * 60;
+            totalnew = total + price * (100 - discount) / 100;
+            totaltt = payments + price * (100 - discount) / 100;
+            $("#Prices").html(numeral(totalnew).format('0,0'));
+            $("#Payment").html(numeral(totaltt).format('0,0'));
+            $("#StartDate").val(tdn);
+            $("#EndDate").val(ed);
+            $("#Payments").val(totaltt);
+            $("#TotalPriceOrder").val(totalnew);
+        });
+
+        $("#frm-Orders").validate({
+            rules: {
+                AddMinuteID:
+                {
+                    required: true,
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#frm-Orders").serialize(), function (data) {
+                    $("#btnSave").prop('disabled', false);
+                    if (data.Erros)
+                        createMessage("Thông báo", data.Message);
+                    else {
+                        printOrderPreView();
+                        $("#dialog-form-3").modal('hide'); //Đóng form thêm mới - sửa
+                        $("[data-event='Default']").trigger("click");
+                        createShowMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+            }
+        });
+        function printOrderPreView() {
+            $("#printPrizeMoneyTotal").html(numeral('@Model.OrderItem.PrizeMoney').format('0,0'));
+            $("#printSale").html(numeral(totalnew).format('0,0'));
+            $("#PriceVND").html(DocTienBangChu(totaltt));
+            $("#TotalPriceVND").html(DocTienBangChu(totaltt));
+            $("#printSaleTotal").html(numeral(totalnew).format('0,0'));
+            $("#printPriceCusN").html(numeral($("#AddMinuteID").find(':selected').data('price')).format('0,0'));
+            var tempt = $('#TotalPrice').html();
+            var names = '<li><strong>Thu ngân:</strong><span>' + '@Model.OrderItem.UserName1' + '</span></li><li><strong>Khách hàng:</strong><span>' + '@Model.OrderItem.CustomerName' + '</span></li><li><strong>NVPV:</strong><span>' + '@Model.OrderItem.UserName' + '</span></li>';
+            var timeshow = '<li><strong>Tầng/Giường</strong><span>' + '@Model.OrderItem.BedDeskName' + '</span></li><li><strong>Vào/ra: </strong><span><b> ' + ddMMyyyyhhmmss(tdn) + ' - ' + hhmmss(ed) + '</b></span></li>';
+            var totals = names + tempt + timeshow;
+            $('#TotalPrice').html(totals);
+            $('#BoxPrint #ObjPrice').html(totals);
+            $("#ListBoxPrint").append($("#BoxPrint").html());
+            jQuery.print('#ListBoxPrint');
+            $('#BoxPrint #ObjPrice').html("");
+            $('#TotalPrice').html(tempt);
+            $('#ListBoxPrint').html("");
+        }
+        $("#btnPrint").click(function () {
+            printOrderPreView();
+        });
+    })
+</script>
+@Html.Action("AjaxPrint")

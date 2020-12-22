@@ -1,0 +1,71 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNCalendarItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" /></th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th class="text-center">Tên sự kiện</th>
+
+                        <th class="text-center">Ngày bắt đầu</th>
+                        <th class="text-center">Ngày kết thúc</th>
+                        <th class="text-center">Thứ 2</th>
+                        <th class="text-center">Thứ 3</th>
+                        <th class="text-center">Thứ 4</th>
+                        <th class="text-center">Thứ 5</th>
+
+                        <th class="text-center">Thứ 6</th>
+                        <th class="text-center">Thứ 7</th>
+                        <th class="text-center">CN</th>
+                        <th class="text-center"><a href="#Field=Show">Hiển thị</a></th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    <tr title="@item.Name">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check"></td>
+                        <td>@item.ID</td>
+                        <td>@Grid.DisplayShowStrike(item.Name, item.IsShow.HasValue && item.IsShow.Value)</td>
+                        <td>@item.DateStart.DecimalToString("dd/MM/yyyy")</td>
+                        <td>@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 1).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 2).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 3).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 4).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 5).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 6).Select(m => m.ScheduleName))</td>
+                        <td>Ca: @string.Join(",", item.WeeklyScheduleItems.Where(m => m.WeeklyID == 7).Select(m => m.ScheduleName))</td>
+                        @*<td>@item.ID</td>*@
+                        <td>@item.Sort</td>
+                        <td class="text-center">@Grid.ActionShow(item.ID, item.Name, item.IsShow)</td>
+                        <td class="text-right" style="width: 12%">
+                            @Grid.ActionView(item.ID, item.Name)
+                            @Grid.ActionEdit(item.ID, item.Name)
+                            @Grid.ActionDelete(item.ID, item.Name)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

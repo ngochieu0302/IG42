@@ -1,0 +1,351 @@
+﻿@using System.Web.Script.Serialization
+@using System.Web.UI.WebControls
+@using FDI.CORE
+@using FDI.Simple
+@using FDI.CORE
+@model FDI.Simple.StorageWarehousingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = Model.LstImport != null ? string.Join(",", Model.LstImport.Where(c => c.IsDelete == false).Select(c => c.CateID)) : "";
+    //var date = DateTime.Now.ToString("dd/mm/yyyy");
+    var wallet = (decimal?)ViewBag.Wallet;
+    var deposit = (decimal?)ViewBag.Deposit;
+    var lsttime = (List<TimeItem>)ViewBag.listtime;
+    var total = Model.LstImport != null ? Model.LstImport.Sum(c => c.TotalPrice ?? 0) : 0;
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+    <input type="hidden" name="UserID" id="UserID" value="@ViewBag.UserID" />
+    <input type="hidden"  id="list_time" value="@(new JavaScriptSerializer().Serialize(lsttime))" />
+    <div class="modal-body npd">
+        <div class="tabs-bookatable-popup">
+            <div class="box-a-table-wrap">
+                <div class="user-order" style="width: 70%">
+                    <div class="input-group" style="margin-bottom: 5px;">
+                        <span class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên sản phẩm">
+                    </div>
+                    <div class="tab-content ct-tabs-bookatable">
+                        <div class="tab-pane fade active in" id="tab_1">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên SP</th>
+                                            <th class='text-center'>Số lượng (con)</th>
+                                            <th class='text-center'>Giá nhập</th>
+                                            <th class='text-center'>Giờ nhận</th>
+                                            @*<th class='text-center'>NSX</th>
+                                            <th class='text-center'>HSD</th>
+                                            <th class='text-center'>BarCode</th>*@
+                                            <th class='text-center'>Thành tiền</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.LstImport != null)
+                                        {
+                                            foreach (var item in Model.LstImport.Where(c => c.IsDelete == false))
+                                            {
+                                            <tr class="data">
+                                                <td>@(stt++)</td>
+                                                <td>@item.ProductName
+                                                    <input type="hidden" class="inputValue" value="@item.CateID">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control changeValue inputValue quantity sl-@item.CateID" step="0.5" value="@item.Quantity">
+                                                </td>
+                                                <td class="inputValue">
+                                                    @string.Format("{0:0,0}", item.Price)
+                                                </td>
+                                                <td>
+                                                    <select name="Time" id="Time" class="form-control inputValue">
+                                                        @foreach (var timeitem in lsttime)
+                                                        {
+                                                            <option value="@timeitem.h" @(item.Hours == timeitem.h ? "selected" : "")>@timeitem.n</option>
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" class="inputValue" value="@ViewBag.marketId">
+                                                    <input type="hidden" class="inputValue" value="@ViewBag.areaId">
+                                                </td>
+
+                                                <td class="text-right total total-@item.CateID">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-default pdelete" data-pid="@item.CateID"><i class="fa fa-times" style="color: red;"></i></button>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-order" style="width: 30%; height: calc(100vh - 104px);">
+                    <div class="title-box-order">
+                        <i class="fa fa-info"></i>Thông tin về phiếu nhập
+                    </div>
+                    <div class="user-detail-order">
+                        <div class="form-group">
+                            <div class="input-group" title="Mã phiếu nhập">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-barcode">Mã nhập</i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@(Model.Code ?? DateTime.Now.ToString("yyMMddHHmm"))" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ngày nhận hàng">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Ngày Nhận hàng</i>
+                                </div>
+                                <input class="form-control" type="date" name="DateCreated_" id="DateCreated_" value="@(Model.DateRecive != null ? Model.DateRecive.DecimalToString("yyyy-MM-dd") : DateTime.Today.AddDays(1).Format("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        @*<div class="form-group" title="Ngày nhận hàng">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Giờ nhận hàng</i>
+                                </div>
+                                <select name="HoursRecive" class="form-control">
+                                    <option value="">Chọn giờ nhận hàng</option>
+                                    @foreach (var hour in TypeHours.Hours())
+                                    {
+                                        <option value="@hour.Value" @(hour.Value == Model.HoursRecive ? "selected" : "")>@hour.Key</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>*@
+                        <div class="form-group" title="Ví hiện tại">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Ví hiện tại</i>
+                                </div>
+                                <input type="text" readonly class="form-control maskPrice" value="@(wallet.Money())" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Sử dụng ví">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Có thể sử dụng</i>
+                                </div>
+                                <input type="text" class="form-control maskPrice" readonly value="@((wallet - deposit).Money())" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Sử dụng ví">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Sử dụng ví</i>
+                                </div>
+                                <input type="text" class="form-control maskPrice" name="PrizeMoney" id="PrizeMoney" value="@(Model.PrizeMoney.Money())" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ghi chú">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-sticky-note-o">Ghi chú</i>
+                                </div>
+                                <textarea rows="5" id="Note" name="Note" class="form-control" placeholder="Ghi chú (*)">@Model.Note</textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="TotalPrice" value="0"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" data-event="PrintNew" id="PrintNew"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        var lstTime = $("#list_time").val();
+        var lstT = JSON.parse(lstTime);
+        $("#list_time").val("");
+        var totaln = parseFloat('@total');
+        var wallet = parseInt('@(wallet)');
+        var deposit = parseInt('@(deposit)');
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/StorageWarehouse/AutoProduct?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/, // regex or character
+            maxHeight: 400,
+            onSelect: function (el) {
+                totaln += parseFloat(el.pricenew);
+                if (wallet <= 0) {
+                    toastr["error"]("Bạn chưa đặt cọc. Không thể mua hàng");
+                    return false;
+                }
+                else {
+                    var totalmax = deposit * 100 / 30;
+                    if (totaln > totalmax) {
+                        toastr["error"]("Bạn chỉ có thể đặt tối đa " + numeral(totalmax).format('0,0'));
+                        return false;
+                    }
+                    $('#autoProduct').val("");
+                    var index = lstP.indexOf(el.ID);
+                    if (index == -1) {
+                        lstP.push(el.ID);
+                        var op = "";
+                        //var i = parseFloat(0.5);
+                        //while (i < parseFloat(30)) {
+                        //    i = i + 0.5;
+                        //    if (i == 1) {
+                        //        op += "<option value='" + i + "' selected>" + i + "</option>";
+                        //    } else {
+                        //        op += "<option value='" + i + "' data-pid='productId' data-price='PriceCost'>" + i + "</option>";
+                        //    }
+                        //}
+                        for (var item in lstT) {
+                            op += "<option value='" + lstT[item].h + "'>" + lstT[item].n + "</option>";
+                        };
+                        var sq = "<select class='form-control inputValue listtime_select'>" + op + "</select>";
+                        var qt = "<input type='number' step='0.5' class='form-control text-right changeValue inputValue quantity sl-productId' data-pid='productId' data-price='PriceCost' value='1' />";
+                        var txt = "<tr class='data'><td>stt</td><td>name</td>" +
+                            "<td><input type='hidden' class='inputValue' value='productId'/>" + qt + "</td>" +
+                            "<td class='price-productId inputValue'>PriceCost</td>" +
+                            "<td>" + sq + "</td>" +
+                            "<input type='hidden' class='inputValue' value='MarketId'/>" +
+                            "<input type='hidden' class='inputValue' value='AreaId'/>" +
+                            "<td class='text-right total total-productId'>totalvalue " +
+                            "</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='productId'><i class='fa fa-times' style='color: red;'></i></button></td></tr>";
+                        txt = txt.replace("stt", lstP.length);
+                        txt = txt.replace(/PriceCost/g, numeral(el.pricenew).format('0,0'));
+                        txt = txt.replace("name", el.title);
+                        txt = txt.replace("MarketId", '@ViewBag.MarketId');
+                        txt = txt.replace("AreaId", '@ViewBag.AreaId');
+                        txt = txt.replace(/productId/g, el.ID);
+                        txt = txt.replace("totalvalue", numeral(el.pricenew).format('0,0'));
+                        $("#ProductDetail tbody").append(txt);
+                        $("#TotalPrice").val(totaln);
+                        mask();
+                        
+                    }
+                }
+
+            }
+        });
+
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+        $("#Payment").change(function () {
+            var payment = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+            var total = parseFloat($("#TotalPrice").val() !== "" ? $("#TotalPrice").val().replace(/[,]+/g, '') : "0");
+            if (payment > total) {
+                toastr["error"]("Vượt quá tiền hóa đơn");
+                $("#Payment").val(numeral(total).format('0,0'));
+            }
+
+        });
+        $("body").on("change", ".changeValue", function () {
+            debugger;
+            totaln = parseFloat($("#TotalPrice").val());
+            var pid = $(this).data("pid");
+            var sl = parseFloat($(this).val());
+            var gia = $(this).data("price") !== "" ? $(this).data("price") : "0";
+            var price = parseFloat(gia.replace(/[,]+/g, ''));
+            var totalprice = parseFloat(sl * price);
+            totaln = totaln - parseFloat(1 * price) + totalprice;
+            var totalmax = deposit * 100 / 30;
+            if (totaln > totalmax) {
+                toastr["error"]("Bạn chỉ có thể đặt tối đa " + numeral(totalmax).format('0,0'));
+                $(this).val("1");
+                totaln = parseFloat($("#TotalPrice").val());
+                return false;
+            } else {
+                $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+                
+            }
+            
+        });
+
+        $("body").on("change", "#PrizeMoney", function () {
+            var pay = $(this).val().replace(/[,]+/g, '');
+            var payuse = wallet - deposit;
+            if (pay > payuse) {
+                toastr["error"]("Vượt quá tiền trong ví");
+                $(this).val(numeral(payuse).format('0,0'));
+                return false;
+            }
+        });
+        $("#frm-modal").validate({
+            rules: {
+            },
+            messages: {
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                debugger;
+                $.post("/Utility/DeleteImportware?key=" + getCookie('CodeLogin'), function () {
+                    var check = false;
+                    debugger;
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        debugger;
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2],
+                            Hours: ret[3],
+                            MarketId: ret[4],
+                            AreaId: ret[5],
+                            Key: getCookie('CodeLogin')
+                        };
+                        check = true;
+                        $.post("/Utility/AddImportware?json=" + JSON.stringify(item), function () { });
+                    });
+                    if (check) {
+                        $.post("/StorageWarehouse/Actions", $("#frm-modal").serialize(), function (data) {
+                            $("#btnSave").prop('disabled', false);
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                                createCloseMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    } else {
+                        $("#btnSave").prop('disabled', false);
+                        toastr["error"]("Chưa có sản phẩm nào nhập kho");
+                    }
+                });
+            }
+        });
+        $("#DateCreated_").on("change", function () {
+            var date = $(this).val();
+            var urlchangetime = '@(Url.Action("ChangeListTimebyDate"))';
+            $.post(urlchangetime, { date: date }, function (data) {
+                var op = "";
+                for (var i in data) {
+                    op += "<option value='" + data[i].h + "'>" + data[i].n + "</option>";
+                }
+                $(".listtime_select").html(op);
+            });
+        });
+        //var today = new Date().toISOString().split('T')[0];
+        //document.getElementsByName("DateCreated_")[0].setAttribute('min', today);
+    });
+
+</script>

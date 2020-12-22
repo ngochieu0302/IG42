@@ -1,0 +1,72 @@
+﻿@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn_Status").click(function () {            
+            $.post("/DNCard/AjaxStatus", function (data) {
+                $("#dialog-form .modal-title").html("Xuất thẻ");
+                $("#dialog-form #dialog-form-ajax").html(data);
+                $('#dialog-form').modal('show');
+            });
+            $("#dialog-form.in #close").click(function () {
+                $('#dialog-form').modal('hide');
+                $("#dialog-form #dialog-form-ajax").html("");
+            });
+        });
+        var urlXuatExcel = '@Url.Action("ExportExcell", "DNCard")';
+        $("#btn_XuatExcel").click(function () {
+            var form = $("#gridSearch");
+            window.location.href = urlXuatExcel + '?' + getValueFormMutilSelect(form);
+            return false;
+        });
+    });
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý thẻ</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#showAll" data-event="showAll" data-grid="#mygird"><i class="fa fa-check icon-muted fa-fw"></i>Kích hoạt</a></li>
+                    <li><a href="#hideAll" data-event="hideAll" data-grid="#mygird"><i class="fa fa-times icon-muted fa-fw"></i>Khóa</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="fa fa-trash-o icon-muted fa-fw"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="Serial">Mã thẻ</option>
+                    <option value="PinCode">Mã pin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="Status" class="form-control" style="font-weight:bold">
+                    <option value="">Tất cả thẻ</option>
+                    <option value="@((int)Card.Create)">Khởi tạo</option>
+                    <option value="@((int)Card.Excel)">Thẻ đã in</option>
+                    <option value="@((int) Card.Released)">Đã phát hành</option>
+                    <option value="@((int)Card.Lock)">Đã khóa</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+            <a class="btn btn-sm btn-primary" id="btn_XuatExcel">Excel</a>
+            <a class="btn btn-sm btn-primary" id="btn_Status">Trạng thái</a>
+            <div class="btn-group pull-right">
+                @Grid.ActionAdd(Url.Action("Actions"))
+            </div>
+        </form>
+    </div>
+</div>

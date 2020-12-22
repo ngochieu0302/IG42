@@ -1,0 +1,110 @@
+﻿@using FDI.Utils
+@model FDI.Base.News_News
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về bài viết
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%"><label>Tên bài viết</label></td>
+                        <td>@Html.DisplayFor(model => model.Title)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>SEO Description</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.SEODescription)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>SEO Title</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.SEOTitle)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>SEO Keyword</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.SEOKeyword)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Hình ảnh đại diện</label>
+                        </td>
+                        <td>
+                            <img src="@((!Model.PictureID.HasValue) ? "/Content/Admin/images/no_image.gif" : (Model.Gallery_Picture.Folder + Model.Gallery_Picture.Url).Picture())" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Chuyên mục tin</label>
+                        </td>
+                        <td>
+                            @string.Join(", ", Model.Categories.Select(c => c.Name))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Title, Model.IsShow == true)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Là tin tiêu điểm</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Title, Model.IsHot == true)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Từ khóa</label>
+                        </td>
+                        <td>@string.Join(", ", Model.System_Tag.Select(tag => tag.Name))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Nội dung chi tiết</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Details)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+</div>

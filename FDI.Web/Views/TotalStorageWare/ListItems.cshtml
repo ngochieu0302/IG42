@@ -1,0 +1,74 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.ModelTotalStorageWareItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="text-center"><a href="#Field=ID">STT</a></th>
+                        <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center"><a href="#Field=Today">Ngày nhận</a></th>
+                        <th class="text-center"><a href="#Field=UsernameCreate">Giờ nhận</a></th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Đã chia</th>
+                        <th>Chia đơn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItems != null)
+                    {
+                        foreach (var item in Model.ListItems)
+                        {
+                        <tr data-id="@item.ID">
+                            <td class="text-center">@stt</td>
+                            <td class="text-center">@item.Catename</td>
+                            <td class="text-center">@item.Today.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-center">
+                                @foreach (var hour in TypeHours.Hours().Where(hour => item.Hour == hour.Value))
+                                {
+                                    <span>@hour.Key</span>
+                                }
+                            </td>
+                            <td class="text-center">@item.Quantity.Quantity()</td>
+                            <td class="text-center">@item.QuantityOut.Quantity()</td>
+                            <td class="text-center">
+                            @if (item.Quantity > item.QuantityOut)
+                            {
+                                @Grid.ActionEdit(item.ID, item.Catename)
+                            }
+                                </td>
+                        </tr>
+                            stt++;
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Chỉnh sửa phiếu yêu cầu nhập kho");
+        });
+    });
+</script>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>

@@ -1,0 +1,130 @@
+﻿@model FDI.Simple.DNTreeItem
+@using FDI.CORE;
+    @{
+        Layout = "~/Views/Shared/_Ajax.cshtml";
+    }
+    <script>
+    $(function () {
+        callSelect2("#ParentID", "100%");
+        callSelect2("#RoleId", "100%");
+        callSelect2("#DepartmentId", "100%");
+        $("#frm-Vote").validate({
+            rules: {
+                Name: { required: true },
+                UserInRoleID: { required: true }
+            },
+            messages: {
+                Name: "Trường này là bắt buộc.",
+                UserInRoleID: "Trường này là bắt buộc."
+            },
+            submitHandler: function () { //onSubmit
+                btnDisabled("#btnSave");
+                $.post("/DNTree/Actions", $("#frm-Vote").serialize(), function (data) {
+                    btnEnable("#btnSave");
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $('.modal').modal('hide');
+                        $('#dialog-form #dialog-form-ajax').html('');
+                        createCloseMessage("Thông báo", data.Message, "");
+                    }
+                });
+            }
+        });
+        $("#RoleId").change(function () {
+            var rId = $("#RoleId").val();
+            var dId = $("#DepartmentId").val();
+            $.post("@Url.Action("GetUserInRole", "DNTree")", { "rId": rId, "dId": dId }, function (data) {
+                $("#UserInRoleID").html('<option value="" data-user=""> -- Chọn nhân viên --</option>');
+                $.each(data, function (i, val) {
+                    $("#UserInRoleID").append("<option value='" + val.ID + "' data-user='" + val.DNUserItem.UserName + "'> " + val.DNUserItem.LoweredUserName + ' ( ' + val.DNUserItem.UserName + " )</option>");
+                });
+            });
+        });
+        $("#ParentID").change(function () {
+            var lst = $("#ParentID :selected").attr("data-ListID");
+            $("#ListID").val(lst);
+        });
+        $("#UserInRoleID").change(function () {
+            var lst = $("#UserInRoleID :selected").attr("data-user");
+            $("#UserName").val(lst);
+        });
+    })
+    </script>
+    <form id="frm-Vote">
+        <div class="modal-body">
+            <input type="hidden" name="AgencyID" id="AgencyID" value="@ViewBag.AgencyID" />
+            <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+            <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-database"></i>Sơ đồ tổ chức
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tên Vị trí</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="Name" class="form-control" value="@Model.Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Cấp quản lý liền trên</label>
+                                <div class="col-sm-10">
+                                    <select class="select2" id="ParentID" name="ParentID" @(ViewBag.Action == ActionType.Edit ? "disabled" : "")>
+                                    <option value="1">-- Quản lý cao nhất --</option>
+                                    @foreach (var item in ViewBag.Tree)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.ParentID ? "selected" : "")>@item.Name ( @item.UserName )</option>
+                                    }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Phòng ban</label>
+                                <div class="col-sm-10">
+                                    <select class="select2" id="RoleId" name="RoleId">
+                                        @foreach (var item in ViewBag.Roles)
+                                        {
+                                            <option value="@item.RoleId" @(item.RoleId == Model.RoleId ? "selected" : "")>@item.RoleName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Chức vụ</label>
+                                <div class="col-sm-10">
+                                    <select class="select2" id="DepartmentId" name="DepartmentId">
+                                        @foreach (var item in ViewBag.Department)
+                                        {
+                                            <option value="@item.ID" @(item.ID == Model.DepartmentId ? "selected" : "")>@item.Name</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">User</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="UserInRoleID" name="UserInRoleID">
+                                        @if (Model.RoleId != null)
+                                        {
+                                            @Html.Action("GetUserView", new { id = Model.UserInRoleID, rId = Model.RoleId, dId = Model.DepartmentId });
+                                        }
+                                    </select>
+                                    <input type="hidden" name="UserName" id="UserName" value="@Model.UserName" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+            <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+        </div>
+    </form>

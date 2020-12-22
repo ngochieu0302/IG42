@@ -1,0 +1,238 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNUserItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+        
+        $("#btnAddCustomer").click(function () {
+            var serial = $("#Customer").val();
+            $.post("/DNUser/GetCustomer", { serial: serial }, function (data) {
+               if (data != 0) {
+                    $("#CustomerName").val(data.FullName);
+                    $("#CustomerID").val(data.ID);
+                } else {
+                    alert("Mã thẻ không tồn tại.");
+                }
+            });            
+        });
+        $("#modalForm").validate({
+            rules: {
+                LoweredUserName:
+                {
+                    required: true,
+                    minlength:6,
+                },
+                UserName:
+                {
+                    required: true,
+                    minlength: 3,
+                    remote: "@Url.Action("CheckByUserName", "DNUser", new { id = Model.UserId })"
+                },
+                Mobile:
+                {
+                    required: true,
+                    number: true,
+                    minlength: 9,
+                    maxlength: 12,
+                },
+                Email:
+                {
+                    email: true,
+                },
+                Customer:
+               {
+                   number: true,
+               },
+                CodeCheckIn: {
+                    number: true,
+                }
+            },
+            messages: {
+                LoweredUserName:
+                {
+                    required: "Xin mời nhập họ và tên.",
+                    minlength:"Tối thiểu 6 ký tự"
+                },
+                UserName:
+                {
+                    required: "Xin mời nhập tên đăng nhập.",
+                    remote: "Tên đăng nhập đã tồn tại.",
+                    minlength:"Tối thiêu 3 ký tự."
+                },
+                Email:
+                {
+                    email: "Email không đúng định dạng.",
+                },
+                Mobile:
+                {
+                    required: "Xin mời nhập số điện thoại.",
+                    number: "Sai định dạng, Xin mời nhập số điện thoại",
+                    minlength: "Số điện thoại tối thiểu 9 chữ số",
+                    maxlength: "Số điện thoại tối đa 12 chữ số",
+                },
+                Customer:
+                {
+                    number: "Sai định dạng, Nhập mã số khách hàng.",
+                },
+                CodeCheckIn: {
+                    number: "Sai định dạng, nhập mã số chấm công.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop("disabled", true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.UserId"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về nhân viên
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên đăng nhập</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" name="UserName" id="UserName" value="@Model.UserName"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mật khẩu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Nhập mật khẩu" name="PasswordSalt" id="PasswordSalt" value="@Model.PasswordSalt" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ và tên</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="LoweredUserName" id="LoweredUserName" value="@Model.LoweredUserName"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giới tính</label>
+                            <div class="col-sm-10">
+                                @Html.RadioButtonFor(model => model.Gender, true)
+                                Nam
+                                @Html.RadioButtonFor(model => model.Gender, false)
+                                Nữ
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày sinh</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="BirthDay_" id="BirthDay_" value="@Model.BirthDay.DecimalToString("yyyy-MM-dd")"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lương cứng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control maskPrice" name="FixedSalary" id="FixedSalary" value="@Model.FixedSalary" placeholder="Nhập mức lương"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày bắt đầu</label>
+                            <div class="col-sm-10">
+                                <input type="date"class="form-control" name="StartDay" id="StartDay" value="@Model.StartDate.DecimalToString("yyyy-MM-dd")" placeholder="Chọn ngày" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" placeholder="Nhập email"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Mobile" id="Mobile" value="@Model.Mobile" class="form-control" placeholder="Nhập số điện thoại"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Address" id="Address" value="@Model.Address" class="form-control" placeholder="Nhập địa chỉ"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea rows="8" id="Comment" name="Comment" class="form-control">@Model.Comment</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mã máy chấm công</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="CodeCheckIn" name="CodeCheckIn" class="form-control" value="@Model.CodeCheckIn" placeholder="Nhập mã số chấm công"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Khách hàng</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Customer" name="Customer" class="form-control"  value="@Model.CardSerial" placeholder="Nhập mã số thẻ khách hàng"/>
+                                <input type="hidden" name="CustomerID" id="CustomerID" value="@Model.CustomerID" />
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="btnAddCustomer" type="button" class="btn btn-sm btn-primary">Kiểm tra</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" id="CustomerName" name="CustomerName" class="form-control"  value="@Model.CustomerName" readonly=""/>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <div class="checkbox col-md-3">
+                                    <label>
+                                        @Html.CheckBox("IsAgency") Chủ đại lý
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-3">
+                                    <label>
+                                        @Html.CheckBox("IsApproved") Kế toán
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox col-md-3">
+                                    <label>
+                                        @Html.CheckBox("IsLockedOut") Khóa
+                                    </label>
+                                </div>
+                                 <div class="checkbox col-md-3">
+                                    <label>
+                                        @Html.CheckBox("IsService") NV phục vụ
+                                    </label>
+                                </div>
+                            </div>                           
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

@@ -1,0 +1,27 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelVideoItem
+
+<div class="sec-tria" id="trainghiem">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="container">
+        <div class="row">
+            @if (Model.VideoItem != null)
+            {
+                <div class="col-md-5">
+                    <div class="text-tria">
+                        <h2>@Model.VideoItem.Name</h2>
+                        <span>@Model.VideoItem.Description</span>
+                        <div class="option">
+                            <a href="https://youtu.be/@(Model.VideoItem.Url)" data-fancybox="video-youtube" title="" class="btf bt-orange">Xem Demo sản phẩm </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="tria-images">
+                        <img src="@Model.VideoItem.UrlPicture.UploadPicture()" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

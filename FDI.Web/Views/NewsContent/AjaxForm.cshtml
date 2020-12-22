@@ -1,0 +1,119 @@
+﻿@using FDI.CORE
+@model FDI.Simple.NewsItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    
+    $(function () {
+        
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                }
+            },
+            submitHandler: function () {
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về tin tức
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tiêu đề</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="Tên hình ảnh..." name="Title"  id="Title" value="@Model.Title" />
+                            </div>
+                        </div>
+                        <div class="form-group" id="PicturePanel">
+                            <label class="col-md-2 control-label">Ảnh đại diện</label>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
+                                <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_DefaultImages" id="Value_DefaultImages" value="@Model.PictureId" data-multi="false" />
+                                <div id="Text_DefaultImages">
+                                    <div class="gridView list-images-popup">
+                                    @if (Model.PictureId > 0)
+                                    {
+                                            <div class="image-product" id="@Model.PictureId">
+                                                <div class="image">
+                                                    @Gallery.DisplayImage(Model.PictureUrl, 120)
+                                                    <div class="option">
+                                                        <button type="button" class="btn red deleteImg" data-id="@Model.PictureId" data-ctn="DefaultImages"><i class="fa fa-trash-o"></i></button>
+                                                    </div>
+                                                </div>
+                                              @*  <span>@Model.GalleryPicture.Name</span>*@
+                                            </div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Mô tả</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày hiện thị</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control date-picker" placeholder="..." name="_StartDateDisplay" id="_StartDateDisplay" data-date-format="dd/mm/yyyy" value="@Convert.ToDateTime(Model.StartDateDisplay).ToString("dd/MM/yyyy")" />
+                            </div>
+                        </div>
+
+                      <div class="form-group">
+                            <label class="col-md-2 control-label">Nội dung chi tiết</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Details" id="Details">@Model.Details</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+         <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

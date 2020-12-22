@@ -1,0 +1,155 @@
+﻿@import '../global/_variables'; // global variables.
+@import '../global/components/_mixins'; // global mixings.
+
+
+.table-thongke-exel td {
+    font-size: 12px;
+    text-align: center;
+}
+
+
+.table-total {
+    background-color: #f4eebb;
+    font-weight: bold;
+}
+
+.table-total-all {
+    background-color: #ffd937;
+    font-weight: bold;
+}
+
+
+.table-head {
+    background-color: #f3f3f3;
+    font-size: 13px;
+}
+
+.table-head td {
+    vertical-align: middle;
+    font-weight: bold;
+    text-align: center;
+    font-size: 13px;
+}
+
+.table-head th {
+    vertical-align: middle !important;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.table-head-number td {
+    text-align: center;
+    vertical-align: middle;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.table-bangluong td {
+    text-align: right;
+}
+
+.table-bangluong .table-content td:nth-child(2) {
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.table-bangluong .table-content td:nth-child(1), .table-bangluong .table-content td:nth-child(3) {
+    text-align: center;
+}
+
+.table-luongnhanvien td {
+    text-align: left;
+}
+
+.table-luongnhanvien .text-bold {
+    font-weight: bold;
+}
+
+.table-luongnhanvien .text-middle {
+    vertical-align: middle;
+}
+
+.table-luongnhanvien .table-content td:nth-child(2) {
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.table-luongnhanvien .table-content td:nth-child(1), .table-luongnhanvien .table-content td:nth-child(2) {
+    text-align: left;
+}
+
+.table-content td:nth-child(3), .table-content td:nth-child(2) {
+    text-align: left;
+}
+
+.printBangLuong {
+    float: left;
+    width: 100%;
+    padding-top:20px;
+
+    .tt-company {
+        strong {
+            display: block;
+            width: 100%;
+            font-size: 16px;
+        }
+    }
+
+    .title-bangluong {
+        float: left;
+        width: 100%;
+        text-align: center;
+        margin-bottom:30px;
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+    .print-time {
+        text-align:right;
+        margin-top:10px;
+        padding-right:10px;
+        width:33%;
+        float:right;
+        text-align:center;
+    }
+    .print-sign {
+        width:33.3333%;
+        float:left;
+        margin-top:10px;
+        text-align:center;
+        i {
+            display:block;
+            width:100%;
+        }
+    }
+    .body-sign {
+        height:80px;
+        width:100%;
+    }
+    .print-footer {
+        float:left;
+        width:100%;
+    }
+}
+
+.left-tt-company {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.right-tt-company {
+    float: right;
+    width: 50%;
+    text-align: center;
+}

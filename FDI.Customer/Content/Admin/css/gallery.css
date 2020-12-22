@@ -1,0 +1,25 @@
+﻿.my-gallery > .item {
+    margin: 10px 2px;
+    float: left;
+    width: 170px;
+    height: 140px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
+.my-gallery > .item:hover {
+    background-color: #FFFAB5;
+}
+.my-gallery > .active,.my-gallery > .active:hover {
+    background-color: #81ba53;
+}
+.my-gallery > .item > img {
+    max-height: 100px;
+    max-width: 90%;
+    clear: both;
+    margin-bottom: 5px;
+}
+.my-gallery > .item > input {
+    display: none;
+}
+

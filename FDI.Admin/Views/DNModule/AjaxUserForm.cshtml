@@ -1,0 +1,50 @@
+﻿@model List<FDI.Simple.DNUserItem>
+@{
+    ViewBag.Title = ViewBag.ActionText + " User_Module";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#ModuleForm").validate({
+            submitHandler: function() { //onSubmit
+                $.post(urlPostAction2, $("#ModuleForm").serialize(), function(data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+
+    });
+</script>
+
+        <div id="Order">
+            <form id="ModuleForm">
+                <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.Id" />
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td><label>Tên User</label></td>
+                        <td>
+                            <select name="UserId" id="UserId" class="form-control">
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.UserId">@item.UserName</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button id="userModule" type="submit" class="btn btn-sm btn-primary">Xong</button>
+                            <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>

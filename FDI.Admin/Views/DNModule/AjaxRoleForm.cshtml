@@ -1,0 +1,50 @@
+﻿@model List<FDI.Simple.DNRolesItem>
+@{
+    ViewBag.Title = ViewBag.ActionText + " Role_Module";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ModuleForm").validate({
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction3, $("#ModuleForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+<form id="ModuleForm">
+    <input type="hidden" name="ItemID" id="ItemID" value="@ViewBag.Id" />
+    <table class="table table-bordered table-striped">
+        <tr>
+            <td>Tên Role</td>
+            <td>
+                <select name="UserID" id="UserID" class="form-control">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.RoleId">@item.RoleName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button id="roleModule" type="submit" class="btn btn-primary">Xong</button>
+                <button id="close" type="button" class="btn btn-primary">Đóng lại</button>
+            </td>
+        </tr>
+    </table>
+
+
+</form>

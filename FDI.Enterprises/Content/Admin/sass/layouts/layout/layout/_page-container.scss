@@ -1,0 +1,16 @@
+/***
+Page container
+***/
+
+.page-container {
+  	margin: 0px;
+  	padding: 0px;
+  	position: relative;
+  	@include clearfix();
+
+  	/* Fixed header */
+	.page-header-fixed & {
+		margin-top: $header-height; 
+	}	  
+}
+

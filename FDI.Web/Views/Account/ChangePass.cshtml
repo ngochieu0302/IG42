@@ -1,0 +1,175 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAnonymous.cshtml";
+  
+}
+
+<header class="bg-blue dk header navbar navbar-fixed-top-xs">
+    <div class="navbar-header aside-md">
+        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a href="/" class="navbar-brand">
+            <img src="/Skin/images/logo.png" class="m-r-sm"></a>
+        <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+            <i class="fa fa-cog"></i>
+        </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
+        <li class="hidden-xs">
+            <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-sm up bg-danger m-l-n-sm count">2</span>
+            </a>
+            <section class="dropdown-menu aside-xl">
+                <section class="panel bg-white">
+                    <header class="panel-heading b-light bg-light">
+                        <strong>You have <span class="count">2</span> notifications</strong>
+                    </header>
+                    <div class="list-group list-group-alt">
+                        <a href="#" class="media list-group-item">
+                            <span class="pull-left thumb-sm">
+                                <img src="/Skin/images/avatar.jpg" alt="John said" class="img-circle">
+                            </span>
+                            <span class="media-body block m-b-none">Use awesome animate.css<br>
+                                <small class="text-muted">10 minutes ago</small>
+                            </span>
+                        </a>
+                        <a href="#" class="media list-group-item">
+                            <span class="media-body block m-b-none">1.0 initial released<br>
+                                <small class="text-muted">1 hour ago</small>
+                            </span>
+                        </a>
+                    </div>
+                    <footer class="panel-footer text-sm">
+                        <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+                        <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                    </footer>
+                </section>
+            </section>
+        </li>
+        <li class="dropdown hidden-xs">
+            <a href="/" class="dropdown-toggle"><i class="fa fa-home"></i></a>
+        </li>
+
+    </ul>
+</header>
+
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+    <div class="container text-center" style="width: 40%">
+        <div class="panel panel-default bg-white m-t-lg">
+            <div class="bs-example form-horizontal">
+                <header class="panel-heading text-center">
+                    <strong>Lấy lại mật khẩu</strong>
+                </header>
+                <div class="alert alert-warning" role="alert">Nhằm bảo mật tài khoản của bạn, Bạn cần kích hoạt lại tài khoản để đăng nhập vào hệ thống !</div>
+                <form id="change-password" role="form">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                                <span id="messageLogin"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tên đăng nhập</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="..." name="UserName" id="UserName" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Mật khẩu cũ</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" placeholder="..." name="PasswordOld" id="PasswordOld" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Mật khẩu mới</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" placeholder="..." name="PasswordNew" id="PasswordNew" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nhập lật khẩu</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" placeholder="..." name="RePassword" id="RePassword" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <img id="imageRandom" title="mã xác nhận" alt="mã xác nhận" src="/showCaptchaImage?width=90&amp;height=26" />
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="..." name="txtCapcha" id="txtCapcha" />
+                        </div>
+                        <div class="col-sm-1">
+                            <img onclick=" ChangeRandom(); " title="đổi mã xác nhận" alt="Đổi mã" style="cursor: pointer; margin-top: 10px;" src="~/Images/Icons/common/icon_refresh_disable_16.png" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-2">
+                            @* <a href="#" class="pull-right m-t-xs"><small>Forgot password?</small></a>*@
+                            <button type="submit" class="btn btn-primary m-r-n">Cập nhật</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder">
+        <p>
+            <small>Hệ quản trị fdisoft &copy; 2012</small>
+        </p>
+    </div>
+</footer>
+
+<script>
+    $("#change-password").validate({
+        rules: {
+            Password:
+            {
+                required: true,
+                minlength: 6,
+            },
+            RePassword:
+            {
+                required: true,
+                minlength: 6,
+            },
+        },
+        messages: {
+            Password: {
+                required: "Bạn chưa nhập mật khẩu !",
+            },
+            RePassword: {
+                required: "Bạn chưa nhập lại mật khẩu ",
+            },
+        },
+
+        submitHandler: function () { //onSubmit
+            $.post("/Account/ProceesChangePassword", $("#change-password").serialize(), function (msg) {
+                if (msg.Erros == false) {
+                    $("#messageLogin").html("<span style='color:red'> " + msg.Message + " </span>");
+                } else {
+                    $("#messageLogin").html("<span style='color:red'> " + msg.Message + " </span>");
+                }
+            });
+            return false;
+        }
+    });
+
+    function ChangeRandom() {
+        $("#imageRandom").attr("src", "/showCaptchaImage?width=90&height=26&t=" + new Date().getMilliseconds());
+    }
+</script>

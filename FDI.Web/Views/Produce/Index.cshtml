@@ -1,0 +1,68 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model decimal
+@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        urlLists = '@Url.Action("ListItems", new {todayCode=Model})';
+        urlForm = '@Url.Action("AjaxForm", new { todayCode = Model })';
+
+        $(".date-picker").datepicker({
+            //showOn: "button",
+            //buttonImageOnly: true,
+            format: "dd/mm/yyyy"
+        }).mask('00/00/0000').on('changeDate', function (ev) {
+            var a = $(".date-picker").val();
+            window.location.href = "@Url.Action("Index")" + "?todayCode=" + a;
+            console.log(ev.date, a);
+        });
+    });
+</script>
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="ProductName">Sản phẩm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control input-sm date-picker" value="@Model.DecimalToString("dd/MM/yyyy")" name="todayCode" id="fromDate">
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            <div class="pull-right">
+                <a class="btn btn-sm btn-primary btn_Inport" data-action="Add"><span class="fa fa-plus"></span>Sản xuất</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".btn_Inport").click(function () {
+            debugger;
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            var arrRowId = "";
+            var rowTitle = "";
+            var linkFw = "#Page=" + getParameters("Page", 1) + "&RowPerPage=" + getParameters("RowPerPage", 10);
+            $(".gridView input.check[type='checkbox']:checked").not("#checkAll").not(".checkAll").each(function () {
+                arrRowId += $(this).val() + ",";
+            });
+            alert(arrRowId); FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + arrRowId + "&do=" + action, "Tạo phiếu yêu cầu phập kho");
+        });
+       
+    });
+</script>

@@ -1,0 +1,77 @@
+﻿
+.pr-total,.print-wrap {
+    float: left;
+    width: 6.9cm;
+}
+
+.box-pr-payment {height: 371px; width: 6.9cm; float: left; font-family: Arial, sans-serif; font-size: 12px !important;padding:0 10px; box-sizing: border-box;font-style: normal;
+    font-weight: normal;height: 100vh !important;
+}
+
+.box-pr-payment ul { padding-left: 0;list-style-type: none;margin-top: 0;}
+
+.pr-title-code { width: 100%;float: left;text-align: center;margin-bottom: 5px;}
+.pr-title-code strong { width: 100%;display: block;font-size: 1.6em;margin-bottom: 5px;}
+.pr-title-code i {font-style: normal;}
+
+.pr-shop {
+    float: left;
+    width: 100%;
+    padding: 5px 0 10px;
+}
+.pr-shop strong {
+    display: block;
+    width:100%;
+
+}
+.pr-shop strong span {
+    display: inline-block;
+
+}
+
+.pr-content { float: left;width: 100%;padding: 10px 0;}
+.pr-detail-employee { float: left;width: 100%;}
+.pr-detail-employee ul { padding-left: 0;}
+.pr-detail-employee ul li { display: block;width: 100%;float: left;padding: 2px 0; }
+.pr-detail-employee ul li  strong  { width: 40%;float: left;font-size: 12px;}
+.pr-detail-employee ul li  span  { width: 60%;float: left;font-size: 12px;}
+.pr-detail-employee ul li b { font-weight: bold !important;font-size: 12px;}
+
+.pr-list-product {float: left;width: 100%;}
+.pr-head { width: 100%;float: left;border-top: 1px solid #353535;padding: 2px 0; border-bottom: 1px solid #353535;}
+.pr-head strong { text-align: center;display: block;float: left;}
+.pr-head strong:nth-child(1) { width: 30%;text-align: left; }
+.pr-head strong:nth-child(2) { width: 35%;text-align: right;}
+.pr-head strong:nth-child(3) { width: 35%;text-align: right; }
+
+.pr-item { width: 100%;float: left;padding-bottom: 5px;}
+.pr-item:last-child { border-bottom: 0;}
+.pr-item b { width: 100%;float: left;padding-top: 5px;display: block;padding-bottom: 5px;font-weight:normal;}
+.pr-item .pr-property span { float: left;display: block;text-align: center;line-height: 1.4em;}
+.pr-item .pr-property span:nth-child(1) { width: 30%; text-align: left }
+.pr-item .pr-property span:nth-child(2) { width: 35%; text-align: right}
+.pr-item .pr-property span:nth-child(3) { width: 35%;text-align: right}
+.pr-detail-pay  { float: left;width: 100%;padding: 5px 0;}
+.pr-detail-pay  ul { padding-left: 0;}
+.pr-detail-pay  ul li { display: block;width: 100%;float: left;padding: 2px 0; }
+.pr-detail-pay  ul li  strong  { width: 40%;float: left;text-align: left;font-weight: normal;font-size: 12px;}
+.pr-detail-pay  ul li  span  { width: 60%;float: left;text-align: right; font-size: 12px;}
+.box-pr-payment .italic {
+    font-style: italic;
+}
+
+.pr-bookatable { margin-top: 5px; border-bottom: 1px dashed #000 !important;}
+.pr-bookatable .pr-head strong { text-align: center;display: block;float: left;}
+.pr-bookatable .pr-head strong:nth-child(1) { width: 35%;text-align: left; }
+.pr-bookatable .pr-head strong:nth-child(2) { width: 10%;text-align: center;}
+.pr-bookatable .pr-head strong:nth-child(3) { width: 25%;text-align: right; }
+.pr-bookatable .pr-head strong:nth-child(4) { width: 30%;text-align: right; }
+.pr-bookatable .pr-item b { width: auto;display: inline-block;}
+.pr-bookatable .pr-item .pr-property { float: left;width: 100%;display: block; padding-top: 5px;padding-bottom: 5px;}
+.pr-bookatable .pr-item .pr-property.line-through span { text-decoration: line-through; }
+.pr-bookatable .pr-item .pr-property span { float: left;display: block;text-align: center;line-height: 1.4em; font-weight:normal;}
+.pr-bookatable .pr-item .pr-property span:nth-child(1) { width: 35%; text-align: left }
+.pr-bookatable .pr-item .pr-property span:nth-child(2) { width: 10%; text-align: center}
+.pr-bookatable .pr-item .pr-property span:nth-child(3) { width: 25%;text-align: right}
+.pr-bookatable .pr-item .pr-property span:nth-child(4) { width: 30%;text-align: right}
+

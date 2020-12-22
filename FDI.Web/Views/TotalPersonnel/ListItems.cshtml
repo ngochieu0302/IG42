@@ -1,0 +1,382 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@using FDI.Simple
+@using FDI.CORE
+@model ModelDNUserCalendarItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var dnSalaryItems = Model.ListItems.Where(m => m.TotalSalaryMonthItem != null && m.TotalSalaryMonthItem.CriteriaList.Any()).SelectMany(m => m.TotalSalaryMonthItem.CriteriaList).ToList();
+    var listCriteria = dnSalaryItems.GroupBy(m => m.Id).Select(m => m.FirstOrDefault());
+    var listday = ConvertDateItem.ListDayInMonth(Model.DateStart);
+    var salaryItems = listCriteria as IList<DNCriteriaTotalitem> ?? listCriteria.ToList();
+    var date = Model.DateStart;
+    var ldo = new List<DayItem>();
+    var count = 0;
+    if (Model.DayOffItems.Any(m => m.Quantity > 0))
+    {
+        foreach (var dayOffItem in Model.DayOffItems)
+        {
+            for (var i = dayOffItem.Date.DecimalToDate(); i < dayOffItem.Date.DecimalToDate().AddDays(dayOffItem.Quantity.Value); i.AddDays(1))
+            {
+                var obj = new DayItem
+                {
+                    Date = i
+                };
+                ldo.Add(obj);
+            }
+        }
+        ldo.Where(m => listday.Any(n => n.Date == m.Date));
+        count = ldo.GroupBy(m => m.Date).Count();
+    }
+
+    var dn = DateTime.Now;
+}
+
+<div id="mygird" class="printBangLuong" style="padding-top: 0;">
+    <div class="PrintTotal tt-company-wrap">
+        <div class="tt-company">
+            <div class="left-tt-company">
+                <strong class="nameagency"></strong>
+                <span><b>Mã đơn vị:</b> ........................</span>
+            </div>
+            <div class="right-tt-company">
+                <strong>Mẫu số: C30 - BB</strong>
+                <span>Ban hành ngày 30 tháng 03 năm 2006</span>
+            </div>
+        </div>
+        <div class="title-bangluong">
+            <h2>Bảng tính - Thanh toán tiền lương</h2>
+            <i>Tháng <span id="monthToShow">@date.Month</span> năm <span id="yearToShow">@date.Year</span></i>
+        </div>
+    </div>
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-calender table-clp" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th rowspan="2"><strong class="text-center">STT</strong> </th>
+                        <th rowspan="2"><strong class="text-left">Tên NV</strong></th>
+                        <th rowspan="2"><strong class="text-left">Tên ĐN</strong> </th>
+                        <th rowspan="2"><strong class="text-center">Phòng ban</strong> </th>
+                        <th rowspan="2"><strong class="text-center">ĐM-VS(P)</strong></th>
+                        <th rowspan="2"><strong class="text-right">Lương</strong></th>
+                        <th rowspan="2"><strong class="text-center">Ngày làm</strong> </th>
+                        <th rowspan="2"><strong class="text-center">Tổng ngày</strong></th>
+                        <th rowspan="2"><strong class="text-center">Số ca nghỉ</strong></th>
+                        <th rowspan="2"><strong class="text-center">Số ca tăng</strong></th>
+                        <th rowspan="2"><strong class="text-right">Lương thực lĩnh</strong></th>
+                        @if (salaryItems.Any())
+                        {
+                            <th colspan="@(salaryItems.Count() + 1)"><strong class="text-right">Thưởng doanh số</strong></th>
+                        }
+                        <th rowspan="2"><strong class="text-right">Tổng thực lĩnh</strong> </th>
+                        <th rowspan="2" class="hidden-print"><strong class="text-center ">Thao tác</strong></th>
+                    </tr>
+                    @if (salaryItems.Any())
+                    {
+                        <tr>
+                            @foreach (var item1 in salaryItems)
+                            {
+                                <td><b>@item1.Name</b></td>
+                            }
+                            <td><strong class="text-center">Tổng thưởng</strong> </td>
+                        </tr>
+                    }
+                </thead>
+                <tbody>
+                    @{
+                        var stt = 1;
+                        int? tong = 0;
+                        foreach (var item2 in Model.ListItems)
+                        {
+                            var listc = item2.CalendarItems.ToList();
+                            item2.TotalLate = 0;
+                            listc.AddRange(item2.RCalendarItems.Select(rcalendarItem => new CalendarItem
+                            {
+                                DateStart = rcalendarItem.DateStart,
+                                DateEnd = rcalendarItem.DateEnd,
+                                ID = rcalendarItem.ID,
+                                DNCalendarWeeklySchedule = rcalendarItem.DNCalendarWeeklySchedule.Select(m => new CalendarWeeklyScheduleItem
+                                {
+                                    MWSID = m.MWSID,
+                                    Weekid = m.Weekid
+                                })
+                            }));
+                            listc = listc.GroupBy(m => m.ID).Select(m => m.FirstOrDefault()).ToList();
+                            var totalDate = listday.Count(m => item2.DN_Time_Job.Any(t => t.DateCreated >= m.Item.S && t.DateCreated < m.Item.E));
+                            var fixedSalary = item2.TotalSalaryMonthItem != null ? item2.TotalSalaryMonthItem.FixedSalary ?? 0 : 0;
+                            if (item2.TotalSalaryMonthItem != null)
+                            {
+                                item2.TotalSalaryMonthItem.TotalDateCC = item2.TotalSalaryMonthItem.TotalDateCC - count;
+                            }
+                            foreach (var itemd in listday)
+                            {
+                                var listd = item2.DN_Time_Job.Where(m => m.DateCreated >= itemd.Item.S && m.DateCreated < itemd.Item.E).ToList();
+                                if (listd.Any())
+                                {
+                                    var obje = listd.OrderBy(m => m.MinutesEarly).FirstOrDefault();
+                                    var objl = listd.OrderBy(m => m.MinutesLater).FirstOrDefault();
+                                    item2.TotalLate += ((obje.MinutesEarly < 0 || obje.DateCreated == obje.DateEnd || !obje.DateEnd.HasValue) ? 0 : obje.MinutesEarly ?? 0) + objl.MinutesLater ?? 0;
+                                }
+                            }
+                            var totalday = listday.Count(dayitem => listc.Any(calendarItem => calendarItem.DateStart <= dayitem.Item.S && calendarItem.DateEnd > dayitem.Item.S && calendarItem.DNCalendarWeeklySchedule.Any(m => m.Weekid == dayitem.Thu)));
+                            <tr id="line-@item2.UserId">
+                                <td class="text-center" id="stt-@item2.UserId">@(stt++)</td>
+                                <td class="text-left" id="name-@item2.UserId"><b id="on-@item2.UserId" class="@(item2.IsOnline ? "online" : "offline")">@item2.LoweredUserName</b></td>
+                                <td class="text-left" id="username-@item2.UserId">@item2.UserName</td>
+                                <td class="text-center" id="namerole-@item2.UserId">@item2.NameRole</td>
+                                <td class="text-center" id="late-@item2.UserId">@((item2.TotalLate ?? 0) - (item2.TotalSalaryMonthItem != null ? item2.TotalSalaryMonthItem.TotalSom ?? 0 : 0) - (item2.TotalSalaryMonthItem != null ? item2.TotalSalaryMonthItem.TotalMuon ?? 0 : 0))</td>
+                                <td class="text-right maskPrice" id="fixedSalary-@item2.UserId">@(fixedSalary)</td>
+                                <td class="text-center" id="totalDate-@item2.UserId">@(totalDate + (item2.TotalSalaryMonthItem != null ? item2.TotalSalaryMonthItem.TotalDateCC ?? 0 : 0)) </td>
+                                <td class="text-center" id="totalday-@item2.UserId">@totalday</td>
+                                <td class="text-center" id="Countca-@item2.UserId">@(item2.EditScheduleItems.Count(m => m.UserId == item2.UserId))</td>
+                                <td class="text-center" id="countcaup-@item2.UserId">@(item2.EditScheduleItems.Count(m => m.UserChangeId == item2.UserId))</td>
+                                <td class="text-center maskPrice" id="Salary-@item2.UserId"><strong>@(totalday == 0 ? 0 : ((totalDate + (item2.TotalSalaryMonthItem != null ? item2.TotalSalaryMonthItem.TotalDateCC ?? 0 : 0)) * fixedSalary) / totalday)</strong></td>
+                                @if (salaryItems.Any())
+                                {
+                                    foreach (var item3 in salaryItems)
+                                    {
+                                        if (item2.TotalSalaryMonthItem != null && item2.TotalSalaryMonthItem.CriteriaList.Any(m => m.Id == item3.Id))
+                                        {
+                                            <td class="text-right maskPrice" id="stt-@item3.Id-@item2.UserId" data-name="@item3.Name"><b>@((item2.TotalSalaryMonthItem != null ? (int)item2.TotalSalaryMonthItem.CriteriaList.Where(m => m.Id == item3.Id).Select(m => m.Value).FirstOrDefault() : 0))</b></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-right maskPrice" data-name="@item3.Name"><b>0</b></td>
+                                        }
+
+                                    }
+                                    <td class="text-right maskPrice" id="totalavard-@item2.UserId"><b>@((item2.TotalSalaryMonthItem != null ? (int)item2.TotalSalaryMonthItem.CriteriaList.Sum(m => m.Value) : 0))</b></td>
+                                }
+                                @if (item2.TotalSalaryMonthItem != null)
+                                {
+                                    var total = (int)item2.TotalSalaryMonthItem.CriteriaList.Sum(m => m.Value) + (totalday == 0 ? 0 : ((totalDate + item2.TotalSalaryMonthItem.TotalDateCC) * fixedSalary) / totalday) + item2.TotalSalaryMonthItem.SalaryAward;
+                                    tong = tong + total;
+                                    <td class="text-right maskPrice" id="tl-@item2.UserId"><strong>@(total)</strong></td>
+                                    <td class="text-right  hidden-print">
+                                        <a href="#" class="btn btn-default btn_Print" data-id="@item2.UserId"><i class="fa fa-print"></i></a>
+                                        @if (item2.TotalSalaryMonthItem != null && item2.TotalSalaryMonthItem.Month != null && item2.TotalSalaryMonthItem.Year != null)
+                                        {
+                                            if ((date.Month == dn.Month && date.Year == dn.Year) || (dn.Month == date.Month - 1 && date.Day >= 1 && date.Day <= 5 && date.Year == dn.Year))
+                                            {
+                                                @Grid.ActionEdit(item2.TotalSalaryMonthItem.ID, item2.LoweredUserName)
+                                            }
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-right maskPrice"><strong></strong></td>
+                                    <td class="text-right  hidden-print"><a href="#" class="btn btn-default btn_Print"><i class="fa fa-print"></i></a></td>
+                                }
+                            </tr>
+                        }
+                        <tr>
+                            <th class="text-right" colspan="@(salaryItems.Count + 12 - (salaryItems.Any() ? 0 : 1))">Tổng</th>
+                            <th class="text-right maskPrice" colspan="2">@(tong)</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="PrintTotal">
+                <div class="print-time">
+                    <i>Hà Nội , Ngày <span>@dn.Day </span>tháng <span>@dn.Month </span>năm <span>@dn.Year</span></i>
+                </div>
+                <div class="print-footer">
+                    <div class="print-sign">
+                        <strong>Thủ trưởng đơn vị</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="body-sign"></div>
+                    </div>
+                    <div class="print-sign">
+                        <strong>Người lập</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="body-sign"></div>
+                    </div>
+                    <div class="print-sign">
+                        <strong>Người nộp</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="body-sign"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="IDListItems" value="@(new JavaScriptSerializer().Serialize(Model.ListItems))">
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".PrintTotal").hide();
+        $(".nameagency").html($("#AgencyName").html());
+        registerGridView('#mygird');
+        $("#_detailAll").click(function (e) {
+            e.preventDefault();
+            $(".PrintTotal").show();
+            jQuery.print('#mygird');
+            $(".PrintTotal").hide();
+        });
+        var list = JSON.parse($('#IDListItems').val());
+        $('#IDListItems').val("");
+        $("#_detail").click(function (e) {
+            e.preventDefault();
+            var htmldefa = $(".userhtml").html();
+            var BoxPrint = $("#BoxPrint").html();
+            for (var i = 0; i < list.length; i++) {
+                PrintDefault(list[i].UserId, BoxPrint, list[i].TotalSalaryMonthItem);
+                $(".userhtml .pstt").html($("#stt-" + list[i].UserId).html());
+                var userhtml = $(".userhtml").html();
+                $(".printuser").append(userhtml).append(userhtml);
+                $(".userhtml").html(htmldefa);
+            }
+            jQuery.print('.printuser');
+            $(".printuser").html("");
+        });
+        $(".btn_Print").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var htmldefa = $(".userhtml").html();
+            var BoxPrint = $("#BoxPrint").html();
+            for (var i = 0; i < list.length; i++) {
+                if (id == list[i].UserId) {
+                    PrintDefault(list[i].UserId, BoxPrint, list[i].TotalSalaryMonthItem);
+                    $(".userhtml .pstt").html($("#stt-" + list[i].UserId).html());
+                    var userhtml = $(".userhtml").html();
+                    $(".printuser").append(userhtml).append(userhtml);
+                    $(".userhtml").html(htmldefa);
+                    break;
+                }
+            }
+            jQuery.print('.printuser');
+            $(".printuser").html("");
+        });
+        function PrintDefault(userid, BoxPrint, lista) {
+            var la = [];
+            var note = "";
+            var str = "";
+            var award = $("#totalavard-" + userid).html();
+            if (lista != undefined) {
+                la = lista.CriteriaList;
+                award = 0;
+                if (lista.Note != null) note = lista.Note;
+            }
+            for (var i = 0; i < la.length; i++) {
+                str = str + '<tr>' + '<td>' + la[i].Name + '</td>' + '<td>' + numeral(la[i].Value).format('0,0') + '</td>' + '</tr>';
+            }
+            var ch = BoxPrint.replace("fullname", $("#name-" + userid).html());
+            ch = ch.replace("username", $("#username-" + userid).html());
+            ch = ch.replace("rolename", $("#namerole-" + userid).html());
+            ch = ch.replace("totaldatecc", $("#totalDate-" + userid).html());
+            ch = ch.replace("dmvs", $("#late-" + userid).html());
+            ch = ch.replace("totaldate", $("#totalday-" + userid).html());
+            ch = ch.replace("<td>tttt</td>", str);
+            ch = ch.replace("FixedSalary", $("#fixedSalary-" + userid).html());
+            ch = ch.replace("thucLinh", $("#Salary-" + userid).html());
+            ch = ch.replace("SalaryAwardAdd", award);
+            ch = ch.replace("total", $("#tl-" + userid).html());
+            ch = ch.replace("noteu", note);
+            $("#contentuser").html(ch);
+        }
+    });
+</script>
+
+<div class="userhtml" style="display: none">
+    <div class="printBangLuong">
+        <div class="tt-company">
+            <div class="left-tt-company">
+                <strong class="nameagency"></strong>
+                <span>Mã đơn vị:...............</span>
+                <span>Số: <i class="pstt"></i></span>
+            </div>
+            <div class="right-tt-company">
+                <strong>Mẫu số: C30 - BB</strong>
+                <span>Ban hành ngày: 30 tháng 03 năm 2006</span>
+            </div>
+        </div>
+        <div class="title-bangluong">
+            <h2>Bảng lương chi tiết nhân viên</h2>
+            <i>Tháng <span>@date.Month</span> năm <span>@date.Year</span></i>
+        </div>
+        <div class="print-table" id="contentuser">
+        </div>
+        <div class="print-time">
+            <i>Hà Nội , Ngày <span>@dn.Day</span> tháng <span>@dn.Month</span> năm <span>@dn.Year</span></i>
+        </div>
+        <div class="print-footer">
+            <div class="print-sign">
+                <strong>Thủ trưởng đơn vị</strong>
+                <i>Ký, họ tên, đóng dấu</i>
+                <div class="body-sign"></div>
+            </div>
+            <div class="print-sign">
+                <strong>Người lập</strong>
+                <i>Ký, họ tên, đóng dấu</i>
+                <div class="body-sign"></div>
+            </div>
+            <div class="print-sign">
+                <strong>Người nộp</strong>
+                <i>Ký, họ tên, đóng dấu</i>
+                <div class="body-sign"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="BoxPrint" style="display: none">
+    <table class="table table-bordered table-luongnhanvien" style="width: 48%; float: left">
+        <tr>
+            <th colspan="2">Họ tên</th>
+            <th>fullname</th>
+        </tr>
+        <tr>
+            <td colspan="2">Tài khoản</td>
+            <td>username</td>
+        </tr>
+        <tr>
+            <td colspan="2">Phòng ban</td>
+            <td>rolename</td>
+        </tr>
+        <tr>
+            <td colspan="2">Số ngày công</td>
+            <td>totaldatecc</td>
+        </tr>
+        <tr>
+            <td colspan="2">Số ngày làm việc</td>
+            <td>totaldate</td>
+        </tr>
+        <tr>
+            <td colspan="2">thời gian(ĐM-VS)</td>
+            <td>dmvs</td>
+        </tr>
+        <tr>
+            <td colspan="2">Mức lương</td>
+            <td>FixedSalary</td>
+        </tr>
+        <tr>
+            <td colspan="2">Ghi chú</td>
+            <td>noteu</td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-luongnhanvien" style="width: 50%; float: left; margin-left: 2%;">
+        @if (salaryItems.Any())
+        {
+            <tr class="bg-2td">
+                <td rowspan="@(salaryItems.Count + 1)" class="text-middle">Chi tiết các khoản</td>
+                <td>tttt</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="2">Thưởng phạt</td>
+            <td colspan="2">SalaryAwardAdd</td>
+        </tr>
+        <tr>
+            <td colspan="2">Thực lĩnh</td>
+            <td colspan="2">thucLinh</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-bold">Tổng</td>
+            <td class="text-bold">total</td>
+        </tr>
+    </table>
+</div>
+<div class="printuser user-print-single"></div>

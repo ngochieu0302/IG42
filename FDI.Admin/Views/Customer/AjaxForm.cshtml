@@ -1,0 +1,237 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CustomerItem
+
+@{
+    ViewBag.Title = ViewBag.ActionText + " Khách hàng";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerDate();
+        $("#CustomerForm").validate({
+            rules: {
+                FullName:
+                {
+                    required: true
+                },
+                CardSerial:
+                {
+                    remote: "@Url.Action("CheckCardSerial", "Customer", new { id = Model.ID })"
+                },
+                UserName:
+                {
+                    remote: "@Url.Action("CheckByUserName", "Customer", new { id = Model.ID })"
+                },
+                Email:
+                {
+                    email: true,
+                    minlength: 3,
+                    remote: "@Url.Action("CheckByEmail", "Customer", new { id = Model.ID })"
+                },
+                Phone:
+                {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 13,
+                    number: true,
+                    remote: "@Url.Action("CheckByPhone", "Customer", new { id = Model.ID })"
+                }
+            },
+            messages: {
+                FullName:
+                {
+                    required: "Xin mời nhập tên khách hàng.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                CardSerial:
+                {
+                    remote: "Mã thẻ không tồn tại hoặc đã được sử dụng."
+                },
+                UserName:
+                {
+                    required: "Nhập user name khách hàng",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự.",
+                    remote: "Tên tài khoản đã tồn tại"
+                },
+                Email:
+                {
+                    //required: "Trường này là bắt buộc.",
+                    email: "Vui lòng nhập một địa chỉ email hợp lệ.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự.",
+                    remote:"Email đã tồn tại"
+                },
+                Phone:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    maxlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    number: "Vui lòng nhập số điện thoại hợp lệ.",
+                    remote:"Số điện thoại đã tồn tại"
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/Customer/Actions", $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $(".modal").modal('hide');
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+        registerDate();
+        $("#CityID").change(function() {
+            var cityId = $(this).val();
+            $.post( "@Url.Action("GetDistrict", "Customer")", {"cityId": cityId}, function( data ) {
+                $("#DistrictID").html("");
+                $.each( data, function( i, val ) {
+                    $("#DistrictID").append("<option value='"+val.ID+"'>"+val.Name+"</option>");
+                });
+            });
+        });
+
+    });
+</script>
+<form id="CustomerForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        @*<input type="hidden" name="AgencyId" id="AgencyId" value="@(Model.AgencyId??ViewBag.AgencyId)" />*@
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Thông tin khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ tên <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                            </div>
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            </div>
+                            @*<label class="col-sm-2 control-label">Mã thẻ</label>
+                                <div class="col-sm-4">
+                                    @if (Model.CardID == null)
+                                    {
+                                        <input class="form-control" id="CardSerial" name="CardSerial" />
+                                    }
+                                    else
+                                    {
+                                        <p class="form-control-static">@Model.CardSerial</p>
+                                    }
+                                </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số điện thoại <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                            </div>
+                            <label class="col-sm-2 control-label">Tên đăng nhập</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                            </div>                            
+                        </div>
+                        @* <div class="form-group">
+
+                            <label class="col-sm-2 control-label">Người giới thiệu</label>
+                             <div class="col-sm-4">
+                                 @if (Model.CardID == null)
+                                 {
+                                     <input class="form-control" id="Parent" name="Parent" />
+                                 }
+                                 else
+                                 {
+                                     <p class="form-control-static">@Model.ParentName</p>
+                                 }
+                             </div>
+                                                </div>*@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày sinh</label>
+                            <div class="col-sm-4">
+                                <input class="form-control date-picker" id="Birthday_" name="Birthday_" size="16" type="text" value="@(Model.Birthday.HasValue ? Model.Birthday.DecimalToString("dd/MM/yyyy") : "")">
+                            </div>
+                            <label class="col-sm-2 control-label">Mật khẩu</label>
+                            <div class="col-sm-4">
+                                <input class="form-control valid" id="Password" name="Password" type="password" value="">
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tỉnh/ Thành phố</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="CityID" name="CityID">
+                                    <option value=""></option>
+                                    @foreach (var item in ViewBag.ListCity)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.CityID ? "selected" : "")>@item.Name.Trim()</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Giới tính</label>
+                            <div class="col-sm-4">
+                                @Html.RadioButtonFor(model => model.Gender, true)
+                                Nam
+                                @Html.RadioButtonFor(model => model.Gender, false)
+                                Nữ
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Quận/Huyện</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="DistrictID" name="DistrictID">
+                                    @Html.Action("District", "Customer", new { cityId = Model.CityID ?? 0, districtId = Model.DistrictID })
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Số CMND</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="PeoplesIdentity" name="PeoplesIdentity" type="text" value="@Model.PeoplesIdentity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="2" id="Address" name="Address">@Model.Address</textarea>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <label class="col-sm-2 control-label">Sở thích</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" id="NoteCate" name="NoteCate">@Model.NoteCate</textarea>
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsActive") Kích hoạt
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+<script type="text/javascript">
+    $("#resetpass").click(function() {
+        var customerid = "@Model.ID";
+        var link = "/Customer/ResetPassword";
+        $.post(link, {"id":customerid
+        }, function(data) {
+            createMessage("Thông báo", data.Message);
+        });
+    });
+</script>

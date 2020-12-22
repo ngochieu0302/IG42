@@ -1,0 +1,101 @@
+﻿
+<form id="frm-tranfer">
+    <div class="modal-body">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Chuyển tiền tích lũy sang ví
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Chọn khách hàng</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="CustomerAuto" id="CustomerAuto" class="form-control" value=""/>
+                                <input type="text" name="CustomerName" id="CustomerName" class="form-control" value=""/>
+                                <input type="hidden" name="CustomerID" id="CustomerID" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tích lũy hiện tại</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control maskPrice" readonly name="Moneycurrent" id="Moneycurrent" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số tiền chuyển</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control maskPrice" name="Moneytranfer" id="Moneytranfer" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $('#CustomerAuto').autocomplete({
+            serviceUrl: "/Wallet/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $(this).val("");
+                $('#CustomerName').val(el.title);
+                $('#CustomerID').val(el.ID);
+                $("#Moneycurrent").val(el.TotalPrice);
+            }
+        });
+        $("#Moneytranfer").keyup(function () {
+            var money = parseInt($(this).val());
+            var moneycur = parseInt($("#Moneycurrent").val().replace(/\,/g, ''));
+            var ischeck = Number.isNaN(moneycur);
+            if (ischeck) {
+                toastr["error"]("Bạn chưa chọn khách hàng.");
+                $(this).val(0);
+                return;
+            }
+            if (money > moneycur) {
+                $(this).val(moneycur);
+            }
+        });
+        $("#frm-tranfer").validate({
+            rules: {
+                Moneytranfer:
+                {
+                    required: true,
+                },
+            },
+            messages: {
+                Moneytranfer: {
+                    required: "Nhập số tiền chuyển !",
+                },
+            },
+
+            submitHandler: function () { //onSubmit
+                var money = parseInt($("#Moneytranfer").val());
+                var moneycur = parseInt($("#Moneycurrent").val().replace(/\,/g, ''));
+                if (money > moneycur) {
+                    $("#Moneytranfer").val(moneycur);
+                }
+                $.post("/Wallet/ActionTranferMoney", $("#frm-tranfer").serialize(), function (data) {
+                    if (data.Erros) {
+                        toastr["error"](data.Message);
+                    } else {
+                        toastr["success"](data.Message);
+                        $(".modal").modal('hide');
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>

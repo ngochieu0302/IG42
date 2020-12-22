@@ -1,0 +1,111 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNUserTimeJobItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    int stt = 1;
+    var dn = DateTime.Now.TotalSeconds();
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content table-timejob">
+            <div class="table-timejob-name">
+                <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                    <thead>
+                        <tr>
+                            <th><strong class="text-center">STT</strong> </th>
+                            <th class="text-left"><strong style="float: left">Tên</strong></th>
+                            <th class="text-left"><strong style="float: left">Tài khoản</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListItems)
+                        {
+                            <tr id="">
+                                <td class="text-center">@(stt++)</td>
+                                <td><strong>@item.LoweredUserName</strong></td>
+                                <td>@item.UserName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-timejob-date">
+                <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                    <thead>
+                        <tr>
+                            @foreach (var item in Model.DayItems)
+                            {
+                                <th><strong class="text-center">@(item.Item.I + 1)</strong></th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListItems)
+                        {
+                            <tr>
+                                @foreach (var itemd in Model.DayItems)
+                                {
+                                    var checkOff = item.EditScheduleItems.Any(m => m.Date == itemd.Item.S && m.Check.HasValue && m.Check.Value) || item.DateOffItem.Any(m => m.Date <= itemd.Item.S && m.Date + (m.Quantity * 86400) > itemd.Item.S);
+                                    if (!checkOff)
+                                    {
+                                        var list = item.DNTimeJobItems.Where(m => m.DateCreated >= itemd.Item.S && m.DateCreated < itemd.Item.E).ToList();
+                                        if (list.Any())
+                                        {
+                                            var obje = list.OrderBy(m => m.MinutesEarly).FirstOrDefault();
+                                            var objl = list.OrderBy(m => m.MinutesLater).FirstOrDefault();
+                                            var e = (obje.MinutesEarly < 0 || obje.DateCreated == obje.DateEnd || !obje.DateEnd.HasValue) ? 0 : obje.MinutesEarly ?? 0;
+                                            var l = objl.MinutesLater < 0 ? 0 : objl.MinutesLater ?? 0;
+                                            item.Totale += e;
+                                            item.CountDay++;
+                                            item.Totall += l;
+                                            <td class="text-center"><b>DM :</b> <b class="first">@l</b> / <b>VS :</b> <b class="last">@(obje.DateCreated == obje.DateEnd || !obje.DateEnd.HasValue ? "Not Out" : ""+ e)</b></td>
+                                            @*<td class="text-center"><b>DM (@objl.DateCreated.DecimalToString("HH:mm")) :</b> <b class="first">@l</b> / <b>VS :</b> <b class="last">@(obje.DateCreated == obje.DateEnd || !obje.DateEnd.HasValue ? "Not Out" : objl.DateCreated.DecimalToString("HH:mm") + " "+ e)</b></td>*@
+                                        }
+                                        else if (itemd.Item.S < dn)
+                                        {
+                                            var check = item.CalendarItems.Any(m => m.DateStart <= itemd.Item.S && m.DateEnd > itemd.Item.S && m.DNCalendarWeeklySchedule.Any(d => d.Weekid == itemd.Thu));
+                                            if (check)
+                                            {
+                                                <td class="text-center" style="color: #ff8c00">Tự nghỉ</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center">Không lịch</td>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center"></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <td class="text-center">Ngày nghỉ</td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-timejob-total">
+                <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                    <thead>
+                        <tr>
+                            <th><strong class="text-center">Tổng</strong> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListItems)
+                        {
+                            <tr>
+                                <td class="text-center"><b class="first">S</b>: <b>@item.Totall</b> / <b class="last">M</b>: <b>@item.Totale</b> - <b class="first">NL</b>: <b>@item.CountDay</b></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

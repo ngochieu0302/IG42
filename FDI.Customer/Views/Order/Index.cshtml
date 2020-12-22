@@ -1,0 +1,272 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelRewardItem
+@{
+    ViewBag.Title = "Danh sách đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var stt = 1;
+    var stt1 = 1;
+}
+<div class="page-head">
+    <div class="container">
+        <div class="page-title">
+            <h1>Quản lý đơn hàng
+                <small>Thống kê điểm tích lũy, lịch sử thưởng và lịch sử sử dụng điểm tích lũy</small>
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <div class="container">
+        <div class="portlet box blue select-angency">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Chọn đại lý
+                </div>
+            </div>
+            <div class="portlet-body form" style="">
+                <form role="form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <select class="form-control" id="Agency" style="font-size: 16px">
+                                    @foreach (var item in Model.ListAgency.OrderByDescending(c => c.PriceReward))
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.AgencyId ? "selected" : "")>@item.Name - @string.Format("{0:0,0}", item.PriceReward -item.PriceReceive ?? 0 - (item.PriceReward-item.PriceReceive) ?? 0) Điểm</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label label-primary">Tổng số đại lý thưởng tích lũy: @Model.ListAgency.Count()</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="page-content-inner">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- BEGIN WIDGET THUMB -->
+                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                        <h4 class="widget-thumb-heading">TỔNG THƯỞNG TÍCH LŨY </h4>
+                        <div class="widget-thumb-wrap">
+                            <i class="widget-thumb-icon bg-green fa fa-plus"></i>
+                            <div class="widget-thumb-body">
+                                <span class="widget-thumb-subtitle">Điểm</span>
+                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="@Model.TotalRewar">@string.Format("{0:0,0}", Model.TotalRewar)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END WIDGET THUMB -->
+                </div>
+                <div class="col-md-4">
+                    <!-- BEGIN WIDGET THUMB -->
+                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                        <h4 class="widget-thumb-heading">TỔNG THƯỞNG TÍCH LŨY ĐÃ RÚT</h4>
+                        <div class="widget-thumb-wrap">
+                            <i class="widget-thumb-icon bg-green fa fa-minus"></i>
+                            <div class="widget-thumb-body">
+                                <span class="widget-thumb-subtitle">Điểm</span>
+                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="@Model.TotalRecive">@string.Format("{0:0,0}", Model.TotalRecive)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END WIDGET THUMB -->
+                </div>
+                <div class="col-md-4">
+                    <!-- BEGIN WIDGET THUMB -->
+                    <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                        <h4 class="widget-thumb-heading">TỔNG THƯỞNG TÍCH LŨY CÒN LẠI</h4>
+                        <div class="widget-thumb-wrap">
+                            <i class="widget-thumb-icon bg-green fa fa-navicon"></i>
+                            <div class="widget-thumb-body">
+                                <span class="widget-thumb-subtitle">Điểm</span>
+                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="@(Model.TotalRewar - Model.TotalRecive)">@string.Format("{0:0,0}", Model.TotalRewar - Model.TotalRecive)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END WIDGET THUMB -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-settings font-dark"></i>
+                                <span class="caption-subject font-dark sbold uppercase">LỊCH SỬ THƯỞNG TÍCH LŨY</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+
+                            <table class="table table-striped table-bordered table-hover table-checkable" id="tableReward">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">STT </th>
+                                        <th class="text-center">Số HD </th>
+                                        <th class="text-center">Ngày giao dịch</th>
+                                        <th class="text-right">Điểm tích lũy</th>
+                                        <th class="text-center">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                @if (Model.ListReward != null)
+                                {
+                                    <tbody>
+                                        @foreach (var item in Model.ListReward)
+                                        {
+                                            <tr class="odd gradeX">
+                                                <td class="text-center">@(stt++) </td>
+                                                <td class="text-center">@item.OrderID </td>
+                                                <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy") </td>
+                                                <td class="text-right">@string.Format("{0:0,0}", item.Price) </td>
+                                                <td class="text-center">
+                                                    <a data-event="Order" data-id="@item.OrderID" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        @if (Model.ListReward.Count > 9)
+                                        {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <button class="btn btn-success btnListReward" data-event="back" data-page="1">Quay lại</button>
+                                                    <button class="btn btn-success btnListReward" data-event="next" data-page="2">Xem thêm</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tfoot>
+                                }
+                            </table>
+                            <div class="footer-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+                <div class="col-md-6">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-settings font-dark"></i>
+                                <span class="caption-subject font-dark sbold uppercase">LỊCH SỬ SỬ DỤNG TÍCH LŨY</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+
+                            <table class="table table-striped table-bordered table-hover table-checkable" id="tableReceive">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">STT </th>
+                                        <th class="text-center">Số HD </th>
+                                        <th class="text-center">Ngày giao dịch</th>
+                                        <th class="text-right">Điểm tích lũy</th>
+                                        <th class="text-center">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                @if (Model.ListReceive != null)
+                                {
+                                    <tbody>
+                                        @foreach (var item in Model.ListReceive)
+                                        {
+                                            <tr class="odd gradeX">
+                                                <td class="text-center">@(stt1++) </td>
+                                                <td class="text-center">@item.OrderID </td>
+                                                <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy") </td>
+                                                <td class="text-right">@string.Format("{0:0,0}", item.Price) </td>
+                                                <td class="text-center">
+                                                    <a data-event="Order" data-id="@item.OrderID" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        @if (Model.ListReceive.Count > 9)
+                                        {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <button class="btn btn-success btnListReceive" data-event="back" data-page="1">Quay lại</button>
+                                                    <button class="btn btn-success btnListReceive" data-event="next" data-page="2">Xem thêm</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tfoot>
+                                }
+                            </table>
+                            <div class="footer-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT INNER -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $('[data-event="back"]').hide();
+        $("[data-event='Order']").click(function () {
+            var id = $(this).attr("data-id");
+            $.post("/Order/AjaxView?id=" + id, function (data) {
+                $("#dialog-form-4" + " .modal-title").html("Chi tiết đơn hàng");
+                $("#dialog-form-4" + " .dialog-form-ajax").html(data);
+                $("#dialog-form-4").modal('show');
+            });
+        });
+        $(".btnListReward").click(function () {
+            var page = parseInt($(this).attr("data-page"));
+            var event = $(this).attr("data-event");
+            //if (event == "back")
+            //    page = page - 1;
+            var agencyId = $("#Agency").val();
+            $.post("/Order/ListReward?page=" + page + "&agencyId=" + agencyId, function (data) {
+                $('#tableReward [data-event="next"]').attr("data-page", page + 1);
+                $('#tableReward [data-event="back"]').attr("data-page", page - 1);
+                if (data != null && data != "") {
+                    $("#tableReward tbody").html(data);
+                } else {
+                    $('#tableReward  [data-event="next"]').hide();
+                }
+                if (page > 1) {
+                    $('#tableReward [data-event="back"]').show();
+                } else {
+                    $('#tableReward [data-event="back"]').hide();
+                }
+            });
+        });
+        $(".btnListReceive").click(function () {
+            var page = parseInt($(this).attr("data-page"));
+            var event = $(this).attr("data-event");
+            //if (event == "back")
+            //    page = page - 1;
+            var agencyId = $("#Agency").val();
+            $.post("/Order/ListReceive?page=" + page + "&agencyId=" + agencyId, function (data) {
+                $('#tableReceive [data-event="next"]').attr("data-page", page + 1);
+                $('#tableReceive [data-event="back"]').attr("data-page", page - 1);
+                if (data != null && data != "") {
+                    $("#tableReceive tbody").html(data);
+                } else {
+                    $('#tableReceive  [data-event="next"]').hide();
+                }
+                if (page > 1) {
+                    $('#tableReceive [data-event="back"]').show();
+                } else {
+                    $('#tableReceive [data-event="back"]').hide();
+                }
+            });
+        });
+
+        $("#Agency").change(function () {
+            var id = $(this).val();
+            var linkFw = "?AgencyId=" + id;
+            window.location.href = linkFw;
+        });
+    });
+
+</script>

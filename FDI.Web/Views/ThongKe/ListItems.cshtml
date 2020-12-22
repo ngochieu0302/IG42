@@ -1,0 +1,59 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelVoteItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th><a href="#Field=Name">STT</a></th>
+                        <th><a href="#Field=Name">Tên tiêu chí</a></th>
+                        <th><a href="#Field=UserName">Tên đăng nhập</a></th>
+                        <th><a href="#Field=LoweredUserName">Tên nhân viên</a></th>
+                        <th><a href="#Field=Value">Giá trị</a></th>
+                        <th><a href="#Field=TotalPrice">Tổng điểm (@string.Format("{0:0,0}", Model.ListItems.Sum(m => m.TotalValue)))</a></th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td>@(stt++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.DNUserVoteItem.UserName</td>
+                            <td>@item.DNUserVoteItem.LoweredUserName</td>
+                            <td>@item.Value</td>
+                            <td>@string.Format("{0:0,0}", item.TotalValue)</td>
+                            <td class="text-right">
+                                <a href="#" class="btn btn-sm btn-default btn-view" data-id="@item.ID"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn-view").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var datee = '@Model.Datee';
+            var dates = '@Model.Dates';
+            var userid = '@Model.UserID';
+                $.post("/thongke/VoteAndUser?id=" + id+"&dates="+dates+"&datee="+datee+"&userid="+userid, function (data) {
+                    //("#dialog-form .modal-title").html("Xem thông kê chi tiết");
+                    $("#dialog-form #dialog-form-ajax").html(data);
+                    $('#dialog-form').modal('show');
+                });
+        });
+    });
+</script>

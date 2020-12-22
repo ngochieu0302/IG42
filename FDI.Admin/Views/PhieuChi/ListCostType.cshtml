@@ -1,0 +1,108 @@
+﻿@model IEnumerable<FDI.Simple.CostTypeItem>
+    
+<input id="cType" value="@ViewBag.Type" hidden=""/>
+<table class="gridView" cellspacing="1" id="tbListCost">
+    <thead>
+        <tr>
+            <th>Tên chi phí</th>
+            <th>Mô tả</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ID" data-mode="edit">
+                <td><input class="form-control clName" value="@item.Name"/></td>
+                <td><input class="form-control clDes" value="@item.Description"/></td>
+                <td>
+                    <button class="btn btn-sm btn-default btUpdate"><i class="fa fa-save" style="color: #04A827;"></i></button>
+                    <button class="btn btn-sm btn-default btDelete"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <input class="btn btn-info" id="add-newType" type="button" value="+">
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<table hidden="" id="tbTemp">
+    <tr data-id="0" data-mode="add">
+        <td><input class="form-control clName"/></td>
+        <td><input class="form-control clDes"/></td>
+        <td>
+            <button class="btn btn-sm btn-default btUpdate"><i class="fa fa-save" style="color: #04A827;"></i></button>
+            <button class="btn btn-sm btn-default btDelete"><i class="fa fa-trash-o" style="color: red;"></i></button>
+        </td>
+    </tr>
+</table>
+<script>
+    $("#add-newType").click(function () {
+        var txt = $("#tbTemp tbody").html().replace("rpstt", 1);
+        $("table#tbListCost tbody").append(txt);
+        fnUpdate();
+        fnDelete();
+    });
+
+    fnUpdate();
+    fnDelete();
+
+    function fnUpdate() {
+        $(".btUpdate").click(function () {
+            var own = $(this).parent().parent();
+            var id = own.attr("data-id");
+            var mode = own.attr("data-mode");
+            var name = own.children().children(".clName").val();
+            var des = own.children().children(".clDes").val();
+            if (name == "") {
+                own.children().children(".clName").focus();
+                return false;
+            }
+            $.post("/Admin/PhieuChi/Update", { id: id, name: name, des: des, mode: mode, type: $("#cType").val() }, function (data) {
+                if (mode == "add") {
+                    var txt = "<option value='" + data + "' >" + name + "</option>'";
+                    $("#CostTypeId").append(txt);
+                    own.attr("data-id", data);
+                    own.attr("data-mode", "edit");
+                }
+                swal({ title: "", text: "Cập nhật thành công!" });
+            });
+            return false;
+        });
+    }
+
+    function fnDelete() {
+        $(".btDelete").click(function () {
+            var own = $(this).parent().parent();
+            var mode = own.attr("data-mode");
+            if (mode == "add") {
+                own.remove();
+            }
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn xóa !",
+                timer: 1,
+                cancelButtonText: "Cancel",
+                showCancelButton: true,
+                confirmButtonColor: "#01ACEB",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var id = own.attr("data-id");
+                    $.post("/Admin/PhieuChi/Delete", { id: id }, function () {
+                        $("#CostTypeId option[value='" + id + "']").remove();
+                        own.remove();
+                        swal.close();
+                    });
+                }
+            });
+        });
+    }
+
+</script>

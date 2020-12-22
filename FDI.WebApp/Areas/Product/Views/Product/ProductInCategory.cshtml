@@ -1,0 +1,38 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.ShopProductDetailItem>
+@{
+    var pageId = WebConfig.ProductDetail;   
+}
+<div class="sec-home sec-white">
+    <div class="container">
+        <div class="productList__wrap">
+            <div class="productList__title">
+                <h2>@Resources.Resource.sanphamcungdanhmuc</h2>
+            </div>
+            <div class="productList__list productOther">
+                <div class="productFilter"><a class="productFilter__item" href="/san-pham-p5c8">@Resources.Resource.xemtatca</a></div>
+                <div class="productList">
+                    @foreach (var item in Model)
+                    {
+                        <div class="productList__item">
+                            <div class="productList__item__view">
+                                <div class="img">
+                                    <a href="/@item.NameAscii-p@(pageId)c@(item.ID)">
+                                        <img src="@item.UrlPicture.UploadPicture()" alt="@item.Name"></a>
+                                </div>
+                                <div class="preview">
+                                    <div class="preview__text">
+                                        @Html.Raw(item.Description)
+                                    </div>
+                                    <a class="preview__link" href="/@item.NameAscii-p@(pageId)c@(item.ID)">@Resources.Resource.xemthem<i class="ion-chevron-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="productList__item__title"><a href="/@item.NameAscii-p@(pageId)c@(item.ID)">@item.Name</a></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

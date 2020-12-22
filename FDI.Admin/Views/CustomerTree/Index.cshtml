@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        urlLists = '@Url.Action("AjaxTreeSelect", "CustomerTree")';
+    });
+</script>
+
+<div class="view-noscroll" data-view="true">
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Quản trị module </li>
+            </ul>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+</div>

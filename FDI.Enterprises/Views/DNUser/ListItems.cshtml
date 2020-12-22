@@ -1,0 +1,76 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNUserItem
+@{
+    ViewBag.Title = "ListCity";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var index = 0;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" /></th>
+                        <th class="text-center"><a href="#Field=ID">STT</a></th>
+                        <th class="text-center">Họ và tên</th>
+                        <th class="text-center">Tên đăng nhập</th>
+                        <th class="text-center">Số điện thoại</th>
+                        <th class="text-center">Địa chỉ</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Lương cứng</th>
+                        <th class="text-center">Phòng ban</th>
+                        <th class="text-center">Mã chấm công</th>
+                        <th class="text-center">Hiện thị</th>
+                        <th class="text-center">Khóa tạm thời</th>
+                        <th class="text-center">Dừng hoạt động</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    index = index + 1;
+                    <tr title="@item.UserName">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.UserId" class="check"></td>
+                        <td>@index</td>
+                        <td>@item.LoweredUserName</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Mobile</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td class="maskPrice">@item.FixedSalary</td>
+                        <td>
+                            @(item.listRole.Any() ? string.Join(",", item.listRole) : "")
+                        </td>
+                        <td>@item.CodeCheckIn</td>
+                        <td class="text-center">@Grid.ActionShow(item.UserId, item.UserName, item.IsApproved)</td>
+                        <td class="text-center">@Grid.ActionShow(item.UserId, item.UserName, item.IsLockedOut)</td>
+                        <td class="text-center">@Grid.ActionShow(item.UserId, item.UserName, item.IsOut)</td>
+                        <td class="text-right" style="width: 12%">
+                            @Grid.RoleModule(item.UserId, item.UserName)
+                            @Grid.ActionView(item.UserId, item.UserName)
+                            @Grid.ActionEdit(item.UserId, item.UserName)
+                            @Grid.ActionDelete(item.UserId, item.UserName)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {  
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var total = '@Model.TotalFixedSalary';
+        registerGridView('#mygird');
+        $('.bottom-pager').append('<span>Tổng Lương cứng: <i class="maskPrice">' + total + '</i>  vnđ</span>');
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+    });
+</script>

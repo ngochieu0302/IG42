@@ -1,0 +1,109 @@
+﻿@using FDI.Utils
+@model FDI.Base.Shop_Orders
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về sản phẩm
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên khách hàng</label></td>
+                        <td>
+                            @Html.DisplayFor(model => model.CustomerName)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Số điện thoại</label></td>
+                        <td>
+                            @Html.Raw(Model.Mobile)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label></td>
+                        <td>
+                            @Html.Raw(Model.Address)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Nội dung</label></td>
+                        <td>
+                            @Html.Raw(Model.Note)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label></td>
+                        <td>
+                            @Model.TotalPrice.Money() đ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Trạng thái</label></td>
+                        @if (Model.Status == 3)
+                        {
+                            <td><span class="label label-success">Đã liên hệ</span></td>
+                        }
+                        @if (Model.Status == 2)
+                        {
+                            <td><span class="label label-default">Đang chờ xử lý</span></td>
+                        }
+                        @if (Model.Status == 1)
+                        {
+                            <td><span class="label label-danger">Đã hủy</span></td>
+                        }
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Size</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    @foreach (var item in Model.Shop_Order_Details)
+                    {
+                        <tr>
+                            <td>@item.Shop_Product.CodeSku</td>
+                            <td>@item.Shop_Product.Shop_Product_Detail.Name</td>
+                            <td>@item.Shop_Product.Product_Size.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@string.Format("{0:0,0}", item.Price).Replace(".", ",")</td>
+                            <td>@string.Format("{0:0,0}", item.Quantity * item.Price).Replace(".", ",")</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+@*<header class="panel-heading font-bold">Thông tin đơn hàng</header>
+        
+    </section>
+
+    <div style="font-size: 14px; font-weight: bold; margin-top: 10px; float: right;">
+        Tổng tiền : <b style="color: red;">@Model.TotalPrice.Money() đ</b>
+    </div>*@
+

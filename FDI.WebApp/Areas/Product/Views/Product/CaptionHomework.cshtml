@@ -1,0 +1,25 @@
+﻿@model FDI.Simple.HomeNetworkItem
+@using FDI.Utils
+
+<div class="banner-page">
+    <div class="container">
+        @if (Model != null)
+        {
+            if (!string.IsNullOrEmpty(Model.UrlPicture))
+            {
+                <div class="logo-page">
+                    <img src="@Model.UrlPicture.UploadPicture()" class="img-responsive" alt="@Model.Name">
+                </div>
+                <div class="detail">
+                    @Model.Description
+                </div>
+            }
+            else
+            {
+                <div>
+                    @Model.Description
+                </div>
+            }
+        }
+    </div>
+</div>

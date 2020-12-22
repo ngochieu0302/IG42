@@ -1,0 +1,126 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelBedDeskItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var dn = DateTime.Now.TotalSeconds();
+    var dnt = DateTime.Today.TotalSeconds();
+    const int timedo = (int)Order.Order;
+    var listRoomItem = Model.ListItem.GroupBy(m => m.LevelRoomId).Select(m => m.FirstOrDefault()).ToList();
+    var listPacketItem = Model.lstPacket;
+}
+
+<div class="box-control no-footer">
+    <div class="tabbable-custom  gridView" id="mygird">
+        @foreach (var item in listPacketItem.OrderBy(m => m.Sort))
+        {
+            <a class="btn btn-sm btn-success packet" data-event="Packet" data-id="@item.ID" data-early="@item.IsEarly" data-val="@item.Time">@item.Name</a>
+        }
+        <div class="class-wrap">
+            @foreach (var item in listRoomItem.OrderBy(m => m.Sort))
+            {
+                <a class="btn btn-sm btn-success LevelRoom" data-event="LevelRoom" data-id="@item.LevelRoomId">@item.RoomName</a>
+            }
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="objbed">
+                <div id="content-blue">
+                    @foreach (var itemnew in Model.ListItem.Where(m => m.IsShow.HasValue && m.IsShow.Value))
+                    {
+                        var idc = "counterOrder-" + itemnew.ID;
+                        <div id="dashboard-@itemnew.ID" class="item-massage blue l-@itemnew.LevelRoomId p-@itemnew.PacketId">
+                            <div class="name-staff" data-id="@itemnew.ID">
+                                <div class="name-room">@itemnew.Name</div>
+                                <div class="detail-name detailu-@itemnew.ID">
+                                    <strong>@itemnew.RoomName </strong><strong id="PacketNameSelect-@(itemnew.ID)"></strong>
+                                    <div id="user_Bill_@itemnew.ID"></div>
+                                   
+                                </div>
+                                <input type="checkbox" name="checkbedid" class="checkboxbed checkboxbed-@itemnew.PacketId" id="checkbedid-@itemnew.ID" style="display: none" value="@itemnew.ID" />
+                            </div>
+                            <div class="time-out">
+                                <i style="float: left; margin-top: 3px" class="fa fa-clock-o"></i><b style="float: left" id="counterOrder-@itemnew.ID"></b><b style="float: right" id="@(idc + "-")"></b>
+                            </div>
+                            <div class="status">
+                                <i class="fa fa-shopping-cart"></i>: <span id="ordercount-@itemnew.ID"></span>
+                                
+                            </div>
+                            <div class="status last">
+                                @*<i class="fa fa-credit-card"></i>: <span id="contactcount-@itemnew.ID"></span>*@
+                                <h5>
+                                    <i class="fa fa-clock-o"></i>
+                                    <span id="order-@itemnew.ID"></span>
+                                </h5>
+                            </div>
+                            <div class="option">
+                                <a class="btn btn-sm btn-primary" style="display: none" id="btnAddMinute-@itemnew.ID" data-event="AddMinute" data-id="@itemnew.ID"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-sm btn-primary" data-event="Order" id="btnOrder-@itemnew.ID" data-packet ="@itemnew.PacketId" data-id="@itemnew.ID"><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-sm btn-success fr" style="margin-left: 5px; display: none" id="btnResetPay-@itemnew.ID" data-event="ResetPay" data-id="@itemnew.ID" data-order="0"><i class="fa fa-close"></i></a>
+                                <input type="hidden" value="@itemnew.ID" id="Idbed-@itemnew.ID"/>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div id="content-gold"></div>
+                <div id="content-red"></div>
+                <div id="content-not-active">
+                    @foreach (var itemnew in Model.ListItem.Where(m => !m.IsShow.HasValue || !m.IsShow.Value))
+                    {
+                        var idc = "counterOrder-" + itemnew.ID;
+                        <div id="dashboard-@itemnew.ID" class="item-massage l-@itemnew.LevelRoomId p-@itemnew.PacketId not-active">
+                            <div class="name-staff" data-id="@itemnew.ID">
+                                <div class="name-room">@itemnew.Name</div>
+                                <div class="detail-name detailu-@itemnew.ID">
+                                    <strong>@itemnew.RoomName @*(@itemnew.PacketName)*@</strong><strong id="PacketNameSelect-@(itemnew.ID)"></strong>
+                                    <div id="user_Bill_@itemnew.ID"></div>
+                                </div>
+                                <input type="checkbox" name="checkbedid" class="checkboxbed checkboxbed-@itemnew.PacketId" id="checkbedid-@itemnew.ID" style="display: none" value="@itemnew.ID" />
+                            </div>
+
+                            <div class="time-out">
+                                <i style="float: left ; margin-top: 3px" class="fa fa-clock-o"></i><b style="float: left" id="counterOrder-@itemnew.ID"></b><b style="float: right" id="@(idc + "-")"></b>
+                            </div>
+                            <div class="status">
+                                <i class="fa fa-shopping-cart"></i>: <span id="ordercount-@itemnew.ID"></span>
+                                <h5>
+                                    <i class="fa fa-clock-o"></i>
+                                    <span id="order-@itemnew.ID"></span>
+                                </h5>
+                            </div>
+                           @* <div class="status last">
+                                <i class="fa fa-credit-card"></i>: <span id="contactcount-@itemnew.ID"></span>
+                                <h5>
+                                    <i class="fa fa-clock-o"></i>
+                                    <span id="contact-@itemnew.ID"></span>
+                                </h5>
+                            </div>*@
+                            <div class="option">
+                                <a class="btn btn-sm btn-primary" style="display: none" id="btnAddMinute-@itemnew.ID" data-event="AddMinute" data-ido= "0" data-id="@itemnew.ID"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-sm btn-primary" data-event="Order" id="btnOrder-@itemnew.ID" data-id="@itemnew.ID"><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-sm btn-success fr" style="margin-left: 5px; display: none" id="btnResetPay-@itemnew.ID" data-event="ResetPay" data-id="@itemnew.ID" data-order="0"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <div id="groupbed" class="group-item-show"></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="agencyid" name="agencyid" value="@(new JavaScriptSerializer().Serialize(Model.ListItem))">
+<input type="hidden" id="quantityroomcount" name="quantityroomcount" value="@(new JavaScriptSerializer().Serialize(Model.ListRoomItem))">
+<input type="hidden" id="listbed" name="listbed" value="">
+<input type="hidden" id="ObjBedOrder" name="ObjBedOrder" value="">
+<script src="~/Content/Web/massage.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dates = parseInt('@dn');
+        var urlnode = '@WebConfig.UrlNode' + ':3000';
+        var nm = intDateNow() - dates;
+        var td = parseInt('@dnt');
+        var agencyid = '@Model.AgencyId';
+        var timedo = parseInt('@timedo');
+        MassageLoad(urlnode, nm, td, agencyid, timedo);
+    });
+</script>    

@@ -1,0 +1,104 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelOrderDebtItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                SupplieId:
+                {
+                    required: true,
+                },
+                Pricetotal:
+                {
+                    required: true,
+                },
+                Note:
+                {
+                    required: true,
+                },
+
+            },
+            messages: {
+                SupplieId:
+                {
+                    required: "Trường bắt buộc nhập.",
+                },
+                Pricetotal:
+                {
+                    required: "Trường bắt buộc nhập.",
+                },
+                Note:
+                {
+                    required: "Trường bắt buộc nhập.",
+                },
+            },
+            submitHandler: function () {
+                PostAction("#modalForm");
+            }
+        });
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@Model.AgencyId" />
+        <input type="hidden" name="UserID" id="UserID" value="@Model.UserID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin về đơn hàng nhà cung cấp
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nhà cung cấp</label>
+                            <div class="col-md-10">
+                                <select id="SupplieId" name="SupplieId" class="form-control">
+                                    <option value="">Chọn nhà cung cấp</option>
+                                    @foreach (var item in Model.ListNcc)
+                                    {
+                                        <option value="@item.ID" @(@Model.SupplieId == item.ID ? "selected" : "")>@item.Name</option>    
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Người mua</label>
+                            <div class="col-md-10">
+                                <input type="text" name="CustomerName" id="CustomerName" readonly value="@Model.UserName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Giá</label>
+                            <div class="col-md-10">
+                                <input type="text" name="Pricetotal" id="Pricetotal" value="@Model.Pricetotal" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nội dung chi tiết</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Note" id="Note">@Model.Note</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

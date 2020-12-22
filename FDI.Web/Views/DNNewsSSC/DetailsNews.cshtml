@@ -1,0 +1,173 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmail.cshtml";
+}
+@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.ModelDNNewsSSCItem
+
+<div class="inbox">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Action("BoxMail", "DNMailSSC")
+        </div>
+        <div class="col-md-9">
+            <div class="inbox-body">
+                <h3 class="page-title">Tin tức nội bộ</h3>
+                <div class="inbox-header inbox-view-header">
+                    <h1>@Model.DNNewsSSCItem.Title </h1>
+                </div>
+                <div class="inbox-view-info">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <img src="/Content/Admin/images/avatar1.jpg" class="inbox-author">
+                            <span class="sbold">Admin </span>
+                            <span>&lt;admin@gmail.com&gt; </span>tới
+                            <span class="sbold">tôi </span>@Model.DNNewsSSCItem.DateCreated.DecimalToString("dd/MM/yyyy HH:mm:ss") (@Utility.TimeAgo(Model.DNNewsSSCItem.DateCreated.DecimalToDate()))
+                        </div>
+                    </div>
+                </div>
+                <div class="inbox-view">
+                    @Html.Raw(Model.DNNewsSSCItem.Content)
+                </div>
+                <div class="blog-comments">
+                    <h4 class="sbold blog-comments-title">Bình luận(@Model.DNNewsSSCItem.ListDNNewsCommentItem.Count())</h4>
+                    <div id="contentComment">
+                        <div class="c-comment-list">
+                            @foreach (var itemComment in Model.DNNewsSSCItem.ListDNNewsCommentItem.Where(m => m.IsLevel == 1))
+                            {
+                                <div class="media" id="media-@itemComment.ID">
+                                    <div class="media-left">
+                                        <img class="media-object" src="/Content/Admin/images/avatar1.jpg">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a>@itemComment.UserName</a>
+                                            <span class="c-date"><i>@Utility.TimeAgo(ConvertDate.DecimalToDate(Model.DNNewsSSCItem.DateCreated))</i></span>
+                                        </h4>
+                                        @itemComment.Message
+
+                                        <div>
+                                            <a data-messageid="@itemComment.ID" class="reply-btn" href="javascript:void(0)">
+                                                <i class="fa fa-reply"></i>Trả lời
+                                            </a>
+
+                                            <div id="formReplyMess-@itemComment.ID" class="formReplyMessMember"></div>
+                                        </div>
+                                        <div id="divParent-@itemComment.ID">
+                                            @foreach (var itemCommentChild in Model.DNNewsSSCItem.ListDNNewsCommentItem.Where(m => m.IsLevel == 2 && m.ParentId == itemComment.ID))
+                                            {
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <img class="media-object" alt="" src="/Content/Admin/images/avatar1.jpg">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">
+                                                            <a href="#">@itemCommentChild.UserName</a>
+                                                            <span class="c-date"><i>@Utility.TimeAgo(ConvertDate.DecimalToDate(Model.DNNewsSSCItem.DateCreated))</i></span>
+                                                        </h4>
+                                                        @itemCommentChild.Message
+                                                    </div>
+                                                </div>
+                                           
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <h3 class="sbold blog-comments-title">Để lại bình luận</h3>
+                    <form action="#" id="formComment">
+                        <input type="hidden" name="NewsSSCID" value="@Model.DNNewsSSCItem.ID" />
+                        <input type="hidden" name="ParentId" id="ParentId" value="1" />
+                        <div class="form-group">
+                            <textarea rows="8" name="Message" id="Message" placeholder="Nội dung..." class="form-control c-square"></textarea>
+                        </div>
+                        <div class="form-group">
+                            @Grid.ActionComment()
+                        </div>
+                    </form>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#formComment").validate({
+            rules: {
+                Message: {
+                    required: true,
+                },
+            },
+            messages: {
+                Message: {
+                    required: "Bạn nhập nội dung bình luận !",
+                }
+            },
+
+            submitHandler: function () { //onSubmit
+                $.post("/DNNewsSSC/ProcessComment", $("#formComment").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+    
+        $(".reply-btn").click(function () {
+            $("#ParentId").val($(this).data("messageid"));
+            $(".formReplyMessMember").html("");
+            $("#formReplyMess-" + $(this).data("messageid")).html("");
+            $("#formReplyMess-" + $(this).data("messageid")).append(
+                "<div class=\"frmReplyMess\">" +
+                    "<form id=\"frmReplyMember\">" +
+                        "<textarea class=\"form-control\" id=\"MessageMember\" rows=\"3\" placeholder=\"Nhập nội dung trả lời\"></textarea>" +
+                        "<button type=\"button\" class=\"btn btn-sm btn-success\" id=\"btnSubmit\" data-id=\"" + $(this).data("messageid") + "\">Gửi trả lời</button>" +
+                        "<button type=\"button\" class=\"btn btn-sm btn-warning btnCancel\" data-id=\"" + $(this).data("messageid") + "\">Hủy</button>" +
+                    "</form>" +
+                "</div>");
+        });
+
+        $("body").on("click", "#btnSubmit", function () {
+            var message = $("#MessageMember").val();
+            if (message != null && message != '') {
+                $.post("/DNNewsSSC/ProcessReplyMember?parentId=" + $(this).data("id") + "&newsSscid=" + @Model.DNNewsSSCItem.ID + "&message=" + message)
+                    .done(function(data) {
+                        if (data.Erros) {
+                            $(".formReplyMessMember").html("");
+                            createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        } else {
+                            createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                            $.post("/DNNewsSSC/ReloadNewsComment?parentId=" + $("#btnSubmit").data("id"), function(dataNew) {
+                                $("#divParent-" + $("#btnSubmit").data("id")).html("");
+                                $("#divParent-" + $("#btnSubmit").data("id")).append(dataNew);
+                                $('html, body').animate({ scrollTop: $("#divParent-" + $("#btnSubmit").data("id")).position().top + 350 }, 'slow');
+                                $(".formReplyMessMember").html("");
+                            });
+                        }
+                    })
+                    .fail(function() {
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        $("#MessageMember").focus();
+                    });
+            } else {
+                createMessage("Đã có lỗi xảy ra", "Bạn chưa nhập nội dung"); // Tạo thông báo lỗi
+                $("#MessageMember").focus();
+            }
+        });
+
+        $("body").on("click", ".btnCancel", function () {
+            $("#formReplyMess-" + $(this).data("id")).html("");
+        });
+    });
+</script>

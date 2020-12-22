@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Cấu hình backup";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+<link href="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+<script type="text/javascript">
+    urlPostAction = '@Url.Action("Actions", "CreateSitemap")';
+</script>
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Tạo sitemap</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control" id="mygird">
+        <div class="btn-group gridView">
+            <a href="#1" class="btn btn-sm btn-primary" data-event="show" title="Cập nhật sitemapsim">Cập nhật Sitemapsim</a>
+        </div>
+        <div class="btn-group gridView">
+            <a href="#1" class="btn btn-sm btn-primary" data-event="active" title="Cập nhật sitemap">Cập nhật Sitemap</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        registerGridView("#mygird");
+    });
+</script>

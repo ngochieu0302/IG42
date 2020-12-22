@@ -1,0 +1,141 @@
+﻿@using FDI.Simple
+@{
+	Layout =  "~/Views/Shared/_Meta.cshtml";
+	var datenow = DateTime.Now;
+	var listUser = (List<DNUserSimpleItem>) ViewBag.ListUser;
+}
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<div class="header-control">
+	<h3 class="page-title"></h3>
+	<div class="group-form-control">
+		<form id="gridSearch" class="form-inline" role="form">
+			<div class="form-group">
+				<select id="UserId" name="UserId" class="select2">
+					@foreach (var item in listUser)
+					{
+						<option value="@item.UserId">@item.LoweredUserName</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<select id="YearId" name="YearId" class="select2">
+					@for (var i = datenow.Year - 2; i < datenow.Year + 3; i++)
+					{
+						<option @(i == datenow.Year ? "selected" : "") value="@i">@i</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-sm btn-success" id="_back"><i class="fa fa-angle-left"></i></button>
+				<select id="ddlWeek" name="ddlWeek" class="select2">
+					@for (var i = 1; i < 13; i++)
+					{
+						<option @(i == datenow.Month ? "selected" : "") value="@i">Tháng @i</option>
+					}
+				</select>
+				<button class="btn btn-sm btn-success" type="button" id="_next"><i class="fa fa-angle-right"></i></button>
+			</div>
+			<div class="form-group">
+				<a href="/TotalPersonnel" class="btn btn-sm btn-success">Xem tổng quát</a>
+			</div>
+			<div class="form-group">
+				<button class="print default btn-sm btn-success" id="btn_Print">In bảng lương</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	Date.prototype.getWeek = function () {
+		var onejan = new Date(this.getFullYear(), 0, 1);
+		return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+	};
+	urlLists = '@Url.Action("TotalDetail", "TotalPersonnel")';
+    $(document).ready(function () {
+        callSelect2("#UserId", "250px");
+        callSelect2("#YearId", "70px");
+        callSelect2("#ddlWeek", "100px");
+		
+		function setTimeTitle(month, year) {
+			$('#monthToShow').html(month);
+			$('#yearToShow').html(year);
+		}
+		var date = new Date();
+		setTimeTitle(date.getMonth, date.getFullYear);
+
+	    $(function() {
+		    var year = $("#YearId").val();
+		    var month = $("#ddlWeek").val();
+		    var userid = $("#UserId").val();
+		    $.post(urlLists + "?userid=" + userid + "&year=" + year + "&month=" + month,
+			    function(data) {
+				    $("#Griditems").html(data);
+				    setTimeTitle(month, year);
+			    });
+	    });
+
+	    $('body').on("change", "#UserId", function () {
+		    var year = $("#YearId").val();
+		    var month = $("#ddlWeek").val();
+			var userid = $("#UserId").val();
+			$.post(urlLists + "?userid=" + userid +  "&year=" + year + "&month=" + month, function (data) {
+			    $("#Griditems").html(data);
+			    setTimeTitle(month, year);
+		    });
+	    });
+
+        $('body').on("change", "#YearId", function () {
+			var year = $("#YearId").val();
+			var month = $("#ddlWeek").val();
+			var userid = $("#UserId").val();
+			$.post(urlLists + "?userid=" + userid +  "&year=" + year + "&month=" + month, function (data) {
+				$("#Griditems").html(data);
+				setTimeTitle(month, year);
+            });
+        });
+        $('body').on("change", "#ddlWeek", function () {
+			var year = $("#YearId").val();
+			var month = $("#ddlWeek").val();
+	        var userid = $("#UserId").val();
+			$.post(urlLists + "?userid=" + userid + "&year=" + year + "&month=" + month, function (data) {
+				$("#Griditems").html(data);
+				setTimeTitle(month, year);
+            });
+        });
+
+		$("#_back").click(function () {
+			var month = $("#ddlWeek").val();
+			month = parseInt(month) - 1;
+			var year = $("#YearId").val();
+			var userid = $("#UserId").val();
+			if (month > 0) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?userid=" + userid + "&year=" + year + "&month=" + month, function (data) {
+					$("#Griditems").html(data);
+					setTimeTitle(month, year);
+				});
+			}
+        });
+		$("#_next").click(function () {
+			var month = $("#ddlWeek").val();
+			month = parseInt(month) + 1;
+			var year = $("#YearId").val();
+			var userid = $("#UserId").val();
+			if (month <= 12) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?userid=" + userid + "&year=" + year + "&month=" + month, function (data) {
+					$("#Griditems").html(data);
+					setTimeTitle(month, year);
+                });
+			}
+		});
+
+	    $(function () {
+		    $("#btn_Print").click(function () {
+			    $('#BoxPrint').show();
+			    jQuery.print('#BoxPrint');
+			    $('#BoxPrint').hide();
+		    });
+	    });
+    });
+</script>

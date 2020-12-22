@@ -1,0 +1,10 @@
+﻿@using FDI.CORE
+@model FDI.Simple.EnterprisesItem
+@if (Model != null && !string.IsNullOrEmpty(Model.PictureUrl))
+{
+    <img src="@Model.PictureUrl.ImageLogo()" alt="" class="logo-default" />
+}
+else
+{
+    <img src="/Content/Admin/images/logo-big.png" alt="" class="logo-default" />
+}

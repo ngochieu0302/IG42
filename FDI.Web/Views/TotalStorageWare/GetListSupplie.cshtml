@@ -1,0 +1,6 @@
+﻿@model List<FDI.Simple.SupplieItem>
+<option value="">Chọn Nhà cung cấp</option>
+@foreach (var item in Model)
+{
+    <option value="@item.ID" data-sup="@item.Name" data-phone="@item.Mobile" data-add="@item.Address">@item.Name</option>
+}

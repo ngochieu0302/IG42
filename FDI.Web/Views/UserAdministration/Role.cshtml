@@ -1,0 +1,66 @@
+﻿@model Admin.Models.UserAdministration.RoleViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+
+<div class="header-control">
+    <h3 class="page-title">
+        Các tính năng
+        <small></small>
+    </h3>
+    <div class="group-form-control">
+        @Html.ActionLink("Quay lại danh sách", "Roles", "UserAdministration", new { }, new { @class = "btn btn-sm btn-default", @id = "btn_back" })
+    </div>
+</div>
+<div class="content-control">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <tr>
+                    <th>Tên vai trò</th>
+                    <th colspan="2">Quản lý</th>
+                </tr>
+                @if (Model.Users.Any())
+            {
+                foreach (var key in Model.Users.Keys)
+                {
+                    var user = Model.Users[key];
+                        <tr>
+                            <td>
+                                @if (user == null)
+                            {
+                                    <span>@key <em>(Deleted)</em></span>
+                            }
+                            else
+                            {
+                                    @Html.ActionLink(user.UserName, "Details", new {id = user.ProviderUserKey})
+                            }
+                            </td>
+                            <td>
+                                @if (user == null)
+                            {
+                                    <span>@key <em>(Deleted)</em></span>
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("RemoveFromRole", "UserAdministration", new {id = user.ProviderUserKey, role = Model.Role}))
+                                {
+                                        <button class="btn btn-sm btn-danger" type="submit">Xóa vai trò của @user.UserName</button>
+                                }
+                            }
+                            </td>
+                        </tr>
+                }
+            }
+            else
+            {
+                    <tr>
+                        <td colspan="2">Không có tài khoản nào được sử dụng</td>
+                    </tr>
+            }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNPromotionItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về giảm giá
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên khuyến mãi</label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Người tạo</label>
+                        </td>
+                        <td>
+                            @Model.Username
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày bắt đầu</label>
+                        </td>
+                        <td>
+                            @Model.DateStart.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr><tr>
+                        <td>
+                            <label>Ngày kết thúc</label>
+                        </td>
+                        <td>
+                            @Model.DateEnd.DecimalToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Sản phẩm</label>
+                        </td>
+                        <td>
+                            @Model.Note
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Chi tiết sản phẩm có khuyến mãi
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                    </tr>
+                    @foreach (var item in Model.ListProductDetailItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>
+                                 <span>@item.Name @item.Code</span>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

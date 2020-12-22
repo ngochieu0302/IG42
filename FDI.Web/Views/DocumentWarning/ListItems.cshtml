@@ -1,0 +1,135 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDocumentItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>
+                        <th><a href="#Field=ID">ID<span /></a></th>
+                        <th>Số hợp đồng</th>
+                        <th><a href="#Field=Name">Tên hợp đồng<span /></a></th>
+                        <th>Loại hợp đồng</th>
+                        <th>Bên B</th>
+                        <th>Địa chỉ B</th>
+                        <th>Số điện thoại B</th>
+                        <th>Giá trị hợp đồng</th>
+                        <th>Thời hạn</th>
+                        <th>Ngăn</th>
+                        <th>Xem File</th>
+                        <th>Xuất File</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                @if (Model.ListItem != null)
+                {
+                    foreach (var item in Model.ListItem)
+                    {
+                    <tr title="@item.Name">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check" >
+                        </td>
+                        <td>
+                            @item.ID
+                        </td>
+                        <td>
+                            @item.Numberbill
+                        </td>
+                        <td>
+                            @Grid.DisplayShowStrike(item.Name, item.IsShow.HasValue && item.IsShow.Value)
+                        </td>
+                        <td>
+                            @foreach (var itemd in TypeDocument.Document().Where(itemd => itemd.Value == item.Type))
+                            {
+                                @itemd.Key
+                            }
+                        </td>
+                        <td>@item.NameB</td>
+                        <td>@item.Address</td>
+                        <td>@item.MobileB</td>
+                        <td>@item.Value.Money()</td>
+                        <td><span style="color: red">@item.DateEnd.DecimalToString("dd/MM/yyyy")</span></td>
+                        <td>@item.DrawerName</td>
+                        <td><a href="#">@(item.NameB + "_" + item.MobileB)</a></td>
+                        <td>
+                            <a data-event="Print_trichluc" data-id="@item.ID" data-type="@item.Type" class="btn btn-sm btn-default" title="In trích lục"><i class="fa fa-print"></i></a>
+                            <a data-event="export_word" data-id="@item.ID" data-type="@item.Type" class="btn btn-sm btn-default" title="Xuất file "><i class="fa fa-file-text-o"></i></a>
+                        </td>
+                       <td class="btn-group">
+                            @Grid.ActionView(item.ID, item.Name)
+                            @*@Grid.ActionEdit(item.ID, item.Name)
+                            @Grid.ActionDelete(item.ID, item.Name)*@
+                        </td>
+                    </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @Html.Raw(Model.PageHtml)
+    </div>
+</div>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<div id="BoxPrint" style="display: none"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".gridView [data-event=\"Print_trichluc\"]").click(function () {
+            var id = $(this).data("id");
+            var type = $(this).data("type");
+            $.post("/DNDocument/BinDataToPattern", { id: parseInt(id), type: parseInt(type) }, function (data) {
+                $("#BoxPrint").html(data);
+                $('#BoxPrint').show();
+                jQuery.print('#BoxPrint');
+                $('#BoxPrint').hide();
+            });
+        });
+        $(".gridView [data-event=\"export_word\"]").click(function () {
+            var id = $(this).data("id");
+            var type = $(this).data("type");
+            $.post("/DNDocument/BinDataToPattern", { id: parseInt(id), type: parseInt(type) }, function (data) {
+                Export2Doc(data, 'baocao');
+            });
+        });
+        function Export2Doc(element, filename) {
+            debugger;
+            var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+            var postHtml = "</body></html>";
+            var html = preHtml + element + postHtml;
+            // Specify link url
+            var blob = new Blob(['\ufeff', html], {
+                type: 'application/msword'
+            });
+            var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+
+            // Specify file name
+            filename = filename ? filename + '.doc' : 'document.doc';
+
+            // Create download link element
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            // Create a link to the file
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = url;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+
+            document.body.removeChild(downloadLink);
+        }
+    });
+</script>

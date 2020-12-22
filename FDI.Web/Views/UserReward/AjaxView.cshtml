@@ -1,0 +1,223 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.OrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin đặt hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Khách hàng</label>
+                        </td>
+                        <td>
+                            @Model.CustomerName
+                        </td>
+                        <td>
+                            <label>Điện thoại</label>
+                        </td>
+                        <td>
+                            @Model.CutomerPhone
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td colspan="3">
+                            @Model.CutomerAddress
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreated.DecimalToString("dd/MM/yyyy HH:mm")
+                        </td>
+                        <td>
+                            <label>Vị trí</label>
+                        </td>
+                        <td>
+                            @Model.BedDeskName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tổng tiền</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.TotalPrice)
+                        </td>
+                        <td>
+                            <label>Tiền khách đưa</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.Payments)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Chiết khấu</label>
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", Model.Discount)
+                        </td>
+                        <td>
+                            <label>In hóa đơn</label>
+                        </td>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i> In</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cart-plus"></i>Chi tiết đơn hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên SP</th>
+                        <th>DVT</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    @foreach (var item in Model.LstOrderDetailItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(string.IsNullOrEmpty(item.ComboName) ? item.ProductName : item.ComboName)</td>
+                            <td>@item.UnitName</td>
+                            <td>@string.Format("{0:0,0}", item.Price)</td>
+                            <td>@item.Quantity</td>
+                            <td>@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none;">
+    <link href="~/Content/Admin/css/print_hoadon_a4.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pagePrint">
+            <div class="shop-name">
+                <h1>@ViewBag.Agency.Name</h1>
+
+                <ul>
+                    <li>Nhà phân phối: Các loại nước toàn miền bắc, các sản phẩm nhựa song long - việt nhật - đỗ gia,</li>
+                    <li>Đồ gia dụng, Phíp inox, hàng khuyễn mại, bát sành sứ ...</li>
+                    <li>Địa chỉ: @ViewBag.Agency.Address.</li>
+                    <li>SĐT: @ViewBag.Agency.Phone</li>
+                    <li>Email: @ViewBag.Agency.Email</li>
+                </ul>
+            </div>
+            <h1>Hóa đơn bán hàng</h1>
+            <span>Số: <b id="NumberOrder">@Model.ID</b></span>
+            <ul class="name-cuss">
+                <li>Thời gian : <strong id="printTime">@Model.StartDate.DecimalToString("dd/MM/yyyy HH:mm")</strong></li>
+                <li>Khách hàng : <strong id="printKH">@(Model.CustomerName ?? "(Khách lẻ)")</strong></li>
+                <li>Địa chỉ : <strong id="printAddress">@(Model.CutomerAddress ?? "Khoái Châu - Hưng yên")</strong></li>
+            </ul>
+            <div class="tablePrint">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">STT</th>
+                            <th style="width: 30%" class="text-center">Tên hàng</th>
+                            <th style="width: 10%" class="text-center">DVT</th>
+                            <th style="width: 15%" class="text-center">Số lượng</th>
+                            <th style="width: 15%" class="text-right">Đơn giá</th>
+                            <th style="width: 20%" class="text-right">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var stt1 = 1;
+                            foreach (var item in Model.LstOrderDetailItems)
+                            {
+                                <tr>
+                                    <td>@(stt1++)</td>
+                                    <td>@item.ProductName</td>
+                                    <td class="text-center">@item.UnitName</td>
+                                    <td class="text-center">@item.Quantity</td>
+                                    <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                                    <td class="text-right">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><b>Tổng cộng:</b></td>
+                            <td class="text-center"><b></b></td>
+                            <td class="text-center"><b></b></td>
+                            <td class="text-right"><b></b></td>
+                            <td class="text-right"><b id="prinPrice">@string.Format("{0:0,0}", Model.TotalPrice ?? 0)</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Chiết khấu:</b></td>
+                            <td class="text-center"><b></b></td>
+                            <td class="text-center"><b></b></td>
+                            <td class="text-right"><b></b></td>
+                            <td class="text-right"><b id="printDiscount">@string.Format("{0:0,0}", Model.Discount ?? 0)</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Đặt trước:</b></td>
+                            <td class="text-right"><b id="printexcess">@string.Format("{0:0,0}", Model.Payments ?? 0)</b></td>
+                            <td colspan="2"><b>Còn lại:</b></td>
+                            <td class="text-right"><b id="printSale">@string.Format("{0:0,0}", (Model.Payments ?? 0) - (Model.TotalPrice??0) + (Model.Discount ?? 0))</b></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <strong class="total-price">Cộng thành tiền (bằng chữ): <span id="printChu">@FDIUtils.NumberToWord(Model.TotalPrice??0," đồng")</span></strong>
+            </div>
+            <div class="optionPrint">
+                <div class="left">
+                    <label>Khách hàng</label>
+                </div>
+                <div class="right">
+                    <div class="date">
+                        Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i>
+                    </div>
+                    <span>Người viết hóa đơn</span>
+                </div>
+
+            </div>
+        </div>
+    </page>
+</div>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $("#NumberOrder").html("0");
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>

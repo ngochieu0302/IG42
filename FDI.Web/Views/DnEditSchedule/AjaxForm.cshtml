@@ -1,0 +1,154 @@
+﻿@model FDI.Simple.EditScheduleItem
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#Type", "100%");
+        callSelect2("#UserId", "100%");
+        callSelect2("#ScheduleID", "100%");
+        callSelect2("#UserChangeId", "100%");
+        var lstID = [];
+        $("#Type").change(function () {
+            if ($(this).val() == 3) {
+                $("#divChange").show();
+            }
+            else
+                $("#divChange").hide();
+        });
+
+        $("#UserId").change(function () {
+            $("#ScheduleID").html("");
+            var date = $("#Date").val();
+            $.post("/DnEditSchedule/GetScheduleById?userId=" + $(this).val() + "&date=" + date, function (data) {
+                //$("#ScheduleID").append("<option  value='0'>--- Chọn ca ---</option>");
+                $.each(data, function (i, val) {
+                    $("#ScheduleID").append("<option  value='" + val.ScheduleID + "'>" + val.ScheduleName.trim() + "</option>");
+                });
+            });
+        });
+
+        $("Body").on("change", "#ScheduleID", function () {
+            $.post("/DnEditSchedule/GetListUser?userId=" + $("#UserId").val() + "&scheduleId=" + $(this).val() + "&date=" + $("#Date").val(), function (data) {
+                $("#UserChangeId").html("");
+                $("#UserChangeId").append("<option  value='0'>--- Chọn nhân viên---</option>");
+                $.each(data, function (i, val) {
+                    $("#UserChangeId").append("<option  value='" + val.UserId + "'>" + val.UserName.trim() + "</option>");
+                });
+            });
+        });
+        $("#modalForm").validate({
+
+            rules: {
+                Type: { required: true },
+                Name: { required: true },
+                UserId: { required: true },
+                ScheduleID: { required: true },
+            },
+            messages: {
+                Type: "Mời chọn kiểu.",
+                Name: "Nhập lý do đổi ca.",
+                UserId: "Chọn nhân viên.",
+                ScheduleID: "Chọn ca làm việc.",
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về đổi ca làm việc
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu</label>
+                            <div class="col-sm-10">
+                                <select id="Type" name="Type" class="select2">
+                                    <option value="1">--- Tăng ca ---</option>
+                                    <option value="2">--- Nghỉ ca ---</option>
+                                    <option value="3">--- Đổi ca ---</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lý do đổi ca</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Name" id="Name" value="@Model.Name" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày đổi</label>
+                            <div class="col-sm-10">
+                                @* <input type="text" name="_Date" id="Date" value="@Model.Date" class="form-control date-picker"/>*@
+                                <input type="date" class="form-control" id="_Date" name="_Date" value="@Model.Date.DecimalToString("yyyy-MM-dd")">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn nhân viên</label>
+                            <div class="col-sm-10">
+                                <select id="UserId" name="UserId" class="select2">
+                                    <option value="">--- Chọn nhân viên ---</option>
+                                    @foreach (var item in ViewBag.UserID)
+                                    {
+                                        <option value="@item.UserId" @(Model.UserId == item.UserId ? "selected" : string.Empty)>@item.UserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ca làm việc</label>
+                            <div class="col-sm-10">
+                                <select id="ScheduleID" name="ScheduleID" class="select2"></select>
+                                <input type="hidden" value="" id="lstScheduleID" />
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                                <label class="col-sm-2 control-label">Giá trị</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control maskPrice" placeholder="..." name="FixedSalary" id="FixedSalary" value="@Model.Price"/>
+                                </div>
+                            </div>*@
+
+                        <div id="divChange">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Đổi cho nhân viên</label>
+                                <div class="col-sm-10">
+                                    <select id="UserChangeId" name="UserChangeId" class="select2">
+                                        <option value="">--- Chọn nhân viên ---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

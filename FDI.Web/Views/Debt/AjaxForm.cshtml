@@ -1,0 +1,87 @@
+﻿@using FDI.CORE
+@model FDI.Simple.FormDebtItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        //$(".customer").hide();
+        callSelect2(".SupplierID", "100%");
+        $("#modalForm").validate({
+            rules: {
+                SupplierID: { required: true },
+                Price: { required: true },
+                Note: { required: true }
+            },
+            messages: {
+                SupplierID: "Trường này là bắt buộc.",
+                Price: "Trường này là bắt buộc.",
+                Note: "Trường này là bắt buộc."
+            },
+            submitHandler: function () { //onSubmit
+                $(".maskPrice").each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });        
+    })
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@Model.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ObjItem.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@Model.AgencyId" />
+        <input type="hidden" name="UserCreated" id="UserCreated" value="@(Model.ObjItem.UserCreated ?? Model.UserId)" />
+        
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về phiếu chuyển
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-4">
+                                <select id="Type" name="Type" class="form-control col-sm-2">
+                                    <option value="1" @(@Model.ObjItem.Type == 1 ? "selected" : "")>Trả</option>
+                                    <option value="2" @(@Model.ObjItem.Type == 2 ? "selected" : "")>Nhận</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">NCC</label>
+                            <div class="col-sm-4">
+                                <select class="select2 SupplierID" name="SupplierID" id="SupplierID">
+                                    <option value="">Nhà cung cấp</option>
+                                    @foreach (var item in Model.DNSuppliers)
+                                    {
+                                        <option value="@item.ID" @(Model.ObjItem.SupplierID == item.ID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Số tiền</label>
+                            <div class="col-sm-4">
+                                <input id="Price" name="Price" class="form-control maskPrice" value="@Model.ObjItem.Price">
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ghi chú</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" name="Note" id="Note">@Model.ObjItem.Note</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

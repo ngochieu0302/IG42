@@ -1,0 +1,206 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelOrderItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<script>
+    $(document).ready(function () {
+        var lst = [];
+        var temp = $("#lstOrder").val();
+        $("#lstOrder").val("");
+        lst = JSON.parse(temp);
+
+        $("#ProductDetail tr").click(function () {
+            debugger;
+            var cusId = $(this).data("cusid");
+            var phone = $(this).data("phone");
+            for (var i = 0; i < lst.length; i++) {
+                if (cusId == lst[i].CustomerID) {
+                    $("#CustomerName").val(lst[i].CustomerName);
+                    $("#Mobile").val(lst[i].CutomerPhone);
+                    $("#Address").val(lst[i].CutomerAddress);
+                    $("#CustomerID").val(lst[i].CustomerID);
+                }
+            }
+            $.post("TherapyHistory/GetlistbyCustomerID", { id: cusId, phone: phone }, function (data) {
+                $("#lstTherapy").html(data);
+            });
+
+        });
+        $('#Customer').autocomplete({
+            serviceUrl: "/Sales/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#Customer').val("");
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#Mobile').val(el.phone);
+                $('#Address').val(el.code);
+                $('#NoteCate').val(el.Unit);
+                $.post("TherapyHistory/GetlistbyCustomerID", { id: el.ID, phone: el.phone }, function (data) {
+                    $("#lstTherapy").html(data);
+                });
+            }
+        });
+        $("#btn_SavePrint").click(function () {
+            btnDisabled("#btn_SavePrint");
+            $.post("/TherapyHistory/Actions", $("#frm-modal").serialize(), function (data) {
+                btnEnable("#btn_SavePrint");
+                if (data.Erros)
+                    toastr["error"](data.Message);
+                else {
+                    createShowMessage("Thông báo:", data.Message);
+                }
+            });
+        });
+    });
+</script>
+<input type="hidden" value="@(new JavaScriptSerializer().Serialize(Model.ListOrderItem))" id="lstOrder"/>
+<div class="box-a-table-wrap box-sales">
+    <div class="box-order">
+        <div class="select-order">
+            <div class="tabbable-custom">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active"><a href="#tabs-hoadon1" data-key="HD1" data-toggle="tab">Đơn hàng</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active tab-scroll" id="tabs-hoadon1">
+                        <div class="form-horizontal" id="mygird">
+                            <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                <colgroup>
+                                    <col style="width: 40px">
+                                    <col style="width: 80px">
+                                    <col>
+                                    <col style="width: 120px">
+                                    <col style="width: 120px">
+                                    <col style="width: 120px">
+                                    <col style="width: 80px">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã HĐ</th>
+                                        <th>Tên khách hàng</th>
+                                        <th class='text-center'>Điện thoại</th>
+                                        <th class='text-center'>Bắt đầu</th>
+                                        <th class='text-right'>Kết thúc</th>
+                                        <th>Thu ngân</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ListOrderItem)
+                                    {
+                                        <tr data-cusid="@item.CustomerID" data-phone="@item.CutomerPhone">
+                                            <td>@stt</td>
+                                            <td>@item.ID</td>
+                                            <td>@item.CustomerName</td>
+                                            <td>@item.CutomerPhone</td>
+                                            <td>@item.StartDate.DecimalToString("dd/MM/yyyy")</td>
+                                            <td>@item.EndDate.DecimalToString("dd/MM/yyyy")</td>
+                                            <td>@item.UserName</td>
+                                        </tr>
+                                        stt++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-order">
+        <div class="title-box-order">
+            <i class="fa fa-user"></i>Thông tin khách hàng
+            <a class="btn btn-sm btn-info pull-right" id="btn_NoteCare">Thêm Trị liệu</a>
+        </div>
+        <div class="user-detail-order">
+            <form id="frm-modal">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <input class="form-control" id="Customer" placeholder="Nhập tên hoặc số điện thoại" />
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input class="form-control date-picker input-sm text-right" type="date" name="dateOfsale_" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" title="Ngày bán">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input class="form-control" id="CustomerName" name="Name" placeholder="Họ tên">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <input class="form-control" id="Mobile" name="Phone" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <select class="form-control" name="Gender">
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <input class="form-control" id="Address" name="Address" placeholder="Địa chỉ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <textarea id="Note" name="Note" rows="3" class="form-control" placeholder="Ghi chú"></textarea>
+                    </div>
+                </div>
+            </form>
+            <div id="lstTherapy"></div>
+        </div>
+        <div class="box-a-table-button">
+            <button id="btn_SavePrint" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>Lưu</button>
+        </div>
+    </div>
+</div>

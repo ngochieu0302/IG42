@@ -1,0 +1,88 @@
+﻿@model List<FDI.Simple.MenuGroupsItem>
+@{
+    ViewBag.Title = "Quản lý menu trang chủ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "Menu")';
+    urlForm = '@Url.Action("AjaxForm", "Menu")';
+    urlSort = '@Url.Action("AjaxSort", "Menu")';
+    urlPostAction = '@Url.Action("Actions", "Menu")';
+    urlView = '@Url.Action("AjaxView", "Menu")';
+    formWidth = 650;
+    formHeight = $(window).height() - 24;
+    viewWidth = 650;
+    viewHeight = $(window).height() - 24;
+
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+
+        $("body").on("click", ".btnAddMenu", function () {
+            $.post(urlForm + "?groupId=" + $("#mnGroupId").val() + "&do=Add&ItemId=" + $(this).attr("href").substring(1), function (data) {
+                $("#dialog-form .modal-title").html("Thêm mới menu");
+                $("#dialog-form #dialog-form-ajax").html(data);
+                $('#dialog-form').modal('show');
+            });
+            $("#dialog-form.in #close").click(function () {
+                $('#dialog-form').modal('hide').html("");
+            });
+            return false;
+        });
+
+        $("body").on("click", ".btnEditMenu", function () {
+            $.post(urlForm + "?groupId=" + $("#mnGroupId").val() + "&do=Edit&ItemId=" + $(this).attr("href").substring(1), function (data) {
+                $("#dialog-form .modal-title").html("Thêm mới menu");
+                $("#dialog-form #dialog-form-ajax").html(data);
+                $('#dialog-form').modal('show');
+            });
+            $("#dialog-form.in #close").click(function () {
+                $('#dialog-form').modal('hide').html("");
+            });
+            return false;
+        });
+
+        $("#gridSearch").change(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });        
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });        
+    });
+</script>
+<div class="view-noscroll" data-view="true">
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Quản lý chuyên mục</li>
+            </ul>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="form-group">
+                <select class="form-control" id="mnGroupId" name="groupId">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                </select>
+            </div>           
+            <div class="btn-group pull-right">
+                <a href="#" class="btn btn-sm btn-primary btnAddMenu"><span class="fa fa-plus"></span>Thêm mới</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="content-control" style=" margin-top: 5px !important;">
+    <div id="Griditems"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#subNav li a").click(function () {
+            $("#subNav li a.active").removeClass("active");
+            $(this).addClass('active');
+        });
+    })
+</script>

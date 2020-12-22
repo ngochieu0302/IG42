@@ -1,0 +1,18 @@
+﻿@model FDI.Simple.ModelSystemConfigItem
+
+<div class="container">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="hotline-cart">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                @if (Model.Item != null)
+                {
+                    <strong class="hotline">Hotline : <a href="tel:@(Model.Item.PhoneAdvice.Replace(".",""))">@Model.Item.PhoneAdvice - @Model.Item.PhoneAdvice1</a></strong>
+                }
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <a class="cart" data-Quan="@Model.Total" href="@(!string.IsNullOrEmpty(Model.Phone)?"/"+Model.Phone:"#")" title="Giỏ hàng của bạn">Giỏ hàng của bạn <b>@Model.Total</b></a>
+            </div>
+        </div>
+    </div>
+</div>

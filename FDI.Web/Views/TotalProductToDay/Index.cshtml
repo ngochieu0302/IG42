@@ -1,0 +1,74 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.StorageWarehouse.TotalProductToDayModel
+@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        urlLists = '@Html.Raw(Url.Action("ListItems", new { todayCode = Request.QueryString["todayCode"], categoryId = Request.QueryString["categoryId"] }))';
+        urlForm = '@Html.Raw(Url.Action("AjaxForm",new { todayCode = Request.QueryString["todayCode"], categoryId = Request.QueryString["categoryId"] }))';
+    });
+</script>
+<div class="header-control">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"> Nhập sản phẩm </i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body text-center">
+                <strong>Sản phẩm:</strong> @Model.CategoryModel.Name           <strong>Ngày nhập:</strong> @decimal.Parse(Request.QueryString["todayCode"]).DecimalToString("dd/MM/yyyy")
+                <br />
+                <strong>Số lượng:</strong> @Model.Quantity.Quantity()    <strong>Số lượng đã nhập:</strong> @Model.QuantityActive
+            </div>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            <div class="btn-group">
+                <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Xóa</span></a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+            </div>
+            <div class="form-group">
+                <select name="SearchIn" id="SearchIn" class="form-control input-sm mutil">
+                    <option value="SupplierName">Nhà cung cấp</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="IsDelete" class="form-control">
+                    <option value="">-- Trạng thái --</option>
+                    <option value="@((int)StatusWarehouse.Complete)">Đã duyệt</option>
+                    <option value="@((int)StatusWarehouse.Imported)">Đã nhập</option>
+                    <option value="@((int)StatusWarehouse.Pending)">Đang xử lý</option>
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+            @*<button type="submit" class="btn btn-sm btn-primary" id="btnExportExcel"><span class="fa fa-file-excel-o"></span>Xuất Excel</button>*@
+            <div class="pull-right">
+                <a class="btn btn-sm btn-primary btn_Inport" data-action="Add"><span class="fa fa-plus"></span>Thêm mới</a>
+            </div>
+        </form>
+    </div>
+
+
+
+</div>
+<script>
+    $(function () {
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "&ItemId=" + id + "&do=" + action, "Tạo phiếu yêu cầu phập kho");
+        });
+    });
+</script>

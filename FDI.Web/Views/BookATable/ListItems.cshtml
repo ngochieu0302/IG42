@@ -1,0 +1,84 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelBedDeskItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var dn = DateTime.Now.TotalSeconds();
+    var dnt = DateTime.Today.TotalSeconds();
+    const int timedo = (int)Order.Order;
+    var listlevelItem = Model.ListItem.GroupBy(m => m.LevelRoomId).Select(m => m.FirstOrDefault()).ToList();
+    var listRoomItem = Model.ListItem.GroupBy(m => m.RoomId).Select(m => m.FirstOrDefault()).ToList();
+    var rowmax = Model.ListItem.OrderByDescending(m => m.Row).FirstOrDefault();
+    var rm = rowmax != null ? rowmax.Row : 0;
+}
+
+<div class="box-control no-footer box-desk">
+    <div class="tabbable-custom  gridView" id="mygird">
+        <div class="class-wrap">
+            @foreach (var item in listlevelItem)
+            {
+                <a class="btn btn-sm btn-success LevelRoom" data-event="LevelRoom" data-id="@item.LevelRoomId">@item.LevelName</a>
+            }
+        </div>
+        <div class="class-room-wrap" id="lroom"></div>
+        <div class="tab-content">
+            <div class="tab-pane fade active in">
+                @foreach (var item in listlevelItem)
+                {
+                    <div class="gdesk glevel-@item.LevelRoomId">
+                        <div class="tag-level">@item.LevelName</div>
+                        @{
+                            var lr = listRoomItem.Where(m => m.LevelRoomId == item.LevelRoomId).OrderBy(c => c.Sort).ToList();
+                            foreach (var itemr in lr)
+                            {
+                                var bien = rm < 14 ? 116 : 86;
+                                var width = itemr.Row * bien + 2;
+                                <div class="rdesk groom-@itemr.RoomId l-@lr.Count() @(rm < 14 ? "room-small" : "")" style="width: @((width + 20) + "px");">
+                                    <div class="tag-room">@itemr.RoomName</div>
+                                    @foreach (var itemnew in Model.ListItem.Where(m => m.RoomId == itemr.RoomId))
+                                    {
+                                        <div id="dashboard-@itemnew.ID" data-id="@itemnew.ID" class="item-desk free-desk desk-@itemnew.Quantity r-@Model.ListItem.Count(m => m.RoomId == itemnew.RoomId) @(itemnew.IsShow == true ? "" : "disable-desk")">
+                                            @if (itemnew.IsShow == true)
+                                            {
+                                                <div class="box-item-desk" id="context-@itemnew.ID" data-id="@itemnew.ID" data-ocid="0">
+                                                    <div class="name-room">@itemnew.Name</div>
+                                                    <div class="time-out">
+                                                        <b id="counterOrder-@itemnew.ID"></b>
+                                                    </div>
+                                                    <div class="status">
+                                                        <span id="contact-@itemnew.ID"></span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+            <div id="groupbed" class="group-item-show"></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="agencyid" name="agencyid" value="@(new JavaScriptSerializer().Serialize(Model.ListItem))">
+<input type="hidden" id="listbed" name="listbed" value="">
+<input type="hidden" id="ObjBedOrder" name="ObjBedOrder" value="">
+<link href="~/Content/Web/jquery.contextMenu.min.css" rel="stylesheet" />
+<script src="~/Content/Web/jquery.contextMenu.min.js"></script>
+<script src="~/Content/Web/jquery.ui.position.min.js"></script>
+<script src="~/Content/Web/restaurant.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dates = parseInt('@dn');
+        var urlnode = '@WebConfig.UrlNode' + ':4000';
+        var nm = intDateNow() - dates;
+        var td = parseInt('@dnt');
+        var stp = parseInt('@((int)FDI.CORE.OrderStatus.Processing)');
+        var agencyid = '@Model.AgencyId';
+        var timedo = parseInt('@timedo');
+        RestaurantLoad(urlnode, nm, td, agencyid, timedo, stp);
+    });
+</script>

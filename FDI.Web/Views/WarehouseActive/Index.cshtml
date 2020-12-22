@@ -1,0 +1,105 @@
+﻿@using FDI.DA.DA.StorageWarehouse
+@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.StorageWarehousingItem
+@{
+    Layout = "~/Views/Shared/_MetaColumn.cshtml";
+}
+<div class="col-lg-4">
+    <div>
+        @Html.Action("DetailOrder")
+    </div>
+    <div id="productdetail"></div>
+</div>
+<div class="col-lg-8">
+    <div class="header-control">
+        <h3 class="page-title"></h3>
+        <div class="group-form-control">
+            <form id="gridSearch" class="form-inline" role="form">
+                <div class="btn-group">
+                    <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" title="Filter" data-toggle="dropdown"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#deleteAll" data-event="deleteAll" data-grid="#mygird"><i class="icon-trash"></i><span class="text">Xóa</span></a></li>
+                        @*<li><a href="#activeAll" data-event="activeAll" data-grid="#mygird"><i class="fa fa-check-square-o"></i>Duyệt phiếu</a></li>*@
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="Keyword">Từ khóa tìm kiếm</label>
+                    <input type="text" class="form-control input-sm" id="Keyword" name="Keyword" placeholder="Từ khóa tìm kiếm">
+                </div>
+                <div class="form-group">
+                    <input type="date" class="form-control input-sm" name="fromDate" id="fromDate">
+                </div>
+                <div class="form-group">
+                    <select name="hours" class="form-control">
+                        <option value="">-- Khung giờ chuyển --</option>
+                        @foreach (var item in TypeHours.Hours())
+                        {
+                            <option value="@item.Value">@item.Key</option>
+                        }
+                    </select>
+                </div>
+                <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+                <div class="pull-right">
+                    @{
+                        var status = StatusWarehouse.New | StatusWarehouse.Pending | StatusWarehouse.WattingConfirm;
+                    }
+                    @if (Model.Status == (int)StatusWarehouse.Pending)
+                    {
+                        <a id="confirmAmount" class="btn btn-sm btn-primary" data-action="Add"><span class="fa fa-plus"></span>Duyệt số lượng</a>
+                    }
+                    @{
+                        if (status.HasFlag((StatusWarehouse)Model.Status))
+                        {
+                            <a id="moveProduce" class="btn btn-sm btn-primary" data - action="Add"><span class="fa fa-plus"></span> Duyệt sản xuất</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-primary">@(((StatusWarehouse)Model.Status).GetDisplayName())</a>
+                        }
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="content-control" id="Griditems">
+    </div>
+</div>
+<script type="text/javascript">
+    var urlXuatExcel = '@Url.Action("ProcessExportFile", "WarehouseActive")';
+    $(document).ready(function () {
+        $("#btnExportExcel").click(function () {
+            var form = $("#gridSearch");
+            FdiOpenDialog("#dialog-form-4", urlXuatExcel + "?" + getValueFormMutilSelect(form), "Tạo phiếu yêu cầu phập kho");
+        });
+        urlLists = '@Url.Action("ListItems", new {orderId=Request.QueryString["orderId"]})';
+
+        $("#confirmAmount").click(function() {
+            $.post('@Url.Action("ConfirmAmount", new {orderId=Request.QueryString["orderId"]})',
+                {},
+                function(data) {
+                    if (data.Erros) {
+                        createMessage("Báo lỗi", data.Message);
+                    } else {
+                        toastr["success"]("Duyệt số lượng thành công");
+                        window.location.reload();
+                    }
+                });
+        });
+        $("#moveProduce").click(function() {
+            $.post('@Url.Action("MoveProduce", new {orderId=Request.QueryString["orderId"]})',
+                {},
+                function(data) {
+                    if (data.Erros) {
+                        createMessage("Báo lỗi", data.Message);
+                    } else {
+                        toastr["success"]("Duyệt số lượng thành công");
+                        window.location.reload();
+                    }
+                });
+        });
+
+        initAjaxLoad("@Url.Action("ProductConfirmedWithSupplier")" + "?orderId=" +@Model.ID,"#productdetail")
+    });
+</script>
+

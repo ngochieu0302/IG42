@@ -1,0 +1,22 @@
+﻿@model List<FDI.Simple.ProductItem>
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="productList__item">
+    <div class="productList__item__view">
+        <div class="img">
+            <a href="/@item.NameAscii" title="@item.Name">
+                <img src="/@(item.UrlPicture)" alt="@item.Name"></a>
+        </div>
+        <div class="preview">
+            <div class="preview__text">
+                @(Html.Raw(item.Description))
+            </div>
+            <a class="preview__link" href="/@item.NameAscii" title="@item.Name">@Resources.Resource.xemthem<i class="ion-chevron-right"></i></a>
+        </div>
+    </div>
+    <div class="productList__item__title"><a href="/@item.NameAscii" title="@item.Name">@item.Name</a></div>
+</div>
+    }
+}

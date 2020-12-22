@@ -1,0 +1,219 @@
+﻿@model FDI.Simple.PacketItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="/Content/Admin/js/numeral.min.js"></script>
+<style>
+    .item label {
+        margin-right: 172px;
+        line-height: 20px;
+        margin-top: 5px;
+        float: right;
+    }
+    .item .check {
+        margin-top: 5px !important;
+       float: left;
+       width: 20px
+    }
+</style>
+<script>
+    $(function () {
+        callSelect2("#LstProductID", "100%");
+        callSelect2("#BedDeskID", "100%");
+
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Mời bạn nhập tên gói."
+            },
+            submitHandler: function () { //onSubmi
+                PostAction("#modalForm");
+            }
+        });
+        var stt = 0;
+        $("#Add").click(function (e) {
+            e.preventDefault();
+            stt++;
+            var html = '<div class="list-add-ncc" id="id_add_' + stt + '"">' +
+                '<div class="item"><select name="Obj_' + stt + '"" id="Obj_' + stt + '"" class="form-control select2"></select>' +
+                '</div>' +
+                '<div class="item"><input type="text" class="form-control maskPrice" placeholder="Số tiền" name="Price_' + stt + '"" id="Price_' + stt + '"  value="0" /></div>' +
+                '<div class="item"><input type="checkbox" class="form-control check"  name="Default_' + stt + '"" id="Default_' + stt + '"  /> <label>Mặc định</label></div>' +
+                '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div>';
+            $("#content-ncc").append(html);
+            $.post("/Packet/ProductAdd", function (data) {
+                $("#Obj_" + stt).html(data);
+            });
+            callSelect2("#Obj_" + stt, "100%");
+            $("#Delete_" + stt).click(function (e) {
+                e.preventDefault();
+                var id = $(this).data("id");
+                stt--;
+                $("#" + id).remove();
+            });
+            $("#do_stt").val(stt);
+            $("#Obj_" + stt).on("change", function (e) {
+                e.preventDefault();
+                var id = $(this).val();
+                $.post("/Packet/GetPricebiProductID", { id: parseInt(id) }, function (data) {
+                    $("#Price_" + stt).val(numeral(data.PriceNew).format("0,0"));
+                });
+            });
+        });
+
+
+        $(".C_Delete").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#" + id).remove();
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@ViewBag.AgencyId" />
+        <input type="hidden" name="do_stt" id="do_stt" value="0" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>gói sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên gói</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Sort" id="Sort" value="@Model.Sort" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thời gian</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Time" id="Time" value="@Model.Time" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">TG bán sớm(NV)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="TimeEarly" id="TimeEarly" value="@Model.TimeEarly" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">TG chờ(Giường)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="TimeWait" id="TimeWait" value="@Model.TimeWait" />
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Giá</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Price" id="Price" value="@Model.Price" />
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                @Html.CheckBox("IsEarly") Bán sớm
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                @Html.CheckBox("IsDefault") Gói mặc định
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn sản phẩm</label>
+                            <div class="col-sm-10">
+                                <select id="LstProductID" name="LstProductID" multiple class="select2">
+                                    @foreach (var item in ViewBag.Product)
+                                    {
+                                        <option value="@item.ID" @(Model.LstProduct.Any(c => c.ID == item.ID) ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Các vị trí </label>
+                            <div class="col-sm-10">
+                                <select id="BedDeskID" name="BedDeskID" multiple class="select2">
+                                    @if (Model.LstBedDesk != null && Model.LstBedDesk.Any())
+                                    {
+                                        foreach (var item in ViewBag.BedDeskID)
+                                        {
+                                        <option value="@item.ID" @(Model.LstBedDesk.Any(c => c.ID == item.ID) ? "selected" : "")>@item.Name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in ViewBag.BedDeskID)
+                                        {
+                                        <option value="@item.ID" >@item.Name</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thêm sản phẩm cho gói dịch vụ
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <a id="Add" href="#" class="btn btn-success" style="margin-bottom: 15px;"><span class="fa fa-plus"></span>Thêm</a>
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div id="content-ncc">
+                            @if (Model.ListProductPacketItems != null)
+                            {
+                                foreach (var item in Model.ListProductPacketItems)
+                                {
+                                <div class="list-add-ncc" id="id_add_@(item.ProductId)">
+                                    <div class="item">
+                                        <select name="Obj_old@(item.ProductId)" id="Obj_old@(item.ProductId)" class="form-control select2">
+                                            @foreach (var items in ViewBag.Product)
+                                            {
+                                                <option value="@items.ID" @(items.ID == item.ProductId ? "selected" : "")>@items.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="item">
+                                        <input type="text" class="form-control maskPrice" placeholder="Số tiền" name="Price_old@(item.ProductId)" id="Price_old@(item.ProductId)" value="@item.Price" />
+                                    </div>
+                                    <div class="item">
+                                        <input type="checkbox" class="form-control check" name="Default_old@(item.ProductId)" @(item.IsDefault == true ? "checked" : "") id="Default_old@(item.ProductId)" />
+                                        <label>Mặc định</label>
+                                    </div>
+                                    <div class="item-button"><a id="Delete_" data-id="id_add_@(item.ProductId)" href="#" class="btn btn-sm btn-block btn-danger">Xóa</a></div>
+                                </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

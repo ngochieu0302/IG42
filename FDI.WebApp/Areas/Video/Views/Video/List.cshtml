@@ -1,0 +1,57 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelVideoItem
+   @if (Session["editPage"] != null && (bool)Session["editPage"] && Request["doAction"] == "setting")
+   {
+       <form id="form-editmodule" class="box-edit-setting">
+           <div class="form-group">
+               <div class="row">
+                   <label class="col-md-4 control-label">Số tin:</label>
+                   <div class="col-md-8">
+                       <input name="@ViewBag.key" value="@ViewBag.Value"/>
+                   </div>
+               </div>
+           </div>
+           <div style="display: none;">
+               <input type="text" id="key" name="key" value="@ViewBag.key" />
+               <button type="button" id="SaveSetting"></button>
+           </div>
+       </form>
+       <script>
+           $("body").on("click", "#SaveSetting", function () {
+               $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-editmodule").serialize(), function (data) {
+                   if (!data.Erros) {
+                       window.location.href = window.location.href;
+                   }
+               });
+           });
+       </script>
+   }
+   else
+   {
+
+       <div class="main-list-news">
+           <h1 class="title-list-news"><span>Video</span></h1>
+       </div>
+
+       <div class="list-video-grird">
+           @foreach (var item in Model.ListItem)
+           {
+               <div class="item-video item-ef">
+                   <div class="img">
+                       <a href="@UrlWrite.VideoDetail(FomatString.Slug(item.Name), item.ID)" title="" class="itemvideo" data-url="@item.Url">
+                           <img src="@Utility.Picture(item.UrlPicture)" alt="@item.Name" class="img-responsive" />
+                           <span class="roll tie-video"></span>
+                       </a>
+                   </div>
+                   <div class="detail"><a href="@UrlWrite.VideoDetail(FomatString.Slug(item.Name), item.ID)">@item.Name</a></div>
+               </div>
+           }
+           <div class="div-phantrang">
+               <div class="dot-fillin">
+                   <ul>
+                       @Html.Raw(Model.PageHtml)
+                   </ul>
+               </div>
+           </div>
+       </div>
+   }

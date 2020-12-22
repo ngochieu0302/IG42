@@ -1,0 +1,138 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.ReceiptPaymentItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " sản phẩm";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $(".date-picker").datepicker({
+            showOn: "button",
+            buttonImageOnly: true,
+            format: "dd/mm/yyyy"
+        }).mask('00/00/0000').on('changeDate', function (e) {
+            $(this).datepicker('hide');
+        });
+       
+        $(".customer").hide();
+       
+        $("#frm-modal").validate({
+            rules: {
+                Price: { required: true },
+                Note: { required: true }
+            },
+            messages: {
+                Price: "Trường bắt buộc nhập.",
+                Note: "Trường bắt buộc nhập."
+            },
+            submitHandler: function () { //onSubmit
+                $(".maskPrice").each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); //Tạo thông báo lỗi
+                    else {
+                        $('#dialog-form').modal('hide'); //Đóng form thêm mới - sửa
+                        $('#dialog-form #dialog-form-ajax').html('');
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+            }
+        });
+        $('#CustomerName').autocomplete({
+            serviceUrl: "/BookATable/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerName').val(el.title);
+                $('#CustomerID').val(el.ID);
+            }
+        });
+        $("#Type").change(function () {
+            var val = $(this).val();
+            if (val === "0") {
+                $(".user").show();
+                $(".customer").hide();
+                $("#CustomerID").val("");
+            }if (val === "1") {
+                $(".user").hide();
+                $(".customer").show();
+                $("#CustomerName").val("");
+                $("#UserId option[value='']").prop('selected', true);
+            }if (val === "2") {
+                $(".user").hide();
+                $(".customer").hide();
+                $("#CustomerID").val("");
+                $("#CustomerName").val("");
+                $("#UserId option[value='']").prop('selected', true);
+            }
+        });
+    })
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@ViewBag.AgencyId" />
+        <input type="hidden" name="UserCreate" id="UserCreate" value="@(Model.UserCreate??ViewBag.UserCreate)" />
+        <input type="hidden" name="Status" id="Status" value="@((int)Vouchers.Payment)" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về phiếu thu chi
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        s
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Ngày ghi nhận</label>
+                            <div class="col-lg-4">
+                                <input class="form-control date-picker" id="DateReturn_" name="DateReturn_" value="@(Model.DateReturn != null ? Model.DateReturn.DecimalToString("dd/MM/yyyy") : DateTime.Now.Format("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                            </div>
+                            <label class="col-lg-2 control-label">Loại phiếu chi</label>
+                            <div class="col-lg-4">
+                                <select id="CostTypeId" name="CostTypeId" class="form-control">
+                                    @foreach (var item in ViewBag.CostType)
+                                    {
+                                        <option value="@item.ID" @(Model.ID == item.ID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số tiền</label>
+                            <div class="col-lg-4">
+                                <input id="Price" name="Price" class="form-control maskPrice text-right" value="@Model.Price">
+                            </div>
+                            <label class="col-lg-2 control-label">Thanh toán</label>
+                            <div class="col-lg-4">
+                                <select class="form-control" name="PaymentMethodId">
+                                    <option value="@((int)PaymentMethod.Cash)">Tiền mặt</option>
+                                    <option value="@((int)PaymentMethod.Transfer)">Chuyển khoản</option>
+                                    <option value="@((int)PaymentMethod.Other)">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Ghi chú</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control" rows="3" name="Note" id="Note">@Model.Note</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

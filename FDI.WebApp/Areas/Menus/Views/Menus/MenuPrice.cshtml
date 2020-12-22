@@ -1,0 +1,68 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@{
+    var pageId = WebConfig.Product;
+}
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <select name="value" class="form-control">
+                <option value="">-- Chọn nhóm menu --</option>
+                @foreach (var item in Model.ListItem)
+                {
+                    <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                }
+            </select>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Model.CtrId" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Model.CtrId", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.href = window.location.href;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <div class="sec-home">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="searchByPrice">
+            <h3>Tìm Sim theo mệnh giá</h3>
+            <ul>
+                <li><a href="/sim-theo-menh-gia-0-999000" title="Dưới 1 triệu">Dưới 1 triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-1000000-2000000" title="1 Triệu - 2 Triệu">1 Triệu - 2 Triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-2000000-5000000" title="2 Triệu - 5 Triệu">2 Triệu - 5 Triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-5000000-10000000" title="5 Triệu - 10 Triệu">5 Triệu - 10 Triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-10000000-30000000" title="10 Triệu - 30 Triệu">10 Triệu - 30 Triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-30000000-50000000" title="30 Triệu - 50 Triệu">30 Triệu - 50 Triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-50000000-100000000" title="Trên 50 triệu">50 triệu - 100 triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-100000000-300000000" title="Trên 50 triệu">100 triệu - 300 triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-300000000-500000000" title="Trên 50 triệu">300 triệu - 400 triệu</a></li>
+                <li><a href="/sim-theo-menh-gia-500000000-1000000000" title="Trên 50 triệu">500 triệu - 1 tỷ</a></li>
+                <li><a href="/sim-theo-menh-gia-1000000000-0" title="Trên 50 triệu">Trên 1 tỷ</a></li>
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+
+}
+<script>
+    $(document).ready(function () {
+        urlLists = '@Url.Action("ListItems")';
+        urlSort = '@Url.Action("AjaxSort")';
+        urlForm = '@Url.Action("AjaxForm")';
+        urlPostAction = '@Url.Action("Actions")';
+        urlView = '@Url.Action("AjaxView")';
+    })
+</script>
+@section metas
+{
+
+}
+<div class="scales-container">
+    <div class="row">
+        <div class="col-lg-12 ">
+            <div class="page-header-menu">Giá trị cân: <strong id="valueping"></strong></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            @RenderSection("columnOne", false)
+        </div>
+        <div class="col-lg-8">
+            @RenderBody()
+            <div class="content-control" id="Griditems">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#gridSearch").submit(function () {
+            var form = $("#gridSearch");
+            window.location.href = '#' + getValueFormMutilSelect(form);
+            return false;
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+    })
+</script>
+
+<style>
+    .page-header-menu {
+        background-color: #007ebb;
+        color: #fff;
+        min-height: 50px;
+        width: 100%;
+        line-height: 50px;
+        font-size: 14px;
+        padding-left: 10px
+    }
+    .scales-container {
+        padding: 0 5px;
+    }
+</style>

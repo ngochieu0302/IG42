@@ -1,0 +1,88 @@
+﻿
+@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.StorageWarehouse.ProduceModel
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var statues = (ProduceStatus[])Enum.GetValues(typeof(ProduceStatus));
+}
+
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <td>STT</td>
+                        <td>Sản phẩm</td>
+                        <td>Số lượng</td>
+                        <td>Giờ sản xuất</td>
+                        <td>Trạng thái</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var i = 1;}
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID">
+                            <td>@(i++)</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity.Quantity()</td>
+                            <td>@ConvertDate.DecimalToString(item.DateProduce, "dd/MM/yyyy: HH:mm")</td>
+
+
+                            <td class="text-center">
+                                <!-- Single button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle bordernone" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                        @{
+                                            var statusenum = (ProduceStatus)item.Status;
+                                        }
+                                        <label class="label @statusenum.GetCssClass()">@statusenum.GetDisplayName()</label>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var status in statues)
+                                        {
+                                            if (status != item.Status)
+                                            {
+                                                <li><a class="changestatus" href="#@((int)status)">@status.GetDisplayName()</a></li>
+                                            }
+                                        }
+
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @Grid.ActionView(item.ID, "")
+                                @Grid.ActionDelete(item.ID, "Xóa lệnh sản xuất")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".changestatus").click(function (e) {
+            e.preventDefault();
+            var id = $(this).closest('tr').attr('data-id');
+            var status = $(this).attr("href").substring(1);
+
+            $.post('@Url.Action("ChangeStatus")', { id, status }, function(data) {
+                if (data.Erros == true) {
+                    createMessage("error", data.Messages);
+                } else {
+                    createCloseMessage("Thông báo", data.Messages);
+                }
+            });
+        });
+
+    });
+</script>
+

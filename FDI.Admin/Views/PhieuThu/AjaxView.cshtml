@@ -1,0 +1,181 @@
+﻿@model FDI.Base.ThuChi
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+    var stt = 0;
+    decimal price = 0;
+    decimal priceold = 0;
+}
+<link href="/Areas/Admin/Content/css/style_hoadon.css" rel="stylesheet" />
+<script>
+    $("#printOrder").click(function() {
+        $('#BoxPrint').show();
+        jQuery.print('#BoxPrint');
+        $("#btnResetPrint").click();
+        $('#BoxPrint').hide();
+    });
+
+    $(".pr-address").html($("#dcShop").val());
+</script>
+<div class="col-sm-12">
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold" style="height: 50px;">
+            Chi tiết hóa đơn
+            <button class="btn btn-success" id="printOrder" style="float: right">In hóa đơn</button>
+        </header>
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 20%">
+                    <label>Mã đơn hàng</label></td>
+                <td>@Model.OrderCode</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Khách hàng</label></td>
+                <td>@(Model.CustomerName ?? "Khách lẻ")</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Ngày bán</label></td>
+                <td>@Model.DateCreated.Value.ToString("dd/MM/yyyy hh:mm")</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Ghi chú</label></td>
+                <td>@Model.Note</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Hình thức thanh toán</label></td>
+                <td>Null</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Tiền hàng</label></td>
+                <td>@(string.Format("{0:0,0} đ", Model.OrderTotal))</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Khuyến mại</label></td>
+                @if (Model.Mode == "m")
+                {
+                    <td>@string.Format("{0:0,0} đ", Model.Sale)</td>
+                }
+                else
+                {
+                    <td>@string.Format("{0} %", Model.Sale)</td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    <label>Tổng cộng</label></td>
+                @if (Model.Mode == "m")
+                {
+                    <td>@string.Format("{0:0,0} đ", Model.OrderTotal - Model.Sale)</td>
+                }
+                else
+                {
+                    <td>@string.Format("{0:0,0} đ %", Model.OrderTotal - Model.OrderTotal * Model.Sale / 100)</td>
+                }
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label><b>Chi tiết đơn hàng</b></label></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="gridView" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>Mã hàng</th>
+                                <th>Tên hàng</th>
+                                <th>Nguyên giá</th>
+                                <th>(%)</th>
+                                <th>Giá bán</th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model.OrderDetail)
+                        {
+                            <tr>
+                                <td>@item.ProductCode</td>
+                                <td>@item.ProductName</td>
+                                <td>@string.Format("{0:0,0}", item.Price)</td>
+                                <td>@(item.Sale)%</td>
+                                <td>@string.Format("{0:0,0}", item.Price - item.Price * item.Sale / 100)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td><b>Tổng tiền:</b></td>
+                            <td colspan="4">@string.Format("{0:0,0}", Model.OrderTotal)</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+
+<section id="BoxPrint" style="display: none;">
+    <div class="box-pr-payment">
+        <div class="pr-header">
+            <div class="pr-logo">
+                <img src="/Content/Publishing/Images/logo.png" />
+            </div>
+            <div class="pr-address">
+            </div>
+        </div>
+        <div class="pr-content">
+            <div class="pr-title-code">
+                <strong>HÓA ĐƠN BÁN HÀNG</strong>
+                <i id="printMP">@Model.OrderCode</i>
+            </div>
+            <div class="pr-detail-employee">
+                <ul>
+                    <li><strong>Ngày bán:</strong><span>@Model.DateCreated.Value.ToString("dd/MM/yyyy")</span></li>
+                    <li><strong>Khách Hàng</strong><span>@(Model.CustomerName ?? "(Khách lẻ)")</span></li>
+                    <li><strong>Nhân viên</strong><span>@Model.UserID</span></li>
+                </ul>
+            </div>
+            <div class="pr-list-product">
+                <div class="pr-head">
+                    <strong>Sản phẩm</strong>
+                    <strong>Nguyên giá</strong>
+                    <strong>% &darr;</strong>
+                    <strong>Giá bán</strong>
+                </div>
+                <div id="listboxprint">
+                    @foreach (var item in Model.OrderDetail)
+                    {
+                        price += (decimal)(item.Price - item.Price * item.Sale / 100);
+                        priceold += (decimal)(item.Price);
+                        <div class='pr-item'>
+                            <b>@(++stt). @item.ProductCode - @item.ProductName</b>
+                            <div class='pr-property'>
+                                <span>&nbsp;</span>
+                                <span>@string.Format("{0:0,0}", item.Price)</span>
+                                <span>@item.Sale %</span>
+                                <span>@string.Format("{0:0,0}", item.Price - item.Price * item.Sale / 100)</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="pr-detail-pay">
+                <ul>
+                    <li><strong>Tổng giảm giá/code giảm:</strong><span>@string.Format("{0:0,0}", priceold - price)</span></li>
+                    <li><strong><b>Tổng tiền thanh toán:</b></strong><span><b>@price</b></span></li>
+                    <li><strong>Số tiền khách đưa:</strong><span>@Model.PayMent</span></li>
+                    <li><strong>Tiền thừa trả khách:</strong><span>@string.Format("{0:0,0}", Model.PayMent - price)</span></li>
+                    <li><strong><i>Giá bán đã bao gồm VAT</i></strong><span></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pr-footer">
+            <strong>Quý khách vui lòng kiểm tra hàng hóa</strong>
+            <strong>trước khi dời khỏi quầy</strong>
+            <strong>Xin cảm ơn và hẹn gặp lại</strong>
+        </div>
+    </div>
+</section>

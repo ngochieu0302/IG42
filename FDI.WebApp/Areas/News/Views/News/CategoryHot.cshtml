@@ -1,0 +1,65 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelCategoryItem
+@if (Request["doAction"] == "setting")
+{
+    <form id="form-modal">
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="value" class="form-control">
+                    <option value="">-- Chọn Chuyên mục --</option>
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.PageId ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div style="display: none;">
+                <input id="ctrId" name="ctrId" value="@Request["ctrId"]" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $("#form-modal").validate({
+                rules: {
+                    value: { required: true }
+                },
+                messages: {
+                    value: { required: "Trường bắt buộc nhập!" }
+                },
+                submitHandler: function () {
+                    $.post("/Setting/Setting/SaveSetting?ctrId=@Request["ctrId"]", $("#form-modal").serialize(), function (data) {
+                        if (!data.Erros) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    
+    <div class="sec-home sec-firstTop">
+        @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+        <div class="container">
+            <div class="firstTop">
+                <div class="firstTop__title">
+                    <h2>@Model.CategoryItem.Name</h2>
+                </div>
+                <div class="firstTop__box">
+                    <div class="aboutHome">
+                        @(Html.Raw(Model.CategoryItem.Description))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

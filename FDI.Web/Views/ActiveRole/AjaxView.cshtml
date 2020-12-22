@@ -1,0 +1,24 @@
+﻿@model FDI.Simple.ActiveRoleItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<table class="table table-bordered" cellspacing="1" width="100%">
+
+    <tr>
+        <td style="width: 30%">
+            <strong>Tên chức năng</strong>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.NameActive)
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 30%">
+            <strong>Thứ tự</strong>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Ord)
+        </td>
+    </tr>
+</table>

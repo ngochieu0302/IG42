@@ -1,0 +1,68 @@
+﻿@model FDI.Simple.ModelDocumentFilesItem
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center">STT</th>
+                        <th class="text-center">Loại file</th>
+                        <th><a href="#Field=Name">Tên File<span /></a></th>
+                        <th class="text-center">Ngày upload</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListItem != null && Model.ListItem.Any())
+                    {
+                        foreach (var item in Model.ListItem)
+                        {
+                            <tr title="@item.Name">
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td class="text-center">@(stt++)</td>
+                                <td class="text-center"><img src="/Images/Icons/file/@(item.TypeFile).png"/></td>
+                                <td>@item.Name</td>
+                                <td class="text-center">@item.DateCreated.Value.ToString("dd/MM/yyyy")</td>
+                                <td class="text-right">
+                                    @Grid.ActionEdit(item.ID, item.Name)
+                                    @Grid.ActionDelete(item.ID, item.Name)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>
+
+

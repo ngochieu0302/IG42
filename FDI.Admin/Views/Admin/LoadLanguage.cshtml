@@ -1,0 +1,35 @@
+﻿@model List<FDI.Simple.LanguagesItem>
+@{
+    ViewBag.Title = "LoadLanguage"; 
+}
+
+<a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+    <img src="@("/Images/Icons/flag24/" + ViewBag.LanguageId + ".png")" class="icon-select-language">
+</a>
+<ul class="dropdown-menu animated fadeInUp" id="ChangeLanguage">
+    <span class="arrow top" style="margin-left: 45px;"></span>
+    <li>
+        @foreach (var item in Model)
+        { 
+            <a href="?lang=@item.Code" data-code="@item.Code" title="@item.Name"  class="icon-language">
+                <img src="@("/Images/Icons/flag24/" + item.Code + ".png")"/>@item.Name
+            </a>
+        }
+    </li>
+</ul>
+<script type="text/javascript">
+    // thay đổi ngôn ngữ
+    $("#ChangeLanguage a").click(function () {
+        //$(".icon-select-language").attr('src', $(this).children().attr("src"));
+        $.post("@Url.Action("ChangelanguageAdmin", "Languages")", { lang: $(this).data("code") }, function (data) {
+            if (!data.Erros) {
+                window.location.href = window.location.href;
+                location.reload(true);
+            }
+        });
+    });
+    
+</script>    
+
+
+

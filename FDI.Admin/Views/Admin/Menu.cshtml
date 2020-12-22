@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FDI.Simple.ModuleadminItem>
+@{
+    ViewBag.Title = "Menu";
+}
+
+<ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-light " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+    <li class="sidebar-toggler-wrapper hide">
+        <div class="sidebar-toggler"></div>
+    </li>
+    <li class="nav-item start">
+        <a href="/Admin" class="nav-link nav-toggle">
+            <i class="icon-diamond"></i>
+            <span class="title">Tổng quan</span>
+        </a>
+    </li>
+    @foreach (var mc in Model)
+    {
+        <li class="nav-item">
+            @if (mc.Module1.Any())
+            {
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="@mc.ClassCss"></i>
+                    <span class="title">@mc.NameModule</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    @foreach (var item in mc.Module1)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/@item.Tag"><span class="title">@item.NameModule</span></a></li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <a href="/@mc.Tag" class="nav-link nav-toggle">
+                    <i class="@mc.ClassCss"></i>
+                    <span class="title">@mc.NameModule</span>
+                </a>
+            }
+        </li>
+    }
+</ul>
+<script>
+    $(function () {
+        setNavigation();
+    });
+    function setNavigation() {
+        var path = window.location.pathname;
+        path = path.replace(/\/$/, "");
+        path = decodeURIComponent(path);
+
+        $(".page-sidebar-menu a").each(function () {
+            var href = $(this).attr('href');
+            if (path === href) {
+                $(this).parents('li').addClass('active');
+            }
+        });
+    }
+</script>

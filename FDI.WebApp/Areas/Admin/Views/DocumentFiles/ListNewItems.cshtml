@@ -1,0 +1,144 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelDocumentFilesItem
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";    
+}
+
+<div class="grid-container-picture" id="gridItems">
+    <div class="listitemPicture scrollable">
+        <table class="table table-striped table-bordered table-hover table-orimid" role="grid">
+            <colgroup>
+                <col class="colgroup check" />
+                <col />
+                <col />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input type="checkbox" class="checkAllFiles" />
+                    </th>
+                    <th class="text-center">Loại file</th>
+                    <th><a href="#Field=Name">Tên File<span /></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListItem != null && Model.ListItem.Any())
+                {
+                    foreach (var item in Model.ListItem)
+                    {
+                        <tr title="@item.Name">
+                            <td class="act_roles">
+                                <input type="checkbox" class="checkFile" value="@item.ID" title="@item.Name" data-TypeFile="@item.TypeFile">
+                            </td>
+                            <td class="text-center"><img src="/Images/Icons/file/@(item.TypeFile).png" /></td>
+                            <td>@item.Name</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="paganitionPicture">
+        @Html.Raw(Model.PageHtml)
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").on("change", ".checkAllFiles", function () {
+            if (selectMutil == 'true') {
+                if ($(this).is(":checked")) {
+                    $(".checkFile").prop("checked", true);
+                } else {
+                    $(".checkFile").prop("checked", false);
+                }
+            } else {
+                $(this).prop("checked", false);
+            }
+        });
+
+        $("body").on("change", ".checkFile", function () {
+            if (selectMutil == 'false') {
+                if ($(this).is(":checked")) {
+                    $("#PictureSelect input[type='checkbox']").each(function () {
+                        $(".checkFile").prop("checked", false);
+                    });
+                    $(this).prop("checked", true);
+                }                
+            }
+        });
+
+        //registerGridView('#gridItems');
+        $("#PictureSelect input[type='checkbox']").each(function () {
+            var val = $(this).val();
+            var lst = $("#Value_Files").val();
+            if (lst.includes(val)) {
+                $(this).prop('checked', true);
+            }
+        });
+        // chuyển phân trang
+        $(".bottom-pager a").click(function (e) {
+            e.preventDefault();
+            var url = "@Url.Action("ListNewItems", "GalleryPicture")" + $(this).attr("href").replace("#", "?");
+            $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                $("#PictureGriditems").html(data);
+            });
+
+        });
+
+        $('input[name="page"]').keypress(function (e) {
+            if (e.which === 13) {
+                var url = urlListPicture + "?" + showPicture
+                $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                    $("#PictureGriditems").html(data);
+                });
+                return false;
+            }
+        });
+
+        $('select[name="RowPerPage"]').change(function () {
+            var fromSearch = $("#PictureGridSearch");
+            var url = urlListPicture + "?" + getValueGalaryFormMutilSelect(fromSearch) + "&RowPerPage=" + $(this).val();
+            $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                $("#PictureGriditems").html(data);
+            });
+        });
+
+        $("#PictureGriditems .submit #close").click(function () {
+            $("#dialog-form-2").html("").dialog('close');
+        });
+
+        $("#btnPictureSelectSubmit").click(function () {
+            $("#PictureSelect .hidden").removeClass("hidden");
+            var txt = '<tr><td><input type="checkbox" class="hidden" checked name="getFiles" id="getFiles" value="FILEID"><img src="/Images/Icons/file/FILETYPE.png"/></td><td>FILENAME</td><td class="text-center"><a class="pdelete"><i class="fa fa-trash-o" style="color: red;"></i></a></td></tr>';
+            var htmlValue = '';
+            var arrRowId = [];
+            var lst = $("#Value_Files").val();
+            $("#PictureSelect .checkFile:checked").each(function () {
+                var val = $(this).val();
+                var title = $(this).attr("title");
+                var typeFile = $(this).attr("data-TypeFile");
+                if (!lst.includes(val)) {
+                    arrRowId.push(val);
+                    var html = txt.replace("FILEID", val);
+                    html = html.replace(/FILENAME/g, title);
+                    html = html.replace("FILETYPE", typeFile);
+                    htmlValue += html;
+                }
+
+            });
+            if (arrRowId.length > 0) {
+                if (selectMutil == 'true') {
+                    $("#DefaultFiles tbody").append(htmlValue);
+                } else {
+                    $("#DefaultFiles tbody").html(htmlValue);
+                }
+                $("#Value_Files").val(arrRowId);
+            }
+            $('#dialog-form-2').modal('hide');
+            $("#btnPictureSelectSubmit").off("click");
+            return false;
+        });
+    });
+</script>

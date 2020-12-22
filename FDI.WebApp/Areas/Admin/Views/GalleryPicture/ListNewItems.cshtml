@@ -1,0 +1,133 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelPictureItem
+
+@{
+    ViewBag.Title = "ListPicture";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="grid-container-picture" id="gridItems">
+    <div class="listitemPicture scrollable">
+        @if (Model.ListItem != null)
+        {
+            foreach (var item in Model.ListItem)
+            {
+                <div class="item">
+                    <div class="img">
+                        <img src="@item.Url.UploadPicture()" title="@item.Name"/>
+                    </div>
+                    <input type="checkbox" id="@item.ID" value="@item.ID" data-url="@item.Url.UploadPicture()" data-name="@item.Name"/><span>@item.Name</span>
+                </div>
+            }
+        }
+    </div>
+    <div class="paganitionPicture">
+        @Html.Raw(Model.PageHtml)
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //registerGridView('#gridItems');
+        $("#PictureSelect input[type='checkbox']").each(function () {
+            var val = $(this).val();
+            var lst = $(hiddenContainer).val();
+            if (lst.includes(val)) {
+                $(this).prop('checked', true);
+                $(this).parent().addClass("active");
+            }
+        });
+        // chuyển phân trang
+        $(".bottom-pager a").click(function (e) {
+            e.preventDefault();
+            var url = "@Url.Action("ListNewItems", "GalleryPicture")" + $(this).attr("href").replace("#", "?");
+            $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                $("#PictureGriditems").html(data);
+            });
+
+        });
+
+        $('input[name="page"]').keypress(function (e) {
+            if (e.which === 13) {
+                var url = urlListPicture + "?" + showPicture
+                $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                    $("#PictureGriditems").html(data);
+                });
+                return false;
+            }
+        });
+
+        $('select[name="RowPerPage"]').change(function () {
+            var fromSearch = $("#PictureGridSearch");
+            var url = urlListPicture + "?" + getValueGalaryFormMutilSelect(fromSearch) + "&RowPerPage=" + $(this).val();
+            $.post(url, $("#PictureGridSearch").serialize(), function (data) {
+                $("#PictureGriditems").html(data);
+            });
+        });
+
+        $("#PictureGriditems .submit #close").click(function () {
+            $("#dialog-form-2").html("").dialog('close');
+        });
+
+        Array.prototype.clean = function (deleteValue) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] === deleteValue) {
+                    this.splice(i, 1);
+                    i--;
+                }
+            }
+            return this;
+        };
+
+        $("#btnPictureSelectSubmit").click(function () {
+            $("#PictureSelect .hidden").removeClass("hidden");
+            var htmlValue = '';
+            var arrRowId = [];
+            var lst = $(hiddenContainer).val();
+            $("#PictureSelect input[type='checkbox']:checked").each(function () {
+                var val = $(this).val();
+                if (!lst.includes(val)) {
+                    arrRowId.push(val);
+                    htmlValue += '<div class="image-product"><div class="image">';
+                    htmlValue += '<input type="hidden" name="ShopProductPictureID" id="ShopProductPictureID" value="0"/>';
+                    htmlValue += '<img src="' + $(this).data("url") + '">';
+                    htmlValue += '<div class="option">';
+                    htmlValue += '<button type="button" class="btn red deleteImg" data-id="' + $(this).val() + '" data-ctn="' + SelectContainer + '"><i class="fa fa-trash-o"></i></button></div></div>';
+                    htmlValue += '<span>Thứ tự: <input style="color:#000; width:100px" type="text" name="Sort" id="Sort" value="0"/></span>';
+                    htmlValue += '<span>' + $(this).data("name") + '</span></div>';
+                }
+            });
+            if (arrRowId.length < 1)
+                return false;
+            if (selectMutil == 'true') {
+                $(textContainer + " .gridView").append(htmlValue);
+            } else {
+                $(textContainer + " .gridView").html(htmlValue);
+            }
+            $(hiddenContainer).val(arrRowId);
+            $("#PictureSelect .hidden").removeClass("hidden");
+            $('#dialog-form-2').modal('hide');
+            return false;
+        });
+
+        // Sự kiện chọn hình ảnh
+        $(".listitemPicture > .item").click(function () {
+            if (selectMutil === 'false') {
+                $(".listitemPicture > .item").removeClass("active");
+                $("#PictureSelect input[type='checkbox']:checked").prop('checked', false);
+            }
+            var obj = $(this).children("input[type='checkbox']");
+            if (obj.prop('checked')) {
+                $(this).removeClass("active");
+                obj.prop('checked', false);
+            }
+            else {
+                $(this).addClass("active");
+                obj.prop('checked', true);
+            }
+        });
+        // Sự kiện double click để chọn ảnh
+        $(".listitemPicture > .item").dblclick(function () {
+            $("#btnPictureSelectSubmit").click();
+        });
+    });
+</script>

@@ -1,0 +1,20 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelVideoItem
+@{
+    var pageId = WebConfig.VideoId;
+}
+<div class="sb">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <h2 class="sb__title">Video</h2>
+    <div class="sb__slider sb__video owl-carousel js-slider">
+        @foreach (var item in Model.ListItem)
+        {
+            <a href="/@FomatString.Slug(item.Name)-p@(pageId)c@(item.ID)" class="item">
+                <div class="img">
+                    <img data-src="@item.UrlPicture.UploadPicture()" class="owl-lazy img-responsive" />
+                </div>
+                <h3>@item.Name</h3>
+            </a>
+        }
+    </div>
+</div>

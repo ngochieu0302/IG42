@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmail.cshtml";
+}
+@using FDI.CORE
+@model FDI.Simple.ModelDNNewsSSCItem
+
+<div class="inbox">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Action("BoxMail","DNMailSSC")
+        </div>
+        <div class="col-md-9">
+            <div class="inbox-body">
+                <h3 class="page-title">Tin tức nội bộ</h3>
+                <div class="inbox-content" id="inbox-content">
+                    <input type="hidden"  value="" id="lstID">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="4">
+                                    <input type="checkbox" class="mail-group-checkbox">
+                                    <div class="btn-group input-actions">
+                                        <a class="btn btn-sm blue btn-outline dropdown-toggle sbold" href="javascript:;" data-toggle="dropdown">
+                                            Thao tác
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <i class="fa fa-trash-o"></i>Xóa
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th class="pagination-control" colspan="3">
+                                    <span class="pagination-info" >Tổng: <span id="TotalRecord">@(Model.ListItem.Count())</span> </span>
+                                    <a class="btn btn-sm blue btn-outline">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                    <a class="btn btn-sm blue btn-outline">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentEmail">
+                            @foreach (var item in Model.ListItem)
+                            {
+                                <tr data-id="@item.ID">
+                                    <td>
+                                        <input type="checkbox" class="chkEmail" value="@item.ID">
+                                    </td>
+                                    <td class="inbox-small-cells">
+                                        <i class="fa fa-star"></i>
+                                    </td>
+                                    <td class="view-message hidden-xs"><a data-id="1064" class="titleEmail">tang_hy</a></td>
+                                    <td class="view-message hidden-xs"><a data-id="@item.ID" href="/DNNewsSSC/DetailsNews?id=@item.ID&type=6">@item.Title</a></td>
+                                    <td class="view-message text-right"><a data-id="@item.ID" class="titleEmail">@item.DateCreated.DecimalToString("dd/MM/yyyy HH:mm")</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

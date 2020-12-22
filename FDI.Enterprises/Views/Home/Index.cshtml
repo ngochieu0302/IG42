@@ -1,0 +1,145 @@
+﻿@model FDI.Simple.EnterprisesItem
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
+
+<div class="content-control">
+    @Html.Action("StaticOrder","Home")
+    <div class="row">
+        <div class="col-lg-6 col-xs-12 col-sm-12">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject bold uppercase font-dark">Đơn hàng</span>
+                        <span class="caption-helper">Thống kê chi tiết đơn hàng</span>
+                    </div>
+                    <div class="actions">
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-eye"></i> Xem chi tiết
+                        </a>
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-pencil"></i> Xuất Exel
+                        </a>
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-print"></i> In
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <canvas id="myChart2"></canvas>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-12 col-sm-12">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject bold uppercase font-dark">Đơn hàng</span>
+                        <span class="caption-helper">Thống kê chi tiết đơn hàng</span>
+                    </div>
+                    <div class="actions">
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-eye"></i> Xem chi tiết
+                        </a>
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-pencil"></i> Xuất Exel
+                        </a>
+                        <a href="#" class="btn btn-circle green btn-outline btn-sm">
+                            <i class="fa fa-print"></i> In
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <canvas id="chart-area"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    debugger;
+    var m = "";
+    var date = new Date();
+    var month = date.getMonth();
+    for (var i = 1; i <= month ;i++) {
+        m += ","+i;
+    }
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "June"],
+            datasets: [{
+                label: "Đơn hàng",
+                borderColor: 'rgb(255, 99, 132)',
+                data: [120, 10, 5, 90, 20, 30, 45, 100],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+
+    var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+    };
+
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                ],
+                backgroundColor: [
+                    window.chartColors.red,
+                    window.chartColors.orange,
+                    window.chartColors.yellow,
+                    window.chartColors.green,
+                    window.chartColors.blue,
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                "Red",
+                "Orange",
+                "Yellow",
+                "Green",
+                "Blue"
+            ]
+        },
+        options: {
+            responsive: true
+        }
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById("chart-area").getContext("2d");
+        window.myPie = new Chart(ctx, config);
+    };
+
+</script>

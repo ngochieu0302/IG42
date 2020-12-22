@@ -1,0 +1,56 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelPartnerItem
+<div class="galleryDetail">
+    @Gallery.ModuleSys(Model.CtrUrl, Model.CtrId)
+    <div class="owlThub">
+        <div class="owl-carousel owlThubMain" id="slide_sync1">
+            @foreach (var item in Model.PartnerItem.LstPictures)
+            {
+                <div class="item-slider">
+                    <a class="callFullScreen" href="@item.Url.UploadPicture()" title="@item.Name" data-effect="mfp-zoom-in"></a>
+                    <img class="owl-lazy" data-src="@item.Url.UploadPicture()" alt="@item.Name">
+                </div>
+            }
+        </div>
+        <div class="boxOwlThumbnail">
+            <div class="owl-carousel owlThumbnail" id="thub_sync2">
+                @foreach (var itemthub in Model.PartnerItem.LstPictures)
+                {
+                    <div class="item-thub">
+                        <img class="owl-lazy" data-src="@itemthub.Url.UploadPicture()" alt="@itemthub.Name">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contentDetail">
+                      <div class="contentDetail__title">
+                        <h1>@Model.PartnerItem.Name</h1>
+                      </div>
+                      <div class="contentDetail__social">
+                        <div class="contentDetail__social__time"><i class="ion-clock"></i><span>@Model.PartnerItem.DateCreated</span></div>
+                      </div>
+                      <div class="contentDetail__text">
+                        @Html.Raw(Model.PartnerItem.Details)
+                      </div>
+                      <div class="contentDetail__social contentDetail__social__border">
+                        
+                          <div class="contentDetail__social__box">
+                              <div class="social-like">
+                    <div class="social-like">
+                        <div id="fb-root"></div>
+                        <div>
+                            <div class="fb-like" style="float: left; padding-top: -10px; margin-right: 5px;" data-href="@Request.Url" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                            <div style="margin-top: 2px; float: left">
+                                <a class="twitter-share-button" style="margin-right: 5px;padding-top: -10px;" href="@Request.Url">Tweet</a>
+                                <div  class="zalo-share-button" data-href="@Request.Url" data-oaid="291158372821215385" data-layout="1" data-color="blue" data-customize=false></div>
+                                <g:plus action="share" data-href="@Request.Url" data-annotation="bubble"></g:plus>
+                            </div>
+                            <div class="zalo-follow-only-button" style="margin-top: 2px" data-oaid="291158372821215385"></div>
+                        </div>
+                    </div>
+                </div>
+                          </div>
+                      </div>
+                    </div>

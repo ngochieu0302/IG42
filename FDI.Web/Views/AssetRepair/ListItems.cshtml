@@ -1,0 +1,66 @@
+﻿@model FDI.Simple.ModelAssetRepairItem
+@using FDI.CORE;
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var i = 1;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th><a href="#Field=Name">STT</a></th>
+                        <th><a href="#Field=Name">Tên Tài sản</a></th>
+                        <th><a href="#Field=UnitName">Ngày sửa</a></th>
+                        <th><a href="#Field=QuantityDay">Giá sửa</a></th>
+                        <th><a href="#Field=QuantityDay">Mô tả</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID" title="@item.AssetName">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@(i++)</td>
+                            <td>@item.AssetName</td>
+                            <td>@item.DateRepair.DecimalToString("dd/MM/yyyy")</td>
+                            <td>@item.Price.Money()</td>
+                            <td class="text-right">@item.Description</td>
+                            <td class="text-right">
+                                @Grid.ActionEdit(item.ID, item.AssetName)
+                                @Grid.ActionDelete(item.ID, item.AssetName)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+            {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

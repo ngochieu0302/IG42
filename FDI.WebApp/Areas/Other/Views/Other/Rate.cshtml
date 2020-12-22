@@ -1,0 +1,36 @@
+﻿@model FDI.Simple.ModelRateCityItem
+<link href="~/Areas/Other/Content/css/Utilities.css" rel="stylesheet" type="text/css"/>
+<div class="main-list-news">
+<h1 class="title-list-news"><span>@Resource.Other.Resource.GoldPrices</span></h1>
+    </div>
+@if (Model.DateUpdated != null)
+{
+  <span class="giavang-title">@Resource.Other.Resource.ContentPrice1<strong>@Model.DateUpdated</strong> @Resource.Other.Resource.ContentPrice2</span>  
+}
+<table class="gridView" cellspacing="1">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@Resource.Other.Resource.Type</th>
+            <th>@Resource.Other.Resource.Buy</th>
+            <th>@Resource.Other.Resource.Sell</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in Model.ListRateCityItem)
+        {
+            <tr class="tr-date-day">
+                <td rowspan="@(item.ListRateItem.Count() + 1)"><strong>@item.CityName</strong></td>
+            </tr>
+            foreach (var itemRate in item.ListRateItem)
+            {
+                <tr>
+                    <td>@itemRate.Type</td>
+                    <td>@itemRate.Buy</td>
+                    <td>@itemRate.Sell</td>
+                </tr>
+            }
+        }
+    }
+</table>
+<b class="right-nguon">@Resource.Other.Resource.Source</b>

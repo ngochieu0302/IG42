@@ -1,0 +1,49 @@
+﻿@using FDI.Utils
+@model FDI.Simple.ModelNewsItem
+@{
+    var pageId = WebConfig.PDFDetail;
+}
+<div class="blog-item-wrapper blog-list-inner">
+    <!-- blog item wrapper end -->
+    <div class="row mbn-30">
+        @if (Model.ListItem != null && Model.ListItem.Any())
+        {
+            foreach (var item in Model.ListItem)
+            {
+            <div class="col-12">
+                <!-- blog post item start -->
+                <div class="blog-post-item mb-30">
+                    <figure class="blog-thumb">
+                        <a href="/@(item.TitleAscii)-p@(pageId)c@(item.ID)">
+                            <img src="@item.PictureUrl.UploadPicture()" alt="@item.Title">
+                        </a>
+                    </figure>
+                    <div class="blog-content">
+                        <h4 class="blog-title">
+                            <a href="/@(item.TitleAscii)-p@(pageId)c@(item.ID)">@item.Title</a>
+                        </h4>
+                        <div class="blog-meta">
+                            <p>@item.DateCreated.Value.ToShortDateString()</p>
+                        </div>
+                        <p>@Html.Raw(item.Description)</p>
+                        <a class="blog-read-more" href="/@(item.TitleAscii)-p@(pageId)c@(item.ID)">Xem thêm</a>
+                    </div>
+                </div>
+                <!-- blog post item end -->
+            </div>
+            }
+        }
+    </div>
+    <!-- blog item wrapper end -->
+
+    <!-- start pagination area -->
+     @if (!string.IsNullOrEmpty(Model.PageHtml))
+     {
+         <div class="paginatoin-area text-center">
+             <ul class="pagination-box">
+                     @Html.Raw(Model.PageHtml)
+             </ul>
+         </div>
+     }
+    <!-- end pagination area -->
+</div>

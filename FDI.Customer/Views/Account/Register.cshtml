@@ -1,0 +1,155 @@
+﻿@model FDI.Customer.LogOnModel
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_LayoutLogon.cshtml";
+}
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    <form id="CustomerForm">
+        <h3 class="font-green">Đăng ký tài khoản</h3>
+        <i class="hint">(*) Các trường bắt buộc nhập </i>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Họ và tên<font color="red">(*)</font></label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Nhập họ tên (*)" name="FullName" id="FullName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Nhập số CMND</label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Nhập số CMND" name="PeoplesIdentity" id="PeoplesIdentity" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Email</label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Nhập Email" name="Email" id="Email" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Điện thoại<font color="red">(*)</font></label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Nhập số điện thoại (*)" name="Phone" id="Phone" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Ngày sinh</label>
+            <input class="form-control placeholder-no-fix " type="date" placeholder="Ngày sinh" name="Birthday_" id="Birthday_" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Địa chỉ</label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Địa chỉ" name="Address" id="Address" />
+        </div>
+        <span class="hint"> Thông tin tài khoản: </span>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Tên đăng nhập<font color="red">(*)</font></label>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Tên đăng nhập (*)" name="UserName" id="UserName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Mật khẩu<font color="red">(*)</font></label>
+            <input class="form-control placeholder-no-fix" type="password" id="PassWord" placeholder="Nhập mật khẩu (*)" name="PassWord" />
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Nhập lại mật khẩu<font color="red">(*)</font></label>
+            <input class="form-control placeholder-no-fix" type="password" placeholder="Nhập lại mật khẩu (*)" name="RePassword" id="RePassword" />
+        </div>
+        <div class="form-actions">
+            <a href="/Account/logon" id="register-back-btn" class="btn btn-default">Đăng nhập</a>
+            <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Hoàn tất đăng ký</button>
+        </div>
+    </form>
+</div>
+<link href="~/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CustomerForm").validate({
+            rules: {
+                FullName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                UserName:
+                {
+                    required: true,
+                    minlength: 3,
+                    remote: "@Url.Action("CheckByUserName", "Account", new { id = 0 })"
+                },
+                Email:
+                {
+                    email: true,
+                    minlength: 3,
+                    remote: "@Url.Action("CheckByEmail", "Account", new { id = 0 })"
+                },
+                Phone:
+                {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 13,
+                    number: true,
+                    remote: "@Url.Action("CheckByPhone", "Account", new { id = 0 })"
+                },
+                PassWord:
+                {
+                    required: true,
+                    minlength: 6
+                },
+                RePassword:
+                {
+                    equalTo: "#PassWord"
+                }
+            },
+            messages: {
+                FullName:
+                {
+                    required: "Xin mời nhập họ tên.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                UserName:
+                {
+                    required: "Xin mời nhập tên tài khoản",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự.",
+                    remote: "Tên tài khoản đã tồn tại"
+                },
+                Email:
+                {
+                    email: "Vui lòng nhập một địa chỉ email hợp lệ.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự.",
+                    remote: "Email đã tồn tại"
+                },
+                Phone:
+                {
+                    required: "Vui lòng nhập số điện thoại.",
+                    minlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    maxlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    number: "Vui lòng nhập số điện thoại hợp lệ.",
+                    remote: "Số điện thoại đã tồn tại"
+                },
+                PassWord:
+                {
+                    required: "Xin mời nhập mật khẩu",
+                    minlength: "Mật khẩu lớn hơn 6 ký tự."
+                },
+                RePassword:
+                {
+                    equalTo: "Nhập lại mật khẩu chưa đúng."
+                }
+            },
+            submitHandler: function () {
+                $("#register-submit-btn").attr("disabled", true);
+                $.post("/Account/ActionRegister", $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros) {
+                        toastr["error"](data.Message); // Tạo thông báo lỗi
+                        $("#register-submit-btn").attr("disabled", false);
+                    }
+                    else {
+                        swal({
+                            title: "",
+                            text: "Tài khoản đã được đăng ký thành công.",
+                            type: "info",
+                            showCancelButton: false,
+                            closeOnCancel: false
+                        }, function (isConfirm) {
+                            window.location.href = "/Account/logon";
+                        });
+                    }
+                });
+                return false;
+            }
+        });
+    });
+
+</script>

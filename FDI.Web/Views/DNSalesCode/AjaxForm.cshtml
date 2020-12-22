@@ -1,0 +1,84 @@
+﻿@using FDI.CORE
+@model FDI.Simple.DNSalesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#DiscountId", "100%");
+        $("#CustomerForm").validate({
+            rules: {
+                Pre_Code:
+                {
+                    required: true
+                },
+                LenghtChar:
+                {
+                    required: true
+                },
+            },
+            messages: {
+                Pre_Code:
+                {
+                    required: "Xin mời nhập tiền tố cho mã.",
+                },
+                LenghtChar:
+                {
+                    required: "Xin mời nhập độ dài.",
+                },
+                
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/DNSalesCode/Actions", $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<form id="CustomerForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Tạo mã giảm giá
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tiền tố <font color="red">(*)</font></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Pre_Code" value=""/>
+                            </div>
+                            <label class="col-sm-2 control-label">Độ dài</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="LenghtChar" class="form-control"  value="" />
+                            </div>                            
+                        </div>
+                         <div class="form-group">
+                           
+                            <label class="col-sm-2 control-label">Số lượng</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="QuantityCode" class="form-control"  value="@Model.QuantityCode" readonly/>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">Tạo mã</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>

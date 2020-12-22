@@ -1,0 +1,51 @@
+﻿@model FDI.Simple.DNCalendarItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    callSelect2("#UserID", "100%");
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+
+<form id="modalForm">
+    <div class="modal-body">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về lịch làm việc
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Chọn nhân viên</label>
+                        <div class="col-sm-10">
+                            <select id="UserID" name="UserID" multiple class="select2">
+                                @foreach (var item in ViewBag.UserId)
+                                {
+                                    <option value="@item.UserId" @(Model.ListDnUserItem != null && Model.ListDnUserItem.Any(m=> m.UserId == item.UserId) ? "selected" : string.Empty)>@item.UserName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

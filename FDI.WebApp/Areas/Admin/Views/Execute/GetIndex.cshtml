@@ -1,0 +1,14 @@
+﻿@model FDI.Simple.ExecuteItem
+<script src="/Skin/js/jquery.min.js"></script>
+<form method="post" action="/Admin/Execute" id="formSubmit">
+    <div>
+        <select name="DropDownList" id="DropDownList">
+            <option value="1" @(Model.DropDownList == 1?"selected":"") >Return DataTable</option>
+            <option value="2" @(Model.DropDownList == 2?"selected":"")>Excute Query</option>
+        </select>
+        <textarea name="ExecuteQuery" rows="2" cols="20" id="ExecuteQuery" style="height: 378px; width: 100%;">@Model.ExecuteQuery</textarea>
+        <input type="submit" name="btnexcute" value="Gửi" id="btnexcute" style="height: 47px; width: 172px;">
+        <br>
+    </div>
+</form>
+

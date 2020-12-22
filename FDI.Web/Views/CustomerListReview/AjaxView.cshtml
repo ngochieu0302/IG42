@@ -1,0 +1,207 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CustomerReviewItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var rep = Model.Rep.Split('-');
+}
+<link href="~/Content/Admin/css/review.css" rel="stylesheet" />
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin khách hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Khách hàng</label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                        <td style="width: 15%">
+                            <label>Điện thoại</label>
+                        </td>
+                        <td>
+                            @Model.Phone
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td colspan="3">
+                            @Model.Address
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Ngày tạo</label>
+                        </td>
+                        <td>
+                            @Model.DateCreate.DecimalToString("dd/MM/yyyy HH:mm")
+                        </td>
+                        <td style="width: 15%">
+                            <label>Nhân viên phục vụ</label>
+                        </td>
+                        <td>
+                            @Model.Username
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cart-plus"></i>Chi tiết đánh giá
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <div class="item-icon" data-id="3">
+                            <div class="img">
+                                <a href="#">
+                                    @if (Model.PointID == 1)
+                                    {
+                                        <img src="~/Content/Admin/img/that-vong.png" />
+                                    }
+                                    @if (Model.PointID == 2)
+                                    {
+                                        <img src="~/Content/Admin/img/chua-tot.png" />
+                                    }
+                                    @if (Model.PointID == 3)
+                                    {
+                                        <img src="~/Content/Admin/img/chap-nhan.png" />
+                                    }
+                                    @if (Model.PointID == 4)
+                                    {
+                                        <img src="~/Content/Admin/img/tot.png" />
+                                    }
+                                    @if (Model.PointID == 5)
+                                    {
+                                        <img src="~/Content/Admin/img/yeu-thich.png" />
+                                    }
+                                </a>
+                            </div>
+                            <div class="box-title"><span>@Model.PointName</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <textarea id="Note" rows="3" class="form-control" name="Note" placeholder="Sở thích của khác hàng"></textarea>
+                    </div>
+                </div>
+                @if (Model.QuestionID == 1)
+                {
+                    <div class="box">
+                        <div class="box-icon">
+                            <span>Dịch vụ của Sengarden Spa làm khách hàng không hài lòng.</span>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input id="check5" class="styled" value="Thái độ nhân viên" @(rep.Contains("Thái độ nhân viên") ? "checked" : "") type="checkbox">
+                                    <label for="check5">
+                                        Thái độ nhân viên
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input id="check4" class="styled" value="Kiến thức chuyên môn nhân viên" @(rep.Contains("Kiến thức chuyên môn nhân viên") ? "checked" : "") type="checkbox">
+                                    <label for="check4">
+                                        Kiến thức chuyên môn nhân viên
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input id="check3" class="styled" value="Không gian, vệ sinh phòng" @(rep.Contains("Không gian, vệ sinh phòng") ? "checked" : "") type="checkbox">
+                                    <label for="check3">
+                                        Không gian, vệ sinh phòng
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input id="check2" class="styled" type="checkbox" @(rep.Contains("Nhân viên làm việc chưa chuyển nghiệp") ? "checked" : "") value="Nhân viên làm việc chưa chuyển nghiệp">
+                                    <label for="check2">
+                                        Nhân viên làm việc chưa chuyển nghiệp
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input id="check1" class="styled" type="checkbox" @(rep.Contains("Không có dịch vụ cần yêu cầu") ? "checked" : "") value="Không có dịch vụ cần yêu cầu">
+                                    <label for="check1">
+                                        Không có dịch vụ cần yêu cầu
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <textarea id="RepNote" name="RepNote" rows="5" class="form-control" placeholder="Ý kiến của khách hàng">@Model.RepNote</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                @if (Model.QuestionID == 2)
+                {
+                    <div class="box">
+                        <div class="box-icon">
+                            <span>Khách hàng đồng ý giới thiệu dịch vụ tới người thân.</span>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-sm-6 col-md-6">
+
+                                <div class="radio radio-info">
+                                    <input type="radio" name="survey" id="Radios1" @(rep.Contains("Có") ? "checked" : "") value="Có">
+                                    <label>
+                                        Có
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="radio radio-info">
+                                    <input type="radio" name="survey" id="Radios2" @(rep.Contains("Không") ? "checked" : "") value="Không">
+                                    <label>
+                                        Không
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <textarea id="RepNote" name="RepNote" rows="5" class="form-control" placeholder="Ý kiến của khách hàng">@Model.RepNote</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

@@ -1,0 +1,94 @@
+﻿@model FDI.Simple.DNRoomItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#LevelID", "100%");
+        $("#modalForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                },
+                LevelID: {
+                    required: true,
+                }
+            },
+            messages: {
+                Name: {
+                    required: "Xin mời nhập tên phòng",
+
+                },
+                LevelID: {
+                    required: "Xin mời chọn tầng",
+                }
+
+            },
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin phòng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên phòng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn nhân viên</label>
+                            <div class="col-sm-10">
+                                <select id="LevelID" name="LevelID" class="select2">
+                                    <option value="">--- Chọn nhân tầng ---</option>
+                                    @foreach (var item in ViewBag.list)
+                                    {
+                                        <option value="@item.ID" @(Model.LevelID == item.ID ? "selected" : string.Empty)>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số cột</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="Row" id="Row" value="@Model.Row" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số hàng</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="Column" id="Column" value="@Model.Column" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="Sort" id="Sort" value="@Model.Sort" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

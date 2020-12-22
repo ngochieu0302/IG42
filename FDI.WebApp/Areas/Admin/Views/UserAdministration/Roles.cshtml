@@ -1,0 +1,77 @@
+﻿@model Admin.Models.UserAdministration.IndexViewModel
+@{
+    ViewBag.Title = "Quản lý tài khoản quản trị";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#gridItems');
+    });
+    urlFormRoleA = '@Url.Action("AjaxViewRoleActive")';
+    urlFormModule = '@Url.Action("AjaxViewModule")';
+</script>
+
+<div class="header-control">
+    @if (!Model.IsRolesEnabled)
+            {
+        <p class="CTS.MvcMembership-warning">Cơ chế membership chưa được bật.</p>
+    }
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Danh sách vai trò hệ thống </li>
+        </ul>
+    </div>
+    <div class="page-title"></div>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+            @using (Html.BeginForm("CreateRole", "UserAdministration"))
+            {
+                <label for="id">Tên vai trò:</label>
+                <input type="text" class="form-control input-sm" id="id" name="id"/>
+                <button class="btn btn-sm btn-primary" type="submit">Tạo Vai trò</button>
+            }
+        </form>
+    </div>
+</div>
+<div class="content-control">
+    <div class="box-control">
+        <div id="gridItems" class="scrollable box-control-content">
+            @if (Model.Roles.Any())
+            {
+                <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                    <tr>
+                        <th>Tên vai trò</th>
+                        <th colspan="4">Quản lý</th>
+                    </tr>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tr>
+                            <td>@role</td>
+                            <td>@Html.ActionLink("Phân quyền", "Role", new { id = role }, new { @class = "btn btn-sm btn-primary" })</td>
+
+                            <td>Tính năng - @Grid.ActionComplete(role)</td>
+
+                            <td>Gán quyền - @Grid.RoleModule(role)</td>
+
+                            <td>
+                                @using (Html.BeginForm("DeleteRole", "UserAdministration", new { id = role }))
+                                {
+                                    <button class="btn btn-sm btn-danger" type="submit">Xóa</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>Chưa có vai trò nào.</p>
+            }
+        </div>
+    </div>
+   
+</div>
+    
+
+

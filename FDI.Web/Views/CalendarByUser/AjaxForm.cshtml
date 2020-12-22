@@ -1,0 +1,107 @@
+﻿@using System.Web.UI.WebControls
+@using FDI.CORE
+@model FDI.Simple.EditScheduleItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var listuser = (List<FDI.Simple.DNUserCalendarItem>)ViewBag.UserChangeId;
+}
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        callSelect2("#Type", "100%");
+        callSelect2("#UserChangeId", "100%");
+        if ('@Model.Type' != "3")
+            $("#divChange").hide();
+        $("#Type").change(function () {
+            if ($(this).val() == 3) $("#divChange").show();
+            else $("#divChange").hide();
+        });
+
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true },
+
+            },
+            messages: {
+                Name: "Lý do bạn đổi ca làm việc.",
+
+            },
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+      
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        <input type="hidden" name="UserId" id="UserId" value="@Model.UserId" />
+        <input type="hidden" name="Date" id="Date" value="@Model.Date" />
+        <input type="hidden" name="ScheduleID" id="ScheduleID" value="@Model.ScheduleID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về đổi ca làm việc
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Người nghỉ</label>
+                            <div class="col-sm-10">
+                                <label>@listuser.Where(m => m.UserId == Model.UserId).Select(m => m.UserName).FirstOrDefault()</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày đổi</label>
+                            <div class="col-sm-10">
+                                <label>@Model.Date.DecimalToString("dd/MM/yyyy")</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu</label>
+                            <div class="col-sm-10">
+                                <select id="Type" name="Type" class="select2 selectv">
+                                    <option value="2" @(Model.Type == 2 ? "selected" : "")>--- Nghỉ ca ---</option>
+                                    <option value="3" @(Model.Type == 3 ? "selected" : "")>--- Đổi ca ---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lý do đổi ca</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Name" id="Name" value="@Model.Name" class="form-control" />
+                            </div>
+                        </div>
+                        <div id="divChange">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Đổi cho nhân viên</label>
+                                <div class="col-sm-10">
+                                    <select id="UserChangeId" name="UserChangeId" class="select2 selectv">
+                                        <option value="">--- Chọn nhân viên ---</option>
+                                        @foreach (var item in listuser.Where(m => m.UserId != Model.UserId))
+                                        {
+                                            <option value="@item.UserId" @(Model.UserChangeId == item.UserId ? "selected" : string.Empty)>@item.UserName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button id="btnReset" type="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

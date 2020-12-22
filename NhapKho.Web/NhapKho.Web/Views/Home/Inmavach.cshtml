@@ -1,0 +1,42 @@
+﻿@model int
+<div id="BoxPrint" class="pagePrint" style="display: none">
+    <div class="box-pr-payment" style="height: 115px !important; width: 100% !important">
+        <div class="pr-content" id="contentPrint" style="padding: 0px !important">
+            <div class="row" style="margin: 0px !important">
+                <div class="form-group " style="padding: 0px !important; margin: 0px !important; float: left">
+                    <div style="text-align: left; display: block; width: 100%; font-size: 11px; margin-top: 4px">
+                        <strong style="float: left; text-transform: uppercase; margin-right: 3px">Thịt tươi</strong> <strong style="float: left; text-transform: uppercase" id="namesp"></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group " style="padding: 0px !important; margin: -2px 0 -3px 10px !important; float: left; width: 193px">
+                    <svg id="barcode" style="display: block; width: 193px; text-align: left; margin: 0; padding: 0; float: left; height: 85px"></svg>
+                </div>
+                <div class="form-group" style="width: calc(100% - 227px);float: left; margin-right: 5px">
+                     <div class="form-group" style="padding: 0px !important; margin: 0 5px 0 0 !important; float: left; width: 100%">
+                        <strong style="font-size: 11px; float: left">Đơn giá:</strong>
+                        <strong style="font-size: 11px;margin-right: 10px; float: right" id="pricein"></strong>
+                    </div>
+                     <div class="form-group" style="padding: 0px !important; margin: 0 5px 0 0 !important; float: left; width: 100%">
+                        <strong style="font-size: 11px; float: left">Số lượng:</strong>
+                          <strong style="font-size: 11px;margin-right: 10px; float: right" id="klin"></strong> 
+                    </div>
+                    <div class="form-group" style="margin: 0 5px 0 0 !important;width: 100%">
+                        <strong style="font-size: 11px; float: left">Thành tiền:</strong>
+                        <br />
+                    </div>
+                    <div class="form-group" style="margin: 0 5px 0 0 !important; width: 100%">
+                        <strong style="font-size: 16px; float: left" id="totalpricein"></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div style="margin: 0 15px; width: 100%"><strong style="font-size: 11px; float: left">NĐG: @DateTime.Now.ToString("dd/MM/yy") @Model:00 - HSD: @DateTime.Now.ToString("dd/MM/yy") @(Model + 6):00</strong></div> <br />
+                    <div style="margin: 0 15px; width: 100%"><strong style="font-size: 11px; float: left">IG4.VN</strong><strong style="font-size: 11px;margin-right: 35px; float: right">TOÀN DÂN ĂN THỰC PHẨM SẠCH!</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

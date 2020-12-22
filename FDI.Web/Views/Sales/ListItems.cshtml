@@ -1,0 +1,816 @@
+﻿@model FDI.Simple.ModelSaleItem
+@using FDI.CORE
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<style>
+    .newOrder {
+        float: left;
+        border-right: none !important;
+        padding: 7px !important;
+    }
+
+    .clearOrder {
+        float: left;
+        border-left: none !important;
+        padding: 7px !important;
+    }
+</style>
+<div class="box-a-table-wrap box-sales">
+    <div class="box-order">
+        <div class="search-order">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </div>
+                <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+            </div>
+        </div>
+        <div class="select-order">
+            <div class="tabbable-custom">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active">
+                        <a class="newOrder" data-key="@Model.Key" data-toggle="tab">Đơn hàng</a>
+                        <a class="clearOrder" data-key="@Model.Key"><i class="fa fa-close" style="color: red; cursor: pointer"></i></a>
+                    </li>
+                    @if (Model.LstKey.Count > 0)
+                    {
+                        foreach (var item in Model.LstKey)
+                        {
+                        <li>
+                            <a class="newOrder" data-key="@item" data-toggle="tab">Đơn hàng</a>
+                            <a class="clearOrder" data-key="@item"><i class="fa fa-close" style="color: red; cursor: pointer"></i></a>
+                        </li>
+                        }
+                    }
+                    <li style="float: right" class="addOrder"><a id="btnAddOrder"><i class="fa fa-plus"></i></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active tab-scroll" id="tabs-hoadon1">
+                        <div class="form-horizontal">
+                            <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                <colgroup>
+                                    <col style="width: 40px">
+                                    <col style="width: 80px">
+                                    <col style="width: 90px">
+                                    <col>
+                                    <col>
+                                    <col style="width: 80px">
+                                    <col style="width: 100px">
+                                    <col style="width: 110px">
+                                    <col style="width: 90px">
+                                    <col style="width: 36px">
+                                </colgroup>
+                                <thead>
+                                    <tr style="text-transform: uppercase">
+                                        <th>STT</th>
+                                        <th>Mã hàng</th>
+                                        <th>Ảnh</th>
+                                        <th>Tên hàng</th>
+                                        @*<th>khuyến mãi</th>*@
+                                        <th>Giảm giá</th>
+                                        <th class='text-center'>SL</th>
+                                        <th class='text-center'>Giá bán</th>
+                                        <th class='text-right'>Thành tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.SaleItems.Count > 0)
+                                    {
+                                        foreach (var item in Model.SaleItems)
+                                        {
+                                        <tr>
+                                            <td class="text-center">@(stt++)</td>
+                                            <td class="text-center">@item.Code</td>
+                                            <td>
+                                                <img src="@item.UrlImg"></td>
+                                            <td>@item.Title</td>
+                                            @*<td style="color: red;">(@item.ContentPromotion)</td>*@
+                                            <td style="color: red;">@(item.PriceSale > 0 ? item.PriceSale + " vnđ" : item.PercentSale + "%")</td>
+                                            <td>
+                                                <input class="form-control input-sm text-right inputValue quantity" data-pid="@item.ProductID" value="@item.Quantity"></td>
+                                            <td class="text-right">
+                                                <input class="form-control input-sm text-right inputValue PriceBuy maskPrice" data-pid="@item.ProductID" value="@item.Price"></td>
+                                            <td class="text-right maskPrice total-@item.ProductID">@(item.Quantity * item.Price)</td>
+                                            <td class="text-center"><a class="pdelete" data-pid="@item.ProductID"><i class="fa fa-trash-o" style="color: red;"></i></a></td>
+                                        </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="announce">
+                                            <td colspan="9" class="no-padding">
+                                                <div class="alert alert-block alert-success">Gõ mã hoặc tên hàng hóa vào hộp tìm kiếm để thêm hàng vào đơn hàng</div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-order">
+        <div class="title-box-order">
+            <i class="fa fa-user"></i>Thông tin đơn hàng
+            <a class="btn btn-sm btn-info pull-right" id="btn_NoteCare">Cập nhật sở thích</a>
+            <a class="btn btn-sm btn-primary pull-right" id="btn_Xuathd" style="margin-right: 10px;">xuất HD</a>
+        </div>
+        <div class="user-detail-order">
+            <form id="frm-modal">
+                <div class="form-group">
+                    <input type="hidden" name="do" id="do" value="Add" />
+                    <input type="hidden" id="KeyOrder" name="KeyOrder" value="@Model.Key"/>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <input type="text" class="form-control input-40 " id="Customer" placeholder="Nhập tên hoặc số điện thoại khách hàng..." />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input class="form-control" id="CustomerName" name="CustomerName" placeholder="Họ tên" value="@Model.CusSaleItem.Name">
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="@Model.CusSaleItem.ID">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <input class="form-control" id="Mobile" name="Mobile" placeholder="Số điện thoại" value="@Model.CusSaleItem.Phone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <input class="form-control" id="Address" name="Address" placeholder="Địa chỉ" value="@Model.CusSaleItem.Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <textarea id="NoteCate" rows="3" class="form-control" placeholder="Sở thích">@Model.CusSaleItem.NoteCate</textarea>
+                    </div>
+                </div>
+                <div id="Xuahoadon" class="hidden">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <input class="form-control" id="Company" name="Company" placeholder="Tên công ty" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    <input class="form-control" id="CodeCompany" name="CodeCompany" placeholder="Mã số thuế" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <input class="form-control" id="AddressCompany" name="AddressCompany" placeholder="Địa chỉ công ty" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input class="form-control date-picker input-sm text-right" type="date" name="DateOfSale_" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" title="Ngày bán">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Mã giảm giá
+                                </div>
+                                <input type="text" value="" id="SaleCode" name="SaleCode" class="form-control color-orange text-bold text-right" placeholder="Mã giảm giá" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Điểm tích lũy
+                                </div>
+                                <input type="text" value="@Model.CusSaleItem.Bonus.Money()" id="Bonus" class="form-control color-orange text-bold text-right" disabled placeholder="Tích lũy" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Sử dụng tích lũy
+                                </div>
+                                <input type="text" id="PrizeMoney" name="PrizeMoney" class="form-control maskPrice text-right" placeholder="Sử dụng tích lũy" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="Note" id="Note" rows="3" class="form-control" placeholder="Ghi chú"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Tổng tiền
+                                </div>
+                                <input value="@Model.TotalPrice.Money()" id="OrderPrice" class="form-control text-bold text-right" disabled placeholder="Tổng tiền" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Giảm giá
+                                </div>
+                                <input value="0" id="txt_SaleP" name="txt_SaleP" class="form-control text-bold text-right" disabled />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Chiết khấu
+                                </div>
+                                <input type="text" id="Discount" name="Discount" class="form-control maskPrice text-right" placeholder="Chiết khấu" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Tiền thanh toán
+                                </div>
+                                <input value="@Model.TotalPrice" id="Payment" class="form-control text-bold color-red text-right" disabled placeholder="Tiền thanh toán" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Tiền khách đưa
+                                </div>
+                                <input id="Payments" name="Payments" class="form-control text-bold  text-right color-green maskPrice" placeholder="Tiền khách đưa" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Tiền trả lại
+                                </div>
+                                <input value="@Model.TotalPrice" id="txtexcesscash" class="form-control text-bold text-right" disabled placeholder="Tiền trả lại" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select name="paymentMethod" id="paymentMethod" class="form-control">
+                                <option value="">Chọn hình thức thanh toán</option>
+                                @foreach (var item in Model.PaymentMethodItems)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Tông tiền CK
+                                </div>
+                                <input type="text" id="TotalPriceTranfer" name="TotalPriceTranfer" value="0" class="form-control text-right" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <table class="gridView table table-striped table-bordered" id="tblPromotion">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm KM</th>
+                                        <th class='text-center'>Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <table class="gridView table table-striped table-bordered" id="tblSales">
+                                <thead>
+                                    <tr>
+                                        <th>Giảm giá</th>
+                                        <th class='text-center'>%</th>
+                                        <th class='text-center'>Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <input type="hidden" name="lstValue" id="lstValue" value="" />
+        </div>
+        <div class="box-a-table-button">
+            <button id="btn_SavePrint" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>Lưu và In</button>
+            @*<button id="btn_Print" type="button" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>Xem trước</button>*@
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none;">
+    @Html.Action("Report")
+</div>
+<script>
+    $(function () {
+        var lstP = [];
+        var prizeMoney = 0;
+        var discount = 0;
+        //var $modal = $('body');
+        var orderKey = '@Model.Key';
+        $.post("/Sales/AddSale", { key: orderKey, type: 0 }, function (data) {
+            discount = data.CusSaleItem.Discount;
+            addSalePromotion(data);
+            $('#CustomerID').val(data.CusSaleItem.ID);
+            $('#CustomerName').val(data.CusSaleItem.Name);
+            $('#Mobile').val(data.CusSaleItem.Phone);
+            $('#Address').val(data.CusSaleItem.Address);
+            $('#NoteCate').val(data.CusSaleItem.NoteCate);
+            $('#Discount').val(numeral(data.CusSaleItem.Discount).format('0,0'));
+            $('#Bonus').val(numeral(data.CusSaleItem.Bonus).format('0,0'));
+            $('#printKH').html(data.CusSaleItem.Name);
+            $('#printAddress').html(data.CusSaleItem.Address);
+            $("#OrderPrice").val(numeral(data.TotalPrice).format('0,0'));
+            $("#prinPrice").html(numeral(data.TotalPrice).format('0,0'));
+            Calculate();
+        });
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/Sales/Auto?type=3",
+            minChars: 1,
+            delimiter: /(;)\s*/, // regex or character
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                //$modal.modalmanager('loading');
+                var item = {
+                    ProductID: el.ID,
+                    Quantity: 1,
+                    Price: el.pricenew,
+                    UrlImg: el.UrlImg,
+                    Title: el.title,
+                    Code: el.code,
+                    ProductdetailID: el.IdDetail
+                };
+                $.post("/Sales/AddSale", { json: JSON.stringify(item), key: orderKey, type: 1 }, function (data) {
+                    //$modal.modalmanager('loading').find('.modal-body');
+                    addSalePromotion(data);
+                });
+                $(".maskPrice").mask('000,000,000', { reverse: true });
+            }
+        });
+        $('#Customer').autocomplete({
+            serviceUrl: "/Sales/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#Customer').val("");
+                var item = {
+                    ID: el.ID,
+                    Name: el.title,
+                    Phone: el.phone,
+                    Address: el.code,
+                    UrlImg: el.UrlImg,
+                    NoteCate: el.Unit,
+                    Bonus: el.TotalPrice,
+                    Discount: el.pricenew,
+                    Birthday: el.Birthday
+                };
+                if (el.keword === el.value) {
+                    prizeMoney = el.TotalPrice;
+                } else {
+                    prizeMoney = 0;
+                }
+                discount = el.pricenew;
+                $.post("/Sales/AddSale", { json: JSON.stringify(item), key: orderKey, type: 5 }, function (data) {
+                    $('#CustomerID').val(data.CusSaleItem.ID);
+                    $('#CustomerName').val(data.CusSaleItem.Name);
+                    $('#Mobile').val(data.CusSaleItem.Phone);
+                    $('#Address').val(data.CusSaleItem.Address);
+                    $('#NoteCate').val(data.CusSaleItem.NoteCate);
+                    $('#Discount').val(numeral(data.CusSaleItem.Discount).format('0,0'));
+                    $('#Bonus').val(numeral(data.CusSaleItem.Bonus).format('0,0'));
+                    $('#printKH').html(data.CusSaleItem.Name);
+                    $('#printAddress').html(data.CusSaleItem.Address);
+                    $("#OrderPrice").val(numeral(data.TotalPrice).format('0,0'));
+                    $("#prinPrice").html(numeral(data.TotalPrice).format('0,0'));
+                    Calculate();
+                    addSalePromotion(data);
+                });
+            }
+        });
+
+        $("#btnAddOrder").click(function () {
+            $.post("/Sales/AddOrder", function (data) {
+                $('.addOrder').before('<li><a class="newOrder" data-key="' + data.Key + '" data-toggle="tab">Đơn hàng</a><a class="clearOrder" data-key="' + data.Key + '"><i class="fa fa-close" style="color:red;cursor:pointer"></i></a></li>')
+            });
+        });
+        $("body").on("click", ".newOrder", function () {
+            var key = $(this).attr("data-key");
+            $("#KeyOrder").val(key);
+            orderKey = key;
+            $.post("/Sales/AddSale", { key: key, type: 0 }, function (data) {
+                discount = data.CusSaleItem.Discount;
+                addSalePromotion(data);
+                $('#CustomerID').val(data.CusSaleItem.ID);
+                $('#CustomerName').val(data.CusSaleItem.Name);
+                $('#Mobile').val(data.CusSaleItem.Phone);
+                $('#Address').val(data.CusSaleItem.Address);
+                $('#NoteCate').val(data.CusSaleItem.NoteCate);
+                $('#Discount').val(numeral(data.CusSaleItem.Discount).format('0,0'));
+                $('#Bonus').val(numeral(data.CusSaleItem.Bonus).format('0,0'));
+                $('#printKH').html(data.CusSaleItem.Name);
+                $('#printAddress').html(data.CusSaleItem.Address);
+                $("#txtexcesscash").val(0);
+                $("#Payments").val(0);
+                $("#OrderPrice").val(numeral(data.TotalPrice).format('0,0'));
+                $("#prinPrice").html(numeral(data.TotalPrice).format('0,0'));
+                Calculate();
+                btnEnable("#btn_SavePrint");
+            });
+        });
+
+        $("body").on("keyup", "#Payments", function () {
+            Calculate();
+        });
+        $("body").on("keyup", "#Discount", function () {
+            var price = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var price2 = parseFloat($("#OrderPrice").val().replace(/[,]+/g, ''));
+            var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+            if (price4 > (price2 - price)) {
+                swal({ title: "", text: "Vượt quá tiền hóa đơn.", type: "info", showCancelButton: false, closeOnCancel: false });
+                $("#Discount").val(numeral(price2 - price).format('0,0'));
+            }
+            Calculate();
+        });
+        $("body").on("keyup", "#PrizeMoney", function () {
+            var price = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            var price2 = parseFloat($("#OrderPrice").val().replace(/[,]+/g, ''));
+            var price4 = parseFloat($("#Discount").val() !== "" ? $("#Discount").val().replace(/[,]+/g, '') : "0");
+            var price24 = price2 - price4;
+            if (prizeMoney === 0) {
+                toastr["error"]("Bạn chưa quẹt thẻ.");
+                $("#PrizeMoney").val("0");
+            }
+            if (price > prizeMoney && prizeMoney < price24) {
+                toastr["error"]("Vượt quá tiền tích lũy.");
+                $("#PrizeMoney").val(numeral(prizeMoney).format('0,0'));
+            }
+            if (price > price24 && price24 < prizeMoney) {
+                toastr["error"]("Vượt quá tiền hóa đơn.");
+                $("#PrizeMoney").val(numeral(price2 - price4).format('0,0'));
+            }
+            Calculate();
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            $(this).parent().parent().remove();
+            $.post("/Sales/AddSale", { key: orderKey, type: 2, pid: pid }, function (data) {
+                addSalePromotion(data);
+            });
+        });
+        $("body").on("change", ".PriceBuy", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var price = $(this).val() !== "" ? $(this).val() : "0";
+            $.post("/Sales/AddSale", { key: orderKey, type: 4, pid: pid, price: price }, function (data) {
+                Calculate();
+                addSalePromotion(data);
+            });
+        });
+
+        $("body").on("change", ".quantity", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var sl = $(this).val() !== "" ? $(this).val() : "0";
+            $.post("/Sales/AddSale", { key: orderKey, type: 3, pid: pid, sl: sl }, function (data) {
+                addSalePromotion(data);
+            });
+        });
+        $("#btn_SavePrint").click(function () {
+            btnDisabled("#btn_SavePrint");
+            $('.maskPrice').each(function (i) {
+                $(this).val($(this).val().replace(/\,/g, ''));
+            });
+            $("#printNote").html($("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            if (lstP.length < 1) {
+                btnEnable("#btn_SavePrint");
+                ErrorMessage("Bạn chưa chọn sản phẩm.");
+                return false;
+            }
+            setTimeout(function () {
+                $.post("/Sales/Actions", $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros) {
+                        toastr["error"](data.Message);
+                        btnEnable("#btn_SavePrint");
+                    }
+                    else {
+                        $("#NumberOrder").html(data.ID);
+                        $("#Payments").val(0);
+                        toastr["success"](data.Message);
+                        //Print
+                        $('#BoxPrint').show();
+                        jQuery.print('#BoxPrint');
+                        $('#BoxPrint').hide();
+                        //Close popup
+                        $("#dialog-form-3 #dialog-form-ajax").html("");
+                        $("#dialog-form-3").modal('hide');
+                        //Close Order
+                        var li = $("#tabs li.active");
+                        $.post("/Sales/AddSale", { key: orderKey, type: 6 }, function (data) {
+                            if (data.Check != true) {
+                                li.remove();
+                            }
+                            $("#tabs > li:first-child").addClass("active");
+                            $("#tabs > li:first-child > a.newOrder").click();
+                        });
+                    }
+                });
+            }, 500);
+        });
+
+        $("body").on("click", ".clearOrder", function () {
+            var keyClear = $(this).attr("data-key");
+            var li = $(this);
+            swal({
+                title: "",
+                text: "Bạn có chắc chắn muốn hủy hóa đơn.",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Tiếp tục",
+                cancelButtonText: "Giữ lại",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.post("/Sales/AddSale", { key: keyClear, type: 6 }, function (data) {
+                        if (data.Check != true) {
+                            li.parent().remove();
+                        }
+                        if (li.parent().hasClass("active")) {
+                            $("#tabs > li:first-child").addClass("active");
+                            $("#tabs > li:first-child > a.newOrder").click();
+                        }
+                    });
+                }
+                swal.close();
+            });
+        });
+
+        $("#btn_NoteCare").click(function () {
+            var id = $('#CustomerID').val();
+            var NoteCate = $("#NoteCate").val();
+            $.post("/Sales/AjaxNoteCate", { ItemID: id, NoteCate: NoteCate }, function (data) {
+                if (data.Erros)
+                    toastr["error"](data.Message);
+                else {
+                    toastr["success"](data.Message);
+                }
+            });
+        });
+        $("body").on("change", "#SaleCode", function () {
+            var code = $(this).val();
+            if (code == "" || code == null) {
+                toastr["error"]("Hãy Nhập mã code");
+                return false;
+            }
+            //$.post("/Sales/ApplyCode", { salecode: code }, function (data) {
+            //    if (data.Erros)
+            //        toastr["error"](data.Message);
+            //    else {
+            //        toastr["success"](data.Message);
+            //        var percent = data.SaleCodeItem.Percent;
+            //        var price = data.SaleCodeItem.PriceSale;
+            //        var totalprice = $("#OrderPrice").val().replace(/[,]+/g, '');
+            //        var sale = price != null && price > 0 ? price : percent * totalprice / 100;
+            //        var dis = $("#txt_SaleP").val().replace(/[,]+/g, '');
+            //        sale = parseInt(sale) + parseInt(dis);
+            //        $("#txt_SaleP").val(numeral(sale).format('0,0'));
+            //        Calculate();
+                    
+            //    }
+            //});
+            $.post("/Sales/AddSale", { key: orderKey,code : code,type: 7 }, function (data) {
+                $("#Payment").val(numeral(data.TotalPrice - data.Discount).format('0,0'));
+                $("#txt_SaleP").val(numeral(data.Discount).format('0,0'));
+                addSalePromotion(data);
+            });
+
+        });
+        var checkb = false;
+        $("#btn_Xuathd").click(function () {
+            if (checkb == false) $("#Xuahoadon").removeClass("hidden");
+            else $("#Xuahoadon").addClass("hidden");
+            checkb = !checkb;
+        });
+        function Calculate() {
+            var price2 = $("#OrderPrice").val() !== "" ? parseFloat($("#OrderPrice").val().replace(/[,]+/g, '')) : 0;
+            var price1 = $("#Payments").val() !== "" ? parseFloat($("#Payments").val().replace(/[,]+/g, '')) : 0;
+            var price4 = $("#Discount").val() !== "" ? parseFloat($("#Discount").val().replace(/[,]+/g, '')) : 0;
+            var price5 = $("#PrizeMoney").val() !== "" ? parseFloat($("#PrizeMoney").val().replace(/[,]+/g, '')) : 0;
+            //var price7 = $("#txt_SaleP").val() !== "" ? parseFloat($("#txt_SaleP").val().replace(/[,]+/g, '')) : 0;
+
+            var price6 = price4 + price5;
+            var payment = $("#Payment").val().replace(/[,]+/g, '');
+            payment = payment - price6;
+            var price3 = price1 - payment;
+            $("#txtexcesscash").val(numeral(price3).format('0,0'));
+            $("#Payment").val(numeral(payment).format('0,0'));
+            if (discount > 0) {
+                $('#Discount').val(numeral((discount * price2) / 100).format('0,0'));
+            }
+            //Print
+            var Bonus = $("#Bonus").val() !== "" ? parseFloat($("#Bonus").val().replace(/[,]+/g, '')) : 0;
+            $("#printPrizeMoneyTotal").html(numeral(price5).format('0,0'));
+            $("#printMoney").html(numeral(Bonus - price5).format('0,0'));
+            $("#printPriceCusN").html(numeral(payment).format('0,0'));
+        }
+        function addSalePromotion(data) {
+            lstP = data.SaleItems;
+            var lstPromotion = data.PromotionOrder;
+            var lstSale = data.SaleOrder;
+            var txtP = "<tr>" +
+               "<td style='color: red;'>namespkm</td>" +
+               "<td>quantityspkm</td>" +
+                //"<td class='text-center'>totalprice</td>" +
+                "</tr>";
+            var txtS = "<tr>" +
+              "<td style='color: red;'>namespgg</td>" +
+              "<td>percentgg</td>" +
+               "<td class='text-center'>pricegg</td>" +
+               "</tr>";
+            $("#tblPromotion tbody").html("");
+            $("#tblSales tbody").html("");
+            lstPromotion.forEach(function (str) {
+                str.PromotionSPItems.forEach(function (str1) {
+                    var pP = txtP.replace("namespkm", str1.Title);
+                    pP = pP.replace("quantityspkm", str1.Quantity);
+                    //pP = pP.replace("totalprice", numeral(str1.TotalPrice).format('0,0'));
+                    $("#tblPromotion tbody").append(pP);
+                });
+
+            });
+            lstSale.forEach(function (str) {
+                var pS = txtS.replace("namespgg", str.Name);
+                pS = pS.replace("percentgg", str.PercentSale);
+                pS = pS.replace("pricegg", numeral(str.Price).format('0,0'));
+                $("#tblSales tbody").append(pS);
+            });
+            if (data.SaleCode != null && data.SaleCode != "") {
+                var txttemp = "<tr>" +
+             "<td style='color: red;'>Giảm giá voucher</td>" +
+             "<td>percentgg</td>" +
+              "<td class='text-center'>pricegg</td>" +
+              "</tr>";
+                var vc = txttemp.replace("percentgg", data.VoucherPer);
+                vc = vc.replace("pricegg", numeral(data.VoucherPrice).format('0,0'));
+                $("#tblSales tbody").append(vc);
+            }
+            $("#PrintDis").html(data.SalePercent);
+            $("#printDiscount").html(numeral(data.Discount).format('0,0'));
+            $("#OrderPrice").val(numeral(data.TotalPrice).format('0,0'));
+            $("#prinPrice").html(numeral(data.TotalPrice).format('0,0'));
+            $("#Payment").val(numeral(data.TotalPrice - data.Discount).format('0,0'));
+            
+            $("#txt_SaleP").val(numeral(data.Discount).format('0,0'));
+            addHTML(data.SaleItems);
+        }
+        function addHTML(lst) {
+            var price = 0;
+            var txt = "<tr><td class='text-center'>stt</td>" +
+                "<td class='text-center'>code</td>" +
+                "<td><img src='urlImg'/></td>" +
+                "<td>name</td>" +
+                "<td style='color: red;'>SaleProduct</td>" +
+                "<td><input class='form-control input-sm text-right inputValue quantity' data-pid='IdProduct' value='pQuantity'/></td>" +
+                "<td class='text-right'><input class='form-control input-sm text-right inputValue maskPrice PriceBuy' data-pid='IdProduct' value='price'/></td>" +
+                "<td class='text-right total-IdProduct'>totalPrice</td>" +
+                "<td class='text-center'><a class='pdelete' data-pid='IdProduct'><i class='fa fa-trash-o' style='color: red;'></i></a></td>" +
+                "</tr>";
+
+            var txtc = "<tr><td class='text-center'>stt</td>" +
+                "<td class='text-center'>code</td>" +
+                "<td><img src='urlImg'/></td>" +
+                "<td>name</td>" +
+                "<td style='color: red;'>SaleProduct</td>" +
+                "<td><input class='form-control input-sm text-right inputValue quantity' data-pid='IdProduct' value='pQuantity'/></td>" +
+                "<td class='text-right'><input class='form-control input-sm text-right inputValue maskPrice PriceBuy' data-pid='IdProduct' value='price'/></td>" +
+                "<td class='text-right total-IdProduct'>totalPrice</td>" +
+                "<td class='text-center'><input type='radio' name='rbtselect' value='IdProduct'></td>" +
+                "</tr>";
+
+            var stt = 1;
+            $("#ProductDetail tbody").html("");
+            $("#listboxprint").html("");
+            lst.forEach(function (entry) {
+                price += entry.Quantity * entry.Price;
+                var ch = txt.replace("stt", stt);
+                ch = ch.replace("code", entry.Code);
+                ch = ch.replace("name", entry.Title);
+                ch = ch.replace("SaleProduct", entry.PriceSale > 0 ? numeral(entry.PriceSale).format('0,0') : entry.PercentSale + "%");
+                ch = ch.replace("urlImg", entry.UrlImg);
+                ch = ch.replace("pQuantity", entry.Quantity);
+                ch = ch.replace("price", numeral(entry.Price).format('0,0'));
+                ch = ch.replace("totalPrice", numeral(entry.TotalPrice * entry.Quantity).format('0,0'));
+                ch = ch.replace(/IdProduct/g, entry.ProductID);
+                $("#ProductDetail tbody").append(ch);
+                var str = "<div class='pr-property'>" +
+                            "<span>" + entry.Title + "</span>" +
+                            "<span>" + entry.Quantity + "</span>" +
+                            "<span>" + numeral(entry.Price).format('0,0') + "</span>" +
+                            "<span>" + numeral(entry.TotalPrice * entry.Quantity).format('0,0') + "</span>" +
+                            "</div>";
+                $("#listboxprint").append(str);
+                debugger;
+                entry.PromotionPs.forEach(function (pt) {
+                    var sl = Math.floor(entry.Quantity / pt.Quantity);
+                    pt.PromotionSPItems.forEach(function (ptr) {
+                        price += ptr.TotalPrice;
+                        var rh = txtc.replace("stt", "");
+                        rh = rh.replace("code", ptr.Code);
+                        rh = rh.replace("name", ptr.Title);
+                        rh = rh.replace("SaleProduct", pt.Title + ": " + ptr.Percent + "% + " + numeral(ptr.Price).format('0,0') + " vnđ");
+                        rh = rh.replace("urlImg", ptr.UrlImg);
+                        rh = rh.replace("pQuantity", ptr.Quantity * sl);
+                        rh = rh.replace("price", numeral(ptr.PriceSp).format('0,0'));
+                        rh = rh.replace("totalPrice", numeral(ptr.TotalPrice * ptr.Quantity).format('0,0'));
+                        rh = rh.replace(/rbtselect/g, ptr.ID);
+                        rh = rh.replace(/IdProduct/g, ptr.ProductID);
+                        $("#ProductDetail tbody").append(rh);
+                        //string print
+                        var strp = "<div class='pr-property'>" +
+                                    "<span>" + ptr.Title + "</span>" +
+                                    "<span>" + ptr.Quantity + "</span>" +
+                                    "<span>" + numeral(ptr.Price).format('0,0') + "</span>" +
+                                    "<span>" + numeral(ptr.TotalPrice * ptr.Quantity).format('0,0') + "</span>" +
+                                    "</div>";
+                        $("#listboxprint").append(strp);
+                    });
+
+                });
+                stt++;
+            });
+            $("#totalPrice").html('<strong>Tổng</strong><strong>' + numeral(price).format('0,0') + '</strong><strong>&nbsp;</strong><strong>' + numeral(price).format('0,0') + '</strong>');
+            Calculate();
+            $(".maskPrice").mask('000,000,000', { reverse: true });
+        }
+    });
+</script>

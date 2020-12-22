@@ -1,0 +1,92 @@
+﻿@using FDI.Simple
+@model ModelPageItem
+@{
+    if (Model.ModeItem == null)
+    {
+        Model.ModeItem = new ModeItem();
+    }
+}
+<form id="form-modal">
+    @if (Model.DoAction != "delete")
+    {
+        <div class="modal-body">
+            <div class="form-group">
+                <select name="Module" id="Module" class="select2 text-center">
+                    <option value="">-- Chọn Module --</option>
+                    @foreach (var item in Model.LstModules)
+                    {
+                        <option value="@item" @(item == Model.ModeItem.Module ? "selected" : "")>@item</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+
+                <select name="Action" id="Action" class="select2 text-center">
+                    <option value="">-- Chọn File --</option>
+                    @if (Model.DoAction == "edit")
+                    {
+                        foreach (var item in Model.LstAction)
+                        {
+                            <option value="@item" @(item == Model.ModeItem.Action ? "selected" : "")>@item</option>
+                        }
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+
+                <select name="Section" id="Section" class="select2 text-center">
+                    <option value="">-- Chọn vị trí --</option>
+                    @foreach (var item in Model.LstSection)
+                    {
+                        <option value="@item" @(item == Model.ModeItem.Section ? "selected" : "")>@item</option>
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+
+                <input type="text" name="Sort" class="form-control" value="@Model.ModeItem.Sort" placeholder="Thứ tự sắp xếp" />
+            </div>
+        </div>
+
+    }
+    <div class="modal-footer">
+        <input type="hidden" name="ctrId" class="form-control" value="@Model.CtrId" />
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Bỏ qua</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        $(".select2").select2({
+            maximumSelectionLeng: 1,
+            width: "100%",
+        });
+        $("#Module").change(function () {
+            $.post("/Setting/Modules/AjaxGetAction", { name: $("#Module").val() }, function (data) {
+                $("#Action").html(data);
+            });
+        });
+
+        $("#form-modal").validate({
+            rules: {
+                Module: { required: true },
+                Action: { required: true },
+                Section: { required: true }
+            },
+            messages: {
+                Module: { required: "Trường bắt buộc nhập!" },
+                Action: { required: "Trường bắt buộc nhập!" },
+                Section: { required: "Trường bắt buộc nhập!" }
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/Setting/Modules/SaveModule" + "?doAction=@Model.DoAction" + "&PageID=" + pageId, $("#form-modal").serialize(), function (data) {
+                    if (data) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    })
+</script>

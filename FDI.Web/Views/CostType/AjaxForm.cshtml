@@ -1,0 +1,82 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.CostTypeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(function () {
+        $("#frm-CostType").validate({
+            rules: {
+                Name: { required: true }
+            },
+            messages: {
+                Name: "Xin mời nhập tên loại thu chi."
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/CostType/Actions", $("#frm-CostType").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $('.modal').modal('hide');
+                        $('#dialog-form #dialog-form-ajax').html('');
+                        var linkFw = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 10);
+                        createCloseMessage("Thông báo", data.Message, linkFw + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+            }
+        });
+        $("#Value_CategoryValues").change(function () {
+            alert("The text has been changed.");
+        });
+    })
+</script>
+<form id="frm-CostType">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <input type="hidden" name="AgencyId" id="AgencyId" value="@ViewBag.AgencyId" />
+        <input type="hidden" name="UserCreate" id="UserCreate" value="@ViewBag.UserCreate" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin loại phiếu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên loại</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" name="Description" id="Description">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Loại phiếu</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="Type" id="Type">
+                                    <option value="@((int)Vouchers.Payment)" @(Model.Type == (int)Vouchers.Payment ? "selected" : "")>Phiếu chi</option>
+                                    <option value="@((int)Vouchers.Receipt)"  @(Model.Type == (int)Vouchers.Receipt ? "selected" : "")>Phiếu thu</option>
+                                    <option value="@((int)Vouchers.ReceiptPayment)" @(Model.Type == (int)Vouchers.ReceiptPayment ? "selected" : "")>Phiếu chuyển</option>
+                                    <option value="@((int)Vouchers.BiasProduce)">Chi phí sản xuất</option>
+                                    <option value="@((int)Vouchers.BiasUser)">Nhân công</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

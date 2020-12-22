@@ -1,0 +1,55 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.DNMailSSCItem
+
+@if (Model != null)
+{
+    <div class="inbox-content">
+        <div class="inbox-header inbox-view-header">
+            <h1>@Model.Title</h1>
+        </div>
+        <div class="inbox-view-info">
+            <div class="row">
+                <div class="col-md-10">
+                    <img src="/Content/Admin/images/avatar1.jpg" class="inbox-author">
+                    <span class="sbold">@Model.UserSendName </span>
+                    <span>&lt;@Model.UserSendEmail&gt; </span> tới
+                    <span class="sbold"> tôi </span>@Model.CreateDate.DecimalToString("dd/MM/yyyy HH:mm") (@Utility.TimeAgo(Model.CreateDate.DecimalToDate()))
+                </div>
+                <div class="col-md-2 inbox-info-btn">
+                    <div class="btn-group">
+                        <a data-messageid="23" href="/DNMailSSC/Compose?userId=@Model.UserSendId" class="btn green reply-btn">
+                            <i class="fa fa-reply"></i> Trả lời
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="inbox-view">
+            @Html.Raw(Model.Content)
+        </div>
+        @if (Model.ListDNFileMailItem != null && Model.ListDNFileMailItem.Any())
+        {
+            <div class="fileDisplay">
+                <h3>File đính kèm</h3>
+                <div class="fileDisplayList">
+                    @foreach (var itemFile in Model.ListDNFileMailItem)
+                          {
+                        <a href="#@(itemFile.Folder + itemFile.Url)" title="@itemFile.Name">
+                            <div class="img">
+                                <img src="@(itemFile.Folder + itemFile.Url)" />
+                            </div>
+                            <strong>@itemFile.Name</strong>
+                        </a>
+                          }
+                </div>
+
+            </div>
+        }
+    </div>
+}
+
+

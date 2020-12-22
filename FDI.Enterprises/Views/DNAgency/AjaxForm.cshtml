@@ -1,0 +1,233 @@
+﻿@using FDI.CORE
+@model FDI.Simple.AgencyItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " Quản lý đại lý";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $("#GroupID").select2({
+        width: '100%',
+        maximumSelectionLeng: 1
+
+    });
+    $("#MarketID").select2({
+        width: '100%',
+        maximumSelectionLeng: 1
+
+    });
+    $(document).ready(function () {
+        // datepicker
+        $(".datepicker-input").each(function () { $(this).datepicker(); });
+        $(".datepicker-input").click(function () {
+            $(".datepicker-days .day").click(function () {
+                $('.datepicker').hide();
+            });
+        });
+        $("#AgencyForm").validate({
+            rules: {
+                Name:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                Email:
+                {
+                    required: true,
+                    minlength: 3,
+                    email: true,
+                },
+                UserName:
+                {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 100
+                },
+                Pass:
+                {
+                    minlength: 6,
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Độ dài tối thiểu 3 ký tự.",
+                    maxlength: "Độ dài tối đã 100 ký tự."
+                },
+                Email:
+                {
+                    required: true,
+                    minlength: 3,
+                    email: "Không đúng định dạng",
+                },
+                UserName:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Độ dài tối thiểu 6 ký tự.",
+                    maxlength: "Độ dài tối đa là 100 ký tự."
+                },
+                Pass:
+                {
+                    minlength: "Độ dài tối thiểu là 6 ký tự.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#AgencyForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+        $("#close").click(function () {
+            $("#dialog-form").modal('hide');
+        });
+
+    });
+</script>
+<style>
+    #Address {
+        display: block !important;
+    }
+</style>
+
+<form id="AgencyForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về đại lý
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                        <label class="col-lg-2 control-label">Chọn Ngành kinh doanh</label>
+                        <div class="col-lg-10">
+                            <select id="GroupID" name="GroupID" class="select2">
+                                @foreach (var item in ViewBag.StGroup)
+                                {
+                                    <option value="@item.ID" @(item.ID == Model.GroupID?"selected":"") >@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mã đại lý</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" placeholder="..." name="Code" id="Code" value="@Model.Code" readonly="readonly"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tên đại lý</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Số điện thoại</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="Phone" id="Phone" value="@Model.Phone" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Địa chỉ</label>
+                            <div class="col-lg-10">
+                                <textarea rows="8" id="Address" name="Address" class="form-control">@Model.Address</textarea>
+                            </div>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Cổng</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="Port" id="Port" value="@Model.Port" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">IP máy chấm công</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="IPTimekeep" id="IPTimekeep" value="@Model.IPTimekeep" class="form-control"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Tên đăng nhập</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="UserName" id="UserName" value="@Model.UserName" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mật khẩu mới</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="Pass" id="Pass" value="@Model.Pass" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Chợ</label>
+                            <div class="col-lg-10">
+                                
+                                <select id="MarketID" name="MarketID" class="select2">
+                                    <option value="">Chọn chợ</option>
+                                    @foreach (var item in ViewBag.market)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.MarketID?"selected":"") >@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Hiện thị
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsLock") Khóa tạm thời
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsOut") Dừng hoạt động
+                                    </label>
+                                </div>
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsFdi") Đại lý Fdi
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

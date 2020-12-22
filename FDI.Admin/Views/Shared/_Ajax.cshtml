@@ -1,0 +1,15 @@
+﻿@model dynamic
+<script src="/Content/Admin/js/jquery.validate.min.js" type="text/javascript"></script>
+
+@RenderBody()
+<script>
+    $(document).ready(function () {
+        registerDate();
+        $(".maskPrice").mask('000,000,000', { reverse: true });
+        $(".quantity").mask('000', { reverse: true });
+        $("#close").click(function () {
+            $("#dialog-form").modal('hide');
+            $("#dialog-form-4").modal('hide');
+        });
+    })
+</script>

@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_MetaCustom.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("body").on("click", ".AddTree", function () {
+            var id = $(this).attr("data-id");
+            FdiOpenDialog("#dialog-form", "/DNtree/AjaxForm?do=Add", "Nhập kho");
+        });
+    });
+</script>
+
+    <div class="header-control">
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        @Grid.ActionAdd(Url.Action("Actions"))
+    </div>
+
+<div class="content-control content-box-a-table" >
+    <div id="Griditems"></div>
+</div>

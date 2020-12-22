@@ -1,0 +1,58 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelSendCardItem
+
+@{
+    ViewBag.Title = "ListItems";
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th class="text-center"><a href="#Field=Serial">Tên KH</a></th>
+                        <th class="text-center"><a href="#Field=PinCode">Ngày giao thẻ</a></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        foreach (var item in Model.ListItems)
+                        {
+                            <tr title="@item.CustomerName">
+                                <td class="act_roles">
+                                    <input type="checkbox" value="@item.ID" class="check">
+                                </td>
+                                <td>@item.ID</td>
+                                <td>@item.CustomerName</td>
+                                <td>@item.DateCreate.DecimalToString("dd/MM/yyyy")</td>
+                                <td class="text-right">
+                                    @Grid.ActionView(item.ID, item.CustomerName)
+                                    @Grid.ActionEdit(item.ID, item.CustomerName)
+                                    @Grid.ActionDelete(item.ID, item.CustomerName)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

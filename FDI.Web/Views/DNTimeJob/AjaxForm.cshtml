@@ -1,0 +1,69 @@
+﻿@model FDI.Simple.DNTimeJobItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#UserID", "100%");
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+
+
+<form id="modalForm">
+    <div class="modal-body">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về chấm công
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div class="form-horizontal">
+             
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên nhân viên</label>
+                        <div class="col-sm-10">
+                            <select id="UserID" name="UserID" multiple class="select2">
+                                @foreach (var item in ViewBag.UserId)
+                                {
+                                    <option value="@item.UserId" @(Model.UserId == item.UserId ? "selected" : string.Empty)>@item.UserName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                  @*  
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">Giờ đi làm</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="_DateCreated" id="_DateCreated" value="@Model.DateCreated" data-date-format="dd/mm/yyyy" class="form-control date-picker"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Giờ về</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="_DateEnd" id="_DateEnd" value="@Model.DateEnd" data-date-format="dd/mm/yyyy" class="form-control date-picker"/>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

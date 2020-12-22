@@ -1,0 +1,128 @@
+﻿@using FDI.CORE
+@model FDI.Simple.AgencyItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về doanh nghiệp
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên đại lý</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Email</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Số điện thoại</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Phone)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Address)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow.HasValue && Model.IsShow.Value)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Khóa</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsLock.HasValue && Model.IsLock.Value)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Dừng hoạt động</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsOut.HasValue && Model.IsOut.Value)
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin về doanh nghiệp
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên hợp đồng</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Giá trị HĐ</th>
+                            <th>Đặt cọc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LstDocumentItems)
+                        {
+                            <tr>
+                                <td>@stt</td>
+                                <td>@item.Name</td>
+                                <td>@item.DateStart.DecimalToString("dd/MM/yyyy")</td>
+                                <td>@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                <td>@item.Value.Money()</td>
+                                <td>@item.Deposit.Money()</td>
+                            </tr>
+                            stt++;
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

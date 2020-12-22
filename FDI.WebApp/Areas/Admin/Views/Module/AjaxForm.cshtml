@@ -1,0 +1,119 @@
+﻿@model FDI.Base.Module
+@{
+    ViewBag.Title = ViewBag.ActionText + " Module";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ModuleForm").validate({
+            rules: {
+                NameModule:
+                {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                Content:
+                {
+                    minlength: 3,
+                    maxlength: 500
+                }
+            },
+
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#ModuleForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+<form id="ModuleForm" class="form-horizontal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-newspaper-o"></i>Thông tin về menu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên module</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="NameModule" id="NameModule" value="@Model.NameModule" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Link chuyên mục</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Tag" id="Tag" value="@Model.Tag" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ClassCss</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="ClassCss" id="ClassCss" value="@Model.ClassCss" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Thứ tự</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Ord" id="Ord" value="@Model.Ord" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chuyên mục cha</label>
+                            <div class="col-sm-10">
+                                <select name="PrarentID" id="PrarentID" class="form-control">
+                                    @foreach (var item in ViewBag.PrarentID)
+                                    {
+                                        <option value="@item.ID" @((item.ID == Model.PrarentID) ? " selected" : string.Empty)>@item.NameModule</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Content" id="Content" value="@Model.Content" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <label>
+                                    @Html.CheckBox("IsShow") Hiện thị
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>
+

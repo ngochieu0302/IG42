@@ -1,0 +1,99 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNUserItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var index = 0;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action-5" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center"><a href="#Field=ID">STT</a></th>
+                        <th><a href="#Field=LoweredUserName">Họ và tên</a></th>
+                        <th><a href="#Field=UserName">Tên đăng nhập</a></th>
+                        <th class="text-center"><a href="#Field=Mobile">Số điện thoại</a></th>
+                        <th class="text-center"><a href="#Field=Email">Email</a></th>
+                        <th class="text-center">Địa chỉ</th>
+                        <th class="text-right">Lương cứng</th>
+                        <th class="text-right">Mã CC</th>
+                        <th class="text-right">TTNV Phục vụ</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Chấm công</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItem)
+                {
+                    index = index + 1;
+                    <tr title="@item.UserName">
+                        <td class="text-center">@index</td>
+                        <td>@item.LoweredUserName</td>
+                        <td>@item.UserName</td>
+                        <td class="text-center">@item.Mobile</td>
+                        <td class="text-center">@item.Email</td>
+                        <td>@item.Address</td>
+                        <td class="text-right">@item.FixedSalary.Money()</td>
+                        <td>@item.CodeCheckIn</td>
+                        <td>@item.IsService</td>
+                        @if (item.IsLockedOut == true)
+                        {
+                            <td class="text-center">Đã khóa</td>
+                        }
+                        else
+                        {
+                            <td class="text-center">Hoạt động</td>
+                        }
+                        <td  class="text-center">@Grid.ActionCheckin(item.CodeCheckIn, item.UserName, false)</td>
+                        <td class="text-right">
+                            <a data-userId="@item.UserId" data-moduleId="@string.Join(",",item.ListModuleID)" class="btn btn-sm btn-default" data-event="AddModule" title="Gán chức năng cho user"><i class="fa fa-user"></i></a>
+                            @Grid.RoleModule(item.UserId, item.UserName)
+                            @Grid.ActionView(item.UserId, item.UserName)
+                            @Grid.ActionEdit(item.UserId, item.UserName)
+                            @Grid.ActionDelete(item.UserId, item.UserName)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var total = '@Model.TotalFixedSalary';
+        registerGridView('#mygird');
+        $('.bottom-pager').append('<span>Tổng Lương cứng: <i class="maskPrice">' + total + '</i>  vnđ</span>');
+
+        var urlSelectCategory = '@Url.Action("AjaxTree", "DNUser")';
+        $('[data-event="AddModule"]').click(function () {            
+            var user = $(this).attr("data-userId");
+            var lstInt = $(this).attr("data-moduleId");
+            $('body').modalmanager('loading');
+            $("#dialog-form .modal-title").html("Phân quyền module cho user");
+            $("#dialog-form #dialog-form-ajax").load(encodeURI(urlSelectCategory + "?UserId=" + user + "&lstInt=" + lstInt));
+            $('#dialog-form').modal('show');
+            return false;
+        });
+    });
+</script>

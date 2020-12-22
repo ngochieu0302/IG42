@@ -1,0 +1,168 @@
+﻿@using FDI.CORE;
+@model FDI.Simple.CustomerRewardItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var price = (Model.TotalReward.HasValue ? Model.TotalReward : 0) - (Model.TotalReceipt.HasValue ? Model.TotalReceipt : 0);
+}
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="Add" />
+        <input type="hidden" name="CustomerID" id="CustomerID" value="@Model.CustomerID" />
+        <input type="hidden" name="IdUser" id="IdUser" value="@Model.UserId" />
+        <input type="hidden" name="Month" id="Month" value="@Model.Month" />
+        <input type="hidden" name="Year" id="Year" value="@Model.Year" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Trả thưởng cho nhân viên
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Người trả</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@ViewBag.UserRecive" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên khách hàng</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@Model.CustomerName" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên đăng nhập</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@Model.UserName" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@Model.Phone" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số CMTND</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@Model.CMND" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số tiền trả</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="@(price)" class="form-control maskPrice" name="Price" id="PriceRecive" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Trả thưởng</button>
+        <button id="btn_Print" type="button" class="btn btn-sm btn-primary"><i class="fa fa-print"></i>In hóa đơn</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" class="pr-total" style="display: none;">
+
+    <link href="~/Content/Admin/css/print_hoadon_a4.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pagePrint">
+            <h1>Hóa đơn trả thưởng</h1>
+            <table>
+                <tr>
+                    <td colspan="2"><strong>Người trả</strong></td>
+                    <td><span>@ViewBag.UserRecive</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Người nhận</strong></td>
+                    <td><span>@Model.CustomerName</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số điện thoại:</strong></td>
+                    <td><span>@Model.CustomerUser</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số điện thoại:</strong></td>
+                    <td><span>@Model.Phone</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số CMTND</strong></td>
+                    <td><span>@Model.CMND</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong><strong>Ngày trả:</strong></strong></td>
+                    <td><span>@DateTime.Now.ToString("dd/MM/yyyy hh:mm")</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Tổng thưởng:</strong></td>
+                    <td><span id="lblNote1">@(price.Money())</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Số tiền trả:</strong></td>
+                    <td><span id="lblNote2"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Còn lại:</strong></td>
+                    <td><span id="lblNote3"></span></td>
+                </tr>
+            </table>
+            <div class="optionPrint">
+                <div class="left">
+                    <label>Khách hàng</label>
+                </div>
+                <div class="right">
+                    <div class="date">
+                        Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i>
+                    </div>
+                    <span>Người viết hóa đơn</span>
+                </div>
+
+            </div>
+        </div>
+    </page>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true },
+                Value: { required: true }
+            },
+            messages: {
+                Name: "Nhập tên màu.",
+                Value: "Chọn mã màu."
+            },
+            submitHandler: function () {
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    });
+    $(function () {
+        $("#btn_Print").click(function () {
+            $('#BoxPrint').show();
+            var PriceRecive = $("#PriceRecive").val();
+            var price = PriceRecive.replace(/[,]+/g, '');
+            var temp1 = $("#lblNote1").html();
+            var totalrewar = temp1.replace(/[,]+/g, '');
+            $("#lblNote2").html(PriceRecive);
+            var temp = totalrewar - price;
+            $("#lblNote3").html(temp)
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>>

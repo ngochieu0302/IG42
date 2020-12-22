@@ -1,0 +1,82 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNComboItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col class="colgroup date" />
+                    <col class="colgroup date" />
+                    <col class="colgroup price"/>
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Name">Tên Combo</a></th>
+                        <th><a href="#Field=DateStart">Bắt đầu</a></th>
+                        <th><a href="#Field=DateEnd">Kết thúc</a></th>
+                        <th class="text-right"><a href="#Field=Price">Giá bán</a></th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItem)
+                    {
+                        <tr data-id="@item.ID" title="@item.Name">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td>@item.ID</td>
+                            <td>@item.Name</td>
+                            <td>@item.DateStart.DecimalToString("dd/MM/yyyy")</td>
+                            <td>@item.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                            <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                            <td class="text-right">
+                                @Grid.ActionView(item.ID, item.Name)
+                                @Grid.ActionEdit(item.ID, item.Name)
+                                @Grid.ActionDelete(item.ID, item.Name)
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function OpenInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".productAttr").click(function () {
+            var productId = $(this).attr("data-pId");
+            var cateId = $(this).attr("data-cateId");
+            $('body').modalmanager('loading');
+            $("#dialog-form-2 .modal-title").html("Thuộc tính sản phẩmss");
+            $("#dialog-form-2 #dialog-form-ajax").load("/Product/AjaxAttribute?productId=" + productId + "&cateId=" + cateId);
+            $('#dialog-form-2').modal('show');
+            return false;
+        });
+    });
+</script>

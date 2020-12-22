@@ -1,0 +1,42 @@
+//## Main Layout CSS Builder
+
+@import '../../global/_variables.scss'; // global metronic framework variables
+@import '../../global/components/_mixins.scss'; // global metronic framework mixings
+
+@import '_variables.scss'; // theme level variables  
+
+
+@import 'layout/_print.scss'; // print layout     
+              
+@import 'layout/_header.scss'; // page header   
+@import 'layout/_page-container.scss'; // page main container       
+/*@import 'layout/_sidebar.scss';  // page sidebar*/        
+@import 'layout/_content.scss'; // page consnde                        
+/*@import 'layout/_footer.scss';   // page footer*/                     
+/*@import 'layout/_theme-panel.scss';  // theme customizer panel*/
+/*@import 'layout/_quick-sidebar.scss';  // quick sidebar toggler*/     
+@import '../../global/plugins/_icheck.scss';             
+/*@import '../quick-sidebar/_quick-sidebar.scss';  // quick sidebar content*/     
+/*@import "../../pages/blog.scss";*/
+@import "../../apps/inbox.scss";
+@import "../../apps/box-a-table.scss";
+@import "../../apps/massage.scss";
+@import "../../apps/_table-vote.scss";
+@import "../../apps/_treeview.scss";
+@import "../../apps/_table-gene-print.scss";
+
+/***  
+Page Loading       
+***/
+
+.page-on-load {
+	background: #fefefe;
+
+	.page-header,
+	.page-container,
+	.page-footer,
+	> .clearfix {
+		display: none;
+		transition: all 2s;
+	}
+}

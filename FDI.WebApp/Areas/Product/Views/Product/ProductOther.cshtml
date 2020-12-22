@@ -1,0 +1,40 @@
+﻿@using FDI.Utils
+@model List<FDI.Simple.ProductItem>
+    @{
+        var pageId = WebConfig.ProductDetail;
+    }
+<div class="list-product-home type-list">
+    <div class="title">
+        <h3>
+            <a title="">Sản phẩm cùng loại</a>
+        </h3>
+    </div>
+    <div class="list-product">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4 col-md-4">
+                    <div class="item-product item-ef">
+                        <div class="img">
+                            <a href="@item.NameAscii-p@(pageId)c@(item.ID)" title="@item.Name">
+                                <img src="@item.UrlPicture.UploadPicture()" class="img-responsive" alt="@item.Name">
+                                <span class="roll-product tie-plus"></span>
+                            </a>
+                            <div class="product-button">
+                                <a href="#popup-payment" title="" class=""><i class="fa fa-cart-plus"></i>Đặt hàng sản phẩm</a>
+                            </div>
+                        </div>
+                        <div class="detail">
+                            <h3>
+                                <a href="@item.NameAscii-p@(pageId)c@(item.ID)" title="@item.Name">@item.Name</a>
+                            </h3>
+                            <div class="price">
+                                <b class="price-now">Giá bán: @string.Format("{0:0,0}",item.PriceNew)</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

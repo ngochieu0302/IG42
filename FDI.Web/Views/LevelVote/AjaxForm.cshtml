@@ -1,0 +1,72 @@
+﻿@model FDI.Simple.LevelVoteItem
+@{
+	Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+	$(function () {
+		$("#frm-LevelVote").validate({
+			rules: {
+			    Name: { required: true },
+			    Value: { required: true }
+			},
+			messages: {
+			    Name: "Mời nhập mức độ của tiêu chí.",
+			    Value: "Mời nhập giá trị của tiêu chí."
+			},
+            submitHandler: function () { //onSubmit
+                btnDisabled("#btnSave");
+                $.post("/LevelVote/Actions", $("#frm-LevelVote").serialize(), function (data) {
+                    btnEnable("#btnSave");
+					if (data.Erros)
+						createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+					else {
+						$("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+						createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+					}
+				});
+			}
+		});
+	})
+</script>
+<form id="frm-LevelVote">
+	<div class="modal-body">
+		<input type="hidden" name="do" value="@ViewBag.Action" />
+		<input type="hidden" name="ItemID" value="@Model.ID" />
+		<input type="hidden" name="AgencyID" value="@ViewBag.AgencyID" />
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-database"></i>Thông tin mức độ tiêu chí đánh giá
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="form-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tên mức độ tiêu chí</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Giá trị</label>
+							<div class="col-sm-10">
+								<input class="form-control" name="Value" id="Value" value="@Model.Value" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Sắp xếp</label>
+							<div class="col-sm-10">
+								<input class="form-control" name="Soft" id="Soft" value="@Model.Soft" />
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+		<button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+	</div>
+</form>

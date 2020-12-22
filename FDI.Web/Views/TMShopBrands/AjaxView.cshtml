@@ -1,0 +1,69 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ProductBrandItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-picture-o"></i>Thông tin về hãng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Tên hãng</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Email</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 15%">
+                            <label>SĐT</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Phone)
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>
+                            @Model.Address
+                        </td>
+                    </tr>
+                 
+                    <tr>
+                        <td>
+                            <label>Hiện thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+

@@ -1,0 +1,54 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.ContentVoteItem>
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gear"></i>Thông tin chi tiết tiêu chí đánh giá
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ tên</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Tên chức vụ</th>
+                            <th>Tên tiêu chí</th>
+                            <th>Tiêu chí</th>
+                            <th>Mức độ</th>
+                            <th>Ngày</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var stt = 1;
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@(stt++)</td>
+                                <td>@item.UserItem.LoweredUserName</td>
+                                <td>@item.UserName</td>
+                                <td>@item.DNTreeItem.Name</td>
+                                <td>@item.VoteName</td>
+                                <td>@item.LevelName</td>
+                                <td>@item.DateCreated.DecimalToString("dd/MM/yyyy")</td>
+                                <td>@item.Value</td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+
+

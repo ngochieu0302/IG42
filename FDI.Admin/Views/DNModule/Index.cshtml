@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        urlLists = '@Url.Action("AjaxTreeSelect", "DNModule")';
+    });
+</script>
+    <div class="header-control">
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li><a href="/"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+                <li class="active">Quản lý Module</li>
+            </ul>
+        </div>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <div class="btn-group pull-left">
+            @Grid.ActionAdd(Url.Action("Actions"))
+        </div>
+    </div>
+

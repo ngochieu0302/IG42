@@ -1,0 +1,275 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model FDI.Simple.MarketItem
+@{
+
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var stt1 = 1;
+    var stt2 = 1;
+    var stt3 = 1;
+    decimal? total = 0;
+}
+
+<div class="modal-body">
+    <div id="PrintContent" class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-newspaper-o"></i>Thông tin về hàng hóa
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 15%">
+                            <label>Chợ</label>
+                        </td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Khu vực</label>
+                        </td>
+                        <td>
+                            @Model.Areaname
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    @*<tr>
+                            <td>
+                                <label>Tổng tiền</label>
+                            </td>
+                            <td>
+                                @string.Format("{0:0,0}", Model.LstStorageProductItems.Sum(c => c.TotalPrice))
+                            </td>
+                        </tr>*@
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách hàng cần giao
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                    </tr>
+                    @foreach (var item in Model.ListDnRequestWareHouseGroupItems)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td><span>@item.ProductName</span></td>
+                            <td>@item.Quantity.Quantity()</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-external-link-square"></i>Danh sách chi tiết
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Người đặt</th>
+                        <th>Điện thoại</th>
+                        <th>Số lượng</th>
+                        <th>Ngày lấy hàng</th>
+                        <th>Giờ lấy hàng</th>
+                    </tr>
+                    @foreach (var item in Model.ListDnRequestWareHouseItems)
+                    {
+                        <tr>
+                            <td>@(stt1++)</td>
+                            <td><span>@item.ProductName</span></td>
+                            <td>@item.Agencyname</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.QuantityActive.Quantity()</td>
+                            <td>@item.Today.DecimalToString("dd/MM/yyyy") h</td>
+                            <td>
+                                @foreach (var hour in TypeHours.Hours().Where(hour => item.Hours == hour.Value))
+                                {
+                                    <span>@hour.Key</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" id="btn_Print" class="btn btn-primary btn-sm">In phiếu</button>
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    });
+</script>
+<div id="BoxPrint" style="display: none">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                @*<div class="pt-head">
+                        <div class="left">
+                            <ul>
+                                <li><img src="https://fditech.vn/Content/Publishing/images/logo-foo.png" width="200px" height="90px" title="logo"/></li>
+                            </ul>
+                        </div>
+                        <div class="right">
+                            <div class="pt-name">
+                                <div class="center">
+                                    <h3 style="font-size: 30px">DANH SÁCH HÀNG NHẬN</h3>
+                                    <i> Ngày @Model.Today.DecimalToDate().Day tháng @Model.Today.DecimalToDate().Month năm @Model.Today.DecimalToDate().Year</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-name">
+                        <ul>
+                            <li>Nhà cung cấp: @Model.Name</li>
+                            <li>Điện Thoại: @Model.Mobile</li>
+                            <li>Địa chỉ: @Model.Address</li>
+                        </ul>
+                    </div>*@
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+
+                            <li><strong>CÔ TY THỰC PHẨM SẠCH</strong><span></span></li>
+                            <li><strong>Bộ phận: Kho hàng</strong><span></span></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <strong>Mẫu số 03 - TT</strong>
+                        <span>
+                            (Ban hành theo Thông tư số 200/2014/TT-BTC
+                            Ngày 22/12/2014 của Bộ Tài chính)
+                        </span>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="center">
+                        <h3>DANH SÁCH NHẬP HÀNG</h3>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <ul>
+                        <li>Khu chợ: <b>@Model.Name</b></li>
+                        <li>Khu vực: <b>@Model.Areaname</b></li>
+                        <li>Địa chỉ: <b>@Model.Address</b></li>
+                    </ul>
+                </div>
+                <div class="pt-detail">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        @foreach (var item in Model.ListDnRequestWareHouseGroupItems)
+                        {
+                            <tr>
+                                <td>@(stt2++)</td>
+                                <td><span>@item.ProductName</span></td>
+                                <td>@item.Quantity.Quantity()</td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+                <div class="pt-detail">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Người đặt</th>
+                            <th>Điện thoại</th>
+                            <th>Số lượng</th>
+                            <th>Ngày lấy hàng</th>
+                            <th>Giờ lấy hàng</th>
+                        </tr>
+                        @foreach (var item in Model.ListDnRequestWareHouseItems)
+                        {
+                            <tr>
+                                <td>@(stt3++)</td>
+                                <td><span>@item.ProductName</span></td>
+                                <td>@item.Agencyname</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.QuantityActive.Quantity()</td>
+                                <td>@item.Today.DecimalToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @foreach (var hour in TypeHours.Hours().Where(hour => item.Hours == hour.Value))
+                                    {
+                                        <span>@hour.Key</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Thủ kho</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người giao hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page>
+
+</div>

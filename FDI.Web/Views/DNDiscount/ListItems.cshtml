@@ -1,0 +1,63 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelDNDiscountItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Name">Tên Chiết khấu</a></th>
+                        <th><a href="#Field=Percent">Phần trăm giảm</a></th>
+                        <th><a href="#Field=Price">Tiền giảm</a></th>
+                        <th><a href="#Field=TotalOrder">Tổng đơn hàng</a></th>
+                        <th><a href="#Field=IsAgency">Tất cả cửa hàng</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <tr data-id="@item.ID" title="@item.Name">
+                            <td class="act_roles">
+                                <input type="checkbox" value="@item.ID" class="check">
+                            </td>
+                            <td class="text-center">@item.ID</td>
+                            <td class="text-center">@item.Name</td>
+                            <td>@item.Percent</td>
+                            <td class="text-center">@item.Price.Money()</td>
+                            <td class="text-center">@item.TotalOrder.Money()</td>
+                            <td class="text-center">@Grid.DisplayShow(item.Name, item.IsAll)</td>
+                            <td class="text-right">
+                               <a data-id="@item.ID" class="btn btn-sm btn-default btn_Inport" data-action="Edit"><i class="fa fa-pencil-square-o" style="color: #04A827;"></i></a>
+                                @Grid.ActionDelete(item.ID, item.Name)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        $(".btn_Inport").click(function () {
+            var id = $(this).attr("data-id");
+            var action = $(this).attr("data-action");
+            FdiOpenDialog("#dialog-form-4", urlForm + "?ItemId=" + id + "&do=" + action, "Chỉnh sửa giảm giá");
+        });
+    });
+</script>

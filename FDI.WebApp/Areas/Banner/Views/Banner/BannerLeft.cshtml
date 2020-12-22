@@ -1,0 +1,10 @@
+﻿@using FDI.Utils
+@model FDI.Simple.AdvertisingItem
+
+    <div class="blog-sidebar">
+        <div class="img-container">
+            <a href="@Model.Link">
+                <img src="@Model.PictureUrl.UploadPicture()" alt="@Model.Name">
+            </a>
+        </div>
+    </div>

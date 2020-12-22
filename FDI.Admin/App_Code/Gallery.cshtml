@@ -1,0 +1,13 @@
+﻿@using FDI.CORE
+@helper DisplayImage(string url, int width)
+{
+    <img src="@(string.IsNullOrEmpty(url) ? "/Content/Admin/images/no_image.gif" : @url.Picture())"/>
+}
+
+@helper ModuleSys(string url, int id)
+{
+    var edit = (int?)Session["editPage"];
+    var admin = User.Identity.IsAuthenticated && User.IsInRole("Admin") && edit == 1;
+    if (admin && edit == 1)
+    {<ul class="dropdown-settinh-module"><li><a title="Menu setting" href="javascript:"><span class="fa fa-bars"></span></a><ul><li><a data-toggle="modal" data-target="#myModal" data-id="@id" class="edit-module"><span class="fa fa-edit"></span>Edit</a></li><li><a data-toggle="modal" data-target="#myModal" data-id="@id" class="copy-module"><span class="fa fa-file-o"></span>Copy</a></li><li><a data-toggle="modal" data-target="#myModal" data-id="@id" class="delete-module"><span class="fa fa-remove"></span>Delete</a></li><li><a data-toggle="modal" data-target="#myModal" data-id="@id" class="setting-module" data-url="@url"><span class="fa fa-gears"></span>Setting</a></li></ul></li></ul>}
+}

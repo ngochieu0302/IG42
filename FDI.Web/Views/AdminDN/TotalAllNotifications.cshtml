@@ -1,0 +1,49 @@
+﻿@model FDI.Simple.ModelCustomerContactItem
+
+<div class="list-group no-radius alt">
+
+
+    @if (Model.TotalNotificationsContact > 0)
+    {
+        <a class="list-group-item" href="#">
+            <span class="badge bg-success">@Model.TotalNotificationsContact</span>
+            <i class="fa fa-envelope icon-muted"></i>
+            Contact
+    </a>
+    }
+    else
+    {
+        <a class="list-group-item" href="#">
+            <span class="badge bg-success">0</span>
+            <i class="fa fa-envelope icon-muted"></i>
+            Contact
+    </a>
+    }
+
+    @if (Model.TotalNotificationsRegisterContact > 0)
+    {
+        <a class="list-group-item" href="#">
+            <span class="badge bg-info">@Model.TotalNotificationsRegisterContact</span>
+            <i class="fa fa-bell icon-muted"></i>
+            Đăng ký nhận tin
+    </a>
+    }
+    else
+    {
+        <a class="list-group-item" href="#">
+            <span class="badge bg-info">0</span>
+            <i class="fa fa-bell icon-muted"></i>
+            Đăng ký nhận tin
+    </a>
+    }
+    <a class="list-group-item" href="#">
+        <span class="badge bg-light">0</span>
+        <i class="fa fa-phone icon-muted fa-fw"></i>
+        Call
+    </a>
+    <a class="list-group-item" href="#">
+        <span class="badge bg-light">0</span>
+        <i class="fa fa-comments-o icon-muted fa-fw"></i>
+        Messages
+    </a>
+</div>

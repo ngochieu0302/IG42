@@ -1,0 +1,153 @@
+﻿@using System.Web.Script.Serialization
+@model FDI.Simple.ModelVoteItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";    
+}
+<input type="hidden" id="modelvote" value="@(new JavaScriptSerializer().Serialize(Model.LevelVoteItems))" />
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-striped table-vote" id="tablevote">
+                <tr class="thead">
+                    <th rowspan="2" style="width: 55px">STT</th>
+                    <th rowspan="2">Tiêu chí</th>
+                    <th colspan="@Model.LevelVoteItems.Count">Cấp độ trong ngày</th>
+                    <th rowspan="2" style="width: 145px">Nội dung</th>
+                    <th rowspan="2">Thao tác</th>
+                </tr>
+                <tr class="thead">
+                    @foreach (var item in Model.LevelVoteItems)
+                    {
+                        <td style="width: 150px">@item.Name</td>
+                    }
+                </tr>
+                @{
+                    var i = 1;
+                    foreach (var item in Model.ListItems.OrderBy(m=>m.Soft))
+                    {
+                        var contentVoteItem = item.ContentVoteItems.FirstOrDefault();
+                    <tr>
+                        <td class="text-center">@(i++)</td>
+                        <td>@item.Name</td>
+                        @{
+                        foreach (var iteml in Model.LevelVoteItems)
+                        {
+                            var obj = contentVoteItem != null && contentVoteItem.LevelVoteID == iteml.ID;
+                            var value = item.Value + iteml.Value * item.Value;
+                            <td class="text-center table-radio "><span>@value</span><strong class="vote-check click-select sum-@iteml.ID select-@item.ID @(obj ? "selected" : "")" data-idc="@(contentVoteItem != null ? contentVoteItem.ID : 0)" data-id="@iteml.ID" data-vote="@item.ID" data-val="@value"></strong></td>
+                        }
+                        }
+                        <td>
+                            <textarea class="form-control Content" id="content-@item.ID" rows="2" data-id="@item.ID" placeholder="Nội dung" style="width: 220px">@(contentVoteItem != null ? contentVoteItem.Content : "")</textarea>
+                        </td>
+                        <td class="text-center">
+                            <button style="display: none" class="btn-sm btn-success btn-id btn-@item.ID" data-id="@item.ID">OK</button>
+                        </td>
+                    </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control footer-table-fixed-wrap">
+        <div class="footer-table-fixed">
+            <div class="item-table-total text-center"><span>0-100</span></div>
+            <div class="item-table-total">Thống kê</div>
+
+            <div class="item-table-total text-center">
+                <span>(A)</span> <b id="total0"></b>
+            </div>
+            <div class="item-table-total text-center">
+                <span>(B)</span> <b id="total1"></b>
+            </div>
+            <div class="item-table-total text-center">
+                <span>(C)</span> <b id="total2"></b>
+            </div>
+            <div class="item-table-total text-center">
+                <strong>Tổng số <span>( A + B + C )</span> :</strong> <b id="total"></b>
+            </div>
+            <div class="item-table-total hidden"></div>
+            <div class="item-table-total "></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var n = $("table.table-vote"),
+        f = $(".footer-table-fixed-wrap"),
+        i = n.find("tbody tr:last").children(),
+        t;
+    $(window).resize(function () {
+        t = i.map(function () {
+            return $(this).width();
+        }).get(), f.find(".footer-table-fixed").children().each(function (i, r) {
+            i < f.find(".footer-table-fixed").children().length - 1 && $(r).width(t[i] + 5);
+        });
+    }).resize();
+
+    var list = JSON.parse($('#modelvote').val());
+    $('#modelvote').val("");
+    SumTotalAnd();
+    $('.Content').keyup(function () {
+        var id = $(this).data("id");
+        $('.btn-' + id).show();
+    });
+    $('.click-select').click(function () {
+        var voteid = $(this).data("vote");
+        $('.select-' + voteid).removeClass("selected");
+        $(this).addClass("selected");
+        SumTotalAnd();
+        $('.btn-' + voteid).show();
+    });
+
+    $('.btn-id').click(function () {
+        var id = $(this).data("id");
+        var content = $('textarea#content-' + id).val();
+        var idlevel = 0;
+        var idc = 0;
+        var val = 0;       
+        $('.select-' + id).each(function () {
+            if ($(this).hasClass("selected")) {
+                idlevel = parseFloat($(this).data("id"));
+                idc = parseFloat($(this).data("idc"));
+                val = parseFloat($(this).data("val"));
+            }
+        });
+        if ($('#UserTree').val() == "") {
+            toastr["error"]("Bạn chưa chọn vị trí cần đánh giá");
+        } else if (content == "") {
+            toastr["error"]("Bạn chưa nhập nội dung đánh giá");
+        } else {            
+            AddUpdate(idc, idlevel, id, val, content);
+        }
+
+    });
+    function AddUpdate(idc, id, voteid, val, content) {
+        var treeId = $('#UserTree').val();
+        var fromDate = $('#fromDate').val();        
+        btnDisabled(".btn-id");
+        $.post("/VotePA/AddUpdate?ID=" + idc + "&TreeID=" + treeId + "&VoteID=" + voteid + "&LevelVoteID=" + id + "&Value=" + val + "&Content=" + content + "&fromDate=" + fromDate, function (data) {
+            if (data.Erros)
+                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+            else {
+                toastr["success"](data.Message);
+            }
+            btnEnable(".btn-id");
+        });
+
+    }
+    function SumTotalAnd() {
+        var total = 0;
+        for (var i = 0; i < list.length; i++) {
+            var total1 = 0;
+            $('.sum-' + list[i].ID).each(function () {
+                if ($(this).hasClass("selected")) {
+                    total1 += parseFloat($(this).data("val"));
+                }
+            });
+            total = total + total1;
+            $('#total' + i).html(total1);
+        }
+        $('#total').html(total);
+    }
+</script>

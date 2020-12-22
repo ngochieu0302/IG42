@@ -1,0 +1,151 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelBedDeskItem
+@{
+    var day = DateTime.Today;
+    var tday = day.TotalSeconds();
+}
+
+<script>
+    callSelect2("#Lstbed", "100%");
+    $(function () {
+        var td = parseInt('@tday');
+        var h = $("#HoursStartAll").val();
+        var m = $("#MinuteStartAll").val();
+        $("#Time-s").html((h < 10 ? "0" : "") + h + ":" + (m < 10 ? " 0" : "") + m);
+        td = td + parseInt(h) * 3600 + parseInt(m) * 60;
+        $('#Customer').autocomplete({
+            serviceUrl: "/BookATable/AutoCustomer",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#CustomerID').val(el.ID);
+                $('#CustomerName').val(el.title);
+                $('#Mobile').val(el.phone);
+                $('#Address').val(el.code);
+                $('#printKH').html(el.title);
+                $('#Customer').val("");
+            }
+        });
+        $("#frm-modal").validate({
+            rules: {
+                CustomerName:
+                {
+                    required: true,
+                }, Mobile:
+                {
+                    required: true,
+                }
+            },
+            messages: {
+                CustomerName:
+                {
+                    required: "Trường này là bắt buộc.",
+                }, Mobile:
+                {
+                    required: "Trường này là bắt buộc.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                    $('.maskPrice').each(function (i) {
+                        $(this).val($(this).val().replace(/\,/g, ''));
+                    });
+                    $("#StartDate").val(td);
+                    $("#EndDate").val(td + 3600);
+                    $("#itemId").val($("#Lstbed").val());
+                    $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                        $("#btnSave").prop('disabled', false);
+                        if (data.Erros)
+                            toastr["error"](data.Message);
+                        else {
+                            createShowMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            $("[data-event='Default']").trigger("click");
+                            $(".modal").modal('hide');
+                        }
+                    });
+            }
+        });
+    });
+</script>
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="itemId" id="itemId" value="@Model.Lstid" />
+        <input type="hidden" name="do" id="do" value="Add" />
+        <input type="hidden" name="StartDate" id="StartDate" value="" />
+        <input type="hidden" name="EndDate" id="EndDate" value="" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thanh toán
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Khách hàng</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Customer" name="Customer" value="">
+                                <input type="hidden" id="CustomerID" name="CustomerID" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Họ Tên</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="CustomerName" name="CustomerName" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Địa chỉ</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Address" name="Address" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Số điện thoại</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="Mobile" name="Mobile" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Bàn đã chọn</label>
+                            <div class="col-md-10">
+                                <select id="Lstbed" name="Lstbed" multiple class="select2">
+                                    @foreach (var item in Model.ListItem)
+                                    {
+                                        <option value="@item.ID" @(Model.Listid.Any(c => c == item.ID) ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Thời gian</label>
+                            <div class="col-md-10">
+                                <label id="Time-s"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Đặt cọc</label>
+                            <div class="col-md-10">
+                                <input class="form-control maskPrice" id="Deposits" name="Deposits" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Ghi chú</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" id="Note" name="Note" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Lưu lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>

@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+@model List<FDI.Simple.CategoryItem>
+
+<div class="header-control">
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <form id="gridSearch" class="form-inline" role="form">
+
+            <div class="form-group">
+                <select name="categoryId" class="form-control">
+                    @foreach (var category in Model)
+                    {
+                        <option value="@category.ID">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <button name="submit.Search" type="submit" class="btn btn-sm btn-primary"><span class="fa fa-search"></span>Tìm kiếm</button>
+
+            <div class="pull-right">
+                <a class="btn btn-sm btn-primary btn_Inport" data-action="Add"><span class="fa fa-plus"></span>Thêm mới</a>
+            </div>
+        </form>
+    </div>
+</div>

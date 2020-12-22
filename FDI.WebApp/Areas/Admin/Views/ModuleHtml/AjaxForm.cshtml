@@ -1,0 +1,66 @@
+﻿@model FDI.Simple.HtmlItem
+@{
+    ViewBag.Title = ViewBag.ActionText + " thành phố";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadCKEDITOR('Value', true);
+        $("#SystemCityForm").validate({
+            rules: {
+                Value:
+                    {
+                        required: true
+                    }
+            },
+            messages: {
+                Value:
+                {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () {
+                updateEditor();
+                $.post(urlPostAction, $("#SystemCityForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message);
+                    else {
+                        $("#dialog-form").modal('hide');
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>
+
+
+<form id="SystemCityForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về quận huyện
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea rows="10" id="Value" name="Value" class="form-control">@Model.Value</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

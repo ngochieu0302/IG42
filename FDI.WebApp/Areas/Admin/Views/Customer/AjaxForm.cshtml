@@ -1,0 +1,159 @@
+﻿@model FDI.Base.Customer
+
+@{
+    ViewBag.Title = ViewBag.ActionText + " Khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGalleryByModule();
+        registerDate();
+        $("#CustomerForm").validate({
+            rules: {
+                FullName:
+                {
+                    required: true,
+                    minlength: 3
+                },
+                Email:
+                {
+                    required: true,
+                    email: true,
+                    minlength: 3
+                },
+                Phone:
+                    {
+                        minlength: 8,
+                        maxlength: 13,
+                        number: true
+                    }
+            },
+            messages: {
+                FullName:
+                {
+                    required: "Trường này là bắt buộc.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Email:
+                {
+                    required: "Trường này là bắt buộc.",
+                    email: "Vui lòng nhập một địa chỉ email hợp lệ.",
+                    minlength: "Vui lòng nhập ít nhất 3 ký tự."
+                },
+                Phone:
+                {
+                    minlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    maxlength: "Vui lòng nhập số điện thoại hợp lệ.",
+                    number: "Vui lòng nhập số điện thoại hợp lệ."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide');
+                        var linkFW = '#Page=' + getParameters("Page", 1) + '&RowPerPage=' + getParameters("RowPerPage", 50);
+                        createCloseMessage("Thông báo", data.Message, linkFW + '&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + '');}
+                });
+                return false;
+            }
+        });
+        $("#@Html.IdFor(model => model.CityID)").change(function() {
+            var cityId = $(this).val();
+            $.post( "@Url.Action("GetDistrictByCity", "SystemDistrict")", {"cityId": cityId}, function( data ) {
+                $("#@Html.IdFor(model => model.DistrictID)").html("");
+                $.each( data.list, function( i, val ) {
+                    $("#@Html.IdFor(model => model.DistrictID)").append("<option value='"+val.ID+"'>"+val.Name+"</option>");
+                });
+            });
+        });
+     
+    });
+</script>
+<form id="CustomerForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Thông tin khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ tên</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên đăng nhập</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giới tính</label>
+                            <div class="col-sm-10">
+                                @Html.RadioButtonFor(model => model.Gender, true)
+                                Nam
+                                @Html.RadioButtonFor(model => model.Gender, false)
+                                Nữ
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày sinh</label>
+                            <div class="col-sm-10">
+                                <input class="form-control form-control-inline input-medium date-picker" id="Birthday_" name="Birthday_" size="16" type="text" value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                                <span class="help-block"> Select date </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsActive") Kích hoạt
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>
+<script type="text/javascript">
+    $("#resetpass").click(function() {
+        var customerid = @Model.ID;
+        var link = "/Admin/Customer/ResetPassword";
+        $.post(link, {"id":customerid
+        }, function(data) {
+            createMessage("Thông báo", data.Message);
+        });
+    });
+  
+</script>

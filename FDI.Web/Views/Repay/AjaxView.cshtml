@@ -1,0 +1,191 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CashAdvanceItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin ứng lương
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>                        
+                        <th>Ngày ghi nhận</th>
+                        <td>@Model.DateReturn.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền</th>
+                        <td>@string.Format("{0:0,0}", Model.Price)</td>
+
+                    </tr>
+                    <tr>
+                        <th>Hình thức thanh toán</th>
+                        @if (Model.PaymentMethodId == (int)PaymentMethod.Transfer)
+                        {
+                            <td>Chuyển khoản</td>
+                        }
+                        else if (Model.PaymentMethodId == (int)PaymentMethod.Cash)
+                        {
+                            <td>Tiền mặt</td>
+                        }
+                        else
+                        {
+                            <td>Khác</td>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Ghi chú</th>
+                        <td colspan="3">@Model.Note</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label>In phiếu</label>
+                        </th>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i>In</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none;">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pt-box">
+            <div class="pt-head">
+                <div class="left">
+                    <ul>
+
+                        <li><strong>Địa chỉ:</strong><span></span></li>
+                        <li><strong>Bộ phận:</strong><span></span></li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <strong>Mẫu số 04 – TT</strong>
+                    <span>
+                        (Ban hành theo Thông tư số 200/2014/TT-BTC
+                        Ngày 22/12/2014 của Bộ Tài chính)
+                    </span>
+                </div>
+            </div>
+            <div class="pt-name">
+                <div class="left">
+                    <h3>Giấy thanh toán tiền tạm ứng</h3>
+                    <i>Ngày ..... tháng ..... năm.....</i>
+                </div>
+                <div class="right">
+                    <ul>
+                        <li><b>Số:</b><span>@Model.Code</span></li>
+                        <li><b>Nợ:</b><span></span></li>
+                        <li><b>Có:</b><span></span></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="pt-detail">
+                <ul>
+                    <li><b>Họ tên người thanh toán:</b><span>@Model.FullNameReceipt</span></li>
+                    <li><b>Bộ phận(hoặc địa chỉ):</b></li>
+                    <li><b>Số tiền tạm ứng được thanh toán theo bảng dưới đây:</b> <span>@Model.Price.Money()</span></li>
+                </ul>
+                <table class="table table-bordered">
+                    <colgroup>
+                        <col style="width: 60%" />
+                        <col style="width: 40%" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Diễn giải</th>
+                        <th>Số tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>I.Số tiền tạm ứng</strong>
+                            <b>1. Số tạm ứng các kỳ trước chưa chi hết</b>
+                            <b>2. Số tạm ứng kỳ này:</b>
+                            <i>- Phiếu chi số .............ngày .........</i>
+                            <i>- Phiếu chi số .............ngày .........</i>
+                            <strong>II . Số tiền đã chi</strong>
+                            <b>1. Chứng từ số ...........ngày...........</b>
+                            <b>2. Chứng từ số ...........ngày...........</b>
+                            <strong>III . Chênh lệch</strong>
+                            <b>1. Số tạm ứng chi không hết ( I - II )</b>
+                            <b>2. Chi quá số tạm ứng ( II - I )</b>
+                        </td>
+                        <td>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                            <span>...</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pt-sign item-sign-4">
+                <div class="pt-item-sign">
+                    <strong>Giám đốc</strong>
+                    <i>(Ký, họ tên, đóng dấu)</i>
+                    <div class="pt-wirte-sign"></div>
+                </div>
+                <div class="pt-item-sign">
+                    <strong>Kế toán trưởng</strong>
+                    <i>(Ký, họ tên)</i>
+                    <div class="pt-wirte-sign"></div>
+                </div>
+                <div class="pt-item-sign">
+                    <strong>Kế toán thanh toán</strong>
+                    <i>(Ký, họ tên)</i>
+                    <div class="pt-wirte-sign">
+                        <div class="pt-text-sign"></div>
+                        <span>@Model.FullNameCashier</span>
+                    </div>
+                </div>
+                <div class="pt-item-sign">
+                    <strong>Người đề nghị thanh toán</strong>
+                    <i>(Ký, họ tên)</i>
+                    <div class="pt-wirte-sign"></div>
+                    <span>Nguyễn Quang Khánh</span>
+                </div>
+            </div>
+        </div>
+    </page>
+</div>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>

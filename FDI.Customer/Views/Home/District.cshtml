@@ -1,0 +1,6 @@
+﻿@model List<FDI.Simple.DistrictItem>
+<option value=""></option>
+@foreach (var item in Model)
+{
+    <option value="@item.ID" @(ViewBag.districtId == item.ID ? "selected" : "")>@item.Name.Trim()</option>
+}

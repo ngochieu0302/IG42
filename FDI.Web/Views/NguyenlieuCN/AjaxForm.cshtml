@@ -1,0 +1,82 @@
+﻿@model FDI.Simple.QLCN.NguyenlieuCNItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        callSelect2("#UnitID", "100%");
+        $("#modalForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                },
+                UnitID: {
+                    required: true,
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                },
+                UnitID:
+                {
+                    required: "Trường này bắt buộc nhập.",
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm mới nguyên liệu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên nguyên liệu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control maskPrice" placeholder="..." name="Price" id="Price" value="@Model.Price" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đơn vị</label>
+                            <div class="col-sm-10">
+                                <select name="UnitID" id="UnitID" class="form-control">
+                                    <option value="">Chọn đơn vị</option>
+                                    @foreach (var item in ViewBag.lstUnit)
+                                    {       
+                                        <option @(item.ID == Model.UnitID ? "selected" : "") value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

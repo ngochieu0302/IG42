@@ -1,0 +1,126 @@
+﻿@{
+	ViewBag.Title = "Tổng quan lương tháng";
+	Layout = "~/Views/Shared/_LayoutNew.cshtml";
+	var datenow = DateTime.Now;
+}
+
+<script src="~/Content/Admin/assets/global/plugins/select2/js/select2.full.min.js"></script>
+
+<div class="header-control">
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li><a href="/"><i class="fa fa-home"></i>Admin</a><i class="fa fa-circle"></i></li>
+			<li class="active">Bảng tổng quát hàng tháng</li>
+		</ul>
+	</div>
+	<h3 class="page-title"></h3>
+	<div class="group-form-control">
+		<form id="gridSearch" class="form-inline" role="form">
+			<div class="form-group">
+				<select id="YearId" name="YearId" class="select2">
+					@for (var i = datenow.Year - 2; i < datenow.Year + 3; i++)
+					{
+						<option @(i == datenow.Year ? "selected" : "") value="@i">@i</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-sm btn-success" id="_back"><i class="fa fa-angle-left"></i></button>
+				<select id="ddlWeek" name="ddlWeek" class="select2">
+					@for (var i = 1; i < 13; i++)
+					{
+						<option @(i == datenow.Month ? "selected" : "") value="@i">Tháng @i</option>
+					}
+				</select>
+				<button class="btn btn-sm btn-success" type="button" id="_next"><i class="fa fa-angle-right"></i></button>
+			</div>
+			<div class="form-group">
+				<a href="/TotalPersonnel" class="btn btn-sm btn-success" >Xem tổng quát</a>
+			</div>
+			<iframe id="txtArea1" style="display:none"></iframe>
+			<div class="form-group">
+				<button class="print default btn-sm btn-success" id="btn_Print">In bảng lương</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="content-control" id="Griditems">
+</div>
+<script type="text/javascript">
+	Date.prototype.getWeek = function () {
+		var onejan = new Date(this.getFullYear(), 0, 1);
+		return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+	};
+	urlLists = '@Url.Action("Detail", "TotalPersonnel")';
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#Griditems");
+        $("#YearId").select2({
+            width: '70px',
+            maximumSelectionLeng: 1
+        });
+        $("#ddlWeek").select2({
+            width: '100px',
+            maximumSelectionLeng: 1
+        });
+		function setTimeTitle(month, year) {
+			$('#monthToShow').html(month);
+			$('#yearToShow').html(year);
+		}
+		var date = new Date();
+		setTimeTitle(date.getMonth, date.getFullYear);
+
+        $('body').on("change", "#YearId", function () {
+			var year = $("#YearId").val();	
+			var month = $("#ddlWeek").val();					
+            $.post(urlLists + "?&year=" + year + "&month=" + month, function (data) {
+				$("#Griditems").html(data);
+				setTimeTitle(month, year);
+            });
+        });
+        $('body').on("change", "#ddlWeek", function () {
+			var year = $("#YearId").val();
+			var month = $("#ddlWeek").val();			
+			$.post(urlLists + "?year=" + year + "&month=" + month, function (data) {
+				$("#Griditems").html(data);
+				setTimeTitle(month, year);
+            });
+        });
+
+		$("#_back").click(function () {
+			var month = $("#ddlWeek").val();
+			month = parseInt(month) - 1;
+			var year = $("#YearId").val();			
+			if (month > 0) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?year=" + year + "&month=" + month, function (data) {
+					$("#Griditems").html(data);
+					setTimeTitle(month, year);
+				});
+			}
+        });
+		$("#_next").click(function () {
+			var month = $("#ddlWeek").val();
+			month = parseInt(month) + 1;
+			var year = $("#YearId").val();
+			if (month <= 12) {
+				$('#ddlWeek').val(month).trigger("change");
+				$.post(urlLists + "?year=" + year + "&month=" + month, function (data) {
+					$("#Griditems").html(data);
+					setTimeTitle(month, year);
+                });
+			}
+        });
+        $("select.mutil").multiSelect({ oneOrMoreSelected: '*', selectAllText: '<b>Tất cả</b>', optGroupSelectable: true });
+
+
+		$(function () {
+			$("#btn_Print").click(function () {
+				// $("#printNode").html("Ghi chú: " + $("#Note").val());
+				// $('#printTime').html($("#DateOfSale_").val());
+				$('#BoxPrint').show();
+				jQuery.print('#BoxPrint');
+				$('#BoxPrint').hide();
+			});
+		});
+    });
+</script>

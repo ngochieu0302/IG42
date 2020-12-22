@@ -1,0 +1,21 @@
+﻿@model FDI.Simple.DistrictItem
+@if (Model != null && Model.ListGoogleMapItem.Any())
+{
+    foreach (var item in Model.ListGoogleMapItem)
+    {
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-sm-6">
+            <div class="col-sm-12">
+                <span><strong style=""><a  class="ViewGooglemap" data-longitude="@item.Longitude" data-latitude="@item.Latitude">@item.Name </a></strong></span>
+                <br />
+                <span>@item.Address</span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <br />
+            <div class="col-sm-6">Tel: @item.Tel</div>
+            <div class="col-sm-6">Fax: @item.Fax</div>
+        </div>
+    </div>
+    }
+}

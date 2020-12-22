@@ -1,0 +1,128 @@
+﻿@using FDI.Areas.Admin.Controllers
+@helper ActionEdit(object id, string title, bool check = true)
+{
+if (BaseController.CheckAction("edit"))
+{
+        <a href="#@id" class="@(check?("btn btn-sm btn-default"):"")" data-event="edit" title="Chỉnh sửa: @title"><i class="fa fa-pencil-square-o" style="color: #04A827;"></i></a>
+}
+}
+
+@helper ActionView(object id, string title)
+{
+if (BaseController.CheckAction("view"))
+{
+        <a href="#@id" class="btn btn-sm btn-default" data-event="view" title="Xem nhanh: @title"><i class="fa fa-eye"></i></a>
+}
+}
+
+@helper ActionQuickView(int id, string link)
+{
+    <a href="/@link" class="btn btn-sm btn-default" target="_blank" title="Xen trên web"><i class="fa fa-long-arrow-right text-success"></i></a>
+}
+
+@helper ActionDelete(object id, string title, bool check = true)
+{
+if (BaseController.CheckAction("delete"))
+{
+        <a href="#@id" class="@(check?"btn btn-sm btn-default":"")" data-event="delete" title="Xóa: @title"><i class="fa fa-trash-o" style="color: red;"></i></a>
+}
+}
+
+@helper ActionSort(object id, string title)
+{
+if (BaseController.CheckAction("soft"))
+{
+        <a href="#@id" class="" data-event="sort" title="Sắp xếp: @title"><i class="fa fa-sort"></i></a>
+}
+}
+
+@helper ActionAdd(object id, string title)
+{
+if (BaseController.CheckAction("add"))
+{
+        <a href="#@id" class="" data-event="add" title="Chỉnh sửa: @title"><i class="fa fa-plus" style="color: red;"></i></a>
+}
+
+}
+
+@helper ActionAdd(string url)
+{
+if (BaseController.CheckAction("add"))
+{
+        <a class="btn btn-sm btn-primary" href="@url" id="btn_add" data-event="add"><span class="fa fa-plus"></span>Thêm mới</a>
+}
+}
+
+@helper ActionAddMenu(object id, string title)
+{
+if (BaseController.CheckAction("Add"))
+{
+        <a href="#@id" class="btnAddMenu" title="Thêm mới: @title"><i class="fa fa-plus" style="color: red;"></i></a>
+}
+}
+
+@helper ActionEditMenu(object id, string title)
+{
+if (BaseController.CheckAction("Add"))
+{
+        <a href="#@id" class="btnEditMenu" title="Chỉnh sửa: @title"><i class="fa fa-pencil-square-o" style="color: #04A827;"></i></a>
+}
+}
+
+@helper ActionActive(object id, string title, bool? status)
+{
+if (status == false && BaseController.CheckAction("Active"))
+{
+        <a href="#@id" class="btn btn-sm btn-default" data-event="active" title="Duyệt: @title">
+            <i class="fa fa-check"></i>
+        </a>
+}
+}
+
+@helper ActionShow(object id, string title, bool? isShow)
+{
+if (BaseController.CheckAction("show"))
+{
+        <a href="#@id" data-event="@(isShow == true ? "hide" : "show")" title="@(isShow == true ? "Ẩn" : "Hiển thị"): @title"><i class="@(isShow == true ? "fa fa-minus-circle text-default" : "fa fa-eye text-success")"></i></a>
+}
+}
+
+@helper DisplayShow(string title, bool? status)
+{
+    <i class="@(status == true ? "fa fa-check text-success" : "fa fa-times text-danger tex")" title="@(status == true ? "Đang đượcc kích hoạt" : "Đang ẩn")"></i>
+}
+@helper DisplayShowStrike(string title, bool isShow)
+{
+if (isShow)
+{
+        @title
+}
+else
+{
+        <strike>@title</strike>
+}
+}
+
+@helper RoleModule(string title)
+{
+if (BaseController.CheckAction("rolemodule"))
+{
+        <a href="#@title" class="" data-event="rolemodule" title="gán role: @title"><i class="fa fa-users"></i></a>
+}
+}
+
+@helper UserModule(object id, string title)
+{
+if (BaseController.CheckAction("usermodule"))
+{
+        <a href="#@id" class="" data-event="usermodule" title="Gán user: @title"><i class="fa fa-user"></i></a>
+}
+}
+
+@helper ActionComplete(string title)
+{
+if (BaseController.CheckAction("complete"))
+{
+        <a href="#@title" class="" data-event="complete" title="Tính năng Role: @title"><i class="fa fa-eye"></i></a>
+}
+}

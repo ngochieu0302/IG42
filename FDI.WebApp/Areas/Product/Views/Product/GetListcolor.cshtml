@@ -1,0 +1,15 @@
+﻿@model List<FDI.Simple.ColorItem>
+@{
+    var lstcolor = Request["color"];
+}
+<ul class="checkbox-container categories-list" id="lst-color">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" @(!string.IsNullOrEmpty(lstcolor) ? lstcolor.Contains(item.ID.ToString()) ? "checked" : "" : "") id="customCheck-@(item.ID)" value="@item.ID">
+                <label class="custom-control-label" for="customCheck-@(item.ID)">@item.Name</label>
+            </div>
+        </li>
+    }
+</ul>

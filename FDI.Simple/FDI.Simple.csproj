@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{187FD03C-2A93-4881-9B02-9E7A80F54F7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FDI.Simple</RootNamespace>
+    <AssemblyName>FDI.Simple</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Code cu\tps\FDI.Web\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionActiveItem.cs" />
+    <Compile Include="ActiveRoleItem.cs" />
+    <Compile Include="BannerItem.cs" />
+    <Compile Include="PolicyAgenciesItem.cs" />
+    <Compile Include="AdvertisingItem.cs" />
+    <Compile Include="AdvertisingPositionItem.cs" />
+    <Compile Include="AdvertisingTypeItem.cs" />
+    <Compile Include="AlbumItem.cs" />
+    <Compile Include="AnalysisItem.cs" />
+    <Compile Include="AppCus\CateAppItem.cs" />
+    <Compile Include="AppSimple.cs" />
+    <Compile Include="AreaItem.cs" />
+    <Compile Include="AspnetRolesItem.cs" />
+    <Compile Include="AspnetUsersInRolesItem.cs" />
+    <Compile Include="AspnetUsersIpMembershipItem.cs" />
+    <Compile Include="AspnetUsersItem.cs" />
+    <Compile Include="AssetHandoverItem.cs" />
+    <Compile Include="AssetRepairItem.cs" />
+    <Compile Include="AssetsItem.cs" />
+    <Compile Include="AttributeDynamicItem.cs" />
+    <Compile Include="AttributeOptionsItem.cs" />
+    <Compile Include="AutoCompleteCommonItem.cs" />
+    <Compile Include="AutoCompleteItem.cs" />
+    <Compile Include="BankItem.cs" />
+    <Compile Include="BaseSimple.cs" />
+    <Compile Include="BedDeskItem.cs" />
+    <Compile Include="BiasProduceItem.cs" />
+    <Compile Include="BonusTypeItem.cs" />
+    <Compile Include="BrandItem.cs" />
+    <Compile Include="CashOutWalletItem.cs" />
+    <Compile Include="CategoryItem.cs" />
+    <Compile Include="CateRecipeItem.cs" />
+    <Compile Include="CityItem.cs" />
+    <Compile Include="ColorItem.cs" />
+    <Compile Include="ContactOderDetailItem.cs" />
+    <Compile Include="ContactOrderItem.cs" />
+    <Compile Include="AgencyItem.cs" />
+    <Compile Include="ContentVoteItem.cs" />
+    <Compile Include="AddMinuteItem.cs" />
+    <Compile Include="BarcodeSouceItem.cs" />
+    <Compile Include="CusContactItem.cs" />
+    <Compile Include="CustomerAppItem.cs" />
+    <Compile Include="DNRequestWareItem.cs" />
+    <Compile Include="DNDiscountItem.cs" />
+    <Compile Include="DNPromotionItem.cs" />
+    <Compile Include="DNRequestWareHouseItem.cs" />
+    <Compile Include="DNSalesItem.cs" />
+    <Compile Include="FreightWarehouseItem.cs" />
+    <Compile Include="GroupAgencyItem.cs" />
+    <Compile Include="Logistics\OrderCarProductDetailItem.cs" />
+    <Compile Include="Logistics\OrderCarItem.cs" />
+    <Compile Include="Logistics\CarItem.cs" />
+    <Compile Include="MarketItem.cs" />
+    <Compile Include="Order\RequestWareSupplierRequest.cs" />
+    <Compile Include="Order\StorageWarehousingRequest.cs" />
+    <Compile Include="Order\UserStorageWarehousingRequest.cs" />
+    <Compile Include="PaymentMethodItem.cs" />
+    <Compile Include="PaymentOrderItem.cs" />
+    <Compile Include="QLCN\CamCNItem.cs" />
+    <Compile Include="QLCN\CateCNItem.cs" />
+    <Compile Include="QLCN\MenCNItem.cs" />
+    <Compile Include="QLCN\NguyenlieuCNItem.cs" />
+    <Compile Include="SouceItem.cs" />
+    <Compile Include="StackItem.cs" />
+    <Compile Include="CustomerPointItem.cs" />
+    <Compile Include="CustomerQuestionItem.cs" />
+    <Compile Include="CustomerReviewDetailsItem.cs" />
+    <Compile Include="CustomerReviewItem.cs" />
+    <Compile Include="DebtItem.cs" />
+    <Compile Include="DiscountItem.cs" />
+    <Compile Include="OrderDebtItem.cs" />
+    <Compile Include="SimItem.cs" />
+    <Compile Include="DateItem.cs" />
+    <Compile Include="HomeNetworkItem.cs" />
+    <Compile Include="SetupProductionItem.cs" />
+    <Compile Include="StorageFreightWarehouseItem.cs" />
+    <Compile Include="StorageWarehouseItem.cs" />
+    <Compile Include="StorageWarehouse\ProduceCatogoryItem.cs" />
+    <Compile Include="StorageWarehouse\ProduceItem.cs" />
+    <Compile Include="StorageWarehouse\ProduceModel.cs" />
+    <Compile Include="StorageWarehouse\ProduceProductDetailItem.cs" />
+    <Compile Include="StorageWarehouse\PurchaseOrderItem.cs" />
+    <Compile Include="StorageWarehouse\TotalProductToDayItem.cs" />
+    <Compile Include="StorageWarehousingItem.cs" />
+    <Compile Include="SupplieItem.cs" />
+    <Compile Include="SupplierItem.cs" />
+    <Compile Include="DNExportProductItem.cs" />
+    <Compile Include="DNTotalSalaryMonthItem.cs" />
+    <Compile Include="ExportProductItem.cs" />
+    <Compile Include="DNActiveRoleItem.cs" />
+    <Compile Include="DNExportItem.cs" />
+    <Compile Include="ExportProductDetailItem.cs" />
+    <Compile Include="DNMailStatusItem.cs" />
+    <Compile Include="ExportProductValueItem.cs" />
+    <Compile Include="CashAdvanceItem.cs" />
+    <Compile Include="GeneralTotalItem.cs" />
+    <Compile Include="StatisticsItem.cs" />
+    <Compile Include="Supplier\SupplierAmountProductItem.cs" />
+    <Compile Include="TemplateDocumentItem.cs" />
+    <Compile Include="TherapyHistoryItem.cs" />
+    <Compile Include="TokenDeiveItem.cs" />
+    <Compile Include="TotalSalaryMonthItem.cs" />
+    <Compile Include="TotalStorageWareItem.cs" />
+    <Compile Include="TypeCriteriaItem.cs" />
+    <Compile Include="LevelVoteItem.cs" />
+    <Compile Include="DNCabinetDocumentItem.cs" />
+    <Compile Include="DNDocumentLevelRoomItem.cs" />
+    <Compile Include="DNDocumentRoomItem.cs" />
+    <Compile Include="CustomerRewardItem.cs" />
+    <Compile Include="DNCardItem.cs" />
+    <Compile Include="DNDrawerItem.cs" />
+    <Compile Include="DNExchangeItem.cs" />
+    <Compile Include="DNFileMailItem.cs" />
+    <Compile Include="DNNewsCommentItem.cs" />
+    <Compile Include="DNNewsSSCItem.cs" />
+    <Compile Include="DNGroupMailSSCItem.cs" />
+    <Compile Include="CostTypeItem.cs" />
+    <Compile Include="DNComboItem.cs" />
+    <Compile Include="DNImportItem.cs" />
+    <Compile Include="DNLevelRoomItem.cs" />
+    <Compile Include="DNMailSSCItem.cs" />
+    <Compile Include="DNPacketItem.cs" />
+    <Compile Include="DNRoomItem.cs" />
+    <Compile Include="DNSalaryItem.cs" />
+    <Compile Include="DNCriteriaItem.cs" />
+    <Compile Include="DNTimeJobItem.cs" />
+    <Compile Include="DNCalendarWeeklyScheduleItem.cs" />
+    <Compile Include="DNCalendarItem.cs" />
+    <Compile Include="DNTreeItem.cs" />
+    <Compile Include="DNUnitItem.cs" />
+    <Compile Include="DNUserBedDeskItem.cs" />
+    <Compile Include="DNUserModuleActiveItem.cs" />
+    <Compile Include="DNUsersInRolesItem.cs" />
+    <Compile Include="DNRolesItem.cs" />
+    <Compile Include="DNEditScheduleItem.cs" />
+    <Compile Include="DNUserItem.cs" />
+    <Compile Include="DNWeekly_ScheduleItem.cs" />
+    <Compile Include="DNWeeklyItem.cs" />
+    <Compile Include="DN_ScheduleItem.cs" />
+    <Compile Include="DayOffItem.cs" />
+    <Compile Include="DepartmentItem.cs" />
+    <Compile Include="ImportProductItem.cs" />
+    <Compile Include="LogDataItem.cs" />
+    <Compile Include="LogItem.cs" />
+    <Compile Include="MapCustomerItem.cs" />
+    <Compile Include="ModulePageItem.cs" />
+    <Compile Include="NodataItem.cs" />
+    <Compile Include="PacketItem.cs" />
+    <Compile Include="PartnerItem.cs" />
+    <Compile Include="FileObj.cs" />
+    <Compile Include="ExecuteItem.cs" />
+    <Compile Include="FileItem.cs" />
+    <Compile Include="GoogleMapItem.cs" />
+    <Compile Include="HtmlMapItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PriceAgencyItem.cs" />
+    <Compile Include="ProductBrandItem.cs" />
+    <Compile Include="ProductCodeItem.cs" />
+    <Compile Include="ProductionCostItem.cs" />
+    <Compile Include="ProductSizeItem.cs" />
+    <Compile Include="ProfitItem.cs" />
+    <Compile Include="PromotionItem.cs" />
+    <Compile Include="ReceiptPaymentItem.cs" />
+    <Compile Include="RewardHistoryItem.cs" />
+    <Compile Include="SendCardItem.cs" />
+    <Compile Include="SEOItem.cs" />
+    <Compile Include="HtmlItem.cs" />
+    <Compile Include="ShopGroupItem.cs" />
+    <Compile Include="ShopProductDetailItem.cs" />
+    <Compile Include="ShopProductPictureItem.cs" />
+    <Compile Include="ShopProductValueItem.cs" />
+    <Compile Include="ShopStatusItem.cs" />
+    <Compile Include="SizeItem.cs" />
+    <Compile Include="EnterprisesItem.cs" />
+    <Compile Include="STGroupItem.cs" />
+    <Compile Include="StorageItem.cs" />
+    <Compile Include="StorageProductItem.cs" />
+    <Compile Include="TreeViewItem.cs" />
+    <Compile Include="UserViewItem.cs" />
+    <Compile Include="WalletCustomerItem.cs" />
+    <Compile Include="WalletItem.cs" />
+    <Compile Include="WalletOrderHistoryItem.cs" />
+    <Compile Include="WardsItem.cs" />
+    <Compile Include="WebsiteItem.cs" />
+    <Compile Include="ModeItem.cs" />
+    <Compile Include="PageItem.cs" />
+    <Compile Include="ModuleSettingItem.cs" />
+    <Compile Include="EventItem.cs" />
+    <Compile Include="NewsItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RateCityItem.cs" />
+    <Compile Include="RateItem.cs" />
+    <Compile Include="System_FileItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VoteTypeItem.cs" />
+    <Compile Include="VoteItem.cs" />
+    <Compile Include="ModuleControlItem.cs" />
+    <Compile Include="DocumentFilesItem.cs" />
+    <Compile Include="DocumentItem.cs" />
+    <Compile Include="LanguagesItem.cs" />
+    <Compile Include="MenuGroupsItem.cs" />
+    <Compile Include="MenusItem.cs" />
+    <Compile Include="OrderDetailItem.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="SuggestionsItem.cs" />
+    <Compile Include="SysPageItem.cs" />
+    <Compile Include="SystemMessageTemplateItem.cs" />
+    <Compile Include="CustomerContactItem.cs" />
+    <Compile Include="CountryItem.cs" />
+    <Compile Include="CustomerItem.cs" />
+    <Compile Include="CustomerGroupItem.cs" />
+    <Compile Include="DistrictItem.cs" />
+    <Compile Include="FAQAnswerItem.cs" />
+    <Compile Include="FAQQuestionItem.cs" />
+    <Compile Include="GalleryPictureItem.cs" />
+    <Compile Include="GalleryVideoItem.cs" />
+    <Compile Include="ModuleadminItem.cs" />
+    <Compile Include="ModuleItem.cs" />
+    <Compile Include="PictureItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductCategoryItem.cs" />
+    <Compile Include="ProductItem.cs" />
+    <Compile Include="ProductTypeItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolesItem.cs" />
+    <Compile Include="Role_ModuleActiveItem.cs" />
+    <Compile Include="SystemActionItem.cs" />
+    <Compile Include="SystemConfigItem.cs" />
+    <Compile Include="SystemLogItem.cs" />
+    <Compile Include="TagItem.cs" />
+    <Compile Include="UserItem.cs" />
+    <Compile Include="UserModuleActiveItem.cs" />
+    <Compile Include="VideoItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WeekItem.cs" />
+    <Compile Include="WertherItem.cs" />
+    <Compile Include="workshop\CompanyItem.cs" />
+    <Compile Include="workshop\WorkShopItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FDI.Base\FDI.Base.csproj">
+      <Project>{689f0818-80d1-4e5c-a498-806c59e25a3a}</Project>
+      <Name>FDI.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FDI.CORE\FDI.CORE.csproj">
+      <Project>{2c81f539-50e6-47bf-bc49-54daf90867b9}</Project>
+      <Name>FDI.CORE</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

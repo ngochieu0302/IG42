@@ -1,0 +1,128 @@
+﻿@using FDI.CORE
+@model FDI.Simple.TMRatingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+
+    $(function () {
+        
+        registerGallery();
+        $("#modalForm").validate({
+            rules: {
+                Content:
+                {
+                    required: true,
+                    minlength: 3
+                },
+            },
+            messages: {
+                Content:
+                {
+                    required: "Trường bắt buộc nhập.",
+                    minlength: "Tên quá ngắn",
+                },
+            },
+            submitHandler: function () {
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+        $('#FullName').autocomplete({
+            serviceUrl: "/TMRating/TmCustomerAuto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $("#TM_CustomerID").val(el.ID);
+                $('#FullName').val(el.value);
+                $('#Email').val(el.data);
+                $('#Mobile').val(el.title);
+            }
+        });
+
+        $('#Name').autocomplete({
+            serviceUrl: "/TMRating/ProductAuto",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#Name').val(el.value);
+                $('#ProductID').val(el.ID);
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-picture-o"></i>Thông tin đánh giá sản phẩm
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên khách hàng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="FullName"  value="@(Model.TMCustomerItem != null ? Model.TMCustomerItem.FullName : string.Empty)" />
+                                <input type="hidden" name="TM_CustomerID" id="TM_CustomerID" value="@(Model.TM_CustomerID ?? 0)"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Email khách hàng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Email" name="Email" value="@(Model.TMCustomerItem != null ? Model.TMCustomerItem.Email : string.Empty)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">SĐT khách hàng</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Mobile"  name="Mobile"  value="@(Model.TMCustomerItem != null ? Model.TMCustomerItem.Mobile : string.Empty)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Tên sản phẩm</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" placeholder="..."  id="Name" value="@(Model.ProductItem != null ? Model.ProductItem.Name : string.Empty)" />
+                                <input type="hidden" name="ProductID" id="ProductID" value="@(Model.ProductID ?? 0)"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nội dung</label>
+                            <div class="col-md-10">
+                                <textarea rows="10" class="form-control" placeholder="..." name="Content" id="Content">@Model.Content</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow") Duyệt
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-success">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>
+

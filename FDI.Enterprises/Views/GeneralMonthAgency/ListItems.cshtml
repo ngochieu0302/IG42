@@ -1,0 +1,66 @@
+﻿@using FDI.CORE
+@model IEnumerable<FDI.Simple.GeneralTotalItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var a = Model.Sum(m => m.TotalOrder);
+    var b = Model.Sum(m => m.TotalReceipt);
+    var c = a + b;
+    var d = Model.Sum(m => m.TotalPayment);
+    var e = Model.Sum(m => m.TotalCash);
+    var f = Model.Sum(m => m.TotalRepay);
+    var g = e - f;
+    var h = c - d - g;
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="table table-bordered table-calender table-striped" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th><strong class="text-center">Tháng</strong> </th>
+                        <th><strong class="text-center">Đơn hàng<br />(A)</strong></th>
+                        <th><strong class="text-center">Khác ĐH<br />(B)</strong> </th>
+                        <th><strong class="text-center">Thu<br />(C = A + B)</strong></th>
+                        <th><strong class="text-center">Chi<br />(D)</strong></th>
+                        <th><strong class="text-center">Ứng<br />(E)</strong></th>
+                        <th><strong class="text-center">Trả ứng<br />(F)</strong></th>
+                        <th><strong class="text-center">Ứng NV<br />(G = E - F)</strong></th>
+                        <th><strong class="text-center">TK KT<br />(H = C - D - G)</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.Month</td>
+                            <td class="text-right ">@item.TotalOrder.Money()</td>
+                            <td class="text-right ">@item.TotalReceipt.Money()</td>
+                            <td class="text-right ">@((item.TotalOrder + item.TotalReceipt).Money())</td>
+                            <td class="text-right ">@item.TotalPayment.Money()</td>
+                            <td class="text-right ">@item.TotalCash.Money()</td>
+                            <td class="text-right ">@item.TotalRepay.Money()</td>
+                            <td class="text-right  ">@((item.TotalCash - item.TotalRepay).Money())</td>
+                            <td class="text-right ">@((item.TotalReceipt + item.TotalOrder - item.TotalPayment + item.TotalRepay - item.TotalCash).Money())</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>TỔNG</td>
+                        <td class="text-right ">@(a.Money())</td>
+                        <td class="text-right ">@(b.Money())</td>
+                        <td class="text-right ">@(c.Money())</td>
+                        <td class="text-right ">@(d.Money())</td>
+                        <td class="text-right ">@(e.Money())</td>
+                        <td class="text-right ">@(f.Money())</td>
+                        <td class="text-right ">@(g.Money())</td>
+                        <td class="text-right ">@(h.Money())</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

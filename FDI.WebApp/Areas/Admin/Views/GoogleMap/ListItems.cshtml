@@ -1,0 +1,105 @@
+﻿@model FDI.Simple.ModelGoogleMapItem
+@{
+    ViewBag.Title = "ListCity";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col />
+                    <col/>
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col class="colgroup action" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="act_roles">
+                        <input value="" type="checkbox" class="checkAll"/></th>
+                    <th class="text-center"><a href="#Field=ID">ID<span /></a></th>
+                    <th><a href="#Field=Name">Tiêu đề<span /></a></th>
+                    <th>Địa chỉ</th>
+                    <th class="text-center">Tel</th>
+                    <th class="text-center">Fax</th>
+                    <th class="text-center">Kinh độ</th>
+                    <th class="text-center">Vĩ độ</th>
+                    <th class="text-center">Mạng lưới</th>
+                    <th class="text-center"><a href="#Field=Show">Hiển thị<span /></a></th>
+                    <th class="text-center">Thao tác</th>
+                </tr>
+                </thead>
+                @foreach (var item in Model.ListGoogleMapItem.OrderByDescending(m => m.ID))
+                {
+                    <tr title="@item.Name">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">
+                            @item.ID
+                        </td>
+                        <td>
+                            @Grid.DisplayShowStrike(item.Name, item.IsShow.HasValue && item.IsShow.Value)
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @item.Tel
+                        </td>
+                        <td>
+                            @item.Fax
+                        </td>
+                        <td>
+                            @item.Longitude
+                        </td>
+                        <td>
+                            @item.Latitude
+                        </td>
+                        @{
+                            switch (item.Type)
+                            {
+                                case 1:
+                                    <td>ATM</td>
+                                    break;
+                                case 2:
+                                    <td>Chi nhánh</td>
+                                    break;
+                                case 3:
+                                    <td>Chi nhánh</td>
+                                    break;
+                                default:
+                                    <td></td>
+                                    break;
+                            }
+                        }
+
+                        <td class="text-center">@Grid.ActionShow(item.ID, item.Name, item.IsShow)</td>
+                        <td class="text-right">
+                            @Grid.ActionEdit(item.ID, item.Name)
+                            @Grid.ActionDelete(item.ID, item.Name)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

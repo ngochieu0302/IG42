@@ -1,0 +1,74 @@
+﻿@using FDI.Utils
+@model FDI.Base.FAQ_Question
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">Thông tin về câu hỏi</header>
+    <table class="table table-bordered">
+        <tr>
+            <td class="col-sm-4">
+                <label>Nội dung</label>
+            </td>
+            <td>
+                @Html.Raw(Model.Content)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-sm-4">
+                <label>Họ tên</label>
+
+            </td>
+            <td>
+                @Html.Raw(Model.Fullname)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-4">
+                <label>Email</label></td>
+            <td>
+                @Html.Raw(Model.Email)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-4">
+                <label>Điện thoại</label></td>
+            <td>
+                @Html.Raw(Model.Phone)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-sm-4">
+                <label>Địa chỉ</label></td>
+            <td>
+                @Html.Raw(Model.Address)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-4">
+                <label>Ngày gửi</label></td>
+            <td>
+                @Model.DateCreated.Value.Format("dd/MM/yyyy")
+            </td>
+        </tr>
+
+    </table>
+    <header class="panel-heading font-bold">Câu trả lời</header>
+    <table class="table table-bordered">
+        <tr>
+            <td class="col-sm-4">
+                <label>Nội dung</label></td>
+            <td>
+                @if (Model.FAQ_Answer != null && Model.FAQ_Answer.FirstOrDefault() != null)
+                {
+                    @Html.Raw(Model.FAQ_Answer.FirstOrDefault().Content)
+                }
+            </td>
+        </tr>
+    </table>
+</section>
+
+

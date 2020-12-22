@@ -1,0 +1,42 @@
+﻿[
+  {
+    "outputFile": "Content/Admin/css/layout.css",
+    "inputFile": "Content/Admin/sass/layouts/layout/layout.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/bootstrap.css",
+    "inputFile": "Content/Admin/sass/bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/custom.css",
+    "inputFile": "Content/Admin/sass/layouts/layout/custom.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/plugins.css",
+    "inputFile": "Content/Admin/sass/global/plugins.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/components.css",
+    "inputFile": "Content/Admin/sass/global/components.scss"
+  },
+  {
+    "outputFile": "Content/Admin/css/login.css",
+    "inputFile": "Content/Admin/sass/pages/login.scss"
+  },
+  
+  {
+    "outputFile": "Content/Publishing/css/styles.css",
+    "inputFile": "Content/Publishing/scss/styles.scss",
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFile": "Content/Publishing/css/plugins.css",
+    "inputFile": "Content/Publishing/scss/plugins.scss"
+  },
+  {
+    "outputFile": "Areas/Setting/Content/css/_setting_module.css",
+    "inputFile": "Areas/Setting/Content/css/_setting_module.scss"
+  }
+]

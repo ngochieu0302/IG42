@@ -1,0 +1,3 @@
+﻿@using System.Web.Script.Serialization
+@model IEnumerable<FDI.Simple.DNUserItem>
+<input type="hidden" id="DNUserItems" value="@(new JavaScriptSerializer().Serialize(Model))" />

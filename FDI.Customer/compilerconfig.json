@@ -1,0 +1,30 @@
+﻿[
+  {
+    "outputFile": "Content/Publishing/css/layout.css",
+    "inputFile": "Content/Publishing/sass/layouts/layout3/layout.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/bootstrap.css",
+    "inputFile": "Content/Publishing/sass/bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/custom.css",
+    "inputFile": "Content/Publishing/sass/layouts/layout3/custom.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/plugins.css",
+    "inputFile": "Content/Publishing/sass/global/plugins.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/components.css",
+    "inputFile": "Content/Publishing/sass/global/components.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/login.css",
+    "inputFile": "Content/Publishing/sass/pages/login-3.scss"
+  },
+  {
+    "outputFile": "Content/Publishing/css/blue.css",
+    "inputFile": "Content/Publishing/sass/layouts/layout/themes/blue.scss"
+  }
+]

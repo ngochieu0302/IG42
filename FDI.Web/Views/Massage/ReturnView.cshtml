@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script>
+    $(function () {
+        
+        $('.checkboxR').change(function () {
+            var totalReturn = parseFloat($("#totalReturn").html().replace(/[,]+/g, ''));
+            var price = $(this).attr("data-price");
+            var sale = $(this).attr("data-sale");
+            if (this.checked) {
+                totalReturn += price - price * sale / 100;
+            } else {
+                totalReturn -= price - price * sale / 100;
+            }
+            $("#totalReturn").html(numeral(totalReturn).format('0,0'));
+        });
+
+        $('#searchOrder').autocomplete({
+            serviceUrl: "/Admin/Order/AutoOrder",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $("#searchOrder").val("");
+                $.post("/Admin/Order/ReturnProduct", { id: el.ID }, function (data) {
+                    if (data.length > 0) {
+                        $("#tblReturn tbody").html(data);
+                        $("#orderCode").html(el.value);
+                        $("#orderKH").html(el.name);
+                        $("#totalReturn").html(numeral(el.Total).format('0,0'));
+                        $("#txtNote").val("Nhập trả hàng cho đơn hàng:" + el.value);
+                        $("#UserIDReturn").val(el.User);
+                        $("#CustomerReturn").val(el.ID1);
+                    }
+                });
+            },
+        });
+    });
+</script>
+<form id="ReturnOrderForm" class="waitMe">
+    <div class="col-sm-8">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Chi tiết đơn hàng</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" id="searchOrder" class="form-control" placeholder="Nhập mã hoặc tên hàng hóa" />
+                        </div>
+                        <div class="col-sm-12" style="margin-top: 10px">
+                            <table class="gridView" id="tblReturn" cellspacing="1">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mã hàng</th>
+                                        <th>Tên hàng</th>
+                                        <th>Giá bán</th>
+                                        <th>(% ↓)</th>
+                                        <th>Tiền trả</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-sm-4">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thông tin phiếu</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Mã hóa đơn</label>
+                        <div class="col-sm-8">
+                            <label class="control-label" id="orderCode">Chưa nhập</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Khách hàng</label>
+                        <div class="col-sm-8">
+                            <label class="control-label" id="orderKH">Chưa nhập</label>
+                            <input type="hidden" id="CustomerReturn" name="CustomerReturn"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Ngày trả</label>
+                        <div class="col-sm-8">
+                            <input class="input-sm input-s date-picker form-control valid" id="NgayNhap" name="NgayNhap" size="16" type="text" value="@(DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                        </div>
+                        <input type="hidden" id="UserIDReturn" name="UserIDReturn" value="" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Ghi chú</label>
+                        <div class="col-sm-8">
+                            <textarea rows="3" class="form-control" name="txtNote" id="txtNote"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Tổng tiển</label>
+                        <div class="col-sm-8">
+                            <label class="control-label" id="totalReturn">0</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Tiền đưa khách</label>
+                        <div class="col-sm-8">
+                            <input name="ReturnPrice" id="ReturnPrice" class="form-control maskPrice"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</form>

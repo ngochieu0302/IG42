@@ -1,0 +1,367 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.Simple
+@using FDI.CORE
+@model FDI.Simple.ModelStorageWarehousingActiveItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var lst = new List<ImportProductItem>();
+    foreach (var items in Model.ListCateValueItems.SelectMany(item => item.ListProductValueItems))
+    {
+        lst.AddRange(items.ListImportProductItems);
+    }
+        //var date = DateTime.Now.ToString("dd/mm/yyyy");
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.StorageWarehousingItem.ID" />
+    <input type="hidden" name="UserActive" id="UserActive" value="@ViewBag.UserID" />
+    <input type="hidden" name="jsonlist" id="jsonlist" value="@(new JavaScriptSerializer().Serialize(lst))" />
+    <div class="modal-body npd">
+        <div class="tabs-bookatable-popup">
+            <div class="box-a-table-wrap">
+                <div class="user-order" style="width: 70%">
+                    <div class="tab-content ct-tabs-bookatable">
+                        <div class="tab-pane fade active in" id="tab_1">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã SP</th>
+                                            <th>Tên SP</th>
+                                            <th class='text-center'>Số lượng</th>
+                                            <th class='text-center'>đơn vị</th>
+                                            <th class='text-center'>Giá nhập</th>
+                                            <th class='text-center'>BarCode</th>
+                                            <th class='text-center'>Thành tiền</th>
+                                            <th>Chi tiết</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.ListCateValueItems != null || Model.ListCateValueItems.Any())
+                                        {
+                                            foreach (var item in Model.ListCateValueItems)
+                                            {
+                                            <tr class="data">
+                                                <td>@(stt++)</td>
+                                                <td>@item.Code</td>
+                                                <td>@item.Name
+                                                    <input type="hidden" class="inputValue" value="@item.ID"/></td>
+                                                <td class="inputValue">@item.Quantity</td>
+                                                <td>@item.Unitname</td>
+                                                <td class="inputValue">@item.PriceNew</td>
+                                                <td class="inputValue">@(item.Barcode)</td>
+                                                <td class="text-right">@((item.PriceNew * item.Quantity).Money()) <input type="hidden" class="inputValue" value="@item.ID"/></td>
+                                                <td><a href="javascript;" data-id="@item.ID" class="ViewCate_Details">Xem chi tiết</a></td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-default pdelete" data-pid="@item.ID"><i class="fa fa-times" style="color: red;"></i></button>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="10">Hiện tại trong kho đang hết hàng</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-order" style="width: 30%; height: calc(100vh - 104px);">
+                    <div class="title-box-order">
+                        <i class="fa fa-info"></i>Thông tin về phiếu nhập
+                    </div>
+                    <div class="user-detail-order">
+                        <div class="form-group">
+                            <div class="input-group" title="Mã phiếu nhập">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-barcode">Mã nhập</i>
+                                </div>
+                                <input type="hidden" name="KeyOrder" value="@Model.StorageWarehousingItem.KeyGuid"/>
+                                <input type="text" class="form-control" disabled value="@(Model.StorageWarehousingItem.Code ?? DateTime.Now.ToString("yyMMddHHmm"))" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Nhân viên nhập kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user">Nhân viên</i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@ViewBag.User" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ngày nhập kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o">Ngày Yêu cầu</i>
+                                </div>
+                                <input class="form-control" type="date" name="DateCreated_" value="@(Model.StorageWarehousingItem.DateCreated != null ? Model.StorageWarehousingItem.DateCreated.DecimalToString("yyyy-MM-dd") : DateTime.Now.Format("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Tổng tiền nhập">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Tổng</i>
+                                </div>
+                                <input class="form-control maskPrice" readonly="" id="TotalPrice" name="TotalPrice" value="@((Model.Payments + Model.Discount).Money())">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Thanh toán">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money">Thanh toán</i>
+                                </div>
+                                <input type="text" class="form-control maskPrice" id="Payment" name="Payment" placeholder="Thanh toán" value="">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ghi chú">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-sticky-note-o">Ghi chú</i>
+                                </div>
+                                <textarea rows="5" id="Note" name="Note" class="form-control" placeholder="Ghi chú (*)">@Model.StorageWarehousingItem.Note</textarea>
+                            </div>
+                        </div>
+                        <div class="select-order">
+                            <table class="gridView table table-striped table-bordered" id="">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên SP</th>
+                                        <th class='text-center'>số lượng</th>
+                                        <th class='text-center'>Giá nhập</th>
+                                        <th class='text-center'>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.StorageWarehousingItem.LstImport != null)
+                                    {
+                                        foreach (var item in Model.StorageWarehousingItem.LstImport.Where(c => c.IsDelete == false))
+                                        {
+                                        <tr class="data">
+                                            <td>@(stt++)</td>
+                                            <td>@item.ProductName</td>
+                                            <td>@string.Format("{0:0.##}", item.Quantity)</td>
+                                            <td>@string.Format("{0:0,0}", item.Price)</td>
+                                            <td class="text-right total total-@item.CateID">@string.Format("{0:0,0}", item.TotalPrice)</td>
+                                        </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" @(!Model.ListCateValueItems.Any() ? "disabled" : "") data-event="PrintNew" id="PrintNew"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    $(function () {
+        $("#Payment").change(function () {
+            var payment = parseFloat($(this).val() !== "" ? $(this).val().replace(/[,]+/g, '') : "0");
+            var total = parseFloat($("#TotalPrice").val() !== "" ? $("#TotalPrice").val().replace(/[,]+/g, '') : "0");
+            if (payment > total) {
+                toastr["error"]("Vượt quá tiền hóa đơn");
+                $("#Payment").val(numeral(total).format('0,0'));
+            }
+        });
+        $("body").on("click", ".ViewCate_Details", function () {
+            var id = $(this).data("id");
+            var urlform = '@Url.Action("ViewCateDetails")';
+            $.post(urlform, { id: id }, function (data) {
+                $("#dialog-form-3 .modal-title").html("Chi tiết sản phẩm");
+                $("#dialog-form-3 #dialog-form-ajax").html(data);
+                $('#dialog-form-3').modal('show');
+            });
+            return false;
+        });
+        $("#frm-modal").validate({
+            rules: {
+                Note:
+				{
+				    required: true
+				}
+            },
+            messages: {
+                Note:
+				{
+				    required: "Xin mời nhập ghi chú."
+				}
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post("/Utility/DeleteImportwareActive?key=" + getCookie('CodeLogin'), function () {
+                    var check = false;
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        var item = {
+                            ProductID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2],
+                            BarCode: ret[3],
+                            CatevalueId: ret[4],
+                            Key: getCookie('CodeLogin')
+                        };
+                        console.log(item);
+                        check = true;
+                        $.post("/Utility/AddImportwareActive?json=" + JSON.stringify(item), function () { });
+                    });
+                    if (check) {
+                        $.post("/WarehouseActive/Actions", $("#frm-modal").serialize(), function (data) {
+                            $("#btnSave").prop('disabled', false);
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                                $('#BoxPrint').show();
+                                jQuery.print('#BoxPrint');
+                                $('#BoxPrint').hide();
+                                createCloseMessage("Thông báo", data.Message, ""); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    } else {
+                        $("#btnSave").prop('disabled', false);
+                        toastr["error"]("Chưa có sản phẩm nào nhập kho");
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+                            <li><img src="https://fditech.vn/Content/Publishing/images/logo-foo.png" width="200px" height="90px" title="logo"/></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <div class="pt-name">
+                    <div class="center">
+                        <h3>PHIẾU XUẤT KHO</h3>
+                        <i> Ngày @DateTime.Now.Day tháng @DateTime.Now.Month năm @DateTime.Now.Year</i>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="right">
+                        <ul>
+                            <li><b>Số:</b><span>@Model.StorageWarehousingItem.Code</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-name">
+                   <div class="pt-infor">
+                       <ul>
+                           <li><span><b>Họ tên người nhận hàng:</b> @Model.AgentSaleItem.Name</span><span><b>Điện thoại:</b> @Model.AgentSaleItem.Phone</span></li>
+                           <li><b>Địa chỉ:</b> @Model.AgentSaleItem.Address</li>
+                       </ul>
+                   </div>
+                </div>
+                <div class="pt-detail">
+                    <table class="table table-bordered">
+                        
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Sản phẩm</th>
+                                <th>Barcode</th>
+                                <th>Giá bán</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        @if (Model.ListCateValueItems != null)
+                        {
+                            <tbody>
+                            
+                                @{
+                                    var stt1 = 1;
+                                    foreach (var item in Model.ListCateValueItems)
+                                    {
+                                        <tr>
+                                            <td>@stt1</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Barcode</td>
+                                            <td>@item.PriceCost.Money()</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.PriceNew.Money()</td>
+                                        </tr>
+                                        stt1++;
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr style="text-align: left">
+                                    <td colspan="5"><b>Tổng: </b></td>
+                                    <td colspan="1"><b>@(Model.ListCateValueItems.Sum(c => c.PriceNew).Money())</b></td>
+                                </tr>
+                            </tfoot>
+                        }
+                    </table>
+                </div>
+                <div class="pt-name">
+                   <div class="pt-infor">
+                       <ul>
+                           <li><span><b>Đại lý: </b> @Model.AgentSaleItem.AgentGroup</span><span><b>Chiết khấu: </b> @Model.AgentSaleItem.Discount % = @(Model.Discount.Money()) vnđ</span></li>
+                            <li><b>Thành tiền: </b> @Model.Payments.Money() vnđ</li>
+                           <li><b>Bằng chữ: </b> @Model.Payments.NumberToWord(" đồng").</li>
+                       </ul>
+                   </div>
+                </div>
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Thủ kho</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người giao hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page>
+</div>

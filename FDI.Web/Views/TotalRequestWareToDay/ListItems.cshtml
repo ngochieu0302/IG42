@@ -1,0 +1,121 @@
+﻿@using FDI.CORE
+@model List<FDI.Simple.DNRequestWareTotalItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<form id="RoleForm">
+    <div id="mygird">
+        <div class="box-control">
+            <div class="scrollable box-control-content">
+                <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><a href="#Field=Code">Sản phẩm</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số lượng</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số lượng đã nhập</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số lượng chưa chốt</a></th>
+                            <th class="text-center"><a href="#Field=Code">NCC</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số ĐT</a></th>
+                            <th class="text-center"><a href="#Field=Code">Đơn giá</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số lượng nhập</a></th>
+                            <th class="text-center"><a href="#Field=Code">Số lượng còn</a></th>
+
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            var rowspan = item.Details.Count() == 1 || item.Details.Count() == 0 ? 2 : item.Details.Count() + 1;
+
+                            <tr title="@item.Today">
+                                <td rowspan="@rowspan" class="text-center">@item.ProductName</td>
+                                <td rowspan="@rowspan" class="text-center">@item.Quantity.Quantity()</td>
+                                <td rowspan="@rowspan" class="text-center">@(item.QuantityActive??0)</td>
+                                <td rowspan="@rowspan" class="text-center">@(item.QuantityNotConfirm ==null? "0": item.QuantityNotConfirm.Quantity())</td>
+                            </tr>
+                            foreach (var supplier in item.Details)
+                            {
+                                <tr>
+                                    <td>@supplier.SupplierName </td>
+                                    <td>@supplier.SupplierPhone </td>
+                                    <td><input type="number" name="inputprice" value="@supplier.Price" class="inputprice" required="required" /> </td>
+                                    <td><input type="number" name="inputform" value="@supplier.Quantity" class="inputform" />  </td>
+                                    <td>@supplier.QuantityActive </td>
+                                    <td><a data-supplier="@supplier.SupplierId" data-product="@supplier.ProductId" class="btn btn-sm btn-default btn_Inport"><i class="fa fa-save" style="color: #04A827;"></i></a></td>
+                                </tr>
+                            }
+                            if (item.Details.Count == 0)
+                            {
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        registerGridView('#mygird');
+
+        $("#RoleForm").validate({
+            rules: {
+                inputform:
+                {
+                    required: true,
+                    min:0,
+                    maxlength: 255
+                }
+            },
+            messages: {
+
+            }
+        });
+
+        $(".btn_Inport").click(function () {
+         
+            if (!$(this).parent().parent().find(".inputprice").valid()) {
+                return;
+            };
+            if (!$(this).parent().parent().find(".inputform").valid()) {
+                return;
+            };
+
+            var obj = {
+                productId: $(this).data("product"),
+                supplierId: $(this).data("supplier"),
+                quantity: $(this).parent().parent().find(".inputform").val(),
+                Price: $(this).parent().parent().find(".inputprice").val(),
+                ToDayCode: '@Request.QueryString["todayCode"]'
+            };
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(obj),
+                url: "@Url.Action("SaveSupplier", "TotalProductToDay")",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    // code here
+                    if (data.Erros == false) {
+                        createCloseMessage("Thông báo", data.Message);
+                    } else {
+                        createMessage("error", data.Message);
+                    }
+                }
+            });
+
+        });
+
+    });
+</script>

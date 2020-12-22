@@ -1,0 +1,22 @@
+﻿@{
+    Layout =  "~/Views/Shared/_Meta.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function() {
+        urlLists = '@Url.Action("AjaxTreeSelect", "Module")';
+        urlViewRole = '@Url.Action("AjaxUserForm", "Module")';
+        urlFormModule = '@Url.Action("AjaxRoleForm", "Module")';
+        urlPostAction1 = '@Url.Action("Actions", "Module", new {@do = "Update", @abc = "True"})';
+        urlPostAction2 = '@Url.Action("Actions", "Module", new {@do = "usermodule", @a = "True"})';
+        urlPostAction3 = '@Url.Action("Actions", "Module", new {@do = "rolemodule", @a = "True"})';
+    });
+</script>
+
+    <div class="header-control">
+        </div>
+<h3 class="page-title"></h3>
+<div class="group-form-control">
+    <div class="btn-group">
+        @Grid.ActionAdd(Url.Action("Actions"))
+    </div>
+</div>

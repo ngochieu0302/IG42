@@ -1,0 +1,119 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.GetAPI", "FDI.GetAPI\FDI.GetAPI.csproj", "{E600480A-F293-4BC1-AF7C-B5773C37B98E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Simple", "FDI.Simple\FDI.Simple.csproj", "{187FD03C-2A93-4881-9B02-9E7A80F54F7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.DA", "FDI.DA\FDI.DA.csproj", "{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Utils", "FDI.Utils\FDI.Utils.csproj", "{B34B3278-35A8-4426-9564-F148F5220F09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Admin", "FDI.Admin\FDI.Admin.csproj", "{5441F703-5033-4BA5-BE5D-5D805282F7B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.MvcAPI", "FDI.MvcAPI\FDI.MvcAPI.csproj", "{72A106C5-8798-4005-B898-3442D552FD9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Enterprises", "FDI.Enterprises\FDI.Enterprises.csproj", "{5F1AFD1B-27C7-46C5-AE4D-344C249AFFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Web", "FDI.Web\FDI.Web.csproj", "{F70F0CF3-20E4-4DE1-96EB-CDE7F235690D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Base", "FDI.Base\FDI.Base.csproj", "{689F0818-80D1-4E5C-A498-806C59E25A3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.CORE", "FDI.CORE\FDI.CORE.csproj", "{2C81F539-50E6-47BF-BC49-54DAF90867B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E600480A-F293-4BC1-AF7C-B5773C37B98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E600480A-F293-4BC1-AF7C-B5773C37B98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E600480A-F293-4BC1-AF7C-B5773C37B98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E600480A-F293-4BC1-AF7C-B5773C37B98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{187FD03C-2A93-4881-9B02-9E7A80F54F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{187FD03C-2A93-4881-9B02-9E7A80F54F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{187FD03C-2A93-4881-9B02-9E7A80F54F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{187FD03C-2A93-4881-9B02-9E7A80F54F7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C328BA20-98BA-4769-8A45-7F53B2B5A6D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B34B3278-35A8-4426-9564-F148F5220F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34B3278-35A8-4426-9564-F148F5220F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34B3278-35A8-4426-9564-F148F5220F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34B3278-35A8-4426-9564-F148F5220F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72A106C5-8798-4005-B898-3442D552FD9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A106C5-8798-4005-B898-3442D552FD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A106C5-8798-4005-B898-3442D552FD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A106C5-8798-4005-B898-3442D552FD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1AFD1B-27C7-46C5-AE4D-344C249AFFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1AFD1B-27C7-46C5-AE4D-344C249AFFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1AFD1B-27C7-46C5-AE4D-344C249AFFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1AFD1B-27C7-46C5-AE4D-344C249AFFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70F0CF3-20E4-4DE1-96EB-CDE7F235690D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70F0CF3-20E4-4DE1-96EB-CDE7F235690D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70F0CF3-20E4-4DE1-96EB-CDE7F235690D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70F0CF3-20E4-4DE1-96EB-CDE7F235690D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689F0818-80D1-4E5C-A498-806C59E25A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689F0818-80D1-4E5C-A498-806C59E25A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689F0818-80D1-4E5C-A498-806C59E25A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689F0818-80D1-4E5C-A498-806C59E25A3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C81F539-50E6-47BF-BC49-54DAF90867B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C81F539-50E6-47BF-BC49-54DAF90867B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C81F539-50E6-47BF-BC49-54DAF90867B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C81F539-50E6-47BF-BC49-54DAF90867B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B40C417C-28AB-4A70-A29E-451D24365B01}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 11
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://ngotienliem.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = FDI.Admin\\FDI.Admin.csproj
+		SccProjectName1 = FDI.Admin
+		SccLocalPath1 = FDI.Admin
+		SccProjectUniqueName2 = FDI.Base\\FDI.Base.csproj
+		SccProjectName2 = FDI.Base
+		SccLocalPath2 = FDI.Base
+		SccProjectUniqueName3 = FDI.DA\\FDI.DA.csproj
+		SccProjectName3 = FDI.DA
+		SccLocalPath3 = FDI.DA
+		SccProjectUniqueName4 = FDI.Enterprises\\FDI.Enterprises.csproj
+		SccProjectName4 = FDI.Enterprises
+		SccLocalPath4 = FDI.Enterprises
+		SccProjectUniqueName5 = FDI.GetAPI\\FDI.GetAPI.csproj
+		SccProjectName5 = FDI.GetAPI
+		SccLocalPath5 = FDI.GetAPI
+		SccProjectUniqueName6 = FDI.MvcAPI\\FDI.MvcAPI.csproj
+		SccProjectName6 = FDI.MvcAPI
+		SccLocalPath6 = FDI.MvcAPI
+		SccProjectUniqueName7 = FDI.Simple\\FDI.Simple.csproj
+		SccProjectName7 = FDI.Simple
+		SccLocalPath7 = FDI.Simple
+		SccProjectUniqueName8 = FDI.Utils\\FDI.Utils.csproj
+		SccProjectName8 = FDI.Utils
+		SccLocalPath8 = FDI.Utils
+		SccProjectUniqueName9 = FDI.Web\\FDI.Web.csproj
+		SccProjectName9 = FDI.Web
+		SccLocalPath9 = FDI.Web
+		SccProjectUniqueName10 = FDI.CORE\\FDI.CORE.csproj
+		SccProjectName10 = FDI.CORE
+		SccLocalPath10 = FDI.CORE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal

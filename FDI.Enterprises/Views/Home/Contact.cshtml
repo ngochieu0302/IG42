@@ -1,0 +1,18 @@
+﻿@using FDI.Enterprises.Controllers
+@model string
+
+<li class="dropdown dropdown-user">
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <img alt="" class="img-circle" src="/Content/Admin/images/avatar3_small.jpg" />
+        <span class="username username-hide-on-mobile">@BaseController.UserName</span>
+        <i class="fa fa-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-default">
+        <li>
+            <a class="username" onclick="FdiDialog('/Account/ChangePassword', 'Đổi mật khẩu tài khoản', 335, 500);" href="#"><i class="fa fa-lock"></i>Đổi mật khẩu</a>
+        </li>
+        <li>
+            <a href="/Account/LogOff"><i class="fa fa-sign-out"></i>Thoát</a>
+        </li>
+    </ul>
+</li>

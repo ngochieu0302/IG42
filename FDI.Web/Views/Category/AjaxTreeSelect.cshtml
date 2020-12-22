@@ -1,0 +1,46 @@
+﻿@model FDI.Simple.ModelCategoryItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("@Url.Action("JsonTreeCategorySelect", "Category")", function (list) {
+            AjaxLoadTreeView(list, '#TreeCategory');
+            registerGridView('#gridItems');
+            $("#TreeCategory a.tool").click(function () {
+                if ($(this).parent().parent().hasClass("unselect")) {
+                    $(".filetree li").addClass("unselect").removeClass("select");
+                    $(this).parent().parent().addClass("select").removeClass("unselect");
+                } else {
+                    $(this).parent().parent().addClass("unselect").removeClass("select");
+                }
+                return false;
+            });
+        });
+    });
+</script>
+<div id="gridItems">
+    <div class="box-control no-footer">
+        <div class="scrollable box-control-content">
+            <div id="treecontrol" class="treeTool">
+                <a title="Đóng tất cả các nhánh" href="#" class="collapse">Đóng tất cả</a>
+                <a title="Mở tất cả các nhánh" href="#" class="expand">Mở tất cả</a>
+            </div>
+            <ul id="TreeCategory" class="filetree gridView treeview" style="border: 0px;"></ul>
+        </div>
+
+        <div id="quickToolvalue" style="display: none">
+            @Grid.ActionAdd("idvalue", "titlevalue")
+            @Grid.ActionEdit("idvalue", "titlevalue", null, false)
+            @Grid.ActionDelete("idvalue", "titlevalue", false)
+            @Grid.ActionSort("idvalue", "titlevalue")
+        </div>
+        <div id="quickToolHide" style="display: none">
+            @Grid.ActionShow("idvalue", "titlevalue", false)
+        </div>
+        <div id="quickToolShow" style="display: none">
+            @Grid.ActionShow("idvalue", "titlevalue", true)
+        </div>
+    </div>
+</div>

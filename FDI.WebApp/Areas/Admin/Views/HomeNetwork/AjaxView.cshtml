@@ -1,0 +1,61 @@
+﻿@model FDI.Base.MenuGroup
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-link"></i>Thông tin về vị trí menu
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <label>Tên vị trí</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Số thứ tự</label>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Sort)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Hiển thị</label>
+                        </td>
+                        <td>
+                            @Grid.DisplayShow(Model.Name, Model.IsShow.HasValue && Model.IsShow.Value)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Mô tả</label>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Des)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+

@@ -1,0 +1,155 @@
+﻿@model FDI.Simple.DNTotalSalaryMonthItem
+@{
+	Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+	$(document).ready(function () {
+	    $("#modalForm").validate({
+			rules: {
+				TotalDateCC:
+				{
+					required: true,
+					min: 0,
+					number: true
+				},
+				TotalSom:
+				{
+					required: true,
+					min: 0,
+					number: true
+				},
+				TotalMuon:
+				{
+					required: true,
+					min: 0,
+					number: true
+				},
+				SalaryAward:
+				{
+					required: true,
+				},
+				TotalSchedule:
+				{
+					required: true,
+					min: 0,
+					number: true
+				}
+			},
+			messages: {
+				TotalDateCC:
+				{
+					required: "Nhập thông tin",
+					min: "Nhập số dương",
+					number: "Nhập số"
+				},
+				TotalSom:
+				{
+					required: "Nhập thông tin",
+					min: "Nhập số dương",
+					number: "Nhập số"
+				},
+				TotalMuon:
+				{
+					required: "Nhập thông tin",
+					min: "Nhập số dương",
+					number: "Nhập số"
+				},
+				SalaryAward:
+				{
+					required: "Nhập thông tin",
+				},
+				TotalSchedule:
+				{
+					required: "Nhập thông tin",
+					min: "Nhập số dương",
+					number: "Nhập số"
+				}
+			},
+			submitHandler: function () {
+			    var price = $("#SalaryAwardu").val() !== "" ? parseFloat($("#SalaryAwardu").val().replace(/[,]+/g, '')) : 0;
+			    $("#SalaryAward").val(price);
+			    PostAction("#modalForm");				
+			}
+		});
+
+	});
+</script>
+<form id="modalForm">
+	<div class="modal-body">
+		<input type="hidden" name="do" id="do" value="Edit" />
+		<input type="hidden" name="ItemId" id="ItemId" value="@ViewBag.ItemId" />
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-user"></i>Sửa đổi thông tin lương
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="form-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tên nhân viên</label>
+							<div class="col-sm-4">
+								<input type="text" readonly="readonly" name="LoweredUserName" id="LoweredUserName" class="form-control" value="@Model.LowerUsername" />
+							</div>
+							<label class="col-sm-2 control-label">Tên tài khoản</label>
+							<div class="col-sm-4">
+								<input type="text" readonly="readonly" name="UserName" id="UserName" class="form-control" value="@Model.Username" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tháng</label>
+							<div class="col-sm-4">
+								<input type="number" readonly="readonly" class="form-control " value="@Model.Month" />
+							</div>
+							<label class="col-sm-2 control-label">Năm</label>
+							<div class="col-sm-4">
+								<input type="number" readonly="readonly" class="form-control " value="@Model.Year" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tăng ngày làm</label>
+							<div class="col-sm-4">
+								<input type="number" min="0" max="31" name="TotalDateCC" id="TotalDateCC" class="form-control" value="@Model.TotalDateCC" />
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Giảm thời gian sơm</label>
+							<div class="col-sm-4">
+								<input type="number" min="0" max="31" name="TotalSom" id="TotalSom" class="form-control" value="@Model.TotalSom" />
+							</div>
+							<label class="col-sm-2 control-label">Giảm thời gian muộn</label>
+							<div class="col-sm-4">
+								<input type="number" min="0" max="31" name="TotalMuon" id="TotalMuon" class="form-control" value="@Model.TotalMuon" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Tổng lương thưởng</label>
+							<div class="col-sm-4">
+							    <input type="text" id="SalaryAwardu" class="form-control maskPrice" value="@Model.SalaryAward" />
+                                <input type="hidden" id="SalaryAward" name="SalaryAward" value="@Model.SalaryAward"/>
+							</div>
+							<label class="col-sm-2 control-label">Tổng ca</label>
+							<div class="col-sm-4">
+								<input type="number" min="0" name="TotalSchedule" id="TotalSchedule" class="form-control" value="@Model.TotalSchedule" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Ghi chú</label>
+							<div class="col-sm-10">
+								<textarea name="Note" id="Note" class="form-control">@Model.Note</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+		<button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+	</div>
+</form>

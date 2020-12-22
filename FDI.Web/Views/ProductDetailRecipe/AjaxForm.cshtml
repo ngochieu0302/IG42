@@ -1,0 +1,373 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.ProductDetailRecipeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    var stt1 = 1;
+    var lst = Model.LstRecipeProductValues != null ? string.Join(",", Model.LstRecipeProductValues.Where(c => c.IsDeleted == false && c.ProductValueId != null).Select(c => c.ProductValueId)) : "";
+    var lst1 = Model.LstRecipeProductDetails != null ? string.Join(",", Model.LstRecipeProductDetails.Where(c => c.IsDeleted == false && c.DetailID != null).Select(c => c.DetailID)) : "";
+    
+}
+<form id="frm-Recipe">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"> @Model.ProductName </i>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sản phẩm</label>
+                            <div class="col-sm-4">
+                                <select name="ProductDetailId" class="form-control">
+                                    <option value="">Chọn sản phẩm</option>
+                                    @foreach (var item in ViewBag.lstproduct)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.ProductDetailId ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mã công thức</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="..." name="Code" id="Code" value="@(Model.Code ?? Ultils.CodeLogin(DateTime.Now))" />
+                            </div>
+                            <label class="col-sm-2 control-label">Thời gian(phút)</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="TimeM" id="TimeM" value="@(Model.TimeM ?? 0)" placeholder="Thời gian tạo ra sản phẩm" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tổng giá từ sản phẩm</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" placeholder="..." name="ProductPrice" id="ProductPrice" value="@Model.ProductPrice" />
+                            </div>
+                            <label class="col-sm-2 control-label">Tổng giá từ nguyên liệu</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="ValuePrice" id="ValuePrice" value="@Model.ValuePrice" class="form-control maskPrice" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @*<label class="col-sm-2 control-label">Chi phí phát sinh</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control maskPrice" placeholder="..." name="Incurred" id="Incurred" value="@(Model.Incurred ?? 0)" />
+            </div>*@
+                            <label class="col-sm-2 control-label">Người thao tác</label>
+                            <div class="col-sm-4">
+                                <span>@Model.Username</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-external-link-square"></i>Công thức nguyên liệu
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal" style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
+                            </div>
+                        </div>
+                        <table class="gridView table table-bordered table-striped" id="ProductDetail">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th class='text-center' style="width: 100px">Số lượng</th>
+                                    <th class='text-center'>Đơn vị</th>
+                                    <th class='text-center'>Giá</th>
+                                    <th class='text-center'>Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LstRecipeProductValues != null)
+                                {
+                                    foreach (var item in Model.LstRecipeProductValues)
+                                    {
+                                        <tr class="data">
+                                            <td>@(stt++)</td>
+                                            <td>@item.ValueName</td>
+                                            <td align="center">
+                                                <input type="hidden" class="inputValue" value="@item.ProductValueId">
+                                                <input type="number" step="0.0001" class="form-control text-right inputValue quan" data-pid="@item.ProductValueId" value="@item.Quantity.Quantity("0:0.######")">
+                                            </td>
+                                            <td class="text-center">@item.UnitName</td>
+                                            <td class="text-right inputValue price-@item.ProductValueId">@item.ValuePrice.Money()</td>
+                                            <td class="text-right total total-@item.ProductValueId">@(item.TotalPrice.Money())</td>
+                                            <td class="text-right">
+                                                <button class="btn btn-default pdelete" data-pid="@item.ProductValueId" data-price="@(item.TotalPrice)"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-external-link-square"></i>Công thức sản phẩm
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-horizontal" style="margin-bottom: 20px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="autoProductDetail" placeholder="Nhập mã hoặc tên hàng hóa" />
+                            </div>
+                        </div>
+                        <table class="gridView table table-bordered table-striped" id="ProductDetail1">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th class='text-center' style="width: 100px">Số lượng</th>
+                                    <th class='text-center'>Đơn vị</th>
+                                    <th class='text-center'>Giá</th>
+                                    <th class='text-center'>Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LstRecipeProductDetails != null)
+                                {
+                                    foreach (var item in Model.LstRecipeProductDetails)
+                                    {
+                                        <tr class="data">
+                                            <td>@(stt++)</td>
+                                            <td>@item.ProductName</td>
+                                            <td align="center">
+                                                <input type="hidden" class="inputProduct" value="@item.DetailID">
+                                                <input type="number" step="0.0001" class="form-control text-right inputProduct quanProduct" data-pid="@item.DetailID" value="@item.Quantity.Quantity("0:0.######")">
+                                            </td>
+                                            <td class="text-center">@item.UnitName</td>
+                                            <td class="text-right inputProduct priceP-@item.DetailID">@item.ProductPrice.Money()</td>
+                                            <td class="text-right total totalP-@item.DetailID">@item.TotalPrice.Money()</td>
+                                            <td class="text-right">
+                                                <button class="btn btn-default pdeleteD" data-pid="@item.DetailID" data-price="@(item.TotalPrice)"><i class="fa fa-trash-o" style="color: red;"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        var lstP = JSON.parse("[@(lst)]");
+        var lstD = JSON.parse("[@(lst1)]");
+
+        $('#autoProduct').autocomplete({
+            serviceUrl: "/Product/AutoValue",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProduct').val("");
+                var index = lstP.indexOf(el.ID);
+                if (index === -1) {
+                    lstP.push(el.ID);
+                    var txt = "<tr class='data'><td>stt</td><td>name</td><td align='center'><input type='hidden' class='inputValue' value='ValueId'/><input type='number' step='0.0001' class='form-control text-right inputValue quan' data-pid='ValueId'  value='1'/></td><td class='text-center'>UnitName</td><td class='text-right inputValue  price-ValueId'>PriceValue</td><td class='text-right total total-ValueId'>PriceValue</td><td class='text-right'><button class='btn btn-default pdelete' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-trash-o' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("stt", lstP.length);
+                    txt = txt.replace("name", el.value);
+                    txt = txt.replace("UnitName", el.data);
+                    txt = txt.replace(/PriceValue/g, numeral(el.pricenew).format('0,0'));
+                    txt = txt.replace("dataPrice", el.pricenew);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#ProductDetail tbody").append(txt);
+                    fnChange();
+                }
+            }
+        });
+        $('#autoProductDetail').autocomplete({
+            serviceUrl: "/Product/AutoProduct",
+            minChars: 1,
+            delimiter: /(;)\s*/,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#autoProductDetail').val("");
+                var index = lstD.indexOf(el.ID);
+                if (index === -1) {
+                    lstD.push(el.ID);
+                    var txt = "<tr class='data'><td>stt</td>" +
+                        "<td>name</td><td align='center'>" +
+                        "<input type='hidden' class='inputProduct' value='ValueId'/><input type='number' step='0.0001' class='form-control text-right inputProduct quanProduct' data-pid='ValueId'  value='1'/></td>" +
+                        "<td class='text-center'>UnitName</td><td class='text-right inputProduct  priceP-ValueId'>PriceValue</td><td class='text-right total totalP-ValueId'>PriceValue</td><td class='text-right'><button class='btn btn-default pdeleteD' data-pid='ValueId' data-price='dataPrice'><i class='fa fa-trash-o' style='color: red;'></i></button></td></tr>";
+                    txt = txt.replace("stt", lstD.length);
+                    txt = txt.replace("name", el.value);
+                    txt = txt.replace("UnitName", el.data);
+                    txt = txt.replace(/PriceValue/g, numeral(el.pricenew).format('0,0'));
+                    txt = txt.replace("dataPrice", el.pricenew);
+                    txt = txt.replace(/ValueId/g, el.ID);
+                    $("#ProductDetail1 tbody").append(txt);
+                    fnChange();
+                }
+            }
+        });
+        $("body").on("change", ".quanProduct", function () {
+            var pid = $(this).attr("data-pid");
+            var sl = parseFloat($(this).val() !== "" ? $(this).val() : "0");
+            var gia = $(".priceP-" + pid).html() !== "" ? $(".priceP-" + pid).html() : "0";
+            var price = parseFloat(gia.replace(/[,]+/g, ''));
+            $(".totalP-" + pid).html(numeral(sl * price).format('0,0'));
+            fnChange();
+        });
+        $("body").on("click", ".pdeleteD", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstD.indexOf(pid);
+            lstD.splice(index, 1);
+            $(this).parent().parent().remove();
+            fnChange();
+        });
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+            fnChange();
+        });
+        $("body").on("change", ".quan", function () {
+            var pid = $(this).attr("data-pid");
+            var sl = parseFloat($(this).val() !== "" ? $(this).val() : "0");
+            var gia = $(".price-" + pid).html() !== "" ? $(".price-" + pid).html() : "0";
+            var price = parseFloat(gia.replace(/[,]+/g, ''));
+            $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+            fnChange();
+        });
+        function fnChange() {
+            var total = 0;
+            var total1 = 0;
+            debugger;
+            $('#ProductDetail .data').each(function () {
+                $('.total', this).each(function () {
+                    var d = $(this).text().replace(/[,]+/g, '');
+                    total += parseFloat(d);
+                });
+            });
+            $('#ProductDetail1 .data').each(function () {
+                $('.total', this).each(function () {
+                    var d = $(this).text().replace(/[,]+/g, '');
+                    total1 += parseFloat(d);
+                });
+            });
+            $("#ProductPrice").val(numeral(total1).format('0,0'));
+            $("#ValuePrice").val(numeral(total).format('0,0'));
+        }
+
+        $("#frm-Recipe").validate({
+            rules: {
+                Code: {
+                    required: true
+                },
+                //TimeM: {
+                //    required: true
+                //},
+                ProductPrice: {
+                    required: true
+                },
+                ValuePrice: {
+                    required: true
+                },
+                ProductDetailId: {
+                    required: true
+                }
+            },
+            messages: {
+                Code: {
+                    required: "Mời bạn nhập mã "
+                },
+                //TimeM: {
+                //    required: "Mời bạn nhập thời gian "
+                //},
+                ProductPrice: {
+                    required: "Mời bạn nhập tổng giá sp "
+                },
+                ValuePrice: {
+                    required: "Mời bạn nhập tổng giá nguyên liệu "
+                },
+                ProductDetailId: {
+                    required:"Hãy chọn sản phẩm .!"
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+               // PostAction("#modalForm");
+                $.post("/Utility/DeleteDetailRecipeItem?key=" + getCookie('CodeLogin'),
+                    function() {
+                        $('#ProductDetail .data').each(function () {
+                            var ret = [];
+                            $('.inputValue', this).each(function () {
+                                var d = $(this).val() || $(this).text();
+                                ret.push(d);
+                            });
+                            var item = {
+                                ValueId: ret[0],
+                                Quantity: ret[1],
+                                Price: ret[2].replace(/[,]+/g, ''),
+                                Key: getCookie('CodeLogin')
+                            };
+                            $.post("/Utility/AddDetailRecipeItem?json=" + JSON.stringify(item), function () { });
+                        });
+                        $('#ProductDetail1 .data').each(function () {
+                            var ret = [];
+                            $('.inputProduct', this).each(function () {
+                                var d = $(this).val() || $(this).text();
+                                ret.push(d);
+                            });
+                            var item = {
+                                ProductDetailID: ret[0],
+                                Quantity: ret[1],
+                                Price: ret[2].replace(/[,]+/g, ''),
+                                Key: getCookie('CodeLogin')
+                            };
+                            $.post("/Utility/AddDetailRecipeItem?json=" + JSON.stringify(item), function () { });
+                        });
+                        $.post("/ProductDetailRecipe/Actions", $("#frm-Recipe").serialize(), function (data) {
+                            btnEnable("#btnSave");
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form").modal('hide');
+                                $("#dialog-form-4").modal('hide');
+                                createCloseMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    });
+            }
+        });
+    });
+
+</script>

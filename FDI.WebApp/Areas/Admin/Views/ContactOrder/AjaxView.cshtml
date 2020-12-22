@@ -1,0 +1,55 @@
+﻿@model FDI.Simple.ContactOrderItem
+@{
+    ViewBag.Title = "Xem thông tin khách mua hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+
+
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">Thông tin khách hàng đặt hàng</header>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <label>Tên khách hàng</label></td>
+                <td>
+                    @Html.DisplayFor(model => model.FullName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email</label></td>
+                <td>
+                    @Html.Raw(Model.Email)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Số điện thoại</label></td>
+                <td>
+                    @Html.Raw(Model.Mobile)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Số di động</label></td>
+                <td>
+                    @Html.Raw(Model.Phone)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Địa chỉ</label></td>
+                <td>
+                    @Html.Raw(Model.Address)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Nội dung</label></td>
+                <td>
+                    @Html.Raw(Model.Message)
+                </td>
+            </tr>
+        </table>
+    </section>
+

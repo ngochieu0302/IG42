@@ -1,0 +1,79 @@
+﻿@model FDI.Simple.ModelDNRolesItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+        $(".chkAll").click(function () {
+            var id = $(this).val();            
+            if ($(this).is(":checked")) {
+                $(".ckb-"+id).prop("checked", true);
+            } else {
+                $(".ckb-" + id).prop("checked", false);
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.Item.RoleId" />
+        <input type="hidden" name="NameRole" id="NameRole" value="@Model.Item.RoleName" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Gán tính năng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <table class="gridView table table-striped table-bordered table-hover table-orimid">
+                                <thead>
+                                    <tr>
+                                        <th>Tên Module</th>
+                                        <th>Check All</th>
+                                        @foreach (var item1 in Model.ActiveRoleItems)
+                                        {
+                                            <th>@item1.NameActive</th>
+                                        }
+                                    </tr>
+                                </thead>
+
+                                @foreach (var item in Model.Item.ModuleItems)
+                                {
+                                    var lstActive = Model.Item.RoleModuleActiveItems.Where(c => c.ModuleId == item.ID);
+                                    var chkall = lstActive.Any(c => c.Active == false);
+                                    <tr id="line-@item.ID">
+                                        <td>@item.NameModule</td>
+                                        <td class="text-center"><input type="checkbox" class="chkAll" value="@item.ID" @(chkall == false ? "checked" : "")/></td>
+                                        @foreach (var i in Model.ActiveRoleItems)
+                                        {
+                                            var itemnew = lstActive.Where(c => c.ActiveRoleId == i.ID).FirstOrDefault();
+                                            <td class="text-center">
+                                                <input type="checkbox" class="chkActiveRoles ckb-@item.ID" name="chkActiveRoles" value="@itemnew.ID" @( itemnew.Active == true ? "checked" : "") title="@itemnew.ActiveName" />
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

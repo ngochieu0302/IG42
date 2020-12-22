@@ -1,0 +1,38 @@
+﻿@using FDI.Areas.Admin.Controllers
+@model List<FDI.Simple.LanguagesItem>
+@{
+    ViewBag.Title = "LoadLanguage";
+    var lang = Model.First(c => c.Code == "vi");
+}
+
+<li class="dropdown dropdown-language">
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <img alt="" src="@("/Content/Admin/img/" + lang.Code + ".png")">
+        <span class="langname"> @lang.Name </span>
+        <i class="fa fa-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-default" id="ChangeLanguage">
+        @foreach (var item in Model)
+        {
+        <li>
+            <a data-code="@item.Code" title="@item.Name">
+                <img alt="" src="@("/Content/Admin/img/" + item.Code + ".png")"> @item.Name
+            </a>
+        </li>
+        }
+    </ul>
+</li>
+
+<script type="text/javascript">
+    $("#ChangeLanguage a").click(function () {
+        $.post("@Url.Action("ChangelanguageAdmin", "Languages")", { lang: $(this).data("code") }, function (data) {
+            if (!data.Erros) {
+                window.location.reload();
+            }
+        });
+    });
+    
+</script>    
+
+
+

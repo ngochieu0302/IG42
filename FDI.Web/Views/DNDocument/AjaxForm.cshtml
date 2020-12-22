@@ -1,0 +1,314 @@
+﻿@using FDI.CORE
+@using FDI.Utils
+@model FDI.Simple.DocumentItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    <link href="~/Content/Admin/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <script src="~/Content/Admin/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Content/Admin/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        callSelect2("#AgencyId", "100%");
+        callSelect2("#UserId", "100%");
+        callSelect2("#SupId", "100%");
+        // datepicker
+        //LoadCKEDITOR('Description', true);
+        $(".datepicker-input").each(function () { $(this).datepicker(); });
+        $(".datepicker-input").click(function () {
+            $(".datepicker-days .day").click(function () {
+                $('.datepicker').hide();
+            });
+        });
+        $("#modalForm").validate({
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                updateEditor();
+                PostAction("#modalForm");
+            }
+        });
+
+        //Dành cho upload
+        var arrFileObj = new Array();
+        var arrFileRemove = new Array();
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            url: '/DNDocument/UploadFiles',
+            autoUpload: true,
+            done: function (e, data) {
+                arrFileObj.push(data.result.Name);
+                $("#lstFile").val(arrFileObj);
+                var jsonData = "<span>";
+                jsonData += '<div class="img"><img src="' + data.result.Icon + '" height="100"></div>' +
+                    '<a href="javascript:void(0)" class="btnDelete" data-name="' + data.result.Name + '" title="' + data.result.Name + '"><i class="fa fa-trash"></i></a><strong>' + data.result.Type + '</strong></span>';
+                $("#lstFileUpload").append(jsonData);
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress .progress-bar').css('width', progress + '%');
+        });
+        $("body").on("click", ".btnDelete", function () {
+            console.log(arrFileObj);
+            $('.progress .progress-bar').css('width', '0%');
+            var id = $(this).data('name');
+            $(this).parent().remove();
+            // xóa các phần tử trong mảng
+            for (var j = 0; j <= arrFileObj.length - 1; j++) {
+                var name = arrFileObj[j];
+                if (name === id.toLowerCase()) {
+                    arrFileObj.remove(arrFileObj[j]);
+                }
+            }
+            $("#lstFile").val(arrFileObj.valueOf());
+        });
+        $(".btnRemove").click(function () {
+            $('.progress .progress-bar').css('width', '0%');
+            var id = $(this).attr('data-id');
+            arrFileRemove.push(id);
+            $(this).parent().remove();
+            $("#lstRemove").val(arrFileRemove.valueOf());
+        });
+        $("body").on("click", "#fileupload", function () {
+            $('.progress .progress-bar').css('width', '0%');
+        });
+        $("#Type").on("change", function () {
+            var id = parseInt($(this).val());
+            $(".selected_type").each(function() {
+                $(this).addClass("hidden");
+            });
+            debugger;
+            if (id == 1) {
+                $(".AgencyId").removeClass("hidden");
+            }
+            if (id == 2) {
+                $(".UserId").removeClass("hidden");
+            }
+            if (id == 3) {
+                $(".SupId").removeClass("hidden");
+            }
+        });
+    });
+</script>
+
+<style>
+    #ShortDescription, #Description {
+        display: block !important;
+    }
+    #listFileAttachRemove li a img {
+        padding-left: 5px;
+    }
+    #fileData li a img {
+        padding-left: 5px;
+    }
+</style>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về tài liệu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên hợp đồng</label>
+                            <div class="col-sm-4">
+                                <input name="Name" id="Name" value="@Model.Name" class="form-control"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Số hợp đồng</label>
+                            <div class="col-sm-4">
+                                <input name="NumberBill" id="NumberBill" value="@Model.Numberbill" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mô tả ngắn</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5" class="form-control" placeholder="..." name="ShortDescription" id="ShortDescription">@Model.ShortDescription</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày bắt đầu</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control datepicker-input" placeholder="..." name="_DateStart" id="_DateStart" data-date-format="dd/mm/yyyy" value="@(Model.DateStart != null ? Model.DateStart.DecimalToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" />
+                            </div>
+                            <label class="col-sm-2 control-label">Thời hạn</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control datepicker-input" placeholder="..." name="_DateEnd" id="_DateEnd" data-date-format="dd/mm/yyyy" value="@(Model.DateEnd != null ? Model.DateEnd.DecimalToString("dd/MM/yyyy") : DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"))" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Loại hợp đồng</label>
+                            <div class="col-sm-4">
+                                <select name="Type" id="Type" class="form-control">
+                                    <option value="">Chọn loại hợp đồng</option>
+                                    @foreach (var items in FDI.Utils.TypeDocument.Document())
+                                    {
+                                        <option value="@items.Value" @(Model.Type == items.Value ? "selected" : "")>@items.Key</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Người ký</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" value="Đào Trung Đông" name="NguoiKy" id="NguoiKy"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá trị hợp đồng</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" value="@Model.Value.Money()" name="Value" id="Value"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Đặt cọc</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control maskPrice" value="@Model.Deposit.Money()" name="Deposit" id="Deposit"/>
+                            </div>
+                        </div>
+                        <legend>Thông tin bên B</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ tên</label>
+                            <div class="col-sm-4">
+                                <input name="NameB" id="NameB" value="@Model.NameB" class="form-control"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Điện thoại</label>
+                            <div class="col-sm-4">
+                                <input name="MobieB" id="MobieB" value="@Model.MobileB" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số tài khoản</label>
+                            <div class="col-sm-4">
+                                <input name="STK" id="STK" value="@Model.STK" class="form-control"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Mã số thuế</label>
+                            <div class="col-sm-4">
+                                <input name="MST" id="MST" value="@Model.MST" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngân hàng</label>
+                            <div class="col-sm-4">
+                                <input name="STK" id="BankName" value="@Model.BankName" class="form-control"/>
+                            </div>
+                            <label class="col-sm-2 control-label">Chức vụ</label>
+                            <div class="col-sm-4">
+                                <input name="MST" id="Department" value="@Model.Department" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <input name="Address" id="Address" value="@Model.Address" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group selected_type @(Model.Type == 1 ? "" : "hidden") AgencyId">
+                            <label class="col-sm-2 control-label">Đại lý</label>
+                            <div class="col-sm-10">
+                                <select name="AgencyId" id="AgencyId" class="form-control">
+                                    <option value="">Chọn đại lý</option>
+                                    @foreach (var items in ViewBag.agencyId)
+                                    {
+                                        <option value="@items.ID"@(items.ID == Model.AgencyId ? "selected" : "") >@items.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group selected_type @(Model.Type == 2 ? "" : "hidden") UserId">
+                            <label class="col-sm-2 control-label">Nhân viên</label>
+                            <div class="col-sm-10">
+                                <select name="UserId" id="UserId" class="form-control">
+                                    <option value="">Chọn Nhân viên</option>
+                                    @foreach (var items in ViewBag.UserId)
+                                    {
+                                        <option value="@items.UserId"@(items.UserId == Model.UserId ? "selected" : "") >@items.LoweredUserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group selected_type @(Model.Type == 3 ? "" : "hidden") SupId">
+                            <label class="col-sm-2 control-label">Nhà cung cấp</label>
+                            <div class="col-sm-10">
+                               <select name="SupId" id="SupId" class="form-control">
+                                    <option value="">Chọn Nhà cung cấp</option>
+                                    @foreach (var items in ViewBag.SupId)
+                                    {
+                                        <option value="@items.ID"@(items.ID == Model.SupId ? "selected" : "") >@items.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chọn ngăn tài liệu</label>
+                            <div class="col-sm-10">
+                                <select id="DrawerID" name="DrawerID" class="form-control">
+                                    <option value="">--- Chọn ngăn ---</option>
+                                    @foreach (var item in ViewBag.Drawer)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.DrawerID ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">File đính kèm<strong></strong></label>
+                            <div class="col-sm-10">
+                                <span class="btn fileinput-button" style="background-color: #007ebb; border-color: #007ebb; color: white">
+                                    <i class="fa fa-upload"></i>
+                                    <span>Upload Tài liệu</span>
+                                    <input id="fileupload" type="file" name="files[]" multiple>
+                                </span>
+                                <br />
+                                <div class="progress" style="margin-top: 10px;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                        <span class="sr-only">0% complete</span>
+                                    </div>
+                                </div>
+                                <br />
+                                <input type="hidden" id="lstFile" name="lstFile" />
+                                <input id="lstRemove" name="lstRemove" type="hidden" />
+                                <div id="lstFileUpload">
+                                    @if (Model.DocumentFilesItem != null)
+                                    {
+                                        foreach (var file in Model.DocumentFilesItem)
+                                        {
+                                            var icon = "/Images/Icons/file/" + file.TypeFile + ".png";
+                                        <span>
+                                            <div class="img">
+                                                <img src="@icon">
+                                            </div>
+                                            <a href="javascript:void(0)" class="btnRemove" data-id="@file.ID" title="@file.Name"><i class="fa fa-trash"></i></a><strong>@file.Name.SubString(14)</strong></span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox col-md-6">
+                                    <label>
+                                        @Html.CheckBox("IsShow", true) Hiện thị
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

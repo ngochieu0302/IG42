@@ -1,0 +1,40 @@
+//## Main Layout CSS Builder
+
+@import '../../global/_variables.scss'; // global metronic framework variables
+@import '../../global/components/_mixins.scss'; // global metronic framework mixings
+
+@import '_variables'; // theme level variables
+
+@mixin reset-container() {    
+  	> .container { 
+    	width: 100%;
+    	max-width: none !important;  
+    	margin: 0 !important;  
+	}
+} 
+
+@import 'layout/_print.scss'; // print layout  
+
+@import 'layout/_header.scss'; // page header
+@import 'layout/_content.scss'; // page consnde          
+@import 'layout/_footer.scss';   // page footer                              
+@import 'layout/_theme-panel.scss';  // theme customizer panel
+
+@import '../quick-sidebar/_quick-sidebar.scss';  // quick sidebar content 
+
+/***  
+Page Loading      
+***/   
+
+.page-on-load {
+	background: #fefefe;
+
+	.page-header,
+	.page-container,  
+	.page-prefooter,
+	.page-footer,
+	> .clearfix {
+		display: none;
+		transition: all 2s;
+	}
+}

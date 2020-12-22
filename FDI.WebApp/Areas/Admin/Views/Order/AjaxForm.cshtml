@@ -1,0 +1,164 @@
+﻿@using FDI.Utils
+@model FDI.Base.Shop_Orders
+@{
+    ViewBag.Title = ViewBag.ActionText + " Đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#frm-modal").validate({
+            submitHandler: function () { //onSubmit
+                $.post(urlPostAction, $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form").modal('hide'); //Đóng form thêm mới - sửa
+                        createCloseMessage("Thông báo", data.Message, '#Page=1&itemId=' + data.ID + '&message=' + data.Message + '&temp=' + Math.floor(Math.random() * 11) + ''); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+                return false;
+            }
+        });
+
+    });
+</script>
+
+
+<form id="frm-modal">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về size
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-10">
+                                @if (Model.Status == 1 || Model.Status == 2)
+                                {
+                                    <select id="Status" name="Status" class="form-control">
+                                        <option value="2" @((2 == Model.Status) ? " selected" : string.Empty)>Đang xử lý</option>
+                                        <option value="3" @((3 == Model.Status) ? " selected" : string.Empty)>Đã hoàn thành</option>
+                                        <option value="1" @((1 == Model.Status) ? " selected" : string.Empty)>Đã hủy</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    switch (Model.Status)
+                                    {
+                                        case 2:
+                                    <label class="form-control">Đang xử lý</label>
+                                            break;
+                                        case 3:
+                                    <label class="form-control">Đã hoàn thành</label>
+                                            break;
+                                        case 1:
+                                    <label class="form-control">Đã hủy</label>
+                                            break;
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về đơn hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày đặt hàng</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.DateCreated.DecimalToString("dd/MM/yyyy")</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tổng tiền</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.TotalPrice.Money() đ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Size</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    @foreach (var item in Model.Shop_Order_Details)
+                    {
+                        <tr>
+                            <td>@item.Shop_Product.CodeSku</td>
+                            <td>@item.Shop_Product.Shop_Product_Detail.Name</td>
+                            <td>@item.Shop_Product.Product_Size.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@string.Format("{0:0,0}", item.Price).Replace(".", ",")</td>
+                            <td>@string.Format("{0:0,0}", item.Quantity * item.Price).Replace(".", ",")</td>
+                        </tr>
+                    }
+                </table>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thông tin về khách hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Họ và tên</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.CustomerName</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Số điện thoại</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.Mobile</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.Address</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nội dung</label>
+                            <div class="col-sm-10">
+                                <label class="form-control">@Model.Note</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default btn-sm">Đóng</button>
+    </div>
+</form>

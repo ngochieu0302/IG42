@@ -1,0 +1,66 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ProductSizeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $("#modalForm").validate({
+            rules: {
+                Name: { required: true },
+                Value: { required: true },
+            },
+            messages: {
+                Name: "Mời bạn nhập Tên Size.",
+                Value: "Mời bạn nhập thông số Size.",
+            },
+            submitHandler: function () { //onSubmit
+                PostAction("#modalForm");
+            }
+        });
+
+    });
+</script>
+
+
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gear"></i>Thông tin về size
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên size</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá trị</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="Value" id="Value" value="@Model.Value" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

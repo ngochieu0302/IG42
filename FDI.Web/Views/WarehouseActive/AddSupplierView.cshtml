@@ -1,0 +1,89 @@
+﻿@model IList<FDI.Simple.Supplier.SupplierAmountProductItem>
+
+@{
+    ViewBag.Title = "AddSupplierView";
+}
+<div class="modal-body">
+    <div class="user-detail-order form-horizontal">
+        <table id="supplierAmount" class=" table table-striped table-bordered table-hover table-orimid" role="grid">
+
+            <thead>
+                <tr>
+                    <th class="act_roles text-center">
+                        <input type="checkbox" class="check" value="1">
+                    </th>
+                    <th>Nhà cung cấp</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th class="text-center w250">Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="data" title="@item.ID @item.ID">
+                        <td class="act_roles text-center">
+                            <input type="checkbox" class="check" value="@item.ID">
+                            <input type="hidden" value="@item.SupplierId" class="inputProduct" />
+                            <input type="hidden" value="@item.ProductID" class="inputProduct" />
+                        </td>
+                        <td>@item.SupplierName</td>
+                        <td>@item.SupplierPhone</td>
+                        <td>@item.SupplierAdress</td>
+                        <td class="text-right">
+                            <input type="number" class="inputProduct" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" id="btn-addsupplier">Lưu</button>
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+<script>
+    $(function () {
+        let objSupplier = { RequestWareId:"@Request.QueryString["RequestWareId"]"};
+        @*$('#inputSupplier').autocomplete({
+            serviceUrl: "@Url.Action("SupplierAutoSupplier")",
+            minChars: 1,
+            maxHeight: 400,
+            onSelect: function (el) {
+                $('#inputSupplier').val(el.title);
+                objSupplier.SupplierId = el.ID;
+            }
+        });*@
+        $("#btn-addsupplier").click(function () {
+            objSupplier.Quantity = $("#QuantitySupplier").val();
+            var lst = [];
+            $('#supplierAmount .data').each(function() {
+                var ret = [];
+                $('.inputProduct', this).each(function () {
+                    var d = $(this).val() || $(this).text();
+                    ret.push(d);
+                });
+                lst.push({ SupplierId: ret[0], Quantity: ret[2], RequestWareId: objSupplier.RequestWareId });
+            });
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(lst),
+                url: "@Url.Action("AddSupplier")",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    // code here
+                    if (data.Erros == false) {
+                        window.location.reload();
+                    } else {
+                        createMessage("error", data.Message);
+                    }
+                }
+            });
+        });
+    });
+</script>

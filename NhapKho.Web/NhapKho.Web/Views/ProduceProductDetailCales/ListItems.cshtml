@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "ListItems";
+    var i = 1;
+
+}
+@model List<NhapKho.Web.Models.ProductCales>
+<table class="gridView table table-striped table-bordered table-hover table-product" role="grid">
+
+    <thead>
+        <tr>
+            <th class="act_roles">
+                <input value="" checked="checked" type="checkbox" class="checkAll" />
+            </th>
+            <th class="text-center"><a href="#Field=ID">STT</a></th>
+
+            <th class="text-center">Code</th>
+            <th class="text-center">Khối lượng</th>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody id="trproduct">
+
+    @foreach (var item in Model)
+    {
+        <tr title="@item.Weight">
+            <td class="act_roles">
+                <input type="checkbox" checked="checked" value="@item.Code" class="check">
+            </td>
+            <td class="text-center">@(i++)</td>
+
+            <td class="text-center">@item.Code</td>
+            <td class="text-center">@item.Weight</td>
+            <td><a href="#@item.Code" class="btn btn-sm btn-default" data-event="delete" title="Xóa: 123469"><i class="fa fa-trash-o" style="color: red;"></i></a></td>
+        </tr>
+    }
+    </tbody>
+</table>
+<script>
+    $(function() {
+        registerGridView('#Griditems');
+    })
+</script>
+

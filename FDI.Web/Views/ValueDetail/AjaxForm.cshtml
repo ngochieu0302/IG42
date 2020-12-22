@@ -1,0 +1,366 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@using FDI.Simple
+@model FDI.Simple.ModuleShopProductValueItem
+
+@{
+    var stt = 1;
+    decimal? price = 0;
+    //var temp = Model.LstExportValueItem;
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="Add" />
+    <input type="hidden" name="UserID" id="UserID" value="@ViewBag.UserID" />
+    <div class="modal-body npd">
+        <div class="tabs-bookatable-popup">
+            <div class="box-a-table-wrap">
+                <div class="user-order" style="width:70%">
+                    <div class="tab-content ct-tabs-bookatable">
+                        <div class="tab-pane fade active in" id="tab_1">
+                            <div class="select-order">
+                                <table class="gridView table table-striped table-bordered" id="ProductDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên SP</th>
+                                            <th class="text-center">Đơn vị</th>
+                                            <th class="text-center">SL xuất</th>
+                                            <th class="text-center">Giá nhập</th>
+                                            <th class="text-center">Thành tiền</th>
+                                            <th class="text-center">Ngày nhập</th>
+                                            <th class="text-center">HSD</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ListItems)
+                                            {
+                                                var quantity = item.Quantity;
+                                                var lst = Model.LstImportItem.Where(c => c.ValueId == item.ID);
+                                                var check = Model.LstExportValueItem.Any(c => c.ValueID == item.ID && c.Quantity >= item.Quantity);
+                                                if (lst != null && lst.Count() > 0)
+                                                {
+                                                    foreach (var itemnew in lst)
+                                                    {
+                                                        if(check)
+                                                        {
+                                                            break;
+                                                        }
+                                                        var quantityAll = itemnew.Quantity;
+                                                        var sl = Model.LstExportValueItem.Where(c => c.ValueID == item.ID).Sum(a => a.Quantity);
+                                                        if (quantity == sl)
+                                                        {
+                                                            break;
+                                                        }
+                                                        quantity = quantity - sl;
+                                                        
+                                                        if (quantity <= quantityAll)
+                                                        {
+                                                            //if (sl >= quantity)
+                                                            //{
+                                                            //    break;
+                                                            //}
+                                                            price += (itemnew.Price * quantity);
+                                                            <tr class="data">
+                                                                <td>@(stt++)</td>
+                                                                <td>@item.Name</td>
+                                                                <td class="text-right">@item.UnitName</td>
+                                                                <td>
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.ID">
+                                                                    <input type="number" step="0.0001" class="form-control text-right inputValue quantity sl-@itemnew.ID" data-pid="@itemnew.ID" data-money="@itemnew.Price" value="@string.Format("{0:0.##}", quantity)">
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.Price">
+                                                                    <input type="hidden" class="inputValue" value="@item.ID">
+                                                                </td>
+                                                                <td class="text-right">@string.Format("{0:0,0}", itemnew.Price)</td>
+                                                                <td class="text-right total total-@itemnew.ID">@string.Format("{0:0,0}", itemnew.Price * quantity)</td>
+                                                                <td class="text-center">@itemnew.Date.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-center">@itemnew.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-right">
+                                                                    <a class="pdelete" data-pid="@itemnew.ID">
+                                                                        <i class="fa fa-trash-o" style="color: red;"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            //var sl = Model.LstExportValueItem.Where(c => c.ValueID == item.ID).Sum(a => a.Quantity);
+                                                            quantity = quantity - quantityAll;
+                                                            price += (itemnew.Price * quantityAll);
+                                                            <tr class="data">
+                                                                <td>@(stt++)</td>
+                                                                <td>@item.Name</td>
+                                                                <td class="text-right">@item.UnitName</td>
+                                                                <td>
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.ID">
+                                                                    <input type="number" step="0.0001" class="form-control text-right inputValue quantity sl-@itemnew.ID" data-pid="@itemnew.ID" data-money="@itemnew.Price" value="@string.Format("{0:0.####}", quantityAll)">
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.Price">
+                                                                    <input type="hidden" class="inputValue" value="@item.ID">
+                                                                </td>
+                                                                <td class="text-right">@string.Format("{0:0,0}", itemnew.Price)</td>
+                                                                <td class="text-right total total-@itemnew.ID">@string.Format("{0:0,0}", itemnew.Price * quantityAll)</td>
+                                                                <td class="text-center">@itemnew.Date.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-center">@itemnew.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-right">
+                                                                    <a class="pdelete" data-pid="@itemnew.ID">
+                                                                        <i class="fa fa-trash-o" style="color: red;"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        @*@foreach (var item1 in Model.LstExportValueItem)
+                                        {
+                                            foreach (var item in Model.ListItems.Where(c => c.ID == item1.ValueID && c.Quantity > item1.Quantity))
+                                            {
+                                                var quantity = item.Quantity;
+                                                var lst = Model.LstImportItem.Where(c => c.ValueId == item.ID);
+                                                if (lst != null && lst.Count() > 0)
+                                                {
+                                                    foreach (var itemnew in lst)
+                                                    {
+                                                        var quantityAll = itemnew.Quantity;
+                                                        if (quantity <= quantityAll)
+                                                        {
+                                                            price += (itemnew.Price * quantity);
+                                                            <tr class="data">
+                                                                <td>@(stt++)</td>
+                                                                <td>@item.Name</td>
+                                                                <td class="text-right">@item.UnitName</td>
+                                                                <td>
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.ID">
+                                                                    <input type="number" step="0.0001" class="form-control text-right inputValue quantity sl-@itemnew.ID" data-pid="@itemnew.ID" data-money="@itemnew.Price" value="@string.Format("{0:0.##}", quantity)">
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.Price">
+                                                                    <input type="hidden" class="inputValue" value="@item.ID">
+                                                                </td>
+                                                                <td class="text-right">@string.Format("{0:0,0}", itemnew.Price)</td>
+                                                                <td class="text-right total total-@itemnew.ID">@string.Format("{0:0,0}", itemnew.Price * quantity)</td>
+                                                                <td class="text-center">@itemnew.Date.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-center">@itemnew.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-right">
+                                                                    <a class="pdelete" data-pid="@itemnew.ID">
+                                                                        <i class="fa fa-trash-o" style="color: red;"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+
+                                                            quantity = quantity - quantityAll;
+                                                            price += (itemnew.Price * quantityAll);
+                                                            <tr class="data">
+                                                                <td>@(stt++)</td>
+                                                                <td>@item.Name</td>
+                                                                <td class="text-right">@item.UnitName</td>
+                                                                <td>
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.ID">
+                                                                    <input type="number" step="0.0001" class="form-control text-right inputValue quantity sl-@itemnew.ID" data-pid="@itemnew.ID" data-money="@itemnew.Price" value="@string.Format("{0:0.####}", quantityAll)">
+                                                                    <input type="hidden" class="inputValue" value="@itemnew.Price">
+                                                                    <input type="hidden" class="inputValue" value="@item.ID">
+                                                                </td>
+                                                                <td class="text-right">@string.Format("{0:0,0}", itemnew.Price)</td>
+                                                                <td class="text-right total total-@itemnew.ID">@string.Format("{0:0,0}", itemnew.Price * quantityAll)</td>
+                                                                <td class="text-center">@itemnew.Date.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-center">@itemnew.DateEnd.DecimalToString("dd/MM/yyyy")</td>
+                                                                <td class="text-right">
+                                                                    <a class="pdelete" data-pid="@itemnew.ID">
+                                                                        <i class="fa fa-trash-o" style="color: red;"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }*@
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-order" style="width:30%;height: calc(100vh - 104px);">
+                    <div class="title-box-order">
+                        <i class="fa fa-info"></i>Thông tin về phiếu xuất
+                    </div>
+                    <div class="user-detail-order">
+                        <div class="form-group" title="Mã phiếu">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-barcode"></i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@DateTime.Now.ToString("yyMMddHHmm")" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Nhân viên xuất kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <input type="text" class="form-control" disabled value="@Model.UserName" />
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ngày xuất kho">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input class="form-control" type="date" name="DateCreated_" value="@Model.DateTime">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Nhân viên nhận">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <select name="UserGet" id="UserGet">
+                                    <option value="">-- Nhân viên nhận --</option>
+                                    @foreach (var item in ViewBag.LstUser)
+                                    {
+                                        <option value="@item.UserId">@item.UserName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" title="Tổng tiền">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <input class="form-control maskPrice" readonly="" id="TotalPrice" name="TotalPrice" value="@string.Format("{0:0,0}", price)">
+                            </div>
+                        </div>
+                        <div class="form-group" title="Ghi chú">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-sticky-note-o"></i>
+                                </div>
+                                <textarea rows="5" id="Note" name="Note" class="form-control" placeholder="Ghi chú (*)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary" data-event="PrintNew" id="PrintNew"><i class="fa fa-floppy-o"></i>Cập nhật</button>
+        <button id="close" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+    </div>
+</form>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.form-control:not("#Note")').keypress(function (event) {
+            if (event.keyCode === 10 || event.keyCode === 13) {
+                event.preventDefault();
+                $("#btnSave").click();
+            }
+        });
+    });
+    $(function () {
+        callSelect2("#UserGet", "100%");
+        var lstP = [];
+        $("body").on("click", ".pdelete", function () {
+            var pid = parseInt($(this).attr("data-pid"));
+            var index = lstP.indexOf(pid);
+            lstP.splice(index, 1);
+            $(this).parent().parent().remove();
+        });
+
+        $("body").on("change", ".inputValue", function () {
+            var pid = $(this).attr("data-pid");
+            var sl = parseFloat($(".sl-" + pid).val() !== "" ? $(".sl-" + pid).val() : "0");
+            var gia = $(".sl-" + pid).attr("data-money") !== "" ? $(".sl-" + pid).attr("data-money") : "0";
+            if (sl <= 0) {
+                sl = 0;
+                $(".sl-" + pid).val(sl);
+            }
+            var price = parseFloat(gia);
+            $(".total-" + pid).html(numeral(sl * price).format('0,0'));
+            var total = 0;
+            $('#ProductDetail .data').each(function () {
+                $('.total', this).each(function () {
+                    var d = $(this).text().replace(/[,]+/g, '');
+                    total += parseFloat(d);
+                });
+            });
+            $("#TotalPrice").val(numeral(total).format('0,0'));
+        });
+        $("#frm-modal").validate({
+            rules: {
+                Code: {
+                    required: true
+                },
+                Note: {
+                    required: true
+                },
+                UserGet: {
+                    required: true
+                }
+            },
+            messages: {
+                Code: {
+                    required: "Trường này là bắt buộc."
+                },
+                Note: {
+                    required: "Trường này là bắt buộc."
+                },
+                UserGet: {
+                    required: "Trường này là bắt buộc."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $("#btnSave").prop('disabled', true);
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                $.post("/Utility/DeleteExportValue?key=" + getCookie('CodeLogin'), function () {
+                    var check = false;
+                    $('#ProductDetail .data').each(function () {
+                        var ret = [];
+                        $('.inputValue', this).each(function () {
+                            var d = $(this).val() || $(this).text();
+                            ret.push(d);
+                        });
+                        var item = {
+                            ImportID: ret[0],
+                            Quantity: ret[1],
+                            Price: ret[2],
+                            PriceExport: ret[2],
+                            Key: getCookie('CodeLogin')
+                        }
+                        check = true;
+                        $.post("/Utility/AddExportValue?json=" + JSON.stringify(item), function () { });
+                    });
+                    if (check) {
+                        $.post("/DNExport/Actions", $("#frm-modal").serialize(), function (data) {
+                            $("#btnSave").prop('disabled', false);
+                            if (data.Erros)
+                                createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                            else {
+                                $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                                createCloseMessage("Thông báo", data.Message, "&fromDate=" + $("#fromDate").val()); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                            }
+                        });
+                    } else {
+                        $("#btnSave").prop('disabled', false);
+                        toastr["error"]("Chưa có sản phẩm nào nhập kho");
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>

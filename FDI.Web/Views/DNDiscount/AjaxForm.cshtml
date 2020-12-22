@@ -1,0 +1,98 @@
+﻿@model FDI.Simple.DNDiscountItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("#modalForm").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                Discount: {
+                    required: true
+                }
+            },
+            messages: {
+                Name:
+                {
+                    required: "Trường này bắt buộc nhập."
+                },
+                Discount: {
+                    required: "Trường này bắt buộc nhập."
+                }
+            },
+            submitHandler: function () { //onSubmit
+                $('.maskPrice').each(function (i) {
+                    $(this).val($(this).val().replace(/\,/g, ''));
+                });
+                PostAction("#modalForm");
+            }
+        });
+    });
+</script>
+<form id="modalForm">
+    <div class="modal-body">
+        <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
+        <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-database"></i>Thêm mới chiết khấu
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên chiết khấu</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"name="Name" id="Name" value="@Model.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chiết khấu (%)</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="Percent" id="Percent" value="@(Model.Percent ?? 0)"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chiết khấu (vnđ)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control maskPrice" name="Price" id="Price" value="@(Model.Price ?? 0)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tổng đơn hàng </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control maskPrice" name="TotalOrder" id="TotalOrder" value="@(Model.TotalOrder ?? 0)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Áp dụng cho đại lý </label>
+                            <div class="col-sm-10">
+                                <select name="AgencyId" class="form-control">
+                                    <option value="">Chọn đại lý</option>
+                                    @foreach (var item in ViewBag.agent)
+                                    {
+                                        <option value="@item.ID" @(item.ID == Model.AgencyId ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tất cả đại lý </label>
+                            <div class="col-sm-10">
+                                @Html.CheckBox("IsAll") tất cả
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>
+        <button id="close" type="button" data-dismiss="modal" class="btn btn-sm btn-default">Đóng</button>
+    </div>
+</form>

@@ -1,0 +1,437 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.AnalysisItem
+@{
+    var i = 1;
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script src="/Content/Admin/plugins/chartjs/Chart.min.js"></script>
+<script src="/Content/Admin/plugins/chartjs/utils.js"></script>
+<input type="hidden" id="nameproduct" value="@(new JavaScriptSerializer().Serialize(Model.ListItem.Select(m => m.Name)))" />
+<input type="hidden" id="quantityproduct" value="@(new JavaScriptSerializer().Serialize(Model.ListItem.Select(m => m.Quantity)))" />
+<script>
+    $(document).ready(function() {
+        registerGridView('#mygird');
+        $("body").removeClass("page-header-fixed").addClass("layout-no-scroll");
+        $(".page-header").removeClass("navbar-fixed-top");
+        $(".content-control").addClass("page-scroll");
+        //ChartsLine("chartBar2", "Khách hàng", ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7"], [20, 10, 5, 2, 20, 30, 45, 125, 65, 89, 12, 54, 20, 10, 5, 2, 20, 30, 45, 125, 65, 89, 12, 54, 20, 10, 5, 2, 20, 30, 45]);
+        //ChartsLine("chartBar2", "Thu chi", ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"], [20, 10, 5, 2, 20, 30, 45, 125, 65, 89, 12, 54, ]);
+        chartsPie("chartPie1", "Biểu đồ tỉ lệ (%)", ["Tổng doanh thu", "Tổng đơn hàng", "Tổng chi", "Lợi nhuận"], ['@((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0))', '@((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0))', '@(Model.Receipt)', '@((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0) - (Model.Receipt ?? 0))']);
+        chartsPie("chartPie2", "Biểu đồ tỉ lệ (%)", ["Tổng tích lũy", "Rút tích lũy", "Tích lũy còn lại"], ['@Model.PriceReward', '@Model.PriceReceive', '@(Model.PriceReward - Model.PriceReceive)']);
+        chartsPie("chartPie3", "Biểu đồ tỉ lệ (%)", ["Tổng tiền ứng", "Tổng tiền trả ứng", "Tổng tiền còn lại"], ['@Model.CashAdvance', '@Model.Repay', '@((Model.CashAdvance ?? 0) - (Model.Repay ?? 0))']);
+        chartsPie("chartPie4", "Biểu đồ tỉ lệ (%)", ["Tổng nhân viên", "Đang đi làm", "Đi làm muộn"], ['@Model.CountU', '@Model.Onl', '@(Model.Later)']);
+        ChartsBar("chartBar", "Biểu đồ sản lượng", JSON.parse($('#nameproduct').val()), JSON.parse($('#quantityproduct').val()));
+        $("#quantityproduct").val("");
+        $("#nameproduct").val("");
+        var list = [
+            { label: "Tổng doanh thu", fill: false, borderColor: window.chartColors.blue, data: [30, 20, 60, 90, 50], lineTension: 0, },
+            { label: "Tổng đơn hàng", fill: false, borderColor: window.chartColors.orange, data: [10, 40, 40, 40, 30], lineTension: 0, },
+            { label: "Tổng chu ", fill: false, borderColor: window.chartColors.red, data: [20, 30, 80, 50, 100], lineTension: 0, },
+            { label: "Lợi nhuận ", fill: false, borderColor: window.chartColors.green, data: [10, 30, 90, 50, 140], lineTension: 0, }
+        ];
+        ChartsLineMutil("chartLineMutil", ["January", "February", "March", "April", "May"], list);
+        ChartsLineMutil("chartLineMutil2", ["January", "February", "March", "April", "May"], list);
+    });
+</script>
+<div class="page-analysis">
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-briefcase fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0)).Money()) đ</div>
+                    <div class="desc">Tổng doanh thu </div>
+                </div>
+                <a class="more" href="javascript:;">
+                    Xem chi tiết
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="dashboard-stat yellow">
+                <div class="visual">
+                    <i class="fa fa-user fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@Model.Complete.Money() đ</div>
+                    <div class="desc">Tổng đơn hàng thanh toán </div>
+                </div>
+                <a class="more" href="javascript:;">
+                    Xem chi tiết
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="dashboard-stat red">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@Model.Pending.Money() đ</div>
+                    <div class="desc">Tổng đơn hàng chưa thanh toán</div>
+                </div>
+                <a class="more" href="javascript:;">
+                    Xem chi tiết
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-group fa-icon-medium"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@Model.CountO </div>
+                    <div class="desc">Tổng đơn hàng </div>
+                </div>
+                <a class="more" href="javascript:;">
+                    Xem chi tiết
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-line-chart"></i>
+                        <span class="caption-subject">Sản phẩm bán chạy</span>
+                    </div>
+                    
+                </div>
+                <div class="portlet-body">
+                    <canvas id="chartBar"></canvas>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-bar-chart"></i>
+                        <span class="caption-subject">Danh sách sản phẩm bán chạy</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                                Lọc theo
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">Tuần </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Tháng </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Năm </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body" id="mygird">
+                    <table class="gridView table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">STT</th>
+                                <th class="text-center">Mã</th>
+                                <th class="text-center">Ảnh</th>
+                                <th>Tên</th>
+                                <th class="text-right">Số lượng </th>
+                                <th class="text-center">Size</th>
+                                <th class="text-center">Màu</th>
+                                <th class="text-right">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListItem)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i++)</td>
+                                    <td class="text-center">@item.CodeSku</td>
+                                    <td class="text-center">
+                                        <img src="@item.UrlPicture.Picture()" class="lazyImg" width="50px" />
+                                    </td>
+                                    <td><a href="javascript:;">@item.Name </a></td>
+                                    <td class="text-right">@item.Quantity </td>
+                                    <td class="text-center">@item.SizeName </td>
+                                    <td class="text-center">@item.ColorName </td>
+                                    <td class="text-right">
+                                        @Grid.ActionView(item.ID, item.Name)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-line-chart"></i>
+                        <span class="caption-subject">Thống kê thu chi</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                                Lọc theo
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">Tuần </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Tháng </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Năm </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <canvas id="chartLineMutil"></canvas>
+                    <div class="well margin-top-20">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-success">Tổng doanh thu: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0)).Money()) đ</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-info">Tổng đơn hàng: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0)).Money())</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-danger">Tổng chi: </span>
+                                <h3>@Model.Receipt.Money() đ</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-warning">Tổng lợi nhuận: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0) - (Model.Receipt ?? 0)).Money()) đ</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-bar-chart"></i>
+                        <span class="caption-subject">Thu chi theo ngày</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                                Lọc theo
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">Tuần </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Tháng </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Năm </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <canvas id="chartPie1"></canvas>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-success">Tổng doanh thu: </span>
+                                        <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0)).Money()) đ</h3>
+                                    </div>
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-info">Tổng đơn hàng: </span>
+                                        <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0)).Money())</h3>
+                                    </div>
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-danger">Tổng chi: </span>
+                                        <h3>@Model.Receipt.Money() đ</h3>
+                                    </div>
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-warning">Tổng lợi nhuận: </span>
+                                        <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0) - (Model.Receipt ?? 0)).Money()) đ</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <canvas id="chartPie3"></canvas>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-success">Tổng ứng: </span>
+                                        <h3>@Model.CashAdvance.Money() đ</h3>
+                                    </div>
+                                    <div class="col-sm-6 text-stat">
+                                        <span class="label label-info">Trả ứng: </span>
+                                        <h3>@Model.Repay.Money() đ</h3>
+                                    </div>
+                                    <div class="col-sm-12 text-stat">
+                                        <span class="label label-danger">Còn lại: </span>
+                                        <h3>@((Model.CashAdvance - Model.Repay).Money()) đ</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-line-chart"></i>
+                        <span class="caption-subject">Khách hàng</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                                Lọc theo
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">Tuần </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Tháng </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Năm </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <canvas id="chartLineMutil2"></canvas>
+                    <div class="well margin-top-20">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-success">Tổng tích lũy: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0)).Money()) đ</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-info">Tổng rút tích lũy: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0)).Money()) đ</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-danger">Tích lũy còn lại: </span>
+                                <h3>@Model.Receipt.Money() đ</h3>
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-stat">
+                                <span class="label label-warning">Tổng khách hàng: </span>
+                                <h3>@(((Model.Complete ?? 0) + (Model.Pending ?? 0) + (Model.Processing ?? 0) + (Model.Payment ?? 0) - (Model.Receipt ?? 0)).Money())</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-bar-chart"></i>
+                        <span class="caption-subject">Tích lũy theo ngày</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                                Lọc theo
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">Tuần </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Tháng </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">Năm </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <canvas id="chartPie2"></canvas>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-success">Tổng tích lũy: </span>
+                                        <h3>@Model.PriceReward.Money() đ</h3>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-info">Rút tích lũy: </span>
+                                        <h3>@Model.PriceReceive.Money() đ</h3>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-danger">Tích lũy còn lại: </span>
+                                        <h3>@((Model.PriceReward - Model.PriceReceive).Money()) đ</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <canvas id="chartPie4"></canvas>
+                            <div class="well margin-top-20">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-success">Tổng nhân viên: </span>
+                                        <h3>@Model.CountU</h3>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-info">Đang đi làm: </span>
+                                        <h3>@Model.Onl</h3>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-stat">
+                                        <span class="label label-danger">Đi muộn: </span>
+                                        <h3>@Model.Later</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

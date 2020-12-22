@@ -1,0 +1,115 @@
+﻿@model FDI.Admin.Models
+@{
+    ViewBag.Title = "Quản lý quyền quản trị" + Model.DisplayName;
+    Layout = "~/Views/Shared/_Meta.cshtml";
+}
+<section id="gridItems" class="vbox">
+    <section class="scrollable wrapper w-f">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Quản lý quyền của trị viên: @Model.DisplayName [@Model.Status]</header>
+            <div class="headear">
+                <div class="searchbox">
+                    @Html.ActionLink("Quay lại danh sách", "Index", "UserAdministration", new { }, new { @class = "btn btn-sm btn-primary m-r m-t-sm", @id = "btn_back" })
+                </div>
+                <div class="manage">
+                    @Html.ActionLink("Đổi mật khẩu", "Password", "UserAdministration", new { id = Model.User.ProviderUserKey }, new { @class = "btn btn-sm btn-primary m-t-sm", @id = "btn_add" })
+                    <div style="float: right; padding-left: 5px;">
+                        @using (Html.BeginForm("DeleteUser", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary m-r m-t-sm">Xóa tài khoản</button>
+                        }
+                    </div>
+                    <div style="float: right;">
+                        @using (Html.BeginForm("ChangeApproval", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+                        {
+                            @Html.Hidden("isApproved", !Model.User.IsApproved)
+                            <button type="submit" class="btn btn-sm btn-primary m-b m-t-sm">@(Model.User.IsApproved ? "Hủy duyệt" : "Duyệt") tài khoản</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            @using (Html.BeginForm("Details", "UserAdministration", new { id = Model.User.ProviderUserKey }))
+            {
+                <fieldset class="forms">
+                    <table class="gridView">
+                        <tr>
+                            <td>Tài khoản</td>
+                            <td>@Model.User.UserName</td>
+                        </tr>
+
+                        <tr>
+                            <td>Email</td>
+                            <td>@Model.User.Email</td>
+                        </tr>
+
+                        <tr>
+                            <td>Hoạt động cuối</td>
+                            <td>@Model.User.LastActivityDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                        </tr>
+
+                        <tr>
+                            <td>Đăng nhập cuối</td>
+                            <td>@Model.User.LastLoginDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                        </tr>
+
+                        <tr>
+                            <td>Ngày tạo</td>
+                            <td>@Model.User.CreationDate.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                        </tr>
+
+                        <tr>
+                            <td>Thay đổi email</td>
+                            <td>@Html.TextBox("email", Model.User.Email, new { @class = "form-control" })</td>
+                        </tr>
+
+                        <tr>
+                            <td>Ghi chú</td>
+                            <td>@Html.TextArea("comments", Model.User.Comment, new { @class = "form-control" })</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="submit">
+                                <button type="submit" class="btn input-sm btn-primary">Lưu thông tin</button>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                
+            }
+            <fieldset class="forms">
+                <header class="panel-heading font-bold">Danh sách vai trò đang được sử dụng</header>
+                <table class="gridView">
+                    <tr>
+                        <th>Tên vai trò</th>
+                        <th>Trạng thái</th>
+                        <th>Quản lý</th>
+                    </tr>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(role.Key, "Role", new { id = role.Key })</td>
+                            <td>@((role.Value) ? "Đang sử dụng" : "Không sử dụng")</td>
+                            <td>
+                                @if (role.Value)
+                                {
+                                    using (Html.BeginForm("RemoveFromRole", "UserAdministration", new { id = Model.User.ProviderUserKey, role = role.Key }))
+                                    {
+                                        <button type="submit" class="btn btn-sm btn-primary">Xóa vai trò</button>
+                                    }
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("AddToRole", "UserAdministration", new { id = Model.User.ProviderUserKey, role = role.Key }))
+                                    {
+                                        <button type="submit" class="btn btn-sm btn-primary">Thêm vai trò</button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </fieldset>
+
+        </section>
+    </section>
+</section>
+

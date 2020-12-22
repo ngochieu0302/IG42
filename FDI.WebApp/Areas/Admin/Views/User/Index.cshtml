@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Quản lý chức năng User với Module";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNew.cshtml";
+}
+<script type="text/javascript">
+    urlLists = '@Url.Action("ListItems", "User")';
+    urlForm = '@Url.Action("AjaxForm", "User")';
+    formWidth = 960;
+    formHeight = $(window).height() - 24;
+    viewWidth = 960;
+    viewHeight = $(window).height() - 24;
+
+    $(document).ready(function () {
+        initAjaxLoad(urlLists, "#User_ModuleActiveGriditems");
+    });
+</script>
+
+
+<div class="header-control">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="/Admin/Admin"><i class="fa fa-home"></i>Home</a><i class="fa fa-circle"></i></li>
+            <li class="active">Quản lý User với Module</li>
+        </ul>
+    </div>
+    <h3 class="page-title"></h3>
+    <div class="group-form-control">
+        <div class="btn-group pull-right">
+            <a class="btn btn-sm green" href="/Admin/ActiveRole/Actions" id="btn_add"><i class="fa fa-plus pdr5"></i>Thêm mới</a>
+        </div>
+    </div>
+</div>
+<div class="content-control" id="User_ModuleActiveGriditems">
+   
+</div>

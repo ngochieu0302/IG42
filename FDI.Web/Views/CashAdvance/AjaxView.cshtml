@@ -1,0 +1,217 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CashAdvanceItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin ứng lương
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>                        
+                        <th>Ngày ghi nhận</th>
+                        <td>@Model.DateReturn.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền</th>
+                        <td>@string.Format("{0:0,0}", Model.Price)</td>
+                        
+                    </tr>
+                    <tr>
+                        <th>Hình thức thanh toán</th>
+                        @if (Model.PaymentMethodId == (int)PaymentMethod.Transfer)
+                        {
+                            <td>Chuyển khoản</td>
+                        }
+                        else if (Model.PaymentMethodId == (int)PaymentMethod.Cash)
+                        {
+                            <td>Tiền mặt</td>
+                        }
+                        else
+                        {
+                            <td>Khác</td>
+                        }
+                    </tr>
+                    <tr>
+                        <th>Ghi chú</th>
+                        <td>@Model.Note</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label>In phiếu</label>
+                        </th>
+                        <td>
+                            <button class="print default" id="btn_Print"><i class="fa fa-print"></i>In</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none;">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+
+                            <li><strong>Địa chỉ:</strong><span></span></li>
+                            <li><strong>Bộ phận:</strong><span></span></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <strong>Mẫu số 03 - TT</strong>
+                        <span>
+                            (Ban hành theo Thông tư số 200/2014/TT-BTC
+                            Ngày 22/12/2014 của Bộ Tài chính)
+                        </span>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="left">
+                        <h3>GIẤY ĐỀ NGHỊ TẠM ỨNG</h3>
+                        <i> Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><b>Số:</b><span>@Model.Code</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <ul>
+                        <li><strong>Kính gửi:</strong><span>@Model.FullNameCashier</span></li>
+                        <li><b>Tên tôi là:</b><span>@Model.FullNameReceipt</span></li>
+                        <li><b>Địa chỉ:</b></li>
+                        <li><b>Đề nghị cho tạm ứng số tiền:</b><strong>@Model.Price.Money()</strong></li>
+                        <li><b>Viết bằng (chữ):</b><span>@Model.Price.NumberToWord(" đồng")</span></li>
+                        <li><b>Lý do tạm ứng:</b><span>@Model.Note</span></li>
+                        <li><b>Thời hạn thanh toán:</b></li>
+                    </ul>
+                </div>
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Giám đốc</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Phụ trách bộ phận</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người đề nghị tạm ứng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span>@Model.FullNameReceipt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+
+                            <li><strong>Địa chỉ:</strong><span></span></li>
+                            <li><strong>Bộ phận:</strong><span></span></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <strong>Mẫu số 03 - TT</strong>
+                        <span>
+                            (Ban hành theo Thông tư số 200/2014/TT-BTC
+                            Ngày 22/12/2014 của Bộ Tài chính)
+                        </span>
+                    </div>
+                </div>
+                <div class="pt-name">
+                    <div class="left">
+                        <h3>GIẤY ĐỀ NGHỊ TẠM ỨNG</h3>
+                        <i>  Ngày <i>@DateTime.Now.Day</i> Tháng <i>@DateTime.Now.Month</i> Năm <i>@DateTime.Now.Year</i></i>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li><b>Số:</b><span>@Model.Code</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <ul>
+                        <li><strong>Kính gửi:</strong><span>@Model.FullNameCashier</span></li>
+                        <li><b>Tên tôi là:</b><span>@Model.FullNameReceipt</span></li>
+                        <li><b>Địa chỉ:</b></li>
+                        <li><b>Đề nghị cho tạm ứng số tiền:</b><strong>@Model.Price.Money()</strong></li>
+                        <li><b>Viết bằng (chữ):</b><span>@Model.Price.NumberToWord(" đồng")</span></li>
+                        <li><b>Lý do tạm ứng:</b><span>@Model.Note</span></li>
+                        <li><b>Thời hạn thanh toán:</b></li>
+                    </ul>
+                </div>
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Giám đốc</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Phụ trách bộ phận</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người đề nghị tạm ứng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span>@Model.FullNameReceipt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page>
+
+</div>
+<script>
+    $(function () {
+        $("#btn_Print").click(function () {
+            $("#printNode").html("Ghi chú: " + $("#Note").val());
+            $('#printTime').html($("#DateOfSale_").val());
+            $('#BoxPrint').show();
+            jQuery.print('#BoxPrint');
+            $('#BoxPrint').hide();
+        });
+    })
+</script>

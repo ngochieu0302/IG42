@@ -1,0 +1,147 @@
+﻿@using FDI.Utils
+@model dynamic
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>
+    <meta charset="utf-8" />
+    <title>Admin | @ViewBag.Title</title>
+    <link href="/Content/Admin/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="description" content="" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="/Content/Admin/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="/Content/Admin/css/components.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/darkblue.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="/Content/Admin/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Admin/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    má
+    <script src="/Content/Admin/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+    <script src="/Content/Admin/js/jquery.address-1.6.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/jquery.mask.min.js"></script>
+    <script src="/Content/Admin/js/jquery.multiselect.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/jquery.treeview.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/jquery.autocomplete.js"></script>
+    <script src="~/Content/Admin/js/jquery.magnific.min.js" type="text/javascript"></script>
+
+    <script src="/Content/Admin/js/GridView.js" type="text/javascript"></script>
+    <script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="/ckfinder/ckfinder.js" type="text/javascript"></script>
+    <script src="~/Content/Admin/js/jquery.lazyload.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/CarMarket.js" type="text/javascript"></script>
+    <script src="/Content/Admin/js/purl.js"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-fixed">
+    <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="/"><img src="/Content/Admin/images/logo.png" alt="logo" class="logo-default"></a>
+                <div class="menu-toggler sidebar-toggler"></div>
+            </div>
+            <form class="search-form" action="/search-p@(WebConfig.NewsId)" method="GET" _lpchecked="1" target="_blank">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search..." name="keyword">
+                    <span class="input-group-btn">
+                        <a href="javascript:;" class="btn submit">
+                            <i class="icon-magnifier"></i>
+                        </a>
+                    </span>
+                </div>
+            </form>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    @Html.Action("TotalNotifications", "Admin")
+                    @Html.Action("LoadLanguage", "Languages")
+                    <li class="dropdown dropdown-user">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img alt="" class="img-circle" src="/Content/Admin/img/avatar3_small.jpg" />
+                                <span class="username username-hide-on-mobile">@User.Identity.Name </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="/Admin/UserAdministration/Details/@Membership.GetUser().ProviderUserKey"><i class="icon-user"></i>Thông tin tài khoản</a>
+                                </li>
+                                <li>
+                                    <a class="username" onclick="FdiDialog('/Admin/AccountAdmin/ChangePassword', 'Đổi mật khẩu tài khoản', 335, 500);" href="#"><i class="fa fa-lock"></i>Đổi mật khẩu</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/AccountAdmin/LogOff"><i class="icon-logout"></i>Thoát</a>
+                                </li>
+                            </ul>
+                        }
+                    </li>
+                    <li class="dropdown dropdown-quick-sidebar-toggler">
+                        <a href="/Admin/AccountAdmin/LogOff" class="dropdown-toggle">
+                            <i class="icon-logout"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                @Html.Action("Menu", "Admin")
+            </div>
+        </div>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+    @Html.Partial("~/Areas/Admin/Views/Shared/Popup.cshtml")
+    <!-- Bootstrap -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="/Content/Admin/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script src="/Content/Admin/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/ui-toastr.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/bootstrap-sweetalert/ui-sweetalert.min.js" type="text/javascript"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+
+    <script src="/Content/Admin/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+    <script src="/Content/Admin/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+
+
+    <script src="/Content/Admin/plugins/app.min.js" type="text/javascript"></script>
+
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="/Content/Admin/plugins/ui-extended-modals.min.js" type="text/javascript"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="/Content/Admin/plugins/layout.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+
+    <script src="/Content/Admin/js/Common.js"></script>
+</body>
+</html>

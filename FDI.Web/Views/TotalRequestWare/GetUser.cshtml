@@ -1,0 +1,49 @@
+﻿@model List<FDI.Simple.DNUserItem>
+
+<div class="modal-body">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Chọn nhân viên</label>
+        <div class="col-sm-10">
+            <select id="GuiID" class="select2" multiple>
+                <option value="">--- Chọn nhân viên ---</option>
+                @foreach (var item in Model)
+                {
+                    <option @(item.IsActive ? "selected" : "") value="@item.UserId">@item.LoweredUserName (@item.UserName)</option>
+
+                }
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" id="btn-assgin">Lưu</button>
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        callSelect2("#GuiID", "100%");
+        let orderId = @Request.QueryString["orderId"]
+            $("#btn-assgin").click(function () {
+                let obj = { orderId, userIds: $("#GuiID").val()}
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify(obj),
+                    url: "@Url.Action("AssignUser")",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // code here
+                        if (data.Erros == false) {
+                            window.location.reload();
+                        }
+
+                    }
+                });
+            });
+    });
+</script>
+
+

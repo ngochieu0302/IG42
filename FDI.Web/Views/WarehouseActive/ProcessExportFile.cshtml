@@ -1,0 +1,200 @@
+﻿@using FDI.CORE
+@using FDI.CORE
+@model IEnumerable<FDI.Simple.ListCateActiveItem>
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var stt = 1;
+    decimal? total = 0;
+    decimal? total1 = 0;
+    var stt1 = 1;
+}
+<form id="frm-modal">
+    <input type="hidden" name="do" id="do" value="Active" />
+    <input type="hidden" name="lstId" id="lstId" value="@(string.Join(",", Model.Select(c => c.ID)))" />
+    <input type="hidden" name="UserID" id="UserID" value="@ViewBag.UserID" />
+    <div class="modal-body">
+        <div id="PrintContent" class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-external-link-square"></i>Danh sách Đơn đặt hàng
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Người yêu cầu</th>
+                                <th>Ngày yêu cầu</th>
+                                <th>Giờ chuyển</th>
+                                <th>Số lượng</th>
+                                <th>Tích lũy dùng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@item.Productname</td>
+                                    <td>@item.Fullname</td>
+                                    <td>@item.DateRecive.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@foreach (var items in TypeHours.Hours().Where(items => items.Value == item.Hours))
+                                        {
+                                        <span>@items.Key</span>
+                                        }</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Prizemoney.Money()</td>
+                                </tr>
+                                        stt++;
+                                        total += item.Quantity;
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6"><b>Tổng số con: </b></td>
+                                <td colspan="2">@total</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm">Duyệt và In</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+    </div>
+</form>
+
+@* In phiếu *@
+<script src="~/Content/Admin/js/jQuery.print.js"></script>
+<script src="~/Content/Admin/js/numeral.min.js"></script>
+<div id="BoxPrint" style="display: none">
+    <link href="~/Content/Admin/css/phieuthu.css" rel="stylesheet" />
+    <page size="A4">
+        <div class="pt-box-wrap">
+            <div class="pt-box">
+                <div class="pt-head">
+                    <div class="left">
+                        <ul>
+                            <li><img src="https://fditech.vn/Content/Publishing/images/logo-foo.png" width="200px" height="90px" title="logo"/></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <div class="pt-name">
+                            <div class="center">
+                                <h3 style="font-size: 26px">DANH SÁCH HÀNG CẦN NHẬP</h3>
+                                <i> Ngày @DateTime.Now.Day tháng @DateTime.Now.Month năm @DateTime.Now.Year</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-detail">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                               <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Người yêu cầu</th>
+                                <th>Điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày yêu cầu</th>
+                                <th>Giờ chuyển</th>
+                                <th>Số lượng</th>
+                                <th>Tích lũy dùng</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@stt1</td>
+                                    <td>@item.Productname</td>
+                                    <td>@item.Fullname</td>
+                                    <td>@item.Mobile</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.DateRecive.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        @foreach (var items in TypeHours.Hours().Where(items => items.Value == item.Hours))
+                                        {
+                                                  <span>@items.Key</span>
+                                        }
+                                    </td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Prizemoney.Money()</td>
+                                    <td></td>
+                                </tr>
+                                        stt1++;
+                                        total1 += item.Quantity;
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="8" style="text-align: left"><b>Tổng số con: </b></td>
+                                <td colspan="2">@total</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="pt-sign item-sign-4">
+                    <div class="pt-item-sign">
+                        <strong>Thủ kho</strong>
+                        <i>(Ký, họ tên, đóng dấu)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Kế toán trưởng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người nhận hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign">
+                            <div class="pt-text-sign"></div>
+
+                        </div>
+                    </div>
+                    <div class="pt-item-sign">
+                        <strong>Người giao hàng</strong>
+                        <i>(Ký, họ tên)</i>
+                        <div class="pt-wirte-sign"></div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </page>
+
+</div>
+<script>
+    $(function () {
+        $("#frm-modal").validate({
+            rules: {
+            },
+            messages: {
+            },
+            submitHandler: function () { //onSubmit
+                $.post("/WarehouseActive/Actions", $("#frm-modal").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $("#dialog-form-4").modal('hide'); //Đóng form thêm mới - sửa
+                        $('#BoxPrint').show();
+                        jQuery.print('#BoxPrint');
+                        $('#BoxPrint').hide();
+                        createCloseMessage("Thông báo", data.Message); // Tạo thông báo khi click đóng thì chuyển đến url đích
+                    }
+                });
+            }
+        });
+    });
+</script>

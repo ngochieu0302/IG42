@@ -1,0 +1,115 @@
+﻿@using System.Web.Script.Serialization
+@using FDI.CORE
+@model FDI.Simple.ModelProductDetailRecipeItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+    var lst = new JavaScriptSerializer().Serialize(Model.ListItems);
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <colgroup>
+                    <col class="colgroup check" />
+                    <col class="colgroup indentity" />
+                    <col />
+                    <col />
+                    <col class="colgroup action-3" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="act_roles"><input value="" type="checkbox" /></th>
+                        <th><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=ProductName">Tên sản phẩm</a></th>
+                        <th><a href="#Field=Code">Mã Công thức</a></th>
+                        <th><a href="#Field=TimeM">Thời gian(phút)</a></th>
+                        <th><a href="#Field=DateCreate">Ngày tạo</a></th>
+                        <th><a href="#Field=DateUpdate">Ngày sửa</a></th>
+                        <th><a href="#Field=Username">Người sửa</a></th>
+                        <th><a href="#Field=ProductPrice">Tổng giá sp</a></th>
+                        <th><a href="#Field=ValuePrice">Tổng giá nguyên liệu</a></th>
+                        <th>Sử dụng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItems)
+                {
+            <tr title="@item.ProductName">
+                <td class="act_roles"><input type="checkbox" value="@item.ID" class="check"></td>
+                <td>@item.ID</td>
+                <td>@item.ProductName</td>
+                <td>@item.Code</td>
+                <td>@item.TimeM</td>
+                <td>@item.DateCreate.DecimalToString("dd/MM/yyyy")</td>
+                <td>@item.DateUpdate.DecimalToString("dd/MM/yyyy")</td>
+                <td>@item.Username</td>
+                <td>@item.ProductPrice.Money()</td>
+                <td>@item.ValuePrice.Money()</td>
+                <td class="text-center"><input type="radio" name="rdUser_@item.ProductDetailId" @(item.IsUse == true ? "checked" : "") data-id="@item.ProductDetailId" id="use-price-@item.ID" value="@item.ID" /></td>
+
+                <td class="text-right">
+                    @Grid.ActionEdit(item.ID, item.ProductName)
+                    @Grid.ActionDelete(item.ID, item.ProductName)
+                </td>
+            </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+        var lstId = [];
+        var lst = JSON.parse('@Html.Raw(lst)');
+
+        for (var i = 0; i < lst.length; i++) {
+            if (lst[i].IsUse) {
+                var item = {
+                    name: "rdUser_" + lst[i].ProductDetailId,
+                    ID: lst[i].ID,
+                }
+                lstId.push(item);
+            }
+        }
+        $(".gridView input[type=radio]").change(function () {
+            var id = $(this).val();
+            var cate = $(this).data("id");
+            swal({
+                title: "Sử dụng giá của công thức này",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Sử dụng",
+                cancelButtonText: "Hủy",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.post('/ProductDetailRecipe/Actions', { "do": "Active", "itemId": "" + id + "," + cate + "" }, function (data) {
+                            if (data.Erros) {
+                                createMessage("Có lỗi xảy ra", "<b>Lỗi được thông báo:</b><br/>" + data.Message);
+                            } else {
+                                swal.close();
+                                createCloseMessage("Thông báo", data.Message, "");
+                            }
+                        });
+                    } else { 
+                        for (var i = 0; i < lstId.length; i++) {
+                            $(".gridView input[type=radio][name='" + lstId[i].name + "']").prop("checked", false);
+                            $("#use-price-" + lstId[i].ID).prop("checked", true);
+                        }
+                        swal.close();
+                    }
+                });
+        });
+    });
+</script>

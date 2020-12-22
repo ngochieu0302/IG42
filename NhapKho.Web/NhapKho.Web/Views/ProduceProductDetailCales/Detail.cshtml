@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    var i = 1;
+}
+@using FDI.CORE
+@model List<FDI.Simple.OrderDetailProductItem>
+
+<table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+
+    <thead>
+        <tr>
+        <tr>
+            <th>STT</th>
+            <th>Tên SP</th>
+            <th>Size</th>
+            <th>Số lượng</th>
+            <th>Khối lượng</th>
+        </tr>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr class="select_item @(i==1?"active":"")" data-id="@item.ProductId">
+            <td>@(i++)</td>
+            <td>@item.ProductName</td>
+            
+            
+            <td>@(item.SizeId == null? item.Quantity.Quantity() + " Kg" : item.UnitName)</td>
+            <td>@(item.SizeId == null? "1" : item.Quantity.Quantity())</td>
+
+            <td>@item.Weight.Quantity()</td>
+        </tr>
+    }
+</table>
+<script>
+    $(function () {
+        productid = @(Model.Count>0?Model[0].ProductId:0);
+        $.post("@Url.Action("SetProduct")" + "?id=" + productid);
+        $(".select_item").click(function() {
+            $(".select_item").removeClass("active");
+            $(this).addClass("active");
+            productid = $(this).data("id");
+            $.post("@Url.Action("SetProduct")" + "?id=" + productid, function() {
+                redirect("");
+            });
+
+        });
+    })
+</script>
