@@ -22,6 +22,7 @@ namespace FDI.Base
             this.Categories = new HashSet<Category>();
             this.System_File = new HashSet<System_File>();
             this.System_Tag = new HashSet<System_Tag>();
+            this.Steps = new HashSet<Step>();
         }
     
         public int ID { get; set; }
@@ -55,6 +56,9 @@ namespace FDI.Base
         public string LanguageId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> Sort { get; set; }
+        public string UserName { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public string UserActive { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Gallery_Picture Gallery_Picture { get; set; }
@@ -64,5 +68,6 @@ namespace FDI.Base
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<System_File> System_File { get; set; }
         public virtual ICollection<System_Tag> System_Tag { get; set; }
+        public virtual ICollection<Step> Steps { get; set; }
     }
 }

@@ -31,6 +31,8 @@ namespace FDI.Base
         public Nullable<int> Check { get; set; }
         public Nullable<bool> IsPrestige { get; set; }
     
+        public virtual Customer Customer { get; set; }
         public virtual Order Order { get; set; }
+        public virtual Shop_Product Shop_Product { get; set; }
     }
 }

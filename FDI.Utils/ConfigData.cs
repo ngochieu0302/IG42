@@ -33,6 +33,7 @@ namespace FDI.Utils
         public static string TempFolderWeb = HttpContext.Current.Server.MapPath(Temp).Replace("FDI.MvcAPI", "FDI.Web");
         public static string ThumbsFolder = HttpContext.Current.Server.MapPath(Thumbs);
         public static string OriginalFolder = HttpContext.Current.Server.MapPath(Originals);
+        public static string MediumsFolder = HttpContext.Current.Server.MapPath(Mediums);
         public static string ImageUploadMediumFolder = HttpContext.Current.Server.MapPath(Mediums);
         public static string ImageFolder = HttpContext.Current.Server.MapPath(Images);
         public static string DocumentFolder = HttpContext.Current.Server.MapPath(Document);

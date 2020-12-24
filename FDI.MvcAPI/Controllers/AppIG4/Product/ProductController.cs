@@ -10,16 +10,16 @@ using FDI.Utils;
 
 namespace FDI.MvcAPI.Controllers.Product
 {
-    public class ProductController : BaseApiController
+    public class ProductController : BaseApiAppIG4Controller
     {
         //
         // GET: /Product/
-        readonly Shop_ProductDA _da = new Shop_ProductDA();
+        readonly Shop_ProductAppIG4DA _da = new Shop_ProductAppIG4DA();
         public ActionResult ListItems(string key, int agencyId)
         {
             var obj = key != Keyapi
-                ? new ModelProductItem()
-                : new ModelProductItem { ListItem = _da.GetListSimpleByRequest(Request), PageHtml = _da.GridHtmlPage, Quantity = 0 };
+                ? new ModelProductAppIG4Item()
+                : new ModelProductAppIG4Item { ListItem = _da.GetListSimpleByRequest(Request), PageHtml = _da.GridHtmlPage, Quantity = 0 };
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
@@ -74,7 +74,7 @@ namespace FDI.MvcAPI.Controllers.Product
         }
         public ActionResult GetProductItem(string key, int id)
         {
-            var obj = key != Keyapi ? new ProductItem() : _da.GetProductItem(id);
+            var obj = key != Keyapi ? new ProductAppIG4Item() : _da.GetProductItem(id);
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Hide(string key, string lstArrId)

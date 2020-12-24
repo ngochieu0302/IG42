@@ -37,7 +37,7 @@ namespace FDI.Simple
         public Nullable<int> LikeTotal { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
-        public CategoryItem CategoryItem { get; set; }
+        public CategoryAppIG4Item CategoryItem { get; set; }
         public double? Km { get; set; }
         public decimal? PriceReward { get; set; }
         public decimal? PriceReceive { get; set; }
@@ -85,20 +85,20 @@ namespace FDI.Simple
         public string page { get; set; }
         public int? pageId { get; set; }
     }
-    public class ModelCustomerCheckout
+    public class ModelCustomerAppIG4Checkout
     {
         public CustomerItem CustomerItem { get; set; }
         public List<ProductCartItem> ListcCartItems { get; set; }
         public decimal? PriceShip { get; set; }
     }
 
-    public class ModelCustoemrHistory : BaseModelSimple
+    public class ModelCustomerAppIG4History : BaseModelSimple
     {
         public CustomerItem CustomerItem { get; set; }
         public IEnumerable<OrderDetailItem> LstOrderDetailItems { get; set; }
     }
 
-    public class ModelPurchasedbooks:BaseModelSimple
+    public class ModelPurchasedbooksAppIG4:BaseModelSimple
     {
         public CustomerItem CustomerItem { get; set; }
         public int? Page { get; set; }
@@ -106,7 +106,7 @@ namespace FDI.Simple
         public IEnumerable<OrderDetailItem> LstProductPurchaseItems { get; set; }
     }
 
-    public class ProductReadingItem:BaseSimple
+    public class ProductReadingAppIG4Item:BaseSimple
     {
         public string ProductName { get; set; }
         public string Author { get; set; }
@@ -126,10 +126,10 @@ namespace FDI.Simple
         public CustomerItem CustomerItem { get; set; }
         public int? Page { get; set; }
         public string sort { get; set; }
-        public IEnumerable<ProductReadingItem> LsstProductReadingItems { get; set; }
+        public IEnumerable<ProductReadingAppIG4Item> LsstProductReadingItems { get; set; }
     }
 
-    public class CookieLoginItem:BaseSimple
+    public class CookieLoginAppIG4Item:BaseSimple
     {
         public int? CustomerID { get; set; }
         public string key { get; set; }
@@ -140,29 +140,29 @@ namespace FDI.Simple
 
     }
 
-    public class ModelListChartItem
+    public class ModelListChartAppIG4Item
     {
-        public IEnumerable<ListChartItem> ListChartItems { get; set; }
-        public IEnumerable<ListChartPacketItem> ListChartPacketItems { get; set; }
+        public IEnumerable<ListChartAppIG4Item> ListChartItems { get; set; }
+        public IEnumerable<ListChartPacketAppIG4Item> ListChartPacketItems { get; set; }
 
     }
-    public class ListChartItem
+    public class ListChartAppIG4Item
     {
         public int? I { get; set; }
         public int? TotalCus { get; set; }
         public decimal? TotalReward { get; set; }
     }
-    public class ListChartPacketItem
+    public class ListChartPacketAppIG4Item
     {
         public int? I { get; set; }
         public decimal? Total { get; set; }
     }
-    public class ListOrderShopChartItem
+    public class ListOrderShopChartAppIG4Item
     {
         public int? I { get; set; }
         public int? Total { get; set; }
     }
-    public class jsonChart
+    public class jsonChartAppIG4
     {
         public string I { get; set; }
         public List<int> TotalCus { get; set; }
@@ -170,7 +170,7 @@ namespace FDI.Simple
 
     }
 
-    public class OrderShopItem:BaseSimple
+    public class OrderShopAppIG4Item:BaseSimple
     {
         public string Customername { get; set; }
         public string Phone { get; set; }
@@ -184,10 +184,10 @@ namespace FDI.Simple
         public double? Longt { get; set; }
         public int? Check { get; set; }
         public string Note { get; set; }
-        public IEnumerable<OrderDetailItem> ListItems { get; set; }
+        public IEnumerable<OrderDetailAppIG4Item> ListItems { get; set; }
     }
 
-    public class PostOtpLogin
+    public class PostOtpLoginAppIG4
     {
         public string msisdn { get; set; }
         public string brandname { get; set; }
@@ -197,24 +197,24 @@ namespace FDI.Simple
         public string pass { get; set; }
         public string charset { get; set; }
     }
-    public class Resultotp 
+    public class ResultotpAppIG4 
     {
-        public Message Result { get; set; }
+        public MessageAppIG4 Result { get; set; }
     }
 
-    public class Message
+    public class MessageAppIG4
     {
         public string code { get; set; }
         public string message { get; set; }
     }
 
-    public class ConfigItem
+    public class ConfigItemAppIG4
     {
         public decimal? Discount { get; set; }
         public decimal? FeeShip { get; set; }
     }
 
-    public class TopCustomerStatic
+    public class TopCustomerStaticAppIG4
     {
         public string Fullname { get; set; }
         public string Email { get; set; }

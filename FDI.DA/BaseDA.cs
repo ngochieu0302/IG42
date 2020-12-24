@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using FDI.Base;
 using FDI.Utils;
@@ -69,6 +70,10 @@ namespace FDI.DA
         public int Save()
         {
             return FDIDB.SaveChanges();
+        }
+        public async Task SaveAsync()
+        {
+            await FDIDB.SaveChangesAsync();
         }
     }
 

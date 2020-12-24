@@ -18,6 +18,7 @@ using System.Net;
 using System.Web.Script.Serialization;
 using FDI.DA.DA;
 using Microsoft.Ajax.Utilities;
+using FDI.CORE;
 
 namespace FDI.MvcAPI.Controllers.Customer
 {
@@ -26,14 +27,14 @@ namespace FDI.MvcAPI.Controllers.Customer
     {
         TokenOtpDA tokenOtpDA = new TokenOtpDA();
         CustomerAppIG4DA customerDA = new CustomerAppIG4DA();
-        OrderDA orderDA = new OrderDA();
+        OrderAppIG4DA orderDA = new OrderAppIG4DA();
         CustomerAddressAppIG4DA customerAddressDA = new CustomerAddressAppIG4DA();
-        readonly WalletCustomerDA _walletCustomerDa = new WalletCustomerDA("#");
-        readonly WalletsDA _walletsDa = new WalletsDA("#");
+        readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
+        readonly WalletsAppIG4DA _walletsDa = new WalletsAppIG4DA("#");
         readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
-        readonly CashOutWalletDA _cashOutWalletDa = new CashOutWalletDA("#");
-        readonly RewardHistoryDA _rewardHistoryDa = new RewardHistoryDA("#");
-        readonly CustomerRewardDA _customerRewardDa = new CustomerRewardDA("#");
+        readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
+        readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
+        readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
 
         //public ActionResult CustomerOrther(string lstInt)
         //{
@@ -47,7 +48,7 @@ namespace FDI.MvcAPI.Controllers.Customer
         }
         #region Wallets customer
 
-        public ActionResult AddWallets(WalletCustomerItem data)
+        public ActionResult AddWallets(WalletCustomerAppIG4Item data)
         {
             try
             {
@@ -77,7 +78,7 @@ namespace FDI.MvcAPI.Controllers.Customer
         public ActionResult GetListWalletsHistory(int customerId, int type, int page, int take)
         {
             var list = _walletCustomerDa.GetListWalletCustomerbyId(customerId);
-            var listall = list.Select(item => new WalletsAppItem
+            var listall = list.Select(item => new WalletsAppAppIG4Item
             {
                 ID = item.ID,
                 Name = item.TypeWalet == 1 ? "Giao dịch nạp tiền vào G-Store" : "Đơn bán thành công cho khách hàng",
@@ -87,7 +88,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             })
                 .ToList();
             var listcash = _cashOutWalletDa.GetListbyCustomer(customerId);
-            listall.AddRange(listcash.Select(item => new WalletsAppItem
+            listall.AddRange(listcash.Select(item => new WalletsAppAppIG4Item
             {
                 ID = item.ID,
                 Name = item.TypeCash == 1 ? "Giao dịch mua hàng từ G-Store" : item.TypeCash == 2 ? "Giao dịch mua gói dịch vụ từ G-Store" : item.Query,
@@ -97,7 +98,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             }));
             listall = listall.Where(c => (c.Type == type || type == 0)).OrderByDescending(c => c.ID).ToList();
             listall = listall.Skip((page - 1) * take).Take(take).ToList();
-            return Json(new BaseResponse<List<WalletsAppItem>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<WalletsAppAppIG4Item>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult GetTotalWallets(int customerId)
@@ -114,7 +115,7 @@ namespace FDI.MvcAPI.Controllers.Customer
         public ActionResult GetListWalletsRewardHistory(int customerId, int type, int page, int take)
         {
             var list = _walletCustomerDa.GetListWalletReward(customerId);
-            var listall = list.Select(item => new WalletsAppItem
+            var listall = list.Select(item => new WalletsAppAppIG4Item
             {
                 ID = item.ID,
                 Name = item.Type == (int)Reward.Dep ? "Thưởng nạp ví chính" : "Thưởng " + item.BonustypeName,
@@ -124,7 +125,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             })
                 .ToList();
             var listrecive = _walletCustomerDa.GetListWalletRecive(customerId);
-            listall.AddRange(listrecive.Select(item => new WalletsAppItem
+            listall.AddRange(listrecive.Select(item => new WalletsAppAppIG4Item
             {
                 ID = item.ID,
                 Name = item.Query,
@@ -134,7 +135,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             }));
             listall = listall.Where(c => (type == 0 || c.Type == type)).OrderByDescending(c => c.ID).ToList();
             listall = listall.Skip((page - 1) * page).Take(take).ToList();
-            return Json(new BaseResponse<List<WalletsAppItem>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<WalletsAppAppIG4Item>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetTotalWalletsReward(int customerId)
@@ -158,12 +159,12 @@ namespace FDI.MvcAPI.Controllers.Customer
                     Mobile = phone,
                     IsDelete = false,
                     IsPrestige = false,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now.TotalSeconds()
                 });
                 customerDA.Save();
             }
             var otp = FDIUtils.RandomOtp(4);
-            var otppost = new PostOtpLogin()
+            var otppost = new PostOtpLoginAppIG4()
             {
                 msisdn = phone.Remove(0, 1).Insert(0, "84"),
                 brandname = "G-STORE",
@@ -173,7 +174,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                 charset = "8"
             };
             var url = "http://123.31.20.167:8383/restservice/";
-            var result = await PostDataAsync<List<Resultotp>>(url, otppost);
+            var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
             if (result.FirstOrDefault()?.Result.code == "200")
             {
                 tokenOtpDA.Add(new TokenOtp()
@@ -207,7 +208,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                         Email = me.email,
                         UserName = me.email,
                         FullName = me.first_name + me.middle_name + me.last_name,
-                        DateCreated = DateTime.Now,
+                        DateCreated = DateTime.Now.TotalSeconds(),
                         IsActive = true,
                         IsDelete = false,
                         idUserFacebook = me.id,
@@ -243,7 +244,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                     var refreshToken = JWTService.Instance.GenerateToken(model: modelRefreshToken);
                     customerDA.InsertToken(data: new TokenRefresh() { GuidId = key });
                     customerDA.Save();
-                    return Json(data: new BaseResponse<CustomerItem>() { Code = 200, Erros = false, Message = "", Data = new CustomerItem() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
+                    return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
@@ -277,7 +278,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                     Email = userinfo.email,
                     UserName = userinfo.email,
                     FullName = userinfo.family_name + " " + userinfo.given_name + " " + userinfo.name,
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.Now.TotalSeconds(),
                     IsActive = true,
                     IsDelete = false,
                     idUserGoogle = userinfo.id,
@@ -313,7 +314,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                 var refreshToken = JWTService.Instance.GenerateToken(model: modelRefreshToken);
                 customerDA.InsertToken(data: new TokenRefresh() { GuidId = key });
                 customerDA.Save();
-                return Json(data: new BaseResponse<CustomerItem>() { Code = 200, Erros = false, Message = "", Data = new CustomerItem() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
+                return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -378,7 +379,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             customerDA.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             customerDA.Save();
-            return Json(new BaseResponse<CustomerItem>() { Code = 200, Erros = false, Message = "", Data = new CustomerItem() { Token = tokenResponse, RefreshToken = refreshToken } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
@@ -435,10 +436,10 @@ namespace FDI.MvcAPI.Controllers.Customer
             customerDA.InsertToken(new TokenRefresh() { GuidId = key });
             customerDA.Save();
 
-            return Json(new BaseResponse<CustomerItem>() { Code = 200, Erros = false, Message = "", Data = new CustomerItem() { Token = tokenResponse, RefreshToken = refreshTokenResponse } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshTokenResponse } }, JsonRequestBehavior.AllowGet);
 
         }
-        public async Task<ActionResult> AddAdress(CustomerAddressItem data)
+        public async Task<ActionResult> AddAdress(CustomerAddressAppIG4Item data)
         {
             if (data.Latitude == null || data.Longitude == null)
             {
@@ -471,7 +472,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             customerAddressDA.Add(item);
             await customerAddressDA.SaveAsync();
 
-            return Json(new BaseResponse<CustomerAddressItem>() { Code = 200, Data = customerAddressDA.GetItemById(item.ID) }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200, Data = customerAddressDA.GetItemById(item.ID) }, JsonRequestBehavior.AllowGet);
         }
         public async Task<ActionResult> DeleteAdress(int id)
         {
@@ -479,7 +480,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             var address = customerAddressDA.GetById(id, CustomerId);
             if (address == null)
             {
-                return Json(new BaseResponse<CustomerAddressItem>() { Code = 1000, Message = "Địa chỉ không tồn tại" }, JsonRequestBehavior.AllowGet);
+                return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 1000, Message = "Địa chỉ không tồn tại" }, JsonRequestBehavior.AllowGet);
 
             }
             if (address != null)
@@ -489,14 +490,14 @@ namespace FDI.MvcAPI.Controllers.Customer
             }
             customerAddressDA.Save();
 
-            return Json(new BaseResponse<CustomerAddressItem>() { Code = 200 }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200 }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetAdress()
         {
             var lst = customerAddressDA.GetAll(CustomerId);
-            return Json(new BaseResponse<List<CustomerAddressItem>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAddressAppIG4Item>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
         }
-        public async Task<ActionResult> UpdateAddress(CustomerAddressItem data)
+        public async Task<ActionResult> UpdateAddress(CustomerAddressAppIG4Item data)
         {
             if (data.Latitude == null || data.Longitude == null)
             {
@@ -531,12 +532,12 @@ namespace FDI.MvcAPI.Controllers.Customer
 
             await customerAddressDA.SaveAsync();
 
-            return Json(new BaseResponse<CustomerAddressItem>() { Code = 200, Data = data, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200, Data = data, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
 
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateAcount(CustomerItem data)
+        public async Task<ActionResult> UpdateAcount(CustomerAppIG4Item data)
         {
             var customer = customerDA.GetById(CustomerId);
             if (customer == null)
@@ -582,7 +583,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             }
             customerDA.Save();
             var obj = customerDA.GetItemByID(CustomerId);
-            return Json(new BaseResponse<CustomerItem> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
         private async Task<BaseResponse<GalleryPictureItem>> UploadImage(HttpPostedFileBase file)
         {
@@ -607,13 +608,13 @@ namespace FDI.MvcAPI.Controllers.Customer
         public ActionResult GetShopPrestige(int page, int pagesize)
         {
             var lst = customerDA.GetPrestige(page, pagesize);
-            return Json(new BaseResponse<List<CustomerItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult GetShopSame(int shopid, double minKm = 0, double maxKm = 0, double latitude = 0, double longitude = 0, int page = 0, int pagesize = 0)
         {
             var lst = customerDA.ShopSame(shopid, minKm, maxKm, latitude, longitude, page, pagesize);
-            return Json(new BaseResponse<List<CustomerItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult GetListOrderStatus(int cusId, int status, int page, int pagesize)
@@ -624,7 +625,7 @@ namespace FDI.MvcAPI.Controllers.Customer
         public ActionResult GetListPackage()
         {
             var lst = customerDA.GetListPackage();
-            return Json(new BaseResponse<List<NewsItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<NewsAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ShopPresigeDetail(int id)
         {
@@ -642,7 +643,7 @@ namespace FDI.MvcAPI.Controllers.Customer
 
             //lay category
             item.CategoryItem = customerDA.GetCategoryByShop(id);
-            return Json(new BaseResponse<CustomerItem>() { Code = 200, Data = item }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Data = item }, JsonRequestBehavior.AllowGet);
         }
         public class Userclass
         {
@@ -702,7 +703,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                 item.Check = 2;
             }
 
-            var totalpricegstore = data.OrderTotal + data.FeeShip;
+            var TotalPricegstore = data.OrderTotal + data.FeeShip;
             SpliceOrderCustomer(":4000", orderId);
             orderDA.Save();
             if (status == (int)StatusOrder.Complete)
@@ -711,7 +712,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                 var cashout = new CashOutWallet
                 {
                     CustomerID = 1,
-                    Totalprice = totalpricegstore ?? 0,
+                    TotalPrice = TotalPricegstore ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     OrderID = data.ID,
                     Type = 1,
@@ -722,11 +723,11 @@ namespace FDI.MvcAPI.Controllers.Customer
                 #endregion
 
                 var config = _walletCustomerDa.GetConfig();
-                var totalprice = data.OrderTotal - (config.DiscountOrder * data.OrderTotal / 100) + data.FeeShip;
+                var TotalPrice = data.OrderTotal - (config.DiscountOrder * data.OrderTotal / 100) + data.FeeShip;
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
-                    TotalPrice = totalprice ?? 0,
+                    TotalPrice = TotalPrice ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     IsActive = true,
                     IsDelete = false,
@@ -739,15 +740,15 @@ namespace FDI.MvcAPI.Controllers.Customer
                 var cus = customerDA.GetItemByID(data.CustomerID ?? 0);
                 var sucess = orderDA.GetNotifyById(3);
                 var token = cus.tokenDevice;
-                Pushnotifycation(sucess.Title, sucess.Content.Replace("{shop}", data.Customer1.FullName).Replace("{price}", totalprice.Money()).Replace("{code}", data.Code), token, sucess.ID.ToString());
+                Pushnotifycation(sucess.Title, sucess.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code), token, sucess.ID.ToString());
 
                 var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(5);
                 var tokenshop = shop.tokenDevice;
-                Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalprice.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
+                Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
                 var bonusItems = customerDA.ListBonusTypeItems();
                 // tính hoa hồng
-                var iskg = data.Customer1.Type == 2;
+                var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
                     InsertRewardCustomer(data.Customer.ParentID ?? 0, data.OrderTotal, data.ID, bonusItems);
@@ -758,7 +759,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                     decimal totalnopres = data.OrderDetails.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
-                        InsertRewardCustomer(data.Customer1.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
                     }
                     if (totalnopres > 0)
                     {
@@ -805,7 +806,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                         var recive = new CashOutWallet()
                         {
                             CustomerID = cusId,
-                            Totalprice = config.PriceSearch,
+                            TotalPrice = config.PriceSearch,
                             DateCreate = DateTime.Now.TotalSeconds(),
                             Type = 3,
                             Query = query,
@@ -827,7 +828,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             }
         }
 
-        public async Task<ActionResult> AddComment(RatingItem data)
+        public async Task<ActionResult> AddComment(RatingAppIG4Item data)
         {
             var comment = customerDA.GetComment(data.ShopId, CustomerId);
             if (comment != null)
@@ -853,7 +854,7 @@ namespace FDI.MvcAPI.Controllers.Customer
 
                         Folder = img.Data.Folder,
                         Name = img.Data.Name,
-                        DateCreated = DateTime.Now,
+                        DateCreated = DateTime.Now.TotalSeconds(),
                         IsShow = true,
                         Url = img.Data.Url,
                         IsDeleted = false,
@@ -880,10 +881,10 @@ namespace FDI.MvcAPI.Controllers.Customer
         public ActionResult GetCommentRatings(int id)
         {
             var data = customerDA.GetCommentRatings(id);
-            return Json(new BaseResponse<List<RatingItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<RatingAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
 
-        private void CaculateRating(RatingItem data)
+        private void CaculateRating(RatingAppIG4Item data)
         {
             var rating = customerDA.GetTotalRating(data.ShopId);
             var customer = customerDA.GetById(data.ShopId);
@@ -899,7 +900,7 @@ namespace FDI.MvcAPI.Controllers.Customer
         [AllowAnonymous]
         public ActionResult StaticChartShop(int shopId, int type, DateTime date, int cateId = 0)
         {
-            var model = new List<ListOrderShopChartItem>();
+            var model = new List<ListOrderShopChartAppIG4Item>();
             if (type == 1)
             {
                 model = customerDA.GetStaticChartsShop(date.Year, 0, 0, date, shopId, cateId);
@@ -912,7 +913,7 @@ namespace FDI.MvcAPI.Controllers.Customer
             {
                 model = customerDA.GetStaticChartsShop(0, 0, 1, date, shopId, cateId);
             }
-            return Json(new BaseResponse<List<ListOrderShopChartItem>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ListOrderShopChartAppIG4Item>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
         }
     }
 }

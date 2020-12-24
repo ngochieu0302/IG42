@@ -29,7 +29,6 @@ namespace FDI.Base
         public Nullable<decimal> Percent { get; set; }
     
         public virtual DN_Promotion DN_Promotion { get; set; }
-        public virtual Shop_Product Shop_Product { get; set; }
         public virtual ICollection<Shop_Order_Details> Shop_Order_Details { get; set; }
     }
 }

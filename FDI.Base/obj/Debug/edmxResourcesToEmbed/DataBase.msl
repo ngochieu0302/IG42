@@ -328,6 +328,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Author">
+        <MappingFragment StoreEntitySet="Author">
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Author_Product">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Author_Product">
+        <MappingFragment StoreEntitySet="Author_Product">
+          <ScalarProperty Name="IsCheck" ColumnName="IsCheck" />
+          <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Banks">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Bank">
         <MappingFragment StoreEntitySet="Bank">
@@ -376,6 +399,7 @@
     <EntitySetMapping Name="BonusTypes">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.BonusType">
         <MappingFragment StoreEntitySet="BonusType">
+          <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="EnterprisesId" ColumnName="EnterprisesId" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
           <ScalarProperty Name="IsExit" ColumnName="IsExit" />
@@ -429,7 +453,11 @@
     <EntitySetMapping Name="CashOutWallets">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CashOutWallet">
         <MappingFragment StoreEntitySet="CashOutWallet">
-          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OrderPaketID" ColumnName="OrderPaketID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="Query" ColumnName="Query" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
           <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
@@ -468,6 +496,8 @@
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Category">
         <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="PictureID2" ColumnName="PictureID2" />
+          <ScalarProperty Name="Step" ColumnName="Step" />
           <ScalarProperty Name="IsShowApp" ColumnName="IsShowApp" />
           <ScalarProperty Name="TotalIncurredFinal" ColumnName="TotalIncurredFinal" />
           <ScalarProperty Name="PriceRecipeFinal" ColumnName="PriceRecipeFinal" />
@@ -613,6 +643,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CookieLogins">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CookieLogin">
+        <MappingFragment StoreEntitySet="CookieLogin">
+          <ScalarProperty Name="IsFacebook" ColumnName="IsFacebook" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="key" ColumnName="key" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Cost_Product">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Cost_Product">
         <MappingFragment StoreEntitySet="Cost_Product">
@@ -665,6 +711,22 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
+          <ScalarProperty Name="DateCreated1" ColumnName="DateCreated1" />
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
+          <ScalarProperty Name="LikeTotal" ColumnName="LikeTotal" />
+          <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+          <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+          <ScalarProperty Name="CustomerPolicyID" ColumnName="CustomerPolicyID" />
+          <ScalarProperty Name="TokenDevice" ColumnName="TokenDevice" />
+          <ScalarProperty Name="ListID" ColumnName="ListID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="idUserGoogle" ColumnName="idUserGoogle" />
+          <ScalarProperty Name="idUserFacebook" ColumnName="idUserFacebook" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
           <ScalarProperty Name="AddressBuyRecently" ColumnName="AddressBuyRecently" />
           <ScalarProperty Name="LongitudeBuyRecently" ColumnName="LongitudeBuyRecently" />
           <ScalarProperty Name="LatitudeBuyRecently" ColumnName="LatitudeBuyRecently" />
@@ -759,6 +821,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Policy">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Policy">
+        <MappingFragment StoreEntitySet="Customer_Policy">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="EndMoney" ColumnName="EndMoney" />
+          <ScalarProperty Name="StartMoney" ColumnName="StartMoney" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Customer_question">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_question">
         <MappingFragment StoreEntitySet="Customer_question">
@@ -806,10 +881,57 @@
     <EntitySetMapping Name="Customer_Reward">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Reward">
         <MappingFragment StoreEntitySet="Customer_Reward">
+          <ScalarProperty Name="CashOutWallet" ColumnName="CashOutWallet" />
+          <ScalarProperty Name="PriceReceiver" ColumnName="PriceReceiver" />
+          <ScalarProperty Name="TotalCP" ColumnName="TotalCP" />
           <ScalarProperty Name="PriceReceive" ColumnName="PriceReceive" />
           <ScalarProperty Name="PriceReward" ColumnName="PriceReward" />
           <ScalarProperty Name="AgencyID" ColumnName="AgencyID" />
           <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Type">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Type">
+        <MappingFragment StoreEntitySet="Customer_Type">
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Border" ColumnName="Border" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_TypeGroup">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_TypeGroup">
+        <MappingFragment StoreEntitySet="Customer_TypeGroup">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerAddresses">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CustomerAddress">
+        <MappingFragment StoreEntitySet="CustomerAddress">
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -829,6 +951,19 @@
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerRatings">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CustomerRating">
+        <MappingFragment StoreEntitySet="CustomerRating">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="TypeRating" ColumnName="TypeRating" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2479,6 +2614,9 @@
     <EntitySetMapping Name="News_News">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.News_News">
         <MappingFragment StoreEntitySet="News_News">
+          <ScalarProperty Name="UserActive" ColumnName="UserActive" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Sort" ColumnName="Sort" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
@@ -2521,6 +2659,47 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Payment1" ColumnName="Payment1" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Check" ColumnName="Check" />
+          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="CustomerAddressID" ColumnName="CustomerAddressID" />
+          <ScalarProperty Name="CouponPrice" ColumnName="CouponPrice" />
+          <ScalarProperty Name="Coupon" ColumnName="Coupon" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="ShipViettelPost" ColumnName="ShipViettelPost" />
+          <ScalarProperty Name="vpc_TransactionNo" ColumnName="vpc_TransactionNo" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+          <ScalarProperty Name="Wards" ColumnName="Wards" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+          <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+          <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+          <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+          <ScalarProperty Name="ContactOrderID" ColumnName="ContactOrderID" />
+          <ScalarProperty Name="NoOrder" ColumnName="NoOrder" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Order_Debt">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order_Debt">
         <MappingFragment StoreEntitySet="Order_Debt">
@@ -2530,6 +2709,19 @@
           <ScalarProperty Name="Datecreate" ColumnName="Datecreate" />
           <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="Pricetotal" ColumnName="Pricetotal" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Package">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order_Package">
+        <MappingFragment StoreEntitySet="Order_Package">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+          <ScalarProperty Name="Datecreate" ColumnName="Datecreate" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -2566,6 +2758,28 @@
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="OrderCarId" ColumnName="OrderCarId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetails">
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="Check" ColumnName="Check" />
+          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+          <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -2763,6 +2977,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Product_Reading">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Product_Reading">
+        <MappingFragment StoreEntitySet="Product_Reading">
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+          <ScalarProperty Name="Page" ColumnName="Page" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Product_Size">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Product_Size">
         <MappingFragment StoreEntitySet="Product_Size">
@@ -2838,6 +3065,19 @@
           <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="ProductDetailId" ColumnName="ProductDetailId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductRatings">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.ProductRating">
+        <MappingFragment StoreEntitySet="ProductRating">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="TypeRating" ColumnName="TypeRating" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -2918,6 +3158,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PushNotifications">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.PushNotification">
+        <MappingFragment StoreEntitySet="PushNotification">
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ReceiptPayments">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.ReceiptPayment">
         <MappingFragment StoreEntitySet="ReceiptPayment">
@@ -2968,6 +3218,10 @@
     <EntitySetMapping Name="ReceiveHistories">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.ReceiveHistory">
         <MappingFragment StoreEntitySet="ReceiveHistory">
+          <ScalarProperty Name="Query" ColumnName="Query" />
+          <ScalarProperty Name="CustomerIDR" ColumnName="CustomerIDR" />
+          <ScalarProperty Name="DateActive" ColumnName="DateActive" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="IdUser" ColumnName="IdUser" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Type" ColumnName="Type" />
@@ -3033,6 +3287,10 @@
     <EntitySetMapping Name="RewardHistories">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.RewardHistory">
         <MappingFragment StoreEntitySet="RewardHistory">
+          <ScalarProperty Name="WalletCusId" ColumnName="WalletCusId" />
+          <ScalarProperty Name="TotalCp" ColumnName="TotalCp" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
           <ScalarProperty Name="ImportID" ColumnName="ImportID" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Percent" ColumnName="Percent" />
@@ -3266,6 +3524,35 @@
     <EntitySetMapping Name="Shop_Product">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Shop_Product">
         <MappingFragment StoreEntitySet="Shop_Product">
+          <ScalarProperty Name="freeShipFor" ColumnName="freeShipFor" />
+          <ScalarProperty Name="IsUpcoming" ColumnName="IsUpcoming" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+          <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="HasTransfer" ColumnName="HasTransfer" />
+          <ScalarProperty Name="BookOld" ColumnName="BookOld" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="FIleReadtryId" ColumnName="FIleReadtryId" />
+          <ScalarProperty Name="FileBookId" ColumnName="FileBookId" />
+          <ScalarProperty Name="YearOfManufacture" ColumnName="YearOfManufacture" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Format" ColumnName="Format" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="NameAscii" ColumnName="NameAscii" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+          <ScalarProperty Name="QuantityOut" ColumnName="QuantityOut" />
+          <ScalarProperty Name="CustomerID1" ColumnName="CustomerID1" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CategoyId" ColumnName="CategoyId" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           <ScalarProperty Name="TypeID" ColumnName="TypeID" />
           <ScalarProperty Name="QuantityDay" ColumnName="QuantityDay" />
           <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
@@ -3417,6 +3704,18 @@
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.ST_Group">
         <MappingFragment StoreEntitySet="ST_Group">
           <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Steps">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Step">
+        <MappingFragment StoreEntitySet="Step">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -3884,6 +4183,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TokenOtps">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.TokenOtp">
+        <MappingFragment StoreEntitySet="TokenOtp">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="TypeToken" ColumnName="TypeToken" />
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TokenRefreshes">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.TokenRefresh">
+        <MappingFragment StoreEntitySet="TokenRefresh">
+          <ScalarProperty Name="GuidId" ColumnName="GuidId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TotalProductToDays">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.TotalProductToDay">
         <MappingFragment StoreEntitySet="TotalProductToDay">
@@ -3972,6 +4292,14 @@
     <EntitySetMapping Name="WalletCustomers">
       <EntityTypeMapping TypeName="pmbh.fditech.vnModel.WalletCustomer">
         <MappingFragment StoreEntitySet="WalletCustomer">
+          <ScalarProperty Name="Transaction_no" ColumnName="Transaction_no" />
+          <ScalarProperty Name="CustomerIDR" ColumnName="CustomerIDR" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="DateActive" ColumnName="DateActive" />
+          <ScalarProperty Name="UserActive" ColumnName="UserActive" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
           <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
@@ -4050,6 +4378,23 @@
         <MappingFragment StoreEntitySet="webpages_Roles">
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfigExchanges">
+      <EntityTypeMapping TypeName="pmbh.fditech.vnModel.ConfigExchange">
+        <MappingFragment StoreEntitySet="ConfigExchange">
+          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+          <ScalarProperty Name="DiscountOrder" ColumnName="DiscountOrder" />
+          <ScalarProperty Name="PriceSearch" ColumnName="PriceSearch" />
+          <ScalarProperty Name="Percent" ColumnName="Percent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4266,6 +4611,14 @@
         <ScalarProperty Name="ID" ColumnName="ContentVoteId" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="CustomerRatingPicture" TypeName="pmbh.fditech.vnModel.CustomerRatingPicture" StoreEntitySet="CustomerRatingPicture">
+      <EndProperty Name="Gallery_Picture">
+        <ScalarProperty Name="ID" ColumnName="PictureId" />
+      </EndProperty>
+      <EndProperty Name="CustomerRating">
+        <ScalarProperty Name="ID" ColumnName="CustomerRatingId" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="DN_Category_Attribute" TypeName="pmbh.fditech.vnModel.DN_Category_Attribute" StoreEntitySet="DN_Category_Attribute">
       <EndProperty Name="DN_AttributeDynamic">
         <ScalarProperty Name="ID" ColumnName="AttributeID" />
@@ -4418,6 +4771,14 @@
         <ScalarProperty Name="ID" ColumnName="NewsID" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="News_Step" TypeName="pmbh.fditech.vnModel.News_Step" StoreEntitySet="News_Step">
+      <EndProperty Name="Step">
+        <ScalarProperty Name="ID" ColumnName="StepID" />
+      </EndProperty>
+      <EndProperty Name="News_News">
+        <ScalarProperty Name="ID" ColumnName="NewID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="Order_BedDesk" TypeName="pmbh.fditech.vnModel.Order_BedDesk" StoreEntitySet="Order_BedDesk">
       <EndProperty Name="Shop_Orders">
         <ScalarProperty Name="ID" ColumnName="OrderID" />
@@ -4440,6 +4801,14 @@
       </EndProperty>
       <EndProperty Name="DN_Sale">
         <ScalarProperty Name="ID" ColumnName="SaleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductRatingPicture" TypeName="pmbh.fditech.vnModel.ProductRatingPicture" StoreEntitySet="ProductRatingPicture">
+      <EndProperty Name="ProductRating">
+        <ScalarProperty Name="ID" ColumnName="ProductRatingId" />
+      </EndProperty>
+      <EndProperty Name="Gallery_Picture">
+        <ScalarProperty Name="ID" ColumnName="Picture" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="Promotion_Cate" TypeName="pmbh.fditech.vnModel.Promotion_Cate" StoreEntitySet="Promotion_Cate">
@@ -4488,6 +4857,14 @@
       </EndProperty>
       <EndProperty Name="Category">
         <ScalarProperty Name="Id" ColumnName="CateID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Shop_Product_Category" TypeName="pmbh.fditech.vnModel.Shop_Product_Category" StoreEntitySet="Shop_Product_Category">
+      <EndProperty Name="Shop_Product">
+        <ScalarProperty Name="ID" ColumnName="ProductID" />
+      </EndProperty>
+      <EndProperty Name="Category">
+        <ScalarProperty Name="Id" ColumnName="CategoryID" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="Shop_Product_Detail_Picture" TypeName="pmbh.fditech.vnModel.Shop_Product_Detail_Picture" StoreEntitySet="Shop_Product_Detail_Picture">
@@ -4730,13 +5107,10 @@
       <ResultMapping>
         <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.AutoSelectProduct_Result">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="IdDetail" ColumnName="IdDetail" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="QuantityDay" ColumnName="QuantityDay" />
-          <ScalarProperty Name="BarCode" ColumnName="BarCode" />
           <ScalarProperty Name="UrlImg" ColumnName="UrlImg" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -4819,6 +5193,22 @@
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="PriceFinal" ColumnName="PriceFinal" />
           <ScalarProperty Name="PriceRecipeFinal" ColumnName="PriceRecipeFinal" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Category_GetListByUser" FunctionName="pmbh.fditech.vnModel.Store.Category_GetListByUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.Category_GetListByUser_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NameRoot" ColumnName="NameRoot" />
+          <ScalarProperty Name="Slug" ColumnName="Slug" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="IsLevel" ColumnName="IsLevel" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -4940,7 +5330,18 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="GetAllProductByCategoryID" FunctionName="pmbh.fditech.vnModel.Store.GetAllProductByCategoryID" />
+    <FunctionImportMapping FunctionImportName="GetAllProductByCategoryID" FunctionName="pmbh.fditech.vnModel.Store.GetAllProductByCategoryID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.GetAllProductByCategoryID_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NameAscii" ColumnName="NameAscii" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="UrlPicture" ColumnName="UrlPicture" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetAttribute" FunctionName="pmbh.fditech.vnModel.Store.GetAttribute">
       <ResultMapping>
         <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.GetAttribute_Result">
@@ -5007,7 +5408,26 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMonthRecentDatetime" FunctionName="pmbh.fditech.vnModel.Store.GetMonthRecentDatetime">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.GetMonthRecentDatetime_Result">
+          <ScalarProperty Name="I" ColumnName="I" />
+          <ScalarProperty Name="S" ColumnName="S" />
+          <ScalarProperty Name="E" ColumnName="E" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetStatisticsVote" FunctionName="pmbh.fditech.vnModel.Store.GetStatisticsVote" />
+    <FunctionImportMapping FunctionImportName="GroupProductGetOrderShop" FunctionName="pmbh.fditech.vnModel.Store.GroupProductGetOrderShop">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.GroupProductGetOrderShop_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="totalproduct" ColumnName="totalproduct" />
+          <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="insert_ShopProductDetail" FunctionName="pmbh.fditech.vnModel.Store.insert_ShopProductDetail" />
     <FunctionImportMapping FunctionImportName="InsertBedByRowColumn" FunctionName="pmbh.fditech.vnModel.Store.InsertBedByRowColumn" />
     <FunctionImportMapping FunctionImportName="InsertDNModule" FunctionName="pmbh.fditech.vnModel.Store.InsertDNModule" />
@@ -5067,6 +5487,69 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductFull" FunctionName="pmbh.fditech.vnModel.Store.ProductFull">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ProductFull_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+          <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+          <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+          <ScalarProperty Name="CateId" ColumnName="CateId" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="IsPrestige1" ColumnName="IsPrestige1" />
+          <ScalarProperty Name="kc" ColumnName="kc" />
+          <ScalarProperty Name="kc1" ColumnName="kc1" />
+          <ScalarProperty Name="sort" ColumnName="sort" />
+          <ScalarProperty Name="km" ColumnName="km" />
+          <ScalarProperty Name="Folder" ColumnName="Folder" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductGetbyShop" FunctionName="pmbh.fditech.vnModel.Store.ProductGetbyShop">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ProductGetbyShop_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Folder" ColumnName="Folder" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductGetNearPosition" FunctionName="pmbh.fditech.vnModel.Store.ProductGetNearPosition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ProductGetNearPosition_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Folder" ColumnName="Folder" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="ratings" ColumnName="ratings" />
+          <ScalarProperty Name="avgrating" ColumnName="avgrating" />
+          <ScalarProperty Name="Km" ColumnName="Km" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="HasTransfer" ColumnName="HasTransfer" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductGetOrderShop" FunctionName="pmbh.fditech.vnModel.Store.ProductGetOrderShop">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ProductGetOrderShop_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Folder" ColumnName="Folder" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="ResultSearchDocument" FunctionName="pmbh.fditech.vnModel.Store.ResultSearchDocument" />
     <FunctionImportMapping FunctionImportName="SearchListNewsAdmin" FunctionName="pmbh.fditech.vnModel.Store.SearchListNewsAdmin">
       <ResultMapping>
@@ -5081,6 +5564,40 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SearchNewsInAdmin" FunctionName="pmbh.fditech.vnModel.Store.SearchNewsInAdmin" />
+    <FunctionImportMapping FunctionImportName="ShopMap" FunctionName="pmbh.fditech.vnModel.Store.ShopMap">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ShopMap_Result">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="UrlIcon" ColumnName="UrlIcon" />
+          <ScalarProperty Name="sortut" ColumnName="sortut" />
+          <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+          <ScalarProperty Name="km" ColumnName="km" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ShopSame" FunctionName="pmbh.fditech.vnModel.Store.ShopSame">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.ShopSame_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
+          <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+          <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+          <ScalarProperty Name="LikeTotal" ColumnName="LikeTotal" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="km" ColumnName="km" />
+          <ScalarProperty Name="sortut" ColumnName="sortut" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SortNameBed" FunctionName="pmbh.fditech.vnModel.Store.SortNameBed" />
     <FunctionImportMapping FunctionImportName="sp_ActionGetByUserId" FunctionName="pmbh.fditech.vnModel.Store.sp_ActionGetByUserId" />
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="pmbh.fditech.vnModel.Store.sp_alterdiagram" />
@@ -5100,7 +5617,20 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetListOrderDetail" FunctionName="pmbh.fditech.vnModel.Store.sp_GetListOrderDetail" />
+    <FunctionImportMapping FunctionImportName="sp_GetListOrderDetail" FunctionName="pmbh.fditech.vnModel.Store.sp_GetListOrderDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.sp_GetListOrderDetail_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CodeSku" ColumnName="CodeSku" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_GetListValueDetail" FunctionName="pmbh.fditech.vnModel.Store.sp_GetListValueDetail" />
     <FunctionImportMapping FunctionImportName="sp_GetOrderDetail" FunctionName="pmbh.fditech.vnModel.Store.sp_GetOrderDetail">
       <ResultMapping>
@@ -5154,7 +5684,40 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_InsertSalesCode" FunctionName="pmbh.fditech.vnModel.Store.sp_InsertSalesCode" />
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="pmbh.fditech.vnModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_thongkenguoiduyet" FunctionName="pmbh.fditech.vnModel.Store.sp_thongkenguoiduyet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.sp_thongkenguoiduyet_Result">
+          <ScalarProperty Name="UserActive" ColumnName="UserActive" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_thongkenguoiviet" FunctionName="pmbh.fditech.vnModel.Store.sp_thongkenguoiviet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.sp_thongkenguoiviet_Result">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="pmbh.fditech.vnModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="StaticChartsCustomer" FunctionName="pmbh.fditech.vnModel.Store.StaticChartsCustomer">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.StaticChartsCustomer_Result">
+          <ScalarProperty Name="I" ColumnName="I" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="StaticChartsCustomerBuyPacket" FunctionName="pmbh.fditech.vnModel.Store.StaticChartsCustomerBuyPacket" />
+    <FunctionImportMapping FunctionImportName="StaticChartsShop" FunctionName="pmbh.fditech.vnModel.Store.StaticChartsShop">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.StaticChartsShop_Result">
+          <ScalarProperty Name="I" ColumnName="I" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="StaticDocumentYear" FunctionName="pmbh.fditech.vnModel.Store.StaticDocumentYear">
       <ResultMapping>
         <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.StaticDocumentYear_Result">
@@ -5180,6 +5743,24 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="TK_HOME" FunctionName="pmbh.fditech.vnModel.Store.TK_HOME" />
+    <FunctionImportMapping FunctionImportName="Top100CustomerBuy" FunctionName="pmbh.fditech.vnModel.Store.Top100CustomerBuy">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.Top100CustomerBuy_Result">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Top100CustomerSell" FunctionName="pmbh.fditech.vnModel.Store.Top100CustomerSell">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.Top100CustomerSell_Result">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="TruncateTable" FunctionName="pmbh.fditech.vnModel.Store.TruncateTable" />
     <FunctionImportMapping FunctionImportName="UpdateAdminRoleActive" FunctionName="pmbh.fditech.vnModel.Store.UpdateAdminRoleActive" />
     <FunctionImportMapping FunctionImportName="UpdateAdminRoleModuleActive" FunctionName="pmbh.fditech.vnModel.Store.UpdateAdminRoleModuleActive" />

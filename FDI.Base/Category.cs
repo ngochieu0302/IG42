@@ -40,6 +40,7 @@ namespace FDI.Base
             this.Shop_Product_Detail1 = new HashSet<Shop_Product_Detail>();
             this.DN_Promotion = new HashSet<DN_Promotion>();
             this.DN_Sale = new HashSet<DN_Sale>();
+            this.Shop_Product1 = new HashSet<Shop_Product>();
         }
     
         public int Id { get; set; }
@@ -77,6 +78,8 @@ namespace FDI.Base
         public Nullable<decimal> PriceRecipeFinal { get; set; }
         public Nullable<decimal> TotalIncurredFinal { get; set; }
         public Nullable<bool> IsShowApp { get; set; }
+        public Nullable<int> Step { get; set; }
+        public Nullable<int> PictureID2 { get; set; }
     
         public virtual ICollection<Cate_Value> Cate_Value { get; set; }
         public virtual DN_Unit DN_Unit { get; set; }
@@ -105,5 +108,6 @@ namespace FDI.Base
         public virtual ICollection<Shop_Product_Detail> Shop_Product_Detail1 { get; set; }
         public virtual ICollection<DN_Promotion> DN_Promotion { get; set; }
         public virtual ICollection<DN_Sale> DN_Sale { get; set; }
+        public virtual ICollection<Shop_Product> Shop_Product1 { get; set; }
     }
 }

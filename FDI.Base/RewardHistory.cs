@@ -24,10 +24,16 @@ namespace FDI.Base
         public Nullable<decimal> Percent { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.Guid> ImportID { get; set; }
+        public Nullable<int> AgencyId { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<decimal> TotalCp { get; set; }
+        public Nullable<int> WalletCusId { get; set; }
     
         public virtual BonusType BonusType { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual DN_ImportProduct DN_ImportProduct { get; set; }
+        public virtual Order Order { get; set; }
         public virtual Shop_Orders Shop_Orders { get; set; }
+        public virtual WalletCustomer WalletCustomer { get; set; }
     }
 }

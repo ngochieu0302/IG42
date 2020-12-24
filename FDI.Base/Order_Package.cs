@@ -23,5 +23,6 @@ namespace FDI.Base
         public Nullable<decimal> Price { get; set; }
     
         public virtual Customer Customer { get; set; }
+        public virtual Customer_Type Customer_Type { get; set; }
     }
 }

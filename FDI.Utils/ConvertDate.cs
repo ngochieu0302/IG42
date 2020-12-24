@@ -33,6 +33,15 @@ namespace FDI.Utils
             }
             return listday;
         }
+        public static DateTime ThisWeekStart(this DateTime date)
+        {
+            var dayofw = (int)date.DayOfWeek - 1;
+            return date.AddDays(0 - dayofw);
+        }
+        public static DateTime ThisWeekEnd(this DateTime date)
+        {
+            return date.ThisWeekStart().AddDays(7).AddSeconds(-1);
+        }
         /// <summary>
         /// dongdt 22/11/2017
         /// </summary>

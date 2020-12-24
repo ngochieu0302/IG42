@@ -14,6 +14,11 @@ namespace FDI.Base
     
     public partial class Customer_Type
     {
+        public Customer_Type()
+        {
+            this.Order_Package = new HashSet<Order_Package>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<bool> IsDelete { get; set; }
@@ -25,5 +30,9 @@ namespace FDI.Base
         public Nullable<bool> Border { get; set; }
         public string Color { get; set; }
         public Nullable<int> Sort { get; set; }
+    
+        public virtual Customer_TypeGroup Customer_TypeGroup { get; set; }
+        public virtual Gallery_Picture Gallery_Picture { get; set; }
+        public virtual ICollection<Order_Package> Order_Package { get; set; }
     }
 }

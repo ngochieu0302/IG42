@@ -14,13 +14,27 @@ namespace FDI.Base
     
     public partial class WalletCustomer
     {
+        public WalletCustomer()
+        {
+            this.RewardHistories = new HashSet<RewardHistory>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> CustomerID { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<decimal> DateCreate { get; set; }
         public Nullable<int> AgencyId { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<int> Type { get; set; }
+        public string Note { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<System.Guid> UserActive { get; set; }
+        public Nullable<decimal> DateActive { get; set; }
+        public string Code { get; set; }
+        public Nullable<int> CustomerIDR { get; set; }
+        public string Transaction_no { get; set; }
     
         public virtual Customer Customer { get; set; }
+        public virtual ICollection<RewardHistory> RewardHistories { get; set; }
     }
 }

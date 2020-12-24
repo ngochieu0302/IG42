@@ -16,25 +16,26 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using FDI.DA.DA;
+using FDI.CORE;
 
 namespace FDI.MvcAPI.Controllers.Product
 {
     [CustomerAuthorize]
     public class ProductAppController : BaseAppApiController
     {
-        readonly Shop_ProductDA _productDa = new Shop_ProductDA();
-        readonly CustomerAddressDA customerAddressDA = new CustomerAddressDA();
-        readonly CustomerDA _customerDa = new CustomerDA();
+        readonly Shop_ProductAppIG4DA _productDa = new Shop_ProductAppIG4DA();
+        readonly CustomerAddressAppIG4DA customerAddressDA = new CustomerAddressAppIG4DA();
+        readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA();
         readonly Gallery_PictureDA _da = new Gallery_PictureDA();
-        readonly OrderPackageDA _orderPackageDa = new OrderPackageDA();
-        readonly CustomerTypeDA _customerTypeDa = new CustomerTypeDA();
+        readonly OrderPackageAppIG4DA _orderPackageDa = new OrderPackageAppIG4DA();
+        readonly CustomerTypeAppIG4DA _customerTypeDa = new CustomerTypeAppIG4DA();
         string[] lst = new string[] { "jpg", "png", "bmp", "dib", "gif", "jpeg", "jpe", "jfif", "tif", "tiff" };
         int kmNearYou = 15000;
-        readonly CategoryDA _categoryDa = new CategoryDA();
-        readonly CashOutWalletDA _cashOutWalletDa = new CashOutWalletDA("#");
+        readonly CategoryAppIG4DA _categoryDa = new CategoryAppIG4DA();
+        readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
         public async Task<ActionResult> Add()
         {
-            var model = new ProductItem();
+            var model = new ProductAppIG4Item();
             UpdateModel(model);
 
             List<Gallery_Picture> images = new List<Gallery_Picture>();
@@ -52,7 +53,7 @@ namespace FDI.MvcAPI.Controllers.Product
                     CategoryID = model.CateId,
                     Folder = img.Data.Folder,
                     Name = img.Data.Name,
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.Now.TotalSeconds(),
                     IsShow = true,
                     Url = img.Data.Url,
                     IsDeleted = false,
@@ -92,7 +93,7 @@ namespace FDI.MvcAPI.Controllers.Product
                 Longitude = address.Longitude.Value,
                 DateCreated = DateTime.Now,
                 CustomerID1 = model.CustomerId1,
-                Gallery_Picture1 = _productDa.GetListPictureByArrId(images.Select(m => m.ID).ToList()),
+                //Gallery_Picture1 = _productDa.GetListPictureByArrId(images.Select(m => m.ID).ToList()),
             };
 
             //product.Categories = _productDa.GetListCategoryByArrId(new List<int>() { model.CateId.Value });
@@ -104,7 +105,7 @@ namespace FDI.MvcAPI.Controllers.Product
         }
         public async Task<ActionResult> Update()
         {
-            var model = new ProductItem();
+            var model = new ProductAppIG4Item();
             UpdateModel(model);
             var product = _productDa.GetById(model.ID);
             if (product.CustomerID != CustomerId)
@@ -112,7 +113,7 @@ namespace FDI.MvcAPI.Controllers.Product
                 return Json(new JsonMessage(4001, "Bạn không có quyển xóa sản phẩm này"));
             }
             var files = Request.Files;
-            if (files.Count == 0 && model.LstPictures != null && model.LstPictures.Count() >= product.Gallery_Picture1.Count())
+            if (files.Count == 0 && model.LstPictures != null && model.LstPictures.Count() >= product.Shop_Product_Picture.Count())
             {
                 return Json(new JsonMessage(1000, "Ảnh sản phẩn không được để trống."));
             }
@@ -144,7 +145,7 @@ namespace FDI.MvcAPI.Controllers.Product
                           model.CateId,
                     Folder = img.Data.Folder,
                     Name = img.Data.Name,
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.Now.TotalSeconds(),
                     IsShow = true,
                     Url = img.Data.Url,
                     IsDeleted = false,
@@ -176,9 +177,9 @@ namespace FDI.MvcAPI.Controllers.Product
             product.CategoryId = model.CateId.Value;
             product.CustomerID1 = model.CustomerId1;
 
-            var idImages = product.Gallery_Picture1.Where(m => model.PictureDeleteIds == null || !model.PictureDeleteIds.Any(n => n == m.ID)).Select(m => m.ID).ToList();
+            var idImages = product.Shop_Product_Picture.Where(m => model.PictureDeleteIds == null || !model.PictureDeleteIds.Any(n => n == m.Gallery_Picture.ID)).Select(m => m.Gallery_Picture.ID).ToList();
             idImages.AddRange(images.Select(m => m.ID).ToList());
-            product.Gallery_Picture1 = _productDa.GetListPictureByArrId(idImages);
+            //product.Shop_Product_Picture = _productDa.GetListPictureByArrId(idImages);
 
             //if (!product.Categories.Any(m => m.Id == model.CateId))
             //{
@@ -210,7 +211,7 @@ namespace FDI.MvcAPI.Controllers.Product
             }
             //var a = _orderPackageDa.GetOrderPackage(product.CustomerId.Value);
             //product.Km = ConvertUtil.distance(latitude, longitude, product.Latitude, product.Longitude, 'K');
-            return Json(new BaseResponse<ProductItem> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<ProductAppIG4Item> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetBestProductForYou(int km, double latitude, double longitude, int page, int pagesize)
@@ -218,12 +219,12 @@ namespace FDI.MvcAPI.Controllers.Product
             pagesize = pagesize > 15 ? 15 : pagesize;
             var lst = _productDa.GetProductNearPosition(km, latitude, longitude, page, pagesize);
 
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ProductGetOrderShop(int cateid, int shopid, bool IsAll, int type, DateTime date, int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;
-            var model = new List<ProductItem>();
+            var model = new List<ProductAppIG4Item>();
             if (type == 1)
             {
                 var firstDay = new DateTime(date.Year, 1, 1).TotalSeconds();
@@ -243,13 +244,13 @@ namespace FDI.MvcAPI.Controllers.Product
                 model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, startweek.TotalSeconds(), endweek.TotalSeconds(), page, pagesize);
 
             }
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ProductGetbyShop(int cateid, int shopid, bool IsAll, DateTime dates, DateTime datee, int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;
             var lst = _productDa.ProductGetbyShop(cateid, shopid, IsAll, dates, datee, page, pagesize);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult GroupProductGetOrderShop(int shopid, bool IsAll, int type,DateTime date,int cateId =0)
@@ -302,7 +303,7 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetProductSampleShop(int id, double latitude, double longitude, int page, int pagesize)
@@ -313,26 +314,26 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(latitude, longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult GetRatings(int id)
         {
             var data = _productDa.GetRatings(id);
-            return Json(new BaseResponse<List<RatingItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<RatingAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetRatingsCustomer(int id)
         {
             var data = _productDa.GetRatingsCustomer(id);
-            return Json(new BaseResponse<List<RatingItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<RatingAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetCommentRatings(int id)
         {
             var data = _productDa.GetCommentRatings(id);
-            return Json(new BaseResponse<List<RatingItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<RatingAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
         
-        public async Task<ActionResult> AddComment(RatingItem data)
+        public async Task<ActionResult> AddComment(RatingAppIG4Item data)
         {
             var comment = _productDa.GetComment(data.ProductId.Value, CustomerId);
             if (comment != null)
@@ -357,7 +358,7 @@ namespace FDI.MvcAPI.Controllers.Product
 
                         Folder = img.Data.Folder,
                         Name = img.Data.Name,
-                        DateCreated = DateTime.Now,
+                        DateCreated = DateTime.Now.TotalSeconds(),
                         IsShow = true,
                         Url = img.Data.Url,
                         IsDeleted = false,
@@ -382,7 +383,7 @@ namespace FDI.MvcAPI.Controllers.Product
             return Json(new JsonMessage(200, ""), JsonRequestBehavior.AllowGet);
         }
 
-        private void CaculateRating(RatingItem data)
+        private void CaculateRating(RatingAppIG4Item data)
         {
             var rating = _productDa.GetTotalRating(data.ProductId.Value);
             var product = _productDa.GetById(data.ProductId.Value);
@@ -444,7 +445,7 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetProductHasTranferByCategoryId(int id, string name, double minKm, double maxKm, int minPrice, int maxPrice, int page, int pagesize)
@@ -457,7 +458,7 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductIsHotByCategoryId(int id, string name, double minKm, double maxKm, int minPrice, int maxPrice, int page, int pagesize)
         {
@@ -469,7 +470,7 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductIsReviewByCategoryId(int id, string name, double minKm, double maxKm, int minPrice, int maxPrice, int page, int pagesize)
         {
@@ -481,42 +482,42 @@ namespace FDI.MvcAPI.Controllers.Product
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetBestBuy(int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;
             var lst = _productDa.GetBestBuy(Latitude, Longitude, kmNearYou, page, pagesize);
 
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult GetCategoryForMap(string name, double minKm, double maxKm, int minPrice, int maxPrice, int categoryId, double latitude, double longitude)
         {
             var lst = _productDa.GetCategoryForMap(name, minKm, maxKm, minPrice, maxPrice, categoryId, latitude, longitude);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         //[AllowAnonymous]
         public ActionResult GetProductForMap(string name ="", double minKm = 0, double maxKm = 0, int minPrice = 0, int maxPrice = 0, int cateId = 0, double latitude = 0, double longitude = 0, int page = 0, int pagesize = 0, bool HasTransfer = false, int shopid = 0)
         {
             var lst = _productDa.GetProductForMap(name, minKm,  maxKm, cateId,  minPrice,  maxPrice, latitude, longitude,  page, pagesize, HasTransfer, shopid);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetMyProduct(string name, int page, int maxKm, int minPrice, int maxPrice, int pagesize, int categoryId = 0)
         {
             maxKm *= 1000;
             var lst = _productDa.GetMyProduct(CustomerId, categoryId, name, maxKm, minPrice, maxPrice, Latitude, Longitude, page, pagesize);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductById(int id, int page, int pagesize)
         {
             var lst = _productDa.GetMyProduct(id, 0, "", 0, 0, 0, Latitude, Longitude, page, pagesize);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductByPosition(double latitude, double longitude, int page, int pagesize)
         {
             var lst = _productDa.GetProductByPosition(latitude, longitude, page, pagesize);
-            return Json(new BaseResponse<List<ProductItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetCustomerForMap(double km, double latitude, double longitude, int page, int pagesize)
@@ -524,19 +525,19 @@ namespace FDI.MvcAPI.Controllers.Product
             km *= 1000;
             //var cate = categoryIds == null ? new int[] { } : categoryIds.Select(m => m.Value).ToArray();
             var lst = _customerDa.GetCustomerForMap(km, latitude, longitude, page, pagesize);
-            return Json(new BaseResponse<List<CustomerItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetOrderPackage(int customerid)
         {
             var lst = _orderPackageDa.GetOrderPackage(customerid);
-            return Json(new BaseResponse<OrderPackageItem> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<OrderPackageAppIG4Item> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetListCustomerType()
         {
             var lst = _customerTypeDa.GetListCustomerTypes();
-            return Json(new BaseResponse<List<CustomerTypeItem>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerTypeAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> AddOrderPackage(int typeid, int customerid)
@@ -564,7 +565,7 @@ namespace FDI.MvcAPI.Controllers.Product
                         {
                             CustomerID = customerid,
                             DateCreate = DateTime.Now.TotalSeconds(),
-                            Totalprice = type.Price,
+                            TotalPrice = type.Price,
                             OrderPaketID = item.ID,
                             Type = 2,
                         };
@@ -576,12 +577,12 @@ namespace FDI.MvcAPI.Controllers.Product
                 }
                 else
                 {
-                    return Json(new BaseResponse<OrderPacketAppItem> { Code = -1, Message = "Ví tiền không đủ." }, JsonRequestBehavior.AllowGet);
+                    return Json(new BaseResponse<OrderPacketAppAppIG4Item> { Code = -1, Message = "Ví tiền không đủ." }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
             {
-                return Json(new BaseResponse<OrderPacketAppItem> { Code = -2, Message = e.ToString() }, JsonRequestBehavior.AllowGet);
+                return Json(new BaseResponse<OrderPacketAppAppIG4Item> { Code = -2, Message = e.ToString() }, JsonRequestBehavior.AllowGet);
             }
             
         }

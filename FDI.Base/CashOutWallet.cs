@@ -20,9 +20,12 @@ namespace FDI.Base
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<int> AgencyId { get; set; }
         public Nullable<bool> IsDelete { get; set; }
-        public Nullable<int> OrderId { get; set; }
+        public Nullable<int> Type { get; set; }
+        public string Query { get; set; }
+        public Nullable<int> OrderID { get; set; }
+        public string Code { get; set; }
+        public Nullable<int> OrderPaketID { get; set; }
     
         public virtual Customer Customer { get; set; }
-        public virtual Shop_Orders Shop_Orders { get; set; }
     }
 }

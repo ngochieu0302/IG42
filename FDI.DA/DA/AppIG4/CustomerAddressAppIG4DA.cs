@@ -5,6 +5,7 @@ using FDI.Base;
 using FDI.Simple;
 using System.Web;
 using FDI.Utils;
+using System.Threading.Tasks;
 
 namespace FDI.DA
 {
@@ -51,6 +52,7 @@ namespace FDI.DA
         {
             FDIDB.CustomerAddresses.Add(data);
         }
+        
 
         public bool CheckExit(int customerId, double latitude, double longitude)
         {
@@ -60,7 +62,6 @@ namespace FDI.DA
         {
             return FDIDB.CustomerAddresses.Any(m => m.ID != id && m.CustomerId == customerId && m.Longitude == longitude && m.Latitude == latitude && !m.IsDelete);
         }
-
         public void ResetDefault(int customerId)
         {
             var lst = FDIDB.CustomerAddresses.Where(m => m.CustomerId == customerId && !m.IsDelete).ToList();
@@ -69,7 +70,6 @@ namespace FDI.DA
                 item.IsDefault = false;
             }
         }
-
         public List<CustomerAddressAppIG4Item> GetAll(int customerId)
         {
             var query = from c in FDIDB.CustomerAddresses
@@ -99,7 +99,6 @@ namespace FDI.DA
         {
             return FDIDB.CustomerAddresses.Where(m => lst.Contains(m.ID)).ToList();
         }
-
         public CustomerAddressAppIG4Item GetItemById(int id)
         {
             var query = from c in FDIDB.CustomerAddresses
@@ -117,5 +116,11 @@ namespace FDI.DA
                         };
             return query.FirstOrDefault();
         }
+        public void save()
+        {
+            FDIDB.SaveChanges();
+
+        }
+       
     }
 }

@@ -17,6 +17,7 @@ namespace FDI.Base
         public Order()
         {
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.RewardHistories = new HashSet<RewardHistory>();
         }
     
         public int ID { get; set; }
@@ -53,9 +54,13 @@ namespace FDI.Base
         public Nullable<int> Status { get; set; }
         public Nullable<decimal> Payment { get; set; }
         public Nullable<int> ShopID { get; set; }
+        public Nullable<decimal> Payment1 { get; set; }
     
         public virtual Customer Customer { get; set; }
+        public virtual CustomerAddress CustomerAddress { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
+        public virtual System_City System_City { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<RewardHistory> RewardHistories { get; set; }
     }
 }

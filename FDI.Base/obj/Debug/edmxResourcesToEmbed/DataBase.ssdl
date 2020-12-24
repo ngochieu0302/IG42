@@ -324,6 +324,27 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="AgencyID" Type="int" />
     <Property Name="AttributeID" Type="int" />
   </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Address" Type="nvarchar" MaxLength="450" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Slug" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Author_Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="AuthorID" Type="int" />
+    <Property Name="IsCheck" Type="bit" />
+  </EntityType>
   <EntityType Name="Bank">
     <Key>
       <PropertyRef Name="ID" />
@@ -388,6 +409,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="IsExit" Type="bit" />
     <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
     <Property Name="EnterprisesId" Type="int" />
+    <Property Name="Type" Type="int" />
   </EntityType>
   <EntityType Name="Car">
     <Key>
@@ -434,7 +456,11 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
     <Property Name="AgencyId" Type="int" />
     <Property Name="IsDelete" Type="bit" />
-    <Property Name="OrderId" Type="int" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Query" Type="ntext" />
+    <Property Name="OrderID" Type="int" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="OrderPaketID" Type="int" />
   </EntityType>
   <EntityType Name="Cate_Value">
     <Key>
@@ -500,6 +526,8 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="PriceRecipeFinal" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalIncurredFinal" Type="decimal" Precision="18" Scale="0" />
     <Property Name="IsShowApp" Type="bit" />
+    <Property Name="Step" Type="int" />
+    <Property Name="PictureID2" Type="int" />
   </EntityType>
   <EntityType Name="Category_Product_Recipe">
     <Key>
@@ -591,6 +619,24 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="Phone" Type="varchar" MaxLength="15" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Gab.fditech.vn.dbo.ConfigExchange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ConfigExchange">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Point" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DateStart" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateEnd" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Percent" Type="int" />
+    <Property Name="PriceSearch" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrder" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="FeeShip" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
   <EntityType Name="ContactOrder_BedDesk">
     <Key>
       <PropertyRef Name="ContactID" />
@@ -617,6 +663,21 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="Sort" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="AgencyID" Type="int" />
+  </EntityType>
+  <EntityType Name="CookieLogin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="key" Type="varchar" MaxLength="50" />
+    <Property Name="Value" Type="varchar" MaxLength="550" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="DateCreate" Type="datetime" />
+    <Property Name="DateEnd" Type="datetime" />
+    <Property Name="Email" Type="varchar" MaxLength="150" />
+    <Property Name="IsFacebook" Type="bit" />
   </EntityType>
   <EntityType Name="Cost_Product">
     <Key>
@@ -694,6 +755,22 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="LatitudeBuyRecently" Type="bigint" />
     <Property Name="LongitudeBuyRecently" Type="bigint" />
     <Property Name="AddressBuyRecently" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Mobile" Type="varchar" MaxLength="50" />
+    <Property Name="Type" Type="int" />
+    <Property Name="idUserFacebook" Type="varchar" MaxLength="50" />
+    <Property Name="idUserGoogle" Type="varchar" MaxLength="50" />
+    <Property Name="ParentID" Type="int" />
+    <Property Name="ListID" Type="varchar" MaxLength="250" />
+    <Property Name="TokenDevice" Type="varchar" MaxLength="250" />
+    <Property Name="CustomerPolicyID" Type="int" />
+    <Property Name="Ratings" Type="int" />
+    <Property Name="AvgRating" Type="float" />
+    <Property Name="LikeTotal" Type="int" />
+    <Property Name="ImageTimeline" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsPrestige" Type="bit" Nullable="false" />
+    <Property Name="DateCreated1" Type="datetime" />
+    <Property Name="AvatarUrl" Type="varchar" MaxLength="128" />
+    <Property Name="Description" Type="nvarchar" MaxLength="1024" />
   </EntityType>
   <EntityType Name="Customer_Action">
     <Key>
@@ -753,6 +830,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="IsDelete" Type="bit" />
     <Property Name="AgencyID" Type="int" />
   </EntityType>
+  <EntityType Name="Customer_Policy">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="StartMoney" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="EndMoney" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Number" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="IsShow" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
   <EntityType Name="Customer_question">
     <Key>
       <PropertyRef Name="ID" />
@@ -803,6 +892,50 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="AgencyID" Type="int" />
     <Property Name="PriceReward" Type="decimal" Precision="18" Scale="0" />
     <Property Name="PriceReceive" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalCP" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceReceiver" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CashOutWallet" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Customer_Type">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Day" Type="int" />
+    <Property Name="PictureId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Border" Type="bit" />
+    <Property Name="Color" Type="varchar" MaxLength="50" />
+    <Property Name="Sort" Type="int" />
+  </EntityType>
+  <EntityType Name="Customer_TypeGroup">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Value" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="CustomerAddress">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="512" />
+    <Property Name="Phone" Type="varchar" MaxLength="32" />
+    <Property Name="Address" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Latitude" Type="float" />
+    <Property Name="Longitude" Type="float" />
+    <Property Name="IsDefault" Type="bit" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="AddressType" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomerContact">
     <Key>
@@ -820,6 +953,26 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
     <Property Name="CreatedOnUtc" Type="datetime" />
     <Property Name="Status" Type="bit" />
     <Property Name="Address" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="CustomerRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="TypeRating" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="2048" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerRatingPicture">
+    <Key>
+      <PropertyRef Name="PictureId" />
+      <PropertyRef Name="CustomerRatingId" />
+    </Key>
+    <Property Name="PictureId" Type="int" Nullable="false" />
+    <Property Name="CustomerRatingId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Debt">
     <Key>
@@ -2543,6 +2696,9 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="LanguageId" Type="varchar" MaxLength="10" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="Sort" Type="int" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="UserActive" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="News_News_File">
     <Key>
@@ -2568,6 +2724,54 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="NewsID" Type="int" Nullable="false" />
     <Property Name="TagID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="News_Step">
+    <Key>
+      <PropertyRef Name="StepID" />
+      <PropertyRef Name="NewID" />
+    </Key>
+    <Property Name="StepID" Type="int" Nullable="false" />
+    <Property Name="NewID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoOrder" Type="varchar" MaxLength="10" />
+    <Property Name="ContactOrderID" Type="int" />
+    <Property Name="OrderTotal" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CreatedOnUtc" Type="datetime" />
+    <Property Name="IsTime" Type="bit" />
+    <Property Name="PaymentMethodId" Type="int" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="250" />
+    <Property Name="StatusPayment" Type="tinyint" />
+    <Property Name="District" Type="nvarchar" MaxLength="350" />
+    <Property Name="Wards" Type="nvarchar" MaxLength="350" />
+    <Property Name="FeeShip" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="vpc_TransactionNo" Type="nvarchar" MaxLength="250" />
+    <Property Name="ShipViettelPost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Coupon" Type="varchar" MaxLength="32" />
+    <Property Name="CouponPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CustomerAddressID" Type="int" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="DateUpdateStatus" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Check" Type="tinyint" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Payment" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ShopID" Type="int" />
+    <Property Name="Payment1" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
   <EntityType Name="Order_BedDesk">
     <Key>
       <PropertyRef Name="OrderID" />
@@ -2587,6 +2791,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="SupplieId" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="UserID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Order_Package">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="Datecreate" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateStart" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateEnd" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="OrderCar">
     <Key>
@@ -2621,6 +2837,27 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Code" Type="varchar" MaxLength="128" />
     <Property Name="IsDelete" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Type" Type="int" />
+    <Property Name="DateEnd" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Status" Type="int" />
+    <Property Name="IsTime" Type="bit" />
+    <Property Name="StatusPayment" Type="tinyint" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="DateUpdateStatus" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Check" Type="int" />
+    <Property Name="IsPrestige" Type="bit" />
   </EntityType>
   <EntityType Name="P_Workshop">
     <Key>
@@ -2810,6 +3047,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="ProductID" Type="int" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
+  <EntityType Name="Product_Reading">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="DateCreate" Type="datetime" />
+    <Property Name="Page" Type="int" />
+    <Property Name="IsTime" Type="bit" />
+    <Property Name="DateEnd" Type="datetime" />
+  </EntityType>
   <EntityType Name="Product_Sale">
     <Key>
       <PropertyRef Name="SaleID" />
@@ -2892,6 +3141,26 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="Note" Type="nvarchar" MaxLength="256" />
     <Property Name="IsUse" Type="bit" />
   </EntityType>
+  <EntityType Name="ProductRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="TypeRating" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="1024" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="2048" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductRatingPicture">
+    <Key>
+      <PropertyRef Name="ProductRatingId" />
+      <PropertyRef Name="Picture" />
+    </Key>
+    <Property Name="ProductRatingId" Type="int" Nullable="false" />
+    <Property Name="Picture" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProductValue_Recipe">
     <Key>
       <PropertyRef Name="ID" />
@@ -2971,6 +3240,15 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="IsDelete" Type="bit" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="PushNotification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" />
+    <Property Name="Content" Type="ntext" />
+  </EntityType>
   <EntityType Name="ReceiptPayment">
     <Key>
       <PropertyRef Name="ID" />
@@ -3033,6 +3311,10 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="Type" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="IdUser" Type="uniqueidentifier" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="DateActive" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomerIDR" Type="int" />
+    <Property Name="Query" Type="ntext" />
   </EntityType>
   <EntityType Name="RecipeCategory_Workshop">
     <Key>
@@ -3107,6 +3389,10 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="Percent" Type="decimal" Precision="18" Scale="4" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="ImportID" Type="uniqueidentifier" />
+    <Property Name="AgencyId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="TotalCp" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="WalletCusId" Type="int" />
   </EntityType>
   <EntityType Name="Role_ModuleActive">
     <Key>
@@ -3361,6 +3647,43 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="IsDelete" Type="bit" />
     <Property Name="QuantityDay" Type="int" />
     <Property Name="TypeID" Type="int" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="CategoyId" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="CustomerID1" Type="int" />
+    <Property Name="QuantityOut" Type="int" />
+    <Property Name="PictureID" Type="int" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="NameAscii" Type="nvarchar" MaxLength="255" />
+    <Property Name="Code" Type="nvarchar" MaxLength="255" />
+    <Property Name="Author" Type="nvarchar" MaxLength="255" />
+    <Property Name="PriceNew" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Format" Type="nvarchar" MaxLength="255" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="YearOfManufacture" Type="int" />
+    <Property Name="FileBookId" Type="int" />
+    <Property Name="FIleReadtryId" Type="int" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="Sort" Type="int" />
+    <Property Name="BookOld" Type="bit" />
+    <Property Name="HasTransfer" Type="bit" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="Type" Type="nvarchar" MaxLength="255" />
+    <Property Name="Ratings" Type="int" />
+    <Property Name="AvgRating" Type="float" />
+    <Property Name="AddressId" Type="int" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="IsUpcoming" Type="bit" />
+    <Property Name="freeShipFor" Type="int" />
+  </EntityType>
+  <EntityType Name="Shop_Product_Category">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Shop_Product_Detail">
     <Key>
@@ -3505,6 +3828,17 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Sort" Type="int" />
+  </EntityType>
+  <EntityType Name="Step">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="UserID" Type="uniqueidentifier" />
+    <Property Name="Number" Type="int" />
+    <Property Name="Note" Type="nvarchar" MaxLength="512" />
   </EntityType>
   <EntityType Name="Storage">
     <Key>
@@ -4002,6 +4336,25 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.TempShop_Product' does not have
     <Property Name="UserId" Type="varchar" MaxLength="128" />
     <Property Name="App" Type="varchar" MaxLength="32" />
   </EntityType>
+  <EntityType Name="TokenOtp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ObjectId" Type="varchar" MaxLength="64" />
+    <Property Name="Token" Type="varchar" MaxLength="32" />
+    <Property Name="IsUsed" Type="bit" Nullable="false" />
+    <Property Name="TypeToken" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TokenRefresh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GuidId" Type="uniqueidentifier" />
+  </EntityType>
   <EntityType Name="TotalProductToDay">
     <Key>
       <PropertyRef Name="ID" />
@@ -4098,6 +4451,14 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.TempShop_Product' does not have
     <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
     <Property Name="AgencyId" Type="int" />
     <Property Name="IsDelete" Type="bit" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Note" Type="ntext" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="UserActive" Type="uniqueidentifier" />
+    <Property Name="DateActive" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Code" Type="varchar" MaxLength="150" />
+    <Property Name="CustomerIDR" Type="int" />
+    <Property Name="Transaction_no" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="WalletOrder_History">
     <Key>
@@ -5400,6 +5761,30 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Author_Product_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Author_Product" Type="Self.Author_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Author_Product">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Author_Product_Shop_Product">
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="0..1" />
+    <End Role="Author_Product" Type="Self.Author_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Author_Product">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BedDesk_Packet_DN_Bed_Desk">
     <End Role="DN_Bed_Desk" Type="Self.DN_Bed_Desk" Multiplicity="1" />
     <End Role="BedDesk_Packet" Type="Self.BedDesk_Packet" Multiplicity="*" />
@@ -5493,18 +5878,6 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="CashOutWallet">
         <PropertyRef Name="CustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CashOutWallet_Shop_Orders">
-    <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="0..1" />
-    <End Role="CashOutWallet" Type="Self.CashOutWallet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shop_Orders">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CashOutWallet">
-        <PropertyRef Name="OrderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5748,6 +6121,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CookieLogin_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CookieLogin" Type="Self.CookieLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CookieLogin">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Cost_Product_BiasProduce">
     <End Role="BiasProduce" Type="Self.BiasProduce" Multiplicity="0..1" />
     <End Role="Cost_Product" Type="Self.Cost_Product" Multiplicity="*" />
@@ -5877,6 +6262,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Customer_Policy">
+    <End Role="Customer_Policy" Type="Self.Customer_Policy" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Policy">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CustomerPolicyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6033,6 +6430,78 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Type_Customer_TypeGroup">
+    <End Role="Customer_TypeGroup" Type="Self.Customer_TypeGroup" Multiplicity="0..1" />
+    <End Role="Customer_Type" Type="Self.Customer_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_TypeGroup">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer_Type">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Type_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="0..1" />
+    <End Role="Customer_Type" Type="Self.Customer_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer_Type">
+        <PropertyRef Name="PictureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAddress_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerAddress">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerRating_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerRating" Type="Self.CustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerRating">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerRatingPicture_CustomerRating">
+    <End Role="CustomerRating" Type="Self.CustomerRating" Multiplicity="1" />
+    <End Role="CustomerRatingPicture" Type="Self.CustomerRatingPicture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerRating">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerRatingPicture">
+        <PropertyRef Name="CustomerRatingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerRatingPicture_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="1" />
+    <End Role="CustomerRatingPicture" Type="Self.CustomerRatingPicture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerRatingPicture">
+        <PropertyRef Name="PictureId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8162,6 +8631,30 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_News_Step_News_News">
+    <End Role="News_News" Type="Self.News_News" Multiplicity="1" />
+    <End Role="News_Step" Type="Self.News_Step" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="News_News">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News_Step">
+        <PropertyRef Name="NewID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_Step_Step">
+    <End Role="Step" Type="Self.Step" Multiplicity="1" />
+    <End Role="News_Step" Type="Self.News_Step" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Step">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News_Step">
+        <PropertyRef Name="StepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_News_Tag_News_News">
     <End Role="News_News" Type="Self.News_News" Multiplicity="1" />
     <End Role="News_News_Tag" Type="Self.News_News_Tag" Multiplicity="*" />
@@ -8210,6 +8703,30 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Order_Customer1">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_CustomerAddress">
+    <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerAddress">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerAddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Order_Debt_DN_Users">
     <End Role="DN_Users" Type="Self.DN_Users" Multiplicity="0..1" />
     <End Role="Order_Debt" Type="Self.Order_Debt" Multiplicity="*" />
@@ -8219,6 +8736,90 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="Order_Debt">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_DN_Agency">
+    <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DN_Agency">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ShopID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Order_Package" Type="Self.Order_Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order_Package">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package_Customer_Type">
+    <End Role="Customer_Type" Type="Self.Customer_Type" Multiplicity="0..1" />
+    <End Role="Order_Package" Type="Self.Order_Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Type">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order_Package">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_System_City">
+    <End Role="System_City" Type="Self.System_City" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="System_City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Shop_Product">
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="0..1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8366,6 +8967,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Product_Reading_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Product_Reading" Type="Self.Product_Reading" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product_Reading">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Product_Sale_DN_Sale">
     <End Role="DN_Sale" Type="Self.DN_Sale" Multiplicity="1" />
     <End Role="Product_Sale" Type="Self.Product_Sale" Multiplicity="*" />
@@ -8510,6 +9123,54 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProductRating_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="ProductRating" Type="Self.ProductRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRating">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductRating_Shop_Product">
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="0..1" />
+    <End Role="ProductRating" Type="Self.ProductRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRating">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductRatingPicture_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="1" />
+    <End Role="ProductRatingPicture" Type="Self.ProductRatingPicture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRatingPicture">
+        <PropertyRef Name="Picture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductRatingPicture_ProductRating">
+    <End Role="ProductRating" Type="Self.ProductRating" Multiplicity="1" />
+    <End Role="ProductRatingPicture" Type="Self.ProductRatingPicture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductRating">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRatingPicture">
+        <PropertyRef Name="ProductRatingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProductValue_Recipe_ProductDetail_Recipe">
     <End Role="ProductDetail_Recipe" Type="Self.ProductDetail_Recipe" Multiplicity="0..1" />
     <End Role="ProductValue_Recipe" Type="Self.ProductValue_Recipe" Multiplicity="*" />
@@ -8579,18 +9240,6 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="Promotion_Product">
         <PropertyRef Name="PromotionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Promotion_Product_Shop_Product">
-    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="0..1" />
-    <End Role="Promotion_Product" Type="Self.Promotion_Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shop_Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Promotion_Product">
-        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8822,6 +9471,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RewardHistory_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RewardHistory_Shop_Orders">
     <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="0..1" />
     <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
@@ -8831,6 +9492,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="RewardHistory">
         <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RewardHistory_WalletCustomer">
+    <End Role="WalletCustomer" Type="Self.WalletCustomer" Multiplicity="0..1" />
+    <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WalletCustomer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="WalletCusId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -9224,6 +9897,66 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Shop_Product_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="CategoyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Category_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="Shop_Product_Category" Type="Self.Shop_Product_Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shop_Product_Category">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Category_Shop_Product">
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="1" />
+    <End Role="Shop_Product_Category" Type="Self.Shop_Product_Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product_Category">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Customer1">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_CustomerAddress">
+    <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="0..1" />
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerAddress">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Shop_Product_Detail_Category">
     <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
     <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
@@ -9305,6 +10038,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Principal>
       <Dependent Role="Shop_Product_Detail_Picture">
         <PropertyRef Name="ProductDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="0..1" />
+    <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="PictureID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -10321,6 +11066,12 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
   <Function Name="Category_GetList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LanguageId" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="Category_GetListByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LanguageId" Type="varchar" Mode="In" />
+    <Parameter Name="IsAdmin" Type="bit" Mode="In" />
+    <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="type" Type="int" Mode="In" />
+  </Function>
   <Function Name="ContactToOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="UserId" Type="uniqueidentifier" Mode="In" />
@@ -10460,8 +11211,27 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
   <Function Name="GetListTree" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AgencyId" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetMonthRecentDatetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="i" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="I" Type="int" />
+          <Property Name="S" Type="datetime" />
+          <Property Name="E" Type="datetime" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="GetStatisticsVote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LanguageId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GroupProductGetOrderShop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerID" Type="int" Mode="In" />
+    <Parameter Name="isAll" Type="bit" Mode="In" />
+    <Parameter Name="dates" Type="decimal" Mode="In" />
+    <Parameter Name="datee" Type="decimal" Mode="In" />
+    <Parameter Name="cateId" Type="int" Mode="In" />
   </Function>
   <Function Name="insert_ShopProductDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="InsertBedByRowColumn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -10523,6 +11293,45 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </CollectionType>
     </ReturnType>
   </Function>
+  <Function Name="ProductFull" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="kmmax" Type="float" Mode="In" />
+    <Parameter Name="kmmin" Type="float" Mode="In" />
+    <Parameter Name="cateid" Type="int" Mode="In" />
+    <Parameter Name="x" Type="float" Mode="In" />
+    <Parameter Name="y" Type="float" Mode="In" />
+    <Parameter Name="minprice" Type="int" Mode="In" />
+    <Parameter Name="maxprice" Type="int" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="HasTransfer" Type="bit" Mode="In" />
+    <Parameter Name="shopid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ProductGetbyShop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cateid" Type="int" Mode="In" />
+    <Parameter Name="CustomerID" Type="int" Mode="In" />
+    <Parameter Name="isAll" Type="bit" Mode="In" />
+    <Parameter Name="dates" Type="datetime" Mode="In" />
+    <Parameter Name="datee" Type="datetime" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ProductGetNearPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="km" Type="int" Mode="In" />
+    <Parameter Name="x" Type="float" Mode="In" />
+    <Parameter Name="y" Type="float" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ProductGetOrderShop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cateid" Type="int" Mode="In" />
+    <Parameter Name="CustomerID" Type="int" Mode="In" />
+    <Parameter Name="isAll" Type="bit" Mode="In" />
+    <Parameter Name="dates" Type="decimal" Mode="In" />
+    <Parameter Name="datee" Type="decimal" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+  </Function>
   <Function Name="RemoveSpecialChars" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
@@ -10537,6 +11346,25 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
   </Function>
   <Function Name="SearchNewsInAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SQLString" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="ShopMap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="kmmax" Type="float" Mode="In" />
+    <Parameter Name="kmmin" Type="float" Mode="In" />
+    <Parameter Name="cateid" Type="int" Mode="In" />
+    <Parameter Name="x" Type="float" Mode="In" />
+    <Parameter Name="y" Type="float" Mode="In" />
+    <Parameter Name="minprice" Type="int" Mode="In" />
+    <Parameter Name="maxprice" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ShopSame" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="kmmax" Type="float" Mode="In" />
+    <Parameter Name="kmmin" Type="float" Mode="In" />
+    <Parameter Name="x" Type="float" Mode="In" />
+    <Parameter Name="y" Type="float" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
   </Function>
   <Function Name="SortNameBed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="aid" Type="int" Mode="In" />
@@ -10608,7 +11436,29 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <Parameter Name="owner_id" Type="int" Mode="In" />
     <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_thongkenguoiduyet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="start" Type="datetime" Mode="In" />
+    <Parameter Name="end" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_thongkenguoiviet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="start" Type="datetime" Mode="In" />
+    <Parameter Name="end" Type="datetime" Mode="In" />
+  </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="StaticChartsCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="i" Type="int" Mode="In" />
+  </Function>
+  <Function Name="StaticChartsCustomerBuyPacket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="i" Type="int" Mode="In" />
+  </Function>
+  <Function Name="StaticChartsShop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="year" Type="int" Mode="In" />
+    <Parameter Name="month" Type="int" Mode="In" />
+    <Parameter Name="week" Type="int" Mode="In" />
+    <Parameter Name="d" Type="datetime" Mode="In" />
+    <Parameter Name="cusId" Type="int" Mode="In" />
+    <Parameter Name="cateId" Type="int" Mode="In" />
+  </Function>
   <Function Name="StaticDocumentYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="year" Type="int" Mode="In" />
     <Parameter Name="areaid" Type="int" Mode="In" />
@@ -10625,6 +11475,8 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <Parameter Name="shopid" Type="int" Mode="In" />
     <Parameter Name="type" Type="int" Mode="In" />
   </Function>
+  <Function Name="Top100CustomerBuy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Top100CustomerSell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="TruncateTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TableName" Type="nvarchar" Mode="In" />
   </Function>
@@ -10684,6 +11536,8 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserTokens" EntityType="Self.AspNetUserTokens" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AttributeOptions" EntityType="Self.AttributeOptions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Author_Product" EntityType="Self.Author_Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BedDesk_Packet" EntityType="Self.BedDesk_Packet" Schema="dbo" store:Type="Tables" />
@@ -10704,6 +11558,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="ContactOrder_BedDesk" EntityType="Self.ContactOrder_BedDesk" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContentVote_Map" EntityType="Self.ContentVote_Map" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ControlValues" EntityType="Self.ControlValues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CookieLogin" EntityType="Self.CookieLogin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cost_Product" EntityType="Self.Cost_Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cost_Product_User" EntityType="Self.Cost_Product_User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CostType" EntityType="Self.CostType" Schema="dbo" store:Type="Tables" />
@@ -10715,11 +11570,17 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="Customer_Groups" EntityType="Self.Customer_Groups" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_History" EntityType="Self.Customer_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_Point" EntityType="Self.Customer_Point" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Policy" EntityType="Self.Customer_Policy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_question" EntityType="Self.Customer_question" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_Review" EntityType="Self.Customer_Review" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_Review_Deltails" EntityType="Self.Customer_Review_Deltails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer_Reward" EntityType="Self.Customer_Reward" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Type" EntityType="Self.Customer_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_TypeGroup" EntityType="Self.Customer_TypeGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerAddress" EntityType="Self.CustomerAddress" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CustomerContact" EntityType="Self.CustomerContact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerRating" EntityType="Self.CustomerRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerRatingPicture" EntityType="Self.CustomerRatingPicture" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DiscountCodes" EntityType="Self.DiscountCodes" Schema="dbo" store:Type="Tables" />
@@ -10846,10 +11707,14 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="News_News_File" EntityType="Self.News_News_File" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="News_News_Product" EntityType="Self.News_News_Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="News_News_Tag" EntityType="Self.News_News_Tag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="News_Step" EntityType="Self.News_Step" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_BedDesk" EntityType="Self.Order_BedDesk" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Debt" EntityType="Self.Order_Debt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_Package" EntityType="Self.Order_Package" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderCar" EntityType="Self.OrderCar" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderCarProductDetail" EntityType="Self.OrderCarProductDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="P_Workshop" EntityType="Self.P_Workshop" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Partners" EntityType="Self.Partners" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment_Method" EntityType="Self.Payment_Method" Schema="dbo" store:Type="Tables" />
@@ -10864,18 +11729,22 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="ProduceProductPrepare" EntityType="Self.ProduceProductPrepare" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Detail_Category" EntityType="Self.Product_Detail_Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Promotion" EntityType="Self.Product_Promotion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_Reading" EntityType="Self.Product_Reading" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Sale" EntityType="Self.Product_Sale" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Size" EntityType="Self.Product_Size" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Value" EntityType="Self.Product_Value" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductCode" EntityType="Self.ProductCode" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductCode_CostUser" EntityType="Self.ProductCode_CostUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductDetail_Recipe" EntityType="Self.ProductDetail_Recipe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductRating" EntityType="Self.ProductRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductRatingPicture" EntityType="Self.ProductRatingPicture" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductValue_Recipe" EntityType="Self.ProductValue_Recipe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Promotion" EntityType="Self.Promotion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Promotion_Cate" EntityType="Self.Promotion_Cate" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Promotion_Procuct" EntityType="Self.Promotion_Procuct" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Promotion_Product" EntityType="Self.Promotion_Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PushNotification" EntityType="Self.PushNotification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReceiptPayment" EntityType="Self.ReceiptPayment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReceiptVouchers" EntityType="Self.ReceiptVouchers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReceiveHistory" EntityType="Self.ReceiveHistory" Schema="dbo" store:Type="Tables" />
@@ -10899,6 +11768,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="Shop_Order_Details" EntityType="Self.Shop_Order_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Orders" EntityType="Self.Shop_Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Product" EntityType="Self.Shop_Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shop_Product_Category" EntityType="Self.Shop_Product_Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Product_Detail" EntityType="Self.Shop_Product_Detail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Product_Detail_Picture" EntityType="Self.Shop_Product_Detail_Picture" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Product_Picture" EntityType="Self.Shop_Product_Picture" Schema="dbo" store:Type="Tables" />
@@ -10909,6 +11779,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Source_Video" EntityType="Self.Source_Video" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ST_Group" EntityType="Self.ST_Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Step" EntityType="Self.Step" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StorageFreightWarehouse" EntityType="Self.StorageFreightWarehouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StorageProduct" EntityType="Self.StorageProduct" Schema="dbo" store:Type="Tables" />
@@ -10937,6 +11808,8 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <EntitySet Name="TM_Products_Comment" EntityType="Self.TM_Products_Comment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_Rate_Comment" EntityType="Self.TM_Rate_Comment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TokenDevice" EntityType="Self.TokenDevice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TokenOtp" EntityType="Self.TokenOtp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TokenRefresh" EntityType="Self.TokenRefresh" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TotalProductToDay" EntityType="Self.TotalProductToDay" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TotalStorageWare" EntityType="Self.TotalStorageWare" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
@@ -10958,6 +11831,21 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
 [AspNetUserRoles].[UserId] AS [UserId], 
 [AspNetUserRoles].[RoleId] AS [RoleId]
 FROM [dbo].[AspNetUserRoles] AS [AspNetUserRoles]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ConfigExchange" EntityType="Self.ConfigExchange" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[ConfigExchange].[ID] AS [ID], 
+[ConfigExchange].[Name] AS [Name], 
+[ConfigExchange].[Price] AS [Price], 
+[ConfigExchange].[Point] AS [Point], 
+[ConfigExchange].[DateStart] AS [DateStart], 
+[ConfigExchange].[DateEnd] AS [DateEnd], 
+[ConfigExchange].[IsActive] AS [IsActive], 
+[ConfigExchange].[Percent] AS [Percent], 
+[ConfigExchange].[PriceSearch] AS [PriceSearch], 
+[ConfigExchange].[DiscountOrder] AS [DiscountOrder], 
+[ConfigExchange].[FeeShip] AS [FeeShip]
+FROM [dbo].[ConfigExchange] AS [ConfigExchange]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="module_aspnetroles_core" EntityType="Self.module_aspnetroles_core" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -11466,6 +12354,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
       <End Role="AttributeOptions" EntitySet="AttributeOptions" />
     </AssociationSet>
+    <AssociationSet Name="FK_Author_Product_Author" Association="Self.FK_Author_Product_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="Author_Product" EntitySet="Author_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Author_Product_Shop_Product" Association="Self.FK_Author_Product_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="Author_Product" EntitySet="Author_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK_BedDesk_Packet_DN_Bed_Desk" Association="Self.FK_BedDesk_Packet_DN_Bed_Desk">
       <End Role="DN_Bed_Desk" EntitySet="DN_Bed_Desk" />
       <End Role="BedDesk_Packet" EntitySet="BedDesk_Packet" />
@@ -11496,10 +12392,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_CashOutWallet_Customer" Association="Self.FK_CashOutWallet_Customer">
       <End Role="Customer" EntitySet="Customer" />
-      <End Role="CashOutWallet" EntitySet="CashOutWallet" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CashOutWallet_Shop_Orders" Association="Self.FK_CashOutWallet_Shop_Orders">
-      <End Role="Shop_Orders" EntitySet="Shop_Orders" />
       <End Role="CashOutWallet" EntitySet="CashOutWallet" />
     </AssociationSet>
     <AssociationSet Name="FK_Cate_Value_Category" Association="Self.FK_Cate_Value_Category">
@@ -11582,6 +12474,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="CategoryControls" EntitySet="CategoryControls" />
       <End Role="ControlValues" EntitySet="ControlValues" />
     </AssociationSet>
+    <AssociationSet Name="FK_CookieLogin_Customer" Association="Self.FK_CookieLogin_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CookieLogin" EntitySet="CookieLogin" />
+    </AssociationSet>
     <AssociationSet Name="FK_Cost_Product_BiasProduce" Association="Self.FK_Cost_Product_BiasProduce">
       <End Role="BiasProduce" EntitySet="BiasProduce" />
       <End Role="Cost_Product" EntitySet="Cost_Product" />
@@ -11624,6 +12520,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Customer_Customer_Groups" Association="Self.FK_Customer_Customer_Groups">
       <End Role="Customer_Groups" EntitySet="Customer_Groups" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Customer_Policy" Association="Self.FK_Customer_Customer_Policy">
+      <End Role="Customer_Policy" EntitySet="Customer_Policy" />
       <End Role="Customer" EntitySet="Customer" />
     </AssociationSet>
     <AssociationSet Name="FK_Customer_DN_Agency" Association="Self.FK_Customer_DN_Agency">
@@ -11677,6 +12577,30 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     <AssociationSet Name="FK_Customer_System_District" Association="Self.FK_Customer_System_District">
       <End Role="System_District" EntitySet="System_District" />
       <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Type_Customer_TypeGroup" Association="Self.FK_Customer_Type_Customer_TypeGroup">
+      <End Role="Customer_TypeGroup" EntitySet="Customer_TypeGroup" />
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Type_Gallery_Picture" Association="Self.FK_Customer_Type_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAddress_Customer" Association="Self.FK_CustomerAddress_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerRating_Customer" Association="Self.FK_CustomerRating_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerRating" EntitySet="CustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerRatingPicture_CustomerRating" Association="Self.FK_CustomerRatingPicture_CustomerRating">
+      <End Role="CustomerRating" EntitySet="CustomerRating" />
+      <End Role="CustomerRatingPicture" EntitySet="CustomerRatingPicture" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerRatingPicture_Gallery_Picture" Association="Self.FK_CustomerRatingPicture_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="CustomerRatingPicture" EntitySet="CustomerRatingPicture" />
     </AssociationSet>
     <AssociationSet Name="FK_Debt_DN_Users" Association="Self.FK_Debt_DN_Users">
       <End Role="DN_Users" EntitySet="DN_Users" />
@@ -12370,6 +13294,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="News_News" EntitySet="News_News" />
       <End Role="News_News_Product" EntitySet="News_News_Product" />
     </AssociationSet>
+    <AssociationSet Name="FK_News_Step_News_News" Association="Self.FK_News_Step_News_News">
+      <End Role="News_News" EntitySet="News_News" />
+      <End Role="News_Step" EntitySet="News_Step" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_Step_Step" Association="Self.FK_News_Step_Step">
+      <End Role="Step" EntitySet="Step" />
+      <End Role="News_Step" EntitySet="News_Step" />
+    </AssociationSet>
     <AssociationSet Name="FK_News_Tag_News_News" Association="Self.FK_News_Tag_News_News">
       <End Role="News_News" EntitySet="News_News" />
       <End Role="News_News_Tag" EntitySet="News_News_Tag" />
@@ -12386,9 +13318,45 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="Shop_Orders" EntitySet="Shop_Orders" />
       <End Role="Order_BedDesk" EntitySet="Order_BedDesk" />
     </AssociationSet>
+    <AssociationSet Name="FK_Order_Customer1" Association="Self.FK_Order_Customer1">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_CustomerAddress" Association="Self.FK_Order_CustomerAddress">
+      <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
     <AssociationSet Name="FK_Order_Debt_DN_Users" Association="Self.FK_Order_Debt_DN_Users">
       <End Role="DN_Users" EntitySet="DN_Users" />
       <End Role="Order_Debt" EntitySet="Order_Debt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_DN_Agency" Association="Self.FK_Order_DN_Agency">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package_Customer" Association="Self.FK_Order_Package_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Order_Package" EntitySet="Order_Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package_Customer_Type" Association="Self.FK_Order_Package_Customer_Type">
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+      <End Role="Order_Package" EntitySet="Order_Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_System_City" Association="Self.FK_Order_System_City">
+      <End Role="System_City" EntitySet="System_City" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Customer" Association="Self.FK_OrderDetails_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Order" Association="Self.FK_OrderDetails_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Shop_Product" Association="Self.FK_OrderDetails_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_P_Workshop_Company" Association="Self.FK_P_Workshop_Company">
       <End Role="Company" EntitySet="Company" />
@@ -12438,6 +13406,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
       <End Role="Product_Promotion" EntitySet="Product_Promotion" />
     </AssociationSet>
+    <AssociationSet Name="FK_Product_Reading_Customer" Association="Self.FK_Product_Reading_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Product_Reading" EntitySet="Product_Reading" />
+    </AssociationSet>
     <AssociationSet Name="FK_Product_Sale_DN_Sale" Association="Self.FK_Product_Sale_DN_Sale">
       <End Role="DN_Sale" EntitySet="DN_Sale" />
       <End Role="Product_Sale" EntitySet="Product_Sale" />
@@ -12486,6 +13458,22 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
       <End Role="ProductDetail_Recipe" EntitySet="ProductDetail_Recipe" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductRating_Customer" Association="Self.FK_ProductRating_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="ProductRating" EntitySet="ProductRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductRating_Shop_Product" Association="Self.FK_ProductRating_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="ProductRating" EntitySet="ProductRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductRatingPicture_Gallery_Picture" Association="Self.FK_ProductRatingPicture_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="ProductRatingPicture" EntitySet="ProductRatingPicture" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductRatingPicture_ProductRating" Association="Self.FK_ProductRatingPicture_ProductRating">
+      <End Role="ProductRating" EntitySet="ProductRating" />
+      <End Role="ProductRatingPicture" EntitySet="ProductRatingPicture" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProductValue_Recipe_ProductDetail_Recipe" Association="Self.FK_ProductValue_Recipe_ProductDetail_Recipe">
       <End Role="ProductDetail_Recipe" EntitySet="ProductDetail_Recipe" />
       <End Role="ProductValue_Recipe" EntitySet="ProductValue_Recipe" />
@@ -12508,10 +13496,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Promotion_Product_DN_Promotion" Association="Self.FK_Promotion_Product_DN_Promotion">
       <End Role="DN_Promotion" EntitySet="DN_Promotion" />
-      <End Role="Promotion_Product" EntitySet="Promotion_Product" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Promotion_Product_Shop_Product" Association="Self.FK_Promotion_Product_Shop_Product">
-      <End Role="Shop_Product" EntitySet="Shop_Product" />
       <End Role="Promotion_Product" EntitySet="Promotion_Product" />
     </AssociationSet>
     <AssociationSet Name="FK_ReceiptPayment_CostType" Association="Self.FK_ReceiptPayment_CostType">
@@ -12590,8 +13574,16 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="DN_ImportProduct" EntitySet="DN_ImportProduct" />
       <End Role="RewardHistory" EntitySet="RewardHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_Order" Association="Self.FK_RewardHistory_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="RewardHistory" EntitySet="RewardHistory" />
+    </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_Shop_Orders" Association="Self.FK_RewardHistory_Shop_Orders">
       <End Role="Shop_Orders" EntitySet="Shop_Orders" />
+      <End Role="RewardHistory" EntitySet="RewardHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_WalletCustomer" Association="Self.FK_RewardHistory_WalletCustomer">
+      <End Role="WalletCustomer" EntitySet="WalletCustomer" />
       <End Role="RewardHistory" EntitySet="RewardHistory" />
     </AssociationSet>
     <AssociationSet Name="FK_Role_ModuleActive_ActiveRole" Association="Self.FK_Role_ModuleActive_ActiveRole">
@@ -12722,6 +13714,26 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
       <End Role="Shop_Orders" EntitySet="Shop_Orders" />
     </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Category" Association="Self.FK_Shop_Product_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Category_Category" Association="Self.FK_Shop_Product_Category_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Shop_Product_Category" EntitySet="Shop_Product_Category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Category_Shop_Product" Association="Self.FK_Shop_Product_Category_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="Shop_Product_Category" EntitySet="Shop_Product_Category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Customer1" Association="Self.FK_Shop_Product_Customer1">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_CustomerAddress" Association="Self.FK_Shop_Product_CustomerAddress">
+      <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="Self.FK_Shop_Product_Detail_Category">
       <End Role="Category" EntitySet="Category" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
@@ -12749,6 +13761,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     <AssociationSet Name="FK_Shop_Product_Detail_Picture_Shop_Product_Detail" Association="Self.FK_Shop_Product_Detail_Picture_Shop_Product_Detail">
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
       <End Role="Shop_Product_Detail_Picture" EntitySet="Shop_Product_Detail_Picture" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Gallery_Picture" Association="Self.FK_Shop_Product_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Picture_Gallery_Picture" Association="Self.FK_Shop_Product_Picture_Gallery_Picture">
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />

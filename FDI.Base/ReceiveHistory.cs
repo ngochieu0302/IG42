@@ -27,6 +27,10 @@ namespace FDI.Base
         public Nullable<int> Type { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.Guid> IdUser { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<decimal> DateActive { get; set; }
+        public Nullable<int> CustomerIDR { get; set; }
+        public string Query { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual DN_Users DN_Users { get; set; }

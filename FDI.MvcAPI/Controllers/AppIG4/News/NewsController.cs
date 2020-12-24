@@ -12,12 +12,12 @@ namespace FDI.MvcAPI.Controllers.News
     public class NewsController : BaseAppApiController
     {
         // GET: News
-        private readonly NewsDA _da = new NewsDA();
+        private readonly NewsAppIG4DA _da = new NewsAppIG4DA();
 
         public ActionResult ListItems(int page, int totalpage)
         {
             var data = _da.GetListAll(page, totalpage);
-            return Json(new BaseResponse<List<NewsItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<NewsAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetItemById(int id)

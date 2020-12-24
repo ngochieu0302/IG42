@@ -74,9 +74,9 @@ namespace FDI.Simple
         public int? TypePacketPoint { get; set; }
         public string PictureUrlIssUing { get; set; }
         public IEnumerable<int> LstInt { get; set; }
-        public IEnumerable<PictureItem> LstPictures { get; set; }
+        public IEnumerable<PictureAppIG4Item> LstPictures { get; set; }
         public IEnumerable<TagItem> Tags { get; set; }
-        public List<CategoryItem> CategoryItems { get; set; }
+        public List<CategoryAppIG4Item> CategoryItems { get; set; }
         public CategoryItem CategoryItem { get; set; }
         public string FolderFile { get; set; }
         public string Filename { get; set; }
@@ -105,7 +105,7 @@ namespace FDI.Simple
         public string Address1 { get; set; }
         public int TopRankShop { get; set; }
         public string Phone { get; set; }
-        public virtual IEnumerable<OrderDetailItem> OrderDetails { get; set; }
+        public virtual IEnumerable<OrderDetailAppIG4Item> OrderDetails { get; set; }
         public virtual Customer1Item CustomerItem { get; set; }
         public virtual Customer2Item CustomerItem1 { get; set; }
         public int? CustomerId1 { get; set; }
@@ -113,8 +113,8 @@ namespace FDI.Simple
     }
     public class ModelProductAppIG4Item : BaseModelSimple
     {
-        public ProductItem ProductItem { get; set; }
-        public IEnumerable<ProductItem> ListItem { get; set; }
+        public ProductAppIG4Item ProductItem { get; set; }
+        public IEnumerable<ProductAppIG4Item> ListItem { get; set; }
         public CategoryItem CategoryItem { get; set; }
         public int? TotalResult { get; set; }
         public string Author { get; set; }
@@ -126,8 +126,8 @@ namespace FDI.Simple
     }
     public class ModelProductSearchItem : BaseModelSimple
     {
-        public ProductItem ProductItem { get; set; }
-        public IEnumerable<ProductItem> ListItem { get; set; }
+        public ProductAppIG4Item ProductAppIG4Item { get; set; }
+        public IEnumerable<ProductAppIG4Item> ListItem { get; set; }
         public CategoryItem CategoryItem { get; set; }
         public int? TotalResult { get; set; }
         public IEnumerable<OrderDetailItem> ListProductBoughtItems { get; set; }
@@ -189,7 +189,7 @@ namespace FDI.Simple
         public int? ColorID { get; set; }
         public int? SizeID { get; set; }
 
-        public virtual ProductItem Shop_Product { get; set; }
+        public virtual ProductAppIG4Item Shop_Product { get; set; }
         public virtual SizeItem Size { get; set; }
         public virtual ColorItem System_Color { get; set; }
     }

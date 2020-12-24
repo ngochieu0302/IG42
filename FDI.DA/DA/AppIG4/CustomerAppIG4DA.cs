@@ -80,10 +80,10 @@ namespace FDI.DA
             return query.ToList();
         }
 
-        public List<TopCustomerStatic> Top100CustomerBuy(int page, int take)
+        public List<TopCustomerStaticAppIG4> Top100CustomerBuy(int page, int take)
         {
             var query = from c in FDIDB.Top100CustomerBuy()
-                        select new TopCustomerStatic
+                        select new TopCustomerStaticAppIG4
                         {
                             Fullname = c.FullName,
                             Email = c.Email,
@@ -91,10 +91,10 @@ namespace FDI.DA
                         };
             return query.Skip((page - 1) * take).Take(take).ToList();
         }
-        public List<TopCustomerStatic> Top100CustomerSell(int page, int take)
+        public List<TopCustomerStaticAppIG4> Top100CustomerSell(int page, int take)
         {
             var query = from c in FDIDB.Top100CustomerSell()
-                select new TopCustomerStatic
+                select new TopCustomerStaticAppIG4
                 {
                     Fullname = c.FullName,
                     Email = c.Email,
@@ -159,7 +159,7 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
-        public List<ListChartItem> GetStaticBarcharCustomerInMonth(int month)
+        public List<ListChartAppIG4Item> GetStaticBarcharCustomerInMonth(int month)
         {
             var query = from c in FDIDB.StaticChartsCustomer(month)
                         select new ListChartItem
@@ -169,7 +169,7 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
-        public List<ListChartPacketItem> GetStaticCustomerbuyPacketInMonth(int month)
+        public List<ListChartPacketAppIG4Item> GetStaticCustomerbuyPacketInMonth(int month)
         {
             var query = from c in FDIDB.StaticChartsCustomerBuyPacket(month)
                 select new ListChartPacketItem
@@ -179,7 +179,7 @@ namespace FDI.DA
                 };
             return query.ToList();
         }
-        public List<ListOrderShopChartItem> GetStaticChartsShop(int year,int month,int week,DateTime date,int shopId,int cateId)
+        public List<ListOrderShopChartAppIG4Item> GetStaticChartsShop(int year,int month,int week,DateTime date,int shopId,int cateId)
         {
             var query = from c in FDIDB.StaticChartsShop(year,month,week,date,shopId, cateId)
                 select new ListOrderShopChartItem
@@ -202,7 +202,7 @@ namespace FDI.DA
             return query.FirstOrDefault();
         }
 
-        public List<CookieLoginItem> GetCookiebyCusId(string name, int id)
+        public List<CookieLoginAppIG4Item> GetCookiebyCusId(string name, int id)
         {
             var query = from c in FDIDB.CookieLogins
                         where c.Name == name && c.CustomerID == id
@@ -432,20 +432,6 @@ namespace FDI.DA
 
             return query.FirstOrDefault();
         }
-        //public List<CustomerAppIG4Item> GetListCustomerOrther(List<int> lstInt)
-        //{
-        //    var query = from c in FDIDB.Categories
-        //        where lstInt.Contains(c.Id)
-        //                group c by c.CategoryId into g
-        //              orderby g.Select(a=>a.)
-        //        select new CustomerAppIG4Item
-        //        {
-        //            ID = c.ID,
-                    
-        //        };
-
-        //    return query.ToList();
-        //}
         public List<BonusTypeItem> ListBonusTypeItems(int type = 1)
         {
             var query = from c in FDIDB.BonusTypes
@@ -476,7 +462,7 @@ namespace FDI.DA
                             Address = c.CustomerAddresses.Where(m => m.IsDefault).Select(m => m.Address).FirstOrDefault(),
                             Ratings = c.Ratings,
                             ListCateId = c.Shop_Product.Select(a=>a.CategoryId).ToList(),
-                            ListCateId1 = c.Shop_Product1.Select(a=>a.CategoryId).ToList(),
+                            //ListCateId1 = c.Shop_Product1.Select(a=>a.CategoryId).ToList(),
                             AvgRating = c.AvgRating,
                             LikeTotal = c.LikeTotal,
                             ImageTimeline = c.ImageTimeline,
@@ -562,11 +548,11 @@ namespace FDI.DA
         {
             return FDIDB.CustomerRatings.FirstOrDefault(m => m.CustomerId == customerId && m.ShopId == shopId);
         }
-        public List<RatingItem> GetTotalRating(int shopId)
+        public List<RatingAppIG4Item> GetTotalRating(int shopId)
         {
             return FDIDB.CustomerRatings.Where(m => m.ShopId == shopId).GroupBy(m => new { m.ShopId, m.TypeRating }).Select(m => new RatingItem() { TypeRating = m.Key.TypeRating, Quantity = m.Count() }).ToList();
         }
-        public List<RatingItem> GetCommentRatings(int id)
+        public List<RatingAppIG4Item> GetCommentRatings(int id)
         {
             var query = FDIDB.CustomerRatings.Where(m => m.ShopId == id)
                 .Select(m => new RatingItem

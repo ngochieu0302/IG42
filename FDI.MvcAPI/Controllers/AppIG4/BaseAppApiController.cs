@@ -25,7 +25,7 @@ namespace FDI.MvcAPI.Controllers
     {
         readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA("#");
         readonly RewardHistoryDA _rewardHistoryDa = new RewardHistoryDA("#");
-        readonly OrderDA _orderDa = new OrderDA("#");
+        readonly OrderAppIG4DA _orderDa = new OrderAppIG4DA("#");
         protected override void OnException(ExceptionContext filterContext)
         {
             filterContext.ExceptionHandled = true;
@@ -320,8 +320,8 @@ namespace FDI.MvcAPI.Controllers
             return "";
         }
         CustomerDA customerDA = new CustomerDA();
-        readonly WalletCustomerDA _walletCustomerDa = new WalletCustomerDA("#");
-        readonly CustomerPolicyDA _customerPolicyDa = new CustomerPolicyDA("#");
+        readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
+        readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
 
 
         public void UpdateLevelCustomer(int customerId)
@@ -330,7 +330,7 @@ namespace FDI.MvcAPI.Controllers
             var wallet = customerDA.GetById(customerId);
             if (wallet != null)
             {
-                var total = wallet.CashOutWallets.Where(c => c.Type == 1).Sum(c => c.Totalprice);
+                var total = wallet.CashOutWallets.Where(c => c.Type == 1).Sum(c => c.TotalPrice);
                 if (total > 0)
                 {
                     var point = (decimal)total * (config.Point / config.Price);
@@ -350,7 +350,7 @@ namespace FDI.MvcAPI.Controllers
             url = UrlNode + url + "/" + Keyapi;
             Utility.GetObjJson<int>(url);
         }
-        public void HandlingNode(string port, OrderProcessItem order)
+        public void HandlingNode(string port, OrderProcessAppIG4Item order)
         {
             var json = new JavaScriptSerializer().Serialize(order);
             Node(port + ("/addorder/" + json));

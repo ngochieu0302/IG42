@@ -22,6 +22,7 @@ namespace FDI.Base
             this.Customer_Care = new HashSet<Customer_Care>();
             this.Customer_Reward = new HashSet<Customer_Reward>();
             this.CustomerAddresses = new HashSet<CustomerAddress>();
+            this.CustomerRatings = new HashSet<CustomerRating>();
             this.DN_Login = new HashSet<DN_Login>();
             this.DN_Mail_SSC = new HashSet<DN_Mail_SSC>();
             this.DN_Mail_SSC1 = new HashSet<DN_Mail_SSC>();
@@ -30,7 +31,9 @@ namespace FDI.Base
             this.ReceiveHistories = new HashSet<ReceiveHistory>();
             this.Orders = new HashSet<Order>();
             this.Order_Package = new HashSet<Order_Package>();
+            this.OrderDetails = new HashSet<OrderDetail>();
             this.Product_Reading = new HashSet<Product_Reading>();
+            this.ProductRatings = new HashSet<ProductRating>();
             this.ReceiptPayments = new HashSet<ReceiptPayment>();
             this.RewardHistories = new HashSet<RewardHistory>();
             this.Send_Card = new HashSet<Send_Card>();
@@ -81,6 +84,10 @@ namespace FDI.Base
         public Nullable<double> AvgRating { get; set; }
         public Nullable<int> LikeTotal { get; set; }
         public string ImageTimeline { get; set; }
+        public bool IsPrestige { get; set; }
+        public Nullable<System.DateTime> DateCreated1 { get; set; }
+        public string AvatarUrl { get; set; }
+        public string Description { get; set; }
     
         public virtual ICollection<CashOutWallet> CashOutWallets { get; set; }
         public virtual ICollection<CookieLogin> CookieLogins { get; set; }
@@ -93,6 +100,7 @@ namespace FDI.Base
         public virtual ICollection<Customer_Reward> Customer_Reward { get; set; }
         public virtual System_District System_District { get; set; }
         public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; }
+        public virtual ICollection<CustomerRating> CustomerRatings { get; set; }
         public virtual ICollection<DN_Login> DN_Login { get; set; }
         public virtual ICollection<DN_Mail_SSC> DN_Mail_SSC { get; set; }
         public virtual ICollection<DN_Mail_SSC> DN_Mail_SSC1 { get; set; }
@@ -101,7 +109,9 @@ namespace FDI.Base
         public virtual ICollection<ReceiveHistory> ReceiveHistories { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Order_Package> Order_Package { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<Product_Reading> Product_Reading { get; set; }
+        public virtual ICollection<ProductRating> ProductRatings { get; set; }
         public virtual ICollection<ReceiptPayment> ReceiptPayments { get; set; }
         public virtual ICollection<RewardHistory> RewardHistories { get; set; }
         public virtual ICollection<Send_Card> Send_Card { get; set; }

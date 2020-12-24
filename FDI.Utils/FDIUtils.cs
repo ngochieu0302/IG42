@@ -153,7 +153,66 @@ namespace FDI.Utils
             const int lengthName = 30;
             return name.Length < lengthName ? name : name.Substring(0, lengthName);
         }
-
+        public static string MoneyDouble(this double price)
+        {
+            var str = price.ToString();
+            if (str.Contains(","))
+            {
+                var a = 0;
+                var stringpr = str.Split(',');
+                if (stringpr.Count() > 1)
+                {
+                    for (int i = stringpr[1].Length; i > 0; i--)
+                    {
+                        if (stringpr[1].Substring(i - 1, 1) != "0")
+                        {
+                            a = i;
+                            break;
+                        }
+                    }
+                    var b1 = int.Parse(stringpr[0]);
+                    var b2 = string.Format("{0:0,0}", b1);
+                    var temp = b2.StartsWith("0") ? int.Parse(b2).ToString() : b2;
+                    var sub = stringpr[1].Substring(0, a);
+                    if (!string.IsNullOrEmpty(sub)) temp = temp + "." + sub;
+                    return temp;
+                }
+                else
+                {
+                    var b2 = string.Format("{0:0,0}", price);
+                    var temp = b2.StartsWith("0") ? int.Parse(b2).ToString() : b2;
+                    return temp;
+                }
+            }
+            else
+            {
+                var a = 0;
+                var stringpr = str.Split('.');
+                if (stringpr.Count() > 1)
+                {
+                    for (int i = stringpr[1].Length; i > 0; i--)
+                    {
+                        if (stringpr[1].Substring(i - 1, 1) != "0")
+                        {
+                            a = i;
+                            break;
+                        }
+                    }
+                    var b1 = int.Parse(stringpr[0]);
+                    var b2 = string.Format("{0:0,0}", b1);
+                    var temp = b2.StartsWith("0") ? int.Parse(b2).ToString() : b2;
+                    var sub = stringpr[1].Substring(0, a);
+                    if (!string.IsNullOrEmpty(sub)) temp = temp + "." + sub;
+                    return temp;
+                }
+                else
+                {
+                    var b2 = string.Format("{0:0,0}", price);
+                    var temp = b2.StartsWith("0") ? int.Parse(b2).ToString() : b2;
+                    return temp;
+                }
+            }
+        }
         /// <summary>
         /// Lấy về danh sách ID
         /// </summary>
@@ -401,7 +460,20 @@ namespace FDI.Utils
             pass = pass.Replace(":", string.Empty);
             return pass;
         }
-
+        public static string RandomOtp(int size)
+        {
+            var stringdate = DateTime.Now.ToString("ss");
+            const string chars = "0123456789";
+            var stringChars = new char[size];
+            var random = new Random();
+            for (var i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            var finalString = new String(stringChars);
+            var key = finalString + stringdate;
+            return key;
+        }
         public static string CreateRandom(string name)
         {
             var stringdate = DateTime.Now.ToString("ddMMyy");

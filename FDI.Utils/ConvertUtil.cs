@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace FDI.Utils
@@ -20,7 +21,53 @@ namespace FDI.Utils
 
             return retVal;
         }
+        [DbFunction("FdiDataModel.Store", "DistanceBetween")]
+        public static double DistanceBetween(float la1, float lo1, float la2, float lo2)
+        {
+            //FDIEntities _d = new FDIEntities();
+            try
+            {
+                //var check = _d.Database.SqlQuery<double>("SELECT dbo.DistanceBetween (@la1, @lo1, @la2, @lo2)");
+                var dLat = (la1 - la2) * (Math.PI / 180);
 
+                var dLon = (lo1 - lo2) * (Math.PI / 180);
+
+                var la1ToRad = la1 * (Math.PI / 180);
+
+                var la2ToRad = la2 * (Math.PI / 180);
+
+                var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(la1ToRad) * Math.Cos(la2ToRad) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+                var c = 2 * Math.Pow(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+                var d = 6371000 * c;
+                return d;
+            }
+            catch (Exception e)
+            {
+                throw new NotSupportedException("Direct calls not supported");
+            }
+        }
+        public static double distance(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+        {
+            if (lat1 == lat2 && lon1 == lon2) return 0;
+            double theta = lon1 - lon2;
+            double dist = Math.Sin(deg2rad(lat1)) * Math.Sin(deg2rad(lat2)) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Cos(deg2rad(theta));
+            dist = Math.Acos(dist);
+            dist = rad2deg(dist);
+            dist = dist * 60 * 1.1515;
+            if (unit == 'K') dist = dist * 1.609344;
+            else if (unit == 'N') dist = dist * 0.8684;
+            return (dist);
+        }
+        private static double deg2rad(double deg)
+        {
+            return (deg * Math.PI / 180.0);
+        }
+        private static double rad2deg(double rad)
+        {
+            return (rad / Math.PI * 180.0);
+        }
         public static List<Guid> LsGuiId(string lguiid)
         {
             var list = new List<Guid>();

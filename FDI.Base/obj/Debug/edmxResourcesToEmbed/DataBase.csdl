@@ -26,6 +26,8 @@
     <EntitySet Name="AspNetUsers" EntityType="pmbh.fditech.vnModel.AspNetUser" />
     <EntitySet Name="AspNetUserTokens" EntityType="pmbh.fditech.vnModel.AspNetUserToken" />
     <EntitySet Name="AttributeOptions" EntityType="pmbh.fditech.vnModel.AttributeOption" />
+    <EntitySet Name="Authors" EntityType="pmbh.fditech.vnModel.Author" />
+    <EntitySet Name="Author_Product" EntityType="pmbh.fditech.vnModel.Author_Product" />
     <EntitySet Name="Banks" EntityType="pmbh.fditech.vnModel.Bank" />
     <EntitySet Name="Banners" EntityType="pmbh.fditech.vnModel.Banner" />
     <EntitySet Name="BiasProduces" EntityType="pmbh.fditech.vnModel.BiasProduce" />
@@ -43,6 +45,7 @@
     <EntitySet Name="Comment_Like" EntityType="pmbh.fditech.vnModel.Comment_Like" />
     <EntitySet Name="Companies" EntityType="pmbh.fditech.vnModel.Company" />
     <EntitySet Name="ControlValues" EntityType="pmbh.fditech.vnModel.ControlValue" />
+    <EntitySet Name="CookieLogins" EntityType="pmbh.fditech.vnModel.CookieLogin" />
     <EntitySet Name="Cost_Product" EntityType="pmbh.fditech.vnModel.Cost_Product" />
     <EntitySet Name="Cost_Product_User" EntityType="pmbh.fditech.vnModel.Cost_Product_User" />
     <EntitySet Name="CostTypes" EntityType="pmbh.fditech.vnModel.CostType" />
@@ -54,11 +57,16 @@
     <EntitySet Name="Customer_Groups" EntityType="pmbh.fditech.vnModel.Customer_Groups" />
     <EntitySet Name="Customer_History" EntityType="pmbh.fditech.vnModel.Customer_History" />
     <EntitySet Name="Customer_Point" EntityType="pmbh.fditech.vnModel.Customer_Point" />
+    <EntitySet Name="Customer_Policy" EntityType="pmbh.fditech.vnModel.Customer_Policy" />
     <EntitySet Name="Customer_question" EntityType="pmbh.fditech.vnModel.Customer_question" />
     <EntitySet Name="Customer_Review" EntityType="pmbh.fditech.vnModel.Customer_Review" />
     <EntitySet Name="Customer_Review_Deltails" EntityType="pmbh.fditech.vnModel.Customer_Review_Deltails" />
     <EntitySet Name="Customer_Reward" EntityType="pmbh.fditech.vnModel.Customer_Reward" />
+    <EntitySet Name="Customer_Type" EntityType="pmbh.fditech.vnModel.Customer_Type" />
+    <EntitySet Name="Customer_TypeGroup" EntityType="pmbh.fditech.vnModel.Customer_TypeGroup" />
+    <EntitySet Name="CustomerAddresses" EntityType="pmbh.fditech.vnModel.CustomerAddress" />
     <EntitySet Name="CustomerContacts" EntityType="pmbh.fditech.vnModel.CustomerContact" />
+    <EntitySet Name="CustomerRatings" EntityType="pmbh.fditech.vnModel.CustomerRating" />
     <EntitySet Name="Debts" EntityType="pmbh.fditech.vnModel.Debt" />
     <EntitySet Name="Discounts" EntityType="pmbh.fditech.vnModel.Discount" />
     <EntitySet Name="DiscountCodes" EntityType="pmbh.fditech.vnModel.DiscountCode" />
@@ -166,9 +174,12 @@
     <EntitySet Name="News_Job" EntityType="pmbh.fditech.vnModel.News_Job" />
     <EntitySet Name="News_News" EntityType="pmbh.fditech.vnModel.News_News" />
     <EntitySet Name="News_News_Product" EntityType="pmbh.fditech.vnModel.News_News_Product" />
+    <EntitySet Name="Orders" EntityType="pmbh.fditech.vnModel.Order" />
     <EntitySet Name="Order_Debt" EntityType="pmbh.fditech.vnModel.Order_Debt" />
+    <EntitySet Name="Order_Package" EntityType="pmbh.fditech.vnModel.Order_Package" />
     <EntitySet Name="OrderCars" EntityType="pmbh.fditech.vnModel.OrderCar" />
     <EntitySet Name="OrderCarProductDetails" EntityType="pmbh.fditech.vnModel.OrderCarProductDetail" />
+    <EntitySet Name="OrderDetails" EntityType="pmbh.fditech.vnModel.OrderDetail" />
     <EntitySet Name="P_Workshop" EntityType="pmbh.fditech.vnModel.P_Workshop" />
     <EntitySet Name="Partners" EntityType="pmbh.fditech.vnModel.Partner" />
     <EntitySet Name="Payment_Method" EntityType="pmbh.fditech.vnModel.Payment_Method" />
@@ -182,16 +193,19 @@
     <EntitySet Name="ProduceProductDetails" EntityType="pmbh.fditech.vnModel.ProduceProductDetail" />
     <EntitySet Name="ProduceProductPrepares" EntityType="pmbh.fditech.vnModel.ProduceProductPrepare" />
     <EntitySet Name="Product_Promotion" EntityType="pmbh.fditech.vnModel.Product_Promotion" />
+    <EntitySet Name="Product_Reading" EntityType="pmbh.fditech.vnModel.Product_Reading" />
     <EntitySet Name="Product_Size" EntityType="pmbh.fditech.vnModel.Product_Size" />
     <EntitySet Name="Product_Value" EntityType="pmbh.fditech.vnModel.Product_Value" />
     <EntitySet Name="ProductCodes" EntityType="pmbh.fditech.vnModel.ProductCode" />
     <EntitySet Name="ProductCode_CostUser" EntityType="pmbh.fditech.vnModel.ProductCode_CostUser" />
     <EntitySet Name="ProductDetail_Recipe" EntityType="pmbh.fditech.vnModel.ProductDetail_Recipe" />
+    <EntitySet Name="ProductRatings" EntityType="pmbh.fditech.vnModel.ProductRating" />
     <EntitySet Name="ProductValue_Recipe" EntityType="pmbh.fditech.vnModel.ProductValue_Recipe" />
     <EntitySet Name="Promotions" EntityType="pmbh.fditech.vnModel.Promotion" />
     <EntitySet Name="Promotion_Procuct" EntityType="pmbh.fditech.vnModel.Promotion_Procuct" />
     <EntitySet Name="Promotion_Product" EntityType="pmbh.fditech.vnModel.Promotion_Product" />
     <EntitySet Name="PurchaseOrders" EntityType="pmbh.fditech.vnModel.PurchaseOrder" />
+    <EntitySet Name="PushNotifications" EntityType="pmbh.fditech.vnModel.PushNotification" />
     <EntitySet Name="ReceiptPayments" EntityType="pmbh.fditech.vnModel.ReceiptPayment" />
     <EntitySet Name="ReceiptVouchers" EntityType="pmbh.fditech.vnModel.ReceiptVoucher" />
     <EntitySet Name="ReceiveHistories" EntityType="pmbh.fditech.vnModel.ReceiveHistory" />
@@ -218,6 +232,7 @@
     <EntitySet Name="Sources" EntityType="pmbh.fditech.vnModel.Source" />
     <EntitySet Name="Source_Video" EntityType="pmbh.fditech.vnModel.Source_Video" />
     <EntitySet Name="ST_Group" EntityType="pmbh.fditech.vnModel.ST_Group" />
+    <EntitySet Name="Steps" EntityType="pmbh.fditech.vnModel.Step" />
     <EntitySet Name="Storages" EntityType="pmbh.fditech.vnModel.Storage" />
     <EntitySet Name="StorageFreightWarehouses" EntityType="pmbh.fditech.vnModel.StorageFreightWarehouse" />
     <EntitySet Name="StorageProducts" EntityType="pmbh.fditech.vnModel.StorageProduct" />
@@ -246,6 +261,8 @@
     <EntitySet Name="TM_Products_Comment" EntityType="pmbh.fditech.vnModel.TM_Products_Comment" />
     <EntitySet Name="TM_Rate_Comment" EntityType="pmbh.fditech.vnModel.TM_Rate_Comment" />
     <EntitySet Name="TokenDevices" EntityType="pmbh.fditech.vnModel.TokenDevice" />
+    <EntitySet Name="TokenOtps" EntityType="pmbh.fditech.vnModel.TokenOtp" />
+    <EntitySet Name="TokenRefreshes" EntityType="pmbh.fditech.vnModel.TokenRefresh" />
     <EntitySet Name="TotalProductToDays" EntityType="pmbh.fditech.vnModel.TotalProductToDay" />
     <EntitySet Name="TotalStorageWares" EntityType="pmbh.fditech.vnModel.TotalStorageWare" />
     <EntitySet Name="Types" EntityType="pmbh.fditech.vnModel.Type" />
@@ -260,6 +277,7 @@
     <EntitySet Name="webpages_Membership" EntityType="pmbh.fditech.vnModel.webpages_Membership" />
     <EntitySet Name="webpages_OAuthMembership" EntityType="pmbh.fditech.vnModel.webpages_OAuthMembership" />
     <EntitySet Name="webpages_Roles" EntityType="pmbh.fditech.vnModel.webpages_Roles" />
+    <EntitySet Name="ConfigExchanges" EntityType="pmbh.fditech.vnModel.ConfigExchange" />
     <EntitySet Name="TempCustomers" EntityType="pmbh.fditech.vnModel.TempCustomer" />
     <EntitySet Name="TempShop_Product" EntityType="pmbh.fditech.vnModel.TempShop_Product" />
     <EntitySet Name="Customer_LastOrder" EntityType="pmbh.fditech.vnModel.Customer_LastOrder" />
@@ -392,6 +410,14 @@
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
       <End Role="AttributeOption" EntitySet="AttributeOptions" />
     </AssociationSet>
+    <AssociationSet Name="FK_Author_Product_Author" Association="pmbh.fditech.vnModel.FK_Author_Product_Author">
+      <End Role="Author" EntitySet="Authors" />
+      <End Role="Author_Product" EntitySet="Author_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Author_Product_Shop_Product" Association="pmbh.fditech.vnModel.FK_Author_Product_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="Author_Product" EntitySet="Author_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK__Banner__UserId__43CCBCED" Association="pmbh.fditech.vnModel.FK__Banner__UserId__43CCBCED">
       <End Role="DN_Users" EntitySet="DN_Users" />
       <End Role="Banner" EntitySet="Banners" />
@@ -446,10 +472,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_CashOutWallet_Customer" Association="pmbh.fditech.vnModel.FK_CashOutWallet_Customer">
       <End Role="Customer" EntitySet="Customers" />
-      <End Role="CashOutWallet" EntitySet="CashOutWallets" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CashOutWallet_Shop_Orders" Association="pmbh.fditech.vnModel.FK_CashOutWallet_Shop_Orders">
-      <End Role="Shop_Orders" EntitySet="Shop_Orders" />
       <End Role="CashOutWallet" EntitySet="CashOutWallets" />
     </AssociationSet>
     <AssociationSet Name="FK__Cate_Valu__Purch__48FB865E" Association="pmbh.fditech.vnModel.FK__Cate_Valu__Purch__48FB865E">
@@ -556,6 +578,10 @@
       <End Role="Category" EntitySet="Categories" />
       <End Role="Mapping_Category_Recipe" EntitySet="Mapping_Category_Recipe" />
     </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Category" Association="pmbh.fditech.vnModel.FK_Shop_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Category">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
@@ -611,6 +637,10 @@
     <AssociationSet Name="FK_P_Workshop_Company" Association="pmbh.fditech.vnModel.FK_P_Workshop_Company">
       <End Role="Company" EntitySet="Companies" />
       <End Role="P_Workshop" EntitySet="P_Workshop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CookieLogin_Customer" Association="pmbh.fditech.vnModel.FK_CookieLogin_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CookieLogin" EntitySet="CookieLogins" />
     </AssociationSet>
     <AssociationSet Name="FK_Cost_Product_SetupProduction" Association="pmbh.fditech.vnModel.FK_Cost_Product_SetupProduction">
       <End Role="SetupProduction" EntitySet="SetupProductions" />
@@ -668,6 +698,10 @@
       <End Role="Customer_Groups" EntitySet="Customer_Groups" />
       <End Role="Customer" EntitySet="Customers" />
     </AssociationSet>
+    <AssociationSet Name="FK_Customer_Customer_Policy" Association="pmbh.fditech.vnModel.FK_Customer_Customer_Policy">
+      <End Role="Customer_Policy" EntitySet="Customer_Policy" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
     <AssociationSet Name="FK_Customer_DN_Agency" Association="pmbh.fditech.vnModel.FK_Customer_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="Customer" EntitySet="Customers" />
@@ -683,6 +717,14 @@
     <AssociationSet Name="FK_Customer_System_District" Association="pmbh.fditech.vnModel.FK_Customer_System_District">
       <End Role="System_District" EntitySet="System_District" />
       <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAddress_Customer" Association="pmbh.fditech.vnModel.FK_CustomerAddress_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerRating_Customer" Association="pmbh.fditech.vnModel.FK_CustomerRating_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerRating" EntitySet="CustomerRatings" />
     </AssociationSet>
     <AssociationSet Name="FK_DN_Login_Customer" Association="pmbh.fditech.vnModel.FK_DN_Login_Customer">
       <End Role="Customer" EntitySet="Customers" />
@@ -708,6 +750,26 @@
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ReceiveHistory" EntitySet="ReceiveHistories" />
     </AssociationSet>
+    <AssociationSet Name="FK_Order_Customer1" Association="pmbh.fditech.vnModel.FK_Order_Customer1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package_Customer" Association="pmbh.fditech.vnModel.FK_Order_Package_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order_Package" EntitySet="Order_Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Customer" Association="pmbh.fditech.vnModel.FK_OrderDetails_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Reading_Customer" Association="pmbh.fditech.vnModel.FK_Product_Reading_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Product_Reading" EntitySet="Product_Reading" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductRating_Customer" Association="pmbh.fditech.vnModel.FK_ProductRating_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="ProductRating" EntitySet="ProductRatings" />
+    </AssociationSet>
     <AssociationSet Name="FK_ReceiptPayment_Customer" Association="pmbh.fditech.vnModel.FK_ReceiptPayment_Customer">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ReceiptPayment" EntitySet="ReceiptPayments" />
@@ -723,6 +785,10 @@
     <AssociationSet Name="FK_Shop_ContactOrder_Customer" Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Customer">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Customer1" Association="pmbh.fditech.vnModel.FK_Shop_Product_Customer1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
     </AssociationSet>
     <AssociationSet Name="FK_Therapy_History_Customer" Association="pmbh.fditech.vnModel.FK_Therapy_History_Customer">
       <End Role="Customer" EntitySet="Customers" />
@@ -775,6 +841,26 @@
     <AssociationSet Name="FK_Customer_Reward_DN_Agency" Association="pmbh.fditech.vnModel.FK_Customer_Reward_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="Customer_Reward" EntitySet="Customer_Reward" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Type_Customer_TypeGroup" Association="pmbh.fditech.vnModel.FK_Customer_Type_Customer_TypeGroup">
+      <End Role="Customer_TypeGroup" EntitySet="Customer_TypeGroup" />
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Type_Gallery_Picture" Association="pmbh.fditech.vnModel.FK_Customer_Type_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package_Customer_Type" Association="pmbh.fditech.vnModel.FK_Order_Package_Customer_Type">
+      <End Role="Customer_Type" EntitySet="Customer_Type" />
+      <End Role="Order_Package" EntitySet="Order_Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_CustomerAddress" Association="pmbh.fditech.vnModel.FK_Order_CustomerAddress">
+      <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_CustomerAddress" Association="pmbh.fditech.vnModel.FK_Shop_Product_CustomerAddress">
+      <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
     </AssociationSet>
     <AssociationSet Name="FK_Debt_DN_Users" Association="pmbh.fditech.vnModel.FK_Debt_DN_Users">
       <End Role="DN_Users" EntitySet="DN_Users" />
@@ -835,6 +921,10 @@
     <AssociationSet Name="FK_Documents_DN_Agency" Association="pmbh.fditech.vnModel.FK_Documents_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="Document" EntitySet="Documents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_DN_Agency" Association="pmbh.fditech.vnModel.FK_Order_DN_Agency">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
+      <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Product_Value_DN_Agency" Association="pmbh.fditech.vnModel.FK_Product_Value_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -1468,6 +1558,10 @@
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
     </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Gallery_Picture" Association="pmbh.fditech.vnModel.FK_Shop_Product_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Picture_Gallery_Picture" Association="pmbh.fditech.vnModel.FK_Shop_Product_Picture_Gallery_Picture">
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
       <End Role="Shop_Product_Picture" EntitySet="Shop_Product_Picture" />
@@ -1572,6 +1666,18 @@
       <End Role="News_News" EntitySet="News_News" />
       <End Role="TM_News_Comment" EntitySet="TM_News_Comment" />
     </AssociationSet>
+    <AssociationSet Name="FK_Order_System_City" Association="pmbh.fditech.vnModel.FK_Order_System_City">
+      <End Role="System_City" EntitySet="System_City" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Order" Association="pmbh.fditech.vnModel.FK_OrderDetails_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_Order" Association="pmbh.fditech.vnModel.FK_RewardHistory_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="RewardHistory" EntitySet="RewardHistories" />
+    </AssociationSet>
     <AssociationSet Name="FK__OrderCar__Worksh__3123FCCD" Association="pmbh.fditech.vnModel.FK__OrderCar__Worksh__3123FCCD">
       <End Role="P_Workshop" EntitySet="P_Workshop" />
       <End Role="OrderCar" EntitySet="OrderCars" />
@@ -1583,6 +1689,10 @@
     <AssociationSet Name="FK__PurchaseO__Order__461F19B3" Association="pmbh.fditech.vnModel.FK__PurchaseO__Order__461F19B3">
       <End Role="OrderCar" EntitySet="OrderCars" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Shop_Product" Association="pmbh.fditech.vnModel.FK_OrderDetails_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Payments_Order_Payment_Method" Association="pmbh.fditech.vnModel.FK_Payments_Order_Payment_Method">
       <End Role="Payment_Method" EntitySet="Payment_Method" />
@@ -1648,6 +1758,10 @@
       <End Role="ProductDetail_Recipe" EntitySet="ProductDetail_Recipe" />
       <End Role="ProductValue_Recipe" EntitySet="ProductValue_Recipe" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductRating_Shop_Product" Association="pmbh.fditech.vnModel.FK_ProductRating_Shop_Product">
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
+      <End Role="ProductRating" EntitySet="ProductRatings" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProductValue_Recipe_Shop_Product_Value" Association="pmbh.fditech.vnModel.FK_ProductValue_Recipe_Shop_Product_Value">
       <End Role="Shop_Product_Value" EntitySet="Shop_Product_Value" />
       <End Role="ProductValue_Recipe" EntitySet="ProductValue_Recipe" />
@@ -1655,10 +1769,6 @@
     <AssociationSet Name="FK_Promotion_Procuct_Promotion" Association="pmbh.fditech.vnModel.FK_Promotion_Procuct_Promotion">
       <End Role="Promotion" EntitySet="Promotions" />
       <End Role="Promotion_Procuct" EntitySet="Promotion_Procuct" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Promotion_Product_Shop_Product" Association="pmbh.fditech.vnModel.FK_Promotion_Product_Shop_Product">
-      <End Role="Shop_Product" EntitySet="Shop_Product" />
-      <End Role="Promotion_Product" EntitySet="Promotion_Product" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Order_Details_Promotion_Product" Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Promotion_Product">
       <End Role="Promotion_Product" EntitySet="Promotion_Product" />
@@ -1674,6 +1784,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_Shop_Orders" Association="pmbh.fditech.vnModel.FK_RewardHistory_Shop_Orders">
       <End Role="Shop_Orders" EntitySet="Shop_Orders" />
+      <End Role="RewardHistory" EntitySet="RewardHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_WalletCustomer" Association="pmbh.fditech.vnModel.FK_RewardHistory_WalletCustomer">
+      <End Role="WalletCustomer" EntitySet="WalletCustomers" />
       <End Role="RewardHistory" EntitySet="RewardHistories" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_ContactOrder_Details_Shop_ContactOrder" Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Details_Shop_ContactOrder">
@@ -1792,6 +1906,10 @@
       <End Role="DN_ContentVote" EntitySet="DN_ContentVote" />
       <End Role="DN_Vote" EntitySet="DN_Vote" />
     </AssociationSet>
+    <AssociationSet Name="CustomerRatingPicture" Association="pmbh.fditech.vnModel.CustomerRatingPicture">
+      <End Role="CustomerRating" EntitySet="CustomerRatings" />
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+    </AssociationSet>
     <AssociationSet Name="DN_Category_Attribute" Association="pmbh.fditech.vnModel.DN_Category_Attribute">
       <End Role="Category" EntitySet="Categories" />
       <End Role="DN_AttributeDynamic" EntitySet="DN_AttributeDynamic" />
@@ -1868,6 +1986,10 @@
       <End Role="News_News" EntitySet="News_News" />
       <End Role="System_Tag" EntitySet="System_Tag" />
     </AssociationSet>
+    <AssociationSet Name="News_Step" Association="pmbh.fditech.vnModel.News_Step">
+      <End Role="News_News" EntitySet="News_News" />
+      <End Role="Step" EntitySet="Steps" />
+    </AssociationSet>
     <AssociationSet Name="Order_BedDesk" Association="pmbh.fditech.vnModel.Order_BedDesk">
       <End Role="DN_Bed_Desk" EntitySet="DN_Bed_Desk" />
       <End Role="Shop_Orders" EntitySet="Shop_Orders" />
@@ -1879,6 +2001,10 @@
     <AssociationSet Name="Product_Sale" Association="pmbh.fditech.vnModel.Product_Sale">
       <End Role="DN_Sale" EntitySet="DN_Sale" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+    </AssociationSet>
+    <AssociationSet Name="ProductRatingPicture" Association="pmbh.fditech.vnModel.ProductRatingPicture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="ProductRating" EntitySet="ProductRatings" />
     </AssociationSet>
     <AssociationSet Name="Promotion_Cate" Association="pmbh.fditech.vnModel.Promotion_Cate">
       <End Role="Category" EntitySet="Categories" />
@@ -1903,6 +2029,10 @@
     <AssociationSet Name="Sale_Cate" Association="pmbh.fditech.vnModel.Sale_Cate">
       <End Role="Category" EntitySet="Categories" />
       <End Role="DN_Sale" EntitySet="DN_Sale" />
+    </AssociationSet>
+    <AssociationSet Name="Shop_Product_Category" Association="pmbh.fditech.vnModel.Shop_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Shop_Product" EntitySet="Shop_Product" />
     </AssociationSet>
     <AssociationSet Name="Shop_Product_Detail_Picture" Association="pmbh.fditech.vnModel.Shop_Product_Detail_Picture">
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
@@ -2346,6 +2476,12 @@
     <FunctionImport Name="Category_GetList" ReturnType="Collection(pmbh.fditech.vnModel.Category_GetList_Result)">
       <Parameter Name="LanguageId" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="Category_GetListByUser" ReturnType="Collection(pmbh.fditech.vnModel.Category_GetListByUser_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="String" />
+      <Parameter Name="IsAdmin" Mode="In" Type="Boolean" />
+      <Parameter Name="userid" Mode="In" Type="Guid" />
+      <Parameter Name="type" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="ContactToOrder" ReturnType="Collection(pmbh.fditech.vnModel.ContactToOrder_Result)">
       <Parameter Name="id" Mode="In" Type="Int32" />
       <Parameter Name="UserId" Mode="In" Type="Guid" />
@@ -2419,7 +2555,7 @@
       <Parameter Name="start" Mode="In" Type="Decimal" />
       <Parameter Name="end" Mode="In" Type="Decimal" />
     </FunctionImport>
-    <FunctionImport Name="GetAllProductByCategoryID">
+    <FunctionImport Name="GetAllProductByCategoryID" ReturnType="Collection(pmbh.fditech.vnModel.GetAllProductByCategoryID_Result)">
       <Parameter Name="CategoryID" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetAttribute" ReturnType="Collection(pmbh.fditech.vnModel.GetAttribute_Result)">
@@ -2447,8 +2583,18 @@
     <FunctionImport Name="GetListTree" ReturnType="Collection(pmbh.fditech.vnModel.GetListTree_Result)">
       <Parameter Name="AgencyId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="GetMonthRecentDatetime" IsComposable="true" ReturnType="Collection(pmbh.fditech.vnModel.GetMonthRecentDatetime_Result)">
+      <Parameter Name="i" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="GetStatisticsVote">
       <Parameter Name="LanguageId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GroupProductGetOrderShop" ReturnType="Collection(pmbh.fditech.vnModel.GroupProductGetOrderShop_Result)">
+      <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+      <Parameter Name="isAll" Mode="In" Type="Boolean" />
+      <Parameter Name="dates" Mode="In" Type="Decimal" />
+      <Parameter Name="datee" Mode="In" Type="Decimal" />
+      <Parameter Name="cateId" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="insert_ShopProductDetail" />
     <FunctionImport Name="InsertBedByRowColumn">
@@ -2501,6 +2647,45 @@
     <FunctionImport Name="MonthInYear" IsComposable="true" ReturnType="Collection(pmbh.fditech.vnModel.MonthInYear_Result)">
       <Parameter Name="year" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="ProductFull" ReturnType="Collection(pmbh.fditech.vnModel.ProductFull_Result)">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="kmmax" Mode="In" Type="Double" />
+      <Parameter Name="kmmin" Mode="In" Type="Double" />
+      <Parameter Name="cateid" Mode="In" Type="Int32" />
+      <Parameter Name="x" Mode="In" Type="Double" />
+      <Parameter Name="y" Mode="In" Type="Double" />
+      <Parameter Name="minprice" Mode="In" Type="Int32" />
+      <Parameter Name="maxprice" Mode="In" Type="Int32" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="HasTransfer" Mode="In" Type="Boolean" />
+      <Parameter Name="shopid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ProductGetbyShop" ReturnType="Collection(pmbh.fditech.vnModel.ProductGetbyShop_Result)">
+      <Parameter Name="cateid" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+      <Parameter Name="isAll" Mode="In" Type="Boolean" />
+      <Parameter Name="dates" Mode="In" Type="DateTime" />
+      <Parameter Name="datee" Mode="In" Type="DateTime" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ProductGetNearPosition" ReturnType="Collection(pmbh.fditech.vnModel.ProductGetNearPosition_Result)">
+      <Parameter Name="km" Mode="In" Type="Int32" />
+      <Parameter Name="x" Mode="In" Type="Double" />
+      <Parameter Name="y" Mode="In" Type="Double" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ProductGetOrderShop" ReturnType="Collection(pmbh.fditech.vnModel.ProductGetOrderShop_Result)">
+      <Parameter Name="cateid" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+      <Parameter Name="isAll" Mode="In" Type="Boolean" />
+      <Parameter Name="dates" Mode="In" Type="Decimal" />
+      <Parameter Name="datee" Mode="In" Type="Decimal" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="ResultSearchDocument">
       <Parameter Name="CategoryID" Mode="In" Type="String" />
       <Parameter Name="Keywords" Mode="In" Type="String" />
@@ -2512,6 +2697,25 @@
     </FunctionImport>
     <FunctionImport Name="SearchNewsInAdmin">
       <Parameter Name="SQLString" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ShopMap" ReturnType="Collection(pmbh.fditech.vnModel.ShopMap_Result)">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="kmmax" Mode="In" Type="Double" />
+      <Parameter Name="kmmin" Mode="In" Type="Double" />
+      <Parameter Name="cateid" Mode="In" Type="Int32" />
+      <Parameter Name="x" Mode="In" Type="Double" />
+      <Parameter Name="y" Mode="In" Type="Double" />
+      <Parameter Name="minprice" Mode="In" Type="Int32" />
+      <Parameter Name="maxprice" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ShopSame" ReturnType="Collection(pmbh.fditech.vnModel.ShopSame_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="kmmax" Mode="In" Type="Double" />
+      <Parameter Name="kmmin" Mode="In" Type="Double" />
+      <Parameter Name="x" Mode="In" Type="Double" />
+      <Parameter Name="y" Mode="In" Type="Double" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="SortNameBed">
       <Parameter Name="aid" Mode="In" Type="Int32" />
@@ -2548,7 +2752,7 @@
       <Parameter Name="isValue" Mode="In" Type="Int32" />
       <Parameter Name="AgencyId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_GetListOrderDetail">
+    <FunctionImport Name="sp_GetListOrderDetail" ReturnType="Collection(pmbh.fditech.vnModel.sp_GetListOrderDetail_Result)">
       <Parameter Name="starDate" Mode="In" Type="Decimal" />
       <Parameter Name="endDate" Mode="In" Type="Decimal" />
     </FunctionImport>
@@ -2583,7 +2787,29 @@
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_thongkenguoiduyet" ReturnType="Collection(pmbh.fditech.vnModel.sp_thongkenguoiduyet_Result)">
+      <Parameter Name="start" Mode="In" Type="DateTime" />
+      <Parameter Name="end" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_thongkenguoiviet" ReturnType="Collection(pmbh.fditech.vnModel.sp_thongkenguoiviet_Result)">
+      <Parameter Name="start" Mode="In" Type="DateTime" />
+      <Parameter Name="end" Mode="In" Type="DateTime" />
+    </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="StaticChartsCustomer" ReturnType="Collection(pmbh.fditech.vnModel.StaticChartsCustomer_Result)">
+      <Parameter Name="i" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="StaticChartsCustomerBuyPacket">
+      <Parameter Name="i" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="StaticChartsShop" ReturnType="Collection(pmbh.fditech.vnModel.StaticChartsShop_Result)">
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="week" Mode="In" Type="Int32" />
+      <Parameter Name="d" Mode="In" Type="DateTime" />
+      <Parameter Name="cusId" Mode="In" Type="Int32" />
+      <Parameter Name="cateId" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="StaticDocumentYear" ReturnType="Collection(pmbh.fditech.vnModel.StaticDocumentYear_Result)">
       <Parameter Name="year" Mode="In" Type="Int32" />
       <Parameter Name="areaid" Mode="In" Type="Int32" />
@@ -2600,6 +2826,8 @@
       <Parameter Name="shopid" Mode="In" Type="Int32" />
       <Parameter Name="type" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="Top100CustomerBuy" ReturnType="Collection(pmbh.fditech.vnModel.Top100CustomerBuy_Result)" />
+    <FunctionImport Name="Top100CustomerSell" ReturnType="Collection(pmbh.fditech.vnModel.Top100CustomerSell_Result)" />
     <FunctionImport Name="TruncateTable">
       <Parameter Name="TableName" Mode="In" Type="String" />
     </FunctionImport>
@@ -2993,6 +3221,30 @@
     <NavigationProperty Name="DN_AttributeDynamic" Relationship="pmbh.fditech.vnModel.FK_AttributeOptions_DN_AttributeDynamic" FromRole="AttributeOption" ToRole="DN_AttributeDynamic" />
     <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_AttributeOptions_Shop_Product_Detail" FromRole="AttributeOption" ToRole="Shop_Product_Detail" />
   </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Address" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Slug" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Author_Product" Relationship="pmbh.fditech.vnModel.FK_Author_Product_Author" FromRole="Author" ToRole="Author_Product" />
+  </EntityType>
+  <EntityType Name="Author_Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="AuthorID" Type="Int32" />
+    <Property Name="IsCheck" Type="Boolean" />
+    <NavigationProperty Name="Author" Relationship="pmbh.fditech.vnModel.FK_Author_Product_Author" FromRole="Author_Product" ToRole="Author" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Author_Product_Shop_Product" FromRole="Author_Product" ToRole="Shop_Product" />
+  </EntityType>
   <EntityType Name="Bank">
     <Key>
       <PropertyRef Name="ID" />
@@ -3055,6 +3307,7 @@
     <Property Name="IsExit" Type="Boolean" />
     <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="EnterprisesId" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
     <NavigationProperty Name="DN_Enterprises" Relationship="pmbh.fditech.vnModel.FK_BonusType_DN_Enterprises" FromRole="BonusType" ToRole="DN_Enterprises" />
     <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_BonusType" FromRole="BonusType" ToRole="RewardHistory" />
   </EntityType>
@@ -3108,9 +3361,12 @@
     <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="AgencyId" Type="Int32" />
     <Property Name="IsDelete" Type="Boolean" />
-    <Property Name="OrderId" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="Query" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OrderID" Type="Int32" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderPaketID" Type="Int32" />
     <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CashOutWallet_Customer" FromRole="CashOutWallet" ToRole="Customer" />
-    <NavigationProperty Name="Shop_Orders" Relationship="pmbh.fditech.vnModel.FK_CashOutWallet_Shop_Orders" FromRole="CashOutWallet" ToRole="Shop_Orders" />
   </EntityType>
   <EntityType Name="Cate_Value">
     <Key>
@@ -3186,6 +3442,8 @@
     <Property Name="PriceRecipeFinal" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalIncurredFinal" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IsShowApp" Type="Boolean" />
+    <Property Name="Step" Type="Int32" />
+    <Property Name="PictureID2" Type="Int32" />
     <NavigationProperty Name="Cate_Value" Relationship="pmbh.fditech.vnModel.FK_Cate_Value_Category" FromRole="Category" ToRole="Cate_Value" />
     <NavigationProperty Name="DN_Unit" Relationship="pmbh.fditech.vnModel.FK__Category__UnitID__302FD894" FromRole="Category" ToRole="DN_Unit" />
     <NavigationProperty Name="DN_SupplierProduct" Relationship="pmbh.fditech.vnModel.FK__DN_Suppli__Produ__01A9F3D5" FromRole="Category" ToRole="DN_SupplierProduct" />
@@ -3204,6 +3462,7 @@
     <NavigationProperty Name="Gallery_Picture1" Relationship="pmbh.fditech.vnModel.FK_Gallery_Picture_Category" FromRole="Category" ToRole="Gallery_Picture" />
     <NavigationProperty Name="Gallery_Video" Relationship="pmbh.fditech.vnModel.FK_Gallery_Video_Category" FromRole="Category" ToRole="Gallery_Video" />
     <NavigationProperty Name="Mapping_Category_Recipe" Relationship="pmbh.fditech.vnModel.FK_Mapping_Category_Recipe_Category" FromRole="Category" ToRole="Mapping_Category_Recipe" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Category" FromRole="Category" ToRole="Shop_Product" />
     <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Category" FromRole="Category" ToRole="Shop_Product_Detail" />
     <NavigationProperty Name="StorageProducts" Relationship="pmbh.fditech.vnModel.FK_StorageProduct_Category" FromRole="Category" ToRole="StorageProduct" />
     <NavigationProperty Name="TotalStorageWares" Relationship="pmbh.fditech.vnModel.FK_TotalStorageWare_Category" FromRole="Category" ToRole="TotalStorageWare" />
@@ -3212,6 +3471,7 @@
     <NavigationProperty Name="Shop_Product_Detail1" Relationship="pmbh.fditech.vnModel.Product_Detail_Category" FromRole="Category" ToRole="Shop_Product_Detail" />
     <NavigationProperty Name="DN_Promotion" Relationship="pmbh.fditech.vnModel.Promotion_Cate" FromRole="Category" ToRole="DN_Promotion" />
     <NavigationProperty Name="DN_Sale" Relationship="pmbh.fditech.vnModel.Sale_Cate" FromRole="Category" ToRole="DN_Sale" />
+    <NavigationProperty Name="Shop_Product1" Relationship="pmbh.fditech.vnModel.Shop_Product_Category" FromRole="Category" ToRole="Shop_Product" />
   </EntityType>
   <EntityType Name="Category_Product_Recipe">
     <Key>
@@ -3329,6 +3589,22 @@
     <Property Name="AgencyID" Type="Int32" />
     <NavigationProperty Name="CategoryControl" Relationship="pmbh.fditech.vnModel.FK_ControlValues_CategoryControls" FromRole="ControlValue" ToRole="CategoryControl" />
   </EntityType>
+  <EntityType Name="CookieLogin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="DateCreate" Type="DateTime" Precision="3" />
+    <Property Name="DateEnd" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="IsFacebook" Type="Boolean" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CookieLogin_Customer" FromRole="CookieLogin" ToRole="Customer" />
+  </EntityType>
   <EntityType Name="Cost_Product">
     <Key>
       <PropertyRef Name="ID" />
@@ -3418,24 +3694,50 @@
     <Property Name="LatitudeBuyRecently" Type="Int64" />
     <Property Name="LongitudeBuyRecently" Type="Int64" />
     <Property Name="AddressBuyRecently" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="idUserFacebook" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="idUserGoogle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="ListID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerPolicyID" Type="Int32" />
+    <Property Name="Ratings" Type="Int32" />
+    <Property Name="AvgRating" Type="Double" />
+    <Property Name="LikeTotal" Type="Int32" />
+    <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsPrestige" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated1" Type="DateTime" Precision="3" />
+    <Property Name="AvatarUrl" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CashOutWallets" Relationship="pmbh.fditech.vnModel.FK_CashOutWallet_Customer" FromRole="Customer" ToRole="CashOutWallet" />
+    <NavigationProperty Name="CookieLogins" Relationship="pmbh.fditech.vnModel.FK_CookieLogin_Customer" FromRole="Customer" ToRole="CookieLogin" />
     <NavigationProperty Name="StorageWarehousings" Relationship="pmbh.fditech.vnModel.FK__StorageWa__Custo__0C5C8C72" FromRole="Customer" ToRole="StorageWarehousing" />
     <NavigationProperty Name="Customer_Care" Relationship="pmbh.fditech.vnModel.FK_Customer_Care_Customer" FromRole="Customer" ToRole="Customer_Care" />
     <NavigationProperty Name="Customer_Groups" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Groups" FromRole="Customer" ToRole="Customer_Groups" />
+    <NavigationProperty Name="Customer_Policy" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Policy" FromRole="Customer" ToRole="Customer_Policy" />
     <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Customer_DN_Agency" FromRole="Customer" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_Card" Relationship="pmbh.fditech.vnModel.FK_Customer_DN_Card" FromRole="Customer" ToRole="DN_Card" />
     <NavigationProperty Name="Customer_Reward" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_Customer" FromRole="Customer" ToRole="Customer_Reward" />
     <NavigationProperty Name="System_District" Relationship="pmbh.fditech.vnModel.FK_Customer_System_District" FromRole="Customer" ToRole="System_District" />
+    <NavigationProperty Name="CustomerAddresses" Relationship="pmbh.fditech.vnModel.FK_CustomerAddress_Customer" FromRole="Customer" ToRole="CustomerAddress" />
+    <NavigationProperty Name="CustomerRatings" Relationship="pmbh.fditech.vnModel.FK_CustomerRating_Customer" FromRole="Customer" ToRole="CustomerRating" />
     <NavigationProperty Name="DN_Login" Relationship="pmbh.fditech.vnModel.FK_DN_Login_Customer" FromRole="Customer" ToRole="DN_Login" />
     <NavigationProperty Name="DN_Mail_SSC" Relationship="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer" FromRole="Customer" ToRole="DN_Mail_SSC" />
     <NavigationProperty Name="DN_Mail_SSC1" Relationship="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer1" FromRole="Customer" ToRole="DN_Mail_SSC" />
     <NavigationProperty Name="DN_StatusEmail" Relationship="pmbh.fditech.vnModel.FK_DN_StatusEmail_Customer" FromRole="Customer" ToRole="DN_StatusEmail" />
     <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_DN_Users_Customer" FromRole="Customer" ToRole="DN_Users" />
     <NavigationProperty Name="ReceiveHistories" Relationship="pmbh.fditech.vnModel.FK_HistoryReward_Customer" FromRole="Customer" ToRole="ReceiveHistory" />
+    <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_Customer1" FromRole="Customer" ToRole="Order" />
+    <NavigationProperty Name="Order_Package" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer" FromRole="Customer" ToRole="Order_Package" />
+    <NavigationProperty Name="OrderDetails" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Customer" FromRole="Customer" ToRole="OrderDetail" />
+    <NavigationProperty Name="Product_Reading" Relationship="pmbh.fditech.vnModel.FK_Product_Reading_Customer" FromRole="Customer" ToRole="Product_Reading" />
+    <NavigationProperty Name="ProductRatings" Relationship="pmbh.fditech.vnModel.FK_ProductRating_Customer" FromRole="Customer" ToRole="ProductRating" />
     <NavigationProperty Name="ReceiptPayments" Relationship="pmbh.fditech.vnModel.FK_ReceiptPayment_Customer" FromRole="Customer" ToRole="ReceiptPayment" />
     <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Customer" FromRole="Customer" ToRole="RewardHistory" />
     <NavigationProperty Name="Send_Card" Relationship="pmbh.fditech.vnModel.FK_Send_Card_Customer" FromRole="Customer" ToRole="Send_Card" />
     <NavigationProperty Name="Shop_ContactOrder" Relationship="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Customer" FromRole="Customer" ToRole="Shop_ContactOrder" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
     <NavigationProperty Name="Therapy_History" Relationship="pmbh.fditech.vnModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
     <NavigationProperty Name="WalletCustomers" Relationship="pmbh.fditech.vnModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
     <NavigationProperty Name="WalletOrder_History" Relationship="pmbh.fditech.vnModel.FK_WalletOrder_History_Customer" FromRole="Customer" ToRole="WalletOrder_History" />
@@ -3506,6 +3808,19 @@
     <NavigationProperty Name="Customer_Review" Relationship="pmbh.fditech.vnModel.FK_Customer_Review_Customer_Point" FromRole="Customer_Point" ToRole="Customer_Review" />
     <NavigationProperty Name="Customer_Review_Deltails" Relationship="pmbh.fditech.vnModel.FK_Customer_Review_Deltails_Customer_Point" FromRole="Customer_Point" ToRole="Customer_Review_Deltails" />
   </EntityType>
+  <EntityType Name="Customer_Policy">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StartMoney" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="EndMoney" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Number" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="IsShow" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Customers" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Policy" FromRole="Customer_Policy" ToRole="Customer" />
+  </EntityType>
   <EntityType Name="Customer_question">
     <Key>
       <PropertyRef Name="ID" />
@@ -3566,8 +3881,59 @@
     <Property Name="AgencyID" Type="Int32" />
     <Property Name="PriceReward" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PriceReceive" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalCP" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceReceiver" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="CashOutWallet" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_Customer" FromRole="Customer_Reward" ToRole="Customer" />
     <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_DN_Agency" FromRole="Customer_Reward" ToRole="DN_Agency" />
+  </EntityType>
+  <EntityType Name="Customer_Type">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="Day" Type="Int32" />
+    <Property Name="PictureId" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Border" Type="Boolean" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sort" Type="Int32" />
+    <NavigationProperty Name="Customer_TypeGroup" Relationship="pmbh.fditech.vnModel.FK_Customer_Type_Customer_TypeGroup" FromRole="Customer_Type" ToRole="Customer_TypeGroup" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="pmbh.fditech.vnModel.FK_Customer_Type_Gallery_Picture" FromRole="Customer_Type" ToRole="Gallery_Picture" />
+    <NavigationProperty Name="Order_Package" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer_Type" FromRole="Customer_Type" ToRole="Order_Package" />
+  </EntityType>
+  <EntityType Name="Customer_TypeGroup">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Customer_Type" Relationship="pmbh.fditech.vnModel.FK_Customer_Type_Customer_TypeGroup" FromRole="Customer_TypeGroup" ToRole="Customer_Type" />
+  </EntityType>
+  <EntityType Name="CustomerAddress">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="AddressType" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CustomerAddress_Customer" FromRole="CustomerAddress" ToRole="Customer" />
+    <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_CustomerAddress" FromRole="CustomerAddress" ToRole="Order" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_CustomerAddress" FromRole="CustomerAddress" ToRole="Shop_Product" />
   </EntityType>
   <EntityType Name="CustomerContact">
     <Key>
@@ -3585,6 +3951,20 @@
     <Property Name="CreatedOnUtc" Type="DateTime" Precision="3" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CustomerRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="Int32" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="TypeRating" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CustomerRating_Customer" FromRole="CustomerRating" ToRole="Customer" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="pmbh.fditech.vnModel.CustomerRatingPicture" FromRole="CustomerRating" ToRole="Gallery_Picture" />
   </EntityType>
   <EntityType Name="Debt">
     <Key>
@@ -3698,6 +4078,7 @@
     <NavigationProperty Name="DN_Supplier" Relationship="pmbh.fditech.vnModel.FK_DN_Supplier_DN_Agency" FromRole="DN_Agency" ToRole="DN_Supplier" />
     <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_DN_Users_DN_Agency" FromRole="DN_Agency" ToRole="DN_Users" />
     <NavigationProperty Name="Documents" Relationship="pmbh.fditech.vnModel.FK_Documents_DN_Agency" FromRole="DN_Agency" ToRole="Document" />
+    <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_DN_Agency" FromRole="DN_Agency" ToRole="Order" />
     <NavigationProperty Name="Product_Value" Relationship="pmbh.fditech.vnModel.FK_Product_Value_DN_Agency" FromRole="DN_Agency" ToRole="Product_Value" />
     <NavigationProperty Name="RewardAgencyHistories" Relationship="pmbh.fditech.vnModel.FK_RewardAgencyHistory_DN_Agency" FromRole="DN_Agency" ToRole="RewardAgencyHistory" />
     <NavigationProperty Name="Shop_ContactOrder" Relationship="pmbh.fditech.vnModel.FK_Shop_ContactOrder_DN_Agency" FromRole="DN_Agency" ToRole="Shop_ContactOrder" />
@@ -5142,6 +5523,7 @@
     <NavigationProperty Name="Advertisings" Relationship="pmbh.fditech.vnModel.FK_Advertising_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Advertising" />
     <NavigationProperty Name="Categories" Relationship="pmbh.fditech.vnModel.FK_Category_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Category" />
     <NavigationProperty Name="Category" Relationship="pmbh.fditech.vnModel.FK_Gallery_Picture_Category" FromRole="Gallery_Picture" ToRole="Category" />
+    <NavigationProperty Name="Customer_Type" Relationship="pmbh.fditech.vnModel.FK_Customer_Type_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Customer_Type" />
     <NavigationProperty Name="DN_Combo" Relationship="pmbh.fditech.vnModel.FK_DN_Combo_Gallery_Picture" FromRole="Gallery_Picture" ToRole="DN_Combo" />
     <NavigationProperty Name="Gallery_Video" Relationship="pmbh.fditech.vnModel.FK_Gallery_Video_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Gallery_Video" />
     <NavigationProperty Name="Languages" Relationship="pmbh.fditech.vnModel.FK_Languages_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Language" />
@@ -5150,10 +5532,13 @@
     <NavigationProperty Name="Shop_Brands" Relationship="pmbh.fditech.vnModel.FK_Shop_Brand_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Shop_Brands" />
     <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product_Detail" />
     <NavigationProperty Name="Shop_Product_Detail1" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Gallery_Picture1" FromRole="Gallery_Picture" ToRole="Shop_Product_Detail" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product" />
     <NavigationProperty Name="Shop_Product_Picture" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Picture_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product_Picture" />
     <NavigationProperty Name="Shop_Product_Type" Relationship="pmbh.fditech.vnModel.FK_Shop_ProductType_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product_Type" />
     <NavigationProperty Name="Sources" Relationship="pmbh.fditech.vnModel.FK_Source_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Source" />
     <NavigationProperty Name="System_FileType" Relationship="pmbh.fditech.vnModel.FK_System_FileType_Gallery_Picture" FromRole="Gallery_Picture" ToRole="System_FileType" />
+    <NavigationProperty Name="CustomerRatings" Relationship="pmbh.fditech.vnModel.CustomerRatingPicture" FromRole="Gallery_Picture" ToRole="CustomerRating" />
+    <NavigationProperty Name="ProductRatings" Relationship="pmbh.fditech.vnModel.ProductRatingPicture" FromRole="Gallery_Picture" ToRole="ProductRating" />
     <NavigationProperty Name="Shop_Product_Detail2" Relationship="pmbh.fditech.vnModel.Shop_Product_Detail_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product_Detail" />
   </EntityType>
   <EntityType Name="Gallery_Video">
@@ -5541,6 +5926,9 @@
     <Property Name="LanguageId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="Sort" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="UserActive" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="aspnet_Users" Relationship="pmbh.fditech.vnModel.FK_News_News_aspnet_Users" FromRole="News_News" ToRole="aspnet_Users" />
     <NavigationProperty Name="Gallery_Picture" Relationship="pmbh.fditech.vnModel.FK_News_News_Gallery_Picture" FromRole="News_News" ToRole="Gallery_Picture" />
     <NavigationProperty Name="News_Comment" Relationship="pmbh.fditech.vnModel.FK_News_Comment_News_News" FromRole="News_News" ToRole="News_Comment" />
@@ -5549,6 +5937,7 @@
     <NavigationProperty Name="Categories" Relationship="pmbh.fditech.vnModel.News_Category" FromRole="News_News" ToRole="Category" />
     <NavigationProperty Name="System_File" Relationship="pmbh.fditech.vnModel.News_News_File" FromRole="News_News" ToRole="System_File" />
     <NavigationProperty Name="System_Tag" Relationship="pmbh.fditech.vnModel.News_News_Tag" FromRole="News_News" ToRole="System_Tag" />
+    <NavigationProperty Name="Steps" Relationship="pmbh.fditech.vnModel.News_Step" FromRole="News_News" ToRole="Step" />
   </EntityType>
   <EntityType Name="News_News_Product">
     <Key>
@@ -5558,6 +5947,52 @@
     <Property Name="NewsID" Type="Int32" Nullable="false" />
     <Property Name="ProductID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="News_News" Relationship="pmbh.fditech.vnModel.FK_News_NewsProduct_News_News" FromRole="News_News_Product" ToRole="News_News" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NoOrder" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ContactOrderID" Type="Int32" />
+    <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="CreatedOnUtc" Type="DateTime" Precision="3" />
+    <Property Name="IsTime" Type="Boolean" />
+    <Property Name="PaymentMethodId" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StatusPayment" Type="Byte" />
+    <Property Name="District" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Wards" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="vpc_TransactionNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ShipViettelPost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="Coupon" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CouponPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CustomerAddressID" Type="Int32" />
+    <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Check" Type="Byte" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="Payment" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ShopID" Type="Int32" />
+    <Property Name="Payment1" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Order_Customer1" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="CustomerAddress" Relationship="pmbh.fditech.vnModel.FK_Order_CustomerAddress" FromRole="Order" ToRole="CustomerAddress" />
+    <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Order_DN_Agency" FromRole="Order" ToRole="DN_Agency" />
+    <NavigationProperty Name="System_City" Relationship="pmbh.fditech.vnModel.FK_Order_System_City" FromRole="Order" ToRole="System_City" />
+    <NavigationProperty Name="OrderDetails" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Order" FromRole="Order" ToRole="OrderDetail" />
+    <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Order" FromRole="Order" ToRole="RewardHistory" />
   </EntityType>
   <EntityType Name="Order_Debt">
     <Key>
@@ -5571,6 +6006,20 @@
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="UserID" Type="Guid" />
     <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_Order_Debt_DN_Users" FromRole="Order_Debt" ToRole="DN_Users" />
+  </EntityType>
+  <EntityType Name="Order_Package">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Datecreate" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateStart" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer" FromRole="Order_Package" ToRole="Customer" />
+    <NavigationProperty Name="Customer_Type" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer_Type" FromRole="Order_Package" ToRole="Customer_Type" />
   </EntityType>
   <EntityType Name="OrderCar">
     <Key>
@@ -5614,6 +6063,30 @@
     <Property Name="Code" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="IsDelete" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="OrderCar" Relationship="pmbh.fditech.vnModel.FK__OrderCarP__Order__424E88CF" FromRole="OrderCarProductDetail" ToRole="OrderCar" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="IsTime" Type="Boolean" />
+    <Property Name="StatusPayment" Type="Byte" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Check" Type="Int32" />
+    <Property Name="IsPrestige" Type="Boolean" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Customer" FromRole="OrderDetail" ToRole="Customer" />
+    <NavigationProperty Name="Order" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Order" FromRole="OrderDetail" ToRole="Order" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Shop_Product" FromRole="OrderDetail" ToRole="Shop_Product" />
   </EntityType>
   <EntityType Name="P_Workshop">
     <Key>
@@ -5830,6 +6303,19 @@
     <NavigationProperty Name="DN_Promotion" Relationship="pmbh.fditech.vnModel.FK_Product_Promotion_DN_Promotion" FromRole="Product_Promotion" ToRole="DN_Promotion" />
     <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Product_Promotion_Shop_Product_Detail" FromRole="Product_Promotion" ToRole="Shop_Product_Detail" />
   </EntityType>
+  <EntityType Name="Product_Reading">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="DateCreate" Type="DateTime" Precision="3" />
+    <Property Name="Page" Type="Int32" />
+    <Property Name="IsTime" Type="Boolean" />
+    <Property Name="DateEnd" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Product_Reading_Customer" FromRole="Product_Reading" ToRole="Customer" />
+  </EntityType>
   <EntityType Name="Product_Size">
     <Key>
       <PropertyRef Name="ID" />
@@ -5923,6 +6409,21 @@
     <NavigationProperty Name="ProductValue_Recipe" Relationship="pmbh.fditech.vnModel.FK_ProductValue_Recipe_ProductDetail_Recipe" FromRole="ProductDetail_Recipe" ToRole="ProductValue_Recipe" />
     <NavigationProperty Name="P_Workshop" Relationship="pmbh.fditech.vnModel.RecipeProduct_Workshop" FromRole="ProductDetail_Recipe" ToRole="P_Workshop" />
   </EntityType>
+  <EntityType Name="ProductRating">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="TypeRating" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_ProductRating_Customer" FromRole="ProductRating" ToRole="Customer" />
+    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_ProductRating_Shop_Product" FromRole="ProductRating" ToRole="Shop_Product" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="pmbh.fditech.vnModel.ProductRatingPicture" FromRole="ProductRating" ToRole="Gallery_Picture" />
+  </EntityType>
   <EntityType Name="ProductValue_Recipe">
     <Key>
       <PropertyRef Name="ID" />
@@ -5983,7 +6484,6 @@
     <Property Name="IsEnd" Type="Boolean" />
     <Property Name="Percent" Type="Decimal" Precision="18" Scale="4" />
     <NavigationProperty Name="DN_Promotion" Relationship="pmbh.fditech.vnModel.FK_Promotion_Product_DN_Promotion" FromRole="Promotion_Product" ToRole="DN_Promotion" />
-    <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Promotion_Product_Shop_Product" FromRole="Promotion_Product" ToRole="Shop_Product" />
     <NavigationProperty Name="Shop_Order_Details" Relationship="pmbh.fditech.vnModel.FK_Shop_Order_Details_Promotion_Product" FromRole="Promotion_Product" ToRole="Shop_Order_Details" />
   </EntityType>
   <EntityType Name="PurchaseOrder">
@@ -6005,6 +6505,15 @@
     <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK__PurchaseO__UserC__47133DEC" FromRole="PurchaseOrder" ToRole="DN_Users" />
     <NavigationProperty Name="DN_Users1" Relationship="pmbh.fditech.vnModel.FK__PurchaseO__UserU__48076225" FromRole="PurchaseOrder" ToRole="DN_Users" />
     <NavigationProperty Name="OrderCar" Relationship="pmbh.fditech.vnModel.FK__PurchaseO__Order__461F19B3" FromRole="PurchaseOrder" ToRole="OrderCar" />
+  </EntityType>
+  <EntityType Name="PushNotification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ReceiptPayment">
     <Key>
@@ -6074,6 +6583,10 @@
     <Property Name="Type" Type="Int32" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="IdUser" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="DateActive" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="CustomerIDR" Type="Int32" />
+    <Property Name="Query" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_HistoryReward_Customer" FromRole="ReceiveHistory" ToRole="Customer" />
     <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_ReceiveHistory_DN_Users" FromRole="ReceiveHistory" ToRole="DN_Users" />
     <NavigationProperty Name="Shop_Orders" Relationship="pmbh.fditech.vnModel.FK_ReceiveHistory_Shop_Orders" FromRole="ReceiveHistory" ToRole="Shop_Orders" />
@@ -6139,10 +6652,16 @@
     <Property Name="Percent" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="ImportID" Type="Guid" />
+    <Property Name="AgencyId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="TotalCp" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="WalletCusId" Type="Int32" />
     <NavigationProperty Name="BonusType" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_BonusType" FromRole="RewardHistory" ToRole="BonusType" />
     <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
     <NavigationProperty Name="DN_ImportProduct" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_DN_ImportProduct" FromRole="RewardHistory" ToRole="DN_ImportProduct" />
+    <NavigationProperty Name="Order" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Order" FromRole="RewardHistory" ToRole="Order" />
     <NavigationProperty Name="Shop_Orders" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Shop_Orders" FromRole="RewardHistory" ToRole="Shop_Orders" />
+    <NavigationProperty Name="WalletCustomer" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_WalletCustomer" FromRole="RewardHistory" ToRole="WalletCustomer" />
   </EntityType>
   <EntityType Name="Role_ModuleActive">
     <Key>
@@ -6378,7 +6897,6 @@
     <Property Name="Type" Type="Int32" />
     <Property Name="ReceiveDate" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="AddMinute" Relationship="pmbh.fditech.vnModel.FK_Shop_Orders_AddMinute" FromRole="Shop_Orders" ToRole="AddMinute" />
-    <NavigationProperty Name="CashOutWallets" Relationship="pmbh.fditech.vnModel.FK_CashOutWallet_Shop_Orders" FromRole="Shop_Orders" ToRole="CashOutWallet" />
     <NavigationProperty Name="Customer_Review" Relationship="pmbh.fditech.vnModel.FK_Customer_Review_Shop_Orders" FromRole="Shop_Orders" ToRole="Customer_Review" />
     <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Agency" FromRole="Shop_Orders" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_Bed_Desk" Relationship="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Bed_Desk" FromRole="Shop_Orders" ToRole="DN_Bed_Desk" />
@@ -6416,15 +6934,50 @@
     <Property Name="IsDelete" Type="Boolean" />
     <Property Name="QuantityDay" Type="Int32" />
     <Property Name="TypeID" Type="Int32" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="CategoyId" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerID1" Type="Int32" />
+    <Property Name="QuantityOut" Type="Int32" />
+    <Property Name="PictureID" Type="Int32" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PriceNew" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Format" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="YearOfManufacture" Type="Int32" />
+    <Property Name="FileBookId" Type="Int32" />
+    <Property Name="FIleReadtryId" Type="Int32" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="BookOld" Type="Boolean" />
+    <Property Name="HasTransfer" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Ratings" Type="Int32" />
+    <Property Name="AvgRating" Type="Double" />
+    <Property Name="AddressId" Type="Int32" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="IsUpcoming" Type="Boolean" />
+    <Property Name="freeShipFor" Type="Int32" />
+    <NavigationProperty Name="Author_Product" Relationship="pmbh.fditech.vnModel.FK_Author_Product_Shop_Product" FromRole="Shop_Product" ToRole="Author_Product" />
     <NavigationProperty Name="BiasProduces" Relationship="pmbh.fditech.vnModel.FK_BiasProduce_Shop_Product" FromRole="Shop_Product" ToRole="BiasProduce" />
+    <NavigationProperty Name="Category" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Category" FromRole="Shop_Product" ToRole="Category" />
     <NavigationProperty Name="Cost_Product" Relationship="pmbh.fditech.vnModel.FK_Cost_Product_Shop_Product" FromRole="Shop_Product" ToRole="Cost_Product" />
     <NavigationProperty Name="Cost_Product_User" Relationship="pmbh.fditech.vnModel.FK_Cost_Product_User_Shop_Product" FromRole="Shop_Product" ToRole="Cost_Product_User" />
+    <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Customer1" FromRole="Shop_Product" ToRole="Customer" />
+    <NavigationProperty Name="CustomerAddress" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_CustomerAddress" FromRole="Shop_Product" ToRole="CustomerAddress" />
     <NavigationProperty Name="DN_Product_Packet" Relationship="pmbh.fditech.vnModel.FK_DN_Product_Packet_Shop_Product" FromRole="Shop_Product" ToRole="DN_Product_Packet" />
     <NavigationProperty Name="DN_RequestWareDetail" Relationship="pmbh.fditech.vnModel.FK__DN_Reques__Produ__2AE11392" FromRole="Shop_Product" ToRole="DN_RequestWareDetail" />
     <NavigationProperty Name="Export_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_DN_ExportProduct_Shop_Product" FromRole="Shop_Product" ToRole="Export_Product_Detail" />
     <NavigationProperty Name="FreightWareHouse_Active" Relationship="pmbh.fditech.vnModel.FK_FreightWareHouse_Active_Shop_Product" FromRole="Shop_Product" ToRole="FreightWareHouse_Active" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Gallery_Picture" FromRole="Shop_Product" ToRole="Gallery_Picture" />
+    <NavigationProperty Name="OrderDetails" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Shop_Product" FromRole="Shop_Product" ToRole="OrderDetail" />
     <NavigationProperty Name="Product_Size" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Product_Size" FromRole="Shop_Product" ToRole="Product_Size" />
-    <NavigationProperty Name="Promotion_Product" Relationship="pmbh.fditech.vnModel.FK_Promotion_Product_Shop_Product" FromRole="Shop_Product" ToRole="Promotion_Product" />
+    <NavigationProperty Name="ProductRatings" Relationship="pmbh.fditech.vnModel.FK_ProductRating_Shop_Product" FromRole="Shop_Product" ToRole="ProductRating" />
     <NavigationProperty Name="Shop_Order_Details" Relationship="pmbh.fditech.vnModel.FK_Shop_Order_Details_Shop_Product" FromRole="Shop_Product" ToRole="Shop_Order_Details" />
     <NavigationProperty Name="Shop_Product_Picture" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Picture_Shop_Product" FromRole="Shop_Product" ToRole="Shop_Product_Picture" />
     <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Shop_Product_Detail" FromRole="Shop_Product" ToRole="Shop_Product_Detail" />
@@ -6433,6 +6986,7 @@
     <NavigationProperty Name="TM_Module_Rating" Relationship="pmbh.fditech.vnModel.FK_TM_Module_Rating_Shop_Product" FromRole="Shop_Product" ToRole="TM_Module_Rating" />
     <NavigationProperty Name="TM_Products_Comment" Relationship="pmbh.fditech.vnModel.FK_TM_Products_Comment_Shop_Product" FromRole="Shop_Product" ToRole="TM_Products_Comment" />
     <NavigationProperty Name="DN_Combo" Relationship="pmbh.fditech.vnModel.DN_Combo_Product" FromRole="Shop_Product" ToRole="DN_Combo" />
+    <NavigationProperty Name="Categories" Relationship="pmbh.fditech.vnModel.Shop_Product_Category" FromRole="Shop_Product" ToRole="Category" />
   </EntityType>
   <EntityType Name="Shop_Product_Detail">
     <Key>
@@ -6598,6 +7152,18 @@
     <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_DN_Agency_ST_Group" FromRole="ST_Group" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_Enterprises" Relationship="pmbh.fditech.vnModel.Group_Enterprise" FromRole="ST_Group" ToRole="DN_Enterprises" />
     <NavigationProperty Name="DN_Module" Relationship="pmbh.fditech.vnModel.Group_Module" FromRole="ST_Group" ToRole="DN_Module" />
+  </EntityType>
+  <EntityType Name="Step">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="News_News" Relationship="pmbh.fditech.vnModel.News_Step" FromRole="Step" ToRole="News_News" />
   </EntityType>
   <EntityType Name="Storage">
     <Key>
@@ -6765,6 +7331,7 @@
     <Property Name="IsDeleted" Type="Boolean" />
     <NavigationProperty Name="Areas" Relationship="pmbh.fditech.vnModel.FK_Area_System_City" FromRole="System_City" ToRole="Area" />
     <NavigationProperty Name="GoogleMaps" Relationship="pmbh.fditech.vnModel.FK_GoogleMap_System_City" FromRole="System_City" ToRole="GoogleMap" />
+    <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_System_City" FromRole="System_City" ToRole="Order" />
     <NavigationProperty Name="System_District" Relationship="pmbh.fditech.vnModel.FK_District_City" FromRole="System_City" ToRole="System_District" />
   </EntityType>
   <EntityType Name="System_Color">
@@ -7091,6 +7658,25 @@
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="App" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="TokenOtp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ObjectId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Token" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="IsUsed" Type="Boolean" Nullable="false" />
+    <Property Name="TypeToken" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TokenRefresh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GuidId" Type="Guid" />
+  </EntityType>
   <EntityType Name="TotalProductToDay">
     <Key>
       <PropertyRef Name="ID" />
@@ -7190,7 +7776,16 @@
     <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="AgencyId" Type="Int32" />
     <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="UserActive" Type="Guid" />
+    <Property Name="DateActive" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Code" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerIDR" Type="Int32" />
+    <Property Name="Transaction_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_WalletCustomer_Customer" FromRole="WalletCustomer" ToRole="Customer" />
+    <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_WalletCustomer" FromRole="WalletCustomer" ToRole="RewardHistory" />
   </EntityType>
   <EntityType Name="WalletOrder_History">
     <Key>
@@ -7264,6 +7859,22 @@
     <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserProfiles" Relationship="pmbh.fditech.vnModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="ConfigExchange">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Point" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DateStart" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Percent" Type="Int32" />
+    <Property Name="PriceSearch" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrder" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="FeeShip" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="TempCustomer">
     <Key>
@@ -7849,6 +8460,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Author_Product_Author">
+    <End Type="pmbh.fditech.vnModel.Author" Role="Author" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Author_Product" Role="Author_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Author_Product">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Author_Product_Shop_Product">
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Author_Product" Role="Author_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Author_Product">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Banner__UserId__43CCBCED">
     <End Type="pmbh.fditech.vnModel.DN_Users" Role="DN_Users" Multiplicity="1" />
     <End Type="pmbh.fditech.vnModel.Banner" Role="Banner" Multiplicity="*" />
@@ -8014,18 +8649,6 @@
       </Principal>
       <Dependent Role="CashOutWallet">
         <PropertyRef Name="CustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CashOutWallet_Shop_Orders">
-    <End Type="pmbh.fditech.vnModel.Shop_Orders" Role="Shop_Orders" Multiplicity="0..1" />
-    <End Type="pmbh.fditech.vnModel.CashOutWallet" Role="CashOutWallet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shop_Orders">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CashOutWallet">
-        <PropertyRef Name="OrderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8345,6 +8968,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Shop_Product_Category">
+    <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="CategoyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Shop_Product_Detail_Category">
     <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="0..1" />
     <End Type="pmbh.fditech.vnModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="*" />
@@ -8510,6 +9145,18 @@
       </Principal>
       <Dependent Role="P_Workshop">
         <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CookieLogin_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.CookieLogin" Role="CookieLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CookieLogin">
+        <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8681,6 +9328,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Customer_Customer_Policy">
+    <End Type="pmbh.fditech.vnModel.Customer_Policy" Role="Customer_Policy" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Policy">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CustomerPolicyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Customer_DN_Agency">
     <End Type="pmbh.fditech.vnModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
     <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="*" />
@@ -8726,6 +9385,30 @@
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAddress_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.CustomerAddress" Role="CustomerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerAddress">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerRating_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.CustomerRating" Role="CustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerRating">
+        <PropertyRef Name="CustomerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -8803,6 +9486,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Order_Customer1">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order_Package" Role="Order_Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order_Package">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="pmbh.fditech.vnModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Reading_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Product_Reading" Role="Product_Reading" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product_Reading">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductRating_Customer">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.ProductRating" Role="ProductRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRating">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ReceiptPayment_Customer">
     <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
     <End Type="pmbh.fditech.vnModel.ReceiptPayment" Role="ReceiptPayment" Multiplicity="*" />
@@ -8847,6 +9590,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Shop_ContactOrder">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Customer1">
+    <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
         <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
@@ -9004,6 +9759,66 @@
       </Principal>
       <Dependent Role="Customer_Reward">
         <PropertyRef Name="AgencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Type_Customer_TypeGroup">
+    <End Type="pmbh.fditech.vnModel.Customer_TypeGroup" Role="Customer_TypeGroup" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Customer_Type" Role="Customer_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_TypeGroup">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer_Type">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Type_Gallery_Picture">
+    <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Customer_Type" Role="Customer_Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer_Type">
+        <PropertyRef Name="PictureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package_Customer_Type">
+    <End Type="pmbh.fditech.vnModel.Customer_Type" Role="Customer_Type" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order_Package" Role="Order_Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Type">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order_Package">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_CustomerAddress">
+    <End Type="pmbh.fditech.vnModel.CustomerAddress" Role="CustomerAddress" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerAddress">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerAddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_CustomerAddress">
+    <End Type="pmbh.fditech.vnModel.CustomerAddress" Role="CustomerAddress" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerAddress">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="AddressId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -9184,6 +9999,18 @@
       </Principal>
       <Dependent Role="Document">
         <PropertyRef Name="AgencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_DN_Agency">
+    <End Type="pmbh.fditech.vnModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DN_Agency">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ShopID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -11105,6 +11932,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Shop_Product_Gallery_Picture">
+    <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product">
+        <PropertyRef Name="PictureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Shop_Product_Picture_Gallery_Picture">
     <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -11429,6 +12268,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Order_System_City">
+    <End Type="pmbh.fditech.vnModel.System_City" Role="System_City" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="System_City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Order">
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RewardHistory_Order">
+    <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.RewardHistory" Role="RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__OrderCar__Worksh__3123FCCD">
     <End Type="pmbh.fditech.vnModel.P_Workshop" Role="P_Workshop" Multiplicity="1" />
     <End Type="pmbh.fditech.vnModel.OrderCar" Role="OrderCar" Multiplicity="*" />
@@ -11462,6 +12337,18 @@
       </Principal>
       <Dependent Role="PurchaseOrder">
         <PropertyRef Name="OrderCarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Shop_Product">
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -11657,6 +12544,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProductRating_Shop_Product">
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.ProductRating" Role="ProductRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductRating">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProductValue_Recipe_Shop_Product_Value">
     <End Type="pmbh.fditech.vnModel.Shop_Product_Value" Role="Shop_Product_Value" Multiplicity="0..1" />
     <End Type="pmbh.fditech.vnModel.ProductValue_Recipe" Role="ProductValue_Recipe" Multiplicity="*" />
@@ -11678,18 +12577,6 @@
       </Principal>
       <Dependent Role="Promotion_Procuct">
         <PropertyRef Name="PromotionId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Promotion_Product_Shop_Product">
-    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="0..1" />
-    <End Type="pmbh.fditech.vnModel.Promotion_Product" Role="Promotion_Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shop_Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Promotion_Product">
-        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -11738,6 +12625,18 @@
       </Principal>
       <Dependent Role="RewardHistory">
         <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RewardHistory_WalletCustomer">
+    <End Type="pmbh.fditech.vnModel.WalletCustomer" Role="WalletCustomer" Multiplicity="0..1" />
+    <End Type="pmbh.fditech.vnModel.RewardHistory" Role="RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WalletCustomer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="WalletCusId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -12059,6 +12958,10 @@
     <End Type="pmbh.fditech.vnModel.DN_ContentVote" Role="DN_ContentVote" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.DN_Vote" Role="DN_Vote" Multiplicity="*" />
   </Association>
+  <Association Name="CustomerRatingPicture">
+    <End Type="pmbh.fditech.vnModel.CustomerRating" Role="CustomerRating" Multiplicity="*" />
+    <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="*" />
+  </Association>
   <Association Name="DN_Category_Attribute">
     <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.DN_AttributeDynamic" Role="DN_AttributeDynamic" Multiplicity="*" />
@@ -12135,6 +13038,10 @@
     <End Type="pmbh.fditech.vnModel.News_News" Role="News_News" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.System_Tag" Role="System_Tag" Multiplicity="*" />
   </Association>
+  <Association Name="News_Step">
+    <End Type="pmbh.fditech.vnModel.News_News" Role="News_News" Multiplicity="*" />
+    <End Type="pmbh.fditech.vnModel.Step" Role="Step" Multiplicity="*" />
+  </Association>
   <Association Name="Order_BedDesk">
     <End Type="pmbh.fditech.vnModel.DN_Bed_Desk" Role="DN_Bed_Desk" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
@@ -12146,6 +13053,10 @@
   <Association Name="Product_Sale">
     <End Type="pmbh.fditech.vnModel.DN_Sale" Role="DN_Sale" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="*" />
+  </Association>
+  <Association Name="ProductRatingPicture">
+    <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="*" />
+    <End Type="pmbh.fditech.vnModel.ProductRating" Role="ProductRating" Multiplicity="*" />
   </Association>
   <Association Name="Promotion_Cate">
     <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="*" />
@@ -12170,6 +13081,10 @@
   <Association Name="Sale_Cate">
     <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="*" />
     <End Type="pmbh.fditech.vnModel.DN_Sale" Role="DN_Sale" Multiplicity="*" />
+  </Association>
+  <Association Name="Shop_Product_Category">
+    <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="*" />
+    <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
   </Association>
   <Association Name="Shop_Product_Detail_Picture">
     <End Type="pmbh.fditech.vnModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="*" />
@@ -12291,13 +13206,10 @@
   </ComplexType>
   <ComplexType Name="AutoSelectProduct_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="Guid" Name="IdDetail" Nullable="false" />
-    <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
     <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
-    <Property Type="Int32" Name="Quantity" Nullable="true" />
-    <Property Type="Int32" Name="QuantityDay" Nullable="true" />
-    <Property Type="String" Name="BarCode" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="UrlImg" Nullable="true" MaxLength="392" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Code" Nullable="true" MaxLength="255" />
   </ComplexType>
   <ComplexType Name="AutoSelectProductDetail_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -12358,6 +13270,18 @@
     <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
     <Property Type="Decimal" Name="PriceFinal" Nullable="true" Precision="18" Scale="0" />
     <Property Type="Decimal" Name="PriceRecipeFinal" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="Category_GetListByUser_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="ParentId" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="true" />
+    <Property Type="String" Name="NameRoot" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Slug" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="Type" Nullable="true" />
+    <Property Type="String" Name="Icon" Nullable="true" MaxLength="150" />
+    <Property Type="Int32" Name="IsLevel" Nullable="true" />
+    <Property Type="String" Name="LanguageId" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Symbol" Nullable="true" />
   </ComplexType>
   <ComplexType Name="ContactToOrder_Result">
     <Property Type="Int32" Name="OrderID" Nullable="false" />
@@ -12434,6 +13358,14 @@
     <Property Type="Int32" Name="Onl" Nullable="true" />
     <Property Type="Int32" Name="Later" Nullable="true" />
   </ComplexType>
+  <ComplexType Name="GetAllProductByCategoryID_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="NameAscii" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Code" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="UrlPicture" Nullable="true" MaxLength="383" />
+  </ComplexType>
   <ComplexType Name="GetAttribute_Result">
     <Property Type="Int32" Name="AttributeID" Nullable="false" />
     <Property Type="String" Name="Name" Nullable="true" MaxLength="500" />
@@ -12481,6 +13413,17 @@
     <Property Type="String" Name="Symbol" Nullable="true" />
     <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
   </ComplexType>
+  <ComplexType Name="GetMonthRecentDatetime_Result">
+    <Property Type="Int32" Name="I" Nullable="true" />
+    <Property Type="DateTime" Name="S" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="E" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="GroupProductGetOrderShop_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="name" Nullable="true" MaxLength="250" />
+    <Property Type="Decimal" Name="totalproduct" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="totalprice" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
   <ComplexType Name="ListAgencyByKm_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
@@ -12516,6 +13459,53 @@
     <Property Type="Decimal" Name="S" Nullable="true" Precision="18" Scale="0" />
     <Property Type="Decimal" Name="E" Nullable="true" Precision="18" Scale="0" />
   </ComplexType>
+  <ComplexType Name="ProductFull_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="512" />
+    <Property Type="Int32" Name="PictureID" Nullable="true" />
+    <Property Type="Int32" Name="Ratings" Nullable="true" />
+    <Property Type="Double" Name="AvgRating" Nullable="true" />
+    <Property Type="Int32" Name="CateId" Nullable="true" />
+    <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Boolean" Name="IsPrestige" Nullable="true" />
+    <Property Type="Boolean" Name="IsPrestige1" Nullable="true" />
+    <Property Type="Double" Name="kc" Nullable="true" />
+    <Property Type="Double" Name="kc1" Nullable="true" />
+    <Property Type="Int32" Name="sort" Nullable="true" />
+    <Property Type="Double" Name="km" Nullable="true" />
+    <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="ProductGetbyShop_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="DateTime" Name="DateCreated" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ProductGetNearPosition_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="ratings" Nullable="true" />
+    <Property Type="Double" Name="avgrating" Nullable="true" />
+    <Property Type="Double" Name="Km" Nullable="true" />
+    <Property Type="Int32" Name="Sort" Nullable="true" />
+    <Property Type="Boolean" Name="HasTransfer" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ProductGetOrderShop_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DateCreate" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="SearchListNewsAdmin_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
@@ -12524,6 +13514,32 @@
     <Property Type="Boolean" Name="IsHot" Nullable="true" />
     <Property Type="String" Name="CateName" Nullable="true" MaxLength="100" />
   </ComplexType>
+  <ComplexType Name="ShopMap_Result">
+    <Property Type="Int32" Name="CustomerId" Nullable="true" />
+    <Property Type="Boolean" Name="IsPrestige" Nullable="false" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="String" Name="UrlIcon" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="sortut" Nullable="true" />
+    <Property Type="String" Name="AvatarUrl" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+    <Property Type="Double" Name="AvgRating" Nullable="true" />
+    <Property Type="Double" Name="km" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ShopSame_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="1024" />
+    <Property Type="String" Name="ImageTimeline" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="Ratings" Nullable="true" />
+    <Property Type="Double" Name="AvgRating" Nullable="true" />
+    <Property Type="Int32" Name="LikeTotal" Nullable="true" />
+    <Property Type="Double" Name="Latitude" Nullable="true" />
+    <Property Type="Double" Name="Longitude" Nullable="true" />
+    <Property Type="Boolean" Name="IsPrestige" Nullable="false" />
+    <Property Type="Double" Name="km" Nullable="true" />
+    <Property Type="Int32" Name="sortut" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="sp_GetListInventoryValue_Result">
     <Property Type="Decimal" Name="slNhap" Nullable="true" Precision="38" Scale="4" />
     <Property Type="Decimal" Name="slXuat" Nullable="true" Precision="38" Scale="4" />
@@ -12531,6 +13547,16 @@
     <Property Type="String" Name="Name" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Unitname" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_GetListOrderDetail_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="CodeSku" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="Color" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="Size" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="4" />
   </ComplexType>
   <ComplexType Name="sp_GetOrderDetail_Result">
     <Property Type="Int32" Name="ProductDetailID" Nullable="false" />
@@ -12565,6 +13591,22 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
+  <ComplexType Name="sp_thongkenguoiduyet_Result">
+    <Property Type="String" Name="UserActive" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_thongkenguoiviet_Result">
+    <Property Type="String" Name="UserName" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="Quantity" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="StaticChartsCustomer_Result">
+    <Property Type="Int32" Name="I" Nullable="true" />
+    <Property Type="Int32" Name="Total" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="StaticChartsShop_Result">
+    <Property Type="Int32" Name="I" Nullable="true" />
+    <Property Type="Int32" Name="Total" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="StaticDocumentYear_Result">
     <Property Type="Int32" Name="I" Nullable="true" />
     <Property Type="Int32" Name="totadocument" Nullable="true" />
@@ -12580,5 +13622,15 @@
     <Property Type="String" Name="Sort2" Nullable="true" />
     <Property Type="String" Name="Symbol" Nullable="true" />
     <Property Type="Int32" Name="Level" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Top100CustomerBuy_Result">
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
+    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="Top100CustomerSell_Result">
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
+    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
   </ComplexType>
 </Schema>

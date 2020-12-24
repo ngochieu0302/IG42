@@ -303,5 +303,3 @@ D:\FDI\Gab\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.dll
 D:\FDI\Gab\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.pdb
 E:\CSharp\ASP.NET CORE\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csproj.CoreCompileInputs.cache
-E:\CSharp\ASP.NET CORE\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.dll
-E:\CSharp\ASP.NET CORE\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.pdb

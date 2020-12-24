@@ -18,6 +18,7 @@ namespace FDI.Base
         {
             this.Areas = new HashSet<Area>();
             this.GoogleMaps = new HashSet<GoogleMap>();
+            this.Orders = new HashSet<Order>();
             this.System_District = new HashSet<System_District>();
         }
     
@@ -34,6 +35,7 @@ namespace FDI.Base
     
         public virtual ICollection<Area> Areas { get; set; }
         public virtual ICollection<GoogleMap> GoogleMaps { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<System_District> System_District { get; set; }
     }
 }

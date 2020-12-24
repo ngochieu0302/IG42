@@ -16,7 +16,6 @@ namespace FDI.Base
     {
         public Shop_Orders()
         {
-            this.CashOutWallets = new HashSet<CashOutWallet>();
             this.Customer_Review = new HashSet<Customer_Review>();
             this.Payments_Order = new HashSet<Payments_Order>();
             this.ReceiveHistories = new HashSet<ReceiveHistory>();
@@ -72,7 +71,6 @@ namespace FDI.Base
         public Nullable<decimal> ReceiveDate { get; set; }
     
         public virtual AddMinute AddMinute { get; set; }
-        public virtual ICollection<CashOutWallet> CashOutWallets { get; set; }
         public virtual ICollection<Customer_Review> Customer_Review { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
         public virtual DN_Bed_Desk DN_Bed_Desk { get; set; }

@@ -53,6 +53,8 @@ namespace FDI.Base
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public DbSet<AttributeOption> AttributeOptions { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Author_Product> Author_Product { get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<BiasProduce> BiasProduces { get; set; }
@@ -88,8 +90,10 @@ namespace FDI.Base
         public DbSet<Customer_Review_Deltails> Customer_Review_Deltails { get; set; }
         public DbSet<Customer_Reward> Customer_Reward { get; set; }
         public DbSet<Customer_Type> Customer_Type { get; set; }
+        public DbSet<Customer_TypeGroup> Customer_TypeGroup { get; set; }
         public DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public DbSet<CustomerContact> CustomerContacts { get; set; }
+        public DbSet<CustomerRating> CustomerRatings { get; set; }
         public DbSet<Debt> Debts { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DiscountCode> DiscountCodes { get; set; }
@@ -222,11 +226,13 @@ namespace FDI.Base
         public DbSet<ProductCode> ProductCodes { get; set; }
         public DbSet<ProductCode_CostUser> ProductCode_CostUser { get; set; }
         public DbSet<ProductDetail_Recipe> ProductDetail_Recipe { get; set; }
+        public DbSet<ProductRating> ProductRatings { get; set; }
         public DbSet<ProductValue_Recipe> ProductValue_Recipe { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Promotion_Procuct> Promotion_Procuct { get; set; }
         public DbSet<Promotion_Product> Promotion_Product { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PushNotification> PushNotifications { get; set; }
         public DbSet<ReceiptPayment> ReceiptPayments { get; set; }
         public DbSet<ReceiptVoucher> ReceiptVouchers { get; set; }
         public DbSet<ReceiveHistory> ReceiveHistories { get; set; }
@@ -253,6 +259,7 @@ namespace FDI.Base
         public DbSet<Source> Sources { get; set; }
         public DbSet<Source_Video> Source_Video { get; set; }
         public DbSet<ST_Group> ST_Group { get; set; }
+        public DbSet<Step> Steps { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<StorageFreightWarehouse> StorageFreightWarehouses { get; set; }
         public DbSet<StorageProduct> StorageProducts { get; set; }
@@ -281,6 +288,8 @@ namespace FDI.Base
         public DbSet<TM_Products_Comment> TM_Products_Comment { get; set; }
         public DbSet<TM_Rate_Comment> TM_Rate_Comment { get; set; }
         public DbSet<TokenDevice> TokenDevices { get; set; }
+        public DbSet<TokenOtp> TokenOtps { get; set; }
+        public DbSet<TokenRefresh> TokenRefreshes { get; set; }
         public DbSet<TotalProductToDay> TotalProductToDays { get; set; }
         public DbSet<TotalStorageWare> TotalStorageWares { get; set; }
         public DbSet<Type> Types { get; set; }
@@ -295,6 +304,7 @@ namespace FDI.Base
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public DbSet<ConfigExchange> ConfigExchanges { get; set; }
         public DbSet<TempCustomer> TempCustomers { get; set; }
         public DbSet<TempShop_Product> TempShop_Product { get; set; }
         public DbSet<Customer_LastOrder> Customer_LastOrder { get; set; }
@@ -1721,6 +1731,27 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Category_GetList_Result>("Category_GetList", languageIdParameter);
         }
     
+        public virtual ObjectResult<Category_GetListByUser_Result> Category_GetListByUser(string languageId, Nullable<bool> isAdmin, Nullable<System.Guid> userid, Nullable<int> type)
+        {
+            var languageIdParameter = languageId != null ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(string));
+    
+            var isAdminParameter = isAdmin.HasValue ?
+                new ObjectParameter("IsAdmin", isAdmin) :
+                new ObjectParameter("IsAdmin", typeof(bool));
+    
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(System.Guid));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Category_GetListByUser_Result>("Category_GetListByUser", languageIdParameter, isAdminParameter, useridParameter, typeParameter);
+        }
+    
         public virtual ObjectResult<ContactToOrder_Result> ContactToOrder(Nullable<int> id, Nullable<System.Guid> userId, Nullable<int> date, Nullable<int> dateend, Nullable<int> value)
         {
             var idParameter = id.HasValue ?
@@ -1968,13 +1999,13 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllAnalysis_Result>("GetAllAnalysis", agencyidParameter, startParameter, endParameter);
         }
     
-        public virtual int GetAllProductByCategoryID(string categoryID)
+        public virtual ObjectResult<GetAllProductByCategoryID_Result> GetAllProductByCategoryID(string categoryID)
         {
             var categoryIDParameter = categoryID != null ?
                 new ObjectParameter("CategoryID", categoryID) :
                 new ObjectParameter("CategoryID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllProductByCategoryID", categoryIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductByCategoryID_Result>("GetAllProductByCategoryID", categoryIDParameter);
         }
     
         public virtual ObjectResult<GetAttribute_Result> GetAttribute(string str, Nullable<int> pid)
@@ -2056,6 +2087,16 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListTree_Result>("GetListTree", agencyIdParameter);
         }
     
+        [EdmFunction("FDIEntities", "GetMonthRecentDatetime")]
+        public virtual IQueryable<GetMonthRecentDatetime_Result> GetMonthRecentDatetime(Nullable<int> i)
+        {
+            var iParameter = i.HasValue ?
+                new ObjectParameter("i", i) :
+                new ObjectParameter("i", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetMonthRecentDatetime_Result>("[FDIEntities].[GetMonthRecentDatetime](@i)", iParameter);
+        }
+    
         public virtual int GetStatisticsVote(string languageId)
         {
             var languageIdParameter = languageId != null ?
@@ -2063,6 +2104,31 @@ namespace FDI.Base
                 new ObjectParameter("LanguageId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetStatisticsVote", languageIdParameter);
+        }
+    
+        public virtual ObjectResult<GroupProductGetOrderShop_Result> GroupProductGetOrderShop(Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> cateId)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var isAllParameter = isAll.HasValue ?
+                new ObjectParameter("isAll", isAll) :
+                new ObjectParameter("isAll", typeof(bool));
+    
+            var datesParameter = dates.HasValue ?
+                new ObjectParameter("dates", dates) :
+                new ObjectParameter("dates", typeof(decimal));
+    
+            var dateeParameter = datee.HasValue ?
+                new ObjectParameter("datee", datee) :
+                new ObjectParameter("datee", typeof(decimal));
+    
+            var cateIdParameter = cateId.HasValue ?
+                new ObjectParameter("cateId", cateId) :
+                new ObjectParameter("cateId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GroupProductGetOrderShop_Result>("GroupProductGetOrderShop", customerIDParameter, isAllParameter, datesParameter, dateeParameter, cateIdParameter);
         }
     
         public virtual int insert_ShopProductDetail()
@@ -2242,6 +2308,150 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<MonthInYear_Result>("[FDIEntities].[MonthInYear](@year)", yearParameter);
         }
     
+        public virtual ObjectResult<ProductFull_Result> ProductFull(string name, Nullable<double> kmmax, Nullable<double> kmmin, Nullable<int> cateid, Nullable<double> x, Nullable<double> y, Nullable<int> minprice, Nullable<int> maxprice, Nullable<int> pageNumber, Nullable<int> pageSize, Nullable<bool> hasTransfer, Nullable<int> shopid)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var kmmaxParameter = kmmax.HasValue ?
+                new ObjectParameter("kmmax", kmmax) :
+                new ObjectParameter("kmmax", typeof(double));
+    
+            var kmminParameter = kmmin.HasValue ?
+                new ObjectParameter("kmmin", kmmin) :
+                new ObjectParameter("kmmin", typeof(double));
+    
+            var cateidParameter = cateid.HasValue ?
+                new ObjectParameter("cateid", cateid) :
+                new ObjectParameter("cateid", typeof(int));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(double));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(double));
+    
+            var minpriceParameter = minprice.HasValue ?
+                new ObjectParameter("minprice", minprice) :
+                new ObjectParameter("minprice", typeof(int));
+    
+            var maxpriceParameter = maxprice.HasValue ?
+                new ObjectParameter("maxprice", maxprice) :
+                new ObjectParameter("maxprice", typeof(int));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var hasTransferParameter = hasTransfer.HasValue ?
+                new ObjectParameter("HasTransfer", hasTransfer) :
+                new ObjectParameter("HasTransfer", typeof(bool));
+    
+            var shopidParameter = shopid.HasValue ?
+                new ObjectParameter("shopid", shopid) :
+                new ObjectParameter("shopid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductFull_Result>("ProductFull", nameParameter, kmmaxParameter, kmminParameter, cateidParameter, xParameter, yParameter, minpriceParameter, maxpriceParameter, pageNumberParameter, pageSizeParameter, hasTransferParameter, shopidParameter);
+        }
+    
+        public virtual ObjectResult<ProductGetbyShop_Result> ProductGetbyShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<System.DateTime> dates, Nullable<System.DateTime> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
+        {
+            var cateidParameter = cateid.HasValue ?
+                new ObjectParameter("cateid", cateid) :
+                new ObjectParameter("cateid", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var isAllParameter = isAll.HasValue ?
+                new ObjectParameter("isAll", isAll) :
+                new ObjectParameter("isAll", typeof(bool));
+    
+            var datesParameter = dates.HasValue ?
+                new ObjectParameter("dates", dates) :
+                new ObjectParameter("dates", typeof(System.DateTime));
+    
+            var dateeParameter = datee.HasValue ?
+                new ObjectParameter("datee", datee) :
+                new ObjectParameter("datee", typeof(System.DateTime));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductGetbyShop_Result>("ProductGetbyShop", cateidParameter, customerIDParameter, isAllParameter, datesParameter, dateeParameter, pageNumberParameter, pageSizeParameter);
+        }
+    
+        public virtual ObjectResult<ProductGetNearPosition_Result> ProductGetNearPosition(Nullable<int> km, Nullable<double> x, Nullable<double> y, Nullable<int> pageNumber, Nullable<int> pageSize)
+        {
+            var kmParameter = km.HasValue ?
+                new ObjectParameter("km", km) :
+                new ObjectParameter("km", typeof(int));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(double));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(double));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductGetNearPosition_Result>("ProductGetNearPosition", kmParameter, xParameter, yParameter, pageNumberParameter, pageSizeParameter);
+        }
+    
+        public virtual ObjectResult<ProductGetOrderShop_Result> ProductGetOrderShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
+        {
+            var cateidParameter = cateid.HasValue ?
+                new ObjectParameter("cateid", cateid) :
+                new ObjectParameter("cateid", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var isAllParameter = isAll.HasValue ?
+                new ObjectParameter("isAll", isAll) :
+                new ObjectParameter("isAll", typeof(bool));
+    
+            var datesParameter = dates.HasValue ?
+                new ObjectParameter("dates", dates) :
+                new ObjectParameter("dates", typeof(decimal));
+    
+            var dateeParameter = datee.HasValue ?
+                new ObjectParameter("datee", datee) :
+                new ObjectParameter("datee", typeof(decimal));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductGetOrderShop_Result>("ProductGetOrderShop", cateidParameter, customerIDParameter, isAllParameter, datesParameter, dateeParameter, pageNumberParameter, pageSizeParameter);
+        }
+    
         public virtual int ResultSearchDocument(string categoryID, string keywords)
         {
             var categoryIDParameter = categoryID != null ?
@@ -2279,6 +2489,76 @@ namespace FDI.Base
                 new ObjectParameter("SQLString", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SearchNewsInAdmin", sQLStringParameter);
+        }
+    
+        public virtual ObjectResult<ShopMap_Result> ShopMap(string name, Nullable<double> kmmax, Nullable<double> kmmin, Nullable<int> cateid, Nullable<double> x, Nullable<double> y, Nullable<int> minprice, Nullable<int> maxprice)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var kmmaxParameter = kmmax.HasValue ?
+                new ObjectParameter("kmmax", kmmax) :
+                new ObjectParameter("kmmax", typeof(double));
+    
+            var kmminParameter = kmmin.HasValue ?
+                new ObjectParameter("kmmin", kmmin) :
+                new ObjectParameter("kmmin", typeof(double));
+    
+            var cateidParameter = cateid.HasValue ?
+                new ObjectParameter("cateid", cateid) :
+                new ObjectParameter("cateid", typeof(int));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(double));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(double));
+    
+            var minpriceParameter = minprice.HasValue ?
+                new ObjectParameter("minprice", minprice) :
+                new ObjectParameter("minprice", typeof(int));
+    
+            var maxpriceParameter = maxprice.HasValue ?
+                new ObjectParameter("maxprice", maxprice) :
+                new ObjectParameter("maxprice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShopMap_Result>("ShopMap", nameParameter, kmmaxParameter, kmminParameter, cateidParameter, xParameter, yParameter, minpriceParameter, maxpriceParameter);
+        }
+    
+        public virtual ObjectResult<ShopSame_Result> ShopSame(Nullable<int> id, Nullable<double> kmmax, Nullable<double> kmmin, Nullable<double> x, Nullable<double> y, Nullable<int> pageNumber, Nullable<int> pageSize)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var kmmaxParameter = kmmax.HasValue ?
+                new ObjectParameter("kmmax", kmmax) :
+                new ObjectParameter("kmmax", typeof(double));
+    
+            var kmminParameter = kmmin.HasValue ?
+                new ObjectParameter("kmmin", kmmin) :
+                new ObjectParameter("kmmin", typeof(double));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(double));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(double));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShopSame_Result>("ShopSame", idParameter, kmmaxParameter, kmminParameter, xParameter, yParameter, pageNumberParameter, pageSizeParameter);
         }
     
         public virtual int SortNameBed(Nullable<int> aid)
@@ -2397,7 +2677,7 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetListInventoryValue_Result>("sp_GetListInventoryValue", isValueParameter, agencyIdParameter);
         }
     
-        public virtual int sp_GetListOrderDetail(Nullable<decimal> starDate, Nullable<decimal> endDate)
+        public virtual ObjectResult<sp_GetListOrderDetail_Result> sp_GetListOrderDetail(Nullable<decimal> starDate, Nullable<decimal> endDate)
         {
             var starDateParameter = starDate.HasValue ?
                 new ObjectParameter("starDate", starDate) :
@@ -2407,7 +2687,7 @@ namespace FDI.Base
                 new ObjectParameter("endDate", endDate) :
                 new ObjectParameter("endDate", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetListOrderDetail", starDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetListOrderDetail_Result>("sp_GetListOrderDetail", starDateParameter, endDateParameter);
         }
     
         public virtual int sp_GetListValueDetail(Nullable<decimal> starDate, Nullable<decimal> endDate, Nullable<int> agencyId)
@@ -2514,9 +2794,82 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
+        public virtual ObjectResult<sp_thongkenguoiduyet_Result> sp_thongkenguoiduyet(Nullable<System.DateTime> start, Nullable<System.DateTime> end)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var endParameter = end.HasValue ?
+                new ObjectParameter("end", end) :
+                new ObjectParameter("end", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_thongkenguoiduyet_Result>("sp_thongkenguoiduyet", startParameter, endParameter);
+        }
+    
+        public virtual ObjectResult<sp_thongkenguoiviet_Result> sp_thongkenguoiviet(Nullable<System.DateTime> start, Nullable<System.DateTime> end)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var endParameter = end.HasValue ?
+                new ObjectParameter("end", end) :
+                new ObjectParameter("end", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_thongkenguoiviet_Result>("sp_thongkenguoiviet", startParameter, endParameter);
+        }
+    
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<StaticChartsCustomer_Result> StaticChartsCustomer(Nullable<int> i)
+        {
+            var iParameter = i.HasValue ?
+                new ObjectParameter("i", i) :
+                new ObjectParameter("i", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsCustomer_Result>("StaticChartsCustomer", iParameter);
+        }
+    
+        public virtual int StaticChartsCustomerBuyPacket(Nullable<int> i)
+        {
+            var iParameter = i.HasValue ?
+                new ObjectParameter("i", i) :
+                new ObjectParameter("i", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StaticChartsCustomerBuyPacket", iParameter);
+        }
+    
+        public virtual ObjectResult<StaticChartsShop_Result> StaticChartsShop(Nullable<int> year, Nullable<int> month, Nullable<int> week, Nullable<System.DateTime> d, Nullable<int> cusId, Nullable<int> cateId)
+        {
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var weekParameter = week.HasValue ?
+                new ObjectParameter("week", week) :
+                new ObjectParameter("week", typeof(int));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("d", d) :
+                new ObjectParameter("d", typeof(System.DateTime));
+    
+            var cusIdParameter = cusId.HasValue ?
+                new ObjectParameter("cusId", cusId) :
+                new ObjectParameter("cusId", typeof(int));
+    
+            var cateIdParameter = cateId.HasValue ?
+                new ObjectParameter("cateId", cateId) :
+                new ObjectParameter("cateId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsShop_Result>("StaticChartsShop", yearParameter, monthParameter, weekParameter, dParameter, cusIdParameter, cateIdParameter);
         }
     
         public virtual ObjectResult<StaticDocumentYear_Result> StaticDocumentYear(Nullable<int> year, Nullable<int> areaid)

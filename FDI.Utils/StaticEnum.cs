@@ -48,7 +48,10 @@ namespace FDI.Utils
         Parent = 1,  //Thưởng cha
         Cus = 2,     // thưởng trực tiếp
         Receive1 = 0,// trừ tích lũy vào đơn hàng
-        Receive2 = 1 // Rút tiền trực tiếp
+        Receive2 = 1, // Rút tiền trực tiếp
+        Cus1 = 3,     // thưởng giới thiệu
+        Dep = 4,// thưởng nạp
+        Kho = 5
     }
     public static class TypeSale
     {
@@ -269,5 +272,24 @@ namespace FDI.Utils
         KG=1,
         GAM=5
     }
-
+    public enum TokenOtpType : int
+    {
+        Authen = 1,
+    }
+    public enum StatusOrder
+    {
+        Create = 1,
+        Process = 2,
+        Complete = 3,
+        Cancel = -1,
+        All = 0,
+        Complain = 4,
+        Refunded = 5,
+    }
+    public enum PaymentOrder
+    {
+        Process = 1,
+        Complete = 2,
+        Cancel = 3,
+    }
 }

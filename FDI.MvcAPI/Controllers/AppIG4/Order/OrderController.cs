@@ -17,6 +17,7 @@ using System.Web.UI.WebControls.WebParts;
 using FDI.DA.DA;
 using FDI.MvcAPI.Common;
 using Newtonsoft.Json;
+using FDI.CORE;
 
 namespace FDI.MvcAPI.Controllers.Order
 {
@@ -24,16 +25,16 @@ namespace FDI.MvcAPI.Controllers.Order
     public class OrderController : BaseAppApiController
     {
 
-        OrderDA orderDA = new OrderDA();
-        readonly CustomerDA _customerDa = new CustomerDA("#");
-        readonly RewardHistoryDA _rewardHistoryDa = new RewardHistoryDA("#");
-        readonly Shop_ProductDA _productDa = new Shop_ProductDA("#");
+        OrderAppIG4DA orderDA = new OrderAppIG4DA();
+        readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA("#");
+        readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
+        readonly Shop_ProductAppIG4DA _productDa = new Shop_ProductAppIG4DA("#");
         public static string Momo = ConfigurationManager.AppSettings["UrlMomo"];
-        private readonly WalletCustomerDA _walletCustomerDa = new WalletCustomerDA("#");
-        private readonly CashOutWalletDA _cashOutWalletDa = new CashOutWalletDA("");
+        private readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
+        private readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("");
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Booking(List<OrderItem> datas)
+        public async Task<ActionResult> Booking(List<OrderAppIG4Item> datas)
         {
             foreach (var data in datas)
             {
@@ -121,12 +122,12 @@ namespace FDI.MvcAPI.Controllers.Order
         public ActionResult GetDiscount()
         {
             var discount = _walletCustomerDa.GetConfigItem();
-            return Json(new BaseResponse<ConfigItem> { Code = 200, Data = discount }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<ConfigItemAppIG4> { Code = 200, Data = discount }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetListProductByNew(int shopid, int status, int page, int take)
         {
             var data = orderDA.GetListProductByNew(shopid, status, page, take);
-            return Json(new BaseResponse<List<OrderShopItem>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<OrderShopAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult UpdateStatus(int orderId, int type)
@@ -135,8 +136,8 @@ namespace FDI.MvcAPI.Controllers.Order
             data.Status = type;
             data.Check = 1;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
-            var totalprice = data.OrderTotal - data.CouponPrice + data.FeeShip;
-            //var totalpricegstore = data.OrderTotal - ((data.Discount * data.OrderTotal / 100)) + data.FeeShip;
+            var TotalPrice = data.OrderTotal - data.CouponPrice + data.FeeShip;
+            //var TotalPricegstore = data.OrderTotal - ((data.Discount * data.OrderTotal / 100)) + data.FeeShip;
             //var config = _walletCustomerDa.GetConfig();
             //var totaldis = data.Discount + config.Percent;
             foreach (var item in data.OrderDetails)
@@ -152,7 +153,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 var cashout = new CashOutWallet
                 {
                     CustomerID = data.CustomerID,
-                    Totalprice = totalprice ?? 0,
+                    TotalPrice = TotalPrice ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     OrderID = data.ID,
                     Type = 1,
@@ -163,7 +164,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = 1,
-                    TotalPrice = totalprice ?? 0,
+                    TotalPrice = TotalPrice ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     IsActive = true,
                     IsDelete = false,
@@ -180,7 +181,7 @@ namespace FDI.MvcAPI.Controllers.Order
                     product.QuantityOut = item.Quantity;
                     _productDa.Save();
                 }
-                var processOrder = new OrderProcessItem
+                var processOrder = new OrderProcessAppIG4Item
                 {
                     OrderId = orderId,
                     EndDate = DateTime.Now.AddHours(24).TotalSeconds(),
@@ -192,16 +193,16 @@ namespace FDI.MvcAPI.Controllers.Order
             var token = gettoken.tokenDevice;
             if (type == (int)StatusOrder.Process)
             {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == 2 ? "đang được giao" : "").Replace("{shop}", data.Customer1.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == 2 ? "đang được giao" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
             }
             if (type == (int)StatusOrder.Cancel)
             {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == -1 ? "vừa bị hủy bởi chủ cửa hàng.!" : "").Replace("{shop}", data.Customer1.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == -1 ? "vừa bị hủy bởi chủ cửa hàng.!" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
             }
             if (type == (int)StatusOrder.Complete)
             {
                 notify = orderDA.GetNotifyById(3);
-                Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer1.FullName).Replace("{price}", totalprice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
             }
             return Json(new BaseResponse<List<ProductItem>> { Code = 200, Message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
@@ -210,16 +211,16 @@ namespace FDI.MvcAPI.Controllers.Order
         {
             if (key == "Fdi@123")
             {
-                var model = new JavaScriptSerializer().Deserialize<OrderProcessItem>(json);
+                var model = new JavaScriptSerializer().Deserialize<OrderProcessAppIG4Item>(json);
                 #region xử lý đơn hàng thành công tự động trừ tiền của KH.
                 var data = orderDA.GetById(model.OrderId);
-                var totalpricegstore = data.OrderTotal + data.FeeShip;
+                var TotalPricegstore = data.OrderTotal + data.FeeShip;
                 var config = _walletCustomerDa.GetConfig();
                 // chuyen tien tu vi trung gian cua gstore customerId = 1 den shop
                 var cashout = new CashOutWallet
                 {
                     CustomerID = 1,
-                    Totalprice = totalpricegstore ?? 0,
+                    TotalPrice = TotalPricegstore ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     OrderID = data.ID,
                     Type = 1,
@@ -252,7 +253,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 #endregion
                 var bonusItems = _customerDa.ListBonusTypeItems();
                 #region hoa hồng khách hàng và shop ký gửi
-                var iskg = data.Customer1.Type == 2;
+                var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
                     InsertRewardCustomer(data.Customer.ParentID ?? 0, data.OrderTotal, data.ID, bonusItems);
@@ -263,7 +264,7 @@ namespace FDI.MvcAPI.Controllers.Order
                     decimal totalnopres = data.OrderDetails.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
-                        InsertRewardCustomer(data.Customer1.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
                     }
                     if (totalnopres > 0)
                     {
@@ -287,12 +288,12 @@ namespace FDI.MvcAPI.Controllers.Order
             {
                 return Json(new JsonMessage(1000, "Coupon không tồn tại"), JsonRequestBehavior.AllowGet);
             }
-            var data = new SaleCodeItem
+            var data = new SaleCodeAppIG4Item
             {
                 Code = coupon.Code,
                 Price = coupon.DN_Sale.Price ?? 0
             };
-            return Json(new BaseResponse<SaleCodeItem> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<SaleCodeAppIG4Item> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -310,7 +311,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 partnerRefId = refId.ToString(),
                 partnerCode = PartnerCode,
                 //partnerName = "Công ty cổ phần công nghệ G-store",
-                partnerTransId = DateTime.Now.TotalMilliSeconds().ToString(),
+                partnerTransId = DateTime.Now.TotalSeconds().ToString(),
                 description = item.description ?? "",
             };
             var json = new JavaScriptSerializer().Serialize(model);
@@ -345,8 +346,8 @@ namespace FDI.MvcAPI.Controllers.Order
             };
             var url = Momo + "pay/app";
             ResultMoMoItem kq;
-            ResultDataMoMoItem resutl;
-            new ResultDataMoMoItem();
+            ResultDataMoMoAppIG4Item resutl;
+            new ResultDataMoMoAppIG4Item();
             try
             {
                 kq = await PostDataAsync<ResultMoMoItem>(url, data1);
@@ -374,7 +375,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 var urlconfirm = Momo + "pay/confirm";
                 try
                 {
-                    resutl = await PostDataAsync<ResultDataMoMoItem>(urlconfirm, obj);
+                    resutl = await PostDataAsync<ResultDataMoMoAppIG4Item>(urlconfirm, obj);
                     if (resutl.status == 0)
                     {
                         // thêm tiền vào ví chính
@@ -416,7 +417,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 }
                 catch (Exception ex)
                 {
-                    resutl = new ResultDataMoMoItem
+                    resutl = new ResultDataMoMoAppIG4Item
                     {
                         status = -1,
                         message = ex.ToString()
@@ -426,7 +427,7 @@ namespace FDI.MvcAPI.Controllers.Order
             }
             catch (Exception ex)
             {
-                resutl = new ResultDataMoMoItem
+                resutl = new ResultDataMoMoAppIG4Item
                 {
                     status = -1,
                     message = ex.ToString()

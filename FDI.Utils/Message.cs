@@ -44,5 +44,11 @@ namespace FDI.Utils
             Erros = erros;
             Message = message;
         }
+        public JsonMessage(int code, string message)
+        {
+            Code = code;
+            Message = message;
+            Erros = code != 200;
+        }
     }
 }
