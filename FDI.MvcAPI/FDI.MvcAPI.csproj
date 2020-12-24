@@ -184,6 +184,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\AppIG4\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Common\AppIG4\IAuthService.cs" />
+    <Compile Include="Common\AppIG4\JWTService.cs" />
     <Compile Include="Common\JsonNotNullResult.cs" />
     <Compile Include="Common\JWTAuthenticationFilter.cs" />
     <Compile Include="Common\RenderTemplate.cs" />
@@ -197,6 +200,16 @@
     <Compile Include="Controllers\AppCustomer\CustomerAppController.cs" />
     <Compile Include="Controllers\AppCustomer\NewsCusAppController.cs" />
     <Compile Include="Controllers\AppCustomer\OrderCustomerAppController.cs" />
+    <Compile Include="Controllers\AppIG4\AdvertisingController.cs" />
+    <Compile Include="Controllers\AppIG4\BaseApiController.cs" />
+    <Compile Include="Controllers\AppIG4\BaseAppApiController.cs" />
+    <Compile Include="Controllers\AppIG4\Category\CategoryController.cs" />
+    <Compile Include="Controllers\AppIG4\Customer\CustomerAppIG4Controller.cs" />
+    <Compile Include="Controllers\AppIG4\HomeController.cs" />
+    <Compile Include="Controllers\AppIG4\News\NewsController.cs" />
+    <Compile Include="Controllers\AppIG4\Order\OrderController.cs" />
+    <Compile Include="Controllers\AppIG4\Product\ProductAppController.cs" />
+    <Compile Include="Controllers\AppIG4\Product\ProductController.cs" />
     <Compile Include="Controllers\APPSales\CustomerAppSaleController.cs" />
     <Compile Include="Controllers\APPSales\DocumentsAppController.cs" />
     <Compile Include="Controllers\APPSales\LoginAppController.cs" />

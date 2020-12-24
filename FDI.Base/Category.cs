@@ -31,6 +31,7 @@ namespace FDI.Base
             this.Gallery_Picture1 = new HashSet<Gallery_Picture>();
             this.Gallery_Video = new HashSet<Gallery_Video>();
             this.Mapping_Category_Recipe = new HashSet<Mapping_Category_Recipe>();
+            this.Shop_Product = new HashSet<Shop_Product>();
             this.Shop_Product_Detail = new HashSet<Shop_Product_Detail>();
             this.StorageProducts = new HashSet<StorageProduct>();
             this.TotalStorageWares = new HashSet<TotalStorageWare>();
@@ -95,6 +96,7 @@ namespace FDI.Base
         public virtual ICollection<Gallery_Picture> Gallery_Picture1 { get; set; }
         public virtual ICollection<Gallery_Video> Gallery_Video { get; set; }
         public virtual ICollection<Mapping_Category_Recipe> Mapping_Category_Recipe { get; set; }
+        public virtual ICollection<Shop_Product> Shop_Product { get; set; }
         public virtual ICollection<Shop_Product_Detail> Shop_Product_Detail { get; set; }
         public virtual ICollection<StorageProduct> StorageProducts { get; set; }
         public virtual ICollection<TotalStorageWare> TotalStorageWares { get; set; }

@@ -11,6 +11,7 @@ namespace FDI.Utils
         public string ID { get; set; }
         public int MsgID { get; set; }
         public int Type { get; set; }
+        public int Code { get; set; }
         public SaleCodeItem SaleCodeItem { get; set; }
 
         public int TotalPages

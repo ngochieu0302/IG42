@@ -91,3 +91,26 @@ D:\FDI\Gab\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
 D:\FDI\Gab\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
 D:\FDI\Gab\FDI.CORE\obj\Debug\FDI.CORE.dll
 D:\FDI\Gab\FDI.CORE\obj\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\HtmlAgilityPack.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Helpers.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Mvc.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\HtmlAgilityPack.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\HtmlAgilityPack.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Helpers.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Mvc.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\obj\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.CORE\obj\Debug\FDI.CORE.pdb

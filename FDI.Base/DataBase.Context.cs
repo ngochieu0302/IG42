@@ -70,6 +70,7 @@ namespace FDI.Base
         public DbSet<Comment_Like> Comment_Like { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<ControlValue> ControlValues { get; set; }
+        public DbSet<CookieLogin> CookieLogins { get; set; }
         public DbSet<Cost_Product> Cost_Product { get; set; }
         public DbSet<Cost_Product_User> Cost_Product_User { get; set; }
         public DbSet<CostType> CostTypes { get; set; }
@@ -81,10 +82,13 @@ namespace FDI.Base
         public DbSet<Customer_Groups> Customer_Groups { get; set; }
         public DbSet<Customer_History> Customer_History { get; set; }
         public DbSet<Customer_Point> Customer_Point { get; set; }
+        public DbSet<Customer_Policy> Customer_Policy { get; set; }
         public DbSet<Customer_question> Customer_question { get; set; }
         public DbSet<Customer_Review> Customer_Review { get; set; }
         public DbSet<Customer_Review_Deltails> Customer_Review_Deltails { get; set; }
         public DbSet<Customer_Reward> Customer_Reward { get; set; }
+        public DbSet<Customer_Type> Customer_Type { get; set; }
+        public DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public DbSet<CustomerContact> CustomerContacts { get; set; }
         public DbSet<Debt> Debts { get; set; }
         public DbSet<Discount> Discounts { get; set; }
@@ -193,9 +197,12 @@ namespace FDI.Base
         public DbSet<News_Job> News_Job { get; set; }
         public DbSet<News_News> News_News { get; set; }
         public DbSet<News_News_Product> News_News_Product { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Order_Debt> Order_Debt { get; set; }
+        public DbSet<Order_Package> Order_Package { get; set; }
         public DbSet<OrderCar> OrderCars { get; set; }
         public DbSet<OrderCarProductDetail> OrderCarProductDetails { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<P_Workshop> P_Workshop { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<Payment_Method> Payment_Method { get; set; }
@@ -209,6 +216,7 @@ namespace FDI.Base
         public DbSet<ProduceProductDetail> ProduceProductDetails { get; set; }
         public DbSet<ProduceProductPrepare> ProduceProductPrepares { get; set; }
         public DbSet<Product_Promotion> Product_Promotion { get; set; }
+        public DbSet<Product_Reading> Product_Reading { get; set; }
         public DbSet<Product_Size> Product_Size { get; set; }
         public DbSet<Product_Value> Product_Value { get; set; }
         public DbSet<ProductCode> ProductCodes { get; set; }
@@ -2564,6 +2572,16 @@ namespace FDI.Base
                 new ObjectParameter("type", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TK_HOME", dayParameter, yearParameter, shopidParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<Top100CustomerBuy_Result> Top100CustomerBuy()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Top100CustomerBuy_Result>("Top100CustomerBuy");
+        }
+    
+        public virtual ObjectResult<Top100CustomerSell_Result> Top100CustomerSell()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Top100CustomerSell_Result>("Top100CustomerSell");
         }
     
         public virtual int TruncateTable(string tableName)

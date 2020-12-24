@@ -49,10 +49,15 @@ namespace FDI.Base
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<int> QuantityDay { get; set; }
         public Nullable<int> TypeID { get; set; }
+        public Nullable<int> CustomerID { get; set; }
+        public Nullable<int> CategoryId { get; set; }
+        public string Name { get; set; }
     
         public virtual ICollection<BiasProduce> BiasProduces { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<Cost_Product> Cost_Product { get; set; }
         public virtual ICollection<Cost_Product_User> Cost_Product_User { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual ICollection<DN_Product_Packet> DN_Product_Packet { get; set; }
         public virtual ICollection<DN_RequestWareDetail> DN_RequestWareDetail { get; set; }
         public virtual ICollection<Export_Product_Detail> Export_Product_Detail { get; set; }

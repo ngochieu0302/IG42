@@ -29,6 +29,7 @@ namespace FDI.Base
         public Nullable<bool> IsExit { get; set; }
         public Nullable<decimal> DateCreate { get; set; }
         public Nullable<int> EnterprisesId { get; set; }
+        public Nullable<int> Type { get; set; }
     
         public virtual DN_Enterprises DN_Enterprises { get; set; }
         public virtual ICollection<RewardHistory> RewardHistories { get; set; }

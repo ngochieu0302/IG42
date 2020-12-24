@@ -77,6 +77,13 @@
     <Compile Include="BL\SeoBL.cs" />
     <Compile Include="BL\VideoBL.cs" />
     <Compile Include="DA\ActiveRoleDA.cs" />
+    <Compile Include="DA\AppIG4\AdvertisingAppIG4DA.cs" />
+    <Compile Include="DA\AppIG4\CashOutWalletDA.cs" />
+    <Compile Include="DA\AppIG4\CustomerAddressAppIG4DA.cs" />
+    <Compile Include="DA\AppIG4\CustomerAppIG4DA.cs" />
+    <Compile Include="DA\AppIG4\CustomerPolicyAppIG4DA.cs" />
+    <Compile Include="DA\AppIG4\OrderDA.cs" />
+    <Compile Include="DA\AppIG4\TokenOtpDA.cs" />
     <Compile Include="DA\BannerDA.cs" />
     <Compile Include="DA\PolicyAgencyDA.cs" />
     <Compile Include="DA\AdminDA.cs" />

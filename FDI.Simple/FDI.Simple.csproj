@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\Code cu\tps\FDI.Web\bin\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -50,6 +51,15 @@
   <ItemGroup>
     <Compile Include="ActionActiveItem.cs" />
     <Compile Include="ActiveRoleItem.cs" />
+    <Compile Include="AppIG4\AutoCompleteItem.cs" />
+    <Compile Include="AppIG4\CategoryAppIG4Item.cs" />
+    <Compile Include="AppIG4\CustomerAddressAppIG4Item.cs" />
+    <Compile Include="AppIG4\CustomerAppIG4Item.cs" />
+    <Compile Include="AppIG4\CustomerPolicyAppIG4Item.cs" />
+    <Compile Include="AppIG4\CustomerTypeAppIG4Item.cs" />
+    <Compile Include="AppIG4\IssuingUnitItem.cs" />
+    <Compile Include="AppIG4\NewsAppIG4Item.cs" />
+    <Compile Include="AppIG4\ProductAppIG4Item.cs" />
     <Compile Include="BannerItem.cs" />
     <Compile Include="PolicyAgenciesItem.cs" />
     <Compile Include="AdvertisingItem.cs" />

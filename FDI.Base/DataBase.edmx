@@ -393,6 +393,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
           <Property Name="IsExit" Type="bit" />
           <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="EnterprisesId" Type="int" />
+          <Property Name="Type" Type="int" />
         </EntityType>
         <EntityType Name="Car">
           <Key>
@@ -623,6 +624,21 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="AgencyID" Type="int" />
         </EntityType>
+        <EntityType Name="CookieLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="key" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="550" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="IsFacebook" Type="bit" />
+        </EntityType>
         <EntityType Name="Cost_Product">
           <Key>
             <PropertyRef Name="ID" />
@@ -699,6 +715,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
           <Property Name="LatitudeBuyRecently" Type="bigint" />
           <Property Name="LongitudeBuyRecently" Type="bigint" />
           <Property Name="AddressBuyRecently" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="int" />
+          <Property Name="idUserFacebook" Type="varchar" MaxLength="50" />
+          <Property Name="idUserGoogle" Type="varchar" MaxLength="50" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="ListID" Type="varchar" MaxLength="250" />
+          <Property Name="TokenDevice" Type="varchar" MaxLength="250" />
+          <Property Name="CustomerPolicyID" Type="int" />
+          <Property Name="Ratings" Type="int" />
+          <Property Name="AvgRating" Type="float" />
+          <Property Name="LikeTotal" Type="int" />
+          <Property Name="ImageTimeline" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Customer_Action">
           <Key>
@@ -758,6 +786,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
           <Property Name="IsDelete" Type="bit" />
           <Property Name="AgencyID" Type="int" />
         </EntityType>
+        <EntityType Name="Customer_Policy">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="StartMoney" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EndMoney" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Number" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IsShow" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
         <EntityType Name="Customer_question">
           <Key>
             <PropertyRef Name="ID" />
@@ -808,6 +848,41 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.AspNetUserRoles' does not have 
           <Property Name="AgencyID" Type="int" />
           <Property Name="PriceReward" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PriceReceive" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalCP" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceReceiver" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CashOutWallet" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Customer_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Day" Type="int" />
+          <Property Name="PictureId" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Border" Type="bit" />
+          <Property Name="Color" Type="varchar" MaxLength="50" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="512" />
+          <Property Name="Phone" Type="varchar" MaxLength="32" />
+          <Property Name="Address" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="Longitude" Type="float" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="AddressType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerContact">
           <Key>
@@ -2573,6 +2648,45 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
           <Property Name="NewsID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoOrder" Type="varchar" MaxLength="10" />
+          <Property Name="ContactOrderID" Type="int" />
+          <Property Name="OrderTotal" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CreatedOnUtc" Type="datetime" />
+          <Property Name="IsTime" Type="bit" />
+          <Property Name="PaymentMethodId" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="250" />
+          <Property Name="StatusPayment" Type="tinyint" />
+          <Property Name="District" Type="nvarchar" MaxLength="350" />
+          <Property Name="Wards" Type="nvarchar" MaxLength="350" />
+          <Property Name="FeeShip" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="vpc_TransactionNo" Type="nvarchar" MaxLength="250" />
+          <Property Name="ShipViettelPost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Coupon" Type="varchar" MaxLength="32" />
+          <Property Name="CouponPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomerAddressID" Type="int" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="DateUpdateStatus" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Check" Type="tinyint" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Payment" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ShopID" Type="int" />
+        </EntityType>
         <EntityType Name="Order_BedDesk">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -2592,6 +2706,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
           <Property Name="SupplieId" Type="int" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="UserID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Order_Package">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="Datecreate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DateStart" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DateEnd" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="OrderCar">
           <Key>
@@ -2626,6 +2752,27 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="128" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Type" Type="int" />
+          <Property Name="DateEnd" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="int" />
+          <Property Name="IsTime" Type="bit" />
+          <Property Name="StatusPayment" Type="tinyint" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="DateUpdateStatus" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Check" Type="int" />
+          <Property Name="IsPrestige" Type="bit" />
         </EntityType>
         <EntityType Name="P_Workshop">
           <Key>
@@ -2814,6 +2961,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
           <Property Name="PromotionID" Type="int" />
           <Property Name="ProductID" Type="int" />
           <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Product_Reading">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="DateCreate" Type="datetime" />
+          <Property Name="Page" Type="int" />
+          <Property Name="IsTime" Type="bit" />
+          <Property Name="DateEnd" Type="datetime" />
         </EntityType>
         <EntityType Name="Product_Sale">
           <Key>
@@ -3366,6 +3525,9 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
           <Property Name="IsDelete" Type="bit" />
           <Property Name="QuantityDay" Type="int" />
           <Property Name="TypeID" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Shop_Product_Detail">
           <Key>
@@ -5753,6 +5915,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CookieLogin_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CookieLogin" Type="Self.CookieLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CookieLogin">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cost_Product_BiasProduce">
           <End Role="BiasProduce" Type="Self.BiasProduce" Multiplicity="0..1" />
           <End Role="Cost_Product" Type="Self.Cost_Product" Multiplicity="*" />
@@ -5882,6 +6056,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Customer_Policy">
+          <End Role="Customer_Policy" Type="Self.Customer_Policy" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer_Policy">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerPolicyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6038,6 +6224,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAddress_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8215,6 +8413,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_Debt_DN_Users">
           <End Role="DN_Users" Type="Self.DN_Users" Multiplicity="0..1" />
           <End Role="Order_Debt" Type="Self.Order_Debt" Multiplicity="*" />
@@ -8224,6 +8434,42 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Principal>
             <Dependent Role="Order_Debt">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_DN_Agency">
+          <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Package_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order_Package" Type="Self.Order_Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Package">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8368,6 +8614,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Principal>
             <Dependent Role="Product_Promotion">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Reading_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Product_Reading" Type="Self.Product_Reading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Reading">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9226,6 +9484,30 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
             </Principal>
             <Dependent Role="Shop_Orders">
               <PropertyRef Name="ContactOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shop_Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10630,6 +10912,8 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <Parameter Name="shopid" Type="int" Mode="In" />
           <Parameter Name="type" Type="int" Mode="In" />
         </Function>
+        <Function Name="Top100CustomerBuy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Top100CustomerSell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="TruncateTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TableName" Type="nvarchar" Mode="In" />
         </Function>
@@ -10709,6 +10993,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <EntitySet Name="ContactOrder_BedDesk" EntityType="Self.ContactOrder_BedDesk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentVote_Map" EntityType="Self.ContentVote_Map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlValues" EntityType="Self.ControlValues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CookieLogin" EntityType="Self.CookieLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cost_Product" EntityType="Self.Cost_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cost_Product_User" EntityType="Self.Cost_Product_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CostType" EntityType="Self.CostType" Schema="dbo" store:Type="Tables" />
@@ -10720,10 +11005,13 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <EntitySet Name="Customer_Groups" EntityType="Self.Customer_Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_History" EntityType="Self.Customer_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Point" EntityType="Self.Customer_Point" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer_Policy" EntityType="Self.Customer_Policy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_question" EntityType="Self.Customer_question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Review" EntityType="Self.Customer_Review" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Review_Deltails" EntityType="Self.Customer_Review_Deltails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Reward" EntityType="Self.Customer_Reward" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer_Type" EntityType="Self.Customer_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerAddress" EntityType="Self.CustomerAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerContact" EntityType="Self.CustomerContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
@@ -10851,10 +11139,13 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <EntitySet Name="News_News_File" EntityType="Self.News_News_File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News_News_Product" EntityType="Self.News_News_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News_News_Tag" EntityType="Self.News_News_Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_BedDesk" EntityType="Self.Order_BedDesk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Debt" EntityType="Self.Order_Debt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Package" EntityType="Self.Order_Package" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderCar" EntityType="Self.OrderCar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderCarProductDetail" EntityType="Self.OrderCarProductDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="P_Workshop" EntityType="Self.P_Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partners" EntityType="Self.Partners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment_Method" EntityType="Self.Payment_Method" Schema="dbo" store:Type="Tables" />
@@ -10869,6 +11160,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <EntitySet Name="ProduceProductPrepare" EntityType="Self.ProduceProductPrepare" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Detail_Category" EntityType="Self.Product_Detail_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Promotion" EntityType="Self.Product_Promotion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Reading" EntityType="Self.Product_Reading" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Sale" EntityType="Self.Product_Sale" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Size" EntityType="Self.Product_Size" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Value" EntityType="Self.Product_Value" Schema="dbo" store:Type="Tables" />
@@ -11587,6 +11879,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="CategoryControls" EntitySet="CategoryControls" />
             <End Role="ControlValues" EntitySet="ControlValues" />
           </AssociationSet>
+          <AssociationSet Name="FK_CookieLogin_Customer" Association="Self.FK_CookieLogin_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CookieLogin" EntitySet="CookieLogin" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cost_Product_BiasProduce" Association="Self.FK_Cost_Product_BiasProduce">
             <End Role="BiasProduce" EntitySet="BiasProduce" />
             <End Role="Cost_Product" EntitySet="Cost_Product" />
@@ -11629,6 +11925,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           </AssociationSet>
           <AssociationSet Name="FK_Customer_Customer_Groups" Association="Self.FK_Customer_Customer_Groups">
             <End Role="Customer_Groups" EntitySet="Customer_Groups" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Customer_Policy" Association="Self.FK_Customer_Customer_Policy">
+            <End Role="Customer_Policy" EntitySet="Customer_Policy" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_DN_Agency" Association="Self.FK_Customer_DN_Agency">
@@ -11682,6 +11982,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Customer_System_District" Association="Self.FK_Customer_System_District">
             <End Role="System_District" EntitySet="System_District" />
             <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAddress_Customer" Association="Self.FK_CustomerAddress_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
           </AssociationSet>
           <AssociationSet Name="FK_Debt_DN_Users" Association="Self.FK_Debt_DN_Users">
             <End Role="DN_Users" EntitySet="DN_Users" />
@@ -12391,9 +12695,25 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
             <End Role="Order_BedDesk" EntitySet="Order_BedDesk" />
           </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer1" Association="Self.FK_Order_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_Debt_DN_Users" Association="Self.FK_Order_Debt_DN_Users">
             <End Role="DN_Users" EntitySet="DN_Users" />
             <End Role="Order_Debt" EntitySet="Order_Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_DN_Agency" Association="Self.FK_Order_DN_Agency">
+            <End Role="DN_Agency" EntitySet="DN_Agency" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Package_Customer" Association="Self.FK_Order_Package_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order_Package" EntitySet="Order_Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Order" Association="Self.FK_OrderDetails_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_P_Workshop_Company" Association="Self.FK_P_Workshop_Company">
             <End Role="Company" EntitySet="Company" />
@@ -12442,6 +12762,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Product_Promotion_Shop_Product_Detail" Association="Self.FK_Product_Promotion_Shop_Product_Detail">
             <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
             <End Role="Product_Promotion" EntitySet="Product_Promotion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Reading_Customer" Association="Self.FK_Product_Reading_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Product_Reading" EntitySet="Product_Reading" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Sale_DN_Sale" Association="Self.FK_Product_Sale_DN_Sale">
             <End Role="DN_Sale" EntitySet="DN_Sale" />
@@ -12727,6 +13051,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Category" Association="Self.FK_Shop_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Shop_Product" EntitySet="Shop_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Customer1" Association="Self.FK_Shop_Product_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Shop_Product" EntitySet="Shop_Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="Self.FK_Shop_Product_Detail_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
@@ -12983,6 +13315,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySet Name="Comment_Like" EntityType="pmbh.fditech.vnModel.Comment_Like" />
           <EntitySet Name="Companies" EntityType="pmbh.fditech.vnModel.Company" />
           <EntitySet Name="ControlValues" EntityType="pmbh.fditech.vnModel.ControlValue" />
+          <EntitySet Name="CookieLogins" EntityType="pmbh.fditech.vnModel.CookieLogin" />
           <EntitySet Name="Cost_Product" EntityType="pmbh.fditech.vnModel.Cost_Product" />
           <EntitySet Name="Cost_Product_User" EntityType="pmbh.fditech.vnModel.Cost_Product_User" />
           <EntitySet Name="CostTypes" EntityType="pmbh.fditech.vnModel.CostType" />
@@ -12994,10 +13327,13 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySet Name="Customer_Groups" EntityType="pmbh.fditech.vnModel.Customer_Groups" />
           <EntitySet Name="Customer_History" EntityType="pmbh.fditech.vnModel.Customer_History" />
           <EntitySet Name="Customer_Point" EntityType="pmbh.fditech.vnModel.Customer_Point" />
+          <EntitySet Name="Customer_Policy" EntityType="pmbh.fditech.vnModel.Customer_Policy" />
           <EntitySet Name="Customer_question" EntityType="pmbh.fditech.vnModel.Customer_question" />
           <EntitySet Name="Customer_Review" EntityType="pmbh.fditech.vnModel.Customer_Review" />
           <EntitySet Name="Customer_Review_Deltails" EntityType="pmbh.fditech.vnModel.Customer_Review_Deltails" />
           <EntitySet Name="Customer_Reward" EntityType="pmbh.fditech.vnModel.Customer_Reward" />
+          <EntitySet Name="Customer_Type" EntityType="pmbh.fditech.vnModel.Customer_Type" />
+          <EntitySet Name="CustomerAddresses" EntityType="pmbh.fditech.vnModel.CustomerAddress" />
           <EntitySet Name="CustomerContacts" EntityType="pmbh.fditech.vnModel.CustomerContact" />
           <EntitySet Name="Debts" EntityType="pmbh.fditech.vnModel.Debt" />
           <EntitySet Name="Discounts" EntityType="pmbh.fditech.vnModel.Discount" />
@@ -13106,9 +13442,12 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySet Name="News_Job" EntityType="pmbh.fditech.vnModel.News_Job" />
           <EntitySet Name="News_News" EntityType="pmbh.fditech.vnModel.News_News" />
           <EntitySet Name="News_News_Product" EntityType="pmbh.fditech.vnModel.News_News_Product" />
+          <EntitySet Name="Orders" EntityType="pmbh.fditech.vnModel.Order" />
           <EntitySet Name="Order_Debt" EntityType="pmbh.fditech.vnModel.Order_Debt" />
+          <EntitySet Name="Order_Package" EntityType="pmbh.fditech.vnModel.Order_Package" />
           <EntitySet Name="OrderCars" EntityType="pmbh.fditech.vnModel.OrderCar" />
           <EntitySet Name="OrderCarProductDetails" EntityType="pmbh.fditech.vnModel.OrderCarProductDetail" />
+          <EntitySet Name="OrderDetails" EntityType="pmbh.fditech.vnModel.OrderDetail" />
           <EntitySet Name="P_Workshop" EntityType="pmbh.fditech.vnModel.P_Workshop" />
           <EntitySet Name="Partners" EntityType="pmbh.fditech.vnModel.Partner" />
           <EntitySet Name="Payment_Method" EntityType="pmbh.fditech.vnModel.Payment_Method" />
@@ -13122,6 +13461,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySet Name="ProduceProductDetails" EntityType="pmbh.fditech.vnModel.ProduceProductDetail" />
           <EntitySet Name="ProduceProductPrepares" EntityType="pmbh.fditech.vnModel.ProduceProductPrepare" />
           <EntitySet Name="Product_Promotion" EntityType="pmbh.fditech.vnModel.Product_Promotion" />
+          <EntitySet Name="Product_Reading" EntityType="pmbh.fditech.vnModel.Product_Reading" />
           <EntitySet Name="Product_Size" EntityType="pmbh.fditech.vnModel.Product_Size" />
           <EntitySet Name="Product_Value" EntityType="pmbh.fditech.vnModel.Product_Value" />
           <EntitySet Name="ProductCodes" EntityType="pmbh.fditech.vnModel.ProductCode" />
@@ -13496,6 +13836,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Category" EntitySet="Categories" />
             <End Role="Mapping_Category_Recipe" EntitySet="Mapping_Category_Recipe" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Category" Association="pmbh.fditech.vnModel.FK_Shop_Product_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Shop_Product" EntitySet="Shop_Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
@@ -13551,6 +13895,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_P_Workshop_Company" Association="pmbh.fditech.vnModel.FK_P_Workshop_Company">
             <End Role="Company" EntitySet="Companies" />
             <End Role="P_Workshop" EntitySet="P_Workshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CookieLogin_Customer" Association="pmbh.fditech.vnModel.FK_CookieLogin_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CookieLogin" EntitySet="CookieLogins" />
           </AssociationSet>
           <AssociationSet Name="FK_Cost_Product_SetupProduction" Association="pmbh.fditech.vnModel.FK_Cost_Product_SetupProduction">
             <End Role="SetupProduction" EntitySet="SetupProductions" />
@@ -13608,6 +13956,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Customer_Groups" EntitySet="Customer_Groups" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Customer_Customer_Policy" Association="pmbh.fditech.vnModel.FK_Customer_Customer_Policy">
+            <End Role="Customer_Policy" EntitySet="Customer_Policy" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customer_DN_Agency" Association="pmbh.fditech.vnModel.FK_Customer_DN_Agency">
             <End Role="DN_Agency" EntitySet="DN_Agency" />
             <End Role="Customer" EntitySet="Customers" />
@@ -13623,6 +13975,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Customer_System_District" Association="pmbh.fditech.vnModel.FK_Customer_System_District">
             <End Role="System_District" EntitySet="System_District" />
             <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAddress_Customer" Association="pmbh.fditech.vnModel.FK_CustomerAddress_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
           </AssociationSet>
           <AssociationSet Name="FK_DN_Login_Customer" Association="pmbh.fditech.vnModel.FK_DN_Login_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -13648,6 +14004,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ReceiveHistory" EntitySet="ReceiveHistories" />
           </AssociationSet>
+          <AssociationSet Name="FK_Order_Customer1" Association="pmbh.fditech.vnModel.FK_Order_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Package_Customer" Association="pmbh.fditech.vnModel.FK_Order_Package_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order_Package" EntitySet="Order_Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Reading_Customer" Association="pmbh.fditech.vnModel.FK_Product_Reading_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Product_Reading" EntitySet="Product_Reading" />
+          </AssociationSet>
           <AssociationSet Name="FK_ReceiptPayment_Customer" Association="pmbh.fditech.vnModel.FK_ReceiptPayment_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ReceiptPayment" EntitySet="ReceiptPayments" />
@@ -13663,6 +14031,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Shop_ContactOrder_Customer" Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Customer1" Association="pmbh.fditech.vnModel.FK_Shop_Product_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Shop_Product" EntitySet="Shop_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Therapy_History_Customer" Association="pmbh.fditech.vnModel.FK_Therapy_History_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -13775,6 +14147,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Documents_DN_Agency" Association="pmbh.fditech.vnModel.FK_Documents_DN_Agency">
             <End Role="DN_Agency" EntitySet="DN_Agency" />
             <End Role="Document" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_DN_Agency" Association="pmbh.fditech.vnModel.FK_Order_DN_Agency">
+            <End Role="DN_Agency" EntitySet="DN_Agency" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Value_DN_Agency" Association="pmbh.fditech.vnModel.FK_Product_Value_DN_Agency">
             <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -14511,6 +14887,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_TM_News_Comment_News_News" Association="pmbh.fditech.vnModel.FK_TM_News_Comment_News_News">
             <End Role="News_News" EntitySet="News_News" />
             <End Role="TM_News_Comment" EntitySet="TM_News_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Order" Association="pmbh.fditech.vnModel.FK_OrderDetails_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__OrderCar__Worksh__3123FCCD" Association="pmbh.fditech.vnModel.FK__OrderCar__Worksh__3123FCCD">
             <End Role="P_Workshop" EntitySet="P_Workshop" />
@@ -15540,6 +15920,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <Parameter Name="shopid" Mode="In" Type="Int32" />
             <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="Top100CustomerBuy" ReturnType="Collection(pmbh.fditech.vnModel.Top100CustomerBuy_Result)" />
+          <FunctionImport Name="Top100CustomerSell" ReturnType="Collection(pmbh.fditech.vnModel.Top100CustomerSell_Result)" />
           <FunctionImport Name="TruncateTable">
             <Parameter Name="TableName" Mode="In" Type="String" />
           </FunctionImport>
@@ -15995,6 +16377,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="IsExit" Type="Boolean" />
           <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="EnterprisesId" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
           <NavigationProperty Name="DN_Enterprises" Relationship="pmbh.fditech.vnModel.FK_BonusType_DN_Enterprises" FromRole="BonusType" ToRole="DN_Enterprises" />
           <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_BonusType" FromRole="BonusType" ToRole="RewardHistory" />
         </EntityType>
@@ -16144,6 +16527,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Gallery_Picture1" Relationship="pmbh.fditech.vnModel.FK_Gallery_Picture_Category" FromRole="Category" ToRole="Gallery_Picture" />
           <NavigationProperty Name="Gallery_Video" Relationship="pmbh.fditech.vnModel.FK_Gallery_Video_Category" FromRole="Category" ToRole="Gallery_Video" />
           <NavigationProperty Name="Mapping_Category_Recipe" Relationship="pmbh.fditech.vnModel.FK_Mapping_Category_Recipe_Category" FromRole="Category" ToRole="Mapping_Category_Recipe" />
+          <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Category" FromRole="Category" ToRole="Shop_Product" />
           <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Category" FromRole="Category" ToRole="Shop_Product_Detail" />
           <NavigationProperty Name="StorageProducts" Relationship="pmbh.fditech.vnModel.FK_StorageProduct_Category" FromRole="Category" ToRole="StorageProduct" />
           <NavigationProperty Name="TotalStorageWares" Relationship="pmbh.fditech.vnModel.FK_TotalStorageWare_Category" FromRole="Category" ToRole="TotalStorageWare" />
@@ -16269,6 +16653,22 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="AgencyID" Type="Int32" />
           <NavigationProperty Name="CategoryControl" Relationship="pmbh.fditech.vnModel.FK_ControlValues_CategoryControls" FromRole="ControlValue" ToRole="CategoryControl" />
         </EntityType>
+        <EntityType Name="CookieLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsFacebook" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CookieLogin_Customer" FromRole="CookieLogin" ToRole="Customer" />
+        </EntityType>
         <EntityType Name="Cost_Product">
           <Key>
             <PropertyRef Name="ID" />
@@ -16358,24 +16758,43 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="LatitudeBuyRecently" Type="Int64" />
           <Property Name="LongitudeBuyRecently" Type="Int64" />
           <Property Name="AddressBuyRecently" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="idUserFacebook" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idUserGoogle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="ListID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerPolicyID" Type="Int32" />
+          <Property Name="Ratings" Type="Int32" />
+          <Property Name="AvgRating" Type="Double" />
+          <Property Name="LikeTotal" Type="Int32" />
+          <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CashOutWallets" Relationship="pmbh.fditech.vnModel.FK_CashOutWallet_Customer" FromRole="Customer" ToRole="CashOutWallet" />
+          <NavigationProperty Name="CookieLogins" Relationship="pmbh.fditech.vnModel.FK_CookieLogin_Customer" FromRole="Customer" ToRole="CookieLogin" />
           <NavigationProperty Name="StorageWarehousings" Relationship="pmbh.fditech.vnModel.FK__StorageWa__Custo__0C5C8C72" FromRole="Customer" ToRole="StorageWarehousing" />
           <NavigationProperty Name="Customer_Care" Relationship="pmbh.fditech.vnModel.FK_Customer_Care_Customer" FromRole="Customer" ToRole="Customer_Care" />
           <NavigationProperty Name="Customer_Groups" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Groups" FromRole="Customer" ToRole="Customer_Groups" />
+          <NavigationProperty Name="Customer_Policy" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Policy" FromRole="Customer" ToRole="Customer_Policy" />
           <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Customer_DN_Agency" FromRole="Customer" ToRole="DN_Agency" />
           <NavigationProperty Name="DN_Card" Relationship="pmbh.fditech.vnModel.FK_Customer_DN_Card" FromRole="Customer" ToRole="DN_Card" />
           <NavigationProperty Name="Customer_Reward" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_Customer" FromRole="Customer" ToRole="Customer_Reward" />
           <NavigationProperty Name="System_District" Relationship="pmbh.fditech.vnModel.FK_Customer_System_District" FromRole="Customer" ToRole="System_District" />
+          <NavigationProperty Name="CustomerAddresses" Relationship="pmbh.fditech.vnModel.FK_CustomerAddress_Customer" FromRole="Customer" ToRole="CustomerAddress" />
           <NavigationProperty Name="DN_Login" Relationship="pmbh.fditech.vnModel.FK_DN_Login_Customer" FromRole="Customer" ToRole="DN_Login" />
           <NavigationProperty Name="DN_Mail_SSC" Relationship="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer" FromRole="Customer" ToRole="DN_Mail_SSC" />
           <NavigationProperty Name="DN_Mail_SSC1" Relationship="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer1" FromRole="Customer" ToRole="DN_Mail_SSC" />
           <NavigationProperty Name="DN_StatusEmail" Relationship="pmbh.fditech.vnModel.FK_DN_StatusEmail_Customer" FromRole="Customer" ToRole="DN_StatusEmail" />
           <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_DN_Users_Customer" FromRole="Customer" ToRole="DN_Users" />
           <NavigationProperty Name="ReceiveHistories" Relationship="pmbh.fditech.vnModel.FK_HistoryReward_Customer" FromRole="Customer" ToRole="ReceiveHistory" />
+          <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_Customer1" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Order_Package" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer" FromRole="Customer" ToRole="Order_Package" />
+          <NavigationProperty Name="Product_Reading" Relationship="pmbh.fditech.vnModel.FK_Product_Reading_Customer" FromRole="Customer" ToRole="Product_Reading" />
           <NavigationProperty Name="ReceiptPayments" Relationship="pmbh.fditech.vnModel.FK_ReceiptPayment_Customer" FromRole="Customer" ToRole="ReceiptPayment" />
           <NavigationProperty Name="RewardHistories" Relationship="pmbh.fditech.vnModel.FK_RewardHistory_Customer" FromRole="Customer" ToRole="RewardHistory" />
           <NavigationProperty Name="Send_Card" Relationship="pmbh.fditech.vnModel.FK_Send_Card_Customer" FromRole="Customer" ToRole="Send_Card" />
           <NavigationProperty Name="Shop_ContactOrder" Relationship="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Customer" FromRole="Customer" ToRole="Shop_ContactOrder" />
+          <NavigationProperty Name="Shop_Product" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
           <NavigationProperty Name="Therapy_History" Relationship="pmbh.fditech.vnModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
           <NavigationProperty Name="WalletCustomers" Relationship="pmbh.fditech.vnModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
           <NavigationProperty Name="WalletOrder_History" Relationship="pmbh.fditech.vnModel.FK_WalletOrder_History_Customer" FromRole="Customer" ToRole="WalletOrder_History" />
@@ -16446,6 +16865,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Customer_Review" Relationship="pmbh.fditech.vnModel.FK_Customer_Review_Customer_Point" FromRole="Customer_Point" ToRole="Customer_Review" />
           <NavigationProperty Name="Customer_Review_Deltails" Relationship="pmbh.fditech.vnModel.FK_Customer_Review_Deltails_Customer_Point" FromRole="Customer_Point" ToRole="Customer_Review_Deltails" />
         </EntityType>
+        <EntityType Name="Customer_Policy">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartMoney" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EndMoney" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Number" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsShow" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Customers" Relationship="pmbh.fditech.vnModel.FK_Customer_Customer_Policy" FromRole="Customer_Policy" ToRole="Customer" />
+        </EntityType>
         <EntityType Name="Customer_question">
           <Key>
             <PropertyRef Name="ID" />
@@ -16506,8 +16938,44 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="AgencyID" Type="Int32" />
           <Property Name="PriceReward" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PriceReceive" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalCP" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceReceiver" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CashOutWallet" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_Customer" FromRole="Customer_Reward" ToRole="Customer" />
           <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Customer_Reward_DN_Agency" FromRole="Customer_Reward" ToRole="DN_Agency" />
+        </EntityType>
+        <EntityType Name="Customer_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Day" Type="Int32" />
+          <Property Name="PictureId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Border" Type="Boolean" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="CustomerName" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="AddressType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_CustomerAddress_Customer" FromRole="CustomerAddress" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerContact">
           <Key>
@@ -16638,6 +17106,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="DN_Supplier" Relationship="pmbh.fditech.vnModel.FK_DN_Supplier_DN_Agency" FromRole="DN_Agency" ToRole="DN_Supplier" />
           <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_DN_Users_DN_Agency" FromRole="DN_Agency" ToRole="DN_Users" />
           <NavigationProperty Name="Documents" Relationship="pmbh.fditech.vnModel.FK_Documents_DN_Agency" FromRole="DN_Agency" ToRole="Document" />
+          <NavigationProperty Name="Orders" Relationship="pmbh.fditech.vnModel.FK_Order_DN_Agency" FromRole="DN_Agency" ToRole="Order" />
           <NavigationProperty Name="Product_Value" Relationship="pmbh.fditech.vnModel.FK_Product_Value_DN_Agency" FromRole="DN_Agency" ToRole="Product_Value" />
           <NavigationProperty Name="RewardAgencyHistories" Relationship="pmbh.fditech.vnModel.FK_RewardAgencyHistory_DN_Agency" FromRole="DN_Agency" ToRole="RewardAgencyHistory" />
           <NavigationProperty Name="Shop_ContactOrder" Relationship="pmbh.fditech.vnModel.FK_Shop_ContactOrder_DN_Agency" FromRole="DN_Agency" ToRole="Shop_ContactOrder" />
@@ -18499,6 +18968,48 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="News_News" Relationship="pmbh.fditech.vnModel.FK_News_NewsProduct_News_News" FromRole="News_News_Product" ToRole="News_News" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoOrder" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ContactOrderID" Type="Int32" />
+          <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CreatedOnUtc" Type="DateTime" Precision="3" />
+          <Property Name="IsTime" Type="Boolean" />
+          <Property Name="PaymentMethodId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StatusPayment" Type="Byte" />
+          <Property Name="District" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Wards" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="vpc_TransactionNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ShipViettelPost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Coupon" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CouponPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CustomerAddressID" Type="Int32" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Check" Type="Byte" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Payment" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ShopID" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Order_Customer1" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="DN_Agency" Relationship="pmbh.fditech.vnModel.FK_Order_DN_Agency" FromRole="Order" ToRole="DN_Agency" />
+          <NavigationProperty Name="OrderDetails" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Order" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
         <EntityType Name="Order_Debt">
           <Key>
             <PropertyRef Name="ID" />
@@ -18511,6 +19022,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="UserID" Type="Guid" />
           <NavigationProperty Name="DN_Users" Relationship="pmbh.fditech.vnModel.FK_Order_Debt_DN_Users" FromRole="Order_Debt" ToRole="DN_Users" />
+        </EntityType>
+        <EntityType Name="Order_Package">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="Datecreate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DateStart" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Order_Package_Customer" FromRole="Order_Package" ToRole="Customer" />
         </EntityType>
         <EntityType Name="OrderCar">
           <Key>
@@ -18554,6 +19078,28 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="Code" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="OrderCar" Relationship="pmbh.fditech.vnModel.FK__OrderCarP__Order__424E88CF" FromRole="OrderCarProductDetail" ToRole="OrderCar" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="IsTime" Type="Boolean" />
+          <Property Name="StatusPayment" Type="Byte" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Check" Type="Int32" />
+          <Property Name="IsPrestige" Type="Boolean" />
+          <NavigationProperty Name="Order" Relationship="pmbh.fditech.vnModel.FK_OrderDetails_Order" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="P_Workshop">
           <Key>
@@ -18769,6 +19315,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="DN_Promotion" Relationship="pmbh.fditech.vnModel.FK_Product_Promotion_DN_Promotion" FromRole="Product_Promotion" ToRole="DN_Promotion" />
           <NavigationProperty Name="Shop_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_Product_Promotion_Shop_Product_Detail" FromRole="Product_Promotion" ToRole="Shop_Product_Detail" />
+        </EntityType>
+        <EntityType Name="Product_Reading">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="DateCreate" Type="DateTime" Precision="3" />
+          <Property Name="Page" Type="Int32" />
+          <Property Name="IsTime" Type="Boolean" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Product_Reading_Customer" FromRole="Product_Reading" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Product_Size">
           <Key>
@@ -19356,9 +19915,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="QuantityDay" Type="Int32" />
           <Property Name="TypeID" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BiasProduces" Relationship="pmbh.fditech.vnModel.FK_BiasProduce_Shop_Product" FromRole="Shop_Product" ToRole="BiasProduce" />
+          <NavigationProperty Name="Category" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Category" FromRole="Shop_Product" ToRole="Category" />
           <NavigationProperty Name="Cost_Product" Relationship="pmbh.fditech.vnModel.FK_Cost_Product_Shop_Product" FromRole="Shop_Product" ToRole="Cost_Product" />
           <NavigationProperty Name="Cost_Product_User" Relationship="pmbh.fditech.vnModel.FK_Cost_Product_User_Shop_Product" FromRole="Shop_Product" ToRole="Cost_Product_User" />
+          <NavigationProperty Name="Customer" Relationship="pmbh.fditech.vnModel.FK_Shop_Product_Customer1" FromRole="Shop_Product" ToRole="Customer" />
           <NavigationProperty Name="DN_Product_Packet" Relationship="pmbh.fditech.vnModel.FK_DN_Product_Packet_Shop_Product" FromRole="Shop_Product" ToRole="DN_Product_Packet" />
           <NavigationProperty Name="DN_RequestWareDetail" Relationship="pmbh.fditech.vnModel.FK__DN_Reques__Produ__2AE11392" FromRole="Shop_Product" ToRole="DN_RequestWareDetail" />
           <NavigationProperty Name="Export_Product_Detail" Relationship="pmbh.fditech.vnModel.FK_DN_ExportProduct_Shop_Product" FromRole="Shop_Product" ToRole="Export_Product_Detail" />
@@ -21285,6 +21849,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shop_Product_Category">
+          <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shop_Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Shop_Product_Detail_Category">
           <End Type="pmbh.fditech.vnModel.Category" Role="Category" Multiplicity="0..1" />
           <End Type="pmbh.fditech.vnModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="*" />
@@ -21450,6 +22026,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="P_Workshop">
               <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CookieLogin_Customer">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.CookieLogin" Role="CookieLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CookieLogin">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21621,6 +22209,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Customer_Customer_Policy">
+          <End Type="pmbh.fditech.vnModel.Customer_Policy" Role="Customer_Policy" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer_Policy">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerPolicyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_DN_Agency">
           <End Type="pmbh.fditech.vnModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
           <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="*" />
@@ -21666,6 +22266,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAddress_Customer">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.CustomerAddress" Role="CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21743,6 +22355,42 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Customer1">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Package_Customer">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Order_Package" Role="Order_Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Package">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Reading_Customer">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Product_Reading" Role="Product_Reading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_Reading">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReceiptPayment_Customer">
           <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
           <End Type="pmbh.fditech.vnModel.ReceiptPayment" Role="ReceiptPayment" Multiplicity="*" />
@@ -21787,6 +22435,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Shop_ContactOrder">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Customer1">
+          <End Type="pmbh.fditech.vnModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Shop_Product" Role="Shop_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product">
               <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
@@ -22124,6 +22784,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="Document">
               <PropertyRef Name="AgencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_DN_Agency">
+          <End Type="pmbh.fditech.vnModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShopID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -24369,6 +25041,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetails_Order">
+          <End Type="pmbh.fditech.vnModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="pmbh.fditech.vnModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__OrderCar__Worksh__3123FCCD">
           <End Type="pmbh.fditech.vnModel.P_Workshop" Role="P_Workshop" Multiplicity="1" />
           <End Type="pmbh.fditech.vnModel.OrderCar" Role="OrderCar" Multiplicity="*" />
@@ -25521,6 +26205,16 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Type="String" Name="Symbol" Nullable="true" />
           <Property Type="Int32" Name="Level" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="Top100CustomerBuy_Result">
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="Top100CustomerSell_Result">
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25902,6 +26596,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="BonusTypes">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.BonusType">
               <MappingFragment StoreEntitySet="BonusType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="EnterprisesId" ColumnName="EnterprisesId" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="IsExit" ColumnName="IsExit" />
@@ -26139,6 +26834,22 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CookieLogins">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CookieLogin">
+              <MappingFragment StoreEntitySet="CookieLogin">
+                <ScalarProperty Name="IsFacebook" ColumnName="IsFacebook" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cost_Product">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Cost_Product">
               <MappingFragment StoreEntitySet="Cost_Product">
@@ -26191,6 +26902,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
+                <ScalarProperty Name="LikeTotal" ColumnName="LikeTotal" />
+                <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
+                <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+                <ScalarProperty Name="CustomerPolicyID" ColumnName="CustomerPolicyID" />
+                <ScalarProperty Name="TokenDevice" ColumnName="TokenDevice" />
+                <ScalarProperty Name="ListID" ColumnName="ListID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="idUserGoogle" ColumnName="idUserGoogle" />
+                <ScalarProperty Name="idUserFacebook" ColumnName="idUserFacebook" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="AddressBuyRecently" ColumnName="AddressBuyRecently" />
                 <ScalarProperty Name="LongitudeBuyRecently" ColumnName="LongitudeBuyRecently" />
                 <ScalarProperty Name="LatitudeBuyRecently" ColumnName="LatitudeBuyRecently" />
@@ -26285,6 +27008,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Customer_Policy">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Policy">
+              <MappingFragment StoreEntitySet="Customer_Policy">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="EndMoney" ColumnName="EndMoney" />
+                <ScalarProperty Name="StartMoney" ColumnName="StartMoney" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customer_question">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_question">
               <MappingFragment StoreEntitySet="Customer_question">
@@ -26332,10 +27068,47 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Customer_Reward">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Reward">
               <MappingFragment StoreEntitySet="Customer_Reward">
+                <ScalarProperty Name="CashOutWallet" ColumnName="CashOutWallet" />
+                <ScalarProperty Name="PriceReceiver" ColumnName="PriceReceiver" />
+                <ScalarProperty Name="TotalCP" ColumnName="TotalCP" />
                 <ScalarProperty Name="PriceReceive" ColumnName="PriceReceive" />
                 <ScalarProperty Name="PriceReward" ColumnName="PriceReward" />
                 <ScalarProperty Name="AgencyID" ColumnName="AgencyID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer_Type">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Customer_Type">
+              <MappingFragment StoreEntitySet="Customer_Type">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Border" ColumnName="Border" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerAddresses">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.CustomerAddress">
+              <MappingFragment StoreEntitySet="CustomerAddress">
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -28047,6 +28820,46 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Check" ColumnName="Check" />
+                <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="CustomerAddressID" ColumnName="CustomerAddressID" />
+                <ScalarProperty Name="CouponPrice" ColumnName="CouponPrice" />
+                <ScalarProperty Name="Coupon" ColumnName="Coupon" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ShipViettelPost" ColumnName="ShipViettelPost" />
+                <ScalarProperty Name="vpc_TransactionNo" ColumnName="vpc_TransactionNo" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+                <ScalarProperty Name="Wards" ColumnName="Wards" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+                <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+                <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="ContactOrderID" ColumnName="ContactOrderID" />
+                <ScalarProperty Name="NoOrder" ColumnName="NoOrder" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Order_Debt">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order_Debt">
               <MappingFragment StoreEntitySet="Order_Debt">
@@ -28056,6 +28869,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Datecreate" ColumnName="Datecreate" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Pricetotal" ColumnName="Pricetotal" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Package">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Order_Package">
+              <MappingFragment StoreEntitySet="Order_Package">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="Datecreate" ColumnName="Datecreate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -28092,6 +28918,28 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="OrderCarId" ColumnName="OrderCarId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+                <ScalarProperty Name="Check" ColumnName="Check" />
+                <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+                <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -28285,6 +29133,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="PromotionID" ColumnName="PromotionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Reading">
+            <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Product_Reading">
+              <MappingFragment StoreEntitySet="Product_Reading">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="IsTime" ColumnName="IsTime" />
+                <ScalarProperty Name="Page" ColumnName="Page" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -28792,6 +29653,9 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Shop_Product">
             <EntityTypeMapping TypeName="pmbh.fditech.vnModel.Shop_Product">
               <MappingFragment StoreEntitySet="Shop_Product">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="QuantityDay" ColumnName="QuantityDay" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
@@ -30706,6 +31570,24 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="TK_HOME" FunctionName="pmbh.fditech.vnModel.Store.TK_HOME" />
+          <FunctionImportMapping FunctionImportName="Top100CustomerBuy" FunctionName="pmbh.fditech.vnModel.Store.Top100CustomerBuy">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.Top100CustomerBuy_Result">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Top100CustomerSell" FunctionName="pmbh.fditech.vnModel.Store.Top100CustomerSell">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="pmbh.fditech.vnModel.Top100CustomerSell_Result">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="TruncateTable" FunctionName="pmbh.fditech.vnModel.Store.TruncateTable" />
           <FunctionImportMapping FunctionImportName="UpdateAdminRoleActive" FunctionName="pmbh.fditech.vnModel.Store.UpdateAdminRoleActive" />
           <FunctionImportMapping FunctionImportName="UpdateAdminRoleModuleActive" FunctionName="pmbh.fditech.vnModel.Store.UpdateAdminRoleModuleActive" />

@@ -109,3 +109,31 @@ D:\FDI\Gab\FDI.Simple\obj\Debug\FDI.Simple.csproj.CoreCompileInputs.cache
 D:\FDI\Gab\FDI.Simple\obj\Debug\FDI.Simple.csproj.CopyComplete
 D:\FDI\Gab\FDI.Simple\obj\Debug\FDI.Simple.dll
 D:\FDI\Gab\FDI.Simple\obj\Debug\FDI.Simple.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.Simple.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.Simple.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\EntityFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\HtmlAgilityPack.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.Base.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.Mvc.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\EntityFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\HtmlAgilityPack.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\HtmlAgilityPack.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\Microsoft.Web.Infrastructure.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\obj\Debug\FDI.Simple.csprojAssemblyReference.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\obj\Debug\FDI.Simple.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Simple\obj\Debug\FDI.Simple.pdb

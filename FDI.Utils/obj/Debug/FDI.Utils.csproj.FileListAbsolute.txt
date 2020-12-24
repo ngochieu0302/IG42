@@ -117,3 +117,28 @@ D:\FDI\Gab\FDI.Utils\obj\Debug\FDI.Utils.csproj.CoreCompileInputs.cache
 D:\FDI\Gab\FDI.Utils\obj\Debug\FDI.Utils.csproj.CopyComplete
 D:\FDI\Gab\FDI.Utils\obj\Debug\FDI.Utils.dll
 D:\FDI\Gab\FDI.Utils\obj\Debug\FDI.Utils.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Utils.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Utils.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\EPPlus.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Simple.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\log4net.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\Newtonsoft.Json.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\EntityFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\HtmlAgilityPack.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Base.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\FDI.Simple.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\EPPlus.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\log4net.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\Newtonsoft.Json.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\EntityFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\HtmlAgilityPack.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\bin\Debug\HtmlAgilityPack.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\obj\Debug\FDI.Utils.csprojAssemblyReference.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\obj\Debug\FDI.Utils.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\obj\Debug\FDI.Utils.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\obj\Debug\FDI.Utils.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Utils\obj\Debug\FDI.Utils.pdb

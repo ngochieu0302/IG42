@@ -19,6 +19,9 @@ namespace FDI.Base
         public Nullable<int> AgencyID { get; set; }
         public Nullable<decimal> PriceReward { get; set; }
         public Nullable<decimal> PriceReceive { get; set; }
+        public Nullable<decimal> TotalCP { get; set; }
+        public Nullable<decimal> PriceReceiver { get; set; }
+        public Nullable<decimal> CashOutWallet { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
