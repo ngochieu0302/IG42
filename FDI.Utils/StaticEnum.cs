@@ -258,6 +258,7 @@ namespace FDI.Utils
         Gallery = 4,
         Video = 5,
         FAQ = 6,
+        Struct = 171,
     }
 
 

@@ -22,7 +22,7 @@ namespace FDI.DA.DA.StorageWarehouse
 
         public void DeleteMapDnRequest(MapProduceRequestWare mapping)
         {
-            FDIDB.Entry(mapping).State = EntityState.Deleted;
+            FDIDB.Entry(mapping).State = (System.Data.Entity.EntityState)EntityState.Deleted;
         }
         public void DeleteMapDnRequest(IList<MapProduceRequestWare> mappings)
         {

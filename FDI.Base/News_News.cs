@@ -41,8 +41,6 @@ namespace FDI.Base
         public string SEOTitle { get; set; }
         public string SEODescription { get; set; }
         public string SEOKeyword { get; set; }
-        public Nullable<System.Guid> Author { get; set; }
-        public Nullable<System.Guid> Modifier { get; set; }
         public string IP { get; set; }
         public Nullable<bool> NoIndex { get; set; }
         public Nullable<System.DateTime> StartDateDisplay { get; set; }
@@ -59,6 +57,12 @@ namespace FDI.Base
         public string UserName { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string UserActive { get; set; }
+        public Nullable<bool> IsHome { get; set; }
+        public string Author { get; set; }
+        public Nullable<int> StepID { get; set; }
+        public Nullable<int> catid { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<System.Guid> Modifier { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Gallery_Picture Gallery_Picture { get; set; }

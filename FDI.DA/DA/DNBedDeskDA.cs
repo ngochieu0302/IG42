@@ -262,7 +262,7 @@ namespace FDI.DA
         public BedDeskItem GetOrderOrContactByBedId(int id)
         {
             var date = DateTime.Now.TotalSeconds();
-            const int before = (int)Order.Order;
+            const int before = (int)Utils.Order.Order;
             var query = from v in FDIDB.DN_Bed_Desk
                         where v.ID == id
                         select new BedDeskItem

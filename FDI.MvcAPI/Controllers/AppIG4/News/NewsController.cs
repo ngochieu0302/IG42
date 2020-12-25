@@ -23,7 +23,7 @@ namespace FDI.MvcAPI.Controllers.News
         public ActionResult GetItemById(int id)
         {
             var obj = _da.GetItemById(id);
-            return Json(new BaseResponse<NewsItem> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<NewsAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -138,5 +138,37 @@ D:\FDI\Gab\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
 D:\FDI\Gab\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete
 D:\FDI\Gab\FDI.DA\obj\Debug\FDI.DA.dll
 D:\FDI\Gab\FDI.DA\obj\Debug\FDI.DA.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.DA.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.DA.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.DA.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EntityFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EntityFramework.SqlServer.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Memcached.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Simple.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Utils.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\System.Web.Mvc.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EPPlus.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\log4net.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Base.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.CORE.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Simple.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Simple.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Utils.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\FDI.Utils.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EntityFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EntityFramework.SqlServer.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\EPPlus.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\bin\Debug\log4net.xml
 E:\CSharp\ASP.NET CORE\IG4\FDI.DA\obj\Debug\FDI.DA.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\obj\Debug\FDI.DA.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.DA\obj\Debug\FDI.DA.pdb

@@ -2097,6 +2097,16 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetMonthRecentDatetime_Result>("[FDIEntities].[GetMonthRecentDatetime](@i)", iParameter);
         }
     
+        [EdmFunction("FDIEntities", "GetMonthRecentDecimal")]
+        public virtual IQueryable<GetMonthRecentDecimal_Result> GetMonthRecentDecimal(Nullable<int> i)
+        {
+            var iParameter = i.HasValue ?
+                new ObjectParameter("i", i) :
+                new ObjectParameter("i", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetMonthRecentDecimal_Result>("[FDIEntities].[GetMonthRecentDecimal](@i)", iParameter);
+        }
+    
         public virtual int GetStatisticsVote(string languageId)
         {
             var languageIdParameter = languageId != null ?
@@ -2834,13 +2844,13 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsCustomer_Result>("StaticChartsCustomer", iParameter);
         }
     
-        public virtual int StaticChartsCustomerBuyPacket(Nullable<int> i)
+        public virtual ObjectResult<StaticChartsCustomerBuyPacket_Result> StaticChartsCustomerBuyPacket(Nullable<int> i)
         {
             var iParameter = i.HasValue ?
                 new ObjectParameter("i", i) :
                 new ObjectParameter("i", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StaticChartsCustomerBuyPacket", iParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsCustomerBuyPacket_Result>("StaticChartsCustomerBuyPacket", iParameter);
         }
     
         public virtual ObjectResult<StaticChartsShop_Result> StaticChartsShop(Nullable<int> year, Nullable<int> month, Nullable<int> week, Nullable<System.DateTime> d, Nullable<int> cusId, Nullable<int> cateId)

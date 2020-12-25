@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="pmbh.fditech.vnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="FDIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="__EFMigrationsHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -838,9 +838,9 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.ConfigExchange' does not have a
     <Property Name="Name" Type="nvarchar" MaxLength="250" />
     <Property Name="StartMoney" Type="decimal" Precision="18" Scale="0" />
     <Property Name="EndMoney" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="Number" Type="decimal" Precision="18" Scale="0" />
     <Property Name="IsShow" Type="bit" />
     <Property Name="IsDeleted" Type="bit" />
+    <Property Name="Number" Type="int" />
   </EntityType>
   <EntityType Name="Customer_question">
     <Key>
@@ -2681,8 +2681,6 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="SEOTitle" Type="nvarchar" MaxLength="255" />
     <Property Name="SEODescription" Type="nvarchar(max)" />
     <Property Name="SEOKeyword" Type="nvarchar(max)" />
-    <Property Name="Author" Type="uniqueidentifier" />
-    <Property Name="Modifier" Type="uniqueidentifier" />
     <Property Name="IP" Type="nvarchar" MaxLength="50" />
     <Property Name="NoIndex" Type="bit" />
     <Property Name="StartDateDisplay" Type="datetime" />
@@ -2699,6 +2697,12 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.module_aspnetroles_core' does n
     <Property Name="UserName" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="UserActive" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsHome" Type="bit" />
+    <Property Name="Author" Type="nvarchar" MaxLength="255" />
+    <Property Name="StepID" Type="int" />
+    <Property Name="catid" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Modifier" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="News_News_File">
     <Key>
@@ -8568,16 +8572,14 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_News_News_aspnet_Users">
-    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
     <End Role="News_News" Type="Self.News_News" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="aspnet_Users">
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="News_News">
-        <PropertyRef Name="Author" />
+        <PropertyRef Name="Modifier" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -10225,6 +10227,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Step_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Step" Type="Self.Step" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Step">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Storage_DN_Users">
     <End Role="DN_Users" Type="Self.DN_Users" Multiplicity="0..1" />
     <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
@@ -11162,6 +11176,9 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
       </CollectionType>
     </ReturnType>
   </Function>
+  <Function Name="fnSplitlistcustomeri" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+    <Parameter Name="sInputList" Type="int" Mode="In" />
+  </Function>
   <Function Name="GeneralMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="year" Type="int" Mode="In" />
     <Parameter Name="mont" Type="int" Mode="In" />
@@ -11219,6 +11236,18 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
           <Property Name="I" Type="int" />
           <Property Name="S" Type="datetime" />
           <Property Name="E" Type="datetime" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GetMonthRecentDecimal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="i" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="I" Type="int" />
+          <Property Name="S" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="E" Type="decimal" Precision="18" Scale="0" />
         </RowType>
       </CollectionType>
     </ReturnType>
@@ -11509,7 +11538,7 @@ warning 6002: The table/view 'Gab.fditech.vn.dbo.vw_aspnet_WebPartState_User' do
     <Parameter Name="userid" Type="uniqueidentifier" Mode="In" />
     <Parameter Name="lid" Type="nvarchar" Mode="In" />
   </Function>
-  <EntityContainer Name="pmbhfditechvnModelStoreContainer">
+  <EntityContainer Name="FDIModelStoreContainer">
     <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActiveRole" EntityType="Self.ActiveRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddMinute" EntityType="Self.AddMinute" Schema="dbo" store:Type="Tables" />
@@ -13821,6 +13850,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     <AssociationSet Name="FK_Source_Video_Source" Association="Self.FK_Source_Video_Source">
       <End Role="Source" EntitySet="Source" />
       <End Role="Source_Video" EntitySet="Source_Video" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Step_Category" Association="Self.FK_Step_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Step" EntitySet="Step" />
     </AssociationSet>
     <AssociationSet Name="FK_Storage_DN_Users" Association="Self.FK_Storage_DN_Users">
       <End Role="DN_Users" EntitySet="DN_Users" />

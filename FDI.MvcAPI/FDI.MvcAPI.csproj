@@ -54,10 +54,10 @@
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="DataAnnotationsExtensions">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DataAnnotationsExtensions.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.Core.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.Core.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -168,23 +168,23 @@
     </Reference>
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.AspNet.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OAuth.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OpenId.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +214,7 @@
     <Compile Include="Controllers\AppIG4\BaseAppApiController.cs" />
     <Compile Include="Controllers\AppIG4\Category\CategoryAppIG4Controller.cs" />
     <Compile Include="Controllers\AppIG4\Customer\CustomerAppIG4Controller.cs" />
-    <Compile Include="Controllers\AppIG4\HomeController.cs" />
+    <Compile Include="Controllers\AppIG4\HomeAppIG4Controller.cs" />
     <Compile Include="Controllers\AppIG4\News\NewsController.cs" />
     <Compile Include="Controllers\AppIG4\Order\OrderController.cs" />
     <Compile Include="Controllers\AppIG4\Product\ProductAppController.cs" />

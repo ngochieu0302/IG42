@@ -56,25 +56,25 @@
       <HintPath>..\packages\Portable.BouncyCastle.1.8.6\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="DataAnnotationsExtensions">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DataAnnotationsExtensions.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.AspNet">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.AspNet.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.Core">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.Core.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.Core.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OAuth.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth.Consumer">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OpenId.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
-      <HintPath>..\..\LASEN\FDI.Admin\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -86,7 +86,7 @@
       <HintPath>..\packages\EPPlus.5.2.0\lib\net45\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FDI.Memcached">
-      <HintPath>..\..\LASEN\FDI.Web\bin\FDI.Memcached.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\FDI.Memcached.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Glimpse.AspNet.1.8.1\lib\net45\Glimpse.AspNet.dll</HintPath>
@@ -102,7 +102,7 @@
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LASEN\FDI.Admin\bin\log4net.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <HintPath>..\packages\CodeContracts.Unofficial.1.0.0.0\lib\Net35\Microsoft.Contracts.dll</HintPath>

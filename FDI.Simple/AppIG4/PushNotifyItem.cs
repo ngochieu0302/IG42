@@ -12,7 +12,7 @@ namespace FDI.Simple
         public string Title { get; set; }
         public string Content { get; set; }
     }
-    public class TokenDeiveItem : BaseSimple
+    public class TokenDeiveAppIG4Item : BaseSimple
     {
         public string Token { get; set; }
         public string Mobile { get; set; }

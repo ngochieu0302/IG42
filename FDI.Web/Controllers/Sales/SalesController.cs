@@ -58,109 +58,109 @@ namespace FDI.Web.Controllers
             return View(model);
         }
 
-        public ActionResult AddSale(string json, Guid key, int type, int pid = 0, int sl = 0, decimal price = 0, string code = "")
-        {
-            var lstOrder = (List<ModelSaleItem>)Session["AddSale"] ?? new List<ModelSaleItem>();
-            var model = lstOrder.FirstOrDefault(c => c.Key == key);
-            decimal? voucher = 0;
-            if (model != null)
-            {
-                model.Check = false;
-                model.SaleCode = "";
-                model.VoucherPer =  0;
-                model.VoucherPrice = 0;
-                switch (type)
-                {
-                    case 1:
-                        var item = JsonConvert.DeserializeObject<SaleItem>(json);
-                        var saleProducts = _dnSalesDa.GetSaleProduct(item.ProductdetailID, UserItem.AgencyID);
-                        var pricesale = saleProducts.Sale.Any() ? saleProducts.Sale.Sum(c => c.Price) : 0;
-                        var percent = saleProducts.Sale.Any() ? saleProducts.Sale.Sum(c => c.PercentSale) : 0;
-                        item.Key = CodeLogin();
-                        item.PriceSale = pricesale;
-                        item.PercentSale = percent;
-                        var discount = pricesale + (item.Price * percent / 100);
-                        item.Discount = discount;
-                        item.TotalPrice = item.Price - discount;
-                        var itemnew = model.SaleItems.FirstOrDefault(c => c.ProductID == item.ProductID);
-                        if (itemnew != null)
-                        {
-                            itemnew.Quantity += 1;
-                            var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, itemnew.Quantity ?? 1);
-                            itemnew.PromotionPs = checkpromotion;
-                        }
-                        else
-                        {
-                            var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, item.Quantity ?? 1);
-                            item.PromotionPs = checkpromotion;
-                            model.SaleItems.Add(item);
-                        }
-                        break;
-                    case 2:
-                        var itemRemove = model.SaleItems.SingleOrDefault(c => c.ProductID == pid);
-                        if (itemRemove != null) model.SaleItems.Remove(itemRemove);
-                        break;
-                    case 3:
-                        var itemQuan = model.SaleItems.FirstOrDefault(c => c.ProductID == pid);
-                        if (itemQuan != null)
-                        {
-                            itemQuan.Quantity = sl;
-                            var checkpromotion = _da.GetPromotionProduct(itemQuan.ProductdetailID, UserItem.AgencyID, sl);
-                            itemQuan.PromotionPs = checkpromotion;
-                        }
-                        break;
-                    case 4:
-                        var itemPrice = model.SaleItems.FirstOrDefault(c => c.ProductID == pid);
-                        if (itemPrice != null)
-                        {
-                            discount = itemPrice.PriceSale + (price * itemPrice.PercentSale / 100);
-                            itemPrice.Price = price;
-                            itemPrice.TotalPrice = price - discount;
-                        }
-                        break;
-                    case 5:
-                        var itemCus = JsonConvert.DeserializeObject<CusSaleItem>(json);
-                        if (itemCus != null) model.CusSaleItem = itemCus;
-                        break;
-                    case 6:
-                        if (lstOrder.Count == 1)
-                        {
-                            model.SaleItems.Clear();
-                            model.CusSaleItem = new CusSaleItem();
-                            model.Check = true;
-                        }
-                        else lstOrder.Remove(model);
-                        break;
-                    case 7:
-                        if (!string.IsNullOrEmpty(code))
-                        {
-                            var check = _dnSalesDa.CheckSaleCode(code, UserItem.AgencyID);
-                            var totalP = model.SaleItems.Sum(c => c.TotalPrice * c.Quantity);
-                            voucher = check.PriceSale > 0
-                                ? check.PriceSale
-                                : (check.Percent > 0 ? (check.Percent * totalP / 100) : 0);
-                            model.SaleCode = code ?? "";
-                            model.VoucherPer = check.Percent ?? 0;
-                            model.VoucherPrice= check.PriceSale ?? 0;
-                        }
-                        break;
-                }
-                var total = model.SaleItems.Sum(c => c.TotalPrice * c.Quantity);
-                var sale = _dnSalesDa.GetSaleByTotalOrderBirthday((decimal)total, (model.CusSaleItem != null ? (model.CusSaleItem.Birthday ?? 0) : 0), UserItem.AgencyID);
-                model.SaleOrder = sale;
-                var disc = (total * sale.Sum(p => p.PercentSale) / 100) + sale.Sum(p => p.Price) + voucher;
-                model.Total = model.SaleItems.Sum(c => c.Price * c.Quantity);
-                model.Discount =   disc;
-                model.SalePercent = sale.Sum(p => p.PercentSale);
-                model.SalePrice = sale.Sum(p => p.Price);
-                model.TotalPrice = total;
-                var promotion = _da.GetPromotionOrder(UserItem.AgencyID, (decimal)total);
-                model.PromotionOrder = promotion;
-                //model.TotalSaleSP = total;
-                Session["AddSale"] = lstOrder;
-            }
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult AddSale(string json, Guid key, int type, int pid = 0, int sl = 0, decimal price = 0, string code = "")
+        //{
+        //    var lstOrder = (List<ModelSaleItem>)Session["AddSale"] ?? new List<ModelSaleItem>();
+        //    var model = lstOrder.FirstOrDefault(c => c.Key == key);
+        //    decimal? voucher = 0;
+        //    if (model != null)
+        //    {
+        //        model.Check = false;
+        //        model.SaleCode = "";
+        //        model.VoucherPer =  0;
+        //        model.VoucherPrice = 0;
+        //        switch (type)
+        //        {
+        //            case 1:
+        //                var item = JsonConvert.DeserializeObject<SaleItem>(json);
+        //                var saleProducts = _dnSalesDa.GetSaleProduct(item.ProductdetailID, UserItem.AgencyID);
+        //                var pricesale = saleProducts.Sale.Any() ? saleProducts.Sale.Sum(c => c.Price) : 0;
+        //                var percent = saleProducts.Sale.Any() ? saleProducts.Sale.Sum(c => c.PercentSale) : 0;
+        //                item.Key = CodeLogin();
+        //                item.PriceSale = pricesale;
+        //                item.PercentSale = percent;
+        //                var discount = pricesale + (item.Price * percent / 100);
+        //                item.Discount = discount;
+        //                item.TotalPrice = item.Price - discount;
+        //                var itemnew = model.SaleItems.FirstOrDefault(c => c.ProductID == item.ProductID);
+        //                if (itemnew != null)
+        //                {
+        //                    itemnew.Quantity += 1;
+        //                    var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, itemnew.Quantity ?? 1);
+        //                    itemnew.PromotionPs = checkpromotion;
+        //                }
+        //                else
+        //                {
+        //                    var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, item.Quantity ?? 1);
+        //                    item.PromotionPs = checkpromotion;
+        //                    model.SaleItems.Add(item);
+        //                }
+        //                break;
+        //            case 2:
+        //                var itemRemove = model.SaleItems.SingleOrDefault(c => c.ProductID == pid);
+        //                if (itemRemove != null) model.SaleItems.Remove(itemRemove);
+        //                break;
+        //            case 3:
+        //                var itemQuan = model.SaleItems.FirstOrDefault(c => c.ProductID == pid);
+        //                if (itemQuan != null)
+        //                {
+        //                    itemQuan.Quantity = sl;
+        //                    var checkpromotion = _da.GetPromotionProduct(itemQuan.ProductdetailID, UserItem.AgencyID, sl);
+        //                    itemQuan.PromotionPs = checkpromotion;
+        //                }
+        //                break;
+        //            case 4:
+        //                var itemPrice = model.SaleItems.FirstOrDefault(c => c.ProductID == pid);
+        //                if (itemPrice != null)
+        //                {
+        //                    discount = itemPrice.PriceSale + (price * itemPrice.PercentSale / 100);
+        //                    itemPrice.Price = price;
+        //                    itemPrice.TotalPrice = price - discount;
+        //                }
+        //                break;
+        //            case 5:
+        //                var itemCus = JsonConvert.DeserializeObject<CusSaleItem>(json);
+        //                if (itemCus != null) model.CusSaleItem = itemCus;
+        //                break;
+        //            case 6:
+        //                if (lstOrder.Count == 1)
+        //                {
+        //                    model.SaleItems.Clear();
+        //                    model.CusSaleItem = new CusSaleItem();
+        //                    model.Check = true;
+        //                }
+        //                else lstOrder.Remove(model);
+        //                break;
+        //            case 7:
+        //                if (!string.IsNullOrEmpty(code))
+        //                {
+        //                    var check = _dnSalesDa.CheckSaleCode(code, UserItem.AgencyID);
+        //                    var totalP = model.SaleItems.Sum(c => c.TotalPrice * c.Quantity);
+        //                    voucher = check.PriceSale > 0
+        //                        ? check.PriceSale
+        //                        : (check.Percent > 0 ? (check.Percent * totalP / 100) : 0);
+        //                    model.SaleCode = code ?? "";
+        //                    model.VoucherPer = check.Percent ?? 0;
+        //                    model.VoucherPrice= check.PriceSale ?? 0;
+        //                }
+        //                break;
+        //        }
+        //        var total = model.SaleItems.Sum(c => c.TotalPrice * c.Quantity);
+        //        var sale = _dnSalesDa.GetSaleByTotalOrderBirthday((decimal)total, (model.CusSaleItem != null ? (model.CusSaleItem.Birthday ?? 0) : 0), UserItem.AgencyID);
+        //        model.SaleOrder = sale;
+        //        var disc = (total * sale.Sum(p => p.PercentSale) / 100) + sale.Sum(p => p.Price) + voucher;
+        //        model.Total = model.SaleItems.Sum(c => c.Price * c.Quantity);
+        //        model.Discount =   disc;
+        //        model.SalePercent = sale.Sum(p => p.PercentSale);
+        //        model.SalePrice = sale.Sum(p => p.Price);
+        //        model.TotalPrice = total;
+        //        var promotion = _da.GetPromotionOrder(UserItem.AgencyID, (decimal)total);
+        //        model.PromotionOrder = promotion;
+        //        //model.TotalSaleSP = total;
+        //        Session["AddSale"] = lstOrder;
+        //    }
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult AddOrder()
         {

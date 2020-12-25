@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FDI.Base\FDI.Base.csproj">
-      <Project>{689F0818-80D1-4E5C-A498-806C59E25A3A}</Project>
+      <Project>{689f0818-80d1-4e5c-a498-806c59e25a3a}</Project>
       <Name>FDI.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\FDI.CORE\FDI.CORE.csproj">

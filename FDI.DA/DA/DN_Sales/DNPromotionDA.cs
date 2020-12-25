@@ -52,133 +52,133 @@ namespace FDI.DA.DA.DN_Sales
             query = query.SelectByRequest(Request, ref TotalRecord);
             return query.ToList();
         }
-        public DNPromotionItem GetDNPromotionItem(int id)
-        {
-            var query = from c in FDIDB.DN_Promotion
-                        where c.ID == id && c.IsDeleted == false
-                        orderby c.ID descending
-                        select new DNPromotionItem
-                        {
-                            ID = c.ID,
-                            Name = c.Name,
-                            DateEnd = c.DateEnd,
-                            DateStart = c.DateStart,
-                            Note = c.Note,
-                            Quantity = c.Quantity,
-                            AgencyId = c.AgencyId,
-                            Username = c.DN_Users.UserName,
-                            IsAgency = c.IsAgency,
-                            IsAll = c.IsAll,
-                            IsEnd = c.IsEnd,
-                            TotalOrder = c.TotalOrder,
-                            IsOnly = c.IsOnly,
-                            IsShow = c.IsShow,
-                            Type = c.Type,
-                            ListProductDetailItems = c.Product_Promotion.Where(a => (!a.Shop_Product_Detail.IsDelete.HasValue || a.Shop_Product_Detail.IsDelete == false) && a.Shop_Product_Detail.IsShow == true).Select(v => new ShopProductDetailItem
-                            {
-                                ID = v.Shop_Product_Detail.ID,
-                                Name = v.Shop_Product_Detail.Name,
-                                Code = v.Shop_Product_Detail.Code,
-                                Price = v.Shop_Product_Detail.Price,
-                                Quantity = v.Quantity,
-                                UrlPicture = v.Shop_Product_Detail.Gallery_Picture.Folder + v.Shop_Product_Detail.Gallery_Picture.Url
-                            }),
-                            LstCategoryItems = c.Categories.Where(a => (!a.IsDeleted.HasValue || a.IsDeleted == false) && a.IsShow == true).Select(v => new CategoryItem
-                            {
-                                ID = v.Id,
-                                Name = v.Name
-                            }),
-                            ListPromotionDetailItems = c.Promotion_Product.Where(b => (!b.Shop_Product.Shop_Product_Detail.IsDelete.HasValue || b.Shop_Product.Shop_Product_Detail.IsDelete == false) && b.Shop_Product.Shop_Product_Detail.IsShow == true).Select(v => new DNPromotionProductItem
-                            {
-                                ID = v.Shop_Product.ID,
-                                Name = v.Shop_Product.Shop_Product_Detail.Name,
-                                Code = v.Shop_Product.CodeSku,
-                                Price = v.Price,
-                                PriceProduct = (v.Shop_Product.Shop_Product_Detail.Price * v.Shop_Product.Product_Size.Value),
-                                Quantity = v.Quantity,
-                                IsEnd = v.IsEnd,
-                                Percent = v.Percent,
-                                Note = v.Note,
-                                UrlPicture = v.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder + v.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url,
-                            })
-                        };
-            return query.FirstOrDefault();
-        }
+        //public DNPromotionItem GetDNPromotionItem(int id)
+        //{
+        //    var query = from c in FDIDB.DN_Promotion
+        //                where c.ID == id && c.IsDeleted == false
+        //                orderby c.ID descending
+        //                select new DNPromotionItem
+        //                {
+        //                    ID = c.ID,
+        //                    Name = c.Name,
+        //                    DateEnd = c.DateEnd,
+        //                    DateStart = c.DateStart,
+        //                    Note = c.Note,
+        //                    Quantity = c.Quantity,
+        //                    AgencyId = c.AgencyId,
+        //                    Username = c.DN_Users.UserName,
+        //                    IsAgency = c.IsAgency,
+        //                    IsAll = c.IsAll,
+        //                    IsEnd = c.IsEnd,
+        //                    TotalOrder = c.TotalOrder,
+        //                    IsOnly = c.IsOnly,
+        //                    IsShow = c.IsShow,
+        //                    Type = c.Type,
+        //                    ListProductDetailItems = c.Product_Promotion.Where(a => (!a.Shop_Product_Detail.IsDelete.HasValue || a.Shop_Product_Detail.IsDelete == false) && a.Shop_Product_Detail.IsShow == true).Select(v => new ShopProductDetailItem
+        //                    {
+        //                        ID = v.Shop_Product_Detail.ID,
+        //                        Name = v.Shop_Product_Detail.Name,
+        //                        Code = v.Shop_Product_Detail.Code,
+        //                        Price = v.Shop_Product_Detail.Price,
+        //                        Quantity = v.Quantity,
+        //                        UrlPicture = v.Shop_Product_Detail.Gallery_Picture.Folder + v.Shop_Product_Detail.Gallery_Picture.Url
+        //                    }),
+        //                    LstCategoryItems = c.Categories.Where(a => (!a.IsDeleted.HasValue || a.IsDeleted == false) && a.IsShow == true).Select(v => new CategoryItem
+        //                    {
+        //                        ID = v.Id,
+        //                        Name = v.Name
+        //                    }),
+        //                    ListPromotionDetailItems = c.Promotion_Product.Where(b => (!b.Shop_Product.Shop_Product_Detail.IsDelete.HasValue || b.Shop_Product.Shop_Product_Detail.IsDelete == false) && b.Shop_Product.Shop_Product_Detail.IsShow == true).Select(v => new DNPromotionProductItem
+        //                    {
+        //                        ID = v.Shop_Product.ID,
+        //                        Name = v.Shop_Product.Shop_Product_Detail.Name,
+        //                        Code = v.Shop_Product.CodeSku,
+        //                        Price = v.Price,
+        //                        PriceProduct = (v.Shop_Product.Shop_Product_Detail.Price * v.Shop_Product.Product_Size.Value),
+        //                        Quantity = v.Quantity,
+        //                        IsEnd = v.IsEnd,
+        //                        Percent = v.Percent,
+        //                        Note = v.Note,
+        //                        UrlPicture = v.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder + v.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url,
+        //                    })
+        //                };
+        //    return query.FirstOrDefault();
+        //}
         #region GetPromotion in Order
-        public List<DNPromotionPItem> GetPromotionProduct(int id, int agencyid, int quantity)
-        {
-            const int type = (int)TypeEnumPromotion.Product;
-            var date = DateTime.Now.TotalSeconds();
-            var modelS = from o in FDIDB.DN_Promotion
-                         where (!o.IsEnd.HasValue || !o.IsEnd.Value) && (!o.IsDeleted.HasValue || !o.IsDeleted.Value) &&
-                             o.IsShow == true && o.Type == type
-                             && (!o.IsAgency.HasValue || !o.IsAgency.Value || o.AgencyId == agencyid) && o.DateStart < date &&
-                             o.DateEnd > date && (o.Quantity == 0 || o.QuantityUse == 0 || o.Quantity - (o.QuantityUse ?? 0) > 0)
-                             && (o.IsAll == true || o.Product_Promotion.Any(k => k.Shop_Product_Detail.ID == id && k.Quantity <= quantity) ||
-                              o.Categories.Any(k => k.Shop_Product_Detail.Any(p => p.ID == id))
-                              || o.Categories.Any(k => k.Category1.Any(c => c.Shop_Product_Detail.Any(p => p.ID == id))))
-                         select new DNPromotionPItem
-                         {
-                             ID = o.ID,
-                             Title = o.Name,
-                             Quantity = o.Product_Promotion.Where(k => k.Shop_Product_Detail.ID == id).Select(p => p.Quantity).FirstOrDefault() ?? 1,
-                             PromotionSPItems = o.Promotion_Product.Where(p => p.Quantity > 0 && (!p.IsEnd.HasValue || !p.IsEnd.Value))
-                                     .Select(p => new PromotionSPItem
-                                     {
-                                         ID = o.ID,
-                                         Name = o.Name,
-                                         ProductID = p.ProductID,
-                                         UrlImg = p.Shop_Product.Shop_Product_Detail.PictureID.HasValue
-                                                 ? "/Uploads/" + p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder +
-                                                   p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url
-                                                 : "/Content/Admin/images/auto-default.jpg",
-                                         Quantity = p.Quantity,
-                                         Code = p.Shop_Product.Shop_Product_Detail.Code,
-                                         Title = p.Shop_Product.Shop_Product_Detail.Name,
-                                         PriceSp = p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000,
-                                         IsOnly = o.IsOnly,
-                                         Percent = p.Percent,
-                                         Price = p.Price,
-                                         TotalPrice = (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000 ?? 0) - ((p.Percent ?? 0) * (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000 ?? 0) / 100) - (p.Price ?? 0)
-                                     })
+        //public List<DNPromotionPItem> GetPromotionProduct(int id, int agencyid, int quantity)
+        //{
+        //    const int type = (int)TypeEnumPromotion.Product;
+        //    var date = DateTime.Now.TotalSeconds();
+        //    var modelS = from o in FDIDB.DN_Promotion
+        //                 where (!o.IsEnd.HasValue || !o.IsEnd.Value) && (!o.IsDeleted.HasValue || !o.IsDeleted.Value) &&
+        //                     o.IsShow == true && o.Type == type
+        //                     && (!o.IsAgency.HasValue || !o.IsAgency.Value || o.AgencyId == agencyid) && o.DateStart < date &&
+        //                     o.DateEnd > date && (o.Quantity == 0 || o.QuantityUse == 0 || o.Quantity - (o.QuantityUse ?? 0) > 0)
+        //                     && (o.IsAll == true || o.Product_Promotion.Any(k => k.Shop_Product_Detail.ID == id && k.Quantity <= quantity) ||
+        //                      o.Categories.Any(k => k.Shop_Product_Detail.Any(p => p.ID == id))
+        //                      || o.Categories.Any(k => k.Category1.Any(c => c.Shop_Product_Detail.Any(p => p.ID == id))))
+        //                 select new DNPromotionPItem
+        //                 {
+        //                     ID = o.ID,
+        //                     Title = o.Name,
+        //                     Quantity = o.Product_Promotion.Where(k => k.Shop_Product_Detail.ID == id).Select(p => p.Quantity).FirstOrDefault() ?? 1,
+        //                     PromotionSPItems = o.Promotion_Product.Where(p => p.Quantity > 0 && (!p.IsEnd.HasValue || !p.IsEnd.Value))
+        //                             .Select(p => new PromotionSPItem
+        //                             {
+        //                                 ID = o.ID,
+        //                                 Name = o.Name,
+        //                                 ProductID = p.ProductID,
+        //                                 UrlImg = p.Shop_Product.Shop_Product_Detail.PictureID.HasValue
+        //                                         ? "/Uploads/" + p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder +
+        //                                           p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url
+        //                                         : "/Content/Admin/images/auto-default.jpg",
+        //                                 Quantity = p.Quantity,
+        //                                 Code = p.Shop_Product.Shop_Product_Detail.Code,
+        //                                 Title = p.Shop_Product.Shop_Product_Detail.Name,
+        //                                 PriceSp = p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000,
+        //                                 IsOnly = o.IsOnly,
+        //                                 Percent = p.Percent,
+        //                                 Price = p.Price,
+        //                                 TotalPrice = (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000 ?? 0) - ((p.Percent ?? 0) * (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000 ?? 0) / 100) - (p.Price ?? 0)
+        //                             })
 
-                         };
-            return modelS.ToList();
-        }
-        public List<DNPromotionPItem> GetPromotionOrder(int agencyid, decimal totalorder)
-        {
-            const int type = (int)TypeEnumPromotion.Order;
-            var date = DateTime.Now.TotalSeconds();
-            var modelS = from o in FDIDB.DN_Promotion
-                         where (!o.IsEnd.HasValue || !o.IsEnd.Value) && (!o.IsDeleted.HasValue || !o.IsDeleted.Value) && o.IsShow == true && o.Type == type
-                         && (!o.IsAgency.HasValue || !o.IsAgency.Value || o.AgencyId == agencyid) && o.DateStart < date && o.DateEnd > date && (o.Quantity == 0 || o.QuantityUse == 0 || o.Quantity - o.QuantityUse > 0)
-                         && (o.TotalOrder <= totalorder)
-                         select new DNPromotionPItem
-                         {
-                             ID = o.ID,
-                             Title = o.Name,
-                             PromotionSPItems = o.Promotion_Product.Where(p => (!p.IsEnd.HasValue || !p.IsEnd.Value))
-                                      .Select(p => new PromotionSPItem
-                                      {
-                                          ID = p.ID,
-                                          Name = o.Name,
-                                          ProductID = p.ProductID,
-                                          UrlImg = p.Shop_Product.Shop_Product_Detail.PictureID.HasValue
-                                                  ? "/Uploads/" + p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder +
-                                                    p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url
-                                                  : "/Content/Admin/images/auto-default.jpg",
-                                          Quantity = p.Quantity,
-                                          Code = p.Shop_Product.Shop_Product_Detail.Code,
-                                          Title = p.Shop_Product.Shop_Product_Detail.Name,
-                                          PriceSp = p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000,
-                                          IsOnly = o.IsOnly,
-                                          Percent = p.Percent,
-                                          Price = p.Price,
-                                          TotalPrice = (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000 ?? 0) - ((p.Percent ?? 0) * (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value/1000 ?? 0) / 100) - (p.Price ?? 0)
-                                      })
-                         };
-            return modelS.ToList();
-        }
+        //                 };
+        //    return modelS.ToList();
+        //}
+        //public List<DNPromotionPItem> GetPromotionOrder(int agencyid, decimal totalorder)
+        //{
+        //    const int type = (int)TypeEnumPromotion.Order;
+        //    var date = DateTime.Now.TotalSeconds();
+        //    var modelS = from o in FDIDB.DN_Promotion
+        //                 where (!o.IsEnd.HasValue || !o.IsEnd.Value) && (!o.IsDeleted.HasValue || !o.IsDeleted.Value) && o.IsShow == true && o.Type == type
+        //                 && (!o.IsAgency.HasValue || !o.IsAgency.Value || o.AgencyId == agencyid) && o.DateStart < date && o.DateEnd > date && (o.Quantity == 0 || o.QuantityUse == 0 || o.Quantity - o.QuantityUse > 0)
+        //                 && (o.TotalOrder <= totalorder)
+        //                 select new DNPromotionPItem
+        //                 {
+        //                     ID = o.ID,
+        //                     Title = o.Name,
+        //                     PromotionSPItems = o.Promotion_Product.Where(p => (!p.IsEnd.HasValue || !p.IsEnd.Value))
+        //                              .Select(p => new PromotionSPItem
+        //                              {
+        //                                  ID = p.ID,
+        //                                  Name = o.Name,
+        //                                  ProductID = p.ProductID,
+        //                                  UrlImg = p.Shop_Product.Shop_Product_Detail.PictureID.HasValue
+        //                                          ? "/Uploads/" + p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Folder +
+        //                                            p.Shop_Product.Shop_Product_Detail.Gallery_Picture.Url
+        //                                          : "/Content/Admin/images/auto-default.jpg",
+        //                                  Quantity = p.Quantity,
+        //                                  Code = p.Shop_Product.Shop_Product_Detail.Code,
+        //                                  Title = p.Shop_Product.Shop_Product_Detail.Name,
+        //                                  PriceSp = p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000,
+        //                                  IsOnly = o.IsOnly,
+        //                                  Percent = p.Percent,
+        //                                  Price = p.Price,
+        //                                  TotalPrice = (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000 ?? 0) - ((p.Percent ?? 0) * (p.Shop_Product.Shop_Product_Detail.Price * p.Shop_Product.Product_Size.Value / 1000 ?? 0) / 100) - (p.Price ?? 0)
+        //                              })
+        //                 };
+        //    return modelS.ToList();
+        //}
         #endregion
         public List<Shop_Product_Detail> GetListIntProductByArrId(List<int> ltsArrID)
         {

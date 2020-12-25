@@ -48,7 +48,7 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="FDI.Memcached">
-      <HintPath>..\..\LASEN\FDI.Web\bin\FDI.Memcached.dll</HintPath>
+      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\FDI.Memcached.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Contracts.1.0.0\lib\net35\Microsoft.Contracts.dll</HintPath>

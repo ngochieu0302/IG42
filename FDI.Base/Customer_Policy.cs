@@ -23,9 +23,9 @@ namespace FDI.Base
         public string Name { get; set; }
         public Nullable<decimal> StartMoney { get; set; }
         public Nullable<decimal> EndMoney { get; set; }
-        public Nullable<decimal> Number { get; set; }
         public Nullable<bool> IsShow { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> Number { get; set; }
     
         public virtual ICollection<Customer> Customers { get; set; }
     }

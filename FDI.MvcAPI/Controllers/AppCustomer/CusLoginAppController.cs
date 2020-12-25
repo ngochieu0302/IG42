@@ -142,7 +142,7 @@ namespace FDI.MvcAPI.Controllers
                     var date = daten.TotalSeconds();
                     var saltKey = FDIUtils.CreateSaltKey(5);
                     var sha1PasswordHash = FDIUtils.CreatePasswordHash(pass, saltKey);
-                    var obj = new Customer
+                    var obj = new Base.Customer
                     {
                         Address = address,
                         FullName = name,
@@ -220,7 +220,7 @@ namespace FDI.MvcAPI.Controllers
                     //get agencyinfo 
                     var agencyDA = new AgencyDA();
                     var agency = agencyDA.GetItem(customer.PhoneAgency);
-                    var obj = new Customer
+                    var obj = new Base.Customer
                     {
                         FullName = customer.FullName,
                         Phone = customer.Phone,

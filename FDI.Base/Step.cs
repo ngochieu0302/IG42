@@ -26,6 +26,7 @@ namespace FDI.Base
         public Nullable<int> Number { get; set; }
         public string Note { get; set; }
     
+        public virtual Category Category { get; set; }
         public virtual ICollection<News_News> News_News { get; set; }
     }
 }

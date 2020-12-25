@@ -1257,6 +1257,10 @@
     <Folder Include="Content\Admin\sass\module\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FDI.Base\FDI.Base.csproj">
+      <Project>{689f0818-80d1-4e5c-a498-806c59e25a3a}</Project>
+      <Name>FDI.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\FDI.CORE\FDI.CORE.csproj">
       <Project>{2c81f539-50e6-47bf-bc49-54daf90867b9}</Project>
       <Name>FDI.CORE</Name>

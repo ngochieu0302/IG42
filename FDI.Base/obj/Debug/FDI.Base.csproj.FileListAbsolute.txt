@@ -1,38 +1,31 @@
-D:\Projects\Web\Gab\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache
-D:\Projects\Web\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
-D:\Projects\Web\Gab\FDI.Base\bin\Debug\FDI.Base.dll.config
-D:\Projects\Web\Gab\FDI.Base\bin\Debug\FDI.Base.dll
-D:\Projects\Web\Gab\FDI.Base\bin\Debug\FDI.Base.pdb
-D:\Projects\Web\Gab\FDI.Base\bin\Debug\EntityFramework.dll
-D:\Projects\Web\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
-D:\Projects\Web\Gab\FDI.Base\obj\Debug\FDI.Base.dll
-D:\Projects\Web\Gab\FDI.Base\obj\Debug\FDI.Base.pdb
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.dll.config
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.dll
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.pdb
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\bin\Debug\EntityFramework.dll
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.dll
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.pdb
-D:\GAB\FDI.Base\bin\Debug\FDI.Base.dll.config
-D:\GAB\FDI.Base\bin\Debug\FDI.Base.dll
-D:\GAB\FDI.Base\bin\Debug\FDI.Base.pdb
-D:\GAB\FDI.Base\bin\Debug\EntityFramework.dll
-D:\GAB\FDI.Base\bin\Debug\EntityFramework.xml
-D:\GAB\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
-D:\GAB\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
-D:\GAB\FDI.Base\obj\Debug\FDI.Base.dll
-D:\GAB\FDI.Base\obj\Debug\FDI.Base.pdb
-D:\Gab\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache
-D:\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.dll.config
-D:\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.dll
-D:\FDI\Gab\FDI.Base\bin\Debug\FDI.Base.pdb
-D:\FDI\Gab\FDI.Base\bin\Debug\EntityFramework.dll
-D:\FDI\Gab\FDI.Base\bin\Debug\EntityFramework.xml
-D:\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
-D:\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
-D:\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.dll
-D:\FDI\Gab\FDI.Base\obj\Debug\FDI.Base.pdb
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\bin\Debug\FDI.Base.dll.config
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\bin\Debug\FDI.Base.dll
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\bin\Debug\FDI.Base.pdb
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\bin\Debug\EntityFramework.dll
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\obj\Debug\FDI.Base.dll
+F:\ProjectTFS\FDI\nguoicocongninhthuan\FDI.Base\obj\Debug\FDI.Base.pdb
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.dll.config
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.dll
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.pdb
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\EntityFramework.dll
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.dll
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.pdb
+F:\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.csprojResolveAssemblyReference.cache
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.dll.config
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.dll
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\FDI.Base.pdb
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\bin\Debug\EntityFramework.dll
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.dll
+C:\Codecu\ProjectTFS\FDI\ncc_quangngai\FDI.Base\obj\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\bin\Debug\FDI.Base.dll.config
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\bin\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\bin\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\bin\Debug\EntityFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\bin\Debug\EntityFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.pdb

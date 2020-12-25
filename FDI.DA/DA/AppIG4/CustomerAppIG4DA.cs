@@ -162,7 +162,7 @@ namespace FDI.DA
         public List<ListChartAppIG4Item> GetStaticBarcharCustomerInMonth(int month)
         {
             var query = from c in FDIDB.StaticChartsCustomer(month)
-                        select new ListChartItem
+                        select new ListChartAppIG4Item
                         {
                             I = c.I,
                             TotalCus = c.Total
@@ -172,7 +172,7 @@ namespace FDI.DA
         public List<ListChartPacketAppIG4Item> GetStaticCustomerbuyPacketInMonth(int month)
         {
             var query = from c in FDIDB.StaticChartsCustomerBuyPacket(month)
-                select new ListChartPacketItem
+                select new ListChartPacketAppIG4Item
                 {
                     I = c.I,
                     Total = c.Total ?? 0
@@ -182,7 +182,7 @@ namespace FDI.DA
         public List<ListOrderShopChartAppIG4Item> GetStaticChartsShop(int year,int month,int week,DateTime date,int shopId,int cateId)
         {
             var query = from c in FDIDB.StaticChartsShop(year,month,week,date,shopId, cateId)
-                select new ListOrderShopChartItem
+                select new ListOrderShopChartAppIG4Item
                 {
                     I = c.I,
                     Total = c.Total
@@ -206,7 +206,7 @@ namespace FDI.DA
         {
             var query = from c in FDIDB.CookieLogins
                         where c.Name == name && c.CustomerID == id
-                        select new CookieLoginItem
+                        select new CookieLoginAppIG4Item
                         {
                             CustomerID = c.CustomerID,
                             Value = c.Value,
@@ -495,7 +495,7 @@ namespace FDI.DA
                             ID = c.ID,
                             Details = c.Details,
                             Type = c.Sort,
-                            OrderPackageItems = FDIDB.Customer_Type.Where(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.Type == c.Sort).OrderBy(m => m.Sort).Select(m => new CustomerTypeItem
+                            OrderPackageItems = FDIDB.Customer_Type.Where(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.Type == c.Sort).OrderBy(m => m.Sort).Select(m => new CustomerTypeAppIG4Item
                             {
                                 ID = m.ID,
                                 Price = m.Price,
@@ -511,7 +511,7 @@ namespace FDI.DA
 
         public void DeleteTokenRefresh(TokenRefresh token)
         {
-            FDIDB.Entry(token).State = EntityState.Deleted;
+            FDIDB.Entry(token).State = System.Data.Entity.EntityState.Deleted;
         }
         public void InsertToken(TokenRefresh data)
         {
@@ -550,12 +550,12 @@ namespace FDI.DA
         }
         public List<RatingAppIG4Item> GetTotalRating(int shopId)
         {
-            return FDIDB.CustomerRatings.Where(m => m.ShopId == shopId).GroupBy(m => new { m.ShopId, m.TypeRating }).Select(m => new RatingItem() { TypeRating = m.Key.TypeRating, Quantity = m.Count() }).ToList();
+            return FDIDB.CustomerRatings.Where(m => m.ShopId == shopId).GroupBy(m => new { m.ShopId, m.TypeRating }).Select(m => new RatingAppIG4Item() { TypeRating = m.Key.TypeRating, Quantity = m.Count() }).ToList();
         }
         public List<RatingAppIG4Item> GetCommentRatings(int id)
         {
             var query = FDIDB.CustomerRatings.Where(m => m.ShopId == id)
-                .Select(m => new RatingItem
+                .Select(m => new RatingAppIG4Item
                 {
                     TypeRating = m.TypeRating,
                     Title = m.Title,

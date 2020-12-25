@@ -13,7 +13,7 @@ namespace FDI.MvcAPI.Controllers
     [CustomerAuthorize]
     public class AdvertisingIGController : BaseAppApiController
     {
-        AdvertisingIGDA advertisingDA = new AdvertisingIGDA();
+        AdvertisingAppIG4DA advertisingDA = new AdvertisingAppIG4DA();
 
         public ActionResult GetByPosition(int id)
         {

@@ -769,7 +769,7 @@ namespace FDI.DA
         {
             var date = DateTime.Now.TotalSeconds();
             var dates = DateTime.Now.AddMinutes(5).TotalSeconds();
-            const int before = (int)Order.Before;
+            const int before = (int)Utils.Order.Before;
             var query = from c in FDIDB.Shop_ContactOrder
                         where c.StartDate - before < date && c.EndDate > date && c.Status == 1 && (!c.IsDelete.HasValue || c.IsDelete == false) && c.BedDeskID == bedid
                         select new OrderGetItem
@@ -872,7 +872,7 @@ namespace FDI.DA
         {
             var date = DateTime.Now.TotalSeconds();
             var dates = DateTime.Now.AddMinutes(5).TotalSeconds();
-            const int before = (int)Order.Before;
+            const int before = (int)Utils.Order.Before;
             var query = from c in FDIDB.Shop_ContactOrder
                         where c.StartDate - before < date && c.EndDate > date && c.Status == 1 && (!c.IsDelete.HasValue || c.IsDelete == false) && c.BedDeskID == bedid
                         select new OrderGetItem
@@ -928,7 +928,7 @@ namespace FDI.DA
         public OrderGetItem OrderByBedId(int bedid, int agencyid)
         {
             var date = DateTime.Now.TotalSeconds();
-            const int before = (int)Order.Before;
+            const int before = (int)Utils.Order.Before;
             var query = from c in FDIDB.Shop_ContactOrder
                         where c.StartDate - before < date && c.EndDate > date && c.Status == 1 && (!c.IsDelete.HasValue || c.IsDelete == false) && c.BedDeskID == bedid
                         select new OrderGetItem

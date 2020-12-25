@@ -4,739 +4,743 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0f5cfeddaf2f4f1996600c175f1dd393" Name="Diagram1" ZoomLevel="34">
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.C__EFMigrationsHistory" Width="1.5" PointX="2.75" PointY="10.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ActiveRole" Width="1.5" PointX="32.25" PointY="372.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AddMinute" Width="1.5" PointX="48.5" PointY="254.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Advertising" Width="1.5" PointX="24.75" PointY="338.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Advertising_Position" Width="1.5" PointX="22.5" PointY="333.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Advertising_Type" Width="1.5" PointX="22.5" PointY="345.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Agency_Module" Width="1.5" PointX="12" PointY="262.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Area" Width="1.5" PointX="3" PointY="253" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Applications" Width="1.5" PointX="34.5" PointY="369" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Membership" Width="1.5" PointX="42" PointY="366.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Paths" Width="1.5" PointX="36.75" PointY="369" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="39" PointY="372.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="39" PointY="368.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Profile" Width="1.5" PointX="39" PointY="375.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Roles" Width="1.5" PointX="34.5" PointY="374.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_SchemaVersions" Width="1.5" PointX="4.75" PointY="10.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_Users" Width="1.5" PointX="36.75" PointY="372.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.aspnet_WebEvent_Events" Width="1.5" PointX="12.75" PointY="11.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetRoleClaim" Width="1.5" PointX="41.5" PointY="230.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetRole" Width="1.5" PointX="39.25" PointY="239.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetUserClaim" Width="1.5" PointX="43.75" PointY="235" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetUserLogin" Width="1.5" PointX="43.75" PointY="237.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetUser" Width="1.5" PointX="41.5" PointY="233.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AspNetUserToken" Width="1.5" PointX="43.75" PointY="232.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.AttributeOption" Width="1.5" PointX="38.25" PointY="316.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Author" Width="1.5" PointX="28.5" PointY="241" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Author_Product" Width="1.5" PointX="30.75" PointY="248.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Bank" Width="1.5" PointX="2.75" PointY="13.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Banner" Width="1.5" PointX="33.5" PointY="345.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.BiasProduce" Width="1.5" PointX="27.75" PointY="273.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.BonusType" Width="1.5" PointX="33.5" PointY="229.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Car" Width="1.5" PointX="39.25" PointY="286.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CashAdvance" Width="1.5" PointX="33.5" PointY="331.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CashOutWallet" Width="1.5" PointX="20.25" PointY="343.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Cate_Value" Width="1.5" PointX="13.5" PointY="248.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Category" Width="1.5" PointX="30.75" PointY="334.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Category_Product_Recipe" Width="1.5" PointX="41.75" PointY="300.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Category_Recipe" Width="1.5" PointX="38.5" PointY="291.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Category_ShopBrand" Width="1.5" PointX="27" PointY="366.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Category_Tags" Width="1.5" PointX="45.5" PointY="323" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CategoryControl" Width="1.5" PointX="33.75" PointY="318.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Comment_Like" Width="1.5" PointX="43.5" PointY="339" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Company" Width="1.5" PointX="33.5" PointY="349.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ControlValue" Width="1.5" PointX="36" PointY="318.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CookieLogin" Width="1.5" PointX="20.25" PointY="259.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Cost_Product" Width="1.5" PointX="34" PointY="268.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Cost_Product_User" Width="1.5" PointX="38.5" PointY="263.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CostType" Width="1.5" PointX="43.25" PointY="240.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Criteria_Total" Width="1.5" PointX="35.75" PointY="360.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer" Width="1.5" PointX="18" PointY="254" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Action" Width="1.5" PointX="12.75" PointY="8.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Care" Width="1.5" PointX="20.25" PointY="354.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Device" Width="1.5" PointX="4.75" PointY="13.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Groups" Width="1.5" PointX="15.75" PointY="270" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_History" Width="1.5" PointX="15" PointY="7.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Point" Width="1.5" PointX="53.75" PointY="268.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Policy" Width="1.5" PointX="15.75" PointY="266.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_question" Width="1.5" PointX="53.75" PointY="252.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Review" Width="1.5" PointX="56" PointY="259.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Review_Deltails" Width="1.5" PointX="58.25" PointY="260.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Reward" Width="1.5" PointX="26.25" PointY="264.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_Type" Width="1.5" PointX="27.75" PointY="339.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_TypeGroup" Width="1.5" PointX="25.5" PointY="335.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CustomerAddress" Width="1.5" PointX="20.25" PointY="245" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CustomerContact" Width="1.5" PointX="6.75" PointY="14.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.CustomerRating" Width="1.5" PointX="20.25" PointY="339.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Debt" Width="1.5" PointX="33.5" PointY="364.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Discount" Width="1.5" PointX="8.75" PointY="14.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DiscountCode" Width="1.5" PointX="10" PointY="11" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Active" Width="1.5" PointX="9.75" PointY="271.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Agency" Width="1.5" PointX="9.75" PointY="253.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_AttributeDynamic" Width="1.5" PointX="36" PointY="339.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_AttributeGroup" Width="1.5" PointX="33.75" PointY="314.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Bed_Desk" Width="1.5" PointX="48.5" PointY="240.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Calendar" Width="1.5" PointX="9.75" PointY="267.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Calendar_Weekly_Schedule" Width="1.5" PointX="36.5" PointY="244.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Card" Width="1.5" PointX="15.75" PointY="273.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Combo" Width="1.5" PointX="24.75" PointY="370.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_ConfigMonth" Width="1.5" PointX="14.75" PointY="11.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_ContentVote" Width="1.5" PointX="44.5" PointY="259.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Criteria" Width="1.5" PointX="9.75" PointY="242.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_DayOff" Width="1.5" PointX="14.75" PointY="15.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Department" Width="1.5" PointX="37.25" PointY="235.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Discount" Width="1.5" PointX="33.5" PointY="336.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Drawer" Width="1.5" PointX="31.25" PointY="281.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_EDIT_Schedule" Width="1.5" PointX="47.5" PointY="266.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Enterprises" Width="1.5" PointX="7.5" PointY="229.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Exchange" Width="1.5" PointX="50.75" PointY="242.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Export" Width="1.5" PointX="33.5" PointY="238.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_ExportProduct" Width="1.5" PointX="33.5" PointY="354.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_File_Mail" Width="1.5" PointX="35.75" PointY="264" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_GroupAgency" Width="1.5" PointX="7.5" PointY="238.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_GroupEmail" Width="1.5" PointX="29" PointY="263" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Import" Width="1.5" PointX="39.75" PointY="251.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_ImportProduct" Width="1.5" PointX="23" PointY="256.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Level" Width="1.5" PointX="9.75" PointY="274.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Login" Width="1.5" PointX="36.5" PointY="260.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Mail_SSC" Width="1.5" PointX="33.5" PointY="258.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Module" Width="1.5" PointX="41.5" PointY="266.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_News_Comment" Width="1.5" PointX="33.5" PointY="272" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_NewsSSC" Width="1.5" PointX="31.25" PointY="278.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_OrderCard" Width="1.5" PointX="13.5" PointY="274.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Packet" Width="1.5" PointX="25.5" PointY="243.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Product_Packet" Width="1.5" PointX="27.75" PointY="245.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Promotion" Width="1.5" PointX="39.5" PointY="303.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Question" Width="1.5" PointX="12.75" PointY="4.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_RequestWare" Width="1.5" PointX="5.25" PointY="248" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_RequestWareDetail" Width="1.5" PointX="7.5" PointY="247.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_RequestWarehousing" Width="1.5" PointX="18.75" PointY="250" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_RequestWareSupplier" Width="1.5" PointX="10.5" PointY="250.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Results_Questions" Width="1.5" PointX="15" PointY="4" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Role_ModuleActive" Width="1.5" PointX="49.75" PointY="268.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Roles" Width="1.5" PointX="12" PointY="257.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Room" Width="1.5" PointX="46.25" PointY="240.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Salary" Width="1.5" PointX="39.5" PointY="272.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Sale" Width="1.5" PointX="36.5" PointY="297.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Schedule" Width="1.5" PointX="45.25" PointY="286.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Setting" Width="1.5" PointX="15" PointY="262" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Stack" Width="1.5" PointX="0.75" PointY="16.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Status" Width="1.5" PointX="46.25" PointY="244.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_StatusEmail" Width="1.5" PointX="40.75" PointY="262.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Supplier" Width="1.5" PointX="12" PointY="303" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_SupplierProduct" Width="1.5" PointX="33" PointY="322.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Time_Group" Width="1.5" PointX="2.75" PointY="16.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Time_Job" Width="1.5" PointX="36.5" PointY="271.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Total_SalaryMonth" Width="1.5" PointX="33.5" PointY="358.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Tree" Width="1.5" PointX="41.75" PointY="245.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_TypeCriteria" Width="1.5" PointX="7.5" PointY="243.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Unit" Width="1.5" PointX="28.5" PointY="336" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_User_BedDesk" Width="1.5" PointX="36.5" PointY="268.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_User_ModuleActive" Width="1.5" PointX="46.75" PointY="262.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Users" Width="1.5" PointX="31.25" PointY="251.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_UsersInRoles" Width="1.5" PointX="39.5" PointY="247" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Vote" Width="1.5" PointX="46.75" PointY="277.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Weekly" Width="1.5" PointX="32" PointY="243.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DN_Weekly_Schedule" Width="1.5" PointX="34.25" PointY="243.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.DocumentFile" Width="1.5" PointX="35.75" PointY="282.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Document" Width="1.5" PointX="33.5" PointY="276.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Enterprise_Setting" Width="1.5" PointX="10.75" PointY="16.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Export_Product" Width="1.5" PointX="35.75" PointY="355" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Export_Product_Detail" Width="1.5" PointX="27.75" PointY="248.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Export_Product_Value" Width="1.5" PointX="35.75" PointY="238.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FAQ_Answer" Width="1.5" PointX="35.25" PointY="415.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FAQ_Category" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FAQ_Question" Width="1.5" PointX="33" PointY="413.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FAQ_Question_Product_Mapping" Width="1.5" PointX="35.25" PointY="412.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FreightWarehouse" Width="1.5" PointX="35.75" PointY="310.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.FreightWareHouse_Active" Width="1.5" PointX="35.75" PointY="287.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Gallery_Picture" Width="1.5" PointX="22.5" PointY="337.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Gallery_Video" Width="1.5" PointX="15.75" PointY="249.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.GoogleMap" Width="1.5" PointX="5.25" PointY="256.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Holiday" Width="1.5" PointX="16.75" PointY="11.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.HtmlContent" Width="1.5" PointX="3" PointY="7.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.HtmlMap" Width="1.5" PointX="5.25" PointY="2.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Language" Width="1.5" PointX="24.75" PointY="328.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.LevelVote" Width="1.5" PointX="42.25" PointY="282.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.LinkWebsite" Width="1.5" PointX="16.75" PointY="14.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Log" Width="1.5" PointX="17.75" PointY="0.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Mapping_Category_Recipe" Width="1.5" PointX="40.75" PointY="317.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Mapping_ProductDetail_Recipe" Width="1.5" PointX="51.25" PointY="290.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.MapProduceRequestWare" Width="1.5" PointX="7.5" PointY="250.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Market" Width="1.5" PointX="7.5" PointY="257.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.MenuGroup" Width="1.5" PointX="7.75" PointY="2.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Menu" Width="1.5" PointX="10" PointY="1.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Module" Width="1.5" PointX="32.25" PointY="375.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ModuleControl" Width="1.5" PointX="3" PointY="2.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ModulePage" Width="1.5" PointX="0.75" PointY="1.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ModuleSetting" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.News_Comment" Width="1.5" PointX="41.25" PointY="339.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.News_CommentReport" Width="1.5" PointX="43.5" PointY="342" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.News_Job" Width="1.5" PointX="41" PointY="312.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.News_News" Width="1.5" PointX="39" PointY="336.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.News_News_Product" Width="1.5" PointX="41.25" PointY="349.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Order" Width="1.5" PointX="28.5" PointY="252.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Order_Debt" Width="1.5" PointX="33.5" PointY="342" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Order_Package" Width="1.5" PointX="30" PointY="297.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.OrderCar" Width="1.5" PointX="41.5" PointY="290.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.OrderCarProductDetail" Width="1.5" PointX="43.75" PointY="297.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.OrderDetail" Width="1.5" PointX="38.75" PointY="256.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.P_Workshop" Width="1.5" PointX="44.75" PointY="300.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Partner" Width="1.5" PointX="24.75" PointY="360.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Payment_Method" Width="1.5" PointX="50.75" PointY="272.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Payments_Order" Width="1.5" PointX="53" PointY="264.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.PaymentVoucher" Width="1.5" PointX="45.5" PointY="247.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.PolicyAgency" Width="1.5" PointX="33" PointY="422.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Position" Width="1.5" PointX="12.75" PointY="268.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.PriceAgency" Width="1.5" PointX="17.75" PointY="3.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Produce" Width="1.5" PointX="39.5" PointY="298.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProduceCatogory" Width="1.5" PointX="46.75" PointY="281.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProduceProductDetail" Width="1.5" PointX="43.75" PointY="293.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProduceProductPrepare" Width="1.5" PointX="46.75" PointY="295.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Product_Promotion" Width="1.5" PointX="44.75" PointY="305.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Product_Reading" Width="1.5" PointX="20.25" PointY="347.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Product_Size" Width="1.5" PointX="23.25" PointY="249.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Product_Value" Width="1.5" PointX="15.75" PointY="255.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProductCode" Width="1.5" PointX="30" PointY="273.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProductCode_CostUser" Width="1.5" PointX="47.75" PointY="258.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProductDetail_Recipe" Width="1.5" PointX="49" PointY="277.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProductRating" Width="1.5" PointX="30.75" PointY="292" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ProductValue_Recipe" Width="1.5" PointX="51.25" PointY="278.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Promotion" Width="1.5" PointX="7.75" PointY="8.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Promotion_Procuct" Width="1.5" PointX="10" PointY="8.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Promotion_Product" Width="1.5" PointX="41.75" PointY="305.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.PurchaseOrder" Width="1.5" PointX="43.75" PointY="276.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.PushNotification" Width="1.5" PointX="17.75" PointY="6.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ReceiptPayment" Width="1.5" PointX="41.5" PointY="256" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ReceiptVoucher" Width="1.5" PointX="45.5" PointY="253.25" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ReceiveHistory" Width="1.5" PointX="42.5" PointY="250.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ReciveAgencyHistory" Width="1.5" PointX="16.75" PointY="17.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Repay" Width="1.5" PointX="33.5" PointY="233.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.RewardAgencyHistory" Width="1.5" PointX="53" PointY="256.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.RewardHistory" Width="1.5" PointX="35.75" PointY="253.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Role_ModuleActive" Width="1.5" PointX="36.75" PointY="377.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.SaleCode" Width="1.5" PointX="38.75" PointY="310.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Send_Card" Width="1.5" PointX="23.25" PointY="263.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.SetupProduction" Width="1.5" PointX="36.25" PointY="276" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop" Width="1.5" PointX="18.75" PointY="9.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Brands" Width="1.5" PointX="24.75" PointY="364.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_ContactOrder" Width="1.5" PointX="44.5" PointY="264.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_ContactOrder_Details" Width="1.5" PointX="46.75" PointY="317.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Order_Details" Width="1.5" PointX="27.75" PointY="307.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Orders" Width="1.5" PointX="50.75" PointY="255.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Product" Width="1.5" PointX="25.5" PointY="247.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Product_Detail" Width="1.5" PointX="33.5" PointY="293.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Product_Picture" Width="1.5" PointX="27.75" PointY="295.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Product_Type" Width="1.5" PointX="24.75" PointY="375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Shop_Product_Value" Width="1.5" PointX="25.5" PointY="238.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Size" Width="1.5" PointX="18.75" PointY="13.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Source" Width="1.5" PointX="38.5" PointY="331.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Source_Video" Width="1.5" PointX="21" PointY="250.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ST_Group" Width="1.5" PointX="47.75" PointY="273.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Step" Width="1.5" PointX="41.25" PointY="336" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Storage" Width="1.5" PointX="33.5" PointY="252.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.StorageFreightWarehouse" Width="1.5" PointX="33.5" PointY="325.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.StorageProduct" Width="1.5" PointX="36.25" PointY="332.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.StorageWarehousing" Width="1.5" PointX="20.25" PointY="263.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.StorageWarehousingLog" Width="1.5" PointX="45.5" PointY="273.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.StorageWarehousingUser" Width="1.5" PointX="42.5" PointY="273.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.SupplierAmountProduct" Width="1.5" PointX="36.5" PointY="304.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.sysdiagram" Width="1.5" PointX="18.75" PointY="16.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_City" Width="1.5" PointX="0.75" PointY="252.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_Color" Width="1.5" PointX="23.25" PointY="252.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_Config" Width="1.5" PointX="19.75" PointY="0.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_Country" Width="1.5" PointX="0.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_District" Width="1.5" PointX="3" PointY="261.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_File" Width="1.5" PointX="41.25" PointY="373.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_FileType" Width="1.5" PointX="24.75" PointY="332.125" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_Menu" Width="1.5" PointX="2.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_MessageTemplate" Width="1.5" PointX="4.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.System_Tag" Width="1.5" PointX="43.25" PointY="317.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TemplateDocument" Width="1.5" PointX="6.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Therapy_History" Width="1.5" PointX="20.25" PointY="350.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_Answer" Width="1.5" PointX="8.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_CategoryAnswer" Width="1.5" PointX="10.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_Customer" Width="1.5" PointX="31.5" PointY="223.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_Module_Rating" Width="1.5" PointX="36.75" PointY="248.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_News_Comment" Width="1.5" PointX="46.25" PointY="339.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_Products_Comment" Width="1.5" PointX="33.75" PointY="247.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TM_Rate_Comment" Width="1.5" PointX="39" PointY="242.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TokenDevice" Width="1.5" PointX="12.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TokenOtp" Width="1.5" PointX="18.75" PointY="19.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TokenRefresh" Width="1.5" PointX="20.75" PointY="7.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TotalProductToDay" Width="1.5" PointX="36" PointY="323.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TotalStorageWare" Width="1.5" PointX="33" PointY="418.625" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Type" Width="1.5" PointX="12.75" PointY="265.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.User_ModuleActive" Width="1.5" PointX="42" PointY="377.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.UserProfile" Width="1.5" PointX="15" PointY="0.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Vote_Type" Width="1.5" PointX="20.75" PointY="10.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Wallet_Agency" Width="1.5" PointX="38.75" PointY="268.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.WalletCustomer" Width="1.5" PointX="20.25" PointY="254.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.WalletOrder_History" Width="1.5" PointX="53" PointY="260.375" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Wallet" Width="1.5" PointX="20.25" PointY="336.5" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Ward" Width="1.5" PointX="5.25" PointY="261.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.webpages_Membership" Width="1.5" PointX="20.75" PointY="14.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.webpages_OAuthMembership" Width="1.5" PointX="20.75" PointY="18.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.webpages_Roles" Width="1.5" PointX="12.75" PointY="0.875" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.ConfigExchange" Width="1.5" PointX="21.75" PointY="0.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TempCustomer" Width="1.5" PointX="14.75" PointY="21.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.TempShop_Product" Width="1.5" PointX="20.75" PointY="21.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.Customer_LastOrder" Width="1.5" PointX="21.75" PointY="4.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_Applications" Width="1.5" PointX="22.75" PointY="7.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_MembershipUsers" Width="1.5" PointX="22.75" PointY="10.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_Profiles" Width="1.5" PointX="22.75" PointY="17.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_Roles" Width="1.5" PointX="22.75" PointY="20.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_Users" Width="1.5" PointX="23.75" PointY="0.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_UsersInRoles" Width="1.5" PointX="0.75" PointY="23.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_WebPartState_Paths" Width="1.5" PointX="23.75" PointY="4.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_WebPartState_Shared" Width="1.5" PointX="6.75" PointY="23.75" />
-        <EntityTypeShape EntityType="pmbh.fditech.vnModel.vw_aspnet_WebPartState_User" Width="1.5" PointX="16.75" PointY="23.75" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Role_ModuleActive_ActiveRole" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_User_ModuleActive_ActiveRole" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_AddMinute" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Advertising_Advertising_Position" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Advertising_Advertising_Type" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Advertising_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Agency_Module_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Agency_Module_DN_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Area_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Area_System_City" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWare_Area" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Market_Area" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Me__Appli__3DE82FB7" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Pa__Appli__3FD07829" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Ro__Appli__44952D46" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Us__Appli__4589517F" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Me__UserI__3EDC53F0" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Pe__PathI__40C49C62" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Pe__PathI__41B8C09B" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Pe__UserI__42ACE4D4" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__aspnet_Pr__UserI__43A1090D" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Role_ModuleActive_aspnet_Roles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_News_aspnet_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_User_ModuleActive_aspnet_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AspNetRoleClaims_AspNetRoles_RoleId" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AspNetUserClaims_AspNetUsers_UserId" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AspNetUserLogins_AspNetUsers_UserId" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AspNetUserTokens_AspNetUsers_UserId" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AttributeOptions_DN_AttributeDynamic" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_AttributeOptions_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Author_Product_Author" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Author_Product_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Banner__UserId__43CCBCED" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Banner__UserUpda__44C0E126" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_BiasProduce_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_BiasProduce" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_User_BiasProduce" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductCode_BiasProduce" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_BonusType_DN_Enterprises" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_BonusType" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Car__UnitID__1B34BBAE" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__CarId__2D536BE9" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CashAdvance_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CashAdvance_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CashAdvance_DN_Users2" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CashOutWallet_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Cate_Valu__Purch__48FB865E" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cate_Value_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cate_Value_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cate_Value_DN_RequestWare" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cate_Value_DN_Unit" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cate_Value_StorageProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWarehousing_Cate_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Gallery_Video_Cate_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Value_Cate_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Cate_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Category__UnitID__302FD894" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Suppli__Produ__01A9F3D5" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__Produc__2C5F47B0" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__PolicyAge__Categ__104D18E7" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Produce__Product__64A3A0D3" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__Produ__26716430" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__SupplierA__Produ__38FA28BF" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__TotalProd__Produ__6D6DF0FE" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Recipe_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWare_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FAQ_Question_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Gallery_Picture_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Gallery_Video_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Mapping_Category_Recipe_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageProduct_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TotalStorageWare_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Product_Recipe_Category_Recipe" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Product_Recipe_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Recipe_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Mapping_Category_Recipe_Category_Recipe" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_ShopBrand_Shop_Brand" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Category_Tags_System_Tag" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ControlValues_CategoryControls" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_AttributeDynamic_CategoryControls" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Comment_Like_News_Comment" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Company_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_P_Workshop_Company" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CookieLogin_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_SetupProduction" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_User_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_User_SetupProduction" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Cost_Product_User_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductCode_CostUser_Cost_Product_User" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_PaymentVouchers_CostType" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptPayment_CostType" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptVouchers_CostType" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Criteria_Total_DN_Criteria" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Criteria_Total_DN_Total_SalaryMonth" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__StorageWa__Custo__0C5C8C72" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Care_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Customer_Groups" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Customer_Policy" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_DN_Card" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Reward_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_System_District" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CustomerAddress_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_CustomerRating_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Login_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Mail_SSC_Customer1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_StatusEmail_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Users_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_HistoryReward_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_Customer1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_Package_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_OrderDetails_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Reading_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductRating_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptPayment_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Send_Card_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Customer1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Therapy_History_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_WalletCustomer_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_WalletOrder_History_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Wallets_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_History_Customer_Action" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_question_Customer_Point" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Customer_Point" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Deltails_Customer_Point" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Customer_question" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Deltails_Customer_question" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Deltails_Customer_Review" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Review_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Reward_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Type_Customer_TypeGroup" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Customer_Type_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_Package_Customer_Type" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_CustomerAddress" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_CustomerAddress" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Debt_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DiscountCodes_Promotion" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Role_ModuleActive_DN_Active" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_ModuleActive_Active" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Agency_DN_Enterprises" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Agency_DN_GroupAgency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Agency_Market" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Agency_ST_Group" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ImportProduct_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWare_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Roles_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Setting_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Supplier_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Users_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Documents_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Value_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardAgencyHistory_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageWarehousing_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Wallet_Agency_DN_Agency" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_AttributeDynamic_DN_AttributeGroup" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Bed_Desk_DN_Room" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Bed_Desk_DN_Status" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Exchange_DN_Bed_Desk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Exchange_DN_Bed_Desk1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_BedDesk_DN_Bed_Desk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_DN_Bed_Desk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Bed_Desk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Calendar_Weekly_Schedule_DN_Calendar" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Calendar_Weekly_Schedule_DN_Weekly_Schedule" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Card_DN_OrderCard" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Send_Card_DN_Card" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Combo_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Details_DN_Combo" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_DN_Combo" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ContentVote_DN_Tree" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ContentVote_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ContentVote_DN_Vote" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ContentVote_LevelVote" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Criteria_DN_TypeCriteria" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Salary_DN_Criteria" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_UsersInRoles_DN_Department" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Discount_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Discount_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Documents_DN_Drawer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_EDIT_Schedule_DN_Schedule" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_EDIT_Schedule_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_EDIT_Schedule_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Export_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Export_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Export_Product_Value_DN_Export" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ExportProduct_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Exprort_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ExportProduct_DN_Exprort" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Import_Shop_Product_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Import_Storage" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Export_Product_Value_DN_Import" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Import__UserC__40313633" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Import__UserU__41255A6C" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ImportProduct_Product_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FreightWareHouse_Active_DN_ImportProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_DN_ImportProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_DN_ImportProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Roles_DN_Level" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Room_DN_Level" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Login_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Mail_SSC_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Mail_SSC_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_StatusEmail_DN_Mail_SSC" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Module_DN_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Role_ModuleActive_DN_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_ModuleActive_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_News_Comment_DN_NewsSSC" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_News_Comment_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Product_Packet_DN_Packet" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Product_Packet_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Promotion_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Promotion_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Promotion_DN_Promotion" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Promotion_Product_DN_Promotion" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Results_Questions_DN_Question" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Reques__Reque__29ECEF59" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Reques__Reque__641990EE" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__MapProduc__Reque__48C67C34" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWare_Market" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWare_StorageWarehousing" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Reques__Produ__2AE11392" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWarehousing_StorageWarehousing" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Reques__Suppl__650DB527" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_RequestWareSupplier_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Role_ModuleActive_DN_Roles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_UsersI__RoleI__116A8EFB" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Salary_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Sale_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Sale_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_SaleCode_DN_Sale" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Time_Job_DN_Schedule" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Time_Job_DN_Schedule1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Weekly_Schedule_DN_Schedule1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Setting_Position" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Setting_Type" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_Suppli__Suppl__029E180E" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__Suppli__2B6B2377" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__SupplierA__Suppl__38060486" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__TotalProd__Suppl__6C79CCC5" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Documents_DN_Supplier" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageProduct_DN_Supplier" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Time_Job_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Total_SalaryMonth_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Tree_DN_UsersInRoles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Value_DN_Unit" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_DN_Unit" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Value_DN_Unit" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_BedDesk_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_BedDesk_DN_Weekly_Schedule" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_User_ModuleActive_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__DN_UsersI__UserI__125EB334" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__UserCr__2E479022" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__UserUp__2F3BB45B" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Produce__UserId__6597C50C" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Produce__UserUpd__668BE945" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProduceCa__UserI__3E48EDC1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProduceCa__UserU__3F3D11FA" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__UserI__27658869" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__UserU__2859ACA2" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__PurchaseO__UserC__47133DEC" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__PurchaseO__UserU__48076225" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__StorageWa__UserI__0E0FCABA" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__StorageWa__UserI__3A235722" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__SupplierA__UserA__39EE4CF8" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Documents_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_Debt_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_P_Workshop_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_PaymentVouchers_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_PaymentVouchers_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductCode_CostUser_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductDetail_Recipe_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptPayment_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptPayment_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiptVouchers_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiveHistory_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Repay_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Repay_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_DN_Users2" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Storage_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageFreightWarehouse_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageFreightWarehouse_DN_Users1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageProduct_DN_Users" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_Weekly_Schedule_DN_Weekly1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DocumentFiles_Documents" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Wallet_Agency_Documents" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ExportProduct_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ExportProduct_Shop_Product_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_DN_ExportProduct_StorageProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FAQ_Answer_FAQ_Question" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FAQ_Category_FAQ_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FAQ_QuestionProduct_FAQ_Question" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FreightWarehouse_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FreightWarehouse_StorageFreightWarehouse" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FreightWareHouse_Active_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_FreightWareHouse_Active_StorageFreightWarehouse" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Gallery_Video_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Languages_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_News_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Partners_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Brand_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Detail_Gallery_Picture1" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Picture_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ProductType_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Source_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_System_FileType_Gallery_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Gallery_Video_Source" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Source_Video_Gallery_Video" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_GoogleMap_System_City" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_GoogleMap_System_District" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_HtmlMap_HtmlContent" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_HtmlMap_ModuleControl" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Mapping_ProductDetail_Recipe_ProductDetail_Recipe" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Mapping_ProductDetail_Recipe_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__MapProduc__Produ__47D257FB" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Market_Wards" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Menus_MenuGroups" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Menus_Menus" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Module_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Role_ModuleActive_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_User_ModuleActive_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ModuleControl_ModulePage" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ModuleSetting_ModuleControl" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_Comment_News_Comment" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_Comment_News_News" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_CommentReport_News_Comment" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_News_NewsProduct_News_News" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_News_Comment_News_News" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Order_System_City" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_OrderDetails_Order" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_Order" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCar__Worksh__3123FCCD" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__OrderCarP__Order__424E88CF" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__PurchaseO__Order__461F19B3" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_OrderDetails_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Payments_Order_Payment_Method" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Payments_Order_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProduceCa__Produ__3C60A54F" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__Produ__0E99DA9F" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__Produ__257D3FF7" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__Product_V__Produ__42197EA5" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProduceCa__Produ__3D54C988" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__Produ__0F8DFED8" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__ProducePr__SizeI__10822311" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Promotion_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Product_Size" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Product_Value_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Product_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductCode_CostUser_ProductCode" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductDetail_Recipe_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductValue_Recipe_ProductDetail_Recipe" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductRating_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ProductValue_Recipe_Shop_Product_Value" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Promotion_Procuct_Promotion" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Promotion_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_ReceiveHistory_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardAgencyHistory_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_RewardHistory_WalletCustomer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Details_Shop_ContactOrder" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Orders_Shop_ContactOrder" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_ContactOrder_Details_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Order_Details_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_WalletOrder_History_Shop_Orders" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Picture_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Shop_Product_Detail" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_Shop_Product_Type" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Shop_Product_System_Color" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Module_Rating_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Products_Comment_Shop_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Source_StorageProduct" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Source_Video_Source" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_StorageProduct_TotalStorageWare" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__StorageWa__Stora__0F03EEF3" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK__StorageWa__Stora__392F32E9" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_District_City" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_Wards_System_District" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_System_File_System_FileType" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Module_Rating_TM_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_News_Comment_TM_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Products_Comment_TM_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Rate_Comment_TM_Customer" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FK_TM_Rate_Comment_TM_Module_Rating" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.aspnet_UsersInRoles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.BedDesk_Packet" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.ContactOrder_BedDesk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.ContentVote_Map" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.CustomerRatingPicture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Category_Attribute" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Combo_Product" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_FileMail_SSC" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_GroupMail_DNUser" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Roles_Active" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Roles_Calendar" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Roles_Criteria" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Roles_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_User_Calendar" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_User_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.DN_Users_Criteria" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.FAQ_Answer_File" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Group_Enterprise" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Group_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_JobFile" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_JobTag" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_News_File" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_News_Tag" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.News_Step" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Order_BedDesk" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Product_Detail_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Product_Sale" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.ProductRatingPicture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Promotion_Cate" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.RecipeCategory_Workshop" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.RecipeProduct_Workshop" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Roles_ActiveRole" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Roles_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Sale_Cate" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Shop_Product_Category" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Shop_Product_Detail_Picture" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.Shop_Product_Tag" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.User_Module" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.webpages_UsersInRoles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.AspNetUserRoles" />
-        <AssociationConnector Association="pmbh.fditech.vnModel.module_aspnetroles_core" />
-      </Diagram>
+      <Diagram DiagramId="e8213f9fe20d48ff82f643e96ac5693d" Name="Diagram1" ZoomLevel="32">
+        <EntityTypeShape EntityType="FDIModel.ImportProduct" Width="1.5" PointX="3.553334597290184" PointY="16.115484066361322" />
+        <AssociationConnector Association="FDIModel.FK_ImportProduct_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_ImportProduct_StorageProduct" />
+        <EntityTypeShape EntityType="FDIModel.C__EFMigrationsHistory" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FDIModel.ActiveRole" Width="1.5" PointX="35.25" PointY="370.875" />
+        <EntityTypeShape EntityType="FDIModel.AddMinute" Width="1.5" PointX="43.5" PointY="234.5" />
+        <EntityTypeShape EntityType="FDIModel.Advertising" Width="1.5" PointX="27.75" PointY="330" />
+        <EntityTypeShape EntityType="FDIModel.Advertising_Position" Width="1.5" PointX="25.5" PointY="336" />
+        <EntityTypeShape EntityType="FDIModel.Advertising_Type" Width="1.5" PointX="25.5" PointY="333.5" />
+        <EntityTypeShape EntityType="FDIModel.Agency_Module" Width="1.5" PointX="18" PointY="261.75" />
+        <EntityTypeShape EntityType="FDIModel.Area" Width="1.5" PointX="3" PointY="253.125" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Applications" Width="1.5" PointX="37.5" PointY="367.625" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Membership" Width="1.5" PointX="42" PointY="365.5" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Paths" Width="1.5" PointX="39.75" PointY="375.875" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="42" PointY="379.25" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="42" PointY="375.375" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Profile" Width="1.5" PointX="42" PointY="371.75" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Roles" Width="1.5" PointX="37.5" PointY="373" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_SchemaVersions" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Users" Width="1.5" PointX="39.75" PointY="370.875" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_WebEvent_Events" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="FDIModel.AspNetRoleClaim" Width="1.5" PointX="42.5" PointY="222.625" />
+        <EntityTypeShape EntityType="FDIModel.AspNetRole" Width="1.5" PointX="40.25" PointY="245.375" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserClaim" Width="1.5" PointX="44.75" PointY="224.5" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserLogin" Width="1.5" PointX="44.75" PointY="227.25" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUser" Width="1.5" PointX="42.5" PointY="225.75" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserToken" Width="1.5" PointX="44.75" PointY="229.875" />
+        <EntityTypeShape EntityType="FDIModel.AttributeOption" Width="1.5" PointX="47.25" PointY="305.25" />
+        <EntityTypeShape EntityType="FDIModel.Author" Width="1.5" PointX="30.75" PointY="288.25" />
+        <EntityTypeShape EntityType="FDIModel.Author_Product" Width="1.5" PointX="33" PointY="300.5" />
+        <EntityTypeShape EntityType="FDIModel.Bank" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="FDIModel.Banner" Width="1.5" PointX="34.5" PointY="341.75" />
+        <EntityTypeShape EntityType="FDIModel.BiasProduce" Width="1.5" PointX="30" PointY="325.625" />
+        <EntityTypeShape EntityType="FDIModel.BonusType" Width="1.5" PointX="28.5" PointY="287.625" />
+        <EntityTypeShape EntityType="FDIModel.Car" Width="1.5" PointX="42.75" PointY="246.875" />
+        <EntityTypeShape EntityType="FDIModel.CashAdvance" Width="1.5" PointX="34.5" PointY="361.75" />
+        <EntityTypeShape EntityType="FDIModel.CashOutWallet" Width="1.5" PointX="23.25" PointY="343.25" />
+        <EntityTypeShape EntityType="FDIModel.Cate_Value" Width="1.5" PointX="7.5" PointY="248.375" />
+        <EntityTypeShape EntityType="FDIModel.Category" Width="1.5" PointX="36.75" PointY="320" />
+        <EntityTypeShape EntityType="FDIModel.Category_Product_Recipe" Width="1.5" PointX="50.25" PointY="293.75" />
+        <EntityTypeShape EntityType="FDIModel.Category_Recipe" Width="1.5" PointX="39" PointY="295.25" />
+        <EntityTypeShape EntityType="FDIModel.Category_ShopBrand" Width="1.5" PointX="30" PointY="322.75" />
+        <EntityTypeShape EntityType="FDIModel.Category_Tags" Width="1.5" PointX="46.5" PointY="310.625" />
+        <EntityTypeShape EntityType="FDIModel.CategoryControl" Width="1.5" PointX="36.75" PointY="315.875" />
+        <EntityTypeShape EntityType="FDIModel.Comment_Like" Width="1.5" PointX="46.5" PointY="332.625" />
+        <EntityTypeShape EntityType="FDIModel.Company" Width="1.5" PointX="34.5" PointY="329.5" />
+        <EntityTypeShape EntityType="FDIModel.ControlValue" Width="1.5" PointX="39" PointY="308" />
+        <EntityTypeShape EntityType="FDIModel.CookieLogin" Width="1.5" PointX="23.25" PointY="351.75" />
+        <EntityTypeShape EntityType="FDIModel.Cost_Product" Width="1.5" PointX="32.25" PointY="310.375" />
+        <EntityTypeShape EntityType="FDIModel.Cost_Product_User" Width="1.5" PointX="34.5" PointY="287.75" />
+        <EntityTypeShape EntityType="FDIModel.CostType" Width="1.5" PointX="41.25" PointY="233.125" />
+        <EntityTypeShape EntityType="FDIModel.Criteria_Total" Width="1.5" PointX="36.75" PointY="352.875" />
+        <EntityTypeShape EntityType="FDIModel.Customer" Width="1.5" PointX="21" PointY="252.125" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Action" Width="1.5" PointX="12.75" PointY="8.125" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Care" Width="1.5" PointX="23.25" PointY="243.125" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Device" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Groups" Width="1.5" PointX="18.75" PointY="265.625" />
+        <EntityTypeShape EntityType="FDIModel.Customer_History" Width="1.5" PointX="15" PointY="7.875" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Point" Width="1.5" PointX="48.75" PointY="247.125" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Policy" Width="1.5" PointX="18.75" PointY="269.375" />
+        <EntityTypeShape EntityType="FDIModel.Customer_question" Width="1.5" PointX="48.75" PointY="250.75" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Review" Width="1.5" PointX="51" PointY="251.5" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Review_Deltails" Width="1.5" PointX="53.25" PointY="252.25" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Reward" Width="1.5" PointX="26.25" PointY="254.375" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Type" Width="1.5" PointX="32.75" PointY="319" />
+        <EntityTypeShape EntityType="FDIModel.Customer_TypeGroup" Width="1.5" PointX="30.5" PointY="319.875" />
+        <EntityTypeShape EntityType="FDIModel.CustomerAddress" Width="1.5" PointX="23.25" PointY="347.25" />
+        <EntityTypeShape EntityType="FDIModel.CustomerContact" Width="1.5" PointX="6.75" PointY="14.75" />
+        <EntityTypeShape EntityType="FDIModel.CustomerRating" Width="1.5" PointX="23.25" PointY="327.5" />
+        <EntityTypeShape EntityType="FDIModel.Debt" Width="1.5" PointX="34.5" PointY="258" />
+        <EntityTypeShape EntityType="FDIModel.Discount" Width="1.5" PointX="8.75" PointY="14.75" />
+        <EntityTypeShape EntityType="FDIModel.DiscountCode" Width="1.5" PointX="10" PointY="11" />
+        <EntityTypeShape EntityType="FDIModel.DN_Active" Width="1.5" PointX="15.75" PointY="266.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Agency" Width="1.5" PointX="12.75" PointY="252.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_AttributeDynamic" Width="1.5" PointX="39" PointY="319.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_AttributeGroup" Width="1.5" PointX="36.75" PointY="312.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Bed_Desk" Width="1.5" PointX="43.5" PointY="238.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Calendar" Width="1.5" PointX="15.75" PointY="262.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Calendar_Weekly_Schedule" Width="1.5" PointX="45.5" PointY="244.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Card" Width="1.5" PointX="18.75" PointY="238.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Combo" Width="1.5" PointX="27.75" PointY="358.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_ConfigMonth" Width="1.5" PointX="14.75" PointY="11.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_ContentVote" Width="1.5" PointX="34.5" PointY="252.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Criteria" Width="1.5" PointX="15.75" PointY="242.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_DayOff" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Department" Width="1.5" PointX="38.25" PointY="275.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Discount" Width="1.5" PointX="34.5" PointY="324.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Drawer" Width="1.5" PointX="32.25" PointY="277.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_EDIT_Schedule" Width="1.5" PointX="40.5" PointY="258" />
+        <EntityTypeShape EntityType="FDIModel.DN_Enterprises" Width="1.5" PointX="10.5" PointY="237.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Exchange" Width="1.5" PointX="45.75" PointY="239.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Export" Width="1.5" PointX="34.5" PointY="357.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_ExportProduct" Width="1.5" PointX="34.5" PointY="334" />
+        <EntityTypeShape EntityType="FDIModel.DN_File_Mail" Width="1.5" PointX="28.5" PointY="266.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_GroupAgency" Width="1.5" PointX="10.5" PointY="233.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_GroupEmail" Width="1.5" PointX="30" PointY="253.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Import" Width="1.5" PointX="36.75" PointY="243.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_ImportProduct" Width="1.5" PointX="23.25" PointY="256" />
+        <EntityTypeShape EntityType="FDIModel.DN_Level" Width="1.5" PointX="15.75" PointY="269.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Login" Width="1.5" PointX="29.25" PointY="258.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Mail_SSC" Width="1.5" PointX="26.25" PointY="262" />
+        <EntityTypeShape EntityType="FDIModel.DN_Module" Width="1.5" PointX="42.5" PointY="267.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_News_Comment" Width="1.5" PointX="37.5" PointY="263.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_NewsSSC" Width="1.5" PointX="35.25" PointY="222.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_OrderCard" Width="1.5" PointX="16.5" PointY="239.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Packet" Width="1.5" PointX="33.75" PointY="378.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Product_Packet" Width="1.5" PointX="36" PointY="300.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Promotion" Width="1.5" PointX="39" PointY="282.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Question" Width="1.5" PointX="12.75" PointY="4.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWare" Width="1.5" PointX="5.25" PointY="248.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWareDetail" Width="1.5" PointX="10.5" PointY="246.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWarehousing" Width="1.5" PointX="12.75" PointY="248" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWareSupplier" Width="1.5" PointX="10.5" PointY="250.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Results_Questions" Width="1.5" PointX="15" PointY="4" />
+        <EntityTypeShape EntityType="FDIModel.DN_Role_ModuleActive" Width="1.5" PointX="48.75" PointY="260.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Roles" Width="1.5" PointX="18" PointY="251.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Room" Width="1.5" PointX="41.25" PointY="240.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Salary" Width="1.5" PointX="43.5" PointY="263.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Sale" Width="1.5" PointX="45" PointY="289.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Schedule" Width="1.5" PointX="33" PointY="224.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Setting" Width="1.5" PointX="18" PointY="257.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Stack" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Status" Width="1.5" PointX="41.25" PointY="238.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_StatusEmail" Width="1.5" PointX="28.5" PointY="262.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Supplier" Width="1.5" PointX="15" PointY="302.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_SupplierProduct" Width="1.5" PointX="39" PointY="311.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Time_Group" Width="1.5" PointX="2.75" PointY="16.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Time_Job" Width="1.5" PointX="39.5" PointY="267.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Total_SalaryMonth" Width="1.5" PointX="34.5" PointY="351.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Tree" Width="1.5" PointX="42.75" PointY="274.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_TypeCriteria" Width="1.5" PointX="13.5" PointY="243.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Unit" Width="1.5" PointX="34.5" PointY="315.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_User_BedDesk" Width="1.5" PointX="37.5" PointY="253.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_User_ModuleActive" Width="1.5" PointX="37.5" PointY="249.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Users" Width="1.5" PointX="32.25" PointY="249.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_UsersInRoles" Width="1.5" PointX="40.5" PointY="263.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Vote" Width="1.5" PointX="36.75" PointY="239.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_Weekly" Width="1.5" PointX="33" PointY="229" />
+        <EntityTypeShape EntityType="FDIModel.DN_Weekly_Schedule" Width="1.5" PointX="35.25" PointY="226.5" />
+        <EntityTypeShape EntityType="FDIModel.DocumentFile" Width="1.5" PointX="36.75" PointY="280.125" />
+        <EntityTypeShape EntityType="FDIModel.Document" Width="1.5" PointX="34.5" PointY="274.25" />
+        <EntityTypeShape EntityType="FDIModel.Enterprise_Setting" Width="1.5" PointX="10.75" PointY="16.75" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product" Width="1.5" PointX="36.75" PointY="334.625" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product_Detail" Width="1.5" PointX="30" PointY="298" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product_Value" Width="1.5" PointX="39" PointY="300.875" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Answer" Width="1.5" PointX="41.25" PointY="404.875" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Category" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Question" Width="1.5" PointX="39" PointY="405.375" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Question_Product_Mapping" Width="1.5" PointX="41.25" PointY="408.375" />
+        <EntityTypeShape EntityType="FDIModel.FreightWarehouse" Width="1.5" PointX="50.25" PointY="265.625" />
+        <EntityTypeShape EntityType="FDIModel.FreightWareHouse_Active" Width="1.5" PointX="36.75" PointY="268.5" />
+        <EntityTypeShape EntityType="FDIModel.Gallery_Picture" Width="1.5" PointX="25.5" PointY="325.125" />
+        <EntityTypeShape EntityType="FDIModel.Gallery_Video" Width="1.5" PointX="15.75" PointY="249.125" />
+        <EntityTypeShape EntityType="FDIModel.GoogleMap" Width="1.5" PointX="5.25" PointY="256.875" />
+        <EntityTypeShape EntityType="FDIModel.Holiday" Width="1.5" PointX="16.75" PointY="11.75" />
+        <EntityTypeShape EntityType="FDIModel.HtmlContent" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="FDIModel.HtmlMap" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="FDIModel.Language" Width="1.5" PointX="27.75" PointY="340.625" />
+        <EntityTypeShape EntityType="FDIModel.LevelVote" Width="1.5" PointX="32.25" PointY="246" />
+        <EntityTypeShape EntityType="FDIModel.LinkWebsite" Width="1.5" PointX="16.75" PointY="14.75" />
+        <EntityTypeShape EntityType="FDIModel.Log" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FDIModel.Mapping_Category_Recipe" Width="1.5" PointX="41.25" PointY="309.625" />
+        <EntityTypeShape EntityType="FDIModel.Mapping_ProductDetail_Recipe" Width="1.5" PointX="54.75" PointY="285" />
+        <EntityTypeShape EntityType="FDIModel.MapProduceRequestWare" Width="1.5" PointX="10.5" PointY="254.75" />
+        <EntityTypeShape EntityType="FDIModel.Market" Width="1.5" PointX="7.5" PointY="257.125" />
+        <EntityTypeShape EntityType="FDIModel.MenuGroup" Width="1.5" PointX="7.75" PointY="2.125" />
+        <EntityTypeShape EntityType="FDIModel.Menu" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="FDIModel.Module" Width="1.5" PointX="35.25" PointY="373.875" />
+        <EntityTypeShape EntityType="FDIModel.ModuleControl" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="FDIModel.ModulePage" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="FDIModel.ModuleSetting" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="FDIModel.News_Comment" Width="1.5" PointX="44.25" PointY="330.125" />
+        <EntityTypeShape EntityType="FDIModel.News_CommentReport" Width="1.5" PointX="46.5" PointY="329.75" />
+        <EntityTypeShape EntityType="FDIModel.News_Job" Width="1.5" PointX="42" PointY="303.625" />
+        <EntityTypeShape EntityType="FDIModel.News_News" Width="1.5" PointX="42" PointY="321.875" />
+        <EntityTypeShape EntityType="FDIModel.News_News_Product" Width="1.5" PointX="44.25" PointY="327.375" />
+        <EntityTypeShape EntityType="FDIModel.Order" Width="1.5" PointX="25.5" PointY="297.125" />
+        <EntityTypeShape EntityType="FDIModel.Order_Debt" Width="1.5" PointX="34.5" PointY="338.5" />
+        <EntityTypeShape EntityType="FDIModel.Order_Package" Width="1.5" PointX="35" PointY="284" />
+        <EntityTypeShape EntityType="FDIModel.OrderCar" Width="1.5" PointX="45" PointY="282.375" />
+        <EntityTypeShape EntityType="FDIModel.OrderCarProductDetail" Width="1.5" PointX="47.25" PointY="289.125" />
+        <EntityTypeShape EntityType="FDIModel.OrderDetail" Width="1.5" PointX="30" PointY="278.125" />
+        <EntityTypeShape EntityType="FDIModel.P_Workshop" Width="1.5" PointX="50.25" PointY="288.25" />
+        <EntityTypeShape EntityType="FDIModel.Partner" Width="1.5" PointX="27.75" PointY="363.125" />
+        <EntityTypeShape EntityType="FDIModel.Payment_Method" Width="1.5" PointX="48.75" PointY="243.625" />
+        <EntityTypeShape EntityType="FDIModel.Payments_Order" Width="1.5" PointX="51" PointY="257.375" />
+        <EntityTypeShape EntityType="FDIModel.PaymentVoucher" Width="1.5" PointX="43.5" PointY="251.375" />
+        <EntityTypeShape EntityType="FDIModel.PolicyAgency" Width="1.5" PointX="39" PointY="410.75" />
+        <EntityTypeShape EntityType="FDIModel.Position" Width="1.5" PointX="15.75" PointY="272.875" />
+        <EntityTypeShape EntityType="FDIModel.PriceAgency" Width="1.5" PointX="17.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FDIModel.Produce" Width="1.5" PointX="39" PointY="289.25" />
+        <EntityTypeShape EntityType="FDIModel.ProduceCatogory" Width="1.5" PointX="45.25" PointY="273.75" />
+        <EntityTypeShape EntityType="FDIModel.ProduceProductDetail" Width="1.5" PointX="44.25" PointY="297" />
+        <EntityTypeShape EntityType="FDIModel.ProduceProductPrepare" Width="1.5" PointX="47.25" PointY="295.75" />
+        <EntityTypeShape EntityType="FDIModel.Product_Promotion" Width="1.5" PointX="47.25" PointY="285.375" />
+        <EntityTypeShape EntityType="FDIModel.Product_Reading" Width="1.5" PointX="23.25" PointY="331" />
+        <EntityTypeShape EntityType="FDIModel.Product_Size" Width="1.5" PointX="25.5" PointY="307.125" />
+        <EntityTypeShape EntityType="FDIModel.Product_Value" Width="1.5" PointX="15" PointY="255.75" />
+        <EntityTypeShape EntityType="FDIModel.ProductCode" Width="1.5" PointX="32.25" PointY="333.125" />
+        <EntityTypeShape EntityType="FDIModel.ProductCode_CostUser" Width="1.5" PointX="36.75" PointY="291.25" />
+        <EntityTypeShape EntityType="FDIModel.ProductDetail_Recipe" Width="1.5" PointX="52.5" PointY="272.5" />
+        <EntityTypeShape EntityType="FDIModel.ProductRating" Width="1.5" PointX="33" PointY="293.875" />
+        <EntityTypeShape EntityType="FDIModel.ProductValue_Recipe" Width="1.5" PointX="54.75" PointY="273.5" />
+        <EntityTypeShape EntityType="FDIModel.Promotion" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="FDIModel.Promotion_Procuct" Width="1.5" PointX="10" PointY="8.125" />
+        <EntityTypeShape EntityType="FDIModel.Promotion_Product" Width="1.5" PointX="41.25" PointY="279" />
+        <EntityTypeShape EntityType="FDIModel.PurchaseOrder" Width="1.5" PointX="47.25" PointY="267" />
+        <EntityTypeShape EntityType="FDIModel.PushNotification" Width="1.5" PointX="17.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FDIModel.ReceiptPayment" Width="1.5" PointX="37.5" PointY="257.25" />
+        <EntityTypeShape EntityType="FDIModel.ReceiptVoucher" Width="1.5" PointX="34.5" PointY="262.5" />
+        <EntityTypeShape EntityType="FDIModel.ReceiveHistory" Width="1.5" PointX="43.5" PointY="257.375" />
+        <EntityTypeShape EntityType="FDIModel.ReciveAgencyHistory" Width="1.5" PointX="16.75" PointY="17.75" />
+        <EntityTypeShape EntityType="FDIModel.Repay" Width="1.5" PointX="34.5" PointY="346.375" />
+        <EntityTypeShape EntityType="FDIModel.RewardAgencyHistory" Width="1.5" PointX="51" PointY="261.375" />
+        <EntityTypeShape EntityType="FDIModel.RewardHistory" Width="1.5" PointX="30.75" PointY="291.875" />
+        <EntityTypeShape EntityType="FDIModel.Role_ModuleActive" Width="1.5" PointX="44.75" PointY="373.125" />
+        <EntityTypeShape EntityType="FDIModel.SaleCode" Width="1.5" PointX="47.25" PointY="292.5" />
+        <EntityTypeShape EntityType="FDIModel.Send_Card" Width="1.5" PointX="26.25" PointY="258.75" />
+        <EntityTypeShape EntityType="FDIModel.SetupProduction" Width="1.5" PointX="32.25" PointY="283.75" />
+        <EntityTypeShape EntityType="FDIModel.Shop" Width="1.5" PointX="18.75" PointY="9.75" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Brands" Width="1.5" PointX="27.75" PointY="321.125" />
+        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder" Width="1.5" PointX="40.5" PointY="249" />
+        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder_Details" Width="1.5" PointX="44.25" PointY="303.5" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Order_Details" Width="1.5" PointX="30" PointY="302" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Orders" Width="1.5" PointX="45.75" PointY="252.625" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product" Width="1.5" PointX="27.75" PointY="294.25" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Detail" Width="1.5" PointX="42" PointY="288.875" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Picture" Width="1.5" PointX="30" PointY="312.5" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Type" Width="1.5" PointX="27.75" PointY="316.375" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Value" Width="1.5" PointX="34.5" PointY="238.375" />
+        <EntityTypeShape EntityType="FDIModel.Size" Width="1.5" PointX="18.75" PointY="13.75" />
+        <EntityTypeShape EntityType="FDIModel.Source" Width="1.5" PointX="44.5" PointY="321.625" />
+        <EntityTypeShape EntityType="FDIModel.Source_Video" Width="1.5" PointX="18" PointY="248.5" />
+        <EntityTypeShape EntityType="FDIModel.ST_Group" Width="1.5" PointX="44.75" PointY="268.75" />
+        <EntityTypeShape EntityType="FDIModel.Step" Width="1.5" PointX="39" PointY="325.625" />
+        <EntityTypeShape EntityType="FDIModel.Storage" Width="1.5" PointX="34.5" PointY="243.75" />
+        <EntityTypeShape EntityType="FDIModel.StorageFreightWarehouse" Width="1.5" PointX="34.5" PointY="231.875" />
+        <EntityTypeShape EntityType="FDIModel.StorageProduct" Width="1.5" PointX="41.25" PointY="314.625" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousing" Width="1.5" PointX="23.25" PointY="262.625" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousingLog" Width="1.5" PointX="34.5" PointY="268.5" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousingUser" Width="1.5" PointX="34.5" PointY="249.875" />
+        <EntityTypeShape EntityType="FDIModel.SupplierAmountProduct" Width="1.5" PointX="42" PointY="283.5" />
+        <EntityTypeShape EntityType="FDIModel.sysdiagram" Width="1.5" PointX="18.75" PointY="16.75" />
+        <EntityTypeShape EntityType="FDIModel.System_City" Width="1.5" PointX="0.75" PointY="252.875" />
+        <EntityTypeShape EntityType="FDIModel.System_Color" Width="1.5" PointX="25.5" PointY="293" />
+        <EntityTypeShape EntityType="FDIModel.System_Config" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FDIModel.System_Country" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.System_District" Width="1.5" PointX="3" PointY="261.625" />
+        <EntityTypeShape EntityType="FDIModel.System_File" Width="1.5" PointX="44.25" PointY="363.375" />
+        <EntityTypeShape EntityType="FDIModel.System_FileType" Width="1.5" PointX="27.75" PointY="326.75" />
+        <EntityTypeShape EntityType="FDIModel.System_Menu" Width="1.5" PointX="2.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.System_MessageTemplate" Width="1.5" PointX="4.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.System_Tag" Width="1.5" PointX="44.25" PointY="309" />
+        <EntityTypeShape EntityType="FDIModel.TemplateDocument" Width="1.5" PointX="6.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.Therapy_History" Width="1.5" PointX="23.25" PointY="334.25" />
+        <EntityTypeShape EntityType="FDIModel.TM_Answer" Width="1.5" PointX="8.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.TM_CategoryAnswer" Width="1.5" PointX="10.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.TM_Customer" Width="1.5" PointX="45" PointY="315.5" />
+        <EntityTypeShape EntityType="FDIModel.TM_Module_Rating" Width="1.5" PointX="33" PointY="303.75" />
+        <EntityTypeShape EntityType="FDIModel.TM_News_Comment" Width="1.5" PointX="47.25" PointY="325.125" />
+        <EntityTypeShape EntityType="FDIModel.TM_Products_Comment" Width="1.5" PointX="36" PointY="295.75" />
+        <EntityTypeShape EntityType="FDIModel.TM_Rate_Comment" Width="1.5" PointX="35.25" PointY="303.75" />
+        <EntityTypeShape EntityType="FDIModel.TokenDevice" Width="1.5" PointX="12.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.TokenOtp" Width="1.5" PointX="18.75" PointY="19.75" />
+        <EntityTypeShape EntityType="FDIModel.TokenRefresh" Width="1.5" PointX="20.75" PointY="7.75" />
+        <EntityTypeShape EntityType="FDIModel.TotalProductToDay" Width="1.5" PointX="39" PointY="315.125" />
+        <EntityTypeShape EntityType="FDIModel.TotalStorageWare" Width="1.5" PointX="39" PointY="388.75" />
+        <EntityTypeShape EntityType="FDIModel.Type" Width="1.5" PointX="15.75" PointY="275.25" />
+        <EntityTypeShape EntityType="FDIModel.User_ModuleActive" Width="1.5" PointX="45" PointY="369.125" />
+        <EntityTypeShape EntityType="FDIModel.UserProfile" Width="1.5" PointX="15" PointY="0.875" />
+        <EntityTypeShape EntityType="FDIModel.Vote_Type" Width="1.5" PointX="20.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FDIModel.Wallet_Agency" Width="1.5" PointX="39.75" PointY="271.875" />
+        <EntityTypeShape EntityType="FDIModel.WalletCustomer" Width="1.5" PointX="23.25" PointY="338.375" />
+        <EntityTypeShape EntityType="FDIModel.WalletOrder_History" Width="1.5" PointX="48" PointY="256.5" />
+        <EntityTypeShape EntityType="FDIModel.Wallet" Width="1.5" PointX="23.25" PointY="252.5" />
+        <EntityTypeShape EntityType="FDIModel.Ward" Width="1.5" PointX="5.25" PointY="262" />
+        <EntityTypeShape EntityType="FDIModel.webpages_Membership" Width="1.5" PointX="20.75" PointY="14.75" />
+        <EntityTypeShape EntityType="FDIModel.webpages_OAuthMembership" Width="1.5" PointX="20.75" PointY="18.75" />
+        <EntityTypeShape EntityType="FDIModel.webpages_Roles" Width="1.5" PointX="12.75" PointY="0.875" />
+        <EntityTypeShape EntityType="FDIModel.ConfigExchange" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FDIModel.TempCustomer" Width="1.5" PointX="14.75" PointY="21.75" />
+        <EntityTypeShape EntityType="FDIModel.TempShop_Product" Width="1.5" PointX="20.75" PointY="21.75" />
+        <EntityTypeShape EntityType="FDIModel.Customer_LastOrder" Width="1.5" PointX="21.75" PointY="4.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_Applications" Width="1.5" PointX="22.75" PointY="7.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_MembershipUsers" Width="1.5" PointX="22.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_Profiles" Width="1.5" PointX="22.75" PointY="17.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_Roles" Width="1.5" PointX="22.75" PointY="20.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_Users" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_UsersInRoles" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_WebPartState_Paths" Width="1.5" PointX="23.75" PointY="4.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_WebPartState_Shared" Width="1.5" PointX="6.75" PointY="23.75" />
+        <EntityTypeShape EntityType="FDIModel.vw_aspnet_WebPartState_User" Width="1.5" PointX="16.75" PointY="23.75" />
+        <AssociationConnector Association="FDIModel.FK_Role_ModuleActive_ActiveRole" />
+        <AssociationConnector Association="FDIModel.FK_User_ModuleActive_ActiveRole" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_AddMinute" />
+        <AssociationConnector Association="FDIModel.FK_Advertising_Advertising_Position" />
+        <AssociationConnector Association="FDIModel.FK_Advertising_Advertising_Type" />
+        <AssociationConnector Association="FDIModel.FK_Advertising_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Agency_Module_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Agency_Module_DN_Module" />
+        <AssociationConnector Association="FDIModel.FK_Area_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Area_System_City" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWare_Area" />
+        <AssociationConnector Association="FDIModel.FK_Market_Area" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Me__Appli__3DE82FB7" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Pa__Appli__3FD07829" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Ro__Appli__44952D46" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Us__Appli__4589517F" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Me__UserI__3EDC53F0" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Pe__PathI__40C49C62" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Pe__PathI__41B8C09B" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Pe__UserI__42ACE4D4" />
+        <AssociationConnector Association="FDIModel.FK__aspnet_Pr__UserI__43A1090D" />
+        <AssociationConnector Association="FDIModel.FK_Role_ModuleActive_aspnet_Roles" />
+        <AssociationConnector Association="FDIModel.FK_News_News_aspnet_Users" />
+        <AssociationConnector Association="FDIModel.FK_User_ModuleActive_aspnet_Users" />
+        <AssociationConnector Association="FDIModel.FK_AspNetRoleClaims_AspNetRoles_RoleId" />
+        <AssociationConnector Association="FDIModel.FK_AspNetUserClaims_AspNetUsers_UserId" />
+        <AssociationConnector Association="FDIModel.FK_AspNetUserLogins_AspNetUsers_UserId" />
+        <AssociationConnector Association="FDIModel.FK_AspNetUserTokens_AspNetUsers_UserId" />
+        <AssociationConnector Association="FDIModel.FK_AttributeOptions_DN_AttributeDynamic" />
+        <AssociationConnector Association="FDIModel.FK_AttributeOptions_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Author_Product_Author" />
+        <AssociationConnector Association="FDIModel.FK_Author_Product_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK__Banner__UserId__43CCBCED" />
+        <AssociationConnector Association="FDIModel.FK__Banner__UserUpda__44C0E126" />
+        <AssociationConnector Association="FDIModel.FK_BiasProduce_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_BiasProduce" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_User_BiasProduce" />
+        <AssociationConnector Association="FDIModel.FK_ProductCode_BiasProduce" />
+        <AssociationConnector Association="FDIModel.FK_BonusType_DN_Enterprises" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_BonusType" />
+        <AssociationConnector Association="FDIModel.FK__Car__UnitID__1B34BBAE" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__CarId__2D536BE9" />
+        <AssociationConnector Association="FDIModel.FK_CashAdvance_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_CashAdvance_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_CashAdvance_DN_Users2" />
+        <AssociationConnector Association="FDIModel.FK_CashOutWallet_Customer" />
+        <AssociationConnector Association="FDIModel.FK__Cate_Valu__Purch__48FB865E" />
+        <AssociationConnector Association="FDIModel.FK_Cate_Value_Category" />
+        <AssociationConnector Association="FDIModel.FK_Cate_Value_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Cate_Value_DN_RequestWare" />
+        <AssociationConnector Association="FDIModel.FK_Cate_Value_DN_Unit" />
+        <AssociationConnector Association="FDIModel.FK_Cate_Value_StorageProduct" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWarehousing_Cate_Value" />
+        <AssociationConnector Association="FDIModel.FK_Gallery_Video_Cate_Value" />
+        <AssociationConnector Association="FDIModel.FK_Product_Value_Cate_Value" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Cate_Value" />
+        <AssociationConnector Association="FDIModel.FK__Category__UnitID__302FD894" />
+        <AssociationConnector Association="FDIModel.FK__DN_Suppli__Produ__01A9F3D5" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__Produc__2C5F47B0" />
+        <AssociationConnector Association="FDIModel.FK__PolicyAge__Categ__104D18E7" />
+        <AssociationConnector Association="FDIModel.FK__Produce__Product__64A3A0D3" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__Produ__26716430" />
+        <AssociationConnector Association="FDIModel.FK__SupplierA__Produ__38FA28BF" />
+        <AssociationConnector Association="FDIModel.FK__TotalProd__Produ__6D6DF0FE" />
+        <AssociationConnector Association="FDIModel.FK_Category_Category" />
+        <AssociationConnector Association="FDIModel.FK_Category_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Category_Recipe_Category" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWare_Category" />
+        <AssociationConnector Association="FDIModel.FK_FAQ_Question_Category" />
+        <AssociationConnector Association="FDIModel.FK_Gallery_Picture_Category" />
+        <AssociationConnector Association="FDIModel.FK_Gallery_Video_Category" />
+        <AssociationConnector Association="FDIModel.FK_Mapping_Category_Recipe_Category" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Category" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Detail_Category" />
+        <AssociationConnector Association="FDIModel.FK_Step_Category" />
+        <AssociationConnector Association="FDIModel.FK_StorageProduct_Category" />
+        <AssociationConnector Association="FDIModel.FK_TotalStorageWare_Category" />
+        <AssociationConnector Association="FDIModel.FK_Category_Product_Recipe_Category_Recipe" />
+        <AssociationConnector Association="FDIModel.FK_Category_Product_Recipe_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Category_Recipe_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Mapping_Category_Recipe_Category_Recipe" />
+        <AssociationConnector Association="FDIModel.FK_Category_ShopBrand_Shop_Brand" />
+        <AssociationConnector Association="FDIModel.FK_Category_Tags_System_Tag" />
+        <AssociationConnector Association="FDIModel.FK_ControlValues_CategoryControls" />
+        <AssociationConnector Association="FDIModel.FK_DN_AttributeDynamic_CategoryControls" />
+        <AssociationConnector Association="FDIModel.FK_Comment_Like_News_Comment" />
+        <AssociationConnector Association="FDIModel.FK_Company_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_P_Workshop_Company" />
+        <AssociationConnector Association="FDIModel.FK_CookieLogin_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_SetupProduction" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_User_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_User_SetupProduction" />
+        <AssociationConnector Association="FDIModel.FK_Cost_Product_User_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_ProductCode_CostUser_Cost_Product_User" />
+        <AssociationConnector Association="FDIModel.FK_PaymentVouchers_CostType" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptPayment_CostType" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptVouchers_CostType" />
+        <AssociationConnector Association="FDIModel.FK_Criteria_Total_DN_Criteria" />
+        <AssociationConnector Association="FDIModel.FK_Criteria_Total_DN_Total_SalaryMonth" />
+        <AssociationConnector Association="FDIModel.FK__StorageWa__Custo__0C5C8C72" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Care_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Customer_Groups" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Customer_Policy" />
+        <AssociationConnector Association="FDIModel.FK_Customer_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Customer_DN_Card" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Reward_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Customer_System_District" />
+        <AssociationConnector Association="FDIModel.FK_CustomerAddress_Customer" />
+        <AssociationConnector Association="FDIModel.FK_CustomerRating_Customer" />
+        <AssociationConnector Association="FDIModel.FK_DN_Login_Customer" />
+        <AssociationConnector Association="FDIModel.FK_DN_Mail_SSC_Customer" />
+        <AssociationConnector Association="FDIModel.FK_DN_Mail_SSC_Customer1" />
+        <AssociationConnector Association="FDIModel.FK_DN_StatusEmail_Customer" />
+        <AssociationConnector Association="FDIModel.FK_DN_Users_Customer" />
+        <AssociationConnector Association="FDIModel.FK_HistoryReward_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Order_Customer1" />
+        <AssociationConnector Association="FDIModel.FK_Order_Package_Customer" />
+        <AssociationConnector Association="FDIModel.FK_OrderDetails_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Product_Reading_Customer" />
+        <AssociationConnector Association="FDIModel.FK_ProductRating_Customer" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptPayment_Customer" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Send_Card_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Customer1" />
+        <AssociationConnector Association="FDIModel.FK_Therapy_History_Customer" />
+        <AssociationConnector Association="FDIModel.FK_WalletCustomer_Customer" />
+        <AssociationConnector Association="FDIModel.FK_WalletOrder_History_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Wallets_Customer" />
+        <AssociationConnector Association="FDIModel.FK_Customer_History_Customer_Action" />
+        <AssociationConnector Association="FDIModel.FK_Customer_question_Customer_Point" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Customer_Point" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Deltails_Customer_Point" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Customer_question" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Deltails_Customer_question" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Deltails_Customer_Review" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Review_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Reward_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Type_Customer_TypeGroup" />
+        <AssociationConnector Association="FDIModel.FK_Customer_Type_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Order_Package_Customer_Type" />
+        <AssociationConnector Association="FDIModel.FK_Order_CustomerAddress" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_CustomerAddress" />
+        <AssociationConnector Association="FDIModel.FK_Debt_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DiscountCodes_Promotion" />
+        <AssociationConnector Association="FDIModel.FK_DN_Role_ModuleActive_DN_Active" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_ModuleActive_Active" />
+        <AssociationConnector Association="FDIModel.FK_DN_Agency_DN_Enterprises" />
+        <AssociationConnector Association="FDIModel.FK_DN_Agency_DN_GroupAgency" />
+        <AssociationConnector Association="FDIModel.FK_DN_Agency_Market" />
+        <AssociationConnector Association="FDIModel.FK_DN_Agency_ST_Group" />
+        <AssociationConnector Association="FDIModel.FK_DN_ImportProduct_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWare_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_Roles_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_Setting_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_Supplier_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_Users_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Documents_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Order_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Product_Value_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_RewardAgencyHistory_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_StorageWarehousing_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_Wallet_Agency_DN_Agency" />
+        <AssociationConnector Association="FDIModel.FK_DN_AttributeDynamic_DN_AttributeGroup" />
+        <AssociationConnector Association="FDIModel.FK_DN_Bed_Desk_DN_Room" />
+        <AssociationConnector Association="FDIModel.FK_DN_Bed_Desk_DN_Status" />
+        <AssociationConnector Association="FDIModel.FK_DN_Exchange_DN_Bed_Desk" />
+        <AssociationConnector Association="FDIModel.FK_DN_Exchange_DN_Bed_Desk1" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_BedDesk_DN_Bed_Desk" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_DN_Bed_Desk" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_DN_Bed_Desk" />
+        <AssociationConnector Association="FDIModel.FK_DN_Calendar_Weekly_Schedule_DN_Calendar" />
+        <AssociationConnector Association="FDIModel.FK_DN_Calendar_Weekly_Schedule_DN_Weekly_Schedule" />
+        <AssociationConnector Association="FDIModel.FK_DN_Card_DN_OrderCard" />
+        <AssociationConnector Association="FDIModel.FK_Send_Card_DN_Card" />
+        <AssociationConnector Association="FDIModel.FK_DN_Combo_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_Details_DN_Combo" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_DN_Combo" />
+        <AssociationConnector Association="FDIModel.FK_DN_ContentVote_DN_Tree" />
+        <AssociationConnector Association="FDIModel.FK_DN_ContentVote_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_ContentVote_DN_Vote" />
+        <AssociationConnector Association="FDIModel.FK_DN_ContentVote_LevelVote" />
+        <AssociationConnector Association="FDIModel.FK_DN_Criteria_DN_TypeCriteria" />
+        <AssociationConnector Association="FDIModel.FK_DN_Salary_DN_Criteria" />
+        <AssociationConnector Association="FDIModel.FK_DN_UsersInRoles_DN_Department" />
+        <AssociationConnector Association="FDIModel.FK_DN_Discount_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Discount_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_Documents_DN_Drawer" />
+        <AssociationConnector Association="FDIModel.FK_DN_EDIT_Schedule_DN_Schedule" />
+        <AssociationConnector Association="FDIModel.FK_DN_EDIT_Schedule_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_EDIT_Schedule_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_DN_Export_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Export_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_Export_Product_Value_DN_Export" />
+        <AssociationConnector Association="FDIModel.FK_DN_ExportProduct_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Exprort_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_ExportProduct_DN_Exprort" />
+        <AssociationConnector Association="FDIModel.FK_DN_Import_Shop_Product_Value" />
+        <AssociationConnector Association="FDIModel.FK_DN_Import_Storage" />
+        <AssociationConnector Association="FDIModel.FK_Export_Product_Value_DN_Import" />
+        <AssociationConnector Association="FDIModel.FK__DN_Import__UserC__40313633" />
+        <AssociationConnector Association="FDIModel.FK__DN_Import__UserU__41255A6C" />
+        <AssociationConnector Association="FDIModel.FK_DN_ImportProduct_Product_Value" />
+        <AssociationConnector Association="FDIModel.FK_FreightWareHouse_Active_DN_ImportProduct" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_DN_ImportProduct" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_DN_ImportProduct" />
+        <AssociationConnector Association="FDIModel.FK_DN_Roles_DN_Level" />
+        <AssociationConnector Association="FDIModel.FK_DN_Room_DN_Level" />
+        <AssociationConnector Association="FDIModel.FK_DN_Login_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Mail_SSC_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Mail_SSC_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_DN_StatusEmail_DN_Mail_SSC" />
+        <AssociationConnector Association="FDIModel.FK_DN_Module_DN_Module" />
+        <AssociationConnector Association="FDIModel.FK_DN_Role_ModuleActive_DN_Module" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_ModuleActive_Module" />
+        <AssociationConnector Association="FDIModel.FK_DN_News_Comment_DN_NewsSSC" />
+        <AssociationConnector Association="FDIModel.FK_DN_News_Comment_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Product_Packet_DN_Packet" />
+        <AssociationConnector Association="FDIModel.FK_DN_Product_Packet_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_DN_Promotion_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Promotion_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_Product_Promotion_DN_Promotion" />
+        <AssociationConnector Association="FDIModel.FK_Promotion_Product_DN_Promotion" />
+        <AssociationConnector Association="FDIModel.FK_DN_Results_Questions_DN_Question" />
+        <AssociationConnector Association="FDIModel.FK__DN_Reques__Reque__29ECEF59" />
+        <AssociationConnector Association="FDIModel.FK__DN_Reques__Reque__641990EE" />
+        <AssociationConnector Association="FDIModel.FK__MapProduc__Reque__48C67C34" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWare_Market" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWare_StorageWarehousing" />
+        <AssociationConnector Association="FDIModel.FK__DN_Reques__Produ__2AE11392" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWarehousing_StorageWarehousing" />
+        <AssociationConnector Association="FDIModel.FK__DN_Reques__Suppl__650DB527" />
+        <AssociationConnector Association="FDIModel.FK_DN_RequestWareSupplier_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Role_ModuleActive_DN_Roles" />
+        <AssociationConnector Association="FDIModel.FK__DN_UsersI__RoleI__116A8EFB" />
+        <AssociationConnector Association="FDIModel.FK_DN_Salary_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Sale_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Sale_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_SaleCode_DN_Sale" />
+        <AssociationConnector Association="FDIModel.FK_DN_Time_Job_DN_Schedule" />
+        <AssociationConnector Association="FDIModel.FK_DN_Time_Job_DN_Schedule1" />
+        <AssociationConnector Association="FDIModel.FK_DN_Weekly_Schedule_DN_Schedule1" />
+        <AssociationConnector Association="FDIModel.FK_DN_Setting_Position" />
+        <AssociationConnector Association="FDIModel.FK_DN_Setting_Type" />
+        <AssociationConnector Association="FDIModel.FK__DN_Suppli__Suppl__029E180E" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__Suppli__2B6B2377" />
+        <AssociationConnector Association="FDIModel.FK__SupplierA__Suppl__38060486" />
+        <AssociationConnector Association="FDIModel.FK__TotalProd__Suppl__6C79CCC5" />
+        <AssociationConnector Association="FDIModel.FK_Documents_DN_Supplier" />
+        <AssociationConnector Association="FDIModel.FK_StorageProduct_DN_Supplier" />
+        <AssociationConnector Association="FDIModel.FK_DN_Time_Job_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Total_SalaryMonth_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Tree_DN_UsersInRoles" />
+        <AssociationConnector Association="FDIModel.FK_Product_Value_DN_Unit" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Detail_DN_Unit" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Value_DN_Unit" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_BedDesk_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_BedDesk_DN_Weekly_Schedule" />
+        <AssociationConnector Association="FDIModel.FK_DN_User_ModuleActive_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK__DN_UsersI__UserI__125EB334" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__UserCr__2E479022" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__UserUp__2F3BB45B" />
+        <AssociationConnector Association="FDIModel.FK__Produce__UserId__6597C50C" />
+        <AssociationConnector Association="FDIModel.FK__Produce__UserUpd__668BE945" />
+        <AssociationConnector Association="FDIModel.FK__ProduceCa__UserI__3E48EDC1" />
+        <AssociationConnector Association="FDIModel.FK__ProduceCa__UserU__3F3D11FA" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__UserI__27658869" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__UserU__2859ACA2" />
+        <AssociationConnector Association="FDIModel.FK__PurchaseO__UserC__47133DEC" />
+        <AssociationConnector Association="FDIModel.FK__PurchaseO__UserU__48076225" />
+        <AssociationConnector Association="FDIModel.FK__StorageWa__UserI__0E0FCABA" />
+        <AssociationConnector Association="FDIModel.FK__StorageWa__UserI__3A235722" />
+        <AssociationConnector Association="FDIModel.FK__SupplierA__UserA__39EE4CF8" />
+        <AssociationConnector Association="FDIModel.FK_Documents_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Order_Debt_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_P_Workshop_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_PaymentVouchers_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_PaymentVouchers_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_ProductCode_CostUser_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_ProductDetail_Recipe_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptPayment_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptPayment_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_ReceiptVouchers_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_ReceiveHistory_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Repay_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Repay_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_DN_Users2" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Detail_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_Storage_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_StorageFreightWarehouse_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_StorageFreightWarehouse_DN_Users1" />
+        <AssociationConnector Association="FDIModel.FK_StorageProduct_DN_Users" />
+        <AssociationConnector Association="FDIModel.FK_DN_Weekly_Schedule_DN_Weekly1" />
+        <AssociationConnector Association="FDIModel.FK_DocumentFiles_Documents" />
+        <AssociationConnector Association="FDIModel.FK_Wallet_Agency_Documents" />
+        <AssociationConnector Association="FDIModel.FK_DN_ExportProduct_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_DN_ExportProduct_Shop_Product_Value" />
+        <AssociationConnector Association="FDIModel.FK_DN_ExportProduct_StorageProduct" />
+        <AssociationConnector Association="FDIModel.FK_FAQ_Answer_FAQ_Question" />
+        <AssociationConnector Association="FDIModel.FK_FAQ_Category_FAQ_Category" />
+        <AssociationConnector Association="FDIModel.FK_FAQ_QuestionProduct_FAQ_Question" />
+        <AssociationConnector Association="FDIModel.FK_FreightWarehouse_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_FreightWarehouse_StorageFreightWarehouse" />
+        <AssociationConnector Association="FDIModel.FK_FreightWareHouse_Active_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_FreightWareHouse_Active_StorageFreightWarehouse" />
+        <AssociationConnector Association="FDIModel.FK_Gallery_Video_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Languages_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_News_News_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Partners_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Brand_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Detail_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Detail_Gallery_Picture1" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Picture_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ProductType_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Source_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_System_FileType_Gallery_Picture" />
+        <AssociationConnector Association="FDIModel.FK_Gallery_Video_Source" />
+        <AssociationConnector Association="FDIModel.FK_Source_Video_Gallery_Video" />
+        <AssociationConnector Association="FDIModel.FK_GoogleMap_System_City" />
+        <AssociationConnector Association="FDIModel.FK_GoogleMap_System_District" />
+        <AssociationConnector Association="FDIModel.FK_HtmlMap_HtmlContent" />
+        <AssociationConnector Association="FDIModel.FK_HtmlMap_ModuleControl" />
+        <AssociationConnector Association="FDIModel.FK_Mapping_ProductDetail_Recipe_ProductDetail_Recipe" />
+        <AssociationConnector Association="FDIModel.FK_Mapping_ProductDetail_Recipe_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK__MapProduc__Produ__47D257FB" />
+        <AssociationConnector Association="FDIModel.FK_Market_Wards" />
+        <AssociationConnector Association="FDIModel.FK_Menus_MenuGroups" />
+        <AssociationConnector Association="FDIModel.FK_Menus_Menus" />
+        <AssociationConnector Association="FDIModel.FK_Module_Module" />
+        <AssociationConnector Association="FDIModel.FK_Role_ModuleActive_Module" />
+        <AssociationConnector Association="FDIModel.FK_User_ModuleActive_Module" />
+        <AssociationConnector Association="FDIModel.FK_ModuleControl_ModulePage" />
+        <AssociationConnector Association="FDIModel.FK_ModuleSetting_ModuleControl" />
+        <AssociationConnector Association="FDIModel.FK_News_Comment_News_Comment" />
+        <AssociationConnector Association="FDIModel.FK_News_Comment_News_News" />
+        <AssociationConnector Association="FDIModel.FK_News_CommentReport_News_Comment" />
+        <AssociationConnector Association="FDIModel.FK_News_NewsProduct_News_News" />
+        <AssociationConnector Association="FDIModel.FK_TM_News_Comment_News_News" />
+        <AssociationConnector Association="FDIModel.FK_Order_System_City" />
+        <AssociationConnector Association="FDIModel.FK_OrderDetails_Order" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_Order" />
+        <AssociationConnector Association="FDIModel.FK__OrderCar__Worksh__3123FCCD" />
+        <AssociationConnector Association="FDIModel.FK__OrderCarP__Order__424E88CF" />
+        <AssociationConnector Association="FDIModel.FK__PurchaseO__Order__461F19B3" />
+        <AssociationConnector Association="FDIModel.FK_OrderDetails_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_Payments_Order_Payment_Method" />
+        <AssociationConnector Association="FDIModel.FK_Payments_Order_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK__ProduceCa__Produ__3C60A54F" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__Produ__0E99DA9F" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__Produ__257D3FF7" />
+        <AssociationConnector Association="FDIModel.FK__Product_V__Produ__42197EA5" />
+        <AssociationConnector Association="FDIModel.FK__ProduceCa__Produ__3D54C988" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__Produ__0F8DFED8" />
+        <AssociationConnector Association="FDIModel.FK__ProducePr__SizeI__10822311" />
+        <AssociationConnector Association="FDIModel.FK_Product_Promotion_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Product_Size" />
+        <AssociationConnector Association="FDIModel.FK_Product_Value_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Product_Value" />
+        <AssociationConnector Association="FDIModel.FK_ProductCode_CostUser_ProductCode" />
+        <AssociationConnector Association="FDIModel.FK_ProductDetail_Recipe_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_ProductValue_Recipe_ProductDetail_Recipe" />
+        <AssociationConnector Association="FDIModel.FK_ProductRating_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_ProductValue_Recipe_Shop_Product_Value" />
+        <AssociationConnector Association="FDIModel.FK_Promotion_Procuct_Promotion" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Promotion_Product" />
+        <AssociationConnector Association="FDIModel.FK_ReceiveHistory_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_RewardAgencyHistory_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_RewardHistory_WalletCustomer" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_Details_Shop_ContactOrder" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Orders_Shop_ContactOrder" />
+        <AssociationConnector Association="FDIModel.FK_Shop_ContactOrder_Details_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_WalletOrder_History_Shop_Orders" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Picture_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Shop_Product_Detail" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_Shop_Product_Type" />
+        <AssociationConnector Association="FDIModel.FK_Shop_Product_System_Color" />
+        <AssociationConnector Association="FDIModel.FK_TM_Module_Rating_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_TM_Products_Comment_Shop_Product" />
+        <AssociationConnector Association="FDIModel.FK_Source_StorageProduct" />
+        <AssociationConnector Association="FDIModel.FK_Source_Video_Source" />
+        <AssociationConnector Association="FDIModel.FK_StorageProduct_TotalStorageWare" />
+        <AssociationConnector Association="FDIModel.FK__StorageWa__Stora__0F03EEF3" />
+        <AssociationConnector Association="FDIModel.FK__StorageWa__Stora__392F32E9" />
+        <AssociationConnector Association="FDIModel.FK_District_City" />
+        <AssociationConnector Association="FDIModel.FK_Wards_System_District" />
+        <AssociationConnector Association="FDIModel.FK_System_File_System_FileType" />
+        <AssociationConnector Association="FDIModel.FK_TM_Module_Rating_TM_Customer" />
+        <AssociationConnector Association="FDIModel.FK_TM_News_Comment_TM_Customer" />
+        <AssociationConnector Association="FDIModel.FK_TM_Products_Comment_TM_Customer" />
+        <AssociationConnector Association="FDIModel.FK_TM_Rate_Comment_TM_Customer" />
+        <AssociationConnector Association="FDIModel.FK_TM_Rate_Comment_TM_Module_Rating" />
+        <AssociationConnector Association="FDIModel.aspnet_UsersInRoles" />
+        <AssociationConnector Association="FDIModel.BedDesk_Packet" />
+        <AssociationConnector Association="FDIModel.ContactOrder_BedDesk" />
+        <AssociationConnector Association="FDIModel.ContentVote_Map" />
+        <AssociationConnector Association="FDIModel.CustomerRatingPicture" />
+        <AssociationConnector Association="FDIModel.DN_Category_Attribute" />
+        <AssociationConnector Association="FDIModel.DN_Combo_Product" />
+        <AssociationConnector Association="FDIModel.DN_FileMail_SSC" />
+        <AssociationConnector Association="FDIModel.DN_GroupMail_DNUser" />
+        <AssociationConnector Association="FDIModel.DN_Roles_Active" />
+        <AssociationConnector Association="FDIModel.DN_Roles_Calendar" />
+        <AssociationConnector Association="FDIModel.DN_Roles_Criteria" />
+        <AssociationConnector Association="FDIModel.DN_Roles_Module" />
+        <AssociationConnector Association="FDIModel.DN_User_Calendar" />
+        <AssociationConnector Association="FDIModel.DN_User_Module" />
+        <AssociationConnector Association="FDIModel.DN_Users_Criteria" />
+        <AssociationConnector Association="FDIModel.FAQ_Answer_File" />
+        <AssociationConnector Association="FDIModel.Group_Enterprise" />
+        <AssociationConnector Association="FDIModel.Group_Module" />
+        <AssociationConnector Association="FDIModel.News_Category" />
+        <AssociationConnector Association="FDIModel.News_JobFile" />
+        <AssociationConnector Association="FDIModel.News_JobTag" />
+        <AssociationConnector Association="FDIModel.News_News_File" />
+        <AssociationConnector Association="FDIModel.News_News_Tag" />
+        <AssociationConnector Association="FDIModel.News_Step" />
+        <AssociationConnector Association="FDIModel.Order_BedDesk" />
+        <AssociationConnector Association="FDIModel.Product_Detail_Category" />
+        <AssociationConnector Association="FDIModel.Product_Sale" />
+        <AssociationConnector Association="FDIModel.ProductRatingPicture" />
+        <AssociationConnector Association="FDIModel.Promotion_Cate" />
+        <AssociationConnector Association="FDIModel.RecipeCategory_Workshop" />
+        <AssociationConnector Association="FDIModel.RecipeProduct_Workshop" />
+        <AssociationConnector Association="FDIModel.Roles_ActiveRole" />
+        <AssociationConnector Association="FDIModel.Roles_Module" />
+        <AssociationConnector Association="FDIModel.Sale_Cate" />
+        <AssociationConnector Association="FDIModel.Shop_Product_Category" />
+        <AssociationConnector Association="FDIModel.Shop_Product_Detail_Picture" />
+        <AssociationConnector Association="FDIModel.Shop_Product_Tag" />
+        <AssociationConnector Association="FDIModel.User_Module" />
+        <AssociationConnector Association="FDIModel.webpages_UsersInRoles" />
+        <AssociationConnector Association="FDIModel.AspNetUserRoles" />
+        <AssociationConnector Association="FDIModel.module_aspnetroles_core" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

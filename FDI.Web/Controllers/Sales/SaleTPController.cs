@@ -82,9 +82,9 @@ namespace FDI.Web.Controllers
                         var itemnew = model.SaleItems.FirstOrDefault(c => c.Idimport == item.Idimport);
                         if (itemnew == null)
                         {
-                            var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, item.Quantity ?? 1);
-                            item.PromotionPs = checkpromotion;
-                            model.SaleItems.Add(item);
+                            //var checkpromotion = _da.GetPromotionProduct(item.ProductdetailID, UserItem.AgencyID, item.Quantity ?? 1);
+                            //item.PromotionPs = checkpromotion;
+                            //model.SaleItems.Add(item);
                         }
                         break;
                     case 2:
@@ -95,9 +95,9 @@ namespace FDI.Web.Controllers
                         var itemQuan = model.SaleItems.FirstOrDefault(c => c.Idimport == pid);
                         if (itemQuan != null)
                         {
-                            itemQuan.Quantity = sl;
-                            var checkpromotion = _da.GetPromotionProduct(itemQuan.ProductdetailID, UserItem.AgencyID, sl);
-                            itemQuan.PromotionPs = checkpromotion;
+                            //itemQuan.Quantity = sl;
+                            //var checkpromotion = _da.GetPromotionProduct(itemQuan.ProductdetailID, UserItem.AgencyID, sl);
+                            //itemQuan.PromotionPs = checkpromotion;
                         }
                         break;
                     case 4:
@@ -145,8 +145,8 @@ namespace FDI.Web.Controllers
                 model.SalePercent = sale.Sum(p => p.PercentSale);
                 model.SalePrice = sale.Sum(p => p.Price);
                 model.TotalPrice = total;
-                var promotion = _da.GetPromotionOrder(UserItem.AgencyID, (decimal)total);
-                model.PromotionOrder = promotion;
+                //var promotion = _da.GetPromotionOrder(UserItem.AgencyID, (decimal)total);
+                //model.PromotionOrder = promotion;
                 //model.TotalSaleSP = total;
                 Session["AddSale"] = lstOrder;
             }

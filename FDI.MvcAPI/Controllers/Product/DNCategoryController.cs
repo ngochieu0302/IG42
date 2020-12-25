@@ -33,7 +33,7 @@ namespace FDI.MvcAPI.Controllers
         }
         public ActionResult GetById(string key, int id)
         {
-            var obj = key != Keyapi ? new Category() : _da.GetById(id); ;
+            var obj = key != Keyapi ? new Base.Category() : _da.GetById(id); ;
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
@@ -107,20 +107,20 @@ namespace FDI.MvcAPI.Controllers
 
         public ActionResult GetListByArrId(string key, string lstId)
         {
-            var obj = key != Keyapi ? new List<Category>() : _da.GetListByArrId(lstId);
+            var obj = key != Keyapi ? new List<Base.Category>() : _da.GetListByArrId(lstId);
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetByName(string key, string name, int agencyId)
         {
-            var obj = key != Keyapi ? new Category() : _da.GetByName(name, agencyId);
+            var obj = key != Keyapi ? new Base.Category() : _da.GetByName(name, agencyId);
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Add(string key, string codelogin, string json)
         {
             var msg = new JsonMessage(false, "Thêm mới dữ liệu thành công.");
-            var model = new Category();
+            var model = new Base.Category();
             var pictureId = Request["Value_DefaultImages"];
             try
             {

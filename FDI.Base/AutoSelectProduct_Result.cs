@@ -14,9 +14,12 @@ namespace FDI.Base
     public partial class AutoSelectProduct_Result
     {
         public int ID { get; set; }
-        public Nullable<decimal> PriceNew { get; set; }
-        public string UrlImg { get; set; }
+        public System.Guid IdDetail { get; set; }
         public string Name { get; set; }
-        public string Code { get; set; }
+        public Nullable<decimal> PriceNew { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<int> QuantityDay { get; set; }
+        public string BarCode { get; set; }
+        public string UrlImg { get; set; }
     }
 }
