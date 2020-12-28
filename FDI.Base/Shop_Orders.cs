@@ -40,7 +40,7 @@ namespace FDI.Base
         public Nullable<decimal> EndDate { get; set; }
         public string Note { get; set; }
         public Nullable<decimal> Payments { get; set; }
-        public Nullable<decimal> Discount { get; set; }
+        public decimal Discount { get; set; }
         public Nullable<decimal> PrizeMoney { get; set; }
         public Nullable<decimal> Deposits { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
@@ -69,9 +69,23 @@ namespace FDI.Base
         public Nullable<decimal> TotalPriceTranfer { get; set; }
         public Nullable<int> Type { get; set; }
         public Nullable<decimal> ReceiveDate { get; set; }
+        public Nullable<double> Longitude { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public string Code { get; set; }
+        public decimal FeeShip { get; set; }
+        public Nullable<int> StatusPayment { get; set; }
+        public string Coupon { get; set; }
+        public Nullable<int> ShopID { get; set; }
+        public decimal CouponPrice { get; set; }
+        public Nullable<int> PaymentMethodId { get; set; }
+        public Nullable<int> CustomerAddressID { get; set; }
+        public Nullable<int> Check { get; set; }
+        public Nullable<decimal> DateUpdateStatus { get; set; }
     
         public virtual AddMinute AddMinute { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual ICollection<Customer_Review> Customer_Review { get; set; }
+        public virtual CustomerAddress CustomerAddress { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
         public virtual DN_Bed_Desk DN_Bed_Desk { get; set; }
         public virtual DN_Users DN_Users { get; set; }

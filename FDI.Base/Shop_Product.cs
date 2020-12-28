@@ -24,7 +24,6 @@ namespace FDI.Base
             this.DN_RequestWareDetail = new HashSet<DN_RequestWareDetail>();
             this.Export_Product_Detail = new HashSet<Export_Product_Detail>();
             this.FreightWareHouse_Active = new HashSet<FreightWareHouse_Active>();
-            this.OrderDetails = new HashSet<OrderDetail>();
             this.ProductRatings = new HashSet<ProductRating>();
             this.Shop_Order_Details = new HashSet<Shop_Order_Details>();
             this.Shop_Product_Picture = new HashSet<Shop_Product_Picture>();
@@ -40,7 +39,7 @@ namespace FDI.Base
         public Nullable<int> SizeID { get; set; }
         public Nullable<int> ColorID { get; set; }
         public string CodeSku { get; set; }
-        public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
         public Nullable<int> QuantityOrder { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
@@ -56,7 +55,7 @@ namespace FDI.Base
         public Nullable<int> CategoyId { get; set; }
         public string Name { get; set; }
         public Nullable<int> CustomerID1 { get; set; }
-        public Nullable<int> QuantityOut { get; set; }
+        public Nullable<decimal> QuantityOut { get; set; }
         public Nullable<int> PictureID { get; set; }
         public int CategoryId { get; set; }
         public string NameAscii { get; set; }
@@ -68,7 +67,7 @@ namespace FDI.Base
         public Nullable<int> YearOfManufacture { get; set; }
         public Nullable<int> FileBookId { get; set; }
         public Nullable<int> FIleReadtryId { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<decimal> DateCreated { get; set; }
         public Nullable<int> Sort { get; set; }
         public Nullable<bool> BookOld { get; set; }
         public Nullable<bool> HasTransfer { get; set; }
@@ -81,6 +80,7 @@ namespace FDI.Base
         public double Latitude { get; set; }
         public Nullable<bool> IsUpcoming { get; set; }
         public Nullable<int> freeShipFor { get; set; }
+        public Nullable<int> Buyed { get; set; }
     
         public virtual ICollection<Author_Product> Author_Product { get; set; }
         public virtual ICollection<BiasProduce> BiasProduces { get; set; }
@@ -94,7 +94,6 @@ namespace FDI.Base
         public virtual ICollection<Export_Product_Detail> Export_Product_Detail { get; set; }
         public virtual ICollection<FreightWareHouse_Active> FreightWareHouse_Active { get; set; }
         public virtual Gallery_Picture Gallery_Picture { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Product_Size Product_Size { get; set; }
         public virtual ICollection<ProductRating> ProductRatings { get; set; }
         public virtual ICollection<Shop_Order_Details> Shop_Order_Details { get; set; }

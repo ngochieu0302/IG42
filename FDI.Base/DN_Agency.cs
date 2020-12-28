@@ -28,7 +28,6 @@ namespace FDI.Base
             this.DN_Supplier = new HashSet<DN_Supplier>();
             this.DN_Users = new HashSet<DN_Users>();
             this.Documents = new HashSet<Document>();
-            this.Orders = new HashSet<Order>();
             this.Product_Value = new HashSet<Product_Value>();
             this.RewardAgencyHistories = new HashSet<RewardAgencyHistory>();
             this.Shop_ContactOrder = new HashSet<Shop_ContactOrder>();
@@ -88,7 +87,6 @@ namespace FDI.Base
         public virtual ICollection<DN_Supplier> DN_Supplier { get; set; }
         public virtual ICollection<DN_Users> DN_Users { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Product_Value> Product_Value { get; set; }
         public virtual ICollection<RewardAgencyHistory> RewardAgencyHistories { get; set; }
         public virtual ICollection<Shop_ContactOrder> Shop_ContactOrder { get; set; }

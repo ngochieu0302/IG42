@@ -14,6 +14,6 @@ namespace FDI.Base
     public partial class StaticChartsShop_Result
     {
         public Nullable<int> I { get; set; }
-        public Nullable<int> Total { get; set; }
+        public Nullable<decimal> Total { get; set; }
     }
 }

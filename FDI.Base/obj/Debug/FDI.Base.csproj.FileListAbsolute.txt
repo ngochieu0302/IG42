@@ -29,3 +29,13 @@ E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.
 E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.dll
 E:\CSharp\ASP.NET CORE\IG4\FDI.Base\obj\Debug\FDI.Base.pdb
+C:\IG4\CodeIG4\IG4\FDI.Base\bin\Debug\FDI.Base.dll.config
+C:\IG4\CodeIG4\IG4\FDI.Base\bin\Debug\FDI.Base.dll
+C:\IG4\CodeIG4\IG4\FDI.Base\bin\Debug\FDI.Base.pdb
+C:\IG4\CodeIG4\IG4\FDI.Base\bin\Debug\EntityFramework.dll
+C:\IG4\CodeIG4\IG4\FDI.Base\bin\Debug\EntityFramework.xml
+C:\IG4\CodeIG4\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInputs.cache
+C:\IG4\CodeIG4\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
+C:\IG4\CodeIG4\IG4\FDI.Base\obj\Debug\FDI.Base.dll
+C:\IG4\CodeIG4\IG4\FDI.Base\obj\Debug\FDI.Base.pdb
+C:\IG4\CodeIG4\IG4\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache

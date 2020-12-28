@@ -14,13 +14,13 @@ namespace FDI.Base
     
     public partial class Shop_Order_Details
     {
-        public System.Guid GID { get; set; }
+        public long ID { get; set; }
         public Nullable<int> OrderID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> ComboID { get; set; }
         public Nullable<int> QuantityOld { get; set; }
         public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
         public Nullable<decimal> DateCreated { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<decimal> Discount { get; set; }
@@ -36,8 +36,14 @@ namespace FDI.Base
         public Nullable<int> ProductValueID { get; set; }
         public Nullable<int> CateValueID { get; set; }
         public Nullable<System.Guid> ImportProductGID { get; set; }
+        public Nullable<int> CustomerId { get; set; }
+        public Nullable<int> StatusPayment { get; set; }
+        public Nullable<bool> IsPrestige { get; set; }
+        public Nullable<int> Check { get; set; }
+        public Nullable<decimal> DateUpdateStatus { get; set; }
     
         public virtual Cate_Value Cate_Value { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual DN_Combo DN_Combo { get; set; }
         public virtual DN_ImportProduct DN_ImportProduct { get; set; }
         public virtual Product_Value Product_Value { get; set; }

@@ -713,7 +713,6 @@
         <MappingFragment StoreEntitySet="Customer">
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
-          <ScalarProperty Name="DateCreated1" ColumnName="DateCreated1" />
           <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
           <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
           <ScalarProperty Name="LikeTotal" ColumnName="LikeTotal" />
@@ -2663,47 +2662,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="FDIModel.Order">
-        <MappingFragment StoreEntitySet="Order">
-          <ScalarProperty Name="Payment1" ColumnName="Payment1" />
-          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
-          <ScalarProperty Name="Payment" ColumnName="Payment" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="Check" ColumnName="Check" />
-          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="CustomerAddressID" ColumnName="CustomerAddressID" />
-          <ScalarProperty Name="CouponPrice" ColumnName="CouponPrice" />
-          <ScalarProperty Name="Coupon" ColumnName="Coupon" />
-          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="ShipViettelPost" ColumnName="ShipViettelPost" />
-          <ScalarProperty Name="vpc_TransactionNo" ColumnName="vpc_TransactionNo" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
-          <ScalarProperty Name="Wards" ColumnName="Wards" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
-          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Note" ColumnName="Note" />
-          <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
-          <ScalarProperty Name="IsTime" ColumnName="IsTime" />
-          <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
-          <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
-          <ScalarProperty Name="ContactOrderID" ColumnName="ContactOrderID" />
-          <ScalarProperty Name="NoOrder" ColumnName="NoOrder" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Order_Debt">
       <EntityTypeMapping TypeName="FDIModel.Order_Debt">
         <MappingFragment StoreEntitySet="Order_Debt">
@@ -2762,28 +2720,6 @@
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="OrderCarId" ColumnName="OrderCarId" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OrderDetails">
-      <EntityTypeMapping TypeName="FDIModel.OrderDetail">
-        <MappingFragment StoreEntitySet="OrderDetails">
-          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
-          <ScalarProperty Name="Check" ColumnName="Check" />
-          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
-          <ScalarProperty Name="IsTime" ColumnName="IsTime" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -3451,6 +3387,11 @@
     <EntitySetMapping Name="Shop_Order_Details">
       <EntityTypeMapping TypeName="FDIModel.Shop_Order_Details">
         <MappingFragment StoreEntitySet="Shop_Order_Details">
+          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+          <ScalarProperty Name="Check" ColumnName="Check" />
+          <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
+          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="ImportProductGID" ColumnName="ImportProductGID" />
           <ScalarProperty Name="CateValueID" ColumnName="CateValueID" />
           <ScalarProperty Name="ProductValueID" ColumnName="ProductValueID" />
@@ -3472,13 +3413,25 @@
           <ScalarProperty Name="ComboID" ColumnName="ComboID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Shop_Orders">
       <EntityTypeMapping TypeName="FDIModel.Shop_Orders">
         <MappingFragment StoreEntitySet="Shop_Orders">
+          <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
+          <ScalarProperty Name="Check" ColumnName="Check" />
+          <ScalarProperty Name="CustomerAddressID" ColumnName="CustomerAddressID" />
+          <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+          <ScalarProperty Name="CouponPrice" ColumnName="CouponPrice" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="Coupon" ColumnName="Coupon" />
+          <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
+          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="TotalPriceTranfer" ColumnName="TotalPriceTranfer" />
@@ -3528,6 +3481,7 @@
     <EntitySetMapping Name="Shop_Product">
       <EntityTypeMapping TypeName="FDIModel.Shop_Product">
         <MappingFragment StoreEntitySet="Shop_Product">
+          <ScalarProperty Name="Buyed" ColumnName="Buyed" />
           <ScalarProperty Name="freeShipFor" ColumnName="freeShipFor" />
           <ScalarProperty Name="IsUpcoming" ColumnName="IsUpcoming" />
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
@@ -5561,7 +5515,7 @@
           <ScalarProperty Name="Folder" ColumnName="Folder" />
           <ScalarProperty Name="Url" ColumnName="Url" />
           <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
         </ComplexTypeMapping>
       </ResultMapping>

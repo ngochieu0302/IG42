@@ -18,7 +18,7 @@ namespace FDI.Base
         public string Folder { get; set; }
         public string Url { get; set; }
         public Nullable<decimal> PriceNew { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> DateCreated { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
     }
 }

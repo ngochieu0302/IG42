@@ -16,7 +16,7 @@ namespace FDI.Base
     {
         public CustomerAddress()
         {
-            this.Orders = new HashSet<Order>();
+            this.Shop_Orders = new HashSet<Shop_Orders>();
             this.Shop_Product = new HashSet<Shop_Product>();
         }
     
@@ -33,7 +33,7 @@ namespace FDI.Base
         public int AddressType { get; set; }
     
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Shop_Orders> Shop_Orders { get; set; }
         public virtual ICollection<Shop_Product> Shop_Product { get; set; }
     }
 }

@@ -705,16 +705,10 @@
     <Compile Include="News_News_Product.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Order.cs">
-      <DependentUpon>DataBase.tt</DependentUpon>
-    </Compile>
     <Compile Include="OrderCar.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderCarProductDetail.cs">
-      <DependentUpon>DataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrderDetail.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Order_Debt.cs">

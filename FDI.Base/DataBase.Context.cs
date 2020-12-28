@@ -201,12 +201,10 @@ namespace FDI.Base
         public DbSet<News_Job> News_Job { get; set; }
         public DbSet<News_News> News_News { get; set; }
         public DbSet<News_News_Product> News_News_Product { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Order_Debt> Order_Debt { get; set; }
         public DbSet<Order_Package> Order_Package { get; set; }
         public DbSet<OrderCar> OrderCars { get; set; }
         public DbSet<OrderCarProductDetail> OrderCarProductDetails { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<P_Workshop> P_Workshop { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<Payment_Method> Payment_Method { get; set; }
@@ -2371,7 +2369,7 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductFull_Result>("ProductFull", nameParameter, kmmaxParameter, kmminParameter, cateidParameter, xParameter, yParameter, minpriceParameter, maxpriceParameter, pageNumberParameter, pageSizeParameter, hasTransferParameter, shopidParameter);
         }
     
-        public virtual ObjectResult<ProductGetbyShop_Result> ProductGetbyShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<System.DateTime> dates, Nullable<System.DateTime> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
+        public virtual ObjectResult<ProductGetbyShop_Result> ProductGetbyShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
         {
             var cateidParameter = cateid.HasValue ?
                 new ObjectParameter("cateid", cateid) :
@@ -2387,11 +2385,11 @@ namespace FDI.Base
     
             var datesParameter = dates.HasValue ?
                 new ObjectParameter("dates", dates) :
-                new ObjectParameter("dates", typeof(System.DateTime));
+                new ObjectParameter("dates", typeof(decimal));
     
             var dateeParameter = datee.HasValue ?
                 new ObjectParameter("datee", datee) :
-                new ObjectParameter("datee", typeof(System.DateTime));
+                new ObjectParameter("datee", typeof(decimal));
     
             var pageNumberParameter = pageNumber.HasValue ?
                 new ObjectParameter("PageNumber", pageNumber) :

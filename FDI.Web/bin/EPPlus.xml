@@ -6375,36 +6375,6 @@
             If the chart has a title or not
             </summary>
         </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartEx.HasLegend">
-            <summary>
-            If the chart has legend or not
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartEx.DisplayBlanksAs">
-            <summary>
-            This property does not apply to extended charts.
-            This property will always return eDisplayBlanksAs.Zero.
-            Setting this property on an extended chart will result in an InvalidOperationException
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartEx.RoundedCorners">
-            <summary>
-            This property does not apply to extended charts.
-            Setting this property on an extended chart will result in an InvalidOperationException
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartEx.ShowDataLabelsOverMaximum">
-            <summary>
-            This property does not apply to extended charts.
-            Setting this property on an extended chart will result in an InvalidOperationException
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartEx.ShowHiddenData">
-            <summary>
-            This property does not apply to extended charts.
-            Setting this property on an extended chart will result in an InvalidOperationException
-            </summary>
-        </member>
         <member name="T:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExAxis">
             <summary>
             An axis for an extended chart
@@ -6727,12 +6697,7 @@
             The side position alignment of the legend
             </summary>
         </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExLegend.Position">
-            <summary>
-            The position of the Legend.
-            </summary>
-            <remarks>Setting the Position to TopRight will set the <see cref="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExLegend.Position"/> to Right and the <see cref="P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExLegend.PositionAlignment" /> to Min</remarks>
-        </member>
+        <!-- Badly formed XML comment ignored for member "P:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExLegend.Position" -->
         <member name="M:OfficeOpenXml.Drawing.Chart.ChartEx.ExcelChartExLegend.Add">
             <summary>
             Adds a legend to the chart
@@ -9253,26 +9218,6 @@
             <summary>
             Formatting for the backwall of a 3D chart. 
             <note type="note">This property is null for non 3D charts</note>
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ExcelChart.RoundedCorners">
-            <summary>
-            Border rounded corners
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ExcelChart.ShowHiddenData">
-            <summary>
-            Show data in hidden rows and columns
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ExcelChart.DisplayBlanksAs">
-            <summary>
-            Specifies the possible ways to display blanks
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.Drawing.Chart.ExcelChart.ShowDataLabelsOverMaximum">
-            <summary>
-            Specifies data labels over the maximum of the chart shall be shown
             </summary>
         </member>
         <member name="P:OfficeOpenXml.Drawing.Chart.ExcelChart.View3D">
@@ -22397,26 +22342,6 @@
             You have a commercial license purchased at https://epplussoftware.com/licenseoverview
             </summary>
         </member>
-        <member name="T:OfficeOpenXml.eWorkSheetHidden">
-            <summary>
-            Worksheet hidden enumeration
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.eWorkSheetHidden.Visible">
-            <summary>
-            The worksheet is visible
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.eWorkSheetHidden.Hidden">
-            <summary>
-            The worksheet is hidden but can be shown by the user via the user interface
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.eWorkSheetHidden.VeryHidden">
-            <summary>
-            The worksheet is hidden and cannot be shown by the user via the user interface
-            </summary>
-        </member>
         <member name="T:OfficeOpenXml.ExcelTableAddress">
             <summary>
             Extended address information for a table address
@@ -23181,13 +23106,6 @@
             Indexer for the comments collection
             </summary>
             <param name="cell">The cell</param>
-            <returns>The comment</returns>
-        </member>
-        <member name="P:OfficeOpenXml.ExcelCommentCollection.Item(System.String)">
-            <summary>
-            Indexer for the comments collection
-            </summary>
-            <param name="cellAddress">The cell address</param>
             <returns>The comment</returns>
         </member>
         <member name="M:OfficeOpenXml.ExcelCommentCollection.Add(OfficeOpenXml.ExcelRangeBase,System.String,System.String)">
@@ -24006,7 +23924,7 @@
             <param name="path">Path</param>
             <param name="stream">Stream</param>
         </member>
-        <member name="P:OfficeOpenXml.ExcelPackage.ZipPackage">
+        <member name="P:OfficeOpenXml.ExcelPackage.Package">
             <summary>
             Returns a reference to the package
             </summary>
@@ -24202,55 +24120,49 @@
             <param name="inputStream">The input stream.</param>
             <param name="outputStream">The output stream.</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo)">
             <summary>
             Loads the specified package data from a stream.
             </summary>
             <param name="fileInfo">The input file.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo,System.String)">
             <summary>
             Loads the specified package data from a stream.
             </summary>
             <param name="fileInfo">The input file.</param>
             <param name="Password">The password</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo,System.IO.Stream,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.FileInfo,System.IO.Stream,System.String)">
             <summary>
             Loads the specified package data from a stream.
             </summary>
             <param name="fileInfo">The input file.</param>
             <param name="output">The out stream. Sets the Stream property</param>
             <param name="Password">The password</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream)">
             <summary>
             Loads the specified package data from a stream.
             </summary>
             <param name="input">The input.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream,System.String)">
             <summary>
             Loads the specified package data from a stream.
             </summary>
             <param name="input">The input.</param>
             <param name="Password">The password to decrypt the document</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream,System.IO.Stream,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.LoadAsync(System.IO.Stream,System.IO.Stream,System.String)">
             <summary>
             
             </summary>
             <param name="input"></param>    
             <param name="output"></param>
             <param name="Password"></param>
-            <param name="cancellationToken"></param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsync(System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsync">
             <summary>
             Saves all the components back into the package.
             This method recursively calls the Save method on all sub-components.
@@ -24259,7 +24171,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsync(System.String)">
             <summary>
             Saves all the components back into the package.
             This method recursively calls the Save method on all sub-components.
@@ -24267,17 +24179,15 @@
             Supply a password to encrypt the workbook package. 
             </summary>
             <param name="password">This parameter overrides the Workbook.Encryption.Password.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.FileInfo,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.FileInfo)">
             <summary>
             Saves the workbook to a new file
             The package is closed after it has been saved        
             </summary>
             <param name="file">The file location</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.FileInfo,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.FileInfo,System.String)">
             <summary>
             Saves the workbook to a new file
             The package is closed after it has been saved
@@ -24285,17 +24195,15 @@
             <param name="file">The file</param>
             <param name="password">The password to encrypt the workbook with. 
             This parameter overrides the Encryption.Password.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.Stream,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.Stream)">
             <summary>
             Copies the Package to the Outstream
             The package is closed after it has been saved
             </summary>
             <param name="OutputStream">The stream to copy the package to</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.SaveAsAsync(System.IO.Stream,System.String)">
             <summary>
             Copies the Package to the Outstream
             The package is closed after it has been saved
@@ -24303,17 +24211,15 @@
             <param name="OutputStream">The stream to copy the package to</param>
             <param name="password">The password to encrypt the workbook with. 
             This parameter overrides the Encryption.Password.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.CopyStreamAsync(System.IO.Stream,System.IO.Stream,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.CopyStreamAsync(System.IO.Stream,System.IO.Stream)">
             <summary>
             Copies the input stream to the output stream.
             </summary>
             <param name="inputStream">The input stream.</param>
             <param name="outputStream">The output stream.</param>
-            <param name="cancellationToken">The cancellation token</param>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.GetAsByteArrayAsync(System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.GetAsByteArrayAsync">
             <summary>
             Saves and returns the Excel files as a bytearray.
             Note that the package is closed upon save
@@ -24329,10 +24235,9 @@
              Response.BinaryWrite(bin);
             </code>
             </example>
-            <param name="cancellationToken">The cancellation token</param>
             <returns></returns>
         </member>
-        <member name="M:OfficeOpenXml.ExcelPackage.GetAsByteArrayAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.ExcelPackage.GetAsByteArrayAsync(System.String)">
             <summary>
             Saves and returns the Excel files as a bytearray
             Note that the package is closed upon save
@@ -24350,7 +24255,6 @@
             </example>
             <param name="password">The password to encrypt the workbook with. 
             This parameter overrides the Encryption.Password.</param>
-            <param name="cancellationToken">The cancellation token</param>
             <returns></returns>
         </member>
         <member name="T:OfficeOpenXml.eOrientation">
@@ -25199,12 +25103,7 @@
         </member>
         <member name="P:OfficeOpenXml.ExcelRangeBase.Comment">
             <summary>
-            Returns the comment object of the first cell in the range
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ExcelRangeBase.ThreadedComment">
-            <summary>
-            Returns the threaded comment object of the first cell in the range
+            returns the comment object of the first cell in the range
             </summary>
         </member>
         <member name="P:OfficeOpenXml.ExcelRangeBase.Worksheet">
@@ -25304,13 +25203,6 @@
             </summary>
             <param name="Text"></param>
             <param name="Author"></param>
-            <returns>A reference comment of the top left cell</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.AddThreadedComment">
-            <summary>
-            Adds a new threaded comment for the range.
-            If this range contains more than one cell, the top left comment is returned by the method.
-            </summary>
             <returns>A reference comment of the top left cell</returns>
         </member>
         <member name="M:OfficeOpenXml.ExcelRangeBase.Copy(OfficeOpenXml.ExcelRangeBase)">
@@ -25453,30 +25345,6 @@
             <param name="PrintHeaders">Print the caption property (if set) or the columnname property if not, on first row</param>
             <returns>The filled range</returns>
         </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDataTable(System.Data.DataTable)">
-            <summary>
-            Load the data from the datatable starting from the top left cell of the range
-            </summary>
-            <param name="table">The datatable to load</param>
-            <returns>The filled range</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDataTable(System.Data.DataTable,System.Action{OfficeOpenXml.LoadFunctions.Params.LoadFromDataTableParams})">
-            <summary>
-            Load the data from the <see cref="T:System.Data.DataTable"/> starting from the top left cell of the range
-            </summary>
-            <param name="table"></param>
-            <param name="paramsConfig"><see cref="T:System.Action`1"/> to provide parameters to the function</param>
-            <example>
-            <code>
-            sheet.Cells["C1"].LoadFromDataTable(dataTable, c =>
-            {
-                c.PrintHeaders = true;
-                c.TableStyle = TableStyles.Dark1;
-            });
-            </code>
-            </example>
-            <returns>The filled range</returns>
-        </member>
         <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromArrays(System.Collections.Generic.IEnumerable{System.Object[]})">
             <summary>
             Loads data from the collection of arrays of objects into the range, starting from
@@ -25523,24 +25391,6 @@
             <param name="TableStyle">Will create a table with this style. If set to TableStyles.None no table will be created</param>
             <param name="memberFlags">Property flags to use</param>
             <param name="Members">The properties to output. Must be of type T</param>
-            <returns>The filled range</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromCollection``1(System.Collections.Generic.IEnumerable{``0},System.Action{OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams})">
-            <summary>
-            Load a collection into the worksheet starting from the top left row of the range.
-            </summary>
-            <typeparam name="T">The datatype in the collection</typeparam>
-            <param name="collection">The collection to load</param>
-            <param name="paramsConfig"><see cref="T:System.Action`1"/> to provide parameters to the function</param>
-            <example>
-            <code>
-            sheet.Cells["C1"].LoadFromCollection(items, c =>
-            {
-                c.PrintHeaders = true;
-                c.TableStyle = TableStyles.Dark1;
-            });
-            </code>
-            </example>
             <returns>The filled range</returns>
         </member>
         <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromText(System.String)">
@@ -25618,147 +25468,6 @@
             <param name="TableStyle">Create a table with this style</param>
             <param name="FirstRowIsHeader">Use the first row as header</param>
             <returns></returns>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDictionaries(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}})">
-            <summary>
-            Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
-            These dictionaries should have the same set of keys.
-            </summary>
-            <param name="items">A list of dictionaries/></param>
-            <returns>The filled range</returns>
-            <example>
-            <code>
-             var items = new List&lt;IDictionary&lt;string, object&gt;&gt;()
-               {
-                   new Dictionary&lt;string, object&gt;()
-                   { 
-                       { "Id", 1 },
-                       { "Name", "TestName 1" }
-                   },
-                   new Dictionary&lt;string, object&gt;()
-                   {
-                       { "Id", 2 },
-                       { "Name", "TestName 2" }
-                   }
-               };
-               using(var package = new ExcelPackage())
-               {
-                   var sheet = package.Workbook.Worksheets.Add("test");
-                   var r = sheet.Cells["A1"].LoadFromDictionaries(items);
-               }
-            </code>
-            </example>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDictionaries(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}},System.Boolean)">
-            <summary>
-            Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
-            These dictionaries should have the same set of keys.
-            </summary>
-            <param name="items">A list of dictionaries/></param>
-            <param name="printHeaders">If true the key names from the first instance will be used as headers</param>
-            <returns>The filled range</returns>
-            <example>
-            <code>
-             var items = new List&lt;IDictionary&lt;string, object&gt;&gt;()
-               {
-                   new Dictionary&lt;string, object&gt;()
-                   { 
-                       { "Id", 1 },
-                       { "Name", "TestName 1" }
-                   },
-                   new Dictionary&lt;string, object&gt;()
-                   {
-                       { "Id", 2 },
-                       { "Name", "TestName 2" }
-                   }
-               };
-               using(var package = new ExcelPackage())
-               {
-                   var sheet = package.Workbook.Worksheets.Add("test");
-                   var r = sheet.Cells["A1"].LoadFromDictionaries(items, true);
-               }
-            </code>
-            </example>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDictionaries(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}},System.Boolean,OfficeOpenXml.Table.TableStyles)">
-            <summary>
-            Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
-            These dictionaries should have the same set of keys.
-            </summary>
-            <param name="items">A list of dictionaries/></param>
-            <param name="printHeaders">If true the key names from the first instance will be used as headers</param>
-            <param name="tableStyle">Will create a table with this style. If set to TableStyles.None no table will be created</param>
-            <returns>The filled range</returns>
-            <example>
-            <code>
-             var items = new List&lt;IDictionary&lt;string, object&gt;&gt;()
-               {
-                   new Dictionary&lt;string, object&gt;()
-                   { 
-                       { "Id", 1 },
-                       { "Name", "TestName 1" }
-                   },
-                   new Dictionary&lt;string, object&gt;()
-                   {
-                       { "Id", 2 },
-                       { "Name", "TestName 2" }
-                   }
-               };
-               using(var package = new ExcelPackage())
-               {
-                   var sheet = package.Workbook.Worksheets.Add("test");
-                   var r = sheet.Cells["A1"].LoadFromDictionaries(items, true, TableStyles.None);
-               }
-            </code>
-            </example>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDictionaries(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}},System.Boolean,OfficeOpenXml.Table.TableStyles,System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
-            These dictionaries should have the same set of keys.
-            </summary>
-            <param name="items">A list of dictionaries</param>
-            <param name="printHeaders">If true the key names from the first instance will be used as headers</param>
-            <param name="tableStyle">Will create a table with this style. If set to TableStyles.None no table will be created</param>
-            <param name="keys">Keys that should be used, keys omitted will not be included</param>
-            <returns>The filled range</returns>
-            <example>
-            <code>
-             var items = new List&lt;IDictionary&lt;string, object&gt;&gt;()
-               {
-                   new Dictionary&lt;string, object&gt;()
-                   { 
-                       { "Id", 1 },
-                       { "Name", "TestName 1" }
-                   },
-                   new Dictionary&lt;string, object&gt;()
-                   {
-                       { "Id", 2 },
-                       { "Name", "TestName 2" }
-                   }
-               };
-               using(var package = new ExcelPackage())
-               {
-                   var sheet = package.Workbook.Worksheets.Add("test");
-                   var r = sheet.Cells["A1"].LoadFromDictionaries(items, true, TableStyles.None, null);
-               }
-            </code>
-            </example>
-        </member>
-        <member name="M:OfficeOpenXml.ExcelRangeBase.LoadFromDictionaries(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}},System.Action{OfficeOpenXml.LoadFunctions.Params.LoadFromDictionariesParams})">
-            <summary>
-            Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
-            These dictionaries should have the same set of keys.
-            </summary>
-            <param name="items">A list of dictionaries/ExpandoObjects</param>
-            <param name="paramsConfig"><see cref="T:System.Action`1"/> to provide parameters to the function</param>
-            <example>
-            sheet.Cells["C1"].LoadFromDictionaries(items, c =>
-            {
-                c.PrintHeaders = true;
-                c.TableStyle = TableStyles.Dark1;
-            });
-            </example>
         </member>
         <member name="M:OfficeOpenXml.ExcelRangeBase.ToText">
             <summary>
@@ -26216,12 +25925,12 @@
         </member>
         <member name="P:OfficeOpenXml.ExcelTextFormatBase.SkipLinesBeginning">
             <summary>
-            Number of lines skipped in the begining of the file. Default 0.
+            Number of lines skiped in the begining of the file. Default 0.
             </summary>
         </member>
         <member name="P:OfficeOpenXml.ExcelTextFormatBase.SkipLinesEnd">
             <summary>
-            Number of lines skipped at the end of the file. Default 0.
+            Number of lines skiped at the end of the file. Default 0.
             </summary>
         </member>
         <member name="P:OfficeOpenXml.ExcelTextFormatBase.Encoding">
@@ -26306,7 +26015,7 @@
             <summary>
             Use the cells Text property with the applied culture.
             This only applies to columns with no format set in the Formats collection.
-            If SkipLinesBeginning is larger than zero, headers will still be read from the first row in the range.
+            If SkipLinesBeginning is larger than zero, headers will still be reed from the first row in the range.
             If a TextQualifier is set, non numeric and date columns will be wrapped with the TextQualifier
             </summary>
         </member>
@@ -26391,11 +26100,6 @@
             Add your own functions or replace native ones, parse formulas or attach a logger.
             </summary>
         </member>
-        <member name="P:OfficeOpenXml.ExcelWorkbook.ThreadedCommentPersons">
-            <summary>
-            Represents a collection of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>s in the workbook.
-            </summary>
-        </member>
         <member name="P:OfficeOpenXml.ExcelWorkbook.MaxFontWidth">
             <summary>
             Max font width for the workbook
@@ -26442,11 +26146,6 @@
         <member name="P:OfficeOpenXml.ExcelWorkbook.SharedStringsUri">
             <summary>
             URI to the shared strings inside the package
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ExcelWorkbook.PersonsUri">
-            <summary>
-            URI to the person elements inside the package
             </summary>
         </member>
         <member name="P:OfficeOpenXml.ExcelWorkbook.Part">
@@ -26606,6 +26305,26 @@
         <member name="P:OfficeOpenXml.ExcelWorkbookView.ActiveTab">
             <summary>
             The active worksheet in the workbook. Zero based.
+            </summary>
+        </member>
+        <member name="T:OfficeOpenXml.eWorkSheetHidden">
+            <summary>
+            Worksheet hidden enumeration
+            </summary>
+        </member>
+        <member name="F:OfficeOpenXml.eWorkSheetHidden.Visible">
+            <summary>
+            The worksheet is visible
+            </summary>
+        </member>
+        <member name="F:OfficeOpenXml.eWorkSheetHidden.Hidden">
+            <summary>
+            The worksheet is hidden but can be shown by the user via the user interface
+            </summary>
+        </member>
+        <member name="F:OfficeOpenXml.eWorkSheetHidden.VeryHidden">
+            <summary>
+            The worksheet is hidden and cannot be shown by the user via the user interface
             </summary>
         </member>
         <member name="T:OfficeOpenXml.ExcelChartsheet">
@@ -29417,16 +29136,8 @@
             <summary>
             Parses the supplied <paramref name="formula"/> and returns the result.
             </summary>
-            <param name="formula">The formula to parse</param>
-            <returns>The result of the parsed formula</returns>
-        </member>
-        <member name="M:OfficeOpenXml.FormulaParsing.FormulaParserManager.Parse(System.String,System.String)">
-            <summary>
-            Parses the supplied <paramref name="formula"/> and returns the result.
-            </summary>
-            <param name="formula">The formula to parse</param>
-            <param name="address">The full address in the workbook where the <paramref name="formula"/> should be parsed. Example: you might want to parse the formula of a conditional format, then this should be the address of the cell where the conditional format resides.</param>
-            <returns>The result of the parsed formula</returns>
+            <param name="formula"></param>
+            <returns></returns>
         </member>
         <member name="M:OfficeOpenXml.FormulaParsing.FormulaParserManager.AttachLogger(OfficeOpenXml.FormulaParsing.Logging.IFormulaParserLogger)">
             <summary>
@@ -30467,131 +30178,6 @@
         <member name="T:OfficeOpenXml.LicenseException">
             <summary>
             An exception thrown when the license context of EPPlus hasn't been set.
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.LoadFunctions.LoadFunctionBase">
-            <summary>
-            Base class for ExcelRangeBase.LoadFrom[...] functions
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.LoadFunctionBase.Range">
-            <summary>
-            The range to which the data should be loaded
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.LoadFunctionBase.PrintHeaders">
-            <summary>
-            If true a header row will be printed above the data
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.LoadFunctionBase.TableStyle">
-            <summary>
-            If value is other than TableStyles.None the data will be added to a table in the worksheet.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.LoadFunctions.LoadFunctionBase.GetNumberOfRows">
-            <summary>
-            Returns how many rows there are in the range (header row not included)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:OfficeOpenXml.LoadFunctions.LoadFunctionBase.GetNumberOfColumns">
-            <summary>
-            Returns how many columns there are in the range
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:OfficeOpenXml.LoadFunctions.LoadFunctionBase.Load">
-            <summary>
-            Loads the data into the worksheet
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes">
-            <summary>
-            Declares how headers should be parsed before they are added to the worksheet
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes.Preserve">
-            <summary>
-            Leaves the header as it is
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes.UnderscoreToSpace">
-            <summary>
-            Replaces any underscore characters with a space
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes.CamelCaseToSpace">
-            <summary>
-            Adds a space between camel cased words ('MyProp' => 'My Prop')
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes.UnderscoreAndCamelCaseToSpace">
-            <summary>
-            Replaces any underscore characters with a space and adds a space between camel cased words ('MyProp' => 'My Prop')
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams">
-            <summary>
-            Parameters for the LoadFromCollection method
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams.DefaultBindingFlags">
-            <summary>
-            Default value for the BindingFlags property
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams.BindingFlags">
-            <summary>
-            The <see cref="P:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams.BindingFlags"/> used when reading properties via reflection.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams.Members">
-            <summary>
-            If not null, this specifies the members that should be used. Any member not present will be ignored.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.Params.LoadFromCollectionParams.HeaderParsingType">
-            <summary>
-            Sets how headers should be parsed before added to the worksheet, see <see cref="T:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes"/>
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.LoadFunctions.Params.LoadFromDictionariesParams">
-            <summary>
-            Parameters for the LoadFromDictionaries method
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.Params.LoadFromDictionariesParams.Keys">
-            <summary>
-            If set, only these keys will be included in the dataset
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.LoadFunctions.Params.LoadFromDictionariesParams.SetKeys(System.String[])">
-            <summary>
-            The keys supplied to this function will be included in the dataset, all others will be ignored.
-            </summary>
-            <param name="keys">The keys to include</param>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.Params.LoadFromDictionariesParams.HeaderParsingType">
-            <summary>
-            Sets how headers should be parsed before added to the worksheet, see <see cref="T:OfficeOpenXml.LoadFunctions.Params.HeaderParsingTypes"/>
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.LoadFunctions.Params.LoadFromTextParams">
-            <summary>
-            Parameters for the LoadFromDictionaries method
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.LoadFunctionFunctionParamsBase.PrintHeaders">
-            <summary>
-            If true a row with headers will be added above the data
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.LoadFunctions.LoadFunctionFunctionParamsBase.TableStyle">
-            <summary>
-            If set to another value than TableStyles.None the data will be added to a
-            table with the specified style
             </summary>
         </member>
         <member name="T:OfficeOpenXml.OfficeProperties">
@@ -49502,8 +49088,7 @@
         </member>
         <member name="P:OfficeOpenXml.Style.XmlAccess.ExcelColorXml.Indexed">
             <summary>
-            Indexed color value.
-            Returns int.MinValue if indexed colors are not used.
+            Indexed color value
             </summary>
         </member>
         <member name="M:OfficeOpenXml.Style.XmlAccess.ExcelColorXml.SetColor(System.Drawing.Color)">
@@ -51630,473 +51215,6 @@
             </summary>
             <param name="Index"></param>
         </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment">
-            <summary>
-            Represents a comment in a thread of ThreadedComments
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.ContainsMentions">
-            <summary>
-            Indicates whether the Text contains mentions. If so the
-            Mentions property will contain data about those mentions.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.Ref">
-            <summary>
-            Address of the cell in the A1 format
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.CellAddress">
-            <summary>
-            The location of the threaded comment
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.DateCreated">
-            <summary>
-            Timestamp for when the comment was created
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.Id">
-            <summary>
-            Unique id
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.PersonId">
-            <summary>
-            Id of the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> who wrote the comment
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.Author">
-            <summary>
-            Author of the comment
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.ParentId">
-            <summary>
-            Id of the first comment in the thread
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.Text">
-            <summary>
-            Text of the comment. To edit the text on an existing comment, use the EditText function.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.EditText(System.String)">
-            <summary>
-            Edit the Text of an existing comment
-            </summary>
-            <param name="newText"></param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.EditText(System.String,OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson[])">
-            <summary>
-            Edit the Text of an existing comment with mentions
-            </summary>
-            <param name="newTextWithFormats">A string with format placeholders - same as in string.Format. Index in these should correspond to an index in the <paramref name="personsToMention"/> array.</param>
-            <param name="personsToMention">A params array of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>. Their DisplayName property will be used to replace the format placeholders.</param>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedComment.Mentions">
-            <summary>
-            Mentions in this comment. Will return null if no mentions exists.
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection">
-            <summary>
-            This class represents an enumerable of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection.Worksheet">
-            <summary>
-            A reference to the worksheet object
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection.Item(System.Int32)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> by its index
-            </summary>
-            <param name="index">Index in this collection</param>
-            <returns>The <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> at the requested <paramref name="index"/></returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">If the <paramref name="index"/> falls out of range</exception>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection.Item(System.String)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> by its <paramref name="id"/>
-            </summary>
-            <param name="id">Id of the requested <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/></param>
-            <returns>The requested <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/></returns>
-            <exception cref="T:System.ArgumentException">If the requested <paramref name="id"/> was not present.</exception>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection.Count">
-            <summary>
-            Number of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentCollection.Clear">
-            <summary>
-            Removes all <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s in the collection
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention">
-            <summary>
-            This class represents a mention of a person in a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention.#ctor(System.Xml.XmlNamespaceManager,System.Xml.XmlNode)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="nameSpaceManager">Namespace manager of the <see cref="T:OfficeOpenXml.ExcelPackage"/></param>
-            <param name="topNode">An <see cref="T:System.Xml.XmlNode"/> representing the mention</param>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention.StartIndex">
-            <summary>
-            Index in the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s text where the mention starts
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention.Length">
-            <summary>
-            Length of the mention, value for @John Doe would be 9.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention.MentionId">
-            <summary>
-            Id of this mention
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention.MentionPersonId">
-            <summary>
-            Id of the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> mentioned
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMentionCollection">
-            <summary>
-            A collection of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMention">mentions</see> that occors in a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMentionCollection.#ctor(System.Xml.XmlNamespaceManager,System.Xml.XmlNode)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="nameSpaceManager">The Namespacemangager of the package</param>
-            <param name="topNode">The <see cref="T:System.Xml.XmlNode"/> representing the parent element of the collection</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMentionCollection.AddMention(OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson,System.Int32)">
-            <summary>
-            Adds a mention
-            </summary>
-            <param name="person">The <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> to mention</param>
-            <param name="textPosition">Index of the first character of the mention in the text</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMentionCollection.SortAndAddMentionsToXml">
-            <summary>
-            Rebuilds the collection with the elements sorted by the property StartIndex.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentMentionCollection.Clear">
-            <summary>
-            Remove all mentions from the collection
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson">
-            <summary>
-            A person in the context of ThreadedComments.
-            Might refer to an <see cref="T:OfficeOpenXml.ThreadedComments.IdentityProvider"/>, see property ProviderId.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson.Id">
-            <summary>
-            Unique Id of the person
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson.DisplayName">
-            <summary>
-            Display name of the person
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson.UserId">
-            <summary>
-            See the documentation of the members of the <see cref="T:OfficeOpenXml.ThreadedComments.IdentityProvider"/> enum and
-            Microsofts documentation at https://docs.microsoft.com/en-us/openspecs/office_standards/ms-xlsx/6274371e-7c5c-46e3-b661-cbeb4abfe968
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson.ProviderId">
-            <summary>
-            See the documentation of the members of the <see cref="T:OfficeOpenXml.ThreadedComments.IdentityProvider"/> enum and
-            Microsofts documentation at https://docs.microsoft.com/en-us/openspecs/office_standards/ms-xlsx/6274371e-7c5c-46e3-b661-cbeb4abfe968
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection">
-            <summary>
-            Represents a collection of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>s in a workbook.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.#ctor(OfficeOpenXml.ExcelWorkbook)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="workbook">The <paramref name="workbook"/> where the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> occurs</param>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Count">
-            <summary>
-            Number of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>s in the collection
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Item(System.Int32)">
-            <summary>
-            Returns the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> by its index
-            </summary>
-            <param name="index">The requested index</param>
-            <returns>The <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> at the requested index</returns>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Item(System.String)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> by its id
-            </summary>
-            <param name="id">The Id of the Person</param>
-            <returns>A <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> with the requested <paramref name="id"/> or null</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Find(System.Predicate{OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson})">
-            <summary>
-            Finds a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> that <paramref name="match"/> a certain criteria
-            </summary>
-            <param name="match">The criterias</param>
-            <returns>A matching <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.FindAll(System.Predicate{OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson})">
-            <summary>
-            Finds a number of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>'s that matches a certain criteria.
-            </summary>
-            <param name="match">The criterias</param>
-            <returns>An enumerable of matching <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>'s</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Add(System.String)">
-            <summary>
-            Creates and adds a new <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> to the workbooks list of persons. A unique Id for the person will be generated and set.
-            The userId will be the same as the <paramref name="displayName"/> and identityProvider will be set to <see cref="F:OfficeOpenXml.ThreadedComments.IdentityProvider.NoProvider"/>
-            </summary>
-            <param name="displayName">The display name of the added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Add(System.String,System.String,OfficeOpenXml.ThreadedComments.IdentityProvider)">
-            <summary>
-            Creates and adds a new <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> to the workbooks list of persons. A unique Id for the person will be generated and set.
-            </summary>
-            <param name="displayName">The display name of the added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></param>
-            <param name="userId">A string representing the userId of the <paramref name="identityProvider"/></param>
-            <param name="identityProvider">The <see cref="T:OfficeOpenXml.ThreadedComments.IdentityProvider"/> from which the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> originates</param>
-            <returns>The added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Add(System.String,System.String,OfficeOpenXml.ThreadedComments.IdentityProvider,System.String)">
-            <summary>
-            Creates and adds a new <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> to the workbooks list of persons
-            </summary>
-            <param name="displayName">The display name of the added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></param>
-            <param name="userId">A string representing the userId of the <paramref name="identityProvider"/></param>
-            <param name="identityProvider">The <see cref="T:OfficeOpenXml.ThreadedComments.IdentityProvider"/> from which the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> originates</param>
-            <param name="id">Id of the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></param>
-            <returns>The added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Remove(OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson)">
-            <summary>
-            Removes a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/> from the collection
-            </summary>
-            <param name="person"></param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPersonCollection.Clear">
-            <summary>
-            Removes all persons from the collection
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread">
-            <summary>
-            Represents a thread of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s in a cell on a worksheet. Contains functionality to add and modify these comments.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.CellAddress">
-            <summary>
-            The address of the cell of the comment thread
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.Worksheet">
-            <summary>
-            The worksheet where this comment thread resides
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.ThreadedCommentsXml">
-            <summary>
-            The raw xml representing this comment thread.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.OnCommentThreadChanged">
-            <summary>
-            When this method is called the legacy comment representing the thread will be rebuilt.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.AddComment(System.String,System.String)">
-            <summary>
-            Adds a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> to the thread
-            </summary>
-            <param name="personId">Id of the author, see <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/></param>
-            <param name="text">Text of the comment</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.AddComment(System.String,System.String,OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson[])">
-            <summary>
-            Adds a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> with mentions in the text to the thread.
-            </summary>
-            <param name="personId">Id of the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson">autor</see></param>
-            <param name="textWithFormats">A string with format placeholders - same as in string.Format. Index in these should correspond to an index in the <paramref name="personsToMention"/> array.</param>
-            <param name="personsToMention">A params array of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>. Their DisplayName property will be used to replace the format placeholders.</param>
-            <returns>The added <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/></returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.Remove(OfficeOpenXml.ThreadedComments.ExcelThreadedComment)">
-            <summary>
-            Removes a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/> from the thread.
-            </summary>
-            <param name="comment">The comment to remove</param>
-            <returns>true if the comment was removed, otherwise false</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.ResolveThread">
-            <summary>
-            Closes the thread, only the author can re-open it.
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.IsResolved">
-            <summary>
-            If true the thread is resolved, i.e. closed for edits or further comments.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.ReopenThread">
-            <summary>
-            Re-opens a resolved thread.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread.DeleteThread">
-            <summary>
-            Deletes all <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s in the thread and the legacy <see cref="T:OfficeOpenXml.ExcelComment"/> in the cell.
-            </summary>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments">
-            <summary>
-            Accessor for <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedComment"/>s on a <see cref="T:OfficeOpenXml.ExcelWorksheet"/>
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Threads">
-            <summary>
-            An enumerable of the existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/>s on the <see cref="T:OfficeOpenXml.ExcelWorksheet">worksheet</see>
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Count">
-            <summary>
-            Number of <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/>s on the <see cref="T:OfficeOpenXml.ExcelWorksheet">worksheet</see> 
-            </summary>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.ThreadedCommentsXml">
-            <summary>
-            The raw xml for the threaded comments
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Add(System.String)">
-            <summary>
-            Adds a new <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> to the cell.
-            </summary>
-            <param name="cellAddress"></param>
-            <exception cref="T:System.ArgumentException">Thrown if there was an existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> in the cell.</exception>
-            <returns>The new, empty <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/></returns>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Item(System.String)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> for the requested <paramref name="cellAddress"/>.
-            </summary>
-            <param name="cellAddress">The requested cell address in A1 format</param>
-            <returns>An existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> or null if no thread exists</returns>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Item(OfficeOpenXml.ExcelCellAddress)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> for the requested <paramref name="cellAddress"/>.
-            </summary>
-            <param name="cellAddress">The requested cell address in A1 format</param>
-            <returns>An existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> or null if no thread exists</returns>
-        </member>
-        <member name="P:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Item(System.Int32)">
-            <summary>
-            Returns a <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> for the requested <paramref name="index"/>.
-            </summary>
-            <param name="index">The index in the collection</param>
-            <returns>An existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> or null if no thread exists</returns>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.RemoveAt(System.Int32)">
-            <summary>
-            Removes the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> index position in the collection
-            </summary>
-            <param name="index">The index for the threaded comment to be removed</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Remove(OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread)">
-            <summary>
-            Removes the <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> supplied
-            </summary>
-            <param name="threadedComment">An existing <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentThread"/> in the worksheet</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Delete(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Shifts all comments based on their address and the location of inserted rows and columns.
-            </summary>
-            <param name="fromRow">The start row.</param>
-            <param name="fromCol">The start column.</param>
-            <param name="rows">The number of rows to insert.</param>
-            <param name="columns">The number of columns to insert.</param>
-            <param name="toRow">If the delete is in a range, this is the end row</param>
-            <param name="toCol">If the delete is in a range, this the end column</param>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.ExcelWorksheetThreadedComments.Insert(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Shifts all comments based on their address and the location of inserted rows and columns.
-            </summary>
-            <param name="fromRow">The start row</param>
-            <param name="fromCol">The start column</param>
-            <param name="rows">The number of rows to insert</param>
-            <param name="columns">The number of columns to insert</param>
-            <param name="toRow">If the insert is in a range, this is the end row</param>
-            <param name="toCol">If the insert is in a range, this the end column</param>
-        </member>
-        <member name="T:OfficeOpenXml.ThreadedComments.IdentityProvider">
-            <summary>
-            This enum defines the Identity providers for <see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>
-            as described here: https://docs.microsoft.com/en-us/openspecs/office_standards/ms-xlsx/6274371e-7c5c-46e3-b661-cbeb4abfe968
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.ThreadedComments.IdentityProvider.NoProvider">
-            <summary>
-            No provider, Person's userId should be a name
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.ThreadedComments.IdentityProvider.ActiveDirectory">
-            <summary>
-            ActiveDirectory, Person's userId should be an ActiveDirectory Security Identifier (SID) as specified here:
-            https://docs.microsoft.com/en-us/openspecs/windows_protocols/MS-DTYP/cca27429-5689-4a16-b2b4-9325d93e4ba2
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.ThreadedComments.IdentityProvider.WindowsLiveId">
-            <summary>
-            Windows Live, Person's userId should be a 64-bit signed decimal that uniquely identifies a user on Windows Live
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.ThreadedComments.IdentityProvider.Office365">
-            <summary>
-            Office 365. The Person's userId should be a string that uniquely identifies a user. It SHOULD be comprised
-            of three individual values separated by a &quot;::&quot; delimiter. 
-            </summary>
-        </member>
-        <member name="F:OfficeOpenXml.ThreadedComments.IdentityProvider.PeoplePicker">
-            <summary>
-            People Picker, The Persons userId should be an email address provided by People Picker.
-            </summary>
-        </member>
-        <member name="M:OfficeOpenXml.ThreadedComments.MentionsHelper.InsertMentions(OfficeOpenXml.ThreadedComments.ExcelThreadedComment,System.String,OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson[])">
-            <summary>
-            Inserts mentions in the comment text and in the comment
-            </summary>
-            <param name="comment"></param>
-            <param name="textWithFormats">A string with format placeholders with indexes, simlar to string.Format</param>
-            <param name="personsToMention"><see cref="T:OfficeOpenXml.ThreadedComments.ExcelThreadedCommentPerson"/>s to mention</param>
-        </member>
         <member name="T:OfficeOpenXml.Utils.AddressUtility">
             <summary>
             A utility to work with Excel addresses
@@ -52162,20 +51280,11 @@
             <param name="fi">The file</param>
             <returns></returns>
         </member>
-        <member name="M:OfficeOpenXml.Utils.CompundDocument.CompoundDocumentFile.IsCompoundDocumentAsync(System.IO.FileInfo,System.Threading.CancellationToken)">
+        <member name="M:OfficeOpenXml.Utils.CompundDocument.CompoundDocumentFile.IsCompoundDocumentAsync(System.IO.FileInfo)">
             <summary>
             Verifies that the header is correct.
             </summary>
             <param name="fi">The file</param>
-            <param name="cancellationToken">The cancellation token</param>
-            <returns></returns>
-        </member>
-        <member name="M:OfficeOpenXml.Utils.CompundDocument.CompoundDocumentFile.IsCompoundDocumentAsync(System.IO.MemoryStream,System.Threading.CancellationToken)">
-            <summary>
-            Verifies that the header is correct.
-            </summary>
-            <param name="ms">The memory stream</param>
-            <param name="cancellationToken">The cancellation token</param>
             <returns></returns>
         </member>
         <member name="P:OfficeOpenXml.Utils.CompundDocument.CompoundDocumentItem.ColorFlag">

@@ -174,12 +174,10 @@
     <EntitySet Name="News_Job" EntityType="FDIModel.News_Job" />
     <EntitySet Name="News_News" EntityType="FDIModel.News_News" />
     <EntitySet Name="News_News_Product" EntityType="FDIModel.News_News_Product" />
-    <EntitySet Name="Orders" EntityType="FDIModel.Order" />
     <EntitySet Name="Order_Debt" EntityType="FDIModel.Order_Debt" />
     <EntitySet Name="Order_Package" EntityType="FDIModel.Order_Package" />
     <EntitySet Name="OrderCars" EntityType="FDIModel.OrderCar" />
     <EntitySet Name="OrderCarProductDetails" EntityType="FDIModel.OrderCarProductDetail" />
-    <EntitySet Name="OrderDetails" EntityType="FDIModel.OrderDetail" />
     <EntitySet Name="P_Workshop" EntityType="FDIModel.P_Workshop" />
     <EntitySet Name="Partners" EntityType="FDIModel.Partner" />
     <EntitySet Name="Payment_Method" EntityType="FDIModel.Payment_Method" />
@@ -754,17 +752,9 @@
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ReceiveHistory" EntitySet="ReceiveHistories" />
     </AssociationSet>
-    <AssociationSet Name="FK_Order_Customer1" Association="FDIModel.FK_Order_Customer1">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
     <AssociationSet Name="FK_Order_Package_Customer" Association="FDIModel.FK_Order_Package_Customer">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="Order_Package" EntitySet="Order_Package" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderDetails_Customer" Association="FDIModel.FK_OrderDetails_Customer">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Product_Reading_Customer" Association="FDIModel.FK_Product_Reading_Customer">
       <End Role="Customer" EntitySet="Customers" />
@@ -789,6 +779,14 @@
     <AssociationSet Name="FK_Shop_ContactOrder_Customer" Association="FDIModel.FK_Shop_ContactOrder_Customer">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Order_Details_Customer" Association="FDIModel.FK_Shop_Order_Details_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Orders_Customer" Association="FDIModel.FK_Shop_Orders_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Shop_Orders" EntitySet="Shop_Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Customer1" Association="FDIModel.FK_Shop_Product_Customer1">
       <End Role="Customer" EntitySet="Customers" />
@@ -858,9 +856,9 @@
       <End Role="Customer_Type" EntitySet="Customer_Type" />
       <End Role="Order_Package" EntitySet="Order_Package" />
     </AssociationSet>
-    <AssociationSet Name="FK_Order_CustomerAddress" Association="FDIModel.FK_Order_CustomerAddress">
+    <AssociationSet Name="FK_Shop_Orders_CustomerAddress" Association="FDIModel.FK_Shop_Orders_CustomerAddress">
       <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
-      <End Role="Order" EntitySet="Orders" />
+      <End Role="Shop_Orders" EntitySet="Shop_Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_CustomerAddress" Association="FDIModel.FK_Shop_Product_CustomerAddress">
       <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
@@ -925,10 +923,6 @@
     <AssociationSet Name="FK_Documents_DN_Agency" Association="FDIModel.FK_Documents_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="Document" EntitySet="Documents" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Order_DN_Agency" Association="FDIModel.FK_Order_DN_Agency">
-      <End Role="DN_Agency" EntitySet="DN_Agency" />
-      <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Product_Value_DN_Agency" Association="FDIModel.FK_Product_Value_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -1670,18 +1664,6 @@
       <End Role="News_News" EntitySet="News_News" />
       <End Role="TM_News_Comment" EntitySet="TM_News_Comment" />
     </AssociationSet>
-    <AssociationSet Name="FK_Order_System_City" Association="FDIModel.FK_Order_System_City">
-      <End Role="System_City" EntitySet="System_City" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderDetails_Order" Association="FDIModel.FK_OrderDetails_Order">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="OrderDetail" EntitySet="OrderDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RewardHistory_Order" Association="FDIModel.FK_RewardHistory_Order">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="RewardHistory" EntitySet="RewardHistories" />
-    </AssociationSet>
     <AssociationSet Name="FK__OrderCar__Worksh__3123FCCD" Association="FDIModel.FK__OrderCar__Worksh__3123FCCD">
       <End Role="P_Workshop" EntitySet="P_Workshop" />
       <End Role="OrderCar" EntitySet="OrderCars" />
@@ -1693,10 +1675,6 @@
     <AssociationSet Name="FK__PurchaseO__Order__461F19B3" Association="FDIModel.FK__PurchaseO__Order__461F19B3">
       <End Role="OrderCar" EntitySet="OrderCars" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderDetails_Shop_Product" Association="FDIModel.FK_OrderDetails_Shop_Product">
-      <End Role="Shop_Product" EntitySet="Shop_Product" />
-      <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Payments_Order_Payment_Method" Association="FDIModel.FK_Payments_Order_Payment_Method">
       <End Role="Payment_Method" EntitySet="Payment_Method" />
@@ -2672,8 +2650,8 @@
       <Parameter Name="cateid" Mode="In" Type="Int32" />
       <Parameter Name="CustomerID" Mode="In" Type="Int32" />
       <Parameter Name="isAll" Mode="In" Type="Boolean" />
-      <Parameter Name="dates" Mode="In" Type="DateTime" />
-      <Parameter Name="datee" Mode="In" Type="DateTime" />
+      <Parameter Name="dates" Mode="In" Type="Decimal" />
+      <Parameter Name="datee" Mode="In" Type="Decimal" />
       <Parameter Name="PageNumber" Mode="In" Type="Int32" />
       <Parameter Name="PageSize" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -3690,7 +3668,7 @@
     <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
     <Property Name="PeoplesIdentity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="IsDelete" Type="Boolean" />
     <Property Name="CardID" Type="Int32" />
@@ -3715,7 +3693,6 @@
     <Property Name="LikeTotal" Type="Int32" />
     <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="IsPrestige" Type="Boolean" Nullable="false" />
-    <Property Name="DateCreated1" Type="DateTime" Precision="3" />
     <Property Name="AvatarUrl" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CashOutWallets" Relationship="FDIModel.FK_CashOutWallet_Customer" FromRole="Customer" ToRole="CashOutWallet" />
@@ -3736,15 +3713,15 @@
     <NavigationProperty Name="DN_StatusEmail" Relationship="FDIModel.FK_DN_StatusEmail_Customer" FromRole="Customer" ToRole="DN_StatusEmail" />
     <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_DN_Users_Customer" FromRole="Customer" ToRole="DN_Users" />
     <NavigationProperty Name="ReceiveHistories" Relationship="FDIModel.FK_HistoryReward_Customer" FromRole="Customer" ToRole="ReceiveHistory" />
-    <NavigationProperty Name="Orders" Relationship="FDIModel.FK_Order_Customer1" FromRole="Customer" ToRole="Order" />
     <NavigationProperty Name="Order_Package" Relationship="FDIModel.FK_Order_Package_Customer" FromRole="Customer" ToRole="Order_Package" />
-    <NavigationProperty Name="OrderDetails" Relationship="FDIModel.FK_OrderDetails_Customer" FromRole="Customer" ToRole="OrderDetail" />
     <NavigationProperty Name="Product_Reading" Relationship="FDIModel.FK_Product_Reading_Customer" FromRole="Customer" ToRole="Product_Reading" />
     <NavigationProperty Name="ProductRatings" Relationship="FDIModel.FK_ProductRating_Customer" FromRole="Customer" ToRole="ProductRating" />
     <NavigationProperty Name="ReceiptPayments" Relationship="FDIModel.FK_ReceiptPayment_Customer" FromRole="Customer" ToRole="ReceiptPayment" />
     <NavigationProperty Name="RewardHistories" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="Customer" ToRole="RewardHistory" />
     <NavigationProperty Name="Send_Card" Relationship="FDIModel.FK_Send_Card_Customer" FromRole="Customer" ToRole="Send_Card" />
     <NavigationProperty Name="Shop_ContactOrder" Relationship="FDIModel.FK_Shop_ContactOrder_Customer" FromRole="Customer" ToRole="Shop_ContactOrder" />
+    <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Customer" ToRole="Shop_Order_Details" />
+    <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Customer" ToRole="Shop_Orders" />
     <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
     <NavigationProperty Name="Therapy_History" Relationship="FDIModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
     <NavigationProperty Name="WalletCustomers" Relationship="FDIModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
@@ -3940,7 +3917,7 @@
     <Property Name="DateCreated" Type="DateTime" Precision="3" />
     <Property Name="AddressType" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Customer" Relationship="FDIModel.FK_CustomerAddress_Customer" FromRole="CustomerAddress" ToRole="Customer" />
-    <NavigationProperty Name="Orders" Relationship="FDIModel.FK_Order_CustomerAddress" FromRole="CustomerAddress" ToRole="Order" />
+    <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_CustomerAddress" FromRole="CustomerAddress" ToRole="Shop_Orders" />
     <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_CustomerAddress" FromRole="CustomerAddress" ToRole="Shop_Product" />
   </EntityType>
   <EntityType Name="CustomerContact">
@@ -4086,7 +4063,6 @@
     <NavigationProperty Name="DN_Supplier" Relationship="FDIModel.FK_DN_Supplier_DN_Agency" FromRole="DN_Agency" ToRole="DN_Supplier" />
     <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_DN_Users_DN_Agency" FromRole="DN_Agency" ToRole="DN_Users" />
     <NavigationProperty Name="Documents" Relationship="FDIModel.FK_Documents_DN_Agency" FromRole="DN_Agency" ToRole="Document" />
-    <NavigationProperty Name="Orders" Relationship="FDIModel.FK_Order_DN_Agency" FromRole="DN_Agency" ToRole="Order" />
     <NavigationProperty Name="Product_Value" Relationship="FDIModel.FK_Product_Value_DN_Agency" FromRole="DN_Agency" ToRole="Product_Value" />
     <NavigationProperty Name="RewardAgencyHistories" Relationship="FDIModel.FK_RewardAgencyHistory_DN_Agency" FromRole="DN_Agency" ToRole="RewardAgencyHistory" />
     <NavigationProperty Name="Shop_ContactOrder" Relationship="FDIModel.FK_Shop_ContactOrder_DN_Agency" FromRole="DN_Agency" ToRole="Shop_ContactOrder" />
@@ -5960,52 +5936,6 @@
     <Property Name="ProductID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="News_News" Relationship="FDIModel.FK_News_NewsProduct_News_News" FromRole="News_News_Product" ToRole="News_News" />
   </EntityType>
-  <EntityType Name="Order">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="NoOrder" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="ContactOrderID" Type="Int32" />
-    <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="CreatedOnUtc" Type="DateTime" Precision="3" />
-    <Property Name="IsTime" Type="Boolean" />
-    <Property Name="PaymentMethodId" Type="Int32" />
-    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="CustomerName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="StatusPayment" Type="Byte" />
-    <Property Name="District" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-    <Property Name="Wards" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-    <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="CityID" Type="Int32" />
-    <Property Name="vpc_TransactionNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="ShipViettelPost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Latitude" Type="Double" Nullable="false" />
-    <Property Name="Longitude" Type="Double" Nullable="false" />
-    <Property Name="Coupon" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="CouponPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="CustomerAddressID" Type="Int32" />
-    <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Check" Type="Byte" />
-    <Property Name="CustomerID" Type="Int32" />
-    <Property Name="IsDelete" Type="Boolean" />
-    <Property Name="Status" Type="Int32" />
-    <Property Name="Payment" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="ShopID" Type="Int32" />
-    <Property Name="Payment1" Type="Decimal" Precision="18" Scale="0" />
-    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Order_Customer1" FromRole="Order" ToRole="Customer" />
-    <NavigationProperty Name="CustomerAddress" Relationship="FDIModel.FK_Order_CustomerAddress" FromRole="Order" ToRole="CustomerAddress" />
-    <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_Order_DN_Agency" FromRole="Order" ToRole="DN_Agency" />
-    <NavigationProperty Name="System_City" Relationship="FDIModel.FK_Order_System_City" FromRole="Order" ToRole="System_City" />
-    <NavigationProperty Name="OrderDetails" Relationship="FDIModel.FK_OrderDetails_Order" FromRole="Order" ToRole="OrderDetail" />
-    <NavigationProperty Name="RewardHistories" Relationship="FDIModel.FK_RewardHistory_Order" FromRole="Order" ToRole="RewardHistory" />
-  </EntityType>
   <EntityType Name="Order_Debt">
     <Key>
       <PropertyRef Name="ID" />
@@ -6075,30 +6005,6 @@
     <Property Name="Code" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="IsDelete" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="OrderCar" Relationship="FDIModel.FK__OrderCarP__Order__424E88CF" FromRole="OrderCarProductDetail" ToRole="OrderCar" />
-  </EntityType>
-  <EntityType Name="OrderDetail">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="OrderID" Type="Int32" />
-    <Property Name="ProductID" Type="Int32" />
-    <Property Name="Quantity" Type="Int32" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Type" Type="Int32" />
-    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Status" Type="Int32" />
-    <Property Name="IsTime" Type="Boolean" />
-    <Property Name="StatusPayment" Type="Byte" />
-    <Property Name="CustomerId" Type="Int32" Nullable="false" />
-    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Check" Type="Int32" />
-    <Property Name="IsPrestige" Type="Boolean" />
-    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_OrderDetails_Customer" FromRole="OrderDetail" ToRole="Customer" />
-    <NavigationProperty Name="Order" Relationship="FDIModel.FK_OrderDetails_Order" FromRole="OrderDetail" ToRole="Order" />
-    <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_OrderDetails_Shop_Product" FromRole="OrderDetail" ToRole="Shop_Product" />
   </EntityType>
   <EntityType Name="P_Workshop">
     <Key>
@@ -6671,7 +6577,6 @@
     <NavigationProperty Name="BonusType" Relationship="FDIModel.FK_RewardHistory_BonusType" FromRole="RewardHistory" ToRole="BonusType" />
     <NavigationProperty Name="Customer" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
     <NavigationProperty Name="DN_ImportProduct" Relationship="FDIModel.FK_RewardHistory_DN_ImportProduct" FromRole="RewardHistory" ToRole="DN_ImportProduct" />
-    <NavigationProperty Name="Order" Relationship="FDIModel.FK_RewardHistory_Order" FromRole="RewardHistory" ToRole="Order" />
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_RewardHistory_Shop_Orders" FromRole="RewardHistory" ToRole="Shop_Orders" />
     <NavigationProperty Name="WalletCustomer" Relationship="FDIModel.FK_RewardHistory_WalletCustomer" FromRole="RewardHistory" ToRole="WalletCustomer" />
   </EntityType>
@@ -6829,15 +6734,15 @@
   </EntityType>
   <EntityType Name="Shop_Order_Details">
     <Key>
-      <PropertyRef Name="GID" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="GID" Type="Guid" Nullable="false" />
+    <Property Name="ID" Type="Int64" Nullable="false" />
     <Property Name="OrderID" Type="Int32" />
     <Property Name="ProductID" Type="Int32" />
     <Property Name="ComboID" Type="Int32" />
     <Property Name="QuantityOld" Type="Int32" />
-    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="4" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Status" Type="Int32" />
     <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
@@ -6853,7 +6758,13 @@
     <Property Name="ProductValueID" Type="Int32" />
     <Property Name="CateValueID" Type="Int32" />
     <Property Name="ImportProductGID" Type="Guid" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="StatusPayment" Type="Int32" />
+    <Property Name="IsPrestige" Type="Boolean" />
+    <Property Name="Check" Type="Int32" />
+    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Shop_Order_Details_Cate_Value" FromRole="Shop_Order_Details" ToRole="Cate_Value" />
+    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Shop_Order_Details" ToRole="Customer" />
     <NavigationProperty Name="DN_Combo" Relationship="FDIModel.FK_Shop_Order_Details_DN_Combo" FromRole="Shop_Order_Details" ToRole="DN_Combo" />
     <NavigationProperty Name="DN_ImportProduct" Relationship="FDIModel.FK_Shop_Order_Details_DN_ImportProduct" FromRole="Shop_Order_Details" ToRole="DN_ImportProduct" />
     <NavigationProperty Name="Product_Value" Relationship="FDIModel.FK_Shop_Order_Details_Product_Value" FromRole="Shop_Order_Details" ToRole="Product_Value" />
@@ -6879,7 +6790,7 @@
     <Property Name="EndDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="Payments" Type="Decimal" Precision="18" Scale="4" />
-    <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="PrizeMoney" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Deposits" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
@@ -6908,8 +6819,22 @@
     <Property Name="TotalPriceTranfer" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Type" Type="Int32" />
     <Property Name="ReceiveDate" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="StatusPayment" Type="Int32" />
+    <Property Name="Coupon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShopID" Type="Int32" />
+    <Property Name="CouponPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PaymentMethodId" Type="Int32" />
+    <Property Name="CustomerAddressID" Type="Int32" />
+    <Property Name="Check" Type="Int32" />
+    <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="AddMinute" Relationship="FDIModel.FK_Shop_Orders_AddMinute" FromRole="Shop_Orders" ToRole="AddMinute" />
+    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Shop_Orders" ToRole="Customer" />
     <NavigationProperty Name="Customer_Review" Relationship="FDIModel.FK_Customer_Review_Shop_Orders" FromRole="Shop_Orders" ToRole="Customer_Review" />
+    <NavigationProperty Name="CustomerAddress" Relationship="FDIModel.FK_Shop_Orders_CustomerAddress" FromRole="Shop_Orders" ToRole="CustomerAddress" />
     <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_Shop_Orders_DN_Agency" FromRole="Shop_Orders" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_Bed_Desk" Relationship="FDIModel.FK_Shop_Orders_DN_Bed_Desk" FromRole="Shop_Orders" ToRole="DN_Bed_Desk" />
     <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_Shop_Orders_DN_Users" FromRole="Shop_Orders" ToRole="DN_Users" />
@@ -6934,7 +6859,7 @@
     <Property Name="SizeID" Type="Int32" />
     <Property Name="ColorID" Type="Int32" />
     <Property Name="CodeSku" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="QuantityOrder" Type="Int32" />
     <Property Name="CreateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="UpdateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -6950,7 +6875,7 @@
     <Property Name="CategoyId" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="CustomerID1" Type="Int32" />
-    <Property Name="QuantityOut" Type="Int32" />
+    <Property Name="QuantityOut" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PictureID" Type="Int32" />
     <Property Name="CategoryId" Type="Int32" Nullable="false" />
     <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -6962,7 +6887,7 @@
     <Property Name="YearOfManufacture" Type="Int32" />
     <Property Name="FileBookId" Type="Int32" />
     <Property Name="FIleReadtryId" Type="Int32" />
-    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Sort" Type="Int32" />
     <Property Name="BookOld" Type="Boolean" />
     <Property Name="HasTransfer" Type="Boolean" />
@@ -6975,6 +6900,7 @@
     <Property Name="Latitude" Type="Double" Nullable="false" />
     <Property Name="IsUpcoming" Type="Boolean" />
     <Property Name="freeShipFor" Type="Int32" />
+    <Property Name="Buyed" Type="Int32" />
     <NavigationProperty Name="Author_Product" Relationship="FDIModel.FK_Author_Product_Shop_Product" FromRole="Shop_Product" ToRole="Author_Product" />
     <NavigationProperty Name="BiasProduces" Relationship="FDIModel.FK_BiasProduce_Shop_Product" FromRole="Shop_Product" ToRole="BiasProduce" />
     <NavigationProperty Name="Category" Relationship="FDIModel.FK_Shop_Product_Category" FromRole="Shop_Product" ToRole="Category" />
@@ -6987,7 +6913,6 @@
     <NavigationProperty Name="Export_Product_Detail" Relationship="FDIModel.FK_DN_ExportProduct_Shop_Product" FromRole="Shop_Product" ToRole="Export_Product_Detail" />
     <NavigationProperty Name="FreightWareHouse_Active" Relationship="FDIModel.FK_FreightWareHouse_Active_Shop_Product" FromRole="Shop_Product" ToRole="FreightWareHouse_Active" />
     <NavigationProperty Name="Gallery_Picture" Relationship="FDIModel.FK_Shop_Product_Gallery_Picture" FromRole="Shop_Product" ToRole="Gallery_Picture" />
-    <NavigationProperty Name="OrderDetails" Relationship="FDIModel.FK_OrderDetails_Shop_Product" FromRole="Shop_Product" ToRole="OrderDetail" />
     <NavigationProperty Name="Product_Size" Relationship="FDIModel.FK_Shop_Product_Product_Size" FromRole="Shop_Product" ToRole="Product_Size" />
     <NavigationProperty Name="ProductRatings" Relationship="FDIModel.FK_ProductRating_Shop_Product" FromRole="Shop_Product" ToRole="ProductRating" />
     <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Shop_Product" FromRole="Shop_Product" ToRole="Shop_Order_Details" />
@@ -7344,7 +7269,6 @@
     <Property Name="IsDeleted" Type="Boolean" />
     <NavigationProperty Name="Areas" Relationship="FDIModel.FK_Area_System_City" FromRole="System_City" ToRole="Area" />
     <NavigationProperty Name="GoogleMaps" Relationship="FDIModel.FK_GoogleMap_System_City" FromRole="System_City" ToRole="GoogleMap" />
-    <NavigationProperty Name="Orders" Relationship="FDIModel.FK_Order_System_City" FromRole="System_City" ToRole="Order" />
     <NavigationProperty Name="System_District" Relationship="FDIModel.FK_District_City" FromRole="System_City" ToRole="System_District" />
   </EntityType>
   <EntityType Name="System_Color">
@@ -9509,18 +9433,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Order_Customer1">
-    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="CustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Order_Package_Customer">
     <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
     <End Type="FDIModel.Order_Package" Role="Order_Package" Multiplicity="*" />
@@ -9530,18 +9442,6 @@
       </Principal>
       <Dependent Role="Order_Package">
         <PropertyRef Name="CustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderDetails_Customer">
-    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="1" />
-    <End Type="FDIModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="OrderDetail">
-        <PropertyRef Name="CustomerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -9613,6 +9513,30 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Shop_ContactOrder">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Order_Details_Customer">
+    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="FDIModel.Shop_Order_Details" Role="Shop_Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Order_Details">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Orders_Customer">
+    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="FDIModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Orders">
         <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
@@ -9821,14 +9745,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Order_CustomerAddress">
+  <Association Name="FK_Shop_Orders_CustomerAddress">
     <End Type="FDIModel.CustomerAddress" Role="CustomerAddress" Multiplicity="0..1" />
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="*" />
+    <End Type="FDIModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CustomerAddress">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Order">
+      <Dependent Role="Shop_Orders">
         <PropertyRef Name="CustomerAddressID" />
       </Dependent>
     </ReferentialConstraint>
@@ -10022,18 +9946,6 @@
       </Principal>
       <Dependent Role="Document">
         <PropertyRef Name="AgencyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Order_DN_Agency">
-    <End Type="FDIModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DN_Agency">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="ShopID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -12291,42 +12203,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Order_System_City">
-    <End Type="FDIModel.System_City" Role="System_City" Multiplicity="0..1" />
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="System_City">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="CityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderDetails_Order">
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="0..1" />
-    <End Type="FDIModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="OrderDetail">
-        <PropertyRef Name="OrderID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RewardHistory_Order">
-    <End Type="FDIModel.Order" Role="Order" Multiplicity="0..1" />
-    <End Type="FDIModel.RewardHistory" Role="RewardHistory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="RewardHistory">
-        <PropertyRef Name="OrderID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__OrderCar__Worksh__3123FCCD">
     <End Type="FDIModel.P_Workshop" Role="P_Workshop" Multiplicity="1" />
     <End Type="FDIModel.OrderCar" Role="OrderCar" Multiplicity="*" />
@@ -12360,18 +12236,6 @@
       </Principal>
       <Dependent Role="PurchaseOrder">
         <PropertyRef Name="OrderCarId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderDetails_Shop_Product">
-    <End Type="FDIModel.Shop_Product" Role="Shop_Product" Multiplicity="0..1" />
-    <End Type="FDIModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shop_Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="OrderDetail">
-        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -13349,7 +13213,7 @@
     <Property Type="Int32" Name="CountC" Nullable="true" />
     <Property Type="Decimal" Name="TotalReward" Nullable="true" Precision="38" Scale="0" />
     <Property Type="Decimal" Name="TotalReceive" Nullable="true" Precision="38" Scale="0" />
-    <Property Type="Decimal" Name="CountP" Nullable="true" Precision="38" Scale="4" />
+    <Property Type="Decimal" Name="CountP" Nullable="true" Precision="38" Scale="2" />
   </ComplexType>
   <ComplexType Name="GeneralYear_Result">
     <Property Type="Int32" Name="I" Nullable="true" />
@@ -13513,8 +13377,8 @@
     <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
     <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
     <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
-    <Property Type="DateTime" Name="DateCreated" Nullable="true" Precision="23" />
-    <Property Type="Int32" Name="Quantity" Nullable="true" />
+    <Property Type="Decimal" Name="DateCreated" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
   </ComplexType>
   <ComplexType Name="ProductGetNearPosition_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -13534,8 +13398,8 @@
     <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
     <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
     <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
-    <Property Type="Decimal" Name="DateCreate" Nullable="true" Precision="18" Scale="0" />
-    <Property Type="Int32" Name="Quantity" Nullable="true" />
+    <Property Type="Decimal" Name="DateCreated" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
   </ComplexType>
   <ComplexType Name="SearchListNewsAdmin_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -13587,7 +13451,7 @@
     <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
     <Property Type="String" Name="Color" Nullable="true" MaxLength="400" />
     <Property Type="String" Name="Size" Nullable="true" MaxLength="50" />
-    <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="4" />
+    <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="2" />
   </ComplexType>
   <ComplexType Name="sp_GetOrderDetail_Result">
     <Property Type="Int32" Name="ProductDetailID" Nullable="false" />
@@ -13640,7 +13504,7 @@
   </ComplexType>
   <ComplexType Name="StaticChartsShop_Result">
     <Property Type="Int32" Name="I" Nullable="true" />
-    <Property Type="Int32" Name="Total" Nullable="true" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
   </ComplexType>
   <ComplexType Name="StaticDocumentYear_Result">
     <Property Type="Int32" Name="I" Nullable="true" />
@@ -13661,11 +13525,11 @@
   <ComplexType Name="Top100CustomerBuy_Result">
     <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
     <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
-    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="4" />
   </ComplexType>
   <ComplexType Name="Top100CustomerSell_Result">
     <Property Type="String" Name="FullName" Nullable="true" MaxLength="128" />
     <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
-    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="4" />
   </ComplexType>
 </Schema>
