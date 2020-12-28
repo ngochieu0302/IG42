@@ -19,10 +19,10 @@ using FDI.MvcAPI.Common;
 using Newtonsoft.Json;
 using FDI.CORE;
 
-namespace FDI.MvcAPI.Controllers.Order
+namespace FDI.MvcAPI.Controllers
 {
     [CustomerAuthorize]
-    public class OrderController : BaseAppApiController
+    public class OrderAppController : BaseAppApiController
     {
 
         OrderAppIG4DA orderDA = new OrderAppIG4DA();
@@ -51,15 +51,15 @@ namespace FDI.MvcAPI.Controllers.Order
                     //    return Json(new JsonMessage(1000, "Coupon không tồn tại"));
                     //}
                 }
-                var order = new FDI.Base.Order
+                var order = new Shop_Orders()
                 {
                     Address = data.Address,
                     CustomerID = CustomerId,
                     Longitude = data.Longitude,
                     Latitude = data.Latitude,
-                    Phone = data.Mobile,
+                    Mobile = data.Mobile,
                     CustomerName = data.CustomerName,
-                    CreatedOnUtc = DateTime.Now,
+                    DateCreated = DateTime.Now.TotalSeconds(),
                     Code = FDIUtils.RandomCode(12),
                     FeeShip = data.FeeShip ?? 0,
                     StatusPayment = (int)PaymentOrder.Process,
@@ -82,28 +82,29 @@ namespace FDI.MvcAPI.Controllers.Order
                 }
                 foreach (var product in data.LisOrderDetailItems)
                 {
-                    var productData = _productDa.GetProductItem(product.ID);
+                    var productData = _productDa.GetProductItem(product.ProductId ?? 0);
                     if (productData == null)
                     {
                         return Json(new JsonMessage(1000, "Sản phẩm không tồn tại"), JsonRequestBehavior.AllowGet);
                     }
-                    var item = new OrderDetail
+                    var item = new Shop_Order_Details()
                     {
-                        ProductID = product.ID,
-                        Price = productData.PriceNew,
+                        ProductID = product.ProductId,
+                        Price = productData.PriceNew ?? 0,
                         Quantity = product.Quantity ?? 1,
                         CustomerId = data.ShopID,
                         Status = (int)StatusOrder.Create,
-                        DateCreate = DateTime.Now.TotalSeconds(),
+                        DateCreated = DateTime.Now.TotalSeconds(),
                         TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
                         StatusPayment = (int)PaymentOrder.Process,
                         IsPrestige = product.IsPrestige,
                     };
-                    order.OrderDetails.Add(item);
+                    order.Shop_Order_Details.Add(item);
                 }
-                var total = order.OrderDetails.Sum(m => m.Price * m.Quantity);
-                order.OrderTotal = total;
-                order.Payment = total - order.CouponPrice + decimal.Round(data.FeeShip ?? 0);
+                var total = order.Shop_Order_Details.Sum(m => m.Price * m.Quantity);
+                order.Total = total;
+                order.TotalPrice = total;
+                order.Payments = total - order.CouponPrice + decimal.Round(data.FeeShip ?? 0);
                 orderDA.Add(order);
                 if (coupon != null)
                 {
@@ -136,11 +137,11 @@ namespace FDI.MvcAPI.Controllers.Order
             data.Status = type;
             data.Check = 1;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
-            var TotalPrice = data.OrderTotal - data.CouponPrice + data.FeeShip;
+            var TotalPrice = data.Total - data.CouponPrice + data.FeeShip;
             //var TotalPricegstore = data.OrderTotal - ((data.Discount * data.OrderTotal / 100)) + data.FeeShip;
             //var config = _walletCustomerDa.GetConfig();
             //var totaldis = data.Discount + config.Percent;
-            foreach (var item in data.OrderDetails)
+            foreach (var item in data.Shop_Order_Details)
             {
                 item.Status = type;
                 item.DateUpdateStatus = DateTime.Now.TotalSeconds();
@@ -175,10 +176,10 @@ namespace FDI.MvcAPI.Controllers.Order
                 _walletCustomerDa.Add(walletcus);
                 _walletCustomerDa.Save();
                 // xử lý trừ số lượng trong kho của shop
-                foreach (var item in data.OrderDetails)
+                foreach (var item in data.Shop_Order_Details)
                 {
                     var product = _productDa.GetById(item.ProductID ?? 0);
-                    product.QuantityOut = item.Quantity;
+                    //product.QuantityOut = item.Quantity;
                     _productDa.Save();
                 }
                 var processOrder = new OrderProcessAppIG4Item
@@ -214,7 +215,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 var model = new JavaScriptSerializer().Deserialize<OrderProcessAppIG4Item>(json);
                 #region xử lý đơn hàng thành công tự động trừ tiền của KH.
                 var data = orderDA.GetById(model.OrderId);
-                var TotalPricegstore = data.OrderTotal + data.FeeShip;
+                var TotalPricegstore = data.Total + data.FeeShip;
                 var config = _walletCustomerDa.GetConfig();
                 // chuyen tien tu vi trung gian cua gstore customerId = 1 den shop
                 var cashout = new CashOutWallet
@@ -229,7 +230,7 @@ namespace FDI.MvcAPI.Controllers.Order
                 _cashOutWalletDa.Add(cashout);
                 _cashOutWalletDa.Save();
 
-                var totalshop = data.OrderTotal - (data.OrderTotal * config.DiscountOrder / 100) + data.FeeShip;
+                var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
@@ -256,12 +257,12 @@ namespace FDI.MvcAPI.Controllers.Order
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.OrderTotal, data.ID, bonusItems);
+                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
                 }
                 else
                 {
-                    decimal totalpres = data.OrderDetails.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    decimal totalnopres = data.OrderDetails.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                    decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                    decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
                         InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);

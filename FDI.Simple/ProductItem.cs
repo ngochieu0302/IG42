@@ -18,8 +18,8 @@ namespace FDI.Simple
         public string Details { get; set; }
         public decimal? PriceCost { get; set; }
         public decimal? PriceOld { get; set; }
-        public decimal? PriceNew { get; set; }
-        public int? Quantity { get; set; }
+        public decimal PriceNew { get; set; }
+        public decimal? Quantity { get; set; }
         public decimal? Percent { get; set; }
         public int? QuantityDay { get; set; }
         public string CreateBy { get; set; }
@@ -126,7 +126,7 @@ namespace FDI.Simple
         public CategoryItem CategoryItem { get; set; }
         public decimal? Total { get; set; }
         public decimal? TotalOld { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 
     public class ProductExportItem : BaseSimple

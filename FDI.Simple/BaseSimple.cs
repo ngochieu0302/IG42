@@ -6,6 +6,7 @@ namespace FDI.Simple
     public class BaseSimple
     {
         public int ID { get; set; }
+        
     }
 
     public class BaseModelSimple

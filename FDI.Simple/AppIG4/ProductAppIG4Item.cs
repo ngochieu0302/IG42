@@ -15,7 +15,7 @@ namespace FDI.Simple
         public int? ColorId { get; set; }
         public int? Sale { get; set; }
         public int? Sort { get; set; }
-        public int? Quantity { get; set; }
+        public decimal? Quantity { get; set; }
         public int? freeShipFor { get; set; }
         public string Name { get; set; }
         public string NameCustomer { get; set; }
@@ -32,7 +32,7 @@ namespace FDI.Simple
         public string Url { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
-        public int? QuantityOut { get; set; }
+        public decimal? QuantityOut { get; set; }
         public string Translater { get; set; }
         public string Country { get; set; }
         public string Details { get; set; }
@@ -43,7 +43,7 @@ namespace FDI.Simple
         public bool? IsPrestige1 { get; set; }
         public bool? IsSlide { get; set; }
         public bool? IsHot { get; set; }
-        public DateTime? DateCreated { get; set; }
+        public decimal? DateCreated { get; set; }
         public string CreateBy { get; set; }
         public string UrlPicture { get; set; }
         public string SeoTitle { get; set; }
@@ -206,8 +206,8 @@ namespace FDI.Simple
         public decimal? Total { get; set; }
         public string NameAscii { get; set; }
         public int? CateId { get; set; }
-        public int? QuantityStorage { get; set; }
-        public int? QuantityOut { get; set; }
+        public decimal? QuantityStorage { get; set; }
+        public decimal? QuantityOut { get; set; }
     }
 
     public class KeySearch

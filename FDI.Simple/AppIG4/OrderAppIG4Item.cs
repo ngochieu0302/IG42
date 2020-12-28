@@ -8,7 +8,7 @@ namespace FDI.Simple
     {
         public int ID { get; set; }
         public decimal? OrderTotal { get; set; }
-        public DateTime? CreatedOnUtc { get; set; }
+        public decimal? DateCreated { get; set; }
         public bool? IsDelete { get; set; }
         public int? Status { get; set; }
         public int? StatusPayment { get; set; }
@@ -204,8 +204,8 @@ namespace FDI.Simple
 
     public class OrderDetailCustomerAppItem
     {
-        public int Id { get; set; }
-        public int? Quantity { get; set; }
+        public long Id { get; set; }
+        public decimal? Quantity { get; set; }
         public decimal? Price { get; set; }
         public string Shopname { get; set; }
         public string Productname { get; set; }

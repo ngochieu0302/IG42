@@ -29,7 +29,7 @@ namespace FDI.Simple
         public string Note { get; set; }
         public string Mobile { get; set; }
         public int? Status { get; set; }
-        public decimal? Discount { get; set; }
+        public decimal Discount { get; set; }
         public decimal? Deposits { get; set; }
         public bool? IsDelete { get; set; }
         public bool? IsActive { get; set; }
@@ -74,7 +74,7 @@ namespace FDI.Simple
         public int? BedDeskID { get; set; }
         public decimal? StartDate { get; set; }
         public decimal? EndDate { get; set; }
-        public decimal? Discount { get; set; }
+        public decimal Discount { get; set; }
         public decimal? Deposits { get; set; }
         public decimal? PrizeMoney { get; set; }
         public decimal? Payments { get; set; }
@@ -106,7 +106,7 @@ namespace FDI.Simple
         public Guid? UserID { get; set; }
         public int? BedDeskID { get; set; }
         public Guid? UserIdBesk { get; set; }
-        public decimal? Discount { get; set; }
+        public decimal Discount { get; set; }
         public decimal? Deposits { get; set; }
         public decimal? PrizeMoney { get; set; }
         public decimal? Payments { get; set; }

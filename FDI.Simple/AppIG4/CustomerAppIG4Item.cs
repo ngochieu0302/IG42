@@ -160,7 +160,7 @@ namespace FDI.Simple
     public class ListOrderShopChartAppIG4Item
     {
         public int? I { get; set; }
-        public int? Total { get; set; }
+        public decimal? Total { get; set; }
     }
     public class jsonChartAppIG4
     {

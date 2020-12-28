@@ -65,7 +65,7 @@ namespace FDI.Simple
         public int ProductID { get; set; }
         public int? Quantity { get; set; }
         public decimal? Value { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
         public string UrlImg { get; set; }
         public string Title { get; set; }
         public string Code { get; set; }
@@ -186,7 +186,7 @@ namespace FDI.Simple
         public bool Check { get; set; }
         public List<Guid> LstKey { get; set; }
         public decimal? Total { get; set; }
-        public decimal? Discount { get; set; }
+        public decimal Discount { get; set; }
         public decimal? SalePrice { get; set; }
         public decimal? TotalSaleSP { get; set; }
         public decimal? VoucherPer { get; set; }

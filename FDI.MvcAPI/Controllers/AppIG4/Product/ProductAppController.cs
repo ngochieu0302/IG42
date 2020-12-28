@@ -18,7 +18,7 @@ using System.Web.Script.Serialization;
 using FDI.DA.DA;
 using FDI.CORE;
 
-namespace FDI.MvcAPI.Controllers.Product
+namespace FDI.MvcAPI.Controllers
 {
     [CustomerAuthorize]
     public class ProductAppController : BaseAppApiController
@@ -91,7 +91,7 @@ namespace FDI.MvcAPI.Controllers.Product
                 Latitude = address.Latitude.Value,
                 CategoryId = model.CateId.Value,
                 Longitude = address.Longitude.Value,
-                DateCreated = DateTime.Now,
+                DateCreated = DateTime.Now.TotalSeconds(),
                 CustomerID1 = model.CustomerId1,
                 //Gallery_Picture1 = _productDa.GetListPictureByArrId(images.Select(m => m.ID).ToList()),
             };

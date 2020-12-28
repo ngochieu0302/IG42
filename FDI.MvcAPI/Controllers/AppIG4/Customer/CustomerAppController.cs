@@ -20,10 +20,10 @@ using FDI.DA.DA;
 using Microsoft.Ajax.Utilities;
 using FDI.CORE;
 
-namespace FDI.MvcAPI.Controllers.Customer
+namespace FDI.MvcAPI.Controllers
 {
     [CustomerAuthorize]
-    public class CustomerAppIG4Controller : BaseAppApiController
+    public class CustomerAppController : BaseAppApiController
     {
         TokenOtpDA tokenOtpDA = new TokenOtpDA();
         CustomerAppIG4DA customerDA = new CustomerAppIG4DA();
@@ -696,14 +696,14 @@ namespace FDI.MvcAPI.Controllers.Customer
             data.Status = status;
             data.Check = 2;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
-            foreach (var item in data.OrderDetails)
+            foreach (var item in data.Shop_Order_Details)
             {
                 item.Status = status;
                 item.DateUpdateStatus = DateTime.Now.TotalSeconds();
                 item.Check = 2;
             }
 
-            var TotalPricegstore = data.OrderTotal + data.FeeShip;
+            var TotalPricegstore = data.Total + data.FeeShip;
             SpliceOrderCustomer(":4000", orderId);
             orderDA.Save();
             if (status == (int)StatusOrder.Complete)
@@ -723,7 +723,7 @@ namespace FDI.MvcAPI.Controllers.Customer
                 #endregion
 
                 var config = _walletCustomerDa.GetConfig();
-                var TotalPrice = data.OrderTotal - (config.DiscountOrder * data.OrderTotal / 100) + data.FeeShip;
+                var TotalPrice = data.Total - (config.DiscountOrder * data.Total / 100) + data.FeeShip;
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
@@ -751,12 +751,12 @@ namespace FDI.MvcAPI.Controllers.Customer
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.OrderTotal, data.ID, bonusItems);
+                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
                 }
                 else
                 {
-                    decimal totalpres = data.OrderDetails.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    decimal totalnopres = data.OrderDetails.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                    decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                    decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
                         InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);

@@ -118,7 +118,7 @@ namespace FDI.Web.Controllers.Sales
                                         Status = (int)FDI.CORE.OrderStatus.Complete,
                                         QuantityOld = 0,
                                         IsPromotion = false,
-                                        Price = saleItem.Price,
+                                        Price = saleItem.Price ?? 0,
                                         Barcode = saleItem.Barcode,
                                         DateCreated = dateCreated,
                                         Percent = saleItem.PercentSale,
@@ -140,7 +140,7 @@ namespace FDI.Web.Controllers.Sales
                                                                Quantity = orderDetailse.Quantity,
                                                                Status = (int)FDI.CORE.OrderStatus.Complete,
                                                                QuantityOld = 0,
-                                                               Price = orderDetailse.PriceSp,
+                                                               Price = orderDetailse.PriceSp ??0,
                                                                Percent = orderDetailse.Percent,
                                                                PriceSale = orderDetailse.Price,
                                                                DateCreated = dateCreated,
@@ -165,7 +165,7 @@ namespace FDI.Web.Controllers.Sales
                                                            Quantity = items.Quantity,
                                                            Status = (int)FDI.CORE.OrderStatus.Complete,
                                                            QuantityOld = 0,
-                                                           Price = items.PriceSp,
+                                                           Price = items.PriceSp ??0,
                                                            DateCreated = dateCreated,
                                                            IsPromotion = true,
                                                            PromotionProductID = items.ID,
@@ -194,7 +194,7 @@ namespace FDI.Web.Controllers.Sales
                                     order.SalePercent = model.SalePercent;
                                     order.SalePrice = model.SalePrice;
                                     order.Shop_Order_Details = lstDetail;
-                                    order.Discount = model.Discount;
+                                    order.Discount = model.Discount ??0;
                                     var payment = model.Total - (order.PrizeMoney ?? 0) - order.Discount - model.DiscountSale;
                                     order.Payments = payment;
                                     order.PriceReceipt = order.Payments;

@@ -27,10 +27,10 @@ namespace FDI.DA
         }
         #endregion
 
-        public List<Shop_Order_Details> GetListByArrId(List<Guid> lstId)
+        public List<Shop_Order_Details> GetListByArrId(List<long> lstId)
         {
             var query = from o in FDIDB.Shop_Order_Details
-                        where lstId.Contains(o.GID)
+                        where lstId.Contains(o.ID)
                 select o;
             return query.ToList();
         }

@@ -48,7 +48,7 @@ namespace FDI.Web.Controllers
             if (objProduct != null)
             {
                 model.Name = objProduct.Name;
-                model.PriceNew = objProduct.Price;
+                model.PriceNew = objProduct.Price ?? 0;
                 model.ProductDetailID = objProduct.ID;
             }
             ViewBag.ColorID = _systemColorApi.GetAll(UserItem.AgencyID);

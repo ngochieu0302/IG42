@@ -35,7 +35,7 @@ namespace FDI.Simple
         public decimal? TotalPrice { get; set; }
         public string CustomerR { get; set; }
 
-		public List<OrderDetail> OrderDetail { get; set; }
+		public List<Shop_Order_Details> OrderDetail { get; set; }
 
 
     }

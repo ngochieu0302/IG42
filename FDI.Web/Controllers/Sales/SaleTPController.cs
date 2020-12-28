@@ -141,7 +141,7 @@ namespace FDI.Web.Controllers
                 model.SaleOrder = sale;
                 var disc = (total * sale.Sum(p => p.PercentSale) / 100) + sale.Sum(p => p.Price) + voucher;
                 model.Total = model.SaleItems.Sum(c => c.Price * c.Quantity * c.Value);
-                model.Discount =   disc;
+                model.Discount =   disc ?? 0;
                 model.SalePercent = sale.Sum(p => p.PercentSale);
                 model.SalePrice = sale.Sum(p => p.Price);
                 model.TotalPrice = total;
@@ -258,7 +258,7 @@ namespace FDI.Web.Controllers
                                                        Quantity = orderDetailse.Quantity,
                                                        Status = (int)FDI.CORE.OrderStatus.Complete,
                                                        QuantityOld = 0,
-                                                       Price = orderDetailse.PriceSp,
+                                                       Price = orderDetailse.PriceSp ??0,
                                                        Percent = orderDetailse.Percent,
                                                        PriceSale = orderDetailse.Price,
                                                        DateCreated = dateCreated,
@@ -281,7 +281,7 @@ namespace FDI.Web.Controllers
                                                Quantity = items.Quantity,
                                                Status = (int)FDI.CORE.OrderStatus.Complete,
                                                QuantityOld = 0,
-                                               Price = items.PriceSp,
+                                               Price = items.PriceSp ??0,
                                                DateCreated = dateCreated,
                                                IsPromotion = true,
                                                PromotionProductID = items.ID,

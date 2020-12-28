@@ -130,7 +130,7 @@ namespace FDI.DA
             query = query.SelectPageByRequest(Request, ref TotalRecord);
             return query.ToList();
         }
-        public List<ProductItem> GetListProductValueByRequest(HttpRequestBase httpRequest, int agencyid, out decimal? total, out decimal? totalOld, out int? quantity)
+        public List<ProductItem> GetListProductValueByRequest(HttpRequestBase httpRequest, int agencyid, out decimal? total, out decimal? totalOld, out decimal? quantity)
         {
             Request = new ParramRequest(httpRequest);
             var query = from c in FDIDB.Product_Value

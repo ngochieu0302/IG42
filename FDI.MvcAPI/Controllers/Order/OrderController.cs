@@ -177,7 +177,7 @@ namespace FDI.MvcAPI.Controllers
             var obj = Request["key"] != Keyapi ? new OrderItem() : _da.GetOrderItem(id);
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetOrderDetailItem(Guid id)
+        public ActionResult GetOrderDetailItem(long id)
         {
             var obj = Request["key"] != Keyapi ? new OrderDetailItem() : _da.GetOrderDetailItem(id);
             return Json(obj, JsonRequestBehavior.AllowGet);
@@ -308,7 +308,7 @@ namespace FDI.MvcAPI.Controllers
                                                        Quantity = orderDetailse.Quantity,
                                                        Status = (int)FDI.CORE.OrderStatus.Complete,
                                                        QuantityOld = 0,
-                                                       Price = orderDetailse.Price,
+                                                       Price = orderDetailse.Price ?? 0,
                                                        DateCreated = dateCreated,
                                                        IsPromotion = true,
                                                        //PromotionID = shopOrderDetailse.ID,
@@ -325,7 +325,7 @@ namespace FDI.MvcAPI.Controllers
                                                Quantity = items.Quantity,
                                                Status = (int)FDI.CORE.OrderStatus.Complete,
                                                QuantityOld = 0,
-                                               Price = items.Price,
+                                               Price = items.Price ?? 0,
                                                DateCreated = dateCreated,
                                                IsPromotion = true,
                                                //PromotionID = itemP.ID,
@@ -410,7 +410,7 @@ namespace FDI.MvcAPI.Controllers
                                          //ProductID = item.ProductID,
                                          Quantity = item.Quantity,
                                          QuantityOld = 0,
-                                         Price = item.Price,
+                                         Price = item.Price ?? 0,
                                          TotalPrice = item.PriceNew - discount,
                                          Total = item.PriceNew,
                                          Discount = discount,
@@ -630,7 +630,7 @@ namespace FDI.MvcAPI.Controllers
                             foreach (string t in idproduct)
                             {
                                 var product = _da.GetProductItem(int.Parse(t));
-                                totalprice += product.PriceNew ?? 0;
+                                totalprice += product.PriceNew ;
                                 var orderDetail = new Shop_Order_Details
                                 {
                                     ProductID = int.Parse(t),
@@ -799,7 +799,7 @@ namespace FDI.MvcAPI.Controllers
                             foreach (string t in idproduct)
                             {
                                 var product = _da.GetProductItem(int.Parse(t));
-                                totalprice += product.PriceNew ?? 0;
+                                totalprice += product.PriceNew;
                                 orderDetail = new Shop_Order_Details
                                 {
                                     ProductID = int.Parse(t),
@@ -931,7 +931,7 @@ namespace FDI.MvcAPI.Controllers
                                     TotalMinute = obj.Value,
                                     AgencyId = Agencyid(),
                                     IsDelete = false,
-                                    Discount = obj.Discount ?? 0,
+                                    Discount = obj.Discount,
                                     PrizeMoney = obj.PrizeMoney ?? 0,
                                     UserCreate = UserId,
                                     UserId = UserId,
@@ -954,7 +954,7 @@ namespace FDI.MvcAPI.Controllers
                                 order.BedDeskID = obj.list.FirstOrDefault();
                                 order.UserId = UserId;
                                 order.Note = obj.Note;
-                                var listold = _orderDetailDa.GetListByArrId(order.Shop_Order_Details.Where(o => o.Status < (int)FDI.CORE.OrderStatus.Cancelled).Select(m => m.GID).ToList());
+                                var listold = _orderDetailDa.GetListByArrId(order.Shop_Order_Details.Where(o => o.Status < (int)FDI.CORE.OrderStatus.Cancelled).Select(m => m.ID).ToList());
                                 // sửa
                                 foreach (var item in lstDetail.Where(m => listold.Any(o => o.ProductID == m.ProductID)))
                                 {
@@ -1250,11 +1250,11 @@ namespace FDI.MvcAPI.Controllers
             var list = Utility.GetObjJson<List<OrderDetailNewItem>>(urlJson);
             return list.Where(m => m.Quantity > 0).Select(item => new Shop_Order_Details
             {
-                GID = item.GID,
+                //GID = item.GID,
                 ProductID = item.ProductID,
                 Quantity = item.Quantity,
                 Status = (int)FDI.CORE.OrderStatus.Complete,
-                Price = item.Price,
+                Price = item.Price ?? 0,
                 DateCreated = date,
                 QuantityOld = 0,
                 Discount = item.Discount,

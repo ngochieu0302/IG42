@@ -189,67 +189,7 @@ namespace FDI.DA
                 };
             return query.ToList();
         }
-        public OrderDetail CheckBook(int id, int cus)
-        {
-            var com = (int)StatusOrder.Complete;
-            var date = DateTime.Now.TotalSeconds();
-            var query = from c in FDIDB.OrderDetails
-                        where c.Order.CustomerID == cus && c.ProductID == id &&
-                              ((c.IsTime == true && c.DateEnd > date) || ((!c.IsTime.HasValue || c.IsTime == false))) &&
-                               c.Order.StatusPayment == com && c.Shop_Product.IsDelete == false
-                        orderby c.ID descending
-                        select c;
-            return query.FirstOrDefault();
-        }
-
-        public List<CookieLoginAppIG4Item> GetCookiebyCusId(string name, int id)
-        {
-            var query = from c in FDIDB.CookieLogins
-                        where c.Name == name && c.CustomerID == id
-                        select new CookieLoginAppIG4Item
-                        {
-                            CustomerID = c.CustomerID,
-                            Value = c.Value,
-                            DateCreate = c.DateCreate,
-                            IsActive = c.IsActive,
-                            key = c.key,
-
-                        };
-            return query.ToList();
-        }
-        public List<CookieLogin> GetCookiebyCusIdBase(string name, int id)
-        {
-            var query = from c in FDIDB.CookieLogins
-                        where c.Name == name && c.CustomerID == id
-                        select c;
-            return query.ToList();
-        }
-        public CookieLogin GetCookiebyKey(string name, string key)
-        {
-            var query = from c in FDIDB.CookieLogins
-                        where c.Name == name && c.key == key && c.IsActive == true
-                        select c;
-            return query.FirstOrDefault();
-        }
-
-        public void DeleteCookie(CookieLogin obj)
-        {
-            FDIDB.CookieLogins.Remove(obj);
-        }
-        public void AddCookie(CookieLogin obj)
-        {
-            FDIDB.CookieLogins.Add(obj);
-        }
-
-        public bool CheckBookReading(int id, int cus)
-        {
-            var date = DateTime.Now;
-            var query = from c in FDIDB.Product_Reading
-                        where c.CustomerID == cus && c.ProductId == id
-                        //&&((c.IsTime == true && c.DateEnd > date) || (!c.IsTime.HasValue || c.IsTime == false))
-                        select c;
-            return query.Any();
-        }
+        
         public Customer GetById(int customerId)
         {
             var query = from c in FDIDB.Customers where c.ID == customerId select c;
@@ -261,11 +201,7 @@ namespace FDI.DA
             var query = from c in FDIDB.Product_Reading where c.CustomerID == customerId && c.ProductId == productId select c;
             return query.FirstOrDefault();
         }
-        public Customer GetByEmail(string email)
-        {
-            var query = from c in FDIDB.Customers where c.Email == email && c.IsDelete == false select c;
-            return query.FirstOrDefault();
-        }
+        
         public Customer GetByUsername(string username)
         {
             var query = from c in FDIDB.Customers where c.Email == username && c.IsDelete == false select c;
@@ -320,10 +256,6 @@ namespace FDI.DA
             FDIDB.Customers.Add(customer);
         }
 
-        public void AddBookReading(Product_Reading obj)
-        {
-            FDIDB.Product_Reading.Add(obj);
-        }
         public void Delete(Customer customer)
         {
             customer.IsDelete = true;
@@ -375,7 +307,7 @@ namespace FDI.DA
         public List<OrderCustomerAppItem> GetListOrderCustomer(int customerId, int status, int page, int take)
         {
             var list = new List<OrderCustomerAppItem>();
-            var query = from c in FDIDB.Orders
+            var query = from c in FDIDB.Shop_Orders
                          where c.CustomerID == customerId &&
                               ( c.Status == status || status == 0)
                          orderby c.ID descending
@@ -383,15 +315,15 @@ namespace FDI.DA
                          {
                              Id = c.ID,
                              PriceShip = c.FeeShip,
-                             Price = c.OrderTotal,
+                             Price = c.Total,
                              Discount = c.Discount,
                              CouponPrice = c.CouponPrice,
                              Customername = c.Customer.FullName,
                              Phone = c.Customer.Mobile,
-                             TotalPrice = c.OrderTotal - (c.CouponPrice + (c.Discount * c.OrderTotal / 100)) + c.FeeShip,
+                             TotalPrice = c.Total - (c.CouponPrice + (c.Discount * c.Total / 100)) + c.FeeShip,
                              UrlPicture = c.Customer.AvatarUrl,
-                             Check = c.OrderDetails.Select(a => a.Check).FirstOrDefault(),
-                             LisOrderDetailItems = c.OrderDetails.Select(v => new OrderDetailCustomerAppItem
+                             Check = c.Shop_Order_Details.Select(a => a.Check).FirstOrDefault(),
+                             LisOrderDetailItems = c.Shop_Order_Details.Select(v => new OrderDetailCustomerAppItem
                              {
                                  Id = v.ID,
                                  Shopname = v.Customer.FullName,
@@ -400,7 +332,7 @@ namespace FDI.DA
                                  Status = v.Status,
                                  Price = v.Price,
                                  Quantity = v.Quantity,
-                                 DateCreate = v.DateCreate,
+                                 DateCreate = v.DateCreated,
                                  Check = v.Check,
                              })
                          };

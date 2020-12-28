@@ -45,7 +45,7 @@ namespace FDI.MvcAPI.Controllers
         {
             decimal? total;
             decimal? totalold;
-            int? quantity;
+            decimal? quantity;
             var obj = Request["key"] != Keyapi
                 ? new ModelProductItem()
                 : new ModelProductItem { ListItem = _da.GetListProductValueByRequest(Request, agencyId, out total, out totalold, out quantity), PageHtml = _da.GridHtmlPage, Total = total ?? 0, TotalOld = totalold ?? 0, Quantity = quantity ?? 0 };

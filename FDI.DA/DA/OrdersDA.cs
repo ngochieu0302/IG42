@@ -87,7 +87,7 @@ namespace FDI.DA
                             TotalPrice = c.TotalPrice ?? 0,
                             PrizeMoney = c.PrizeMoney ?? 0,
                             Payments = c.Payments ?? 0,
-                            Discount = c.Discount ?? 0,
+                            Discount = c.Discount,
                             Deposits = c.Deposits ?? 0,
                             IsDelete = c.IsDelete,
                             UserID = c.UserId,
@@ -161,7 +161,7 @@ namespace FDI.DA
                             TotalPrice = c.TotalPrice ?? 0,
                             PrizeMoney = c.PrizeMoney ?? 0,
                             Payments = c.Payments ?? 0,
-                            Discount = c.Discount ?? 0,
+                            Discount = c.Discount,
                             Deposits = c.Deposits ?? 0,
                             IsDelete = c.IsDelete,
                             UserID = c.UserId,
@@ -620,7 +620,7 @@ namespace FDI.DA
                         orderby c.DateCreated descending
                         select new OrderDetailItem
                         {
-                            GID = c.GID,
+                            //GID = c.GID,
                             OrderID = c.OrderID,
                             ProductID = c.ProductID,
                             ProductName = c.Shop_Product.Shop_Product_Detail.Name,
@@ -696,7 +696,7 @@ namespace FDI.DA
                             TotalPrice = c.TotalPrice ?? 0,
                             PrizeMoney = c.PrizeMoney ?? 0,
                             Payments = c.Payments ?? 0,
-                            Discount = c.Discount ?? 0,
+                            Discount = c.Discount,
                             IsDelete = c.IsDelete,
                             UserID = c.UserId,
                             Note = c.Note,
@@ -795,7 +795,7 @@ namespace FDI.DA
                                         ID = v.ID,
                                         Name = v.Shop_Product_Detail.Name,
                                         //Value = v.Value,
-                                        PriceNew = v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000,
+                                        PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
                                         Quantity = 0
                                     })
                         };
@@ -818,7 +818,7 @@ namespace FDI.DA
                                 ID = m.ID,
                                 Name = m.Shop_Product_Detail.Name,
                                 //Value = m.Value,
-                                PriceNew = m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000,
+                                PriceNew = (m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000) ?? 0,
                             })
                         }).FirstOrDefault();
             return list;
@@ -898,7 +898,7 @@ namespace FDI.DA
                                         ID = v.ID,
                                         Name = v.Shop_Product_Detail.Name,
                                         Value = 0,
-                                        PriceNew = v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000,
+                                        PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
                                     })
                         };
             if (query.Any())
@@ -920,7 +920,7 @@ namespace FDI.DA
                                 ID = m.ID,
                                 Name = m.Shop_Product_Detail.Name,
                                 Value = 0,
-                                PriceNew = m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000,
+                                PriceNew = (m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000) ?? 0,
                             })
                         }).FirstOrDefault();
             return list;
@@ -1004,7 +1004,8 @@ namespace FDI.DA
                                                   where c.ID == id
                                                   select new OrderDetailItem
                                                   {
-                                                      GID = v.GID,
+                                                      //GID = v.GID,
+                                                      ID = v.ID,
                                                       Price = v.Price,
                                                       Quantity = v.Quantity,
                                                       ProductName = v.Shop_Product.Shop_Product_Detail.Name,
@@ -1025,13 +1026,14 @@ namespace FDI.DA
                         };
             return query.FirstOrDefault();
         }
-        public OrderDetailItem GetOrderDetailItem(Guid id)
+        public OrderDetailItem GetOrderDetailItem(long id)
         {
             var query = from c in FDIDB.Shop_Order_Details
-                        where c.GID == id
+                        where c.ID == id
                         select new OrderDetailItem
                         {
-                            GID = c.GID,
+                            //GID = c.GID,
+                            ID = c.ID,
                             OrderID = c.OrderID,
                             ProductID = c.ProductID,
                             ProductName = c.Shop_Product.Shop_Product_Detail.Name,
@@ -1067,7 +1069,7 @@ namespace FDI.DA
                             UserName2 = c.DN_Users2.UserName,
                             Note = c.Note,
                             Deposits = c.Deposits.HasValue ? c.Deposits : 0,
-                            Discount = c.Discount.HasValue ? c.Discount : 0,
+                            Discount = c.Discount,
                             Payments = c.Payments.HasValue ? c.Payments : 0,
                             TotalPrice = c.TotalPrice,
                             AgencyId =  c.AgencyId,
@@ -1110,7 +1112,7 @@ namespace FDI.DA
                             EndDate = c.EndDate,
                             Note = c.Note,
                             TotalPrice = c.TotalPrice,
-                            Discount = c.Discount.HasValue ? c.Discount : 0,
+                            Discount = c.Discount,
                             Payments = c.Payments.HasValue ? c.Payments : 0,
                             PrizeMoney = c.PrizeMoney.HasValue ? c.PrizeMoney : 0,
                             UserIdBedDeskID = c.UserIdBedDeskID,
@@ -1146,7 +1148,7 @@ namespace FDI.DA
                         select new ProductItem
                         {
                             ID = c.ID,
-                            PriceNew = c.Shop_Product_Detail.Price * c.Product_Size.Value / 1000,
+                            PriceNew = (c.Shop_Product_Detail.Price * c.Product_Size.Value / 1000) ?? 0,
                             Value = 0,
                         };
             return query.FirstOrDefault();
@@ -1287,7 +1289,7 @@ namespace FDI.DA
                             UserName2 = c.DN_Users2.UserName,
                             Note = c.Note,
                             Deposits = c.Deposits.HasValue ? c.Deposits : 0,
-                            Discount = c.Discount.HasValue ? c.Discount : 0,
+                            Discount = c.Discount,
                             Payments = c.Payments.HasValue ? c.Payments : 0,
                             TotalPrice = c.TotalPrice,
                             LstOrderDetailItems = c.Shop_Order_Details.Where(m => m.Quantity > 0).Select(v => new OrderDetailItem

@@ -85,7 +85,7 @@ namespace FDI.DA
                             {
                                 ID = m.Shop_Product.ID,
                                 //Value = m.Shop_Product.Value,
-                                PriceNew = m.Shop_Product.Shop_Product_Detail.Price*m.Shop_Product.Product_Size.Value/1000
+                                PriceNew = (m.Shop_Product.Shop_Product_Detail.Price*m.Shop_Product.Product_Size.Value/1000) ?? 0
                             })
                         };
             return query.ToList();

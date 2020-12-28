@@ -94,7 +94,7 @@ namespace FDI.MvcAPI.Controllers
                             for (int i = 0; i < lstp.Length; i++)
                             {
                                 var product = _da.GetProductItem(int.Parse(lstp[i]));
-                                totalprice += product.PriceNew ?? 0;
+                                totalprice += product.PriceNew;
                                 orderDetail = new Shop_ContactOrder_Details
                                 {
                                     ProductID = int.Parse(lstp[i]),
@@ -177,7 +177,7 @@ namespace FDI.MvcAPI.Controllers
                             for (int i = 0; i < lstp.Length; i++)
                             {
                                 var product = _da.GetProductItem(int.Parse(lstp[i]));
-                                totalprice += product.PriceNew ?? 0;
+                                totalprice += product.PriceNew;
                                 orderDetail = new Shop_ContactOrder_Details
                                 {
                                     ProductID = int.Parse(lstp[i]),

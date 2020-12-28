@@ -7,9 +7,9 @@ using FDI.DA;
 using FDI.Simple;
 using FDI.Utils;
 
-namespace FDI.MvcAPI.Controllers.News
+namespace FDI.MvcAPI.Controllers
 {
-    public class NewsController : BaseAppApiController
+    public class NewsAppController : BaseAppApiController
     {
         // GET: News
         private readonly NewsAppIG4DA _da = new NewsAppIG4DA();

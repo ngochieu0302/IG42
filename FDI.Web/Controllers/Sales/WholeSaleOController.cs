@@ -108,7 +108,7 @@ namespace FDI.Web.Controllers.Sales
                                         QuantityOld = 0,
                                         IsPromotion = false,
                                         CateValueID = saleItem.CateValueID,
-                                        Price = item.Price,
+                                        Price = item.Price ?? 0,
                                         Barcode = item.Barcode,
                                         DateCreated = dateCreated,
                                         Percent = item.PercentSale,
@@ -137,7 +137,7 @@ namespace FDI.Web.Controllers.Sales
                                     order.SalePercent = model.SalePercent;
                                     order.SalePrice = model.SalePrice;
                                     order.Shop_Order_Details = lstDetail;
-                                    order.Discount = model.Discount;
+                                    order.Discount = model.Discount ?? 0;
                                     var payment = model.Total - (order.PrizeMoney ?? 0) - order.Discount -
                                                   model.DiscountSale;
                                     order.Payments = payment;

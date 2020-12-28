@@ -376,14 +376,14 @@ namespace FDI.DA
 
         public List<ProductAppIG4Item> ProductGetbyShop(int cateid, int shopid, bool IsAll, DateTime dates, DateTime datee, int page, int pagesize)
         {
-            var query = FDIDB.ProductGetbyShop(cateid, shopid, IsAll, dates, datee, page, pagesize).Select(m =>
+            var query = FDIDB.ProductGetbyShop(cateid, shopid, IsAll, dates.TotalSeconds(), datee.TotalSeconds(), page, pagesize).Select(m =>
                 new ProductAppIG4Item
                 {
                     ID = m.ID,
                     Name = m.Name,
-                    PriceNew = m.PriceNew,
+                    PriceNew = m.PriceNew ?? 0,
                     DateCreated = m.DateCreated,
-                    Quantity = m.Quantity ?? 0,
+                    Quantity = m.Quantity,
                     UrlPicture = m.Folder + m.Url,
                 });
             return query.ToList();
@@ -395,9 +395,9 @@ namespace FDI.DA
                  {
                      ID = m.ID,
                      Name = m.Name,
-                     PriceNew = m.PriceNew,
-                     DateCreated = m.DateCreate.DecimalToDate(),
-                     Quantity = m.Quantity ?? 0,
+                     PriceNew = m.PriceNew ?? 0,
+                     DateCreated = m.DateCreated,
+                     Quantity = m.Quantity,
                      UrlPicture = m.Folder + m.Url,
                  });
             return query.ToList();

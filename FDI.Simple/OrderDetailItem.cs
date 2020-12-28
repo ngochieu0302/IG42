@@ -6,6 +6,7 @@ namespace FDI.Simple
     public class OrderDetailItem : BaseSimple
     {
         public Guid GID { get; set; }
+        public long ID { get; set; }
         public int? OrderID { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }

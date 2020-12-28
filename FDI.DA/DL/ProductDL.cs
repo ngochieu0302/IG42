@@ -41,7 +41,7 @@ namespace FDI.DA
                             ColorName = c.System_Color.Value,
                             UrlPicture = c.Shop_Product_Detail.Gallery_Picture.Folder + c.Shop_Product_Detail.Gallery_Picture.Url,
                             IsShow = c.IsShow,
-                            PriceNew = c.Shop_Product_Detail.Price * c.Product_Size.Value / 1000,
+                            PriceNew = (c.Shop_Product_Detail.Price * c.Product_Size.Value / 1000) ?? 0,
                             //PriceOld = c.PriceOld,
                             //Percent = c.Percent,
                             ProductDetailID = c.ProductDetailID,
@@ -135,7 +135,7 @@ namespace FDI.DA
                             }),
                             ListProductItem = c.Shop_Product.Where(a=>a.IsDelete != true).Select(v=> new ProductItem
                             {
-                                PriceNew = v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000,
+                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld,
                                 ID = v.ID,
                             }),

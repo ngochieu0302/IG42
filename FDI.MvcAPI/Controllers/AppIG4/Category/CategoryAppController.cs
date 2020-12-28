@@ -8,10 +8,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace FDI.MvcAPI.Controllers.Category
+namespace FDI.MvcAPI.Controllers
 {
     [CustomerAuthorize]
-    public class CategoryAppIG4Controller : BaseAppApiController
+    public class CategoryAppController : BaseAppApiController
     {
         readonly CategoryAppIG4DA _categoryDa = new CategoryAppIG4DA();
         [AllowAnonymous]
