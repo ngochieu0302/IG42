@@ -234,7 +234,6 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\EPPlus.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\log4net.xml
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete

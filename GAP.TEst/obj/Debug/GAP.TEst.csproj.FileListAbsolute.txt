@@ -495,6 +495,7 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Mvc.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Optimization.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Facebook.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\ZaloDotNetSDK.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.GetAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.WebHost.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\DotNetOpenAuth.Core.dll
@@ -554,4 +555,3 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CoreCompileInp
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.pdb
-E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\ZaloDotNetSDK.dll

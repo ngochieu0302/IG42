@@ -300,4 +300,3 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CoreCompil
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.pdb
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml

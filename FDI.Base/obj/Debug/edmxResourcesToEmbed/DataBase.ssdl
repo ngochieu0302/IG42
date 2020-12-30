@@ -4315,7 +4315,7 @@ warning 6002: The table/view 'NNIG4.dbo.TempShop_Product' does not have a primar
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ObjectId" Type="varchar" MaxLength="64" />
     <Property Name="Token" Type="varchar" MaxLength="32" />
     <Property Name="IsUsed" Type="bit" Nullable="false" />

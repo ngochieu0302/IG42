@@ -154,46 +154,55 @@ namespace FDI.MvcAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(string phone)
         {
-            if (!customerDA.CheckExitsByPhone(phone))
+            try
             {
-                customerDA.Add(new Base.Customer()
+                if (!customerDA.CheckExitsByPhone(phone))
                 {
-                    Mobile = phone,
-                    IsDelete = false,
-                    IsPrestige = false,
-                    DateCreated = DateTime.Now.TotalSeconds()
-                });
-                customerDA.Save();
-            }
-            var otp = FDIUtils.RandomOtp(4);
-            var otppost = new PostOtpLoginAppIG4()
-            {
-                msisdn = phone.Remove(0, 1).Insert(0, "84"),
-                brandname = "G-STORE",
-                msgbody = "G-Store: Ma xac minh cua ban la " + otp,
-                user = "G-STORE",
-                pass = "GSTORE123",
-                charset = "8"
-            };
-            var url = "http://123.31.20.167:8383/restservice/";
-            var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
-            if (result.FirstOrDefault()?.Result.code == "200")
-            {
-                tokenOtpDA.Add(new TokenOtp()
+                    customerDA.Add(new Base.Customer()
+                    {
+                        Mobile = phone,
+                        IsDelete = false,
+                        IsPrestige = false,
+                        DateCreated = DateTime.Now.TotalSeconds()
+                    });
+                    customerDA.Save();
+                }
+                var otp = FDIUtils.RandomOtp(4);
+                var otppost = new PostOtpLoginAppIG4()
                 {
-                    ObjectId = phone,
-                    Token = otp,
-                    IsDeleted = false,
-                    IsUsed = false,
-                    TypeToken = (int)TokenOtpType.Authen,
-                    DateCreated = DateTime.Now,
-                });
-                tokenOtpDA.Save();
+                    msisdn = phone.Remove(0, 1).Insert(0, "84"),
+                    brandname = "G-STORE",
+                    msgbody = "IG4: Ma xac minh cua ban la " + otp,
+                    user = "G-STORE",
+                    pass = "GSTORE123",
+                    charset = "8"
+                };
+                var url = "http://123.31.20.167:8383/restservice/";
+                var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
+                if (result.FirstOrDefault()?.Result.code == "200")
+                {
+                    tokenOtpDA.Add(new TokenOtp()
+                    {
+                        ObjectId = phone,
+                        Token = otp,
+                        IsDeleted = false,
+                        IsUsed = false,
+                        TypeToken = (int)TokenOtpType.Authen,
+                        DateCreated = DateTime.Now,
+                    });
+                    tokenOtpDA.Save();
+                }
+                else
+                {
+                    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
+                }
             }
-            else
+            catch (Exception e)
             {
-                return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
+                return Json(new JsonMessage(-2, e.ToString()), JsonRequestBehavior.AllowGet);
+
             }
+
             return Json(new JsonMessage(200, "Ok"), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
