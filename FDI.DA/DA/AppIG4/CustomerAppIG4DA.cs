@@ -189,7 +189,11 @@ namespace FDI.DA
                 };
             return query.ToList();
         }
-        
+        public Customer GetbyidUserZalo(string idUserZalo)
+        {
+            var query = from c in FDIDB.Customers where c.idUserZalo == idUserZalo && c.IsDelete == false select c;
+            return query.FirstOrDefault();
+        }
         public Customer GetById(int customerId)
         {
             var query = from c in FDIDB.Customers where c.ID == customerId select c;

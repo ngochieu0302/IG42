@@ -107,7 +107,17 @@ namespace FDI.DA
             var query = from c in FDIDB.Advertisings where ltsArrId.Contains(c.ID) select c;
             return query.ToList();
         }
-
+        public List<AdvertisingItem> GetByPosition(int id)
+        {
+            var query = from c in FDIDB.Advertisings
+                        where c.PositionID == id && (c.IsDeleted != null && c.IsDeleted.Value == false)
+                        select new AdvertisingItem()
+                        {
+                            ID = c.ID,
+                            PictureUrl = (c.PictureID.HasValue) ? c.Gallery_Picture.Folder + c.Gallery_Picture.Url : string.Empty
+                        };
+            return query.ToList();
+        }
         public void Add(Advertising advertising)
         {
             FDIDB.Advertisings.Add(advertising);

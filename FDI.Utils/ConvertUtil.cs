@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FDI.Base;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -21,27 +22,15 @@ namespace FDI.Utils
 
             return retVal;
         }
-        [DbFunction("FdiDataModel.Store", "DistanceBetween")]
+        [DbFunction("FDIModel.Store", "DistanceBetween")]
         public static double DistanceBetween(float la1, float lo1, float la2, float lo2)
         {
-            //FDIEntities _d = new FDIEntities();
+            FDIEntities _d = new FDIEntities();
             try
             {
-                //var check = _d.Database.SqlQuery<double>("SELECT dbo.DistanceBetween (@la1, @lo1, @la2, @lo2)");
-                var dLat = (la1 - la2) * (Math.PI / 180);
+                var check = _d.Database.SqlQuery<float>("SELECT dbo.DistanceBetween (@la1, @lo1, @la2, @lo2)");
 
-                var dLon = (lo1 - lo2) * (Math.PI / 180);
-
-                var la1ToRad = la1 * (Math.PI / 180);
-
-                var la2ToRad = la2 * (Math.PI / 180);
-
-                var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(la1ToRad) * Math.Cos(la2ToRad) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-
-                var c = 2 * Math.Pow(Math.Sqrt(a), Math.Sqrt(1 - a));
-
-                var d = 6371000 * c;
-                return d;
+                return check.FirstOrDefault();
             }
             catch (Exception e)
             {

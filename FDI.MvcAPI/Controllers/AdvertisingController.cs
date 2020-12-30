@@ -116,5 +116,10 @@ namespace FDI.MvcAPI.Controllers
             _da.Save();
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetByPosition(int id)
+        {
+            var lst = _da.GetByPosition(id);
+            return Json(new BaseResponse<List<AdvertisingItem>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

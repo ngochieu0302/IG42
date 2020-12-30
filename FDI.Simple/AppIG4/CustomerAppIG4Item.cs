@@ -220,5 +220,20 @@ namespace FDI.Simple
         public string Email { get; set; }
         public decimal? Total { get; set; }
     }
-
+    public class ZaloCustomerItem
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public PictureZalo picture { get; set; }
+        public string error { get; set; }
+        public string message { get; set; }
+    }
+    public class PictureZalo
+    {
+        public PictureZaloData data { get; set; }
+    }
+    public class PictureZaloData
+    {
+        public string url { get; set; }
+    }
 }

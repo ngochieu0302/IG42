@@ -89,6 +89,7 @@
     <Compile Include="DA\AppIG4\CategoryAppIG4DA.cs" />
     <Compile Include="DA\AppIG4\CustomerAddressAppIG4DA.cs" />
     <Compile Include="DA\AppIG4\CustomerAppIG4DA.cs" />
+    <Compile Include="DA\AppIG4\CustomerAppSMSDA.cs" />
     <Compile Include="DA\AppIG4\CustomerPolicyAppIG4DA.cs" />
     <Compile Include="DA\AppIG4\CustomerTypeAppIG4DA.cs" />
     <Compile Include="DA\AppIG4\NewsAppIG4DA.cs" />
