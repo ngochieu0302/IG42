@@ -770,6 +770,7 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="IsPrestige" Type="bit" Nullable="false" />
     <Property Name="AvatarUrl" Type="varchar" MaxLength="128" />
     <Property Name="Description" Type="nvarchar" MaxLength="1024" />
+    <Property Name="idUserZalo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Customer_Action">
     <Key>
@@ -924,7 +925,7 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CustomerId" Type="int" />
     <Property Name="CustomerName" Type="nvarchar" MaxLength="512" />
     <Property Name="Phone" Type="varchar" MaxLength="32" />
@@ -3754,6 +3755,20 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="IsShow" Type="bit" />
     <Property Name="LanguageId" Type="varchar" MaxLength="10" />
   </EntityType>
+  <EntityType Name="SMS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content" Type="ntext" />
+    <Property Name="DateCreated" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="AgencyID" Type="int" />
+    <Property Name="IsShow" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DateUpdated" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
   <EntityType Name="Source">
     <Key>
       <PropertyRef Name="ID" />
@@ -4300,7 +4315,7 @@ warning 6002: The table/view 'NNIG4.dbo.TempShop_Product' does not have a primar
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ObjectId" Type="varchar" MaxLength="64" />
     <Property Name="Token" Type="varchar" MaxLength="32" />
     <Property Name="IsUsed" Type="bit" Nullable="false" />
@@ -10075,6 +10090,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SMS_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="SMS" Type="Self.SMS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SMS">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Source_Gallery_Picture">
     <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="0..1" />
     <End Role="Source" Type="Self.Source" Multiplicity="*" />
@@ -11699,6 +11726,7 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     <EntitySet Name="Shop_Product_Type" EntityType="Self.Shop_Product_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shop_Product_Value" EntityType="Self.Shop_Product_Value" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SMS" EntityType="Self.SMS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Source_Video" EntityType="Self.Source_Video" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ST_Group" EntityType="Self.ST_Group" Schema="dbo" store:Type="Tables" />
@@ -13708,6 +13736,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     <AssociationSet Name="FK_Shop_ProductType_Gallery_Picture" Association="Self.FK_Shop_ProductType_Gallery_Picture">
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
       <End Role="Shop_Product_Type" EntitySet="Shop_Product_Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMS_Customer" Association="Self.FK_SMS_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="SMS" EntitySet="SMS" />
     </AssociationSet>
     <AssociationSet Name="FK_Source_Gallery_Picture" Association="Self.FK_Source_Gallery_Picture">
       <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
