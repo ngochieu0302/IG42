@@ -215,17 +215,17 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
-        public List<Select2Model> GetAllListSelect2(string key,int page, ref int total)
+        public List<Select2Model> GetAllListSelect2(string key, int page, ref int total)
         {
             var keyword = FDIUtils.Slug(key);
             var query = from c in FDIDB.Shop_Product
-                where c.IsDelete == false && c.NameAscii.Contains(keyword) && c.IsShow == true
-                orderby c.ID descending
-                select new Select2Model()
-                {
-                    text = c.Name,
-                    id = c.Name,
-                };
+                        where c.IsDelete == false && c.NameAscii.Contains(keyword) && c.IsShow == true
+                        orderby c.ID descending
+                        select new Select2Model()
+                        {
+                            text = c.Name,
+                            id = c.Name,
+                        };
             total = query.Count();
             query = query.Skip((page - 1) * 10).Take(10);
             return query.ToList();
@@ -740,12 +740,12 @@ namespace FDI.DA
         public List<ProductAppIG4Item> GetCategoryForMap(string name, double minKm, double maxKm, int minPrice, int maxPrice, int categoryId, double Latitude, double Longitude)
         {
             if (!string.IsNullOrEmpty(name)) name = String.Join(",", FDIUtils.Slug(FDIUtils.NewUnicodeToAscii(name)).Split('_').ToList());
-            var query = from p in FDIDB.ShopMap(name,maxKm, minKm, categoryId,Latitude,Longitude,minPrice, maxPrice)
-                        
+            var query = from p in FDIDB.ShopMap(name, maxKm, minKm, categoryId, Latitude, Longitude, minPrice, maxPrice)
+
                         select new ProductAppIG4Item
                         {
-                            Longitude = p.Longitude??0,
-                            Latitude = p.Latitude??0,
+                            Longitude = p.Longitude ?? 0,
+                            Latitude = p.Latitude ?? 0,
                             CustomerId = p.CustomerId,
                             IsPrestige = p.IsPrestige,
                             UrlPicture = p.UrlIcon,
@@ -787,20 +787,20 @@ namespace FDI.DA
                           && (maxKm == 0 || ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) <= maxKm)
                         orderby c.ID descending
                         select
-            new ProductAppIG4Item()
-            {
-                ID = c.ID,
-                Name = c.Name,
-                PriceNew = c.PriceNew,
-                Ratings = c.Ratings ?? 0,
-                AvgRating = c.AvgRating ?? 0,
-                UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
-                Latitude = c.Latitude,
-                Longitude = c.Longitude,
-                QuantityOut = c.QuantityOut ?? 0,
-                Quantity = c.Quantity,
-                HasTransfer = c.HasTransfer != null && c.HasTransfer.Value
-            };
+                        new ProductAppIG4Item()
+                        {
+                            ID = c.ID,
+                            Name = c.Name,
+                            PriceNew = c.PriceNew,
+                            Ratings = c.Ratings ?? 0,
+                            AvgRating = c.AvgRating ?? 0,
+                            UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                            Latitude = c.Latitude,
+                            Longitude = c.Longitude,
+                            QuantityOut = c.QuantityOut ?? 0,
+                            Quantity = c.Quantity,
+                            HasTransfer = c.HasTransfer != null && c.HasTransfer.Value
+                        };
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
 
             return query.ToList();

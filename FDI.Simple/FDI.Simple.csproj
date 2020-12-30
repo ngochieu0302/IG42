@@ -76,6 +76,7 @@
     <Compile Include="AppIG4\RatingAppIG4Item.cs" />
     <Compile Include="AppIG4\RewardHistoryAppIG4Item.cs" />
     <Compile Include="AppIG4\SaleCodeAppIG4Item.cs" />
+    <Compile Include="AppIG4\SMSAppIG4Item.cs" />
     <Compile Include="AppIG4\SuggestionsAppIG4Item.cs" />
     <Compile Include="AppIG4\TreeViewAppIG4Item.cs" />
     <Compile Include="AppIG4\WalletCustomerAppIG4Item.cs" />

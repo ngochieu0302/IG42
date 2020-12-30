@@ -19,6 +19,8 @@ using System.Web.Script.Serialization;
 using FDI.DA.DA;
 using Microsoft.Ajax.Utilities;
 using FDI.CORE;
+using Newtonsoft.Json.Linq;
+using ZaloDotNetSDK;
 
 namespace FDI.MvcAPI.Controllers
 {
@@ -194,6 +196,8 @@ namespace FDI.MvcAPI.Controllers
             }
             return Json(new JsonMessage(200, "Ok"), JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        [AllowAnonymous]
         public ActionResult FacebookCallback(string accesstoken, string token)
         {
             try
@@ -323,6 +327,74 @@ namespace FDI.MvcAPI.Controllers
 
             return Redirect("/");
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ZaloCallback(string accesstoken)
+        {
+            try
+            {
+                var appId = 3722523456944291775;
+                var appSecret = "MU1RP7QQ6k8ndjhPNqdj";
+
+                if (!string.IsNullOrEmpty(accesstoken))
+                {
+                    ZaloAppInfo appInfo = new ZaloAppInfo(appId, appSecret, "callbackUrl");
+                    ZaloAppClient appClient = new ZaloAppClient(appInfo);
+                    JObject me = appClient.getProfile(accesstoken, "fields=a,name,id,birthday,gender,phone,picture");
+                    var output = JsonConvert.SerializeObject(me);
+                    ZaloCustomerItem deserializedProduct = JsonConvert.DeserializeObject<ZaloCustomerItem>(output);
+                    if (string.IsNullOrEmpty(deserializedProduct.error))
+                    {
+                        var cus = new Base.Customer
+                        {
+                            UserName = deserializedProduct.name,
+                            FullName = deserializedProduct.name,
+                            DateCreated = DateTime.Now.TotalSeconds(),
+                            IsActive = true,
+                            IsDelete = false,
+                            idUserZalo = deserializedProduct.id,
+                            AvatarUrl = deserializedProduct.picture.data.url,
+                        };
+
+                        InsertCustomerZalo(cus);
+                        var customer = customerDA.GetbyidUserZalo(cus.idUserZalo);
+                        var key = Guid.NewGuid();
+                        IAuthContainerModel model = new JWTContainerModel()
+                        {
+                            Claims = new Claim[]
+                            {
+                                new Claim(type: "Phone", value: customer.Mobile ?? ""),
+                                new Claim(type: "Type", value: "Token"),
+                                new Claim(type: "ID",value: customer.ID.ToString()),
+                            },
+                            ExpireMinutes = 10,
+                        };
+                        IAuthContainerModel modelRefreshToken = new JWTContainerModel()
+                        {
+                            Claims = new Claim[]
+                            {
+                                new Claim(type: "Phone", value: customer.Mobile ?? ""),
+                                new Claim(type: "Type", value: "RefreshToken"),
+                                new Claim(type: "key", value: key.ToString()),
+                                new Claim(type: "ID",value: customer.ID.ToString()),
+                            },
+                            ExpireMinutes = 60 * 24 * 30,
+                        };
+                        var tokenResponse = JWTService.Instance.GenerateToken(model: model);
+                        var refreshToken = JWTService.Instance.GenerateToken(model: modelRefreshToken);
+                        customerDA.InsertToken(data: new TokenRefresh() { GuidId = key });
+                        customerDA.Save();
+                        return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(data: new { Code = deserializedProduct.error, Erros = true, Message = "Có lỗi xảy ra vui lòng xem lại mã lỗi" }, behavior: JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Redirect("/");
+            }
+            return Redirect("/");
+        }
 
         private void InsertCustomerFacebook(Base.Customer cus)
         {
@@ -339,6 +411,20 @@ namespace FDI.MvcAPI.Controllers
             if (obj == null)
             {
                 customerDA.Add(cus);
+                customerDA.Save();
+            }
+        }
+        private void InsertCustomerZalo(Base.Customer cus)
+        {
+            var obj = customerDA.GetbyidUserZalo(cus.idUserZalo);
+            if (obj == null)
+            {
+                customerDA.Add(cus);
+                customerDA.Save();
+            }
+            else
+            {
+                obj = cus;
                 customerDA.Save();
             }
         }
@@ -454,7 +540,7 @@ namespace FDI.MvcAPI.Controllers
             if (data.IsDefault)
             {
                 customerAddressDA.ResetDefault(CustomerId);
-            }
+             }
 
             var item = new CustomerAddress()
             {
@@ -773,6 +859,7 @@ namespace FDI.MvcAPI.Controllers
             {
                 var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(10);
+                
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title.Replace("{customer}", data.Customer.FullName), shopsucess.Content.Replace("{code}", data.Code), tokenshop, shopsucess.ID.ToString());
             }
