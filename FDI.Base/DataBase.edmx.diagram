@@ -9,276 +9,277 @@
         <AssociationConnector Association="FDIModel.FK_ImportProduct_Shop_Product" />
         <AssociationConnector Association="FDIModel.FK_ImportProduct_StorageProduct" />
         <EntityTypeShape EntityType="FDIModel.C__EFMigrationsHistory" Width="1.5" PointX="2.75" PointY="10.75" />
-        <EntityTypeShape EntityType="FDIModel.ActiveRole" Width="1.5" PointX="23.25" PointY="396.25" />
-        <EntityTypeShape EntityType="FDIModel.AddMinute" Width="1.5" PointX="26.25" PointY="286.375" />
-        <EntityTypeShape EntityType="FDIModel.Advertising" Width="1.5" PointX="27.75" PointY="346.25" />
-        <EntityTypeShape EntityType="FDIModel.Advertising_Position" Width="1.5" PointX="25.5" PointY="351.75" />
-        <EntityTypeShape EntityType="FDIModel.Advertising_Type" Width="1.5" PointX="25.5" PointY="354.625" />
-        <EntityTypeShape EntityType="FDIModel.Agency_Module" Width="1.5" PointX="7.5" PointY="249.375" />
-        <EntityTypeShape EntityType="FDIModel.Area" Width="1.5" PointX="12" PointY="252.875" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Applications" Width="1.5" PointX="25.5" PointY="387.875" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Membership" Width="1.5" PointX="30" PointY="388.75" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Paths" Width="1.5" PointX="27.75" PointY="396.125" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="30" PointY="399.5" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="33" PointY="393.625" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Profile" Width="1.5" PointX="30" PointY="395.5" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Roles" Width="1.5" PointX="25.5" PointY="393.25" />
+        <EntityTypeShape EntityType="FDIModel.ActiveRole" Width="1.5" PointX="29.25" PointY="385.875" />
+        <EntityTypeShape EntityType="FDIModel.AddMinute" Width="1.5" PointX="31.25" PointY="275.5" />
+        <EntityTypeShape EntityType="FDIModel.Advertising" Width="1.5" PointX="27.75" PointY="329.875" />
+        <EntityTypeShape EntityType="FDIModel.Advertising_Position" Width="1.5" PointX="25.5" PointY="327" />
+        <EntityTypeShape EntityType="FDIModel.Advertising_Type" Width="1.5" PointX="25.5" PointY="330.5" />
+        <EntityTypeShape EntityType="FDIModel.Agency_Module" Width="1.5" PointX="13.5" PointY="246.375" />
+        <EntityTypeShape EntityType="FDIModel.Area" Width="1.5" PointX="18" PointY="243.875" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Applications" Width="1.5" PointX="31.5" PointY="377.5" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Membership" Width="1.5" PointX="36" PointY="378.375" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Paths" Width="1.5" PointX="33.75" PointY="385.875" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="36" PointY="389.25" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="39" PointY="383.375" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Profile" Width="1.5" PointX="36" PointY="385.25" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Roles" Width="1.5" PointX="31.5" PointY="383" />
         <EntityTypeShape EntityType="FDIModel.aspnet_SchemaVersions" Width="1.5" PointX="4.75" PointY="10.75" />
-        <EntityTypeShape EntityType="FDIModel.aspnet_Users" Width="1.5" PointX="27.75" PointY="391.125" />
+        <EntityTypeShape EntityType="FDIModel.aspnet_Users" Width="1.5" PointX="33.75" PointY="380.875" />
         <EntityTypeShape EntityType="FDIModel.aspnet_WebEvent_Events" Width="1.5" PointX="12.75" PointY="11.75" />
-        <EntityTypeShape EntityType="FDIModel.AspNetRoleClaim" Width="1.5" PointX="5.25" PointY="230.75" />
-        <EntityTypeShape EntityType="FDIModel.AspNetRole" Width="1.5" PointX="3" PointY="226.5" />
-        <EntityTypeShape EntityType="FDIModel.AspNetUserClaim" Width="1.5" PointX="7.5" PointY="225.25" />
-        <EntityTypeShape EntityType="FDIModel.AspNetUserLogin" Width="1.5" PointX="7.5" PointY="228" />
-        <EntityTypeShape EntityType="FDIModel.AspNetUser" Width="1.5" PointX="5.25" PointY="223.875" />
-        <EntityTypeShape EntityType="FDIModel.AspNetUserToken" Width="1.5" PointX="7.5" PointY="222.5" />
-        <EntityTypeShape EntityType="FDIModel.AttributeOption" Width="1.5" PointX="44.75" PointY="313.25" />
-        <EntityTypeShape EntityType="FDIModel.Author" Width="1.5" PointX="19.5" PointY="284.125" />
-        <EntityTypeShape EntityType="FDIModel.Author_Product" Width="1.5" PointX="21.75" PointY="290.25" />
+        <EntityTypeShape EntityType="FDIModel.AspNetRoleClaim" Width="1.5" PointX="11.25" PointY="227.75" />
+        <EntityTypeShape EntityType="FDIModel.AspNetRole" Width="1.5" PointX="9" PointY="223.5" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserClaim" Width="1.5" PointX="13.5" PointY="219.625" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserLogin" Width="1.5" PointX="13.5" PointY="222.25" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUser" Width="1.5" PointX="11.25" PointY="220.875" />
+        <EntityTypeShape EntityType="FDIModel.AspNetUserToken" Width="1.5" PointX="13.5" PointY="225" />
+        <EntityTypeShape EntityType="FDIModel.AttributeOption" Width="1.5" PointX="48.75" PointY="320.875" />
+        <EntityTypeShape EntityType="FDIModel.Author" Width="1.5" PointX="25.5" PointY="275.125" />
+        <EntityTypeShape EntityType="FDIModel.Author_Product" Width="1.5" PointX="27.75" PointY="282.375" />
         <EntityTypeShape EntityType="FDIModel.Bank" Width="1.5" PointX="2.75" PointY="13.75" />
-        <EntityTypeShape EntityType="FDIModel.Banner" Width="1.5" PointX="28.5" PointY="227.5" />
-        <EntityTypeShape EntityType="FDIModel.BiasProduce" Width="1.5" PointX="21.75" PointY="315.75" />
-        <EntityTypeShape EntityType="FDIModel.BonusType" Width="1.5" PointX="44" PointY="276.375" />
-        <EntityTypeShape EntityType="FDIModel.Car" Width="1.5" PointX="34.25" PointY="309.75" />
-        <EntityTypeShape EntityType="FDIModel.CashAdvance" Width="1.5" PointX="28.5" PointY="334.125" />
-        <EntityTypeShape EntityType="FDIModel.CashOutWallet" Width="1.5" PointX="17.25" PointY="343.625" />
-        <EntityTypeShape EntityType="FDIModel.Cate_Value" Width="1.5" PointX="22.5" PointY="245" />
-        <EntityTypeShape EntityType="FDIModel.Category" Width="1.5" PointX="21.75" PointY="342.25" />
-        <EntityTypeShape EntityType="FDIModel.Category_Product_Recipe" Width="1.5" PointX="43.75" PointY="292" />
-        <EntityTypeShape EntityType="FDIModel.Category_Recipe" Width="1.5" PointX="33.5" PointY="304.125" />
-        <EntityTypeShape EntityType="FDIModel.Category_ShopBrand" Width="1.5" PointX="24" PointY="375.875" />
-        <EntityTypeShape EntityType="FDIModel.Category_Tags" Width="1.5" PointX="43" PointY="321.625" />
-        <EntityTypeShape EntityType="FDIModel.CategoryControl" Width="1.5" PointX="21.75" PointY="357.375" />
-        <EntityTypeShape EntityType="FDIModel.Comment_Like" Width="1.5" PointX="34.5" PointY="356.875" />
-        <EntityTypeShape EntityType="FDIModel.Company" Width="1.5" PointX="28.5" PointY="318.375" />
-        <EntityTypeShape EntityType="FDIModel.ControlValue" Width="1.5" PointX="24" PointY="357.625" />
-        <EntityTypeShape EntityType="FDIModel.CookieLogin" Width="1.5" PointX="17.25" PointY="245.75" />
-        <EntityTypeShape EntityType="FDIModel.Cost_Product" Width="1.5" PointX="24" PointY="303.375" />
-        <EntityTypeShape EntityType="FDIModel.Cost_Product_User" Width="1.5" PointX="28.5" PointY="277.5" />
-        <EntityTypeShape EntityType="FDIModel.CostType" Width="1.5" PointX="35.25" PointY="243.625" />
-        <EntityTypeShape EntityType="FDIModel.Criteria_Total" Width="1.5" PointX="30.75" PointY="308.625" />
-        <EntityTypeShape EntityType="FDIModel.Customer" Width="1.5" PointX="15" PointY="247.75" />
+        <EntityTypeShape EntityType="FDIModel.Banner" Width="1.5" PointX="33.5" PointY="318.875" />
+        <EntityTypeShape EntityType="FDIModel.BiasProduce" Width="1.5" PointX="27.75" PointY="309.625" />
+        <EntityTypeShape EntityType="FDIModel.BonusType" Width="1.5" PointX="47.25" PointY="277.5" />
+        <EntityTypeShape EntityType="FDIModel.Car" Width="1.5" PointX="43.25" PointY="275.125" />
+        <EntityTypeShape EntityType="FDIModel.CashAdvance" Width="1.5" PointX="33.5" PointY="294.125" />
+        <EntityTypeShape EntityType="FDIModel.CashOutWallet" Width="1.5" PointX="23.25" PointY="236" />
+        <EntityTypeShape EntityType="FDIModel.Cate_Value" Width="1.5" PointX="33.75" PointY="256.125" />
+        <EntityTypeShape EntityType="FDIModel.Category" Width="1.5" PointX="30.75" PointY="332" />
+        <EntityTypeShape EntityType="FDIModel.Category_Product_Recipe" Width="1.5" PointX="47.75" PointY="291.25" />
+        <EntityTypeShape EntityType="FDIModel.Category_Recipe" Width="1.5" PointX="43.5" PointY="283.5" />
+        <EntityTypeShape EntityType="FDIModel.Category_ShopBrand" Width="1.5" PointX="30" PointY="356.375" />
+        <EntityTypeShape EntityType="FDIModel.Category_Tags" Width="1.5" PointX="48" PointY="326.125" />
+        <EntityTypeShape EntityType="FDIModel.CategoryControl" Width="1.5" PointX="30.75" PointY="350.125" />
+        <EntityTypeShape EntityType="FDIModel.Comment_Like" Width="1.5" PointX="40.5" PointY="341.125" />
+        <EntityTypeShape EntityType="FDIModel.Company" Width="1.5" PointX="33.5" PointY="327.625" />
+        <EntityTypeShape EntityType="FDIModel.ControlValue" Width="1.5" PointX="33" PointY="357.25" />
+        <EntityTypeShape EntityType="FDIModel.CookieLogin" Width="1.5" PointX="23.25" PointY="340.875" />
+        <EntityTypeShape EntityType="FDIModel.Cost_Product" Width="1.5" PointX="30" PointY="294.875" />
+        <EntityTypeShape EntityType="FDIModel.Cost_Product_User" Width="1.5" PointX="33.5" PointY="273" />
+        <EntityTypeShape EntityType="FDIModel.CostType" Width="1.5" PointX="34.25" PointY="233.75" />
+        <EntityTypeShape EntityType="FDIModel.Criteria_Total" Width="1.5" PointX="35.75" PointY="300.875" />
+        <EntityTypeShape EntityType="FDIModel.Customer" Width="1.5" PointX="21" PointY="242.625" />
         <EntityTypeShape EntityType="FDIModel.Customer_Action" Width="1.5" PointX="12.75" PointY="8.125" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Care" Width="1.5" PointX="17.25" PointY="331.625" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Care" Width="1.5" PointX="23.25" PointY="331" />
         <EntityTypeShape EntityType="FDIModel.Customer_Device" Width="1.5" PointX="4.75" PointY="13.75" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Groups" Width="1.5" PointX="12.75" PointY="248.375" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Groups" Width="1.5" PointX="18.75" PointY="253.25" />
         <EntityTypeShape EntityType="FDIModel.Customer_History" Width="1.5" PointX="15" PointY="7.875" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Point" Width="1.5" PointX="31.5" PointY="312" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Policy" Width="1.5" PointX="12.75" PointY="262" />
-        <EntityTypeShape EntityType="FDIModel.Customer_question" Width="1.5" PointX="31.5" PointY="315.25" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Review" Width="1.5" PointX="33.75" PointY="291.625" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Review_Deltails" Width="1.5" PointX="36" PointY="292.5" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Reward" Width="1.5" PointX="20.25" PointY="257" />
-        <EntityTypeShape EntityType="FDIModel.Customer_Type" Width="1.5" PointX="24.75" PointY="347.25" />
-        <EntityTypeShape EntityType="FDIModel.Customer_TypeGroup" Width="1.5" PointX="22.5" PointY="361.125" />
-        <EntityTypeShape EntityType="FDIModel.CustomerAddress" Width="1.5" PointX="17.25" PointY="339.25" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Point" Width="1.5" PointX="36.5" PointY="275.125" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Policy" Width="1.5" PointX="18.75" PointY="262" />
+        <EntityTypeShape EntityType="FDIModel.Customer_question" Width="1.5" PointX="36.5" PointY="306.5" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Review" Width="1.5" PointX="38.75" PointY="282.875" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Review_Deltails" Width="1.5" PointX="41" PointY="283.625" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Reward" Width="1.5" PointX="23.25" PointY="252" />
+        <EntityTypeShape EntityType="FDIModel.Customer_Type" Width="1.5" PointX="27.75" PointY="337" />
+        <EntityTypeShape EntityType="FDIModel.Customer_TypeGroup" Width="1.5" PointX="25.5" PointY="343.75" />
+        <EntityTypeShape EntityType="FDIModel.CustomerAddress" Width="1.5" PointX="23.25" PointY="326.5" />
         <EntityTypeShape EntityType="FDIModel.CustomerContact" Width="1.5" PointX="6.75" PointY="14.75" />
-        <EntityTypeShape EntityType="FDIModel.CustomerRating" Width="1.5" PointX="17.25" PointY="347.75" />
-        <EntityTypeShape EntityType="FDIModel.Debt" Width="1.5" PointX="28.5" PointY="232.125" />
+        <EntityTypeShape EntityType="FDIModel.CustomerRating" Width="1.5" PointX="23.25" PointY="337.375" />
+        <EntityTypeShape EntityType="FDIModel.Debt" Width="1.5" PointX="33.5" PointY="238" />
         <EntityTypeShape EntityType="FDIModel.Discount" Width="1.5" PointX="8.75" PointY="14.75" />
         <EntityTypeShape EntityType="FDIModel.DiscountCode" Width="1.5" PointX="10" PointY="11" />
-        <EntityTypeShape EntityType="FDIModel.DN_Active" Width="1.5" PointX="0.75" PointY="244.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Agency" Width="1.5" PointX="9.75" PointY="248.5" />
-        <EntityTypeShape EntityType="FDIModel.DN_AttributeDynamic" Width="1.5" PointX="24" PointY="342" />
-        <EntityTypeShape EntityType="FDIModel.DN_AttributeGroup" Width="1.5" PointX="21.75" PointY="333.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_Bed_Desk" Width="1.5" PointX="26.25" PointY="280" />
-        <EntityTypeShape EntityType="FDIModel.DN_Calendar" Width="1.5" PointX="0.75" PointY="233.25" />
-        <EntityTypeShape EntityType="FDIModel.DN_Calendar_Weekly_Schedule" Width="1.5" PointX="34.5" PointY="228.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Card" Width="1.5" PointX="12.75" PointY="266.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Combo" Width="1.5" PointX="21.75" PointY="379.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Active" Width="1.5" PointX="0.75" PointY="246.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Agency" Width="1.5" PointX="15.75" PointY="244.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_AttributeDynamic" Width="1.5" PointX="33" PointY="342.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_AttributeGroup" Width="1.5" PointX="30.75" PointY="346.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Bed_Desk" Width="1.5" PointX="31.25" PointY="299.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_Calendar" Width="1.5" PointX="3.75" PointY="239.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Calendar_Weekly_Schedule" Width="1.5" PointX="44.5" PointY="261.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Card" Width="1.5" PointX="18.75" PointY="257.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Combo" Width="1.5" PointX="27.75" PointY="364.875" />
         <EntityTypeShape EntityType="FDIModel.DN_ConfigMonth" Width="1.5" PointX="14.75" PointY="11.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_ContentVote" Width="1.5" PointX="12.75" PointY="243.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Criteria" Width="1.5" PointX="0.75" PointY="237.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_ContentVote" Width="1.5" PointX="12.75" PointY="239.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Criteria" Width="1.5" PointX="3.75" PointY="235.375" />
         <EntityTypeShape EntityType="FDIModel.DN_DayOff" Width="1.5" PointX="14.75" PointY="15.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Department" Width="1.5" PointX="6" PointY="236" />
-        <EntityTypeShape EntityType="FDIModel.DN_Discount" Width="1.5" PointX="28.5" PointY="322.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_Drawer" Width="1.5" PointX="29.25" PointY="220" />
-        <EntityTypeShape EntityType="FDIModel.DN_EDIT_Schedule" Width="1.5" PointX="37.5" PointY="247.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_Enterprises" Width="1.5" PointX="7.5" PointY="255.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_Exchange" Width="1.5" PointX="28.5" PointY="242.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Export" Width="1.5" PointX="28.5" PointY="281.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_ExportProduct" Width="1.5" PointX="28.5" PointY="236" />
-        <EntityTypeShape EntityType="FDIModel.DN_File_Mail" Width="1.5" PointX="25.5" PointY="267" />
-        <EntityTypeShape EntityType="FDIModel.DN_GroupAgency" Width="1.5" PointX="7.5" PointY="264.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_GroupEmail" Width="1.5" PointX="24" PointY="236.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Import" Width="1.5" PointX="30.75" PointY="302.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_ImportProduct" Width="1.5" PointX="40" PointY="250.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_Level" Width="1.5" PointX="0.75" PointY="230" />
-        <EntityTypeShape EntityType="FDIModel.DN_Login" Width="1.5" PointX="28.5" PointY="254" />
-        <EntityTypeShape EntityType="FDIModel.DN_Mail_SSC" Width="1.5" PointX="23.25" PointY="252.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_Module" Width="1.5" PointX="5.25" PointY="247.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_News_Comment" Width="1.5" PointX="31.5" PointY="247.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_NewsSSC" Width="1.5" PointX="29.25" PointY="266.25" />
-        <EntityTypeShape EntityType="FDIModel.DN_OrderCard" Width="1.5" PointX="10.5" PointY="266.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_Packet" Width="1.5" PointX="22.5" PointY="306.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Product_Packet" Width="1.5" PointX="24.75" PointY="290.25" />
-        <EntityTypeShape EntityType="FDIModel.DN_Promotion" Width="1.5" PointX="36.5" PointY="304.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Department" Width="1.5" PointX="6" PointY="241.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Discount" Width="1.5" PointX="33.5" PointY="305.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Drawer" Width="1.5" PointX="34.25" PointY="229.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_EDIT_Schedule" Width="1.5" PointX="42.5" PointY="243.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Enterprises" Width="1.5" PointX="13.5" PointY="230.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Exchange" Width="1.5" PointX="33.5" PointY="353.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Export" Width="1.5" PointX="33.5" PointY="337.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_ExportProduct" Width="1.5" PointX="33.5" PointY="222.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_File_Mail" Width="1.5" PointX="35.75" PointY="251.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_GroupAgency" Width="1.5" PointX="13.5" PointY="253.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_GroupEmail" Width="1.5" PointX="29" PointY="241.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Import" Width="1.5" PointX="35.75" PointY="323.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_ImportProduct" Width="1.5" PointX="47.25" PointY="247.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Level" Width="1.5" PointX="3.75" PointY="232" />
+        <EntityTypeShape EntityType="FDIModel.DN_Login" Width="1.5" PointX="28.25" PointY="245.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Mail_SSC" Width="1.5" PointX="33.5" PointY="247.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Module" Width="1.5" PointX="11.25" PointY="244.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_News_Comment" Width="1.5" PointX="38.5" PointY="253.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_NewsSSC" Width="1.5" PointX="36.25" PointY="238.25" />
+        <EntityTypeShape EntityType="FDIModel.DN_OrderCard" Width="1.5" PointX="16.5" PointY="258" />
+        <EntityTypeShape EntityType="FDIModel.DN_Packet" Width="1.5" PointX="25.5" PointY="294.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Product_Packet" Width="1.5" PointX="27.75" PointY="285.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Promotion" Width="1.5" PointX="36.5" PointY="291.125" />
         <EntityTypeShape EntityType="FDIModel.DN_Question" Width="1.5" PointX="12.75" PointY="4.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_RequestWare" Width="1.5" PointX="17.25" PointY="250.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_RequestWareDetail" Width="1.5" PointX="21.75" PointY="275.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_RequestWarehousing" Width="1.5" PointX="24.75" PointY="240.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_RequestWareSupplier" Width="1.5" PointX="28.5" PointY="270.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWare" Width="1.5" PointX="25.5" PointY="246.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWareDetail" Width="1.5" PointX="27.75" PointY="269" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWarehousing" Width="1.5" PointX="44" PointY="256.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_RequestWareSupplier" Width="1.5" PointX="33.5" PointY="268.25" />
         <EntityTypeShape EntityType="FDIModel.DN_Results_Questions" Width="1.5" PointX="15" PointY="4" />
-        <EntityTypeShape EntityType="FDIModel.DN_Role_ModuleActive" Width="1.5" PointX="5.25" PointY="244" />
-        <EntityTypeShape EntityType="FDIModel.DN_Roles" Width="1.5" PointX="3" PointY="243.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Room" Width="1.5" PointX="24" PointY="282.5" />
-        <EntityTypeShape EntityType="FDIModel.DN_Salary" Width="1.5" PointX="28.5" PointY="262" />
-        <EntityTypeShape EntityType="FDIModel.DN_Sale" Width="1.5" PointX="39.5" PointY="297.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Schedule" Width="1.5" PointX="26.25" PointY="235.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_Setting" Width="1.5" PointX="12" PointY="257.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Role_ModuleActive" Width="1.5" PointX="8.25" PointY="246" />
+        <EntityTypeShape EntityType="FDIModel.DN_Roles" Width="1.5" PointX="6" PointY="245.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Room" Width="1.5" PointX="29" PointY="301.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Salary" Width="1.5" PointX="42.5" PointY="240.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Sale" Width="1.5" PointX="42.5" PointY="289.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Schedule" Width="1.5" PointX="40.25" PointY="234.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_Setting" Width="1.5" PointX="18" PointY="248.75" />
         <EntityTypeShape EntityType="FDIModel.DN_Stack" Width="1.5" PointX="0.75" PointY="16.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Status" Width="1.5" PointX="24" PointY="279.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_StatusEmail" Width="1.5" PointX="28.5" PointY="250.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Supplier" Width="1.5" PointX="12" PointY="293.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_SupplierProduct" Width="1.5" PointX="24" PointY="319.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Status" Width="1.5" PointX="29" PointY="299" />
+        <EntityTypeShape EntityType="FDIModel.DN_StatusEmail" Width="1.5" PointX="35.75" PointY="248.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Supplier" Width="1.5" PointX="18" PointY="293.625" />
+        <EntityTypeShape EntityType="FDIModel.DN_SupplierProduct" Width="1.5" PointX="36" PointY="313.375" />
         <EntityTypeShape EntityType="FDIModel.DN_Time_Group" Width="1.5" PointX="2.75" PointY="16.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Time_Job" Width="1.5" PointX="28.5" PointY="245.75" />
-        <EntityTypeShape EntityType="FDIModel.DN_Total_SalaryMonth" Width="1.5" PointX="28.5" PointY="307.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_Tree" Width="1.5" PointX="10.5" PointY="243.625" />
-        <EntityTypeShape EntityType="FDIModel.DN_TypeCriteria" Width="1.5" PointX="1.5" PointY="249.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_Unit" Width="1.5" PointX="19.5" PointY="341.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_User_BedDesk" Width="1.5" PointX="34.5" PointY="248" />
-        <EntityTypeShape EntityType="FDIModel.DN_User_ModuleActive" Width="1.5" PointX="6" PointY="240" />
-        <EntityTypeShape EntityType="FDIModel.DN_Users" Width="1.5" PointX="26.25" PointY="244.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_UsersInRoles" Width="1.5" PointX="8.25" PointY="243.875" />
-        <EntityTypeShape EntityType="FDIModel.DN_Vote" Width="1.5" PointX="15" PointY="244.125" />
-        <EntityTypeShape EntityType="FDIModel.DN_Weekly" Width="1.5" PointX="30" PointY="223.375" />
-        <EntityTypeShape EntityType="FDIModel.DN_Weekly_Schedule" Width="1.5" PointX="32.25" PointY="223" />
-        <EntityTypeShape EntityType="FDIModel.DocumentFile" Width="1.5" PointX="33.75" PointY="277.75" />
-        <EntityTypeShape EntityType="FDIModel.Document" Width="1.5" PointX="31.5" PointY="266" />
+        <EntityTypeShape EntityType="FDIModel.DN_Time_Job" Width="1.5" PointX="41.5" PointY="248.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_Total_SalaryMonth" Width="1.5" PointX="33.5" PointY="299.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Tree" Width="1.5" PointX="10.5" PointY="239.75" />
+        <EntityTypeShape EntityType="FDIModel.DN_TypeCriteria" Width="1.5" PointX="1.5" PointY="236.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Unit" Width="1.5" PointX="28.5" PointY="341.5" />
+        <EntityTypeShape EntityType="FDIModel.DN_User_BedDesk" Width="1.5" PointX="36.5" PointY="258.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_User_ModuleActive" Width="1.5" PointX="3" PointY="246" />
+        <EntityTypeShape EntityType="FDIModel.DN_Users" Width="1.5" PointX="31.25" PointY="240" />
+        <EntityTypeShape EntityType="FDIModel.DN_UsersInRoles" Width="1.5" PointX="8.25" PointY="241.875" />
+        <EntityTypeShape EntityType="FDIModel.DN_Vote" Width="1.5" PointX="15" PointY="240.125" />
+        <EntityTypeShape EntityType="FDIModel.DN_Weekly" Width="1.5" PointX="32" PointY="264.375" />
+        <EntityTypeShape EntityType="FDIModel.DN_Weekly_Schedule" Width="1.5" PointX="34.25" PointY="264.125" />
+        <EntityTypeShape EntityType="FDIModel.DocumentFile" Width="1.5" PointX="38.75" PointY="275.25" />
+        <EntityTypeShape EntityType="FDIModel.Document" Width="1.5" PointX="36.5" PointY="263.375" />
         <EntityTypeShape EntityType="FDIModel.Enterprise_Setting" Width="1.5" PointX="10.75" PointY="16.75" />
-        <EntityTypeShape EntityType="FDIModel.Export_Product" Width="1.5" PointX="30.75" PointY="236.625" />
-        <EntityTypeShape EntityType="FDIModel.Export_Product_Detail" Width="1.5" PointX="21.75" PointY="293.75" />
-        <EntityTypeShape EntityType="FDIModel.Export_Product_Value" Width="1.5" PointX="30.75" PointY="282" />
-        <EntityTypeShape EntityType="FDIModel.FAQ_Answer" Width="1.5" PointX="26.25" PointY="433.75" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product" Width="1.5" PointX="35.75" PointY="223.125" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product_Detail" Width="1.5" PointX="30.75" PointY="279.875" />
+        <EntityTypeShape EntityType="FDIModel.Export_Product_Value" Width="1.5" PointX="38" PointY="331.125" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Answer" Width="1.5" PointX="35.25" PointY="423.5" />
         <EntityTypeShape EntityType="FDIModel.FAQ_Category" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="FDIModel.FAQ_Question" Width="1.5" PointX="24" PointY="431.875" />
-        <EntityTypeShape EntityType="FDIModel.FAQ_Question_Product_Mapping" Width="1.5" PointX="26.25" PointY="431.375" />
-        <EntityTypeShape EntityType="FDIModel.FreightWarehouse" Width="1.5" PointX="41.75" PointY="308.625" />
-        <EntityTypeShape EntityType="FDIModel.FreightWareHouse_Active" Width="1.5" PointX="42.25" PointY="287.125" />
-        <EntityTypeShape EntityType="FDIModel.Gallery_Picture" Width="1.5" PointX="19.5" PointY="345.375" />
-        <EntityTypeShape EntityType="FDIModel.Gallery_Video" Width="1.5" PointX="30.75" PointY="297" />
-        <EntityTypeShape EntityType="FDIModel.GoogleMap" Width="1.5" PointX="21" PointY="262.875" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Question" Width="1.5" PointX="33" PointY="421.625" />
+        <EntityTypeShape EntityType="FDIModel.FAQ_Question_Product_Mapping" Width="1.5" PointX="35.25" PointY="421.125" />
+        <EntityTypeShape EntityType="FDIModel.FreightWarehouse" Width="1.5" PointX="45.75" PointY="317.625" />
+        <EntityTypeShape EntityType="FDIModel.FreightWareHouse_Active" Width="1.5" PointX="50.5" PointY="290.5" />
+        <EntityTypeShape EntityType="FDIModel.Gallery_Picture" Width="1.5" PointX="25.5" PointY="335" />
+        <EntityTypeShape EntityType="FDIModel.Gallery_Video" Width="1.5" PointX="38" PointY="300.375" />
+        <EntityTypeShape EntityType="FDIModel.GoogleMap" Width="1.5" PointX="21" PointY="233.875" />
         <EntityTypeShape EntityType="FDIModel.Holiday" Width="1.5" PointX="16.75" PointY="11.75" />
         <EntityTypeShape EntityType="FDIModel.HtmlContent" Width="1.5" PointX="3" PointY="7.875" />
         <EntityTypeShape EntityType="FDIModel.HtmlMap" Width="1.5" PointX="5.25" PointY="2.5" />
-        <EntityTypeShape EntityType="FDIModel.Language" Width="1.5" PointX="21.75" PointY="384.5" />
-        <EntityTypeShape EntityType="FDIModel.LevelVote" Width="1.5" PointX="10.5" PointY="240.375" />
+        <EntityTypeShape EntityType="FDIModel.Language" Width="1.5" PointX="27.75" PointY="369.5" />
+        <EntityTypeShape EntityType="FDIModel.LevelVote" Width="1.5" PointX="10.5" PointY="236.375" />
         <EntityTypeShape EntityType="FDIModel.LinkWebsite" Width="1.5" PointX="16.75" PointY="14.75" />
         <EntityTypeShape EntityType="FDIModel.Log" Width="1.5" PointX="17.75" PointY="0.75" />
-        <EntityTypeShape EntityType="FDIModel.Mapping_Category_Recipe" Width="1.5" PointX="35.75" PointY="328.125" />
-        <EntityTypeShape EntityType="FDIModel.Mapping_ProductDetail_Recipe" Width="1.5" PointX="44" PointY="281.375" />
-        <EntityTypeShape EntityType="FDIModel.MapProduceRequestWare" Width="1.5" PointX="22.5" PointY="259.5" />
-        <EntityTypeShape EntityType="FDIModel.Market" Width="1.5" PointX="20.25" PointY="252.75" />
+        <EntityTypeShape EntityType="FDIModel.Mapping_Category_Recipe" Width="1.5" PointX="45.75" PointY="312.75" />
+        <EntityTypeShape EntityType="FDIModel.Mapping_ProductDetail_Recipe" Width="1.5" PointX="51.25" PointY="286.875" />
+        <EntityTypeShape EntityType="FDIModel.MapProduceRequestWare" Width="1.5" PointX="33.75" PointY="244.125" />
+        <EntityTypeShape EntityType="FDIModel.Market" Width="1.5" PointX="23.25" PointY="247.75" />
         <EntityTypeShape EntityType="FDIModel.MenuGroup" Width="1.5" PointX="7.75" PointY="2.125" />
         <EntityTypeShape EntityType="FDIModel.Menu" Width="1.5" PointX="10" PointY="1.125" />
-        <EntityTypeShape EntityType="FDIModel.Module" Width="1.5" PointX="23.25" PointY="391.125" />
+        <EntityTypeShape EntityType="FDIModel.Module" Width="1.5" PointX="29.25" PointY="380.875" />
         <EntityTypeShape EntityType="FDIModel.ModuleControl" Width="1.5" PointX="3" PointY="2.125" />
         <EntityTypeShape EntityType="FDIModel.ModulePage" Width="1.5" PointX="0.75" PointY="1.625" />
         <EntityTypeShape EntityType="FDIModel.ModuleSetting" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="FDIModel.News_Comment" Width="1.5" PointX="32.25" PointY="354.25" />
-        <EntityTypeShape EntityType="FDIModel.News_CommentReport" Width="1.5" PointX="34.5" PointY="354" />
-        <EntityTypeShape EntityType="FDIModel.News_Job" Width="1.5" PointX="38.5" PointY="317.75" />
-        <EntityTypeShape EntityType="FDIModel.News_News" Width="1.5" PointX="30" PointY="344.125" />
-        <EntityTypeShape EntityType="FDIModel.News_News_Product" Width="1.5" PointX="32.25" PointY="351.625" />
-        <EntityTypeShape EntityType="FDIModel.Order_Debt" Width="1.5" PointX="28.5" PointY="257.75" />
-        <EntityTypeShape EntityType="FDIModel.Order_Package" Width="1.5" PointX="34" PointY="288" />
-        <EntityTypeShape EntityType="FDIModel.OrderCar" Width="1.5" PointX="36.5" PointY="297.375" />
-        <EntityTypeShape EntityType="FDIModel.OrderCarProductDetail" Width="1.5" PointX="38.75" PointY="311" />
-        <EntityTypeShape EntityType="FDIModel.P_Workshop" Width="1.5" PointX="36.75" PointY="279.5" />
-        <EntityTypeShape EntityType="FDIModel.Partner" Width="1.5" PointX="21.75" PointY="369.75" />
-        <EntityTypeShape EntityType="FDIModel.Payment_Method" Width="1.5" PointX="28.5" PointY="339.875" />
-        <EntityTypeShape EntityType="FDIModel.Payments_Order" Width="1.5" PointX="30.75" PointY="292.625" />
-        <EntityTypeShape EntityType="FDIModel.PaymentVoucher" Width="1.5" PointX="37.5" PointY="253" />
-        <EntityTypeShape EntityType="FDIModel.PolicyAgency" Width="1.5" PointX="24" PointY="427.125" />
-        <EntityTypeShape EntityType="FDIModel.Position" Width="1.5" PointX="9.75" PointY="272.75" />
+        <EntityTypeShape EntityType="FDIModel.News_Comment" Width="1.5" PointX="38.25" PointY="341.375" />
+        <EntityTypeShape EntityType="FDIModel.News_CommentReport" Width="1.5" PointX="40.5" PointY="344" />
+        <EntityTypeShape EntityType="FDIModel.News_Job" Width="1.5" PointX="43.5" PointY="316.25" />
+        <EntityTypeShape EntityType="FDIModel.News_News" Width="1.5" PointX="36" PointY="334.75" />
+        <EntityTypeShape EntityType="FDIModel.News_News_Product" Width="1.5" PointX="38.25" PointY="347.25" />
+        <EntityTypeShape EntityType="FDIModel.Order_Debt" Width="1.5" PointX="33.5" PointY="315.625" />
+        <EntityTypeShape EntityType="FDIModel.Order_Package" Width="1.5" PointX="36" PointY="287.25" />
+        <EntityTypeShape EntityType="FDIModel.OrderCar" Width="1.5" PointX="45.5" PointY="289.75" />
+        <EntityTypeShape EntityType="FDIModel.OrderCarProductDetail" Width="1.5" PointX="47.75" PointY="296.375" />
+        <EntityTypeShape EntityType="FDIModel.P_Workshop" Width="1.5" PointX="45.75" PointY="283.625" />
+        <EntityTypeShape EntityType="FDIModel.Partner" Width="1.5" PointX="27.75" PointY="360.375" />
+        <EntityTypeShape EntityType="FDIModel.Payment_Method" Width="1.5" PointX="33.5" PointY="219" />
+        <EntityTypeShape EntityType="FDIModel.Payments_Order" Width="1.5" PointX="35.75" PointY="283.875" />
+        <EntityTypeShape EntityType="FDIModel.PaymentVoucher" Width="1.5" PointX="38.5" PointY="248" />
+        <EntityTypeShape EntityType="FDIModel.PolicyAgency" Width="1.5" PointX="33" PointY="394.125" />
+        <EntityTypeShape EntityType="FDIModel.Position" Width="1.5" PointX="15.75" PointY="261.5" />
         <EntityTypeShape EntityType="FDIModel.PriceAgency" Width="1.5" PointX="17.75" PointY="3.75" />
-        <EntityTypeShape EntityType="FDIModel.Produce" Width="1.5" PointX="39.5" PointY="305.125" />
-        <EntityTypeShape EntityType="FDIModel.ProduceCatogory" Width="1.5" PointX="41.75" PointY="275.25" />
-        <EntityTypeShape EntityType="FDIModel.ProduceProductDetail" Width="1.5" PointX="46.75" PointY="296.75" />
-        <EntityTypeShape EntityType="FDIModel.ProduceProductPrepare" Width="1.5" PointX="44.75" PointY="300.625" />
-        <EntityTypeShape EntityType="FDIModel.Product_Promotion" Width="1.5" PointX="43.75" PointY="296.375" />
-        <EntityTypeShape EntityType="FDIModel.Product_Reading" Width="1.5" PointX="17.25" PointY="315.5" />
-        <EntityTypeShape EntityType="FDIModel.Product_Size" Width="1.5" PointX="17.25" PointY="292.75" />
-        <EntityTypeShape EntityType="FDIModel.Product_Value" Width="1.5" PointX="30.75" PointY="240.875" />
-        <EntityTypeShape EntityType="FDIModel.ProductCode" Width="1.5" PointX="24" PointY="323.25" />
-        <EntityTypeShape EntityType="FDIModel.ProductCode_CostUser" Width="1.5" PointX="33.75" PointY="284.125" />
-        <EntityTypeShape EntityType="FDIModel.ProductDetail_Recipe" Width="1.5" PointX="41.75" PointY="269.25" />
-        <EntityTypeShape EntityType="FDIModel.ProductRating" Width="1.5" PointX="24.75" PointY="298.875" />
-        <EntityTypeShape EntityType="FDIModel.ProductValue_Recipe" Width="1.5" PointX="44" PointY="270.25" />
+        <EntityTypeShape EntityType="FDIModel.Produce" Width="1.5" PointX="39.5" PointY="291.5" />
+        <EntityTypeShape EntityType="FDIModel.ProduceCatogory" Width="1.5" PointX="45.75" PointY="272.125" />
+        <EntityTypeShape EntityType="FDIModel.ProduceProductDetail" Width="1.5" PointX="45.75" PointY="299.5" />
+        <EntityTypeShape EntityType="FDIModel.ProduceProductPrepare" Width="1.5" PointX="48.75" PointY="286" />
+        <EntityTypeShape EntityType="FDIModel.Product_Promotion" Width="1.5" PointX="48.75" PointY="299.75" />
+        <EntityTypeShape EntityType="FDIModel.Product_Reading" Width="1.5" PointX="23.25" PointY="243.75" />
+        <EntityTypeShape EntityType="FDIModel.Product_Size" Width="1.5" PointX="23.25" PointY="287" />
+        <EntityTypeShape EntityType="FDIModel.Product_Value" Width="1.5" PointX="45" PointY="243.875" />
+        <EntityTypeShape EntityType="FDIModel.ProductCode" Width="1.5" PointX="30" PointY="317" />
+        <EntityTypeShape EntityType="FDIModel.ProductCode_CostUser" Width="1.5" PointX="35.75" PointY="278.5" />
+        <EntityTypeShape EntityType="FDIModel.ProductDetail_Recipe" Width="1.5" PointX="48" PointY="271.875" />
+        <EntityTypeShape EntityType="FDIModel.ProductRating" Width="1.5" PointX="27.75" PointY="293.125" />
+        <EntityTypeShape EntityType="FDIModel.ProductValue_Recipe" Width="1.5" PointX="50.25" PointY="273" />
         <EntityTypeShape EntityType="FDIModel.Promotion" Width="1.5" PointX="7.75" PointY="8.75" />
         <EntityTypeShape EntityType="FDIModel.Promotion_Procuct" Width="1.5" PointX="10" PointY="8.125" />
-        <EntityTypeShape EntityType="FDIModel.Promotion_Product" Width="1.5" PointX="38.75" PointY="314" />
-        <EntityTypeShape EntityType="FDIModel.PurchaseOrder" Width="1.5" PointX="38.75" PointY="272.25" />
+        <EntityTypeShape EntityType="FDIModel.Promotion_Product" Width="1.5" PointX="38.75" PointY="306.375" />
+        <EntityTypeShape EntityType="FDIModel.PurchaseOrder" Width="1.5" PointX="47.75" PointY="266" />
         <EntityTypeShape EntityType="FDIModel.PushNotification" Width="1.5" PointX="17.75" PointY="6.75" />
-        <EntityTypeShape EntityType="FDIModel.ReceiptPayment" Width="1.5" PointX="31.5" PointY="258.75" />
-        <EntityTypeShape EntityType="FDIModel.ReceiptVoucher" Width="1.5" PointX="34.5" PointY="260.125" />
-        <EntityTypeShape EntityType="FDIModel.ReceiveHistory" Width="1.5" PointX="33.75" PointY="267.75" />
+        <EntityTypeShape EntityType="FDIModel.ReceiptPayment" Width="1.5" PointX="41.5" PointY="253.875" />
+        <EntityTypeShape EntityType="FDIModel.ReceiptVoucher" Width="1.5" PointX="36.5" PointY="242.125" />
+        <EntityTypeShape EntityType="FDIModel.ReceiveHistory" Width="1.5" PointX="41.75" PointY="260.75" />
         <EntityTypeShape EntityType="FDIModel.ReciveAgencyHistory" Width="1.5" PointX="16.75" PointY="17.75" />
-        <EntityTypeShape EntityType="FDIModel.Repay" Width="1.5" PointX="28.5" PointY="313.625" />
-        <EntityTypeShape EntityType="FDIModel.RewardAgencyHistory" Width="1.5" PointX="30.75" PointY="275.625" />
-        <EntityTypeShape EntityType="FDIModel.RewardHistory" Width="1.5" PointX="46.25" PointY="286.75" />
-        <EntityTypeShape EntityType="FDIModel.Role_ModuleActive" Width="1.5" PointX="32.75" PointY="397.375" />
-        <EntityTypeShape EntityType="FDIModel.SaleCode" Width="1.5" PointX="41.75" PointY="299.375" />
-        <EntityTypeShape EntityType="FDIModel.Send_Card" Width="1.5" PointX="17.25" PointY="259.375" />
-        <EntityTypeShape EntityType="FDIModel.SetupProduction" Width="1.5" PointX="26.25" PointY="275.625" />
+        <EntityTypeShape EntityType="FDIModel.Repay" Width="1.5" PointX="33.5" PointY="310.75" />
+        <EntityTypeShape EntityType="FDIModel.RewardAgencyHistory" Width="1.5" PointX="38.75" PointY="267.125" />
+        <EntityTypeShape EntityType="FDIModel.RewardHistory" Width="1.5" PointX="49.5" PointY="279.875" />
+        <EntityTypeShape EntityType="FDIModel.Role_ModuleActive" Width="1.5" PointX="38.75" PointY="387.125" />
+        <EntityTypeShape EntityType="FDIModel.SaleCode" Width="1.5" PointX="44.75" PointY="279.75" />
+        <EntityTypeShape EntityType="FDIModel.Send_Card" Width="1.5" PointX="28.25" PointY="249.375" />
+        <EntityTypeShape EntityType="FDIModel.SetupProduction" Width="1.5" PointX="31.25" PointY="271" />
         <EntityTypeShape EntityType="FDIModel.Shop" Width="1.5" PointX="18.75" PointY="9.75" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Brands" Width="1.5" PointX="21.75" PointY="374.25" />
-        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder" Width="1.5" PointX="34.5" PointY="251.625" />
-        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder_Details" Width="1.5" PointX="41.75" PointY="314.5" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Order_Details" Width="1.5" PointX="47.25" PointY="303.375" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Orders" Width="1.5" PointX="28.5" PointY="286.5" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Product" Width="1.5" PointX="19.5" PointY="288" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Product_Detail" Width="1.5" PointX="38.5" PointY="284.75" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Product_Picture" Width="1.5" PointX="21.75" PointY="320.5" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Product_Type" Width="1.5" PointX="21.75" PointY="336.625" />
-        <EntityTypeShape EntityType="FDIModel.Shop_Product_Value" Width="1.5" PointX="28.5" PointY="355.625" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Brands" Width="1.5" PointX="27.75" PointY="354.75" />
+        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder" Width="1.5" PointX="39.5" PointY="239.625" />
+        <EntityTypeShape EntityType="FDIModel.Shop_ContactOrder_Details" Width="1.5" PointX="45.75" PointY="304.125" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Order_Details" Width="1.5" PointX="49.5" PointY="302.875" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Orders" Width="1.5" PointX="33.5" PointY="277.625" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product" Width="1.5" PointX="25.5" PointY="279.125" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Detail" Width="1.5" PointX="43.5" PointY="297.125" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Picture" Width="1.5" PointX="27.75" PointY="306.875" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Type" Width="1.5" PointX="27.75" PointY="372.875" />
+        <EntityTypeShape EntityType="FDIModel.Shop_Product_Value" Width="1.5" PointX="33.5" PointY="348.125" />
         <EntityTypeShape EntityType="FDIModel.Size" Width="1.5" PointX="18.75" PointY="13.75" />
-        <EntityTypeShape EntityType="FDIModel.Source" Width="1.5" PointX="33.75" PointY="339.25" />
-        <EntityTypeShape EntityType="FDIModel.Source_Video" Width="1.5" PointX="41" PointY="294.375" />
-        <EntityTypeShape EntityType="FDIModel.ST_Group" Width="1.5" PointX="7.5" PointY="252.375" />
-        <EntityTypeShape EntityType="FDIModel.Step" Width="1.5" PointX="32.25" PointY="347.875" />
-        <EntityTypeShape EntityType="FDIModel.Storage" Width="1.5" PointX="28.5" PointY="303" />
-        <EntityTypeShape EntityType="FDIModel.StorageFreightWarehouse" Width="1.5" PointX="28.5" PointY="328.25" />
-        <EntityTypeShape EntityType="FDIModel.StorageProduct" Width="1.5" PointX="31.5" PointY="329.75" />
-        <EntityTypeShape EntityType="FDIModel.StorageWarehousing" Width="1.5" PointX="20.25" PointY="247.25" />
-        <EntityTypeShape EntityType="FDIModel.StorageWarehousingLog" Width="1.5" PointX="31.5" PointY="255.125" />
-        <EntityTypeShape EntityType="FDIModel.StorageWarehousingUser" Width="1.5" PointX="31.5" PointY="252.5" />
-        <EntityTypeShape EntityType="FDIModel.SupplierAmountProduct" Width="1.5" PointX="33.5" PointY="298.375" />
+        <EntityTypeShape EntityType="FDIModel.SM" Width="1.5" PointX="23.25" PointY="333.75" />
+        <EntityTypeShape EntityType="FDIModel.Source" Width="1.5" PointX="40.5" PointY="331.375" />
+        <EntityTypeShape EntityType="FDIModel.Source_Video" Width="1.5" PointX="40.25" PointY="302.625" />
+        <EntityTypeShape EntityType="FDIModel.ST_Group" Width="1.5" PointX="13.5" PointY="249.375" />
+        <EntityTypeShape EntityType="FDIModel.Step" Width="1.5" PointX="38.25" PointY="337.5" />
+        <EntityTypeShape EntityType="FDIModel.Storage" Width="1.5" PointX="33.5" PointY="323.5" />
+        <EntityTypeShape EntityType="FDIModel.StorageFreightWarehouse" Width="1.5" PointX="33.5" PointY="332.125" />
+        <EntityTypeShape EntityType="FDIModel.StorageProduct" Width="1.5" PointX="38.25" PointY="324.25" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousing" Width="1.5" PointX="28.25" PointY="253.25" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousingLog" Width="1.5" PointX="39.5" PointY="260.125" />
+        <EntityTypeShape EntityType="FDIModel.StorageWarehousingUser" Width="1.5" PointX="44.5" PointY="250.5" />
+        <EntityTypeShape EntityType="FDIModel.SupplierAmountProduct" Width="1.5" PointX="40.5" PointY="297.75" />
         <EntityTypeShape EntityType="FDIModel.sysdiagram" Width="1.5" PointX="18.75" PointY="16.75" />
-        <EntityTypeShape EntityType="FDIModel.System_City" Width="1.5" PointX="9.75" PointY="261.625" />
-        <EntityTypeShape EntityType="FDIModel.System_Color" Width="1.5" PointX="17.25" PointY="295.5" />
+        <EntityTypeShape EntityType="FDIModel.System_City" Width="1.5" PointX="15.75" PointY="235.75" />
+        <EntityTypeShape EntityType="FDIModel.System_Color" Width="1.5" PointX="23.25" PointY="283.875" />
         <EntityTypeShape EntityType="FDIModel.System_Config" Width="1.5" PointX="19.75" PointY="0.75" />
         <EntityTypeShape EntityType="FDIModel.System_Country" Width="1.5" PointX="0.75" PointY="19.75" />
-        <EntityTypeShape EntityType="FDIModel.System_District" Width="1.5" PointX="15.75" PointY="264.75" />
-        <EntityTypeShape EntityType="FDIModel.System_File" Width="1.5" PointX="32.25" PointY="388.875" />
-        <EntityTypeShape EntityType="FDIModel.System_FileType" Width="1.5" PointX="21.75" PointY="366.875" />
+        <EntityTypeShape EntityType="FDIModel.System_District" Width="1.5" PointX="18.75" PointY="238.75" />
+        <EntityTypeShape EntityType="FDIModel.System_File" Width="1.5" PointX="38.25" PointY="374.875" />
+        <EntityTypeShape EntityType="FDIModel.System_FileType" Width="1.5" PointX="27.75" PointY="326.375" />
         <EntityTypeShape EntityType="FDIModel.System_Menu" Width="1.5" PointX="2.75" PointY="19.75" />
         <EntityTypeShape EntityType="FDIModel.System_MessageTemplate" Width="1.5" PointX="4.75" PointY="19.75" />
-        <EntityTypeShape EntityType="FDIModel.System_Tag" Width="1.5" PointX="40.75" PointY="320.125" />
+        <EntityTypeShape EntityType="FDIModel.System_Tag" Width="1.5" PointX="45.75" PointY="321.625" />
         <EntityTypeShape EntityType="FDIModel.TemplateDocument" Width="1.5" PointX="6.75" PointY="19.75" />
-        <EntityTypeShape EntityType="FDIModel.Therapy_History" Width="1.5" PointX="17.25" PointY="327.5" />
+        <EntityTypeShape EntityType="FDIModel.Therapy_History" Width="1.5" PointX="23.25" PointY="231.875" />
         <EntityTypeShape EntityType="FDIModel.TM_Answer" Width="1.5" PointX="8.75" PointY="19.75" />
         <EntityTypeShape EntityType="FDIModel.TM_CategoryAnswer" Width="1.5" PointX="10.75" PointY="19.75" />
-        <EntityTypeShape EntityType="FDIModel.TM_Customer" Width="1.5" PointX="22.5" PointY="270" />
-        <EntityTypeShape EntityType="FDIModel.TM_Module_Rating" Width="1.5" PointX="24.75" PointY="293.5" />
-        <EntityTypeShape EntityType="FDIModel.TM_News_Comment" Width="1.5" PointX="35.25" PointY="347.375" />
-        <EntityTypeShape EntityType="FDIModel.TM_Products_Comment" Width="1.5" PointX="21.75" PointY="298.625" />
-        <EntityTypeShape EntityType="FDIModel.TM_Rate_Comment" Width="1.5" PointX="31" PointY="287.625" />
+        <EntityTypeShape EntityType="FDIModel.TM_Customer" Width="1.5" PointX="28.5" PointY="276.125" />
+        <EntityTypeShape EntityType="FDIModel.TM_Module_Rating" Width="1.5" PointX="27.75" PointY="288.625" />
+        <EntityTypeShape EntityType="FDIModel.TM_News_Comment" Width="1.5" PointX="43.25" PointY="338" />
+        <EntityTypeShape EntityType="FDIModel.TM_Products_Comment" Width="1.5" PointX="30.75" PointY="284.625" />
+        <EntityTypeShape EntityType="FDIModel.TM_Rate_Comment" Width="1.5" PointX="30" PointY="289.625" />
         <EntityTypeShape EntityType="FDIModel.TokenDevice" Width="1.5" PointX="12.75" PointY="19.75" />
         <EntityTypeShape EntityType="FDIModel.TokenOtp" Width="1.5" PointX="18.75" PointY="19.75" />
         <EntityTypeShape EntityType="FDIModel.TokenRefresh" Width="1.5" PointX="20.75" PointY="7.75" />
-        <EntityTypeShape EntityType="FDIModel.TotalProductToDay" Width="1.5" PointX="24" PointY="327" />
-        <EntityTypeShape EntityType="FDIModel.TotalStorageWare" Width="1.5" PointX="24" PointY="423.5" />
-        <EntityTypeShape EntityType="FDIModel.Type" Width="1.5" PointX="9.75" PointY="270.5" />
-        <EntityTypeShape EntityType="FDIModel.User_ModuleActive" Width="1.5" PointX="35" PointY="389.375" />
+        <EntityTypeShape EntityType="FDIModel.TotalProductToDay" Width="1.5" PointX="36" PointY="316.75" />
+        <EntityTypeShape EntityType="FDIModel.TotalStorageWare" Width="1.5" PointX="33" PointY="417.375" />
+        <EntityTypeShape EntityType="FDIModel.Type" Width="1.5" PointX="15.75" PointY="263.875" />
+        <EntityTypeShape EntityType="FDIModel.User_ModuleActive" Width="1.5" PointX="39" PointY="379.125" />
         <EntityTypeShape EntityType="FDIModel.UserProfile" Width="1.5" PointX="15" PointY="0.875" />
         <EntityTypeShape EntityType="FDIModel.Vote_Type" Width="1.5" PointX="20.75" PointY="10.75" />
-        <EntityTypeShape EntityType="FDIModel.Wallet_Agency" Width="1.5" PointX="36.75" PointY="260.5" />
-        <EntityTypeShape EntityType="FDIModel.WalletCustomer" Width="1.5" PointX="17.25" PointY="334.375" />
-        <EntityTypeShape EntityType="FDIModel.WalletOrder_History" Width="1.5" PointX="33.75" PointY="274.25" />
-        <EntityTypeShape EntityType="FDIModel.Wallet" Width="1.5" PointX="17.25" PointY="238.75" />
-        <EntityTypeShape EntityType="FDIModel.Ward" Width="1.5" PointX="18" PointY="265" />
+        <EntityTypeShape EntityType="FDIModel.Wallet_Agency" Width="1.5" PointX="43.75" PointY="253.25" />
+        <EntityTypeShape EntityType="FDIModel.WalletCustomer" Width="1.5" PointX="23.25" PointY="321.75" />
+        <EntityTypeShape EntityType="FDIModel.WalletOrder_History" Width="1.5" PointX="38.75" PointY="271.25" />
+        <EntityTypeShape EntityType="FDIModel.Wallet" Width="1.5" PointX="23.25" PointY="344.75" />
+        <EntityTypeShape EntityType="FDIModel.Ward" Width="1.5" PointX="21" PointY="239" />
         <EntityTypeShape EntityType="FDIModel.webpages_Membership" Width="1.5" PointX="20.75" PointY="14.75" />
         <EntityTypeShape EntityType="FDIModel.webpages_OAuthMembership" Width="1.5" PointX="20.75" PointY="18.75" />
         <EntityTypeShape EntityType="FDIModel.webpages_Roles" Width="1.5" PointX="12.75" PointY="0.875" />
@@ -421,6 +422,7 @@
         <AssociationConnector Association="FDIModel.FK_Shop_Order_Details_Customer" />
         <AssociationConnector Association="FDIModel.FK_Shop_Orders_Customer" />
         <AssociationConnector Association="FDIModel.FK_Shop_Product_Customer1" />
+        <AssociationConnector Association="FDIModel.FK_SMS_Customer" />
         <AssociationConnector Association="FDIModel.FK_Therapy_History_Customer" />
         <AssociationConnector Association="FDIModel.FK_WalletCustomer_Customer" />
         <AssociationConnector Association="FDIModel.FK_WalletOrder_History_Customer" />

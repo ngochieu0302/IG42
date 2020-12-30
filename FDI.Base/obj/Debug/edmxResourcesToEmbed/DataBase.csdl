@@ -227,6 +227,7 @@
     <EntitySet Name="Shop_Product_Type" EntityType="FDIModel.Shop_Product_Type" />
     <EntitySet Name="Shop_Product_Value" EntityType="FDIModel.Shop_Product_Value" />
     <EntitySet Name="Sizes" EntityType="FDIModel.Size" />
+    <EntitySet Name="SMS" EntityType="FDIModel.SM" />
     <EntitySet Name="Sources" EntityType="FDIModel.Source" />
     <EntitySet Name="Source_Video" EntityType="FDIModel.Source_Video" />
     <EntitySet Name="ST_Group" EntityType="FDIModel.ST_Group" />
@@ -791,6 +792,10 @@
     <AssociationSet Name="FK_Shop_Product_Customer1" Association="FDIModel.FK_Shop_Product_Customer1">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="Shop_Product" EntitySet="Shop_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMS_Customer" Association="FDIModel.FK_SMS_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="SM" EntitySet="SMS" />
     </AssociationSet>
     <AssociationSet Name="FK_Therapy_History_Customer" Association="FDIModel.FK_Therapy_History_Customer">
       <End Role="Customer" EntitySet="Customers" />
@@ -3695,6 +3700,7 @@
     <Property Name="IsPrestige" Type="Boolean" Nullable="false" />
     <Property Name="AvatarUrl" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="idUserZalo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CashOutWallets" Relationship="FDIModel.FK_CashOutWallet_Customer" FromRole="Customer" ToRole="CashOutWallet" />
     <NavigationProperty Name="CookieLogins" Relationship="FDIModel.FK_CookieLogin_Customer" FromRole="Customer" ToRole="CookieLogin" />
     <NavigationProperty Name="StorageWarehousings" Relationship="FDIModel.FK__StorageWa__Custo__0C5C8C72" FromRole="Customer" ToRole="StorageWarehousing" />
@@ -3723,6 +3729,7 @@
     <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Customer" ToRole="Shop_Order_Details" />
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Customer" ToRole="Shop_Orders" />
     <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
+    <NavigationProperty Name="SMS" Relationship="FDIModel.FK_SMS_Customer" FromRole="Customer" ToRole="SM" />
     <NavigationProperty Name="Therapy_History" Relationship="FDIModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
     <NavigationProperty Name="WalletCustomers" Relationship="FDIModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
     <NavigationProperty Name="WalletOrder_History" Relationship="FDIModel.FK_WalletOrder_History_Customer" FromRole="Customer" ToRole="WalletOrder_History" />
@@ -3905,7 +3912,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CustomerId" Type="Int32" />
     <Property Name="CustomerName" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
@@ -7046,6 +7053,21 @@
     <Property Name="IsShow" Type="Boolean" />
     <Property Name="LanguageId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="SM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="AgencyID" Type="Int32" />
+    <Property Name="IsShow" Type="Boolean" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DateUpdated" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_SMS_Customer" FromRole="SM" ToRole="Customer" />
+  </EntityType>
   <EntityType Name="Source">
     <Key>
       <PropertyRef Name="ID" />
@@ -9549,6 +9571,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Shop_Product">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMS_Customer">
+    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="FDIModel.SM" Role="SM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SM">
         <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>

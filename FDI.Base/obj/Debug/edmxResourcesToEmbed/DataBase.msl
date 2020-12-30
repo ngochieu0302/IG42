@@ -711,6 +711,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="FDIModel.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="idUserZalo" ColumnName="idUserZalo" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
           <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
@@ -3625,6 +3626,21 @@
           <ScalarProperty Name="IsShow" ColumnName="IsShow" />
           <ScalarProperty Name="Sort" ColumnName="Sort" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMS">
+      <EntityTypeMapping TypeName="FDIModel.SM">
+        <MappingFragment StoreEntitySet="SMS">
+          <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="AgencyID" ColumnName="AgencyID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
