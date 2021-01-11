@@ -205,3 +205,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\obj\Debug\FDI.Utils.csproj.CoreCompileI
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\obj\Debug\FDI.Utils.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\obj\Debug\FDI.Utils.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\obj\Debug\FDI.Utils.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\bin\Debug\Newtonsoft.Json.xml

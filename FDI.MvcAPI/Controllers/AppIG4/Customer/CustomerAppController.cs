@@ -604,7 +604,6 @@ namespace FDI.MvcAPI.Controllers
             if (item == null)
             {
                 return Json(new JsonMessage(1000, "Địa chỉ không tồn tại"), JsonRequestBehavior.AllowGet);
-
             }
 
             if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))

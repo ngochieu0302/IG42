@@ -239,3 +239,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
