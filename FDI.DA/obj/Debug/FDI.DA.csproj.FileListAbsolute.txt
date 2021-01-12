@@ -233,10 +233,13 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\EPPlus.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\log4net.xml
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.pdb
+<<<<<<< HEAD
 C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
+=======
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
+>>>>>>> 28c616013aa1d46fb6e9cc7a72c4078254d7e51f

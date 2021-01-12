@@ -159,7 +159,6 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\FDI.CORE.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\FDI.CORE.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\EntityFramework.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\EntityFramework.SqlServer.dll
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\FDI.Base.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\HtmlAgilityPack.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\Microsoft.Web.Infrastructure.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.Helpers.dll
@@ -168,8 +167,6 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.Razor.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.dll
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\FDI.Base.pdb
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\FDI.Base.dll.config
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\EntityFramework.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\EntityFramework.SqlServer.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\HtmlAgilityPack.pdb
