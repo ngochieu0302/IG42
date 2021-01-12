@@ -19,6 +19,7 @@ namespace FDI.Base
         {
             this.Advertisings = new HashSet<Advertising>();
             this.Categories = new HashSet<Category>();
+            this.Customers = new HashSet<Customer>();
             this.Customer_Type = new HashSet<Customer_Type>();
             this.DN_Combo = new HashSet<DN_Combo>();
             this.Gallery_Video = new HashSet<Gallery_Video>();
@@ -34,6 +35,7 @@ namespace FDI.Base
             this.Sources = new HashSet<Source>();
             this.System_FileType = new HashSet<System_FileType>();
             this.CustomerRatings = new HashSet<CustomerRating>();
+            this.DN_Agency = new HashSet<DN_Agency>();
             this.ProductRatings = new HashSet<ProductRating>();
             this.Shop_Product_Detail2 = new HashSet<Shop_Product_Detail>();
         }
@@ -58,6 +60,8 @@ namespace FDI.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }
         public virtual Category Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Type> Customer_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -88,6 +92,8 @@ namespace FDI.Base
         public virtual ICollection<System_FileType> System_FileType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerRating> CustomerRatings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DN_Agency> DN_Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductRating> ProductRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

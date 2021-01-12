@@ -555,3 +555,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csproj.CopyComple
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\bin\ZaloDotNetSDK.dll
+C:\IG4\CodeIG4\IG4\FDI.MvcAPI\bin\ZaloDotNetSDK.dll

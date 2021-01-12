@@ -619,13 +619,11 @@ warning 6002: The table/view 'NNIG4.dbo.AspNetUserRoles' does not have a primary
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="Phone" Type="varchar" MaxLength="15" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="ConfigExchange">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="250" />
     <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Point" Type="decimal" Precision="18" Scale="2" />
@@ -636,6 +634,12 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="PriceSearch" Type="decimal" Precision="18" Scale="0" />
     <Property Name="DiscountOrder" Type="decimal" Precision="18" Scale="0" />
     <Property Name="FeeShip" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Profit" Type="int" />
+    <Property Name="DiscountCTV" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountQR" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountSale" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ProfitSouce" Type="int" />
+    <Property Name="DiscountSouce" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="ContactOrder_BedDesk">
     <Key>
@@ -750,10 +754,10 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="Reward" Type="decimal" Precision="18" Scale="4" />
     <Property Name="AgencyID" Type="int" />
     <Property Name="QRCode" Type="varchar" MaxLength="50" />
-    <Property Name="Latitude" Type="bigint" />
-    <Property Name="Longitude" Type="bigint" />
-    <Property Name="LatitudeBuyRecently" Type="bigint" />
-    <Property Name="LongitudeBuyRecently" Type="bigint" />
+    <Property Name="Latitude" Type="float" />
+    <Property Name="Longitude" Type="float" />
+    <Property Name="LatitudeBuyRecently" Type="float" />
+    <Property Name="LongitudeBuyRecently" Type="float" />
     <Property Name="AddressBuyRecently" Type="nvarchar" MaxLength="1024" />
     <Property Name="Mobile" Type="varchar" MaxLength="50" />
     <Property Name="Type" Type="int" />
@@ -920,6 +924,7 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="Name" Type="nvarchar" MaxLength="150" />
     <Property Name="Value" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
+    <Property Name="Percent" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="CustomerAddress">
     <Key>
@@ -1044,6 +1049,8 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="Company" Type="nvarchar" MaxLength="350" />
     <Property Name="MST" Type="varchar" MaxLength="50" />
     <Property Name="STK" Type="varchar" MaxLength="50" />
+    <Property Name="FullnameBank" Type="nvarchar" MaxLength="250" />
+    <Property Name="Branchname" Type="nvarchar" MaxLength="250" />
     <Property Name="BankName" Type="nvarchar" MaxLength="250" />
     <Property Name="CreateDate" Type="decimal" Precision="18" Scale="4" />
     <Property Name="DateStart" Type="decimal" Precision="18" Scale="4" />
@@ -1065,6 +1072,13 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="CashOut" Type="decimal" Precision="18" Scale="0" />
     <Property Name="MarketID" Type="int" />
     <Property Name="IsFdi" Type="bit" />
+    <Property Name="ParentID" Type="int" />
+    <Property Name="ListID" Type="varchar" MaxLength="350" />
+    <Property Name="Level" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="TokenDevice" Type="varchar" MaxLength="250" />
+    <Property Name="AvatarUrl" Type="nvarchar" MaxLength="250" />
+    <Property Name="ImageTimeline" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="DN_AttributeDynamic">
     <Key>
@@ -2385,6 +2399,14 @@ warning 6002: The table/view 'NNIG4.dbo.ConfigExchange' does not have a primary 
     <Property Name="IdModule" Type="int" />
     <Property Name="LanguageId" Type="varchar" MaxLength="50" />
     <Property Name="IdCopy" Type="int" />
+  </EntityType>
+  <EntityType Name="ImagesVerify_Account">
+    <Key>
+      <PropertyRef Name="AgencyID" />
+      <PropertyRef Name="PictureID" />
+    </Key>
+    <Property Name="AgencyID" Type="int" Nullable="false" />
+    <Property Name="PictureID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Languages">
     <Key>
@@ -6276,6 +6298,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Customer_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="PictureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Customer_History_Customer_Action">
     <End Role="Customer_Action" Type="Self.Customer_Action" Multiplicity="0..1" />
     <End Role="Customer_History" Type="Self.Customer_History" Multiplicity="*" />
@@ -8257,6 +8291,30 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Principal>
       <Dependent Role="HtmlMap">
         <PropertyRef Name="IdModule" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImagesVerify_Account_DN_Agency">
+    <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="1" />
+    <End Role="ImagesVerify_Account" Type="Self.ImagesVerify_Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DN_Agency">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ImagesVerify_Account">
+        <PropertyRef Name="AgencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImagesVerify_Account_Gallery_Picture">
+    <End Role="Gallery_Picture" Type="Self.Gallery_Picture" Multiplicity="1" />
+    <End Role="ImagesVerify_Account" Type="Self.ImagesVerify_Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ImagesVerify_Account">
+        <PropertyRef Name="PictureID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -11507,6 +11565,7 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     <EntitySet Name="CategoryControls" EntityType="Self.CategoryControls" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comment_Like" EntityType="Self.Comment_Like" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConfigExchange" EntityType="Self.ConfigExchange" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContactOrder_BedDesk" EntityType="Self.ContactOrder_BedDesk" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContentVote_Map" EntityType="Self.ContentVote_Map" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ControlValues" EntityType="Self.ControlValues" Schema="dbo" store:Type="Tables" />
@@ -11635,6 +11694,7 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HtmlContent" EntityType="Self.HtmlContent" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HtmlMap" EntityType="Self.HtmlMap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImagesVerify_Account" EntityType="Self.ImagesVerify_Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LevelVote" EntityType="Self.LevelVote" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LinkWebsite" EntityType="Self.LinkWebsite" Schema="dbo" store:Type="Tables" />
@@ -11782,21 +11842,6 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
 [AspNetUserRoles].[UserId] AS [UserId], 
 [AspNetUserRoles].[RoleId] AS [RoleId]
 FROM [dbo].[AspNetUserRoles] AS [AspNetUserRoles]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="ConfigExchange" EntityType="Self.ConfigExchange" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-[ConfigExchange].[ID] AS [ID], 
-[ConfigExchange].[Name] AS [Name], 
-[ConfigExchange].[Price] AS [Price], 
-[ConfigExchange].[Point] AS [Point], 
-[ConfigExchange].[DateStart] AS [DateStart], 
-[ConfigExchange].[DateEnd] AS [DateEnd], 
-[ConfigExchange].[IsActive] AS [IsActive], 
-[ConfigExchange].[Percent] AS [Percent], 
-[ConfigExchange].[PriceSearch] AS [PriceSearch], 
-[ConfigExchange].[DiscountOrder] AS [DiscountOrder], 
-[ConfigExchange].[FeeShip] AS [FeeShip]
-FROM [dbo].[ConfigExchange] AS [ConfigExchange]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="module_aspnetroles_core" EntityType="Self.module_aspnetroles_core" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -12485,6 +12530,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
       <End Role="DN_Card" EntitySet="DN_Card" />
       <End Role="Customer" EntitySet="Customer" />
     </AssociationSet>
+    <AssociationSet Name="FK_Customer_Gallery_Picture" Association="Self.FK_Customer_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
     <AssociationSet Name="FK_Customer_History_Customer_Action" Association="Self.FK_Customer_History_Customer_Action">
       <End Role="Customer_Action" EntitySet="Customer_Action" />
       <End Role="Customer_History" EntitySet="Customer_History" />
@@ -13132,6 +13181,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     <AssociationSet Name="FK_HtmlMap_ModuleControl" Association="Self.FK_HtmlMap_ModuleControl">
       <End Role="ModuleControl" EntitySet="ModuleControl" />
       <End Role="HtmlMap" EntitySet="HtmlMap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImagesVerify_Account_DN_Agency" Association="Self.FK_ImagesVerify_Account_DN_Agency">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
+      <End Role="ImagesVerify_Account" EntitySet="ImagesVerify_Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImagesVerify_Account_Gallery_Picture" Association="Self.FK_ImagesVerify_Account_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
+      <End Role="ImagesVerify_Account" EntitySet="ImagesVerify_Account" />
     </AssociationSet>
     <AssociationSet Name="FK_Job_JobFile_Job_Job" Association="Self.FK_Job_JobFile_Job_Job">
       <End Role="News_Job" EntitySet="News_Job" />

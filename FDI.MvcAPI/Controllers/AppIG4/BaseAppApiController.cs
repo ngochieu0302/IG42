@@ -25,6 +25,7 @@ namespace FDI.MvcAPI.Controllers
     {
         readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA("#");
         readonly RewardHistoryDA _rewardHistoryDa = new RewardHistoryDA("#");
+        public static int Type = 1;
         readonly OrderAppIG4DA _orderDa = new OrderAppIG4DA("#");
         protected override void OnException(ExceptionContext filterContext)
         {
@@ -53,13 +54,13 @@ namespace FDI.MvcAPI.Controllers
             {
                 data = new object();
             }
-            var json = JsonConvert.SerializeObject(data);
+            var json = new JavaScriptSerializer().Serialize(data);
             var postdata = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, postdata);
             if (response.IsSuccessStatusCode)
             {
                 var datas = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(datas);
+                return new JavaScriptSerializer().Deserialize<T>(datas);
             }
             return default(T);
         }
@@ -96,142 +97,195 @@ namespace FDI.MvcAPI.Controllers
                 throw new Exception("longitude missing");
             }
         }
-        public void InsertRewardCustomer(int parentId, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0)
+        public void InsertRewardCustomer(string lstId, int parentId, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
         {
             var now = DateTime.Now.TotalSeconds();
-            if (type == 2)
-            {
-                // chinh sach them cho don hang ban tu kho.
-                var customer = _customerDa.GetItemByID(idkho);
-                var bonusItem = bonusItems.FirstOrDefault(m => m.ID == 1);
-                if (bonusItem != null)
-                {
-                    var reward = new RewardHistory
-                    {
-                        Price = (totalprice ?? 0) * (bonusItem.Percent / 100),
-                        CustomerID = customer.ID,
-                        Date = now,
-                        OrderID = OrderId,
-                        Type = (int)Reward.Kho,
-                        BonusTypeId = 1,
-                        Percent = bonusItem.Percent,
-                        IsDeleted = false,
-                        IsActive = true,
-                        AgencyId = 1006,
-                        TotalCp = totalprice,
-                    };
-                    _rewardHistoryDa.Add(reward);
-                    var shopsucess = _orderDa.GetNotifyById(9);
-                    var tokenshop = customer.tokenDevice;
-                    Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
-                }
-                var listcustomer = _customerDa.GetItemByID(parentId);
-                var bonusItemparent = bonusItems.FirstOrDefault(m => m.ID == 2);
-                if (bonusItemparent != null)
-                {
-                    var reward = new RewardHistory
-                    {
-                        Price = (totalprice ?? 0) * (bonusItemparent.Percent / 100),
-                        CustomerID = listcustomer.ID,
-                        Date = now,
-                        OrderID = OrderId,
-                        Type = (int)Reward.Kho,
-                        BonusTypeId = 2,
-                        Percent = bonusItemparent.Percent,
-                        IsDeleted = false,
-                        IsActive = true,
-                        AgencyId = 1006,
-                        TotalCp = totalprice,
-                    };
-                    _rewardHistoryDa.Add(reward);
-                    var shopsucess = _orderDa.GetNotifyById(9);
-                    var tokenshop = listcustomer.tokenDevice;
-                    Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
-                }
-                var bonusItemroot = bonusItems.FirstOrDefault(m => m.ID == 3);
-                if (bonusItemroot != null)
-                {
-                    var reward = new RewardHistory
-                    {
-                        Price = (totalprice ?? 0) * (bonusItemroot.Percent / 100),
-                        CustomerID = 1,
-                        Date = now,
-                        OrderID = OrderId,
-                        Type = (int)Reward.Kho,
-                        BonusTypeId = 3,
-                        Percent = bonusItemroot.Percent,
-                        IsDeleted = false,
-                        IsActive = true,
-                        AgencyId = 1006,
-                        TotalCp = totalprice,
-                    };
-                    _rewardHistoryDa.Add(reward);
-                    //var shopsucess = _orderDa.GetNotifyById(9);
-                    //var tokenshop = root.tokenDevice;
-                    //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
-                }
-                _rewardHistoryDa.Save();
-            }
-            else
-            {
-                //ltsArrId = ltsArrId.Take(10).ToList();
-                //var listcustomer = _customerDa.GetListCustomerListID(ltsArrId);
-                //var i = 1;
-                //foreach (var item in listcustomer)
-                //{
-                //    if (i <= bonusItems.Count)
-                //    {
-                //        if (item.LevelAdd >= i)
-                //        {
-                //            var bonusItem = bonusItems.FirstOrDefault(m => m.ID == i);
-                //            if (bonusItem != null)
-                //            {
-                //                var reward = new RewardHistory
-                //                {
-                //                    Price = totalprice * (bonusItem.Percent / 100),
-                //                    CustomerID = item.ID,
-                //                    Date = now,
-                //                    OrderID = OrderId,
-                //                    Type = (int)Reward.Cus,
-                //                    BonusTypeId = i,
-                //                    Percent = bonusItem.Percent,
-                //                    IsDeleted = false,
-                //                    IsActive = true,
-                //                    AgencyId = 1006,
-                //                    TotalCp = totalprice,
-                //                };
-                //                _rewardHistoryDa.Add(reward);
-                //                var cus = _customerDa.GetItemByID(item.ID);
-                //                var shopsucess = _orderDa.GetNotifyById(6);
-                //                var tokenshop = cus.tokenDevice;
-                //                Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
-                //            }
-                //        }
-                //    }
-                //    i++;
-                //}
+            //hoa hong cho shop ky gui
+            //if (type == 2)
+            //{
+            //    // chinh sach them cho don hang ban tu kho.
+            //    var customer = _customerDa.GetItemByID(idkho);
+            //    var bonusItem = bonusItems.FirstOrDefault(m => m.ID == 1);
+            //    if (bonusItem != null)
+            //    {
+            //        var reward = new RewardHistory
+            //        {
+            //            Price = (totalprice ?? 0) * (bonusItem.Percent / 100),
+            //            CustomerID = customer.ID,
+            //            Date = now,
+            //            OrderID = OrderId,
+            //            Type = (int)Reward.Kho,
+            //            BonusTypeId = 1,
+            //            Percent = bonusItem.Percent,
+            //            IsDeleted = false,
+            //            IsActive = true,
+            //            AgencyId = 1006,
+            //            TotalCp = totalprice,
+            //        };
+            //        _rewardHistoryDa.Add(reward);
+            //        var shopsucess = _orderDa.GetNotifyById(9);
+            //        var tokenshop = customer.tokenDevice;
+            //        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
+            //    }
+            //    var listcustomer = _customerDa.GetItemByID(parentId);
+            //    var bonusItemparent = bonusItems.FirstOrDefault(m => m.ID == 2);
+            //    if (bonusItemparent != null)
+            //    {
+            //        var reward = new RewardHistory
+            //        {
+            //            Price = (totalprice ?? 0) * (bonusItemparent.Percent / 100),
+            //            CustomerID = listcustomer.ID,
+            //            Date = now,
+            //            OrderID = OrderId,
+            //            Type = (int)Reward.Kho,
+            //            BonusTypeId = 2,
+            //            Percent = bonusItemparent.Percent,
+            //            IsDeleted = false,
+            //            IsActive = true,
+            //            AgencyId = 1006,
+            //            TotalCp = totalprice,
+            //        };
+            //        _rewardHistoryDa.Add(reward);
+            //        var shopsucess = _orderDa.GetNotifyById(9);
+            //        var tokenshop = listcustomer.tokenDevice;
+            //        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
+            //    }
+            //    var bonusItemroot = bonusItems.FirstOrDefault(m => m.ID == 3);
+            //    if (bonusItemroot != null)
+            //    {
+            //        var reward = new RewardHistory
+            //        {
+            //            Price = (totalprice ?? 0) * (bonusItemroot.Percent / 100),
+            //            CustomerID = 1,
+            //            Date = now,
+            //            OrderID = OrderId,
+            //            Type = (int)Reward.Kho,
+            //            BonusTypeId = 3,
+            //            Percent = bonusItemroot.Percent,
+            //            IsDeleted = false,
+            //            IsActive = true,
+            //            AgencyId = 1006,
+            //            TotalCp = totalprice,
+            //        };
+            //        _rewardHistoryDa.Add(reward);
+            //        //var shopsucess = _orderDa.GetNotifyById(9);
+            //        //var tokenshop = root.tokenDevice;
+            //        //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money()), tokenshop);
+            //    }
+            //    _rewardHistoryDa.Save();
+            //}
+            //else
+            //{
+            var totalD = totalprice * discountKH / 100;
+            var ltsArrId = FDIUtils.StringToListInt(lstId);
+            ltsArrId = ltsArrId.Take(bonusItems.Count).ToList();
+            var listcustomer = _customerDa.GetListCustomerListID(ltsArrId);
 
-                var config = _walletCustomerDa.GetConfig();
-                var reward = new RewardHistory
+            var i = 1;
+            foreach (var item in listcustomer)
+            {
+                if (i <= bonusItems.Count)
                 {
-                    Price = (totalprice ?? 0) * config.DiscountOrder / 100,
-                    CustomerID = 1,
-                    Date = now,
-                    OrderID = OrderId,
-                    Type = (int)Reward.Cus,
-                    //BonusTypeId = i,
-                    Percent = config.DiscountOrder,
-                    IsDeleted = false,
-                    IsActive = true,
-                    AgencyId = 1006,
-                    TotalCp = totalprice,
-                };
-                _rewardHistoryDa.Add(reward);
-                _rewardHistoryDa.Save();
+                    //if (item.LevelAdd >= i)
+                    //{
+                        var bonusItem = bonusItems.FirstOrDefault(m => m.ID == i);
+                        if (bonusItem != null)
+                        {
+                            var reward = new RewardHistory
+                            {
+                                Price = totalprice * (bonusItem.Percent / 100),
+                                CustomerID = item.ID,
+                                Date = now,
+                                OrderID = OrderId,
+                                Type = (int)Reward.Cus,
+                                BonusTypeId = i,
+                                Percent = bonusItem.Percent,
+                                IsDeleted = false,
+                                IsActive = true,
+                                AgencyId = 1006,
+                                TotalCp = totalprice,
+                            };
+                            _rewardHistoryDa.Add(reward);
+                            var cus = _customerDa.GetItemByID(item.ID);
+                            var shopsucess = _orderDa.GetNotifyById(6);
+                            var tokenshop = cus.tokenDevice;
+                            Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                        }
+                    //}
+                }
+                i++;
             }
+
+
+            //}
+            var config = _walletCustomerDa.GetConfig();
+            // % chiết khấu cho công ty
+            var reward1 = new RewardHistory
+            {
+                Price = (totalprice ?? 0) * config.DiscountOrder / 100,
+                CustomerID = 1,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.Cus,
+                //BonusTypeId = i,
+                Percent = config.DiscountOrder,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = 1006,
+                TotalCp = totalprice,
+            };
+            _rewardHistoryDa.Add(reward1);
+            // % chiết khấu cho mã QR truy xuất nguồn gốc
+            var reward2 = new RewardHistory
+            {
+                Price = (totalprice ?? 0) * config.DiscountQR / 100,
+                CustomerID = 1,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.QR,
+                //BonusTypeId = i,
+                Percent = config.DiscountQR,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = 1006,
+                TotalCp = totalprice,
+            };
+            _rewardHistoryDa.Add(reward2);
+            // % chiết khấu cho quỹ khuyến mãi KH
+            var reward3 = new RewardHistory
+            {
+                Price = (totalprice ?? 0) * config.DiscountSale / 100,
+                CustomerID = 1,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.Sale,
+                //BonusTypeId = i,
+                Percent = config.DiscountSale,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = 1006,
+                TotalCp = totalprice,
+            };
+            // % phát triển cty
+            var reward4 = new RewardHistory
+            {
+                Price = (totalprice ?? 0) * (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV) / 100,
+                CustomerID = 1,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.Depvelop,
+                //BonusTypeId = i,
+                Percent = (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV),
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = 1006,
+                TotalCp = totalprice,
+            };
+            _rewardHistoryDa.Add(reward4);
+            _rewardHistoryDa.Save();
         }
 
-        public string Pushnotifycation(string title, string content, string token,string type ="1")
+        public string Pushnotifycation(string title, string content, string token, string type = "1")
         {
             if (!string.IsNullOrEmpty(token))
             {

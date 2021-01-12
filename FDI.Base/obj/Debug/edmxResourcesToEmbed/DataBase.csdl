@@ -849,6 +849,7 @@
     <EntitySet Name="CategoryControls" EntityType="FDIModel.CategoryControl" />
     <EntitySet Name="Comment_Like" EntityType="FDIModel.Comment_Like" />
     <EntitySet Name="Companies" EntityType="FDIModel.Company" />
+    <EntitySet Name="ConfigExchanges" EntityType="FDIModel.ConfigExchange" />
     <EntitySet Name="ControlValues" EntityType="FDIModel.ControlValue" />
     <EntitySet Name="CookieLogins" EntityType="FDIModel.CookieLogin" />
     <EntitySet Name="Cost_Product" EntityType="FDIModel.Cost_Product" />
@@ -1081,7 +1082,6 @@
     <EntitySet Name="webpages_Membership" EntityType="FDIModel.webpages_Membership" />
     <EntitySet Name="webpages_OAuthMembership" EntityType="FDIModel.webpages_OAuthMembership" />
     <EntitySet Name="webpages_Roles" EntityType="FDIModel.webpages_Roles" />
-    <EntitySet Name="ConfigExchanges" EntityType="FDIModel.ConfigExchange" />
     <EntitySet Name="TempCustomers" EntityType="FDIModel.TempCustomer" />
     <EntitySet Name="TempShop_Product" EntityType="FDIModel.TempShop_Product" />
     <EntitySet Name="Customer_LastOrder" EntityType="FDIModel.Customer_LastOrder" />
@@ -1516,6 +1516,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Customer_DN_Card" Association="FDIModel.FK_Customer_DN_Card">
       <End Role="DN_Card" EntitySet="DN_Card" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Gallery_Picture" Association="FDIModel.FK_Customer_Gallery_Picture">
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
       <End Role="Customer" EntitySet="Customers" />
     </AssociationSet>
     <AssociationSet Name="FK_Customer_Reward_Customer" Association="FDIModel.FK_Customer_Reward_Customer">
@@ -2757,6 +2761,10 @@
     <AssociationSet Name="Group_Module" Association="FDIModel.Group_Module">
       <End Role="DN_Module" EntitySet="DN_Module" />
       <End Role="ST_Group" EntitySet="ST_Group" />
+    </AssociationSet>
+    <AssociationSet Name="ImagesVerify_Account" Association="FDIModel.ImagesVerify_Account">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
+      <End Role="Gallery_Picture" EntitySet="Gallery_Picture" />
     </AssociationSet>
     <AssociationSet Name="News_Category" Association="FDIModel.News_Category">
       <End Role="Category" EntitySet="Categories" />
@@ -4103,6 +4111,28 @@
     <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_Company_DN_Users" FromRole="Company" ToRole="DN_Users" />
     <NavigationProperty Name="P_Workshop" Relationship="FDIModel.FK_P_Workshop_Company" FromRole="Company" ToRole="P_Workshop" />
   </EntityType>
+  <EntityType Name="ConfigExchange">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Point" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DateStart" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Percent" Type="Int32" />
+    <Property Name="PriceSearch" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrder" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="FeeShip" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Profit" Type="Int32" />
+    <Property Name="DiscountCTV" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountQR" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountSale" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ProfitSouce" Type="Int32" />
+    <Property Name="DiscountSouce" Type="Decimal" Precision="18" Scale="0" />
+  </EntityType>
   <EntityType Name="ControlValue">
     <Key>
       <PropertyRef Name="ID" />
@@ -4215,10 +4245,10 @@
     <Property Name="Reward" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="AgencyID" Type="Int32" />
     <Property Name="QRCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Latitude" Type="Int64" />
-    <Property Name="Longitude" Type="Int64" />
-    <Property Name="LatitudeBuyRecently" Type="Int64" />
-    <Property Name="LongitudeBuyRecently" Type="Int64" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="LatitudeBuyRecently" Type="Double" />
+    <Property Name="LongitudeBuyRecently" Type="Double" />
     <Property Name="AddressBuyRecently" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
     <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Type" Type="Int32" />
@@ -4244,6 +4274,7 @@
     <NavigationProperty Name="Customer_Policy" Relationship="FDIModel.FK_Customer_Customer_Policy" FromRole="Customer" ToRole="Customer_Policy" />
     <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_Customer_DN_Agency" FromRole="Customer" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_Card" Relationship="FDIModel.FK_Customer_DN_Card" FromRole="Customer" ToRole="DN_Card" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="FDIModel.FK_Customer_Gallery_Picture" FromRole="Customer" ToRole="Gallery_Picture" />
     <NavigationProperty Name="Customer_Reward" Relationship="FDIModel.FK_Customer_Reward_Customer" FromRole="Customer" ToRole="Customer_Reward" />
     <NavigationProperty Name="System_District" Relationship="FDIModel.FK_Customer_System_District" FromRole="Customer" ToRole="System_District" />
     <NavigationProperty Name="CustomerAddresses" Relationship="FDIModel.FK_CustomerAddress_Customer" FromRole="Customer" ToRole="CustomerAddress" />
@@ -4441,6 +4472,7 @@
     <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Value" Type="Int32" />
     <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="Percent" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="Customer_Type" Relationship="FDIModel.FK_Customer_Type_Customer_TypeGroup" FromRole="Customer_TypeGroup" ToRole="Customer_Type" />
   </EntityType>
   <EntityType Name="CustomerAddress">
@@ -4568,6 +4600,8 @@
     <Property Name="Company" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
     <Property Name="MST" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="STK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FullnameBank" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Branchname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="BankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="CreateDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="DateStart" Type="Decimal" Precision="18" Scale="4" />
@@ -4589,6 +4623,13 @@
     <Property Name="CashOut" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="MarketID" Type="Int32" />
     <Property Name="IsFdi" Type="Boolean" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="ListID" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="AvatarUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Agency_Module" Relationship="FDIModel.FK_Agency_Module_DN_Agency" FromRole="DN_Agency" ToRole="Agency_Module" />
     <NavigationProperty Name="Areas" Relationship="FDIModel.FK_Area_DN_Agency" FromRole="DN_Agency" ToRole="Area" />
     <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Cate_Value_DN_Agency" FromRole="DN_Agency" ToRole="Cate_Value" />
@@ -4611,6 +4652,7 @@
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_DN_Agency" FromRole="DN_Agency" ToRole="Shop_Orders" />
     <NavigationProperty Name="StorageWarehousings" Relationship="FDIModel.FK_StorageWarehousing_DN_Agency" FromRole="DN_Agency" ToRole="StorageWarehousing" />
     <NavigationProperty Name="Wallet_Agency" Relationship="FDIModel.FK_Wallet_Agency_DN_Agency" FromRole="DN_Agency" ToRole="Wallet_Agency" />
+    <NavigationProperty Name="Gallery_Picture" Relationship="FDIModel.ImagesVerify_Account" FromRole="DN_Agency" ToRole="Gallery_Picture" />
   </EntityType>
   <EntityType Name="DN_AttributeDynamic">
     <Key>
@@ -6049,6 +6091,7 @@
     <NavigationProperty Name="Advertisings" Relationship="FDIModel.FK_Advertising_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Advertising" />
     <NavigationProperty Name="Categories" Relationship="FDIModel.FK_Category_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Category" />
     <NavigationProperty Name="Category" Relationship="FDIModel.FK_Gallery_Picture_Category" FromRole="Gallery_Picture" ToRole="Category" />
+    <NavigationProperty Name="Customers" Relationship="FDIModel.FK_Customer_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Customer" />
     <NavigationProperty Name="Customer_Type" Relationship="FDIModel.FK_Customer_Type_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Customer_Type" />
     <NavigationProperty Name="DN_Combo" Relationship="FDIModel.FK_DN_Combo_Gallery_Picture" FromRole="Gallery_Picture" ToRole="DN_Combo" />
     <NavigationProperty Name="Gallery_Video" Relationship="FDIModel.FK_Gallery_Video_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Gallery_Video" />
@@ -6064,6 +6107,7 @@
     <NavigationProperty Name="Sources" Relationship="FDIModel.FK_Source_Gallery_Picture" FromRole="Gallery_Picture" ToRole="Source" />
     <NavigationProperty Name="System_FileType" Relationship="FDIModel.FK_System_FileType_Gallery_Picture" FromRole="Gallery_Picture" ToRole="System_FileType" />
     <NavigationProperty Name="CustomerRatings" Relationship="FDIModel.CustomerRatingPicture" FromRole="Gallery_Picture" ToRole="CustomerRating" />
+    <NavigationProperty Name="DN_Agency" Relationship="FDIModel.ImagesVerify_Account" FromRole="Gallery_Picture" ToRole="DN_Agency" />
     <NavigationProperty Name="ProductRatings" Relationship="FDIModel.ProductRatingPicture" FromRole="Gallery_Picture" ToRole="ProductRating" />
     <NavigationProperty Name="Shop_Product_Detail2" Relationship="FDIModel.Shop_Product_Detail_Picture" FromRole="Gallery_Picture" ToRole="Shop_Product_Detail" />
   </EntityType>
@@ -8354,22 +8398,6 @@
     <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserProfiles" Relationship="FDIModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
   </EntityType>
-  <EntityType Name="ConfigExchange">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Point" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="DateStart" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="DateEnd" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="Percent" Type="Int32" />
-    <Property Name="PriceSearch" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="DiscountOrder" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="FeeShip" Type="Decimal" Precision="18" Scale="0" />
-  </EntityType>
   <EntityType Name="TempCustomer">
     <Key>
       <PropertyRef Name="ID" />
@@ -9865,6 +9893,18 @@
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="CardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Gallery_Picture">
+    <End Type="FDIModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="0..1" />
+    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery_Picture">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="PictureID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -13473,6 +13513,10 @@
   <Association Name="Group_Module">
     <End Type="FDIModel.DN_Module" Role="DN_Module" Multiplicity="*" />
     <End Type="FDIModel.ST_Group" Role="ST_Group" Multiplicity="*" />
+  </Association>
+  <Association Name="ImagesVerify_Account">
+    <End Type="FDIModel.DN_Agency" Role="DN_Agency" Multiplicity="*" />
+    <End Type="FDIModel.Gallery_Picture" Role="Gallery_Picture" Multiplicity="*" />
   </Association>
   <Association Name="News_Category">
     <End Type="FDIModel.Category" Role="Category" Multiplicity="*" />

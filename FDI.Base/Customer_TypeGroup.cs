@@ -24,6 +24,7 @@ namespace FDI.Base
         public string Name { get; set; }
         public Nullable<int> Value { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<decimal> Percent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Type> Customer_Type { get; set; }

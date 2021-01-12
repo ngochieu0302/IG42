@@ -555,3 +555,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\ZaloDotNetSDK.dll
+C:\IG4\CodeIG4\IG4\GAP.TEst\bin\Debug\ZaloDotNetSDK.dll

@@ -69,10 +69,10 @@ namespace FDI.Base
         public Nullable<decimal> Reward { get; set; }
         public Nullable<int> AgencyID { get; set; }
         public string QRCode { get; set; }
-        public Nullable<long> Latitude { get; set; }
-        public Nullable<long> Longitude { get; set; }
-        public Nullable<long> LatitudeBuyRecently { get; set; }
-        public Nullable<long> LongitudeBuyRecently { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public Nullable<double> Longitude { get; set; }
+        public Nullable<double> LatitudeBuyRecently { get; set; }
+        public Nullable<double> LongitudeBuyRecently { get; set; }
         public string AddressBuyRecently { get; set; }
         public string Mobile { get; set; }
         public Nullable<int> Type { get; set; }
@@ -103,6 +103,7 @@ namespace FDI.Base
         public virtual Customer_Policy Customer_Policy { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
         public virtual DN_Card DN_Card { get; set; }
+        public virtual Gallery_Picture Gallery_Picture { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Reward> Customer_Reward { get; set; }
         public virtual System_District System_District { get; set; }

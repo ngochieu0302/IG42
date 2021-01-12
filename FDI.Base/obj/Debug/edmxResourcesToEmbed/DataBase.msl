@@ -1504,6 +1504,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ConfigExchanges">
+      <EntityTypeMapping TypeName="FDIModel.ConfigExchange">
+        <MappingFragment StoreEntitySet="ConfigExchange">
+          <ScalarProperty Name="DiscountSouce" ColumnName="DiscountSouce" />
+          <ScalarProperty Name="ProfitSouce" ColumnName="ProfitSouce" />
+          <ScalarProperty Name="DiscountSale" ColumnName="DiscountSale" />
+          <ScalarProperty Name="DiscountQR" ColumnName="DiscountQR" />
+          <ScalarProperty Name="DiscountCTV" ColumnName="DiscountCTV" />
+          <ScalarProperty Name="Profit" ColumnName="Profit" />
+          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+          <ScalarProperty Name="DiscountOrder" ColumnName="DiscountOrder" />
+          <ScalarProperty Name="PriceSearch" ColumnName="PriceSearch" />
+          <ScalarProperty Name="Percent" ColumnName="Percent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ControlValues">
       <EntityTypeMapping TypeName="FDIModel.ControlValue">
         <MappingFragment StoreEntitySet="ControlValues">
@@ -1785,6 +1808,7 @@
     <EntitySetMapping Name="Customer_TypeGroup">
       <EntityTypeMapping TypeName="FDIModel.Customer_TypeGroup">
         <MappingFragment StoreEntitySet="Customer_TypeGroup">
+          <ScalarProperty Name="Percent" ColumnName="Percent" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Value" ColumnName="Value" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1900,6 +1924,13 @@
     <EntitySetMapping Name="DN_Agency">
       <EntityTypeMapping TypeName="FDIModel.DN_Agency">
         <MappingFragment StoreEntitySet="DN_Agency">
+          <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
+          <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
+          <ScalarProperty Name="TokenDevice" ColumnName="TokenDevice" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="ListID" ColumnName="ListID" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
           <ScalarProperty Name="IsFdi" ColumnName="IsFdi" />
           <ScalarProperty Name="MarketID" ColumnName="MarketID" />
           <ScalarProperty Name="CashOut" ColumnName="CashOut" />
@@ -1921,6 +1952,8 @@
           <ScalarProperty Name="DateStart" ColumnName="DateStart" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Branchname" ColumnName="Branchname" />
+          <ScalarProperty Name="FullnameBank" ColumnName="FullnameBank" />
           <ScalarProperty Name="STK" ColumnName="STK" />
           <ScalarProperty Name="MST" ColumnName="MST" />
           <ScalarProperty Name="Company" ColumnName="Company" />
@@ -5228,23 +5261,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ConfigExchanges">
-      <EntityTypeMapping TypeName="FDIModel.ConfigExchange">
-        <MappingFragment StoreEntitySet="ConfigExchange">
-          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
-          <ScalarProperty Name="DiscountOrder" ColumnName="DiscountOrder" />
-          <ScalarProperty Name="PriceSearch" ColumnName="PriceSearch" />
-          <ScalarProperty Name="Percent" ColumnName="Percent" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-          <ScalarProperty Name="Point" ColumnName="Point" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TempCustomers">
       <EntityTypeMapping TypeName="FDIModel.TempCustomer">
         <MappingFragment StoreEntitySet="TempCustomer">
@@ -5576,6 +5592,14 @@
       </EndProperty>
       <EndProperty Name="DN_Module">
         <ScalarProperty Name="ID" ColumnName="ModuleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ImagesVerify_Account" TypeName="FDIModel.ImagesVerify_Account" StoreEntitySet="ImagesVerify_Account">
+      <EndProperty Name="Gallery_Picture">
+        <ScalarProperty Name="ID" ColumnName="PictureID" />
+      </EndProperty>
+      <EndProperty Name="DN_Agency">
+        <ScalarProperty Name="ID" ColumnName="AgencyID" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="News_Category" TypeName="FDIModel.News_Category" StoreEntitySet="News_Category">

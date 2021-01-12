@@ -20,6 +20,8 @@ namespace FDI.Simple
         public string PasswordSalt { get; set; }
         public string Password { get; set; }
         public int? DistrictId { get; set; }
+        public int? AgencyID { get; set; }
+
         public int? CityId { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
@@ -59,6 +61,17 @@ namespace FDI.Simple
         public List<int> ListCateId1 { get; set; }
         public IEnumerable<CustomerAddressAppIG4Item> ListCustomerAddressItems { get; set; }
         public CustomerAddressAppIG4Item CustomerAddressItem { get; set; }
+        public string Bankname { get; set; }
+        public string Branchname { get; set; }
+        public string STK { get; set; }
+        public string FullnameBank { get; set; }
+        public int? Level { get; set; }
+        public decimal? PercentDiscount { get; set; }
+
+        public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
+
+
+
     }
 
     public class Customer1Item : BaseSimple

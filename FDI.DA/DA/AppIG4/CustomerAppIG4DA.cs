@@ -221,9 +221,9 @@ namespace FDI.DA
             var query = from c in FDIDB.Customers where c.idUserGoogle == idUserGoogle && c.IsDelete == false select c;
             return query.FirstOrDefault();
         }
-        public Customer GetByPhone(string phone)
+        public Customer GetByPhone(string phone,int type)
         {
-            var query = from c in FDIDB.Customers where c.Mobile == phone && c.IsDelete == false select c;
+            var query = from c in FDIDB.Customers where c.Mobile == phone && c.Type == type && c.IsDelete == false select c;
             return query.FirstOrDefault();
         }
         public bool CheckExitsByEmail(string email)
@@ -240,10 +240,10 @@ namespace FDI.DA
                          select c).Count();
             return query > 0;
         }
-        public bool CheckExitsByPhone(string phone)
+        public bool CheckExitsByPhone(string phone,int type)
         {
             var query = (from c in FDIDB.Customers
-                         where c.Mobile.Equals(phone) && c.IsDelete == false
+                         where c.Mobile.Equals(phone) && c.IsDelete == false && c.Type  == type
                          select c).Count();
             return query > 0;
         }
@@ -343,8 +343,10 @@ namespace FDI.DA
             query = query.Skip((page - 1) * take).Take(take);
             return query.ToList();
         }
-        public CustomerAppIG4Item GetItemByID(int id)
+        public CustomerAppIG4Item GetItemByID(int id,decimal discount = 60)
         {
+            var date = DateTime.Now.TotalSeconds();
+
             var query = from c in FDIDB.Customers
                         where c.ID == id
 
@@ -363,7 +365,7 @@ namespace FDI.DA
                             tokenDevice = c.TokenDevice,
                             Wallets = c.Customer_Reward.Sum(a => a.PriceReward - a.PriceReceive),
                             TotalWallets = c.Wallets.Sum(a=>a.WalletCus - a.CashOutWallet),
-
+                            PercentDiscount = c.Order_Package.Where(a => a.DateStart <= date && a.DateEnd > date).Select(a => a.Customer_Type.Customer_TypeGroup.Percent).FirstOrDefault() ?? discount
                         };
 
             return query.FirstOrDefault();

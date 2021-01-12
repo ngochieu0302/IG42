@@ -84,9 +84,10 @@ namespace FDI.Areas.Admin.Controllers
                         //model.Viewer = 0;
                         var membershipUser = Membership.GetUser();
                         //model.TitleAscii = FomatString.Slug(model.Title);
+
                         if (membershipUser != null)
                         {
-                            model.Author = (Guid)membershipUser.ProviderUserKey;
+                            model.Author = membershipUser.UserName;
                         }
                         model.DateCreated = !string.IsNullOrEmpty(datecreate) ? ConvertUtil.ToDateTime(datecreate) : DateTime.Now;
                         if (!string.IsNullOrEmpty(lstCate))

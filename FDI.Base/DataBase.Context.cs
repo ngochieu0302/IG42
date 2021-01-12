@@ -70,6 +70,7 @@ namespace FDI.Base
         public virtual DbSet<CategoryControl> CategoryControls { get; set; }
         public virtual DbSet<Comment_Like> Comment_Like { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<ConfigExchange> ConfigExchanges { get; set; }
         public virtual DbSet<ControlValue> ControlValues { get; set; }
         public virtual DbSet<CookieLogin> CookieLogins { get; set; }
         public virtual DbSet<Cost_Product> Cost_Product { get; set; }
@@ -302,7 +303,6 @@ namespace FDI.Base
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
         public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public virtual DbSet<ConfigExchange> ConfigExchanges { get; set; }
         public virtual DbSet<TempCustomer> TempCustomers { get; set; }
         public virtual DbSet<TempShop_Product> TempShop_Product { get; set; }
         public virtual DbSet<Customer_LastOrder> Customer_LastOrder { get; set; }

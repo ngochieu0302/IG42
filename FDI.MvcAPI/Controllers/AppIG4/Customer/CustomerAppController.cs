@@ -156,13 +156,15 @@ namespace FDI.MvcAPI.Controllers
         {
             try
             {
-                if (!customerDA.CheckExitsByPhone(phone))
+                if (!customerDA.CheckExitsByPhone(phone, Type))
                 {
                     customerDA.Add(new Base.Customer()
                     {
                         Mobile = phone,
                         IsDelete = false,
                         IsPrestige = false,
+                        // type = 1 la khach hang
+                        Type = 1,
                         DateCreated = DateTime.Now.TotalSeconds()
                     });
                     customerDA.Save();
@@ -446,7 +448,7 @@ namespace FDI.MvcAPI.Controllers
             }
             tokenOtpDA.UpdateIsUsed(token, phone);
             await tokenOtpDA.SaveAsync();
-            var customer = customerDA.GetByPhone(phone);
+            var customer = customerDA.GetByPhone(phone, Type);
             var key = Guid.NewGuid();
             IAuthContainerModel model = new JWTContainerModel()
             {
@@ -491,9 +493,9 @@ namespace FDI.MvcAPI.Controllers
             {
                 return Json(new JsonMessage(1000, "invalid token"));
             }
-            var phone = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "Phone").Value.ToString();
-            var id = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "ID").Value.ToString();
-            var key = Guid.Parse(JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "key").Value);
+            var phone = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "Phone")?.Value.ToString();
+            var id = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "ID")?.Value.ToString();
+            var key = Guid.Parse(JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "key")?.Value ?? throw new InvalidOperationException());
 
             var oldToke = customerDA.GetTokenByGuidId(key);
             if (oldToke == null)
@@ -549,7 +551,7 @@ namespace FDI.MvcAPI.Controllers
             if (data.IsDefault)
             {
                 customerAddressDA.ResetDefault(CustomerId);
-             }
+            }
 
             var item = new CustomerAddress()
             {
@@ -639,7 +641,6 @@ namespace FDI.MvcAPI.Controllers
             {
                 return Json(new JsonMessage(1000, "Not found"));
             }
-
             if (!string.IsNullOrEmpty(data.Mobile) && customerDA.CheckExitsByPhone(CustomerId, data.Mobile))
             {
                 return Json(new JsonMessage(1000, "Số điện thoại đã tồn tại"));
@@ -653,7 +654,7 @@ namespace FDI.MvcAPI.Controllers
             customer.Description = data.Description;
             customer.FullName = data.Fullname;
             customer.Mobile = data.Mobile;
-
+            customer.AgencyID = data.AgencyID ?? 1006;
             var file = Request.Files["fileAvatar"];
             if (file != null)
             {
@@ -661,7 +662,6 @@ namespace FDI.MvcAPI.Controllers
                 if (img.Code != 200)
                 {
                     return Json(new JsonMessage(1000, "Tải Avatar không thành công"));
-
                 }
                 customer.AvatarUrl = img.Data.Folder + img.Data.Url;
             }
@@ -672,7 +672,6 @@ namespace FDI.MvcAPI.Controllers
                 if (img.Code != 200)
                 {
                     return Json(new JsonMessage(1000, "Tải ảnh bìa không thành công"));
-
                 }
                 customer.ImageTimeline = img.Data.Folder + img.Data.Url;
             }
@@ -846,7 +845,7 @@ namespace FDI.MvcAPI.Controllers
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
+                    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
                 }
                 else
                 {
@@ -854,11 +853,11 @@ namespace FDI.MvcAPI.Controllers
                     decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
                     }
                     if (totalnopres > 0)
                     {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
+                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
                     }
                 }
                 // update level KH
@@ -868,7 +867,7 @@ namespace FDI.MvcAPI.Controllers
             {
                 var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(10);
-                
+
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title.Replace("{customer}", data.Customer.FullName), shopsucess.Content.Replace("{code}", data.Code), tokenshop, shopsucess.ID.ToString());
             }

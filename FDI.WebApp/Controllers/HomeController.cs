@@ -15,7 +15,7 @@ namespace FDI.Web.Controllers
         readonly SeoBL _selBL = new SeoBL();
 
         //readonly SEOCommon _seo = new SEOCommon();
-        [MinifyHtmlFilter] // nén nội dung html
+        //[MinifyHtmlFilter] // nén nội dung html
         public ActionResult Index(int? pageId, int cateId = 0, string slug = "home", string tag = "")
         {
             //var domain = Request.Url.Authority;

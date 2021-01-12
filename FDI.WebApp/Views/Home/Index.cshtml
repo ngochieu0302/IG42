@@ -12,19 +12,19 @@
     {
         if (Model.Page == null || Model.Page == 0)
         {
-        <title>@(Model.SeoTitle ?? "")</title>
-        <meta name="author" content="@(Model.SeoTitle ?? "")" />
-        <meta property="og:site_name" content="@(Model.SeoTitle ?? "")" />
-        <meta property="og:title" content="@Model.SeoTitle" />
-        <meta name="copyright" content="@(Model.SeoTitle ?? "")" />
+            <title>@(Model.SeoTitle ?? "")</title>
+            <meta name="author" content="@(Model.SeoTitle ?? "")" />
+            <meta property="og:site_name" content="@(Model.SeoTitle ?? "")" />
+            <meta property="og:title" content="@Model.SeoTitle" />
+            <meta name="copyright" content="@(Model.SeoTitle ?? "")" />
         }
         else
         {
-        <title>@Model.SeoTitle | Trang @Model.Page</title>
-        <meta name="author" content="@Model.SeoTitle | Trang @Model.Page" />
-        <meta property="og:site_name" content="@Model.SeoTitle | Trang @Model.Page" />
-        <meta property="og:title" content="@Model.SeoTitle | Trang @Model.Page" />
-        <meta name="copyright" content="@Model.SeoTitle | Trang @Model.Page" />
+            <title>@Model.SeoTitle | Trang @Model.Page</title>
+            <meta name="author" content="@Model.SeoTitle | Trang @Model.Page" />
+            <meta property="og:site_name" content="@Model.SeoTitle | Trang @Model.Page" />
+            <meta property="og:title" content="@Model.SeoTitle | Trang @Model.Page" />
+            <meta name="copyright" content="@Model.SeoTitle | Trang @Model.Page" />
         }
         <meta name="description" content="@(Model.SeoDescription ?? "")" />
         <meta name="keywords" content="@(Model.SeoKeyword ?? "")" />
@@ -44,7 +44,6 @@
         <script src="/Areas/Setting/Content/js/util.js"></script>
         <script src="/Areas/Setting/Content/js/modal.js"></script>
         <script src="/Areas/Setting/Content/js/module.js"></script>
-        <script src="~/Content/Publishing/js/pdfadmin.js"></script>
         <script type="text/javascript">
             pageId = "@Model.ID";
             layoutName = "@Model.Layout";
@@ -61,7 +60,7 @@
             });
         </script>
         <link rel="stylesheet" href="/Areas/Setting/Content/css/_setting_module.min.css" type="text/css" />
-        
+
     }
 }
 @if (Model.Key == "home")
@@ -70,7 +69,7 @@
 }
 else
 {
-  <h1 style="color: transparent; font-size: 0px;">@(Model.SeoTitle ?? "")</h1>
+    <h1 style="color: transparent; font-size: 0px;">@(Model.SeoTitle ?? "")</h1>
 }
 
 @{
@@ -88,83 +87,56 @@ else
     {
         <script src="/Content/Publishing/js/vendors.min.js"></script>
     }
-    <script src="https://sp.zalo.me/plugins/sdk.js" type="text/javascript" async="" defer=""></script>
-    <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <script>
-        window.twttr = (function (d, s, id) {
-            var js,
-                fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
 
-            t._e = [];
-            t.ready = function (f) {
-                t._e.push(f);
-            };
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/jquery-migrate.min.js"></script>
+    <script src="~/Content/Publishing/Organik/js/bootstrap.min.js"></script>
 
-            return t;
-        }(document, "script", "twitter-wjs"));
-    </script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="/Content/Admin/js/GridView.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/jquery.isotope.init.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/script.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.video.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.actions.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.migration.min.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/extensions/revolution.extension.parallax.min.js"></script>
+    @*<script src="/Content/Admin/js/GridView.js" type="text/javascript"></script>
     <link href="/Content/Admin/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" />
 
     <script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
     <script src="/Content/Admin/js/CarMarket.js" type="text/javascript"></script>
     <script src="/Content/Admin/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
-    <script src="/Content/Admin/plugins/ui-toastr.min.js" type="text/javascript"></script>
-    <script src="/Content/Publishing/js/plugins.js"></script>
-    <script src="/Content/Publishing/js/jquery.magnific.min.js"></script>
-    <script src="~/Content/Publishing/js/numeral.min.js"></script>
-    <script src="/Content/Publishing/js/customs.js"></script>
-     
-    <script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
-    <link href="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="/Content/Admin/plugins/ui-toastr.min.js" type="text/javascript"></script>*@
+    @*<script src="/Content/Publishing/js/plugins.js"></script>*@
+    @*<script src="/Content/Publishing/js/jquery.magnific.min.js"></script>*@
+    @*<script src="~/Content/Publishing/js/numeral.min.js"></script>*@
+    @*<script src="/Content/Publishing/js/customs.js"></script>*@
+
+    @*<script src="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+    <link href="/Content/Admin/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />*@
     <script src="/Content/Publishing/assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <!-- jQuery JS -->
-   
     <!-- Popper JS -->
-    <script src="/Content/Publishing/assets/js/vendor/popper.min.js"></script>
+    @*<script src="/Content/Publishing/assets/js/vendor/popper.min.js"></script>*@
     <!-- Bootstrap JS -->
-    <script src="/Content/Publishing/assets/js/vendor/bootstrap.min.js"></script>
     <!-- slick Slider JS -->
-    <script src="/Content/Publishing/assets/js/plugins/slick.min.js"></script>
+    <!--<script src="/Content/Publishing/assets/js/plugins/slick.min.js"></script>-->
     <!-- Countdown JS -->
     <script src="/Content/Publishing/assets/js/plugins/countdown.min.js"></script>
-    <!-- Nice Select JS -->
-    <script src="/Content/Publishing/assets/js/plugins/nice-select.min.js"></script>
     <!-- jquery UI JS -->
     <script src="/Content/Publishing/assets/js/plugins/jqueryui.min.js"></script>
     <!-- Image zoom JS -->
-    <script src="/Content/Publishing/assets/js/plugins/image-zoom.min.js"></script>
     <!-- Imagesloaded JS -->
-    <script src="/Content/Publishing/assets/js/plugins/imagesloaded.pkgd.min.js"></script>
-    <!-- Instagram feed JS -->
-    <script src="/Content/Publishing/assets/js/plugins/instagramfeed.min.js"></script>
-    <!-- mailchimp active js -->
-    <script src="/Content/Publishing/assets/js/plugins/ajaxchimp.js"></script>
-    <!-- contact form dynamic js -->
-    <script src="/Content/Publishing/assets/js/plugins/ajax-mail.js"></script>
-    <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfmCVTjRI007pC1Yk2o2d_EhgkjTsFVN8"></script>
-    <!-- google map active js -->
-    <script src="/Content/Publishing/assets/js/plugins/google-map.js"></script>
+    <script type="text/javascript" src="~/Content/Publishing/Organik/js/imagesloaded.pkgd.min.js"></script>
+
     <!-- Main JS -->
-    <script src="/Content/Publishing/assets/js/main.js"></script>
     <script>
 
-</script>
+    </script>
 }
 @Html.Partial("~/Views/Shared/_Meta.cshtml")

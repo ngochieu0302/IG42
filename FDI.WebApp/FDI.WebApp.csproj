@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FDI.Web</RootNamespace>
     <AssemblyName>FDI.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -29,6 +30,9 @@
     <SccProvider>SAK</SccProvider>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +54,7 @@
   <ItemGroup>
     <Reference Include="Admin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\FDISYS\FDI.SYS\Areas\Admin\bin\Admin.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\Admin.dll</HintPath>
     </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -59,7 +63,7 @@
     </Reference>
     <Reference Include="DataAnnotationsExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=358a5681c50fd84c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\DataAnnotationsExtensions.dll</HintPath>
+      <HintPath>..\..\..\..\Tranh\LandingPage\FDI.Web\bin\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,26 +95,29 @@
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPPlus, Version=3.1.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\EPPlus.dll</HintPath>
+      <HintPath>..\..\..\..\Tranh\LandingPage\FDI.Web\bin\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FDI.Memcached, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\FDI.Memcached.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\BenTre\FDI.Web\bin\FDI.Memcached.dll</HintPath>
     </Reference>
     <Reference Include="FDI.MvcMembership, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\FDI.MvcMembership.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\BenTre\FDI.Web\bin\FDI.MvcMembership.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Banhang\Banhang\bin\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\Tranh\LandingPage\FDI.Web\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualBasic" />
@@ -125,14 +132,15 @@
     </Reference>
     <Reference Include="NPOI, Version=2.1.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\NPOI.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\BenTre\FDI.Web\bin\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.14.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dacap_TLGroup\Code.Web\bin\PagedList.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\BenTre\FDI.Web\bin\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -143,8 +151,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -186,9 +193,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -204,6 +209,7 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
@@ -2110,85 +2116,12 @@
     <Content Include="Content\Publishing\assets\css\vendor\vendor.min.css" />
     <Content Include="Content\Publishing\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Publishing\assets\fonts\Pe-icon-7-stroke.svg" />
-    <Content Include="Content\Publishing\assets\img\about\about.jpg" />
-    <Content Include="Content\Publishing\assets\img\about\avatar.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img-bottom-banner.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img1-middle.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img1-static-menu.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img1-top.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img2-middle.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img2-static-menu.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img2-top.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img3-middle.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img3-top.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img4-middle.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img4-top.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\img5-middle.jpg" />
-    <Content Include="Content\Publishing\assets\img\banner\sidebar-banner.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\blog-img1.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\blog-img2.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\blog-img3.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\blog-img4.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\blog-img5.jpg" />
-    <Content Include="Content\Publishing\assets\img\blog\comment-icon.png" />
-    <Content Include="Content\Publishing\assets\img\brand\1.png" />
-    <Content Include="Content\Publishing\assets\img\brand\2.png" />
-    <Content Include="Content\Publishing\assets\img\brand\3.png" />
-    <Content Include="Content\Publishing\assets\img\brand\4.png" />
-    <Content Include="Content\Publishing\assets\img\brand\5.png" />
-    <Content Include="Content\Publishing\assets\img\brand\6.png" />
-    <Content Include="Content\Publishing\assets\img\cart\cart-1.jpg" />
-    <Content Include="Content\Publishing\assets\img\cart\cart-2.jpg" />
-    <Content Include="Content\Publishing\assets\img\favicon.ico" />
-    <Content Include="Content\Publishing\assets\img\icon\cancel.png" />
-    <Content Include="Content\Publishing\assets\img\icon\de.png" />
-    <Content Include="Content\Publishing\assets\img\icon\en.png" />
-    <Content Include="Content\Publishing\assets\img\icon\fr.png" />
-    <Content Include="Content\Publishing\assets\img\logo\logo.png" />
-    <Content Include="Content\Publishing\assets\img\payment.png" />
-    <Content Include="Content\Publishing\assets\img\paypal-card.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-1.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-10.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-11.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-12.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-13.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-14.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-15.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-16.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-17.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-18.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-2.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-3.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-4.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-5.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-6.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-7.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-8.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-9.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img1.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img2.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img3.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img4.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img5.jpg" />
-    <Content Include="Content\Publishing\assets\img\product\product-details-img6.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home1-slide1.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home1-slide2.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home1-slide3.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home2-slide1.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home2-slide2.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home3-slide1.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home3-slide2.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home3-slide3.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home4-slide1.jpg" />
-    <Content Include="Content\Publishing\assets\img\slider\home4-slide2.jpg" />
-    <Content Include="Content\Publishing\assets\img\team\team_member_1.jpg" />
-    <Content Include="Content\Publishing\assets\img\team\team_member_2.jpg" />
-    <Content Include="Content\Publishing\assets\img\team\team_member_3.jpg" />
-    <Content Include="Content\Publishing\assets\img\team\team_member_4.jpg" />
-    <Content Include="Content\Publishing\assets\img\testimonial\testimonial-1.png" />
-    <Content Include="Content\Publishing\assets\img\testimonial\testimonial-2.png" />
-    <Content Include="Content\Publishing\assets\img\testimonial\testimonial-3.png" />
-    <Content Include="Content\Publishing\assets\img\testimonial\testimonials-bg.jpg" />
+    <Content Include="Content\Publishing\assets\img\coloredbg.png" />
+    <Content Include="Content\Publishing\assets\img\gridtile.png" />
+    <Content Include="Content\Publishing\assets\img\gridtile_3x3.png" />
+    <Content Include="Content\Publishing\assets\img\gridtile_3x3_white.png" />
+    <Content Include="Content\Publishing\assets\img\gridtile_white.png" />
+    <Content Include="Content\Publishing\assets\img\loader.gif" />
     <Content Include="Content\Publishing\assets\js\main.js" />
     <Content Include="Content\Publishing\assets\js\plugins\ajax-mail.js" />
     <Content Include="Content\Publishing\assets\js\plugins\ajaxchimp.js" />
@@ -2238,6 +2171,326 @@
     <Content Include="Content\Publishing\js\plugins.js" />
     <Content Include="Content\Publishing\js\vendors.js" />
     <Content Include="Content\Publishing\js\vendors.min.js" />
+    <Content Include="Content\Publishing\Organik\1&amp;title=0&amp;byline=0&amp;portrait=0&amp;api=1_.html" />
+    <Content Include="Content\Publishing\Organik\404.html" />
+    <Content Include="Content\Publishing\Organik\about-us-2.html" />
+    <Content Include="Content\Publishing\Organik\about-us.html" />
+    <Content Include="Content\Publishing\Organik\assets\coloredbg.png" />
+    <Content Include="Content\Publishing\Organik\assets\gridtile.png" />
+    <Content Include="Content\Publishing\Organik\assets\gridtile_3x3.png" />
+    <Content Include="Content\Publishing\Organik\assets\gridtile_3x3_white.png" />
+    <Content Include="Content\Publishing\Organik\assets\gridtile_white.png" />
+    <Content Include="Content\Publishing\Organik\assets\loader.gif" />
+    <Content Include="Content\Publishing\Organik\blog-classic.html" />
+    <Content Include="Content\Publishing\Organik\blog-detail.html" />
+    <Content Include="Content\Publishing\Organik\blog-masonry.html" />
+    <Content Include="Content\Publishing\Organik\blog.html" />
+    <Content Include="Content\Publishing\Organik\cart-empty.html" />
+    <Content Include="Content\Publishing\Organik\cart.html" />
+    <Content Include="Content\Publishing\Organik\checkout.html" />
+    <Content Include="Content\Publishing\Organik\contact-us.html" />
+    <Content Include="Content\Publishing\Organik\css\AjaxLoader.html" />
+    <Content Include="Content\Publishing\Organik\css\bootstrap.min.css" />
+    <Content Include="Content\Publishing\Organik\css\closedhand.html" />
+    <Content Include="Content\Publishing\Organik\css\custom.css" />
+    <Content Include="Content\Publishing\Organik\css\font-awesome.min.css" />
+    <Content Include="Content\Publishing\Organik\css\ionicons.min.css" />
+    <Content Include="Content\Publishing\Organik\css\openhand.html" />
+    <Content Include="Content\Publishing\Organik\css\owl.carousel.css" />
+    <Content Include="Content\Publishing\Organik\css\owl.theme.css" />
+    <Content Include="Content\Publishing\Organik\css\prettyPhoto.css" />
+    <Content Include="Content\Publishing\Organik\css\settings.css" />
+    <Content Include="Content\Publishing\Organik\css\slick.css" />
+    <Content Include="Content\Publishing\Organik\css\style.css" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfont5b62.svg" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regular-2.html" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regular-3.html" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regular-4.html" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regular-5.html" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regular.html" />
+    <Content Include="Content\Publishing\Organik\fonts\glyphicons-halflings-regulard41d.html" />
+    <Content Include="Content\Publishing\Organik\fonts\ionicons28b5.svg" />
+    <Content Include="Content\Publishing\Organik\fonts\organik.svg" />
+    <Content Include="Content\Publishing\Organik\fonts\revicons.svg" />
+    <Content Include="Content\Publishing\Organik\gallery-freestyle.html" />
+    <Content Include="Content\Publishing\Organik\gallery-grid.html" />
+    <Content Include="Content\Publishing\Organik\images\404.png" />
+    <Content Include="Content\Publishing\Organik\images\about\about_1.png" />
+    <Content Include="Content\Publishing\Organik\images\about\about_2.png" />
+    <Content Include="Content\Publishing\Organik\images\about\about_3.png" />
+    <Content Include="Content\Publishing\Organik\images\about\about_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about\about_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about\about_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\about_pic.png" />
+    <Content Include="Content\Publishing\Organik\images\app-desc.png" />
+    <Content Include="Content\Publishing\Organik\images\avatar\avatar.png" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_10.png" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_7.jpg" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_8.png" />
+    <Content Include="Content\Publishing\Organik\images\background\bg_9.png" />
+    <Content Include="Content\Publishing\Organik\images\back_to_top.png" />
+    <Content Include="Content\Publishing\Organik\images\blog\blog_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\blog_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\blog_detail.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\blog_detail_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\large\blog_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\large\blog_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\masonry\blog_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\masonry\blog_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\thumb\blog_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\blog\thumb\blog_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\can.png" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\carousel\img_large_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_5.png" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_6.png" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_7.png" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_8.png" />
+    <Content Include="Content\Publishing\Organik\images\category\cate_9.png" />
+    <Content Include="Content\Publishing\Organik\images\client\client_1.png" />
+    <Content Include="Content\Publishing\Organik\images\client\client_2.png" />
+    <Content Include="Content\Publishing\Organik\images\client\client_3.png" />
+    <Content Include="Content\Publishing\Organik\images\client\client_4.png" />
+    <Content Include="Content\Publishing\Organik\images\client\client_5.png" />
+    <Content Include="Content\Publishing\Organik\images\deal_of_day.png" />
+    <Content Include="Content\Publishing\Organik\images\favicon.ico" />
+    <Content Include="Content\Publishing\Organik\images\featured_product.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_10.jpg" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_11.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_2.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_3.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_4.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_5.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_6.png" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_7.jpg" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_8.jpg" />
+    <Content Include="Content\Publishing\Organik\images\featured_product_9.jpg" />
+    <Content Include="Content\Publishing\Organik\images\footer_logo.png" />
+    <Content Include="Content\Publishing\Organik\images\footer_payment.png" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_10.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_11.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_12.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_13.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_14.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_15.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_15_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_16.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_16_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_1_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_2_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_3_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_4_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_5_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_6_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_7.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_7_large.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_8.jpg" />
+    <Content Include="Content\Publishing\Organik\images\gallery\gallery_9.jpg" />
+    <Content Include="Content\Publishing\Organik\images\grabbing.png" />
+    <Content Include="Content\Publishing\Organik\images\image_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\image_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\image_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\line_bg.png" />
+    <Content Include="Content\Publishing\Organik\images\logo.png" />
+    <Content Include="Content\Publishing\Organik\images\logo_white.png" />
+    <Content Include="Content\Publishing\Organik\images\megamenu_ads.jpg" />
+    <Content Include="Content\Publishing\Organik\images\oranges.png" />
+    <Content Include="Content\Publishing\Organik\images\payment.jpg" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_rounded\btnNext.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_rounded\btnPrevious.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_rounded\contentPattern.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_rounded\loader.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_rounded\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_square\btnNext.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_square\btnPrevious.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_square\loader.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\dark_square\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\default_thumb.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\loader.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\sprite_next.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\sprite_prev.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\sprite_x.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\default\sprite_y.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\btnNext.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\btnPrevious.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\contentPatternBottom.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\contentPatternLeft.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\contentPatternRight.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\contentPatternTop.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\default_thumbnail.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\loader.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\facebook\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_rounded\btnNext.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_rounded\btnPrevious.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_rounded\loader.gif" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_rounded\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_square\btnNext.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_square\btnPrevious.png" />
+    <Content Include="Content\Publishing\Organik\images\prettyPhoto\light_square\sprite.png" />
+    <Content Include="Content\Publishing\Organik\images\search.png" />
+    <Content Include="Content\Publishing\Organik\images\shop\large\shop_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\large\shop_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\large\shop_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_10.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_11.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_12.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_13.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_14.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_15.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_17.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_7.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_8.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\shop_9.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\thumb\shop_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\thumb\shop_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\thumb\shop_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\thumb\shop_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\shop\thumb\shop_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\line_object.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_1.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_10.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_11.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_12.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_13.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_14.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_15.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_16.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_17.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_18.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_19.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_2.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_20.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_21.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_22.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_23.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_3.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_4.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_5.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_6.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_7.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_8.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_9.png" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_1.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_10.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_11.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_12.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_13.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_5.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_6.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_7.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_8.jpg" />
+    <Content Include="Content\Publishing\Organik\images\slider\slide_bg_9.jpg" />
+    <Content Include="Content\Publishing\Organik\images\testimonial\picture_1.png" />
+    <Content Include="Content\Publishing\Organik\images\testimonial\picture_2.jpg" />
+    <Content Include="Content\Publishing\Organik\images\testimonial\picture_3.jpg" />
+    <Content Include="Content\Publishing\Organik\images\testimonial\picture_4.jpg" />
+    <Content Include="Content\Publishing\Organik\images\testi_quote.png" />
+    <Content Include="Content\Publishing\Organik\images\testi_quote_2.png" />
+    <Content Include="Content\Publishing\Organik\index-farm.html" />
+    <Content Include="Content\Publishing\Organik\index-fresh.html" />
+    <Content Include="Content\Publishing\Organik\index-house.html" />
+    <Content Include="Content\Publishing\Organik\index-shop.html" />
+    <Content Include="Content\Publishing\Organik\index-store.html" />
+    <Content Include="Content\Publishing\Organik\index.html" />
+    <Content Include="Content\Publishing\Organik\js\bootstrap.min.js" />
+    <Content Include="Content\Publishing\Organik\js\core.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.actions.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.kenburn.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.layeranimation.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.migration.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.navigation.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.parallax.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.slideanims.min.js" />
+    <Content Include="Content\Publishing\Organik\js\extensions\revolution.extension.video.min.js" />
+    <Content Include="Content\Publishing\Organik\js\imagesloaded.pkgd.min.js" />
+    <Content Include="Content\Publishing\Organik\js\isotope.pkgd.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery-migrate.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.countdown.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.isotope.init.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.prettyPhoto.init.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.prettyPhoto.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.themepunch.revolution.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.themepunch.tools.min.js" />
+    <Content Include="Content\Publishing\Organik\js\jquery.ui.touch-punch.js" />
+    <Content Include="Content\Publishing\Organik\js\modernizr-2.7.1.min.js" />
+    <Content Include="Content\Publishing\Organik\js\mouse.min.js" />
+    <Content Include="Content\Publishing\Organik\js\owl.carousel.min.js" />
+    <Content Include="Content\Publishing\Organik\js\price-slider.js" />
+    <Content Include="Content\Publishing\Organik\js\script.js" />
+    <Content Include="Content\Publishing\Organik\js\slick.min.js" />
+    <Content Include="Content\Publishing\Organik\js\slider.min.js" />
+    <Content Include="Content\Publishing\Organik\js\widget.min.js" />
+    <Content Include="Content\Publishing\Organik\my-account.html" />
+    <Content Include="Content\Publishing\Organik\shop-detail.html" />
+    <Content Include="Content\Publishing\Organik\shop-list.html" />
+    <Content Include="Content\Publishing\Organik\shop.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-about-2.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-about-3.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-about.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-accordion.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-blog.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-button.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-carousel.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-featured-category.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-featured-product-box.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-gallery.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-google-map.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-icon-boxes.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-icon.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-process.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-product-carousel.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-product-column.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-product-grid.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-services.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-team.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-testimonial.html" />
+    <Content Include="Content\Publishing\Organik\shortcode-title.html" />
+    <Content Include="Content\Publishing\Organik\shortcodes.html" />
+    <Content Include="Content\Publishing\Organik\wishlist.html" />
+    <Content Include="Content\Publishing\Organik\_images\featured_product.html" />
+    <Content Include="Content\Publishing\Organik\_images\featured_product_2.html" />
+    <Content Include="Content\Publishing\Organik\_images\featured_product_3.html" />
     <Content Include="Content\socket\socket.io.js" />
     <Content Include="favicon.ico" />
     <Content Include="ckeditor\plugins\syntaxhighlight\images\Thumbs.db" />
@@ -2514,7 +2767,23 @@
     <Content Include="Content\Publishing\scss\layouts\_popup-wrap.scss" />
     <Content Include="Content\Publishing\scss\layouts\_sidebar.scss" />
     <Content Include="Content\Publishing\scss\layouts\_sidebar-mobie.scss" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Content\Publishing\Organik\debug.log" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfont5b62.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfont5b62.ttf" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfont5b62.woff" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfont5b62.woff2" />
+    <Content Include="Content\Publishing\Organik\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\ionicons28b5.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\ionicons28b5.ttf" />
+    <Content Include="Content\Publishing\Organik\fonts\ionicons28b5.woff" />
+    <Content Include="Content\Publishing\Organik\fonts\organik.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\organik.ttf" />
+    <Content Include="Content\Publishing\Organik\fonts\organik.woff" />
+    <Content Include="Content\Publishing\Organik\fonts\organikd41d.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\revicons.eot" />
+    <Content Include="Content\Publishing\Organik\fonts\revicons.ttf" />
+    <Content Include="Content\Publishing\Organik\fonts\revicons.woff" />
+    <None Include="Properties\PublishProfiles\ig4_pub.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -2627,6 +2896,7 @@
     <Folder Include="Content\Admin\plugins\ckfinder\skins\v1\images\toolbar\" />
     <Folder Include="Content\Admin\sass\module\" />
     <Folder Include="Content\Admin\TreeView\" />
+    <Folder Include="Content\Publishing\img\" />
     <Folder Include="Content\Publishing\scss\components\" />
     <Folder Include="Models\" />
     <Folder Include="Uploads\Avatar\" />
@@ -2724,6 +2994,14 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

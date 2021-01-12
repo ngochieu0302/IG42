@@ -137,7 +137,7 @@ namespace FDI.MvcAPI.Controllers
             data.Status = type;
             data.Check = 1;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
-            var TotalPrice = data.Total - data.CouponPrice + data.FeeShip;
+            var totalPrice = data.Total - data.CouponPrice + data.FeeShip;
             //var TotalPricegstore = data.OrderTotal - ((data.Discount * data.OrderTotal / 100)) + data.FeeShip;
             //var config = _walletCustomerDa.GetConfig();
             //var totaldis = data.Discount + config.Percent;
@@ -154,7 +154,7 @@ namespace FDI.MvcAPI.Controllers
                 var cashout = new CashOutWallet
                 {
                     CustomerID = data.CustomerID,
-                    TotalPrice = TotalPrice ?? 0,
+                    TotalPrice = totalPrice ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     OrderID = data.ID,
                     Type = 1,
@@ -165,7 +165,7 @@ namespace FDI.MvcAPI.Controllers
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = 1,
-                    TotalPrice = TotalPrice ?? 0,
+                    TotalPrice = totalPrice ?? 0,
                     DateCreate = DateTime.Now.TotalSeconds(),
                     IsActive = true,
                     IsDelete = false,
@@ -179,7 +179,7 @@ namespace FDI.MvcAPI.Controllers
                 foreach (var item in data.Shop_Order_Details)
                 {
                     var product = _productDa.GetById(item.ProductID ?? 0);
-                    //product.QuantityOut = item.Quantity;
+                    product.QuantityOut += item.Quantity;
                     _productDa.Save();
                 }
                 var processOrder = new OrderProcessAppIG4Item
@@ -194,16 +194,16 @@ namespace FDI.MvcAPI.Controllers
             var token = gettoken.tokenDevice;
             if (type == (int)StatusOrder.Process)
             {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == 2 ? "đang được giao" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == 2 ? "đang được giao" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
             }
             if (type == (int)StatusOrder.Cancel)
             {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == -1 ? "vừa bị hủy bởi chủ cửa hàng.!" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token,notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == -1 ? "vừa bị hủy bởi chủ cửa hàng.!" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
             }
             if (type == (int)StatusOrder.Complete)
             {
                 notify = orderDA.GetNotifyById(3);
-                Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
+                Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", totalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
             }
             return Json(new BaseResponse<List<ProductItem>> { Code = 200, Message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
@@ -213,11 +213,12 @@ namespace FDI.MvcAPI.Controllers
             if (key == "Fdi@123")
             {
                 var model = new JavaScriptSerializer().Deserialize<OrderProcessAppIG4Item>(json);
-                #region xử lý đơn hàng thành công tự động trừ tiền của KH.
+                
                 var data = orderDA.GetById(model.OrderId);
                 var TotalPricegstore = data.Total + data.FeeShip;
                 var config = _walletCustomerDa.GetConfig();
                 // chuyen tien tu vi trung gian cua gstore customerId = 1 den shop
+                #region đơn hàng đã giao thành công cộng tiền cho shop
                 var cashout = new CashOutWallet
                 {
                     CustomerID = 1,
@@ -230,7 +231,10 @@ namespace FDI.MvcAPI.Controllers
                 _cashOutWalletDa.Add(cashout);
                 _cashOutWalletDa.Save();
 
-                var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
+                var temp = _customerDa.GetItemByID(data.ShopID ?? 0);
+                //var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
+                var totalshop = (data.Total * temp.PercentDiscount / 100) + data.FeeShip;
+
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
@@ -245,19 +249,19 @@ namespace FDI.MvcAPI.Controllers
                 _walletCustomerDa.Add(walletcus);
                 _walletCustomerDa.Save();
 
-                #region đơn hàng đã giao thành công cộng tiền cho shop
+                
                 var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(5);
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalshop.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
                 #endregion
-                #endregion
+
                 var bonusItems = _customerDa.ListBonusTypeItems();
                 #region hoa hồng khách hàng và shop ký gửi
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
+                    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
                 }
                 else
                 {
@@ -265,11 +269,12 @@ namespace FDI.MvcAPI.Controllers
                     decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
                     if (totalpres > 0)
                     {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        //InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
                     }
                     if (totalnopres > 0)
                     {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
+                        InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
                     }
                 }
                 #endregion
@@ -412,7 +417,7 @@ namespace FDI.MvcAPI.Controllers
                         _rewardHistoryDa.Save();
                         var sucess = orderDA.GetNotifyById(4);
                         var token = gettoken.tokenDevice;
-                        Pushnotifycation(sucess.Title.Replace("{percent}", config.Percent.ToString()), sucess.Content.Replace("{price}", reward.Price.Money()).Replace("{total}", resutl.data.amount.MoneyDouble()), token,sucess.ID.ToString());
+                        Pushnotifycation(sucess.Title.Replace("{percent}", config.Percent.ToString()), sucess.Content.Replace("{price}", reward.Price.Money()).Replace("{total}", resutl.data.amount.MoneyDouble()), token, sucess.ID.ToString());
                     }
                     return Json(resutl, JsonRequestBehavior.AllowGet);
                 }

@@ -35,6 +35,7 @@ namespace FDI.Base
             this.Shop_Orders = new HashSet<Shop_Orders>();
             this.StorageWarehousings = new HashSet<StorageWarehousing>();
             this.Wallet_Agency = new HashSet<Wallet_Agency>();
+            this.Gallery_Picture = new HashSet<Gallery_Picture>();
         }
     
         public int ID { get; set; }
@@ -50,6 +51,8 @@ namespace FDI.Base
         public string Company { get; set; }
         public string MST { get; set; }
         public string STK { get; set; }
+        public string FullnameBank { get; set; }
+        public string Branchname { get; set; }
         public string BankName { get; set; }
         public Nullable<decimal> CreateDate { get; set; }
         public Nullable<decimal> DateStart { get; set; }
@@ -71,6 +74,13 @@ namespace FDI.Base
         public Nullable<decimal> CashOut { get; set; }
         public Nullable<int> MarketID { get; set; }
         public Nullable<bool> IsFdi { get; set; }
+        public Nullable<int> ParentID { get; set; }
+        public string ListID { get; set; }
+        public Nullable<int> Level { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public string TokenDevice { get; set; }
+        public string AvatarUrl { get; set; }
+        public string ImageTimeline { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Agency_Module> Agency_Module { get; set; }
@@ -112,5 +122,7 @@ namespace FDI.Base
         public virtual ICollection<StorageWarehousing> StorageWarehousings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wallet_Agency> Wallet_Agency { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Gallery_Picture> Gallery_Picture { get; set; }
     }
 }

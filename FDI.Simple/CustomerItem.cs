@@ -35,10 +35,10 @@ namespace FDI.Simple
         public string Token { get; set; }
         public int? AgencyId { get; set; }
         public string AgencyName { get; set; }
-        public long? Latitude { get; set; }
-        public long? Longitude { get; set; }
-        public long? LatitudeBuyRecently { get; set; }
-        public long? LongitudeBuyRecently { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public double? LatitudeBuyRecently { get; set; }
+        public double? LongitudeBuyRecently { get; set; }
         public string AddressBuyRecently { get; set; }
         public string PhoneAgency { get; set; }
     }
