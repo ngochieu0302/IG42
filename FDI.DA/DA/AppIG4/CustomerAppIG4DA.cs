@@ -365,6 +365,8 @@ namespace FDI.DA
                             tokenDevice = c.TokenDevice,
                             Wallets = c.Customer_Reward.Sum(a => a.PriceReward - a.PriceReceive),
                             TotalWallets = c.Wallets.Sum(a=>a.WalletCus - a.CashOutWallet),
+                            ListAgencyId = c.DN_Agency.ListID,
+                            AgencyID = c.AgencyID,
                             PercentDiscount = c.Order_Package.Where(a => a.DateStart <= date && a.DateEnd > date).Select(a => a.Customer_Type.Customer_TypeGroup.Percent).FirstOrDefault() ?? discount
                         };
 

@@ -266,6 +266,28 @@ namespace FDI.DA
         }
         #endregion
         #region App
+        public List<CustomerAppIG4Item> GetListAgencyListID(List<int> ltsArrId)
+        {
+
+            var query = from c in FDIDB.DN_Agency
+                where (!c.IsDelete.HasValue || !c.IsDelete.Value) && ltsArrId.Contains(c.ID)
+                orderby c.ID descending
+                select new CustomerAppIG4Item
+                {
+                    ID = c.ID,
+                    ParentID = c.ParentID,
+                    //GroupID = c.GroupID,
+                    ListID = c.ListID,
+                    Email = c.Email,
+                    
+                    tokenDevice = c.TokenDevice,
+                    //PrizeMoney = c.Customer_Groups.Discount,
+                    //IsActive = c.WalletCustomers.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice) >= 500000,
+                    //WalletCus = c.WalletCustomers.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice),
+                    //WalletOr = c.WalletOrder_History.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice),
+                };
+            return query.ToList();
+        }
         public CustomerAppIG4Item GetItemByIdApp(int id)
         {
             var query = from c in FDIDB.DN_Agency

@@ -24,6 +24,7 @@ namespace FDI.MvcAPI.Controllers
     public class BaseAppApiController : Controller
     {
         readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA("#");
+        readonly AgencyDA _agencyDa = new AgencyDA("#");
         readonly RewardHistoryDA _rewardHistoryDa = new RewardHistoryDA("#");
         public static int Type = 1;
         readonly OrderAppIG4DA _orderDa = new OrderAppIG4DA("#");
@@ -97,7 +98,7 @@ namespace FDI.MvcAPI.Controllers
                 throw new Exception("longitude missing");
             }
         }
-        public void InsertRewardCustomer(string lstId, int parentId, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
+        public void InsertRewardOrderCustomer(CustomerAppIG4Item customer, ConfigExchange config, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
         {
             var now = DateTime.Now.TotalSeconds();
             //hoa hong cho shop ky gui
@@ -176,11 +177,11 @@ namespace FDI.MvcAPI.Controllers
             //}
             //else
             //{
-            var totalD = totalprice * discountKH / 100;
-            var ltsArrId = FDIUtils.StringToListInt(lstId);
+            var totalD = totalprice * config.DiscountCTV / 100;
+            var ltsArrId = FDIUtils.StringToListInt(customer.ListAgencyId);
             ltsArrId = ltsArrId.Take(bonusItems.Count).ToList();
-            var listcustomer = _customerDa.GetListCustomerListID(ltsArrId);
-
+            var listcustomer = _agencyDa.GetListAgencyListID(ltsArrId);
+            decimal per = 0;
             var i = 1;
             foreach (var item in listcustomer)
             {
@@ -193,8 +194,8 @@ namespace FDI.MvcAPI.Controllers
                         {
                             var reward = new RewardHistory
                             {
-                                Price = totalprice * (bonusItem.Percent / 100),
-                                CustomerID = item.ID,
+                                Price = totalD * (bonusItem.Percent / 100),
+                                //CustomerID = item.ID,
                                 Date = now,
                                 OrderID = OrderId,
                                 Type = (int)Reward.Cus,
@@ -202,23 +203,38 @@ namespace FDI.MvcAPI.Controllers
                                 Percent = bonusItem.Percent,
                                 IsDeleted = false,
                                 IsActive = true,
-                                AgencyId = 1006,
-                                TotalCp = totalprice,
+                                AgencyId = item.ID,
+                                TotalCp = totalD,
                             };
                             _rewardHistoryDa.Add(reward);
                             var cus = _customerDa.GetItemByID(item.ID);
                             var shopsucess = _orderDa.GetNotifyById(6);
                             var tokenshop = cus.tokenDevice;
                             Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
-                        }
-                    //}
+                            per += bonusItem.Percent ?? 0;
+                    }
+                        //}
                 }
                 i++;
+                
             }
-
-
+            var reward0 = new RewardHistory
+            {
+                Price = totalD * ((100 - per) / 100),
+                //CustomerID = item.ID,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.Cus,
+                BonusTypeId = i,
+                Percent = 100 - per,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = customer.AgencyID,
+                TotalCp = totalD,
+            };
+            _rewardHistoryDa.Add(reward0);
             //}
-            var config = _walletCustomerDa.GetConfig();
+            
             // % chiết khấu cho công ty
             var reward1 = new RewardHistory
             {
@@ -266,22 +282,83 @@ namespace FDI.MvcAPI.Controllers
                 AgencyId = 1006,
                 TotalCp = totalprice,
             };
+            _rewardHistoryDa.Add(reward3);
+
             // % phát triển cty
             var reward4 = new RewardHistory
             {
-                Price = (totalprice ?? 0) * (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV) / 100,
+                Price = (totalprice ?? 0) * (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV - config.DiscountOrderAgency) / 100,
                 CustomerID = 1,
                 Date = now,
                 OrderID = OrderId,
                 Type = (int)Reward.Depvelop,
                 //BonusTypeId = i,
-                Percent = (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV),
+                Percent = (100 - discountKH - config.DiscountQR - config.DiscountOrder - config.DiscountSale - config.DiscountCTV - config.DiscountOrderAgency),
                 IsDeleted = false,
                 IsActive = true,
                 AgencyId = 1006,
                 TotalCp = totalprice,
             };
             _rewardHistoryDa.Add(reward4);
+            _rewardHistoryDa.Save();
+        }
+        public void InsertRewardOrderAgency(CustomerAppIG4Item shop,ConfigExchange config, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
+        {
+            var now = DateTime.Now.TotalSeconds();
+            var totalD = totalprice * config.DiscountOrderAgency / 100;
+            var ltsArrId = FDIUtils.StringToListInt(shop.ListAgencyId);
+            ltsArrId = ltsArrId.Take(bonusItems.Count).ToList();
+            var listcustomer = _agencyDa.GetListAgencyListID(ltsArrId);
+            decimal per = 0;
+            var i = 1;
+            foreach (var item in listcustomer)
+            {
+                if (i <= bonusItems.Count)
+                {
+                    //if (item.LevelAdd >= i)
+                    //{
+                    var bonusItem = bonusItems.FirstOrDefault(m => m.ID == i);
+                    if (bonusItem != null)
+                    {
+                        var reward = new RewardHistory
+                        {
+                            Price = totalD * (bonusItem.Percent / 100),
+                            //CustomerID = item.ID,
+                            Date = now,
+                            OrderID = OrderId,
+                            Type = (int)Reward.Cus,
+                            BonusTypeId = i,
+                            Percent = bonusItem.Percent,
+                            IsDeleted = false,
+                            IsActive = true,
+                            AgencyId = item.ID,
+                            TotalCp = totalD,
+                        };
+                        _rewardHistoryDa.Add(reward);
+                        var cus = _customerDa.GetItemByID(item.ID);
+                        var shopsucess = _orderDa.GetNotifyById(6);
+                        var tokenshop = cus.tokenDevice;
+                        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                        per += bonusItem.Percent ?? 0;
+                    }
+                }
+                i++;
+            }
+            var reward0 = new RewardHistory
+            {
+                Price = totalD * ((100 - per) / 100),
+                //CustomerID = item.ID,
+                Date = now,
+                OrderID = OrderId,
+                Type = (int)Reward.Cus,
+                BonusTypeId = i,
+                Percent = 100 - per,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = shop.AgencyID,
+                TotalCp = totalD,
+            };
+            _rewardHistoryDa.Add(reward0);
             _rewardHistoryDa.Save();
         }
 

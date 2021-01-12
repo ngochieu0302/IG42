@@ -786,6 +786,12 @@ namespace FDI.MvcAPI.Controllers
         public ActionResult UpdateStatusCustomer(int orderId, int status, int cusId)
         {
             var data = orderDA.GetById(orderId);
+            decimal? totak = 0;
+            foreach (var items in data.Shop_Order_Details)
+            {
+                var k = items.Shop_Product.Category.Profit;
+                totak += (items.Shop_Product.Product_Size != null ? items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+            }
             data.Status = status;
             data.Check = 2;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
@@ -801,7 +807,7 @@ namespace FDI.MvcAPI.Controllers
             orderDA.Save();
             if (status == (int)StatusOrder.Complete)
             {
-                #region đơn hàng đã giao thành công trừ tiên của Khách
+                #region đơn hàng đã giao thành chuyển tiền cho shop
                 var cashout = new CashOutWallet
                 {
                     CustomerID = 1,
@@ -816,7 +822,11 @@ namespace FDI.MvcAPI.Controllers
                 #endregion
 
                 var config = _walletCustomerDa.GetConfig();
-                var TotalPrice = data.Total - (config.DiscountOrder * data.Total / 100) + data.FeeShip;
+                var shop = customerDA.GetItemByID(data.ShopID ?? 0);
+
+                //var TotalPrice = data.Total - (config.DiscountOrder * data.Total / 100) + data.FeeShip;
+                var TotalPrice = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
+
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
@@ -835,7 +845,6 @@ namespace FDI.MvcAPI.Controllers
                 var token = cus.tokenDevice;
                 Pushnotifycation(sucess.Title, sucess.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code), token, sucess.ID.ToString());
 
-                var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(5);
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
@@ -844,20 +853,23 @@ namespace FDI.MvcAPI.Controllers
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
+                    InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
+                    InsertRewardOrderAgency(shop,config, totak, data.ID, bonusItems);
                 }
                 else
                 {
-                    decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
-                    if (totalpres > 0)
-                    {
-                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                    }
-                    if (totalnopres > 0)
-                    {
-                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
-                    }
+                    // chiết khấu shop ký gửi
+
+                    //decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                    //decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                    //if (totalpres > 0)
+                    //{
+                    //    InsertRewardCustomer(cus, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                    //}
+                    //if (totalnopres > 0)
+                    //{
+                    //    InsertRewardCustomer(cus, totalnopres, data.ID, bonusItems);
+                    //}
                 }
                 // update level KH
                 UpdateLevelCustomer(cusId);

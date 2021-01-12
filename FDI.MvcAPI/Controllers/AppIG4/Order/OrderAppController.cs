@@ -213,8 +213,14 @@ namespace FDI.MvcAPI.Controllers
             if (key == "Fdi@123")
             {
                 var model = new JavaScriptSerializer().Deserialize<OrderProcessAppIG4Item>(json);
-                
+
                 var data = orderDA.GetById(model.OrderId);
+                decimal? totak = 0;
+                foreach (var items in data.Shop_Order_Details)
+                {
+                    var k = items.Shop_Product.Category.Profit;
+                    totak += (items.Shop_Product.Product_Size != null ? items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+                }
                 var TotalPricegstore = data.Total + data.FeeShip;
                 var config = _walletCustomerDa.GetConfig();
                 // chuyen tien tu vi trung gian cua gstore customerId = 1 den shop
@@ -231,9 +237,10 @@ namespace FDI.MvcAPI.Controllers
                 _cashOutWalletDa.Add(cashout);
                 _cashOutWalletDa.Save();
 
-                var temp = _customerDa.GetItemByID(data.ShopID ?? 0);
+                var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
                 //var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
-                var totalshop = (data.Total * temp.PercentDiscount / 100) + data.FeeShip;
+                
+                var totalshop = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
 
                 var walletcus = new WalletCustomer
                 {
@@ -248,34 +255,34 @@ namespace FDI.MvcAPI.Controllers
                 };
                 _walletCustomerDa.Add(walletcus);
                 _walletCustomerDa.Save();
-
-                
-                var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
+                var cus = _customerDa.GetItemByID(data.CustomerID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(5);
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalshop.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
                 #endregion
-
                 var bonusItems = _customerDa.ListBonusTypeItems();
                 #region hoa hồng khách hàng và shop ký gửi
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
+                    InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
+                    InsertRewardOrderAgency(shop, config, totak, data.ID, bonusItems);
+
                 }
                 else
                 {
-                    decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
-                    if (totalpres > 0)
-                    {
-                        //InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                        InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                    }
-                    if (totalnopres > 0)
-                    {
-                        InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
-                    }
+                    // chiết khấu shop ký gửi
+                    //decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                    //decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                    //if (totalpres > 0)
+                    //{
+                    //    //InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                    //    InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                    //}
+                    //if (totalnopres > 0)
+                    //{
+                    //    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
+                    //}
                 }
                 #endregion
                 // kiem tra level khach hang.
