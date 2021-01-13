@@ -51,7 +51,10 @@ namespace FDI.Utils
         Receive2 = 1, // Rút tiền trực tiếp
         Cus1 = 3,     // thưởng giới thiệu
         Dep = 4,// thưởng nạp
-        Kho = 5
+        Kho = 5,
+        Sale = 6,
+        QR = 7,
+        Depvelop = 8,
     }
     public static class TypeSale
     {

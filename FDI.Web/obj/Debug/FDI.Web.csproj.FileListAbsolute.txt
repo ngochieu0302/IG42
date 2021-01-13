@@ -380,7 +380,6 @@ C:\IG4\CodeIG4\IG4\FDI.Web\bin\Microsoft.Web.WebPages.OAuth.xml
 C:\IG4\CodeIG4\IG4\FDI.Web\bin\WebMatrix.WebData.xml
 C:\IG4\CodeIG4\IG4\FDI.Web\bin\HtmlAgilityPack.pdb
 C:\IG4\CodeIG4\IG4\FDI.Web\bin\HtmlAgilityPack.xml
-C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csprojAssemblyReference.cache
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.dll
@@ -465,3 +464,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CoreCompileInput
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.pdb
+C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csprojAssemblyReference.cache

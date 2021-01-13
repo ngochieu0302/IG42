@@ -206,6 +206,7 @@
     <Compile Include="Controllers\AppIG4\BaseApiAppIG4Controller.cs" />
     <Compile Include="Controllers\AppIG4\BaseAppApiController.cs" />
     <Compile Include="Controllers\AppIG4\Category\CategoryAppController.cs" />
+    <Compile Include="Controllers\AppIG4\CTV\AgencyAppController.cs" />
     <Compile Include="Controllers\AppIG4\Customer\CustomerAppController.cs" />
     <Compile Include="Controllers\AppIG4\Customer\CustomerAppSMSController.cs" />
     <Compile Include="Controllers\AppIG4\HomeAppIG4Controller.cs" />

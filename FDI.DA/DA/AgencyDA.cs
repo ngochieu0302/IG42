@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FDI.Base;
@@ -30,7 +31,7 @@ namespace FDI.DA
             Request = new ParramRequest(httpRequest);
             var query = from o in FDIDB.DN_Agency
                         where (enterprisesid == 0 || o.EnterpriseID == enterprisesid) && o.IsDelete == false
-                      //  && (areaId == 0 || o.Areas.Any(c => c.ID == areaId) || o.Market.AreaID == areaId)
+                        //  && (areaId == 0 || o.Areas.Any(c => c.ID == areaId) || o.Market.AreaID == areaId)
                         orderby o.ID descending
                         select new AgencyItem
                         {
@@ -51,7 +52,7 @@ namespace FDI.DA
             var query = from o in FDIDB.DN_Agency
                         where (enterprisesid == 0 || o.EnterpriseID == enterprisesid) && o.IsDelete == false
                         && (areaId == 0 || o.Areas.Any(c => c.ID == areaId) || o.Market.AreaID == areaId)
-                        && o.DN_ImportProduct.Where(a => a.QuantityOut < a.Quantity && a.IsDelete == false).Sum(c=>c.Quantity) > 0
+                        && o.DN_ImportProduct.Where(a => a.QuantityOut < a.Quantity && a.IsDelete == false).Sum(c => c.Quantity) > 0
                         orderby o.DN_ImportProduct.Count(a => a.QuantityOut < a.Quantity && a.IsDelete == false) descending
                         select new AgencyItem
                         {
@@ -161,55 +162,57 @@ namespace FDI.DA
             var query = from c in FDIDB.DN_Agency
                         where c.ID == id
                         select new AgencyItem
+                        {
+                            ID = c.ID,
+                            Code = c.Code,
+                            Name = c.Name,
+                            Address = c.Address,
+                            FullName = c.FullName,
+                            
+                            GroupID = c.GroupID,
+                            WalletValue = c.WalletValue,
+                            Phone = c.Phone,
+                            Email = c.Email,
+                            IPTimekeep = c.IPTimekeep,
+                            Port = c.Port,
+                            MarketID = c.MarketID,
+                            IsShow = c.IsShow,
+                            IsFdi = c.IsFdi,
+                            AgencyLevelId = c.AgencyLevelId,
+                            UserName = c.DN_Users.OrderBy(m => m.CreateDate).Select(m => m.UserName).FirstOrDefault(),
+                            LstDocumentItems = c.Documents.Select(v => new DocumentItem
                             {
-                                ID = c.ID,
-                                Code = c.Code,
-                                Name = c.Name,
-                                Address = c.Address,
-                                GroupID = c.GroupID,
-                                WalletValue = c.WalletValue,
-                                Phone = c.Phone,
-                                Email = c.Email,
-                                IPTimekeep = c.IPTimekeep,
-                                Port = c.Port,
-                                MarketID = c.MarketID,
-                                IsShow = c.IsShow,
-                                IsFdi = c.IsFdi,
-                                AgencyLevelId =  c.AgencyLevelId,
-                                UserName = c.DN_Users.OrderBy(m => m.CreateDate).Select(m => m.UserName).FirstOrDefault(),
-                                LstDocumentItems = c.Documents.Select(v => new DocumentItem
-                                {
-                                    Name = v.Name,
-                                    Value = v.Value,
-                                    DateStart = v.DateStart,
-                                    DateEnd = v.DateEnd,
-                                    Deposit = v.Deposit
-                                })
-                            };
+                                Name = v.Name,
+                                Value = v.Value,
+                                DateStart = v.DateStart,
+                                DateEnd = v.DateEnd,
+                                Deposit = v.Deposit
+                            })
+                        };
             return query.FirstOrDefault();
         }
         public AgencyItem GetItem(string phone)
         {
             var query = from c in FDIDB.DN_Agency
-                where c.Phone == phone
-                select new AgencyItem
-                {
-                    ID = c.ID,
-                    Code = c.Code,
-                    Name = c.Name,
-                    Address = c.Address,
-                    GroupID = c.GroupID,
-                    WalletValue = c.WalletValue,
-                    Phone = c.Phone,
-                    Email = c.Email,
-                    IPTimekeep = c.IPTimekeep,
-                    Port = c.Port,
-                    MarketID = c.MarketID,
-                    IsShow = c.IsShow,
-                    IsFdi = c.IsFdi,
-                    AgencyLevelId = c.AgencyLevelId,
-                   
-                };
+                        where c.Phone == phone
+                        select new AgencyItem
+                        {
+                            ID = c.ID,
+                            Code = c.Code,
+                            Name = c.Name,
+                            Address = c.Address,
+                            GroupID = c.GroupID,
+                            WalletValue = c.WalletValue,
+                            Phone = c.Phone,
+                            Email = c.Email,
+                            IPTimekeep = c.IPTimekeep,
+                            Port = c.Port,
+                            MarketID = c.MarketID,
+                            IsShow = c.IsShow,
+                            IsFdi = c.IsFdi,
+                            AgencyLevelId = c.AgencyLevelId,
+
+                        };
             return query.FirstOrDefault();
         }
         public AgencyItem GetItemByStatic(int id)
@@ -222,7 +225,7 @@ namespace FDI.DA
                             Name = c.Name,
                             Address = c.Address,
                             Phone = c.Phone,
-                            LstImportProductItems = c.DN_ImportProduct.Where(a=>a.Quantity > a.QuantityOut && a.IsDelete == false).Select(v=> new ImportProductItem
+                            LstImportProductItems = c.DN_ImportProduct.Where(a => a.Quantity > a.QuantityOut && a.IsDelete == false).Select(v => new ImportProductItem
                             {
                                 Name = v.Product_Value.Shop_Product_Detail.Name,
                                 Value = v.Value,
@@ -262,6 +265,84 @@ namespace FDI.DA
 
         }
         #endregion
+        #region App
+        public List<CustomerAppIG4Item> GetListAgencyListID(List<int> ltsArrId)
+        {
+
+            var query = from c in FDIDB.DN_Agency
+                where (!c.IsDelete.HasValue || !c.IsDelete.Value) && ltsArrId.Contains(c.ID)
+                orderby c.ID descending
+                select new CustomerAppIG4Item
+                {
+                    ID = c.ID,
+                    ParentID = c.ParentID,
+                    //GroupID = c.GroupID,
+                    ListID = c.ListID,
+                    Email = c.Email,
+                    
+                    tokenDevice = c.TokenDevice,
+                    //PrizeMoney = c.Customer_Groups.Discount,
+                    //IsActive = c.WalletCustomers.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice) >= 500000,
+                    //WalletCus = c.WalletCustomers.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice),
+                    //WalletOr = c.WalletOrder_History.Where(m => m.DateCreate > date && m.DateCreate < dateend && m.IsDelete == false).Sum(m => m.TotalPrice),
+                };
+            return query.ToList();
+        }
+        public CustomerAppIG4Item GetItemByIdApp(int id)
+        {
+            var query = from c in FDIDB.DN_Agency
+                where c.ID == id
+                select new CustomerAppIG4Item
+                {
+                    ID = c.ID,
+                    Address = c.Address,
+                    Fullname = c.FullName,
+                    Wallets = c.WalletValue,
+                    Mobile = c.Phone,
+                    Email = c.Email,
+                    ParentID = c.ParentID,
+                    ListID = c.ListID,
+                    Bankname = c.BankName,
+                    FullnameBank = c.FullnameBank,
+                    Branchname = c.Branchname,
+                    IsActive = c.IsActive,
+                    Level = c.Level,
+                    ListGalleryPictureItems = c.Gallery_Picture.Where(a=>a.IsDeleted == false || !a.IsDeleted.HasValue).Select(z=> new GalleryPictureItem
+                    {
+                        Url = z.Folder + z.Url,
+                        Name = z.Name,
+                    }),
+                    UserName = c.DN_Users.OrderBy(m => m.CreateDate).Select(m => m.UserName).FirstOrDefault(),
+                    
+                };
+            return query.FirstOrDefault();
+        }
+        public bool CheckExitsByPhone(string phone)
+        {
+            var query = (from c in FDIDB.DN_Agency
+                         where c.Phone.Equals(phone) && c.IsDelete == false
+                         select c).Count();
+            return query > 0;
+        }
+        public DN_Agency GetByPhone(string phone)
+        {
+            var query = from c in FDIDB.DN_Agency where c.Phone == phone && c.IsDelete == false select c;
+            return query.FirstOrDefault();
+        }
+        public TokenRefresh GetTokenByGuidId(Guid id)
+        {
+            return FDIDB.TokenRefreshes.FirstOrDefault(m => m.GuidId == id);
+        }
+
+        public void DeleteTokenRefresh(TokenRefresh token)
+        {
+            FDIDB.Entry(token).State = System.Data.Entity.EntityState.Deleted;
+        }
+        public void InsertToken(TokenRefresh data)
+        {
+            FDIDB.TokenRefreshes.Add(data);
+        }
+        #endregion
         public void Add(DN_Agency agency)
         {
             agency.Code = GetCodeAgency();
@@ -275,5 +356,6 @@ namespace FDI.DA
         {
             FDIDB.SaveChanges();
         }
+
     }
 }

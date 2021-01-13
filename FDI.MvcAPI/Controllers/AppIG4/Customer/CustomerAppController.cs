@@ -156,13 +156,15 @@ namespace FDI.MvcAPI.Controllers
         {
             try
             {
-                if (!customerDA.CheckExitsByPhone(phone))
+                if (!customerDA.CheckExitsByPhone(phone, Type))
                 {
                     customerDA.Add(new Base.Customer()
                     {
                         Mobile = phone,
                         IsDelete = false,
                         IsPrestige = false,
+                        // type = 1 la khach hang
+                        Type = 1,
                         DateCreated = DateTime.Now.TotalSeconds()
                     });
                     customerDA.Save();
@@ -446,7 +448,7 @@ namespace FDI.MvcAPI.Controllers
             }
             tokenOtpDA.UpdateIsUsed(token, phone);
             await tokenOtpDA.SaveAsync();
-            var customer = customerDA.GetByPhone(phone);
+            var customer = customerDA.GetByPhone(phone, Type);
             var key = Guid.NewGuid();
             IAuthContainerModel model = new JWTContainerModel()
             {
@@ -491,9 +493,9 @@ namespace FDI.MvcAPI.Controllers
             {
                 return Json(new JsonMessage(1000, "invalid token"));
             }
-            var phone = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "Phone").Value.ToString();
-            var id = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "ID").Value.ToString();
-            var key = Guid.Parse(JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "key").Value);
+            var phone = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "Phone")?.Value.ToString();
+            var id = JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "ID")?.Value.ToString();
+            var key = Guid.Parse(JWTService.Instance.GetTokenClaims(refreshToken).FirstOrDefault(m => m.Type == "key")?.Value ?? throw new InvalidOperationException());
 
             var oldToke = customerDA.GetTokenByGuidId(key);
             if (oldToke == null)
@@ -549,7 +551,7 @@ namespace FDI.MvcAPI.Controllers
             if (data.IsDefault)
             {
                 customerAddressDA.ResetDefault(CustomerId);
-             }
+            }
 
             var item = new CustomerAddress()
             {
@@ -638,7 +640,6 @@ namespace FDI.MvcAPI.Controllers
             {
                 return Json(new JsonMessage(1000, "Not found"));
             }
-
             if (!string.IsNullOrEmpty(data.Mobile) && customerDA.CheckExitsByPhone(CustomerId, data.Mobile))
             {
                 return Json(new JsonMessage(1000, "Số điện thoại đã tồn tại"));
@@ -652,7 +653,7 @@ namespace FDI.MvcAPI.Controllers
             customer.Description = data.Description;
             customer.FullName = data.Fullname;
             customer.Mobile = data.Mobile;
-
+            customer.AgencyID = data.AgencyID ?? 1006;
             var file = Request.Files["fileAvatar"];
             if (file != null)
             {
@@ -660,7 +661,6 @@ namespace FDI.MvcAPI.Controllers
                 if (img.Code != 200)
                 {
                     return Json(new JsonMessage(1000, "Tải Avatar không thành công"));
-
                 }
                 customer.AvatarUrl = img.Data.Folder + img.Data.Url;
             }
@@ -671,7 +671,6 @@ namespace FDI.MvcAPI.Controllers
                 if (img.Code != 200)
                 {
                     return Json(new JsonMessage(1000, "Tải ảnh bìa không thành công"));
-
                 }
                 customer.ImageTimeline = img.Data.Folder + img.Data.Url;
             }
@@ -787,6 +786,12 @@ namespace FDI.MvcAPI.Controllers
         public ActionResult UpdateStatusCustomer(int orderId, int status, int cusId)
         {
             var data = orderDA.GetById(orderId);
+            decimal? totak = 0;
+            foreach (var items in data.Shop_Order_Details)
+            {
+                var k = items.Shop_Product.Category.Profit;
+                totak += (items.Shop_Product.Product_Size != null ? items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+            }
             data.Status = status;
             data.Check = 2;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
@@ -802,7 +807,7 @@ namespace FDI.MvcAPI.Controllers
             orderDA.Save();
             if (status == (int)StatusOrder.Complete)
             {
-                #region đơn hàng đã giao thành công trừ tiên của Khách
+                #region đơn hàng đã giao thành chuyển tiền cho shop
                 var cashout = new CashOutWallet
                 {
                     CustomerID = 1,
@@ -817,7 +822,11 @@ namespace FDI.MvcAPI.Controllers
                 #endregion
 
                 var config = _walletCustomerDa.GetConfig();
-                var TotalPrice = data.Total - (config.DiscountOrder * data.Total / 100) + data.FeeShip;
+                var shop = customerDA.GetItemByID(data.ShopID ?? 0);
+
+                //var TotalPrice = data.Total - (config.DiscountOrder * data.Total / 100) + data.FeeShip;
+                var TotalPrice = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
+
                 var walletcus = new WalletCustomer
                 {
                     CustomerID = data.ShopID,
@@ -836,7 +845,6 @@ namespace FDI.MvcAPI.Controllers
                 var token = cus.tokenDevice;
                 Pushnotifycation(sucess.Title, sucess.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code), token, sucess.ID.ToString());
 
-                var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(5);
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", TotalPrice.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
@@ -845,20 +853,23 @@ namespace FDI.MvcAPI.Controllers
                 var iskg = data.Customer.Type == 2;
                 if (!iskg)
                 {
-                    InsertRewardCustomer(data.Customer.ParentID ?? 0, data.Total, data.ID, bonusItems);
+                    InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
+                    InsertRewardOrderAgency(shop,config, totak, data.ID, bonusItems);
                 }
                 else
                 {
-                    decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
-                    if (totalpres > 0)
-                    {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                    }
-                    if (totalnopres > 0)
-                    {
-                        InsertRewardCustomer(data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
-                    }
+                    // chiết khấu shop ký gửi
+
+                    //decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                    //decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                    //if (totalpres > 0)
+                    //{
+                    //    InsertRewardCustomer(cus, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                    //}
+                    //if (totalnopres > 0)
+                    //{
+                    //    InsertRewardCustomer(cus, totalnopres, data.ID, bonusItems);
+                    //}
                 }
                 // update level KH
                 UpdateLevelCustomer(cusId);
@@ -867,7 +878,7 @@ namespace FDI.MvcAPI.Controllers
             {
                 var shop = customerDA.GetItemByID(data.ShopID ?? 0);
                 var shopsucess = orderDA.GetNotifyById(10);
-                
+
                 var tokenshop = shop.tokenDevice;
                 Pushnotifycation(shopsucess.Title.Replace("{customer}", data.Customer.FullName), shopsucess.Content.Replace("{code}", data.Code), tokenshop, shopsucess.ID.ToString());
             }
