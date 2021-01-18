@@ -25,6 +25,7 @@ namespace FDI.MvcAPI.Controllers
     {
         readonly Shop_ProductAppIG4DA _productDa = new Shop_ProductAppIG4DA();
         readonly CustomerAddressAppIG4DA customerAddressDA = new CustomerAddressAppIG4DA();
+        readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("");
         readonly CustomerAppIG4DA _customerDa = new CustomerAppIG4DA();
         readonly Gallery_PictureDA _da = new Gallery_PictureDA();
         readonly OrderPackageAppIG4DA _orderPackageDa = new OrderPackageAppIG4DA();
@@ -545,11 +546,12 @@ namespace FDI.MvcAPI.Controllers
             try
             {
                 var cus = _customerDa.GetItemByID(customerid);
+                var config = _walletCustomerDa.GetConfig();
                 var type = _customerTypeDa.GetById(typeid);
                 if (cus.Wallets >= type.Price)
                 {
                     var dateStart = _orderPackageDa.GetDateStartByCustomerID(customerid);
-                    {
+                    
                         var date = DateTime.Now;
                         var item = new Order_Package
                         {
@@ -560,6 +562,7 @@ namespace FDI.MvcAPI.Controllers
                             DateStart = dateStart ?? date.TotalSeconds(),
                             DateEnd = date.AddMonths(type.Month ?? 0).AddDays(type.Day ?? 0).TotalSeconds(),
                         };
+
                         _orderPackageDa.Add(item);
                         var cashout = new CashOutWallet
                         {
@@ -570,9 +573,27 @@ namespace FDI.MvcAPI.Controllers
                             Type = 2,
                         };
                         _cashOutWalletDa.Add(cashout);
-                    }
+                    
                     await _orderPackageDa.SaveAsync();
+                    
+                    //var walletcus = new WalletCustomer
+                    //{
+                    //    CustomerID = 1,
+                    //    TotalPrice = type.Price*(100 - config.DiscountOrderPacket) ?? 0,
+                    //    DateCreate = DateTime.Now.TotalSeconds(),
+                    //    IsActive = true,
+                    //    IsDelete = false,
+                    //    Type = 3,
+                    //    //Transaction_no = data.Code,
+                    //    CustomerIDR = cus.ID,
+                    //};
+                    //_walletCustomerDa.Add(walletcus);
+                    //_walletCustomerDa.Save();
                     _cashOutWalletDa.Save();
+                    //var total = type.Price * config.DiscountOrderPacket / 100;
+                    var bonusItems = _customerDa.ListBonusTypeItems();
+
+                    InsertRewardOrderPacket(cus,config, type.Price, item.ID, bonusItems);
                     return Json(new BaseResponse<JsonMessage> { Code = 200, Message = "Mua gói dịch vụ thành công." }, JsonRequestBehavior.AllowGet);
                 }
                 else

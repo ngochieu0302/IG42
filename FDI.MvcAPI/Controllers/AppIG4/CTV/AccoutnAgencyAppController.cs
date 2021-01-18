@@ -25,128 +25,22 @@ using ZaloDotNetSDK;
 namespace FDI.MvcAPI.Controllers
 {
     [CustomerAuthorize]
-    public class AgencyAppController : BaseAppApiController
+    public class AccoutnAgencyAppController : BaseAppApiController
     {
         TokenOtpDA tokenOtpDA = new TokenOtpDA();
         CustomerAppIG4DA customerDA = new CustomerAppIG4DA();
         AgencyDA _agencyDa = new AgencyDA("#");
-        OrderAppIG4DA orderDA = new OrderAppIG4DA();
-        CustomerAddressAppIG4DA customerAddressDA = new CustomerAddressAppIG4DA();
         readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
-        readonly WalletsAppIG4DA _walletsDa = new WalletsAppIG4DA("#");
-        readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
-        readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
-        readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
-        readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
+        readonly CustomerAppIG4DA _customerApp = new CustomerAppIG4DA("");
 
+        readonly  CustomerRewardDA _customerRewardApp = new CustomerRewardDA();
         public ActionResult GetProfile()
         {
             var obj = _agencyDa.GetItemById(CustomerId);
             return Json(new BaseResponse<AgencyItem> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-        //#region Wallets customer
 
-        //public ActionResult AddWallets(WalletCustomerAppIG4Item data)
-        //{
-        //    try
-        //    {
-        //        var wallet = new WalletCustomer
-        //        {
-        //            CustomerID = data.CustomerID,
-        //            TotalPrice = data.Totalprice ?? 0,
-        //            DateCreate = DateTime.Now.TotalSeconds(),
-        //            IsDelete = false,
-        //            Note = data.Note,
-        //            IsActive = true,
-        //            Transaction_no = data.TransactionNo,
-        //        };
-        //        _walletCustomerDa.Add(wallet);
-        //        _walletCustomerDa.Save();
-        //        UpdateLevelCustomer(data.CustomerID ?? 0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new JsonMessage(404, ex.ToString()), JsonRequestBehavior.AllowGet);
-        //    }
-        //    return Json(new JsonMessage(200, ""), JsonRequestBehavior.AllowGet);
-        //}
-
-
-        //[AllowAnonymous]
-        //public ActionResult GetListWalletsHistory(int customerId, int type, int page, int take)
-        //{
-        //    var list = _walletCustomerDa.GetListWalletCustomerbyId(customerId);
-        //    var listall = list.Select(item => new WalletsAppAppIG4Item
-        //    {
-        //        ID = item.ID,
-        //        Name = item.TypeWalet == 1 ? "Giao dịch nạp tiền vào G-Store" : "Đơn bán thành công cho khách hàng",
-        //        Date = item.DateCreate.DecimalToString("dd/MM/yyyy hh:mm:ss"),
-        //        Price = item.Totalprice,
-        //        Type = 1
-        //    })
-        //        .ToList();
-        //    var listcash = _cashOutWalletDa.GetListbyCustomer(customerId);
-        //    listall.AddRange(listcash.Select(item => new WalletsAppAppIG4Item
-        //    {
-        //        ID = item.ID,
-        //        Name = item.TypeCash == 1 ? "Giao dịch mua hàng từ G-Store" : item.TypeCash == 2 ? "Giao dịch mua gói dịch vụ từ G-Store" : item.Query,
-        //        Date = item.DateCreate.DecimalToString("dd/MM/yyyy hh:mm:ss"),
-        //        Price = item.Total,
-        //        Type = 2
-        //    }));
-        //    listall = listall.Where(c => (c.Type == type || type == 0)).OrderByDescending(c => c.ID).ToList();
-        //    listall = listall.Skip((page - 1) * take).Take(take).ToList();
-        //    return Json(new BaseResponse<List<WalletsAppAppIG4Item>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
-        //}
-        //[AllowAnonymous]
-        //public ActionResult GetTotalWallets(int customerId)
-        //{
-        //    decimal? totalw = 0;
-        //    var total = _walletsDa.GetWalletsItemById(customerId);
-        //    if (total != null)
-        //    {
-        //        totalw = total.Wallets;
-        //    }
-        //    return Json(new BaseResponse<decimal>() { Code = 200, Data = totalw ?? 0, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
-        //}
-        //[AllowAnonymous]
-        //public ActionResult GetListWalletsRewardHistory(int customerId, int type, int page, int take)
-        //{
-        //    var list = _walletCustomerDa.GetListWalletReward(customerId);
-        //    var listall = list.Select(item => new WalletsAppAppIG4Item
-        //    {
-        //        ID = item.ID,
-        //        Name = item.Type == (int)Reward.Dep ? "Thưởng nạp ví chính" : "Thưởng " + item.BonustypeName,
-        //        Price = item.Price,
-        //        Date = item.DateCreate.DecimalToString("dd/MM/yyyy hh:mm:ss"),
-        //        Type = 1
-        //    })
-        //        .ToList();
-        //    var listrecive = _walletCustomerDa.GetListWalletRecive(customerId);
-        //    listall.AddRange(listrecive.Select(item => new WalletsAppAppIG4Item
-        //    {
-        //        ID = item.ID,
-        //        Name = item.Query,
-        //        Price = item.Price,
-        //        Date = item.DateCreate.DecimalToString("dd/MM/yyyy hh:mm:ss"),
-        //        Type = 2
-        //    }));
-        //    listall = listall.Where(c => (type == 0 || c.Type == type)).OrderByDescending(c => c.ID).ToList();
-        //    listall = listall.Skip((page - 1) * page).Take(take).ToList();
-        //    return Json(new BaseResponse<List<WalletsAppAppIG4Item>>() { Code = 200, Data = listall, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public ActionResult GetTotalWalletsReward(int customerId)
-        //{
-        //    decimal? totalw = 0;
-        //    var total = _walletsDa.GetWalletsRewardByCusId(customerId);
-        //    if (total != null)
-        //    {
-        //        totalw = total.Total;
-        //    }
-        //    return Json(new BaseResponse<decimal>() { Code = 200, Data = totalw ?? 0, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
-        //}
-        //#endregion
+        
         [AllowAnonymous]
         public async Task<ActionResult> Login(string phone)
         {
@@ -292,7 +186,7 @@ namespace FDI.MvcAPI.Controllers
             _agencyDa.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             _agencyDa.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken,ID = customer.ID,IsPrestige = customer.IsFdi} }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, IsPrestige = customer.IsFdi } }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
@@ -465,7 +359,7 @@ namespace FDI.MvcAPI.Controllers
             var obj = _agencyDa.GetItemByIdApp(data.ID);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-        public  ActionResult UpdateAcountRegisterStep2(CustomerAppIG4Item data)
+        public ActionResult UpdateAcountRegisterStep2(CustomerAppIG4Item data)
         {
             var customer = _agencyDa.GetById(data.ID);
             if (customer == null)
@@ -561,8 +455,33 @@ namespace FDI.MvcAPI.Controllers
             }
         }
 
+        public  ActionResult GetListCustomer(int page, int total)
+        {
+            var model = _customerApp.GetListCustomerbyAgencyId(CustomerId, page, total);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>> {Code = 200, Data = model});
+        }
+        public  ActionResult GetListAgency(int page, int total)
+        {
+            var model = _customerApp.GetListAgencyCustomerbyAgencyId(CustomerId, page, total);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = model });
+        }
+        public ActionResult GetListSouce(int page, int total)
+        {
+            var model = _customerApp.GetListSouceCustomerbyAgencyId(CustomerId, page, total);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = model });
+        }
 
+        public ActionResult GetWallet()
+        {
+            var model = _customerRewardApp.GetWallet(CustomerId);
+            return Json(new BaseResponse<CustomerRewardAppIG4Item> {Code = 200, Data = model});
+        }
 
+        public ActionResult StaticWalletTotal(decimal? from, decimal? to)
+        {
+
+            return Json(new BaseResponse<CustomerRewardAppIG4Item>());
+        }
 
     }
 }
