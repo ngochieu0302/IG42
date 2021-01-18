@@ -55,6 +55,7 @@ namespace FDI.Utils
         Sale = 6,
         QR = 7,
         Depvelop = 8,
+        Packet = 9
     }
     public static class TypeSale
     {
