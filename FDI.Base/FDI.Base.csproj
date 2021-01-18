@@ -924,6 +924,9 @@
     <Compile Include="sp_thongkenguoiviet_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="StaticChartsAgencyTotalPrice_Result.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="StaticChartsCustomerBuyPacket_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

@@ -2833,6 +2833,23 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
+        public virtual ObjectResult<StaticChartsAgencyTotalPrice_Result> StaticChartsAgencyTotalPrice(Nullable<decimal> from, Nullable<decimal> to, Nullable<int> aid)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(decimal));
+    
+            var toParameter = to.HasValue ?
+                new ObjectParameter("to", to) :
+                new ObjectParameter("to", typeof(decimal));
+    
+            var aidParameter = aid.HasValue ?
+                new ObjectParameter("aid", aid) :
+                new ObjectParameter("aid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsAgencyTotalPrice_Result>("StaticChartsAgencyTotalPrice", fromParameter, toParameter, aidParameter);
+        }
+    
         public virtual ObjectResult<StaticChartsCustomer_Result> StaticChartsCustomer(Nullable<int> i)
         {
             var iParameter = i.HasValue ?

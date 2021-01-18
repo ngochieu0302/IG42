@@ -640,6 +640,8 @@ warning 6002: The table/view 'NNIG4.dbo.AspNetUserRoles' does not have a primary
     <Property Name="DiscountSale" Type="decimal" Precision="18" Scale="0" />
     <Property Name="ProfitSouce" Type="int" />
     <Property Name="DiscountSouce" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrderAgency" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrderPacket" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="ContactOrder_BedDesk">
     <Key>
@@ -3358,6 +3360,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="IsActive" Type="bit" />
     <Property Name="TotalCp" Type="decimal" Precision="18" Scale="0" />
     <Property Name="WalletCusId" Type="int" />
+    <Property Name="OrderPacketID" Type="int" />
   </EntityType>
   <EntityType Name="Role_ModuleActive">
     <Key>
@@ -9406,6 +9409,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RewardHistory_DN_Agency">
+    <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="0..1" />
+    <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DN_Agency">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="AgencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RewardHistory_DN_ImportProduct">
     <End Role="DN_ImportProduct" Type="Self.DN_ImportProduct" Multiplicity="0..1" />
     <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
@@ -11455,6 +11470,11 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     <Parameter Name="end" Type="datetime" Mode="In" />
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="StaticChartsAgencyTotalPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="from" Type="decimal" Mode="In" />
+    <Parameter Name="to" Type="decimal" Mode="In" />
+    <Parameter Name="aid" Type="int" Mode="In" />
+  </Function>
   <Function Name="StaticChartsCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="i" Type="int" Mode="In" />
   </Function>
@@ -13548,6 +13568,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_Customer" Association="Self.FK_RewardHistory_Customer">
       <End Role="Customer" EntitySet="Customer" />
+      <End Role="RewardHistory" EntitySet="RewardHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_DN_Agency" Association="Self.FK_RewardHistory_DN_Agency">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="RewardHistory" EntitySet="RewardHistory" />
     </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_DN_ImportProduct" Association="Self.FK_RewardHistory_DN_ImportProduct">
