@@ -173,7 +173,7 @@ namespace FDI.MvcAPI.Controllers
                 var otppost = new PostOtpLoginAppIG4()
                 {
                     msisdn = phone.Remove(0, 1).Insert(0, "84"),
-                    brandname = "G-STORE",
+                    brandname = "IG4",
                     msgbody = "IG4: Ma xac minh cua ban la " + otp,
                     user = "G-STORE",
                     pass = "GSTORE123",

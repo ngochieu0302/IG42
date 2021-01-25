@@ -310,6 +310,8 @@ namespace FDI.DA
 
                                 ID = c.ID,
                                 SizeID = c.SizeID,
+                                PriceOld = c.PriceOld,
+                                PriceNew = c.PriceNew ?? 0
                             }),
                             ListGalleryPictureItems = o.Gallery_Picture2.Where(a => a.IsDeleted != true && a.IsShow == true).Select(c => new GalleryPictureItem
                             {

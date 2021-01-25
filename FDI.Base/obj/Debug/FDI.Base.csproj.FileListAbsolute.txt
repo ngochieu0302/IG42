@@ -52,3 +52,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CoreCompileInp
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\obj\Debug\FDI.Base.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\obj\Debug\FDI.Base.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\obj\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\obj\Debug\FDI.Base.csprojAssemblyReference.cache

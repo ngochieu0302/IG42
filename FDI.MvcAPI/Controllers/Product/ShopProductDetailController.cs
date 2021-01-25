@@ -140,7 +140,6 @@ namespace FDI.MvcAPI.Controllers
                     var objProduct = new Shop_Product
                     {
                         QuantityDay = model.QuantityDay,
-
                         Quantity = 0,
                         CreateDate = model.StartDate,
                         CodeSku = model.Code,
@@ -303,18 +302,26 @@ namespace FDI.MvcAPI.Controllers
                         PictureID = model.PictureID,
                         UnitID = model.UnitID,
                         StartDate = DateTime.Now.TotalSeconds(),
-                        Description = model.Description
+                        Description = model.Description,
                     };
-                    var objProduct = new Shop_Product
+                    foreach (var item in model.Shop_Product)
                     {
-                        QuantityDay = model.QuantityDay,
-                        Quantity = 0,
-                        CreateDate = model.StartDate,
-                        CodeSku = model.Code,
-                        IsDelete = false,
-                        IsShow = model.IsShow
-                    };
-                    modelNew.Shop_Product.Add(objProduct);
+                        var objProduct = new Shop_Product
+                        {
+                            SizeID = item.SizeID,
+                            PriceNew = item.PriceNew,
+                            PriceOld = item.PriceOld,
+                            QuantityDay = model.QuantityDay,
+                            Quantity = 0,
+                            CreateDate = model.StartDate,
+                            CodeSku = model.Code,
+                            IsDelete = false,
+                            IsShow = model.IsShow
+                        };
+
+                        modelNew.Shop_Product.Add(objProduct);
+                    }
+                    
                     _da.Add(modelNew);
                     _da.Save();
                 }
@@ -365,7 +372,6 @@ namespace FDI.MvcAPI.Controllers
             var msg = new JsonMessage(false, "Thêm mới sản phẩm thành công.");
             try
             {
-
                 if (key == Keyapi)
                 {
                     var model = _da.GetProductById(ItemId);
@@ -374,6 +380,8 @@ namespace FDI.MvcAPI.Controllers
                     foreach (var item in model)
                     {
                         var name = Request["Size_old" + item.ID];
+                        var pricenew = Request["PriceNew_old" + item.ID];
+                        var priceold = Request["PriceOld_old" + item.ID];
                         if (string.IsNullOrEmpty(name))
                         {
                             list.Add(item);
@@ -381,10 +389,10 @@ namespace FDI.MvcAPI.Controllers
                         else
                         {
                             item.SizeID = int.Parse(name);
+                            item.PriceNew = decimal.Parse(pricenew);
+                            item.PriceOld = decimal.Parse(priceold);
                             //item.SizeID = ConvertUtil.ToInt32(Request["Size_old" + item.ID]);
-
                         }
-
                     }
                     foreach (var item in list)
                     {
@@ -394,6 +402,8 @@ namespace FDI.MvcAPI.Controllers
                     for (int i = 1; i <= stt; i++)
                     {
                         var name = Request["Size_add_" + i];
+                        var pricenew = Request["PriceNew_add_" + i];
+                        var priceold = Request["PriceOld_add_" + i];
                         if (!string.IsNullOrEmpty(name))
                         {
                             var obj = new Shop_Product()
@@ -401,6 +411,8 @@ namespace FDI.MvcAPI.Controllers
                                 ProductDetailID = product.ID,
 
                                 SizeID = int.Parse(name),
+                                PriceNew = decimal.Parse(pricenew),
+                                PriceOld = decimal.Parse(priceold),
                                 // SizeID = ConvertUtil.ToInt32(Request["Size_add_" + i]),
                                 IsShow = true,
                                 IsDelete = false,

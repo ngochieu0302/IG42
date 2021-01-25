@@ -384,6 +384,7 @@ C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.dll
 C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.pdb
+C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\bin\FDI.Web.dll.config
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\bin\FDI.Web.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\bin\FDI.Web.pdb
@@ -464,4 +465,3 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CoreCompileInput
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.pdb
-C:\IG4\CodeIG4\IG4\FDI.Web\obj\Debug\FDI.Web.csprojAssemblyReference.cache

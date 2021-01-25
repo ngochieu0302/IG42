@@ -62,6 +62,7 @@ namespace FDI.Base
         public string NameAscii { get; set; }
         public string Code { get; set; }
         public string Author { get; set; }
+        public Nullable<decimal> PriceOld { get; set; }
         public Nullable<decimal> PriceNew { get; set; }
         public string Format { get; set; }
         public Nullable<decimal> Weight { get; set; }
