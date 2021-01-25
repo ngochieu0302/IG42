@@ -36,7 +36,8 @@ namespace FDI.MvcAPI.Controllers
         readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
         readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
         readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
-        readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
+        //readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
+        readonly AgencyDA _agencyDa = new AgencyDA("");
 
         //public ActionResult CustomerOrther(string lstInt)
         //{
@@ -207,8 +208,25 @@ namespace FDI.MvcAPI.Controllers
 
             return Json(new JsonMessage(200, "Ok"), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult UpdateAgencyQR(string phone)
+        {
+            try
+            {
+                var agency = _agencyDa.GetByPhone(phone);
+                var cus = customerDA.GetById(CustomerId);
+                cus.AgencyID = agency.ID;
+                customerDA.Save();
+            }
+            catch (Exception e)
+            {
+                return Json(new JsonMessage { Code = 404, Message = e.ToString() });
+            }
+
+            return Json(new JsonMessage {Code = 200, Message = ""});
+        }
         [HttpPost]
         [AllowAnonymous]
+
         public ActionResult FacebookCallback(string accesstoken, string token)
         {
             try
@@ -1021,5 +1039,6 @@ namespace FDI.MvcAPI.Controllers
             }
             return Json(new BaseResponse<List<ListOrderShopChartAppIG4Item>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

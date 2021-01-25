@@ -177,8 +177,35 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.Razor.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.xml
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.pdb
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\FDI.CORE.dll.config
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\FDI.CORE.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\FDI.CORE.pdb
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\EntityFramework.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\EntityFramework.SqlServer.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\HtmlAgilityPack.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Helpers.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Mvc.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Razor.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.dll
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\EntityFramework.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\EntityFramework.SqlServer.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\HtmlAgilityPack.pdb
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\HtmlAgilityPack.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Helpers.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Mvc.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.Razor.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\FDI\NNIG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.xml
+D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache
+D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
+D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
+D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.dll
+D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.pdb

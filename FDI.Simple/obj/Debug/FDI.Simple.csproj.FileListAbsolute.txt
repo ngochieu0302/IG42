@@ -175,3 +175,25 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CoreCompil
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Simple\obj\Debug\FDI.Simple.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Simple\obj\Debug\FDI.Simple.pdb
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Simple.dll.config
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Simple.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Simple.pdb
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\EntityFramework.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\EntityFramework.SqlServer.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Base.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.CORE.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\HtmlAgilityPack.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Base.pdb
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.Base.dll.config
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.CORE.pdb
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\FDI.CORE.dll.config
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\EntityFramework.xml
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\EntityFramework.SqlServer.xml
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\HtmlAgilityPack.pdb
+D:\FDI\NNIG4\FDI.Simple\bin\Debug\HtmlAgilityPack.xml
+D:\FDI\NNIG4\FDI.Simple\obj\Debug\FDI.Simple.csprojAssemblyReference.cache
+D:\FDI\NNIG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CoreCompileInputs.cache
+D:\FDI\NNIG4\FDI.Simple\obj\Debug\FDI.Simple.csproj.CopyComplete
+D:\FDI\NNIG4\FDI.Simple\obj\Debug\FDI.Simple.dll
+D:\FDI\NNIG4\FDI.Simple\obj\Debug\FDI.Simple.pdb

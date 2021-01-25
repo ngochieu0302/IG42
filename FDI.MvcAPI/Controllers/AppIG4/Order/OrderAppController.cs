@@ -267,7 +267,6 @@ namespace FDI.MvcAPI.Controllers
                 {
                     InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
                     InsertRewardOrderAgency(shop, config, totak, data.ID, bonusItems);
-
                 }
                 else
                 {

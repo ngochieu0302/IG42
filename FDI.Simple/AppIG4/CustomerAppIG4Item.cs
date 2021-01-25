@@ -67,6 +67,8 @@ namespace FDI.Simple
         public string FullnameBank { get; set; }
         public int? Level { get; set; }
         public decimal? PercentDiscount { get; set; }
+        public string ListAgencyId { get; set; }
+
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
 

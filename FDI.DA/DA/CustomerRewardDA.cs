@@ -181,7 +181,23 @@ namespace FDI.DA
             else
                 return true;
         }
+        #region App
 
+        public CustomerRewardAppIG4Item GetWallet(int id)
+        {
+            var query = from c in FDIDB.Customer_Reward
+                where c.AgencyID == id
+                select new CustomerRewardAppIG4Item
+                {
+                    ID = c.ID,
+                    FullName = c.DN_Agency.FullName,
+                    Total = c.PriceReward - c.CashOutWallet,
+                    PriceReward = c.PriceReward,
+                    CashOutWallet = c.CashOutWallet,
+                };
+            return query.FirstOrDefault();
+        }
+#endregion
         public void Add(ReceiveHistory item)
         {
             FDIDB.ReceiveHistories.Add(item);

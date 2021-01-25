@@ -361,6 +361,81 @@ namespace FDI.MvcAPI.Controllers
             _rewardHistoryDa.Add(reward0);
             _rewardHistoryDa.Save();
         }
+        public void InsertRewardOrderPacket(CustomerAppIG4Item shop, ConfigExchange config, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
+        {
+            var now = DateTime.Now.TotalSeconds();
+            var totalD = totalprice * config.DiscountOrderPacket / 100;
+            var ltsArrId = FDIUtils.StringToListInt(shop.ListAgencyId);
+            ltsArrId = ltsArrId.Take(bonusItems.Count).ToList();
+            var listcustomer = _agencyDa.GetListAgencyListID(ltsArrId);
+            decimal per = 0;
+            var i = 1;
+            foreach (var item in listcustomer)
+            {
+                if (i <= bonusItems.Count)
+                {
+                    //if (item.LevelAdd >= i)
+                    //{
+                    var bonusItem = bonusItems.FirstOrDefault(m => m.ID == i);
+                    if (bonusItem != null)
+                    {
+                        var reward = new RewardHistory
+                        {
+                            Price = totalD * (bonusItem.Percent / 100),
+                            //CustomerID = item.ID,
+                            Date = now,
+                            OrderPacketID = OrderId,
+                            Type = (int)Reward.Cus,
+                            BonusTypeId = i,
+                            Percent = bonusItem.Percent,
+                            IsDeleted = false,
+                            IsActive = true,
+                            AgencyId = item.ID,
+                            TotalCp = totalD,
+                        };
+                        _rewardHistoryDa.Add(reward);
+                        var cus = _customerDa.GetItemByID(item.ID);
+                        var shopsucess = _orderDa.GetNotifyById(6);
+                        var tokenshop = cus.tokenDevice;
+                        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                        per += bonusItem.Percent ?? 0;
+                    }
+                }
+                i++;
+            }
+            var reward0 = new RewardHistory
+            {
+                Price = totalD * ((100 - per) / 100),
+                //CustomerID = item.ID,
+                Date = now,
+                OrderPacketID = OrderId,
+                Type = (int)Reward.Cus,
+                //BonusTypeId = i,
+                Percent = 100 - per,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = shop.AgencyID,
+                TotalCp = totalD,
+            };
+            _rewardHistoryDa.Add(reward0);
+            var reward1 = new RewardHistory
+            {
+                Price = totalprice * (100-config.DiscountOrderPacket)/100,
+                //CustomerID = item.ID,
+                Date = now,
+                OrderPacketID = OrderId,
+                Type = (int)Reward.Packet,
+                //BonusTypeId = i,
+                Percent = 100 - config.DiscountOrderPacket,
+                IsDeleted = false,
+                IsActive = true,
+                AgencyId = 1006,
+                TotalCp = totalprice * (100 - config.DiscountOrderPacket) / 100,
+            };
+            _rewardHistoryDa.Add(reward1);
+            _rewardHistoryDa.Save();
+
+        }
 
         public string Pushnotifycation(string title, string content, string token, string type = "1")
         {

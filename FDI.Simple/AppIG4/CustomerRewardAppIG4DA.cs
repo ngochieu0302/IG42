@@ -4,7 +4,7 @@ using FDI.Base;
 
 namespace FDI.Simple
 {
-    public class CustomerRewardAppIG4DA : BaseSimple
+    public class CustomerRewardAppIG4Item : BaseSimple
     {
         public int? CustomerID { get; set; }
         public string CustomerName { get; set; }
@@ -36,7 +36,7 @@ namespace FDI.Simple
 
     public class ModelCustomerRewardAppIG4Item : BaseModelSimple
     {
-        public IEnumerable<CustomerRewardAppIG4DA> ListItems { get; set; }
+        public IEnumerable<CustomerRewardAppIG4Item> ListItems { get; set; }
         public string DateMonth { get; set; }
         public string DateYear { get; set; }
         public decimal? TotalReward { get; set; }
