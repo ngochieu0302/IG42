@@ -209,3 +209,4 @@ D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.dll
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache
