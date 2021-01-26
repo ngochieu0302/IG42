@@ -130,6 +130,11 @@ namespace FDI.MvcAPI.Controllers
             var data = orderDA.GetListProductByNew(shopid, status, page, take);
             return Json(new BaseResponse<List<OrderShopAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetListProductByCustomerID()
+        {
+            var data = orderDA.GetListSimpleByCusId(CustomerId);
+            return Json(new BaseResponse<List<OrderAppIG4Item>> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
+        }
         [AllowAnonymous]
         public ActionResult UpdateStatus(int orderId, int type)
         {

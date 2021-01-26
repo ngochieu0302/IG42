@@ -496,7 +496,6 @@ namespace FDI.MvcAPI.Controllers
             customerDA.Save();
             return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, JsonRequestBehavior.AllowGet);
         }
-
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> RefreshToken(string refreshToken)
@@ -649,7 +648,6 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200, Data = data, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
 
         }
-
         [HttpPost]
         public async Task<ActionResult> UpdateAcount(CustomerAppIG4Item data)
         {
@@ -716,9 +714,16 @@ namespace FDI.MvcAPI.Controllers
                 }
             }
         }
+        [AllowAnonymous]
         public ActionResult GetShopPrestige(int page, int pagesize)
         {
-            var lst = customerDA.GetPrestige(page, pagesize);
+            var lst = customerDA.GetPrestige(Latitude, Longitude, page, pagesize);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        public ActionResult GetShopPrestigeForMap(double km)
+        {
+            var lst = customerDA.GetPrestigeForMap(km, Latitude, Longitude);
             return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
@@ -732,7 +737,7 @@ namespace FDI.MvcAPI.Controllers
         {
             var lst = customerDA.GetListOrderCustomer(cusId, status, page, pagesize);
             return Json(new BaseResponse<List<OrderCustomerAppItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
-        }
+        } 
         public ActionResult GetListPackage()
         {
             var lst = customerDA.GetListPackage();
