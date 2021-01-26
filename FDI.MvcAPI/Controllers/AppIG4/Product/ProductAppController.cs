@@ -20,7 +20,7 @@ using FDI.CORE;
 
 namespace FDI.MvcAPI.Controllers
 {
-    [CustomerAuthorize]
+    //[CustomerAuthorize]
     public class ProductAppController : BaseAppApiController
     {
         readonly Shop_ProductAppIG4DA _productDa = new Shop_ProductAppIG4DA();

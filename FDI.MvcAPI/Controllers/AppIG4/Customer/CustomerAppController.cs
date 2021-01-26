@@ -170,21 +170,22 @@ namespace FDI.MvcAPI.Controllers
                     });
                     customerDA.Save();
                 }
-                var otp = FDIUtils.RandomOtp(4);
-                var otppost = new PostOtpLoginAppIG4()
-                {
-                    msisdn = phone.Remove(0, 1).Insert(0, "84"),
-                    brandname = "G-STORE",
-                    msgbody = "IG4: Ma xac minh cua ban la " + otp,
-                    user = "G-STORE",
-                    pass = "GSTORE123",
-                    charset = "8"
-                };
-                var url = "http://123.31.20.167:8383/restservice/";
-                var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
-                if (result.FirstOrDefault()?.Result.code == "200")
-                {
-                    tokenOtpDA.Add(new TokenOtp()
+                //var otp = FDIUtils.RandomOtp(4);
+                var otp = "123456";
+                //var otppost = new PostOtpLoginAppIG4()
+                //{
+                //    msisdn = phone.Remove(0, 1).Insert(0, "84"),
+                //    brandname = "G-STORE",
+                //    msgbody = "IG4: Ma xac minh cua ban la " + otp,
+                //    user = "G-STORE",
+                //    pass = "GSTORE123",
+                //    charset = "8"
+                //};
+                //var url = "http://123.31.20.167:8383/restservice/";
+                //var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
+                //if (result.FirstOrDefault()?.Result.code == "200")
+                //{
+                tokenOtpDA.Add(new TokenOtp()
                     {
                         ObjectId = phone,
                         Token = otp,
@@ -194,11 +195,11 @@ namespace FDI.MvcAPI.Controllers
                         DateCreated = DateTime.Now,
                     });
                     tokenOtpDA.Save();
-                }
-                else
-                {
-                    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
-                }
+                //}
+                //else
+                //{
+                //    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
+                //}
             }
             catch (Exception e)
             {
@@ -494,7 +495,7 @@ namespace FDI.MvcAPI.Controllers
             customerDA.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             customerDA.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, Fullname = customer.FullName } }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
