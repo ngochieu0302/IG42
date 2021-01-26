@@ -177,7 +177,6 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.Razor.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\bin\Debug\System.Web.WebPages.Razor.xml
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.dll
@@ -210,3 +209,4 @@ D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CoreCompileInputs.cache
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.csproj.CopyComplete
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.dll
 D:\FDI\NNIG4\FDI.CORE\obj\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.CORE\obj\Debug\FDI.CORE.csprojAssemblyReference.cache

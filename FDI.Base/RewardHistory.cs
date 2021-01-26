@@ -29,6 +29,7 @@ namespace FDI.Base
         public Nullable<decimal> TotalCp { get; set; }
         public Nullable<int> WalletCusId { get; set; }
         public Nullable<int> OrderPacketID { get; set; }
+        public Nullable<decimal> DateCreate { get; set; }
     
         public virtual BonusType BonusType { get; set; }
         public virtual Customer Customer { get; set; }

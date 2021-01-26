@@ -3366,6 +3366,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="TotalCp" Type="decimal" Precision="18" Scale="0" />
           <Property Name="WalletCusId" Type="int" />
           <Property Name="OrderPacketID" Type="int" />
+          <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Role_ModuleActive">
           <Key>
@@ -3647,6 +3648,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="NameAscii" Type="nvarchar" MaxLength="255" />
           <Property Name="Code" Type="nvarchar" MaxLength="255" />
           <Property Name="Author" Type="nvarchar" MaxLength="255" />
+          <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PriceNew" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Format" Type="nvarchar" MaxLength="255" />
           <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
@@ -11480,6 +11482,12 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
           <Parameter Name="to" Type="decimal" Mode="In" />
           <Parameter Name="aid" Type="int" Mode="In" />
         </Function>
+        <Function Name="StaticChartsbyDayAgencyTotalPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="from" Type="decimal" Mode="In" />
+          <Parameter Name="to" Type="decimal" Mode="In" />
+          <Parameter Name="aid" Type="int" Mode="In" />
+          <Parameter Name="type" Type="int" Mode="In" />
+        </Function>
         <Function Name="StaticChartsCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="i" Type="int" Mode="In" />
         </Function>
@@ -16779,6 +16787,12 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <Parameter Name="to" Mode="In" Type="Decimal" />
             <Parameter Name="aid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="StaticChartsbyDayAgencyTotalPrice" ReturnType="Collection(FDIModel.StaticChartsbyDayAgencyTotalPrice_Result)">
+            <Parameter Name="from" Mode="In" Type="Decimal" />
+            <Parameter Name="to" Mode="In" Type="Decimal" />
+            <Parameter Name="aid" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="StaticChartsCustomer" ReturnType="Collection(FDIModel.StaticChartsCustomer_Result)">
             <Parameter Name="i" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -20614,6 +20628,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="TotalCp" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="WalletCusId" Type="Int32" />
           <Property Name="OrderPacketID" Type="Int32" />
+          <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="BonusType" Relationship="FDIModel.FK_RewardHistory_BonusType" FromRole="RewardHistory" ToRole="BonusType" />
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
           <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_RewardHistory_DN_Agency" FromRole="RewardHistory" ToRole="DN_Agency" />
@@ -20922,6 +20937,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PriceNew" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Format" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
@@ -27577,9 +27593,15 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
         <ComplexType Name="StaticChartsAgencyTotalPrice_Result">
           <Property Type="Int32" Name="AgencyId" Nullable="true" />
           <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TotalOld" Nullable="true" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="totalcustomer" Nullable="true" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="totalagency" Nullable="true" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="totalsouce" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="StaticChartsbyDayAgencyTotalPrice_Result">
+          <Property Type="Int32" Name="AgencyId" Nullable="true" />
+          <Property Type="Decimal" Name="DateCreate" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
         <ComplexType Name="StaticChartsCustomer_Result">
           <Property Type="Int32" Name="I" Nullable="true" />
@@ -30887,6 +30909,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="RewardHistories">
             <EntityTypeMapping TypeName="FDIModel.RewardHistory">
               <MappingFragment StoreEntitySet="RewardHistory">
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="OrderPacketID" ColumnName="OrderPacketID" />
                 <ScalarProperty Name="WalletCusId" ColumnName="WalletCusId" />
                 <ScalarProperty Name="TotalCp" ColumnName="TotalCp" />
@@ -31162,6 +31185,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Format" ColumnName="Format" />
                 <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
+                <ScalarProperty Name="PriceOld" ColumnName="PriceOld" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="NameAscii" ColumnName="NameAscii" />
@@ -33343,9 +33367,19 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               <ComplexTypeMapping TypeName="FDIModel.StaticChartsAgencyTotalPrice_Result">
                 <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TotalOld" ColumnName="TotalOld" />
                 <ScalarProperty Name="totalcustomer" ColumnName="totalcustomer" />
                 <ScalarProperty Name="totalagency" ColumnName="totalagency" />
                 <ScalarProperty Name="totalsouce" ColumnName="totalsouce" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StaticChartsbyDayAgencyTotalPrice" FunctionName="FDIModel.Store.StaticChartsbyDayAgencyTotalPrice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FDIModel.StaticChartsbyDayAgencyTotalPrice_Result">
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

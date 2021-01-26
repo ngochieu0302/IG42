@@ -3361,6 +3361,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="TotalCp" Type="decimal" Precision="18" Scale="0" />
     <Property Name="WalletCusId" Type="int" />
     <Property Name="OrderPacketID" Type="int" />
+    <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="Role_ModuleActive">
     <Key>
@@ -3642,6 +3643,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="NameAscii" Type="nvarchar" MaxLength="255" />
     <Property Name="Code" Type="nvarchar" MaxLength="255" />
     <Property Name="Author" Type="nvarchar" MaxLength="255" />
+    <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
     <Property Name="PriceNew" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Format" Type="nvarchar" MaxLength="255" />
     <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
@@ -11474,6 +11476,12 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     <Parameter Name="from" Type="decimal" Mode="In" />
     <Parameter Name="to" Type="decimal" Mode="In" />
     <Parameter Name="aid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="StaticChartsbyDayAgencyTotalPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="from" Type="decimal" Mode="In" />
+    <Parameter Name="to" Type="decimal" Mode="In" />
+    <Parameter Name="aid" Type="int" Mode="In" />
+    <Parameter Name="type" Type="int" Mode="In" />
   </Function>
   <Function Name="StaticChartsCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="i" Type="int" Mode="In" />

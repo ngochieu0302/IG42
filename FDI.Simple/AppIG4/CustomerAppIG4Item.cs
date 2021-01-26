@@ -21,7 +21,7 @@ namespace FDI.Simple
         public string Password { get; set; }
         public int? DistrictId { get; set; }
         public int? AgencyID { get; set; }
-
+        public string ListAgencyId { get; set; }
         public int? CityId { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
@@ -67,7 +67,6 @@ namespace FDI.Simple
         public string FullnameBank { get; set; }
         public int? Level { get; set; }
         public decimal? PercentDiscount { get; set; }
-        public string ListAgencyId { get; set; }
 
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }

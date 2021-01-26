@@ -15,6 +15,7 @@ namespace FDI.Base
     {
         public Nullable<int> AgencyId { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public Nullable<decimal> TotalOld { get; set; }
         public Nullable<decimal> totalcustomer { get; set; }
         public Nullable<decimal> totalagency { get; set; }
         public Nullable<decimal> totalsouce { get; set; }

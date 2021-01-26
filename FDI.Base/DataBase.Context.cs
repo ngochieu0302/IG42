@@ -2850,6 +2850,27 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsAgencyTotalPrice_Result>("StaticChartsAgencyTotalPrice", fromParameter, toParameter, aidParameter);
         }
     
+        public virtual ObjectResult<StaticChartsbyDayAgencyTotalPrice_Result> StaticChartsbyDayAgencyTotalPrice(Nullable<decimal> from, Nullable<decimal> to, Nullable<int> aid, Nullable<int> type)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(decimal));
+    
+            var toParameter = to.HasValue ?
+                new ObjectParameter("to", to) :
+                new ObjectParameter("to", typeof(decimal));
+    
+            var aidParameter = aid.HasValue ?
+                new ObjectParameter("aid", aid) :
+                new ObjectParameter("aid", typeof(int));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsbyDayAgencyTotalPrice_Result>("StaticChartsbyDayAgencyTotalPrice", fromParameter, toParameter, aidParameter, typeParameter);
+        }
+    
         public virtual ObjectResult<StaticChartsCustomer_Result> StaticChartsCustomer(Nullable<int> i)
         {
             var iParameter = i.HasValue ?

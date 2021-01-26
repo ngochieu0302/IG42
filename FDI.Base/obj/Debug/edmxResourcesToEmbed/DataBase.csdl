@@ -2803,6 +2803,12 @@
       <Parameter Name="to" Mode="In" Type="Decimal" />
       <Parameter Name="aid" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="StaticChartsbyDayAgencyTotalPrice" ReturnType="Collection(FDIModel.StaticChartsbyDayAgencyTotalPrice_Result)">
+      <Parameter Name="from" Mode="In" Type="Decimal" />
+      <Parameter Name="to" Mode="In" Type="Decimal" />
+      <Parameter Name="aid" Mode="In" Type="Int32" />
+      <Parameter Name="type" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="StaticChartsCustomer" ReturnType="Collection(FDIModel.StaticChartsCustomer_Result)">
       <Parameter Name="i" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -6638,6 +6644,7 @@
     <Property Name="TotalCp" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="WalletCusId" Type="Int32" />
     <Property Name="OrderPacketID" Type="Int32" />
+    <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="BonusType" Relationship="FDIModel.FK_RewardHistory_BonusType" FromRole="RewardHistory" ToRole="BonusType" />
     <NavigationProperty Name="Customer" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
     <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_RewardHistory_DN_Agency" FromRole="RewardHistory" ToRole="DN_Agency" />
@@ -6946,6 +6953,7 @@
     <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PriceNew" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Format" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
@@ -13601,9 +13609,15 @@
   <ComplexType Name="StaticChartsAgencyTotalPrice_Result">
     <Property Type="Int32" Name="AgencyId" Nullable="true" />
     <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="TotalOld" Nullable="true" Precision="38" Scale="0" />
     <Property Type="Decimal" Name="totalcustomer" Nullable="true" Precision="38" Scale="0" />
     <Property Type="Decimal" Name="totalagency" Nullable="true" Precision="38" Scale="0" />
     <Property Type="Decimal" Name="totalsouce" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="StaticChartsbyDayAgencyTotalPrice_Result">
+    <Property Type="Int32" Name="AgencyId" Nullable="true" />
+    <Property Type="Decimal" Name="DateCreate" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
   </ComplexType>
   <ComplexType Name="StaticChartsCustomer_Result">
     <Property Type="Int32" Name="I" Nullable="true" />

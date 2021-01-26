@@ -253,6 +253,7 @@ C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CoreCompileInputs.cach
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.dll
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.pdb
+C:\IG4\CodeIG4\IG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.dll.config
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.pdb
@@ -300,52 +301,3 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CopyComple
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml
-C:\IG4\CodeIG4\IG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.dll.config
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.GetAPI.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EntityFramework.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EntityFramework.SqlServer.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Base.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.CORE.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Memcached.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Simple.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Utils.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\Microsoft.Contracts.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\Microsoft.Web.Infrastructure.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Helpers.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Mvc.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Razor.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.Deployment.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.Razor.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\HtmlAgilityPack.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EPPlus.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\log4net.dll
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Base.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Base.dll.config
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.CORE.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.CORE.dll.config
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Simple.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Simple.dll.config
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Utils.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\FDI.Utils.dll.config
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EntityFramework.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EntityFramework.SqlServer.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Helpers.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Mvc.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.Razor.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.Deployment.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\System.Web.WebPages.Razor.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\HtmlAgilityPack.pdb
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\HtmlAgilityPack.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\EPPlus.xml
-D:\FDI\NNIG4\FDI.GetAPI\bin\Debug\log4net.xml
-D:\FDI\NNIG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csprojAssemblyReference.cache
-D:\FDI\NNIG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CoreCompileInputs.cache
-D:\FDI\NNIG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CopyComplete
-D:\FDI\NNIG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.dll
-D:\FDI\NNIG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.pdb
