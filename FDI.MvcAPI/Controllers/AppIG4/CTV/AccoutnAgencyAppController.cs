@@ -39,7 +39,6 @@ namespace FDI.MvcAPI.Controllers
             var obj = _agencyDa.GetItemById(CustomerId);
             return Json(new BaseResponse<AgencyItem> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-
         
         [AllowAnonymous]
         public async Task<ActionResult> Login(string phone)
@@ -94,11 +93,12 @@ namespace FDI.MvcAPI.Controllers
 
             return Json(new JsonMessage(200, "Ok"), JsonRequestBehavior.AllowGet);
         }
+        [AllowAnonymous]
         public async Task<ActionResult> CheckPhoneRegister(string phone)
         {
             try
             {
-                if (!_agencyDa.CheckExitsByPhone(phone))
+                if (!_agencyDa.CheckExitsByPhone(phone,0))
                 {
                     var model = new DN_Agency
                     {
@@ -109,35 +109,35 @@ namespace FDI.MvcAPI.Controllers
                     _agencyDa.Add(model);
                     customerDA.Save();
                 }
-                var otp = FDIUtils.RandomOtp(4);
-                var otppost = new PostOtpLoginAppIG4()
-                {
-                    msisdn = phone.Remove(0, 1).Insert(0, "84"),
-                    brandname = "G-STORE",
-                    msgbody = "IG4: Ma xac minh cua ban la " + otp,
-                    user = "G-STORE",
-                    pass = "GSTORE123",
-                    charset = "8"
-                };
-                var url = "http://123.31.20.167:8383/restservice/";
-                var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
-                if (result.FirstOrDefault()?.Result.code == "200")
-                {
-                    tokenOtpDA.Add(new TokenOtp()
-                    {
-                        ObjectId = phone,
-                        Token = otp,
-                        IsDeleted = false,
-                        IsUsed = false,
-                        TypeToken = (int)TokenOtpType.Authen,
-                        DateCreated = DateTime.Now,
-                    });
-                    tokenOtpDA.Save();
-                }
-                else
-                {
-                    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
-                }
+                //var otp = FDIUtils.RandomOtp(4);
+                //var otppost = new PostOtpLoginAppIG4()
+                //{
+                //    msisdn = phone.Remove(0, 1).Insert(0, "84"),
+                //    brandname = "G-STORE",
+                //    msgbody = "IG4: Ma xac minh cua ban la " + otp,
+                //    user = "G-STORE",
+                //    pass = "GSTORE123",
+                //    charset = "8"
+                //};
+                //var url = "http://123.31.20.167:8383/restservice/";
+                //var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
+                //if (result.FirstOrDefault()?.Result.code == "200")
+                //{
+                //    tokenOtpDA.Add(new TokenOtp()
+                //    {
+                //        ObjectId = phone,
+                //        Token = otp,
+                //        IsDeleted = false,
+                //        IsUsed = false,
+                //        TypeToken = (int)TokenOtpType.Authen,
+                //        DateCreated = DateTime.Now,
+                //    });
+                //    tokenOtpDA.Save();
+                //}
+                //else
+                //{
+                //    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
+                //}
             }
             catch (Exception e)
             {
@@ -148,16 +148,15 @@ namespace FDI.MvcAPI.Controllers
             return Json(new JsonMessage(200, "Ok"), JsonRequestBehavior.AllowGet);
         }
 
-
         [AllowAnonymous]
         public async Task<ActionResult> ValidateToken(string token, string phone, string tokenDevice)
         {
-            if (!tokenOtpDA.ValidateToken(token, phone, (int)TokenOtpType.Authen))
-            {
-                return Json(new JsonMessage(1000, "Thông tin đăng nhập không hợp lệ"), JsonRequestBehavior.AllowGet);
-            }
-            tokenOtpDA.UpdateIsUsed(token, phone);
-            await tokenOtpDA.SaveAsync();
+            //if (!tokenOtpDA.ValidateToken(token, phone, (int)TokenOtpType.Authen))
+            //{
+            //    return Json(new JsonMessage(1000, "Thông tin đăng nhập không hợp lệ"), JsonRequestBehavior.AllowGet);
+            //}
+            //tokenOtpDA.UpdateIsUsed(token, phone);
+            //await tokenOtpDA.SaveAsync();
             var customer = _agencyDa.GetByPhone(phone);
             var key = Guid.NewGuid();
             IAuthContainerModel model = new JWTContainerModel()
@@ -186,7 +185,7 @@ namespace FDI.MvcAPI.Controllers
             _agencyDa.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             _agencyDa.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, IsPrestige = customer.IsFdi } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, IsPrestige = customer.IsFdi,IsVerify = customer.IsVerify,IsBank = customer.IsBank,IsActive = customer.IsActive} }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
@@ -296,22 +295,18 @@ namespace FDI.MvcAPI.Controllers
             var obj = _agencyDa.GetItemByIdApp(CustomerId);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
+        
         public async Task<ActionResult> UpdateAcountRegister(CustomerAppIG4Item data)
         {
-            var customer = _agencyDa.GetById(data.ID);
+            var customer = _agencyDa.GetById(CustomerId);
             if (customer == null)
             {
                 return Json(new JsonMessage(1000, "Not found"));
             }
 
-            if (!string.IsNullOrEmpty(data.Mobile) && customerDA.CheckExitsByPhone(data.ID, data.Mobile))
+            if (!string.IsNullOrEmpty(data.Mobile) && customerDA.CheckExitsByPhone(data.Mobile, CustomerId))
             {
                 return Json(new JsonMessage(1001, "Số điện thoại đã tồn tại"));
-            }
-
-            if (!string.IsNullOrEmpty(data.Email) && customerDA.CheckExitsByEmail(data.ID, data.Email))
-            {
-                return Json(new JsonMessage(1002, "Email đã tồn tại"));
             }
             customer.Email = data.Email;
             if (data.ParentID != null)
@@ -355,13 +350,15 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(1000, "Ảnh xác minh không được để trống."));
             }
             customer.Gallery_Picture = images;
-            customerDA.Save();
-            var obj = _agencyDa.GetItemByIdApp(data.ID);
+            customer.IsVerify = true;
+            _agencyDa.Save();
+            var obj = _agencyDa.GetItemByIdApp(CustomerId);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
+        
         public ActionResult UpdateAcountRegisterStep2(CustomerAppIG4Item data)
         {
-            var customer = _agencyDa.GetById(data.ID);
+            var customer = _agencyDa.GetById(CustomerId);
             if (customer == null)
             {
                 return Json(new JsonMessage(1000, "Not found"));
@@ -381,7 +378,8 @@ namespace FDI.MvcAPI.Controllers
             customer.Branchname = data.Branchname;
             customer.FullnameBank = data.FullnameBank;
             customer.IsFdi = true;
-            customerDA.Save();
+            customer.IsBank = true;
+            _agencyDa.Save();
             var obj = _agencyDa.GetItemByIdApp(data.ID);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
@@ -412,7 +410,7 @@ namespace FDI.MvcAPI.Controllers
             }
             return Json(new JsonMessage(200, ""));
         }
-
+        [AllowAnonymous]
         private async Task<BaseResponse<GalleryPictureItem>> UploadImage(int i)
         {
             var file = Request.Files[i];
@@ -424,7 +422,7 @@ namespace FDI.MvcAPI.Controllers
                     var fileContent = new ByteArrayContent(fileBytes);
                     fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.FileName };
                     content.Add(fileContent);
-                    var result = await client.PostAsync("http://imggstore.fditech.vn/home/upload", content);
+                    var result = await client.PostAsync("http://imgg.wini.vn/home/upload", content);
                     if (result.IsSuccessStatusCode)
                     {
                         var datas = await result.Content.ReadAsStringAsync();

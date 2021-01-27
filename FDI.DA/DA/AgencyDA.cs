@@ -302,6 +302,8 @@ namespace FDI.DA
                     Email = c.Email,
                     ParentID = c.ParentID,
                     ListID = c.ListID,
+                    IsVerify =  c.IsVerify,
+                    IsBank = c.IsBank,
                     Bankname = c.BankName,
                     FullnameBank = c.FullnameBank,
                     Branchname = c.Branchname,
@@ -317,10 +319,10 @@ namespace FDI.DA
                 };
             return query.FirstOrDefault();
         }
-        public bool CheckExitsByPhone(string phone)
+        public bool CheckExitsByPhone(string phone,int id)
         {
             var query = (from c in FDIDB.DN_Agency
-                         where c.Phone.Equals(phone) && c.IsDelete == false
+                         where c.Phone.Equals(phone) && c.IsDelete == false && (id == 0 || c.ID != id)
                          select c).Count();
             return query > 0;
         }

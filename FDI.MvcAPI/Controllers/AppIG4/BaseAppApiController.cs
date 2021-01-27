@@ -364,6 +364,7 @@ namespace FDI.MvcAPI.Controllers
         public void InsertRewardOrderPacket(CustomerAppIG4Item shop, ConfigExchange config, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
         {
             var now = DateTime.Now.TotalSeconds();
+            var today = DateTime.Today.TotalSeconds();
             var totalD = totalprice * config.DiscountOrderPacket / 100;
             var ltsArrId = FDIUtils.StringToListInt(shop.ListAgencyId);
             ltsArrId = ltsArrId.Take(bonusItems.Count).ToList();
@@ -384,6 +385,7 @@ namespace FDI.MvcAPI.Controllers
                             Price = totalD * (bonusItem.Percent / 100),
                             //CustomerID = item.ID,
                             Date = now,
+                            DateCreate = today,
                             OrderPacketID = OrderId,
                             Type = (int)Reward.Cus,
                             BonusTypeId = i,
@@ -408,6 +410,7 @@ namespace FDI.MvcAPI.Controllers
                 Price = totalD * ((100 - per) / 100),
                 //CustomerID = item.ID,
                 Date = now,
+                DateCreate = today,
                 OrderPacketID = OrderId,
                 Type = (int)Reward.Cus,
                 //BonusTypeId = i,
@@ -423,6 +426,7 @@ namespace FDI.MvcAPI.Controllers
                 Price = totalprice * (100-config.DiscountOrderPacket)/100,
                 //CustomerID = item.ID,
                 Date = now,
+                DateCreate = today,
                 OrderPacketID = OrderId,
                 Type = (int)Reward.Packet,
                 //BonusTypeId = i,

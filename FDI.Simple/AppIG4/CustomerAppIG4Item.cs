@@ -68,7 +68,8 @@ namespace FDI.Simple
         public int? Level { get; set; }
         public decimal? PercentDiscount { get; set; }
         public string ListAgencyId { get; set; }
-
+        public bool? IsVerify { get; set; }
+        public bool? IsBank { get; set; }
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
 
