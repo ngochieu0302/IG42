@@ -300,4 +300,3 @@ C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CoreCompileInputs.cach
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.dll
 C:\IG4\CodeIG4\IG4\FDI.GetAPI\obj\Debug\FDI.GetAPI.pdb
-C:\IG4\CodeIG4\IG4\FDI.GetAPI\bin\Debug\Newtonsoft.Json.xml

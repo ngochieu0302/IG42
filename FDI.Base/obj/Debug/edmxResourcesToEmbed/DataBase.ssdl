@@ -3714,6 +3714,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="Knowledge" Type="ntext" />
     <Property Name="Proccess" Type="ntext" />
     <Property Name="IsUpcoming" Type="int" />
+    <Property Name="CustomerID" Type="int" />
   </EntityType>
   <EntityType Name="Shop_Product_Detail_Picture">
     <Key>
@@ -9960,6 +9961,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Shop_Product_Detail_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product_Detail">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Shop_Product_Detail_DN_Unit">
     <End Role="DN_Unit" Type="Self.DN_Unit" Multiplicity="0..1" />
     <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
@@ -13759,6 +13772,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="Self.FK_Shop_Product_Detail_Category">
       <End Role="Category" EntitySet="Category" />
+      <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Detail_Customer" Association="Self.FK_Shop_Product_Detail_Customer">
+      <End Role="Customer" EntitySet="Customer" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_DN_Unit" Association="Self.FK_Shop_Product_Detail_DN_Unit">

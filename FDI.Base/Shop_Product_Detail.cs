@@ -69,12 +69,14 @@ namespace FDI.Base
         public string Knowledge { get; set; }
         public string Proccess { get; set; }
         public Nullable<int> IsUpcoming { get; set; }
+        public Nullable<int> CustomerID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttributeOption> AttributeOptions { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category_Product_Recipe> Category_Product_Recipe { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual DN_Unit DN_Unit { get; set; }
         public virtual DN_Users DN_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
