@@ -113,6 +113,7 @@ namespace FDI.Simple
         public virtual ProductSizeItem SizeItem { get; set; }
         public int? CustomerId1 { get; set; }
         public bool? IsShop { get; set; }
+        public decimal? Price { get; set; }
     }
     public class ModelProductAppIG4Item : BaseModelSimple
     {

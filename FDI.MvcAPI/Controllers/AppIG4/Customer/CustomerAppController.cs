@@ -38,7 +38,6 @@ namespace FDI.MvcAPI.Controllers
         readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
         readonly AgencyDA _agencyDa = new AgencyDA("");
 
-        //readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
         //public ActionResult CustomerOrther(string lstInt)
         //{
         //    var model = customerDA.GetItemByID()
@@ -186,15 +185,15 @@ namespace FDI.MvcAPI.Controllers
                 //if (result.FirstOrDefault()?.Result.code == "200")
                 //{
                 tokenOtpDA.Add(new TokenOtp()
-                    {
-                        ObjectId = phone,
-                        Token = otp,
-                        IsDeleted = false,
-                        IsUsed = false,
-                        TypeToken = (int)TokenOtpType.Authen,
-                        DateCreated = DateTime.Now,
-                    });
-                    tokenOtpDA.Save();
+                {
+                    ObjectId = phone,
+                    Token = otp,
+                    IsDeleted = false,
+                    IsUsed = false,
+                    TypeToken = (int)TokenOtpType.Authen,
+                    DateCreated = DateTime.Now,
+                });
+                tokenOtpDA.Save();
                 //}
                 //else
                 //{
@@ -223,7 +222,7 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage { Code = 404, Message = e.ToString() });
             }
 
-            return Json(new JsonMessage {Code = 200, Message = ""});
+            return Json(new JsonMessage { Code = 200, Message = "" });
         }
         [HttpPost]
         [AllowAnonymous]
@@ -278,7 +277,7 @@ namespace FDI.MvcAPI.Controllers
                     var refreshToken = JWTService.Instance.GenerateToken(model: modelRefreshToken);
                     customerDA.InsertToken(data: new TokenRefresh() { GuidId = key });
                     customerDA.Save();
-                    return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
+                    return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID } }, behavior: JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
@@ -414,7 +413,7 @@ namespace FDI.MvcAPI.Controllers
                         var refreshToken = JWTService.Instance.GenerateToken(model: modelRefreshToken);
                         customerDA.InsertToken(data: new TokenRefresh() { GuidId = key });
                         customerDA.Save();
-                        return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, behavior: JsonRequestBehavior.AllowGet);
+                        return Json(data: new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID } }, behavior: JsonRequestBehavior.AllowGet);
                     }
                     return Json(data: new { Code = deserializedProduct.error, Erros = true, Message = "Có lỗi xảy ra vui lòng xem lại mã lỗi" }, behavior: JsonRequestBehavior.AllowGet);
                 }
@@ -495,7 +494,7 @@ namespace FDI.MvcAPI.Controllers
             customerDA.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             customerDA.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, Fullname = customer.FullName } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, Fullname = customer.FullName  } }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         [HttpPost]
@@ -722,9 +721,9 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
-        public ActionResult GetShopPrestigeForMap(double km)
+        public ActionResult GetShopPrestigeForMap(double km, double latitude, double longitude, string name)
         {
-            var lst = customerDA.GetPrestigeForMap(km, Latitude, Longitude);
+            var lst = customerDA.GetPrestigeForMap(km, latitude, longitude, name);
             return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
@@ -738,7 +737,7 @@ namespace FDI.MvcAPI.Controllers
         {
             var lst = customerDA.GetListOrderCustomer(cusId, status, page, pagesize);
             return Json(new BaseResponse<List<OrderCustomerAppItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
-        } 
+        }
         public ActionResult GetListPackage()
         {
             var lst = customerDA.GetListPackage();
@@ -878,7 +877,7 @@ namespace FDI.MvcAPI.Controllers
                 if (!iskg)
                 {
                     InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
-                    InsertRewardOrderAgency(shop,config, totak, data.ID, bonusItems);
+                    InsertRewardOrderAgency(shop, config, totak, data.ID, bonusItems);
                 }
                 else
                 {

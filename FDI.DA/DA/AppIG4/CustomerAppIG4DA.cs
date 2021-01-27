@@ -329,17 +329,17 @@ namespace FDI.DA
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
             return query.ToList();
         }
-        public List<CustomerAppIG4Item> GetPrestigeForMap(double km, double Latitude, double Longitude)
+        public List<CustomerAppIG4Item> GetPrestigeForMap(double km, double Latitude, double Longitude, string name)
         {
             var query = from c in FDIDB.Customers
-                        where c.IsPrestige == true && (!c.IsDelete.HasValue || c.IsDelete == false)
+                        where c.IsPrestige == true && (!c.IsDelete.HasValue || c.IsDelete == false) && (string.IsNullOrEmpty(name) || c.FullName.Contains(name))
                               && ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)(c.Latitude ?? 0), (float)(c.Longitude ?? 0)) / 1000 <= km
                         orderby c.Ratings descending
                         select new CustomerAppIG4Item
                         {
                             ID = c.ID,
                             Fullname = c.FullName,
-                            Address = c.Address,
+                            Address = c.CustomerAddresses.Where(a => a.IsDefault == true).Select(a => a.Address).FirstOrDefault(),
                             Ratings = c.Ratings,
                             AvgRating = c.AvgRating,
                             LikeTotal = c.LikeTotal,

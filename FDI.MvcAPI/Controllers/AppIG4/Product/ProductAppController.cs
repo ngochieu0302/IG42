@@ -470,12 +470,12 @@ namespace FDI.MvcAPI.Controllers
             }
             return Json(new BaseResponse<List<ProductAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetProductIsHotByCategoryId(int id, string name, double minKm, double maxKm, int minPrice, int maxPrice, int page, int pagesize)
+        public ActionResult GetProductIsHotByCategoryId(int cateId, string name, double minKm, double maxKm, int minPrice, int maxPrice, int page, int pagesize)
         {
             minKm *= 1000;
             maxKm *= 1000;
             pagesize = pagesize > 15 ? 15 : pagesize;
-            var lst = _productDa.GetIsHotItemByCategoryId(id, name, minKm, maxKm, minPrice, maxPrice, Latitude, Longitude, page, pagesize);
+            var lst = _productDa.GetIsHotItemByCategoryId(cateId, name, minKm, maxKm, minPrice, maxPrice, Latitude, Longitude, page, pagesize);
             foreach (var product in lst)
             {
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
@@ -518,6 +518,11 @@ namespace FDI.MvcAPI.Controllers
             maxKm *= 1000;
             var lst = _productDa.GetMyProduct(CustomerId, categoryId, name, maxKm, minPrice, maxPrice, Latitude, Longitude, page, pagesize);
             return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetMyProduct1(int page, int pagesize, int categoryId = 0)
+        {
+            var lst = _productDa.GetMyProduct1(CustomerId, Latitude, Longitude, page, pagesize);
+            return Json(new BaseResponse<List<CategoryAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductById(int productId)
         {

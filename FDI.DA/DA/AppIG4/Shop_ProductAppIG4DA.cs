@@ -710,28 +710,24 @@ namespace FDI.DA
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
             return query.ToList();
         }
-        public List<ProductAppIG4Item> GetIsHotItemByCategoryId(int id, string name, double minKm, double maxKm, int minPrice, int maxPrice, double Latitude, double Longitude, int page, int pagesize)
+        public List<ProductAppIG4Item> GetIsHotItemByCategoryId(int cateId, string name, double minKm, double maxKm, int minPrice, int maxPrice, double Latitude, double Longitude, int page, int pagesize)
         {
             var date = DateTime.Now.TotalSeconds();
-            var query = from c in FDIDB.Shop_Product
-                        where c.CategoryId == id && c.IsShow == true && c.IsDelete == false && c.IsHot == true
+            var query = from c in FDIDB.Shop_Product_Detail
+                        where c.CateID == cateId && c.IsShow == true && c.IsDelete == false && c.IsHot == true
                           && (maxKm == 0 || ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) <= maxKm)
                         && (minKm == 0 || ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) >= minKm)
-                        && (maxPrice == 0 || c.PriceNew <= maxPrice)
-                        && (minPrice == 0 || c.PriceNew >= minPrice)
+                        && (maxPrice == 0 || c.Price <= maxPrice)
+                        && (minPrice == 0 || c.Price >= minPrice)
                         && c.Name.Contains(name)
                         select new ProductAppIG4Item
                         {
                             ID = c.ID,
                             Name = c.Name,
-                            PriceNew = c.PriceNew,
-                            Ratings = c.Ratings ?? 0,
-                            AvgRating = c.AvgRating ?? 0,
+                            Price = c.Price,
                             UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                             Latitude = c.Latitude,
                             Longitude = c.Longitude,
-                            HasTransfer = c.HasTransfer,
-                            Sort = !c.CustomerID1.HasValue ? (c.Customer.Order_Package.Where(m => m.DateStart < date && m.DateEnd > date).Select(m => m.Customer_Type.Sort).FirstOrDefault() ?? 10000) : 0,
                         };
             query = query.OrderBy(m => m.Sort).OrderByDescending(m => m.AvgRating).ThenByDescending(m => m.Ratings);
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
@@ -832,7 +828,6 @@ namespace FDI.DA
                 });
             return query.ToList();
         }
-
         public List<ProductAppIG4Item> GetMyProduct(int customerId, int categoryId, string name, int maxKm, int minPrice, int maxPrice, double Latitude, double Longitude, int page, int pagesize)
         {
 
@@ -862,6 +857,42 @@ namespace FDI.DA
                             QuantityOut = c.QuantityOut ?? 0,
                             Quantity = c.Quantity,
                             HasTransfer = c.HasTransfer != null && c.HasTransfer.Value
+                        };
+            query = query.Skip(pagesize * (page - 1)).Take(pagesize);
+
+            return query.ToList();
+        }
+
+        public List<CategoryAppIG4Item> GetMyProduct1(int customerId, double Latitude, double Longitude, int page, int pagesize)
+        {
+
+            var query = from c in FDIDB.Categories
+                        where c.Shop_Product.Any(a => a.CustomerID == customerId)
+                        orderby c.Id descending
+                        select
+                        new CategoryAppIG4Item
+                        {
+                            ID = c.Id,
+                            Name = c.Name,
+                            ListProductItem = c.Shop_Product.Select(a => new ProductAppIG4Item {
+                                ID = a.ID,
+                                Name = a.Name,
+                                PriceNew = a.PriceNew,
+                                SizeItem = a.SizeID != null ? new ProductSizeItem
+                                {
+                                    ID = a.Product_Size.ID,
+                                    Name = a.Product_Size.Name,
+                                    Value = a.Product_Size.Value
+                                } : null,
+                                Ratings = a.Ratings ?? 0,
+                                AvgRating = a.AvgRating ?? 0,
+                                UrlPicture = a.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                                Latitude = a.Latitude,
+                                Longitude = a.Longitude,
+                                QuantityOut = a.QuantityOut ?? 0,
+                                Quantity = a.Quantity,
+                                HasTransfer = a.HasTransfer != null && a.HasTransfer.Value
+                            })
                         };
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
 
