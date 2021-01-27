@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\IG4\CodeIG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\IG4\CodeIG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\IG4\CodeIG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
@@ -83,3 +84,90 @@ C:\IG4\CodeIG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.dll
 C:\IG4\CodeIG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.pdb
+=======
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\GAP.TEst.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\GAP.TEst.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\GAP.TEst.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EntityFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EntityFramework.SqlServer.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Base.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.CORE.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.DA.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.MvcAPI.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Simple.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Utils.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Newtonsoft.Json.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\HtmlAgilityPack.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Memcached.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Mvc.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Optimization.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Facebook.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\ZaloDotNetSDK.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.GetAPI.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.WebHost.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\DotNetOpenAuth.Core.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\RazorEngine.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EPPlus.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\log4net.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.Logging.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.Razor.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\WebGrease.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Net.Http.Formatting.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Antlr3.Runtime.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Base.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Base.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.CORE.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.CORE.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.DA.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.DA.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.MvcAPI.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.MvcAPI.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Simple.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Simple.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Utils.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.Utils.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EntityFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EntityFramework.SqlServer.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Newtonsoft.Json.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\HtmlAgilityPack.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\HtmlAgilityPack.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Mvc.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Facebook.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.GetAPI.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\FDI.GetAPI.dll.config
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Http.WebHost.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\RazorEngine.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\RazorEngine.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\EPPlus.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\log4net.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.Logging.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.Razor.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Net.Http.Formatting.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csprojAssemblyReference.cache
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CoreCompileInputs.cache
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CopyComplete
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.dll
+E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.pdb
+>>>>>>> eb09eded42210267c7f3ad53ee0857bc4e939f5a

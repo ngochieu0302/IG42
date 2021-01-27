@@ -307,10 +307,10 @@ namespace FDI.DA
             entry.Property(e => e.IsDelete).IsModified = true;
             // DB.Customers.Remove(customer);
         }
-        public List<CustomerAppIG4Item> GetPrestige(int page, int pagesize)
+        public List<CustomerAppIG4Item> GetPrestige(double Latitude, double Longitude, int page, int pagesize)
         {
             var query = from c in FDIDB.Customers
-                        where c.IsPrestige
+                        where c.IsPrestige == true && (!c.IsDelete.HasValue || c.IsDelete == false)
                         orderby c.Ratings descending
                         select new CustomerAppIG4Item
                         {
@@ -320,10 +320,34 @@ namespace FDI.DA
                             Ratings = c.Ratings,
                             AvgRating = c.AvgRating,
                             LikeTotal = c.LikeTotal,
-                            ImageTimeline = c.ImageTimeline
+                            ImageTimeline = c.ImageTimeline,
+                            Longitude = c.Longitude,
+                            Latitude = c.Latitude,
+                            Km = ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) / 1000,
                         };
 
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
+            return query.ToList();
+        }
+        public List<CustomerAppIG4Item> GetPrestigeForMap(double km, double Latitude, double Longitude)
+        {
+            var query = from c in FDIDB.Customers
+                        where c.IsPrestige == true && (!c.IsDelete.HasValue || c.IsDelete == false)
+                              && ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)(c.Latitude ?? 0), (float)(c.Longitude ?? 0)) / 1000 <= km
+                        orderby c.Ratings descending
+                        select new CustomerAppIG4Item
+                        {
+                            ID = c.ID,
+                            Fullname = c.FullName,
+                            Address = c.Address,
+                            Ratings = c.Ratings,
+                            AvgRating = c.AvgRating,
+                            LikeTotal = c.LikeTotal,
+                            ImageTimeline = c.ImageTimeline,
+                            Longitude = c.Longitude,
+                            Latitude = c.Latitude,
+                            Km = ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) / 1000,
+                        };
             return query.ToList();
         }
         public List<CustomerAppIG4Item> ShopSame(int shopid, double minKm, double maxKm, double latitude, double longitude, int page, int pagesize)
@@ -440,7 +464,8 @@ namespace FDI.DA
                             Fullname = c.FullName,
                             Address = c.CustomerAddresses.Where(m => m.IsDefault).Select(m => m.Address).FirstOrDefault(),
                             Ratings = c.Ratings,
-                            ListCateId = c.Shop_Product.Select(a => a.CategoryId).ToList(),
+                            //ListCateId = c.Shop_Product.Select(a => a.CategoryId).ToList(),
+                            IsPrestige = c.IsPrestige,
                             //ListCateId1 = c.Shop_Product1.Select(a=>a.CategoryId).ToList(),
                             AvgRating = c.AvgRating,
                             LikeTotal = c.LikeTotal,
@@ -460,7 +485,7 @@ namespace FDI.DA
                         select new CategoryAppIG4Item()
                         {
                             ID = c.CategoryId,
-                            Name = c.Name
+                            Name = c.Category.Name
                         };
             return query.FirstOrDefault();
         }
@@ -511,6 +536,8 @@ namespace FDI.DA
                             Address = c.CustomerAddresses.Where(g => g.IsDefault == true).Select(b => b.Address).FirstOrDefault(),
                             Mobile = c.Mobile,
                             AvartaUrl = c.AvatarUrl,
+                            Latitude = c.Latitude,
+                            Longitude = c.Longitude,
                             Km = ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)a.Latitude, (float)a.Longitude) / 1000,
                             ImageTimeline = c.ImageTimeline,
                         };

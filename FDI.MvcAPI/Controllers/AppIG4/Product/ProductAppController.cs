@@ -20,7 +20,7 @@ using FDI.CORE;
 
 namespace FDI.MvcAPI.Controllers
 {
-    [CustomerAuthorize]
+    //[CustomerAuthorize]
     public class ProductAppController : BaseAppApiController
     {
         readonly Shop_ProductAppIG4DA _productDa = new Shop_ProductAppIG4DA();
@@ -203,6 +203,16 @@ namespace FDI.MvcAPI.Controllers
             return Json(new JsonMessage(200, ""));
         }
         //[AllowAnonymous]
+        public ActionResult Product_Sales()
+        {
+            var product = _productDa.GetListProductSales();
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Product_Incoming()
+        {
+            var product = _productDa.GetListProductIncoming();
+            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult GetById(int id, double latitude, double longitude)
         {
             var product = _productDa.GetProductItem(id, latitude, longitude);
@@ -214,7 +224,6 @@ namespace FDI.MvcAPI.Controllers
             //product.Km = ConvertUtil.distance(latitude, longitude, product.Latitude, product.Longitude, 'K');
             return Json(new BaseResponse<ProductAppIG4Item> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult GetBestProductForYou(int km, double latitude, double longitude, int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;
@@ -510,10 +519,10 @@ namespace FDI.MvcAPI.Controllers
             var lst = _productDa.GetMyProduct(CustomerId, categoryId, name, maxKm, minPrice, maxPrice, Latitude, Longitude, page, pagesize);
             return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetProductById(int id, int page, int pagesize)
+        public ActionResult GetProductById(int productId)
         {
-            var lst = _productDa.GetMyProduct(id, 0, "", 0, 0, 0, Latitude, Longitude, page, pagesize);
-            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+            var data = _productDa.GetById(productId);
+            return Json(new BaseResponse<Shop_Product> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProductByPosition(double latitude, double longitude, int page, int pagesize)
         {

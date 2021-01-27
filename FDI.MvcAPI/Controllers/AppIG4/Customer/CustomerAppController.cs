@@ -36,7 +36,11 @@ namespace FDI.MvcAPI.Controllers
         readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
         readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
         readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
+<<<<<<< HEAD
         
+=======
+        //readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
+>>>>>>> eb09eded42210267c7f3ad53ee0857bc4e939f5a
         readonly AgencyDA _agencyDa = new AgencyDA("");
 
         //public ActionResult CustomerOrther(string lstInt)
@@ -170,21 +174,22 @@ namespace FDI.MvcAPI.Controllers
                     });
                     customerDA.Save();
                 }
-                var otp = FDIUtils.RandomOtp(4);
-                var otppost = new PostOtpLoginAppIG4()
-                {
-                    msisdn = phone.Remove(0, 1).Insert(0, "84"),
-                    brandname = "G-STORE",
-                    msgbody = "IG4: Ma xac minh cua ban la " + otp,
-                    user = "G-STORE",
-                    pass = "GSTORE123",
-                    charset = "8"
-                };
-                var url = "http://123.31.20.167:8383/restservice/";
-                var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
-                if (result.FirstOrDefault()?.Result.code == "200")
-                {
-                    tokenOtpDA.Add(new TokenOtp()
+                //var otp = FDIUtils.RandomOtp(4);
+                var otp = "123456";
+                //var otppost = new PostOtpLoginAppIG4()
+                //{
+                //    msisdn = phone.Remove(0, 1).Insert(0, "84"),
+                //    brandname = "G-STORE",
+                //    msgbody = "IG4: Ma xac minh cua ban la " + otp,
+                //    user = "G-STORE",
+                //    pass = "GSTORE123",
+                //    charset = "8"
+                //};
+                //var url = "http://123.31.20.167:8383/restservice/";
+                //var result = await PostDataAsync<List<ResultotpAppIG4>>(url, otppost);
+                //if (result.FirstOrDefault()?.Result.code == "200")
+                //{
+                tokenOtpDA.Add(new TokenOtp()
                     {
                         ObjectId = phone,
                         Token = otp,
@@ -194,11 +199,11 @@ namespace FDI.MvcAPI.Controllers
                         DateCreated = DateTime.Now,
                     });
                     tokenOtpDA.Save();
-                }
-                else
-                {
-                    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
-                }
+                //}
+                //else
+                //{
+                //    return Json(new JsonMessage(-1, "Gửi mã OTP thất bại"), JsonRequestBehavior.AllowGet);
+                //}
             }
             catch (Exception e)
             {
@@ -494,9 +499,8 @@ namespace FDI.MvcAPI.Controllers
             customerDA.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             customerDA.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken } }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, Fullname = customer.FullName } }, JsonRequestBehavior.AllowGet);
         }
-
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> RefreshToken(string refreshToken)
@@ -649,7 +653,6 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200, Data = data, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
 
         }
-
         [HttpPost]
         public async Task<ActionResult> UpdateAcount(CustomerAppIG4Item data)
         {
@@ -716,9 +719,16 @@ namespace FDI.MvcAPI.Controllers
                 }
             }
         }
+        [AllowAnonymous]
         public ActionResult GetShopPrestige(int page, int pagesize)
         {
-            var lst = customerDA.GetPrestige(page, pagesize);
+            var lst = customerDA.GetPrestige(Latitude, Longitude, page, pagesize);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        public ActionResult GetShopPrestigeForMap(double km)
+        {
+            var lst = customerDA.GetPrestigeForMap(km, Latitude, Longitude);
             return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
@@ -732,7 +742,7 @@ namespace FDI.MvcAPI.Controllers
         {
             var lst = customerDA.GetListOrderCustomer(cusId, status, page, pagesize);
             return Json(new BaseResponse<List<OrderCustomerAppItem>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
-        }
+        } 
         public ActionResult GetListPackage()
         {
             var lst = customerDA.GetListPackage();

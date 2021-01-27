@@ -34,7 +34,50 @@ namespace FDI.DA
         }
 
         #endregion
-
+        public List<ProductAppIG4Item> GetListProductSales()
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                        where c.IsDelete == false && c.IsShow == true && (c.Sale > 0 && c.Sale != null)
+                        orderby c.ID descending
+                        select new ProductAppIG4Item
+                        {
+                            ID = c.ID,
+                            Name = c.Name,
+                            Code = c.Code,
+                            Sale = c.Sale,
+                            PriceNew = c.Price,
+                            PriceOld = c.PriceOld,
+                            PictureItem = new PictureAppIG4Item
+                            {
+                                ID = c.Gallery_Picture.ID,
+                                Name = c.Gallery_Picture.Name,
+                                Url = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                            },
+                        };
+            return query.ToList();
+        }
+        public List<ProductAppIG4Item> GetListProductIncoming()
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                        where c.IsDelete == false && c.IsShow == true && (c.IsUpcoming == (int)IsUpcoming.Sapco)
+                        orderby c.ID descending
+                        select new ProductAppIG4Item
+                        {
+                            ID = c.ID,
+                            Name = c.Name,
+                            Code = c.Code,
+                            Sale = c.Sale,
+                            PriceNew = c.Price,
+                            PriceOld = c.PriceOld,
+                            PictureItem = new PictureAppIG4Item
+                            {
+                                ID = c.Gallery_Picture.ID,
+                                Name = c.Gallery_Picture.Name,
+                                Url = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                            },
+                        };
+            return query.ToList();
+        }
         public List<ProductAppIG4Item> GetListSimpleByRequest(HttpRequestBase httpRequest)
         {
             Request = new ParramRequest(httpRequest);
@@ -112,7 +155,6 @@ namespace FDI.DA
 
             return query.ToList();
         }
-
         public List<SizeItem> GetListSimpleAll()
         {
             var query = from c in FDIDB.Sizes
@@ -512,14 +554,28 @@ namespace FDI.DA
         {
             var query = FDIDB.ProductRatings.Where(m => m.ProductId == id)
                 .GroupBy(m => new { m.ProductId, m.TypeRating })
-                .Select(m => new RatingAppIG4Item() { TypeRating = m.Key.TypeRating, Quantity = m.Count() });
+                .Select(m => new RatingAppIG4Item { 
+                    TypeRating = m.Key.TypeRating, 
+                    Quantity = m.Count(),
+                    Comment = m.FirstOrDefault().Comment,
+                    Title = m.FirstOrDefault().Title,
+                    DateCreated = m.FirstOrDefault().DateCreated,
+                });
             return query.ToList();
         }
         public List<RatingAppIG4Item> GetRatingsCustomer(int id)
         {
-            var query = FDIDB.ProductRatings.Where(m => m.CustomerId == id)
+            var query = FDIDB.ProductRatings
+                .Where(m => m.CustomerId == id)
                 .GroupBy(m => new { m.CustomerId, m.TypeRating })
-                .Select(m => new RatingAppIG4Item() { TypeRating = m.Key.TypeRating, Quantity = m.Count() });
+                .Select(m => new RatingAppIG4Item { 
+                    ID = m.FirstOrDefault().ID,
+                    ProductId = m.FirstOrDefault().ProductId,
+                    TypeRating = m.Key.TypeRating, 
+                    Quantity = m.Count(), 
+                    Title = m.FirstOrDefault().Title,
+                    Comment = m.FirstOrDefault().Comment
+                });
             return query.ToList();
         }
         public void AddComment(ProductRating data)
@@ -714,7 +770,7 @@ namespace FDI.DA
             var date = DateTime.Now.TotalSeconds();
             var query = from c in FDIDB.Shop_Product
                         where c.IsShow == true && c.IsDelete == false && c.HasTransfer == true
-                        && ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) < met
+                        && ConvertUtil.DistanceBetween((float)Latitude, (float)Longitude, (float)c.Latitude, (float)c.Longitude) / 1000 < met
 
                         select new ProductAppIG4Item
                         {
@@ -792,6 +848,12 @@ namespace FDI.DA
                             ID = c.ID,
                             Name = c.Name,
                             PriceNew = c.PriceNew,
+                            SizeItem = c.SizeID != null ? new ProductSizeItem
+                            {
+                                ID = c.Product_Size.ID,
+                                Name = c.Product_Size.Name,
+                                Value = c.Product_Size.Value
+                            } : null,
                             Ratings = c.Ratings ?? 0,
                             AvgRating = c.AvgRating ?? 0,
                             UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
