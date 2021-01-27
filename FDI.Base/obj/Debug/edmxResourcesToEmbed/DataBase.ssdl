@@ -1081,6 +1081,8 @@ warning 6002: The table/view 'NNIG4.dbo.AspNetUserRoles' does not have a primary
     <Property Name="TokenDevice" Type="varchar" MaxLength="250" />
     <Property Name="AvatarUrl" Type="nvarchar" MaxLength="250" />
     <Property Name="ImageTimeline" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsVerify" Type="bit" />
+    <Property Name="IsBank" Type="bit" />
   </EntityType>
   <EntityType Name="DN_AttributeDynamic">
     <Key>
@@ -3678,13 +3680,16 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="QuantityDay" Type="int" />
     <Property Name="StartDate" Type="numeric" Precision="18" Scale="4" />
     <Property Name="Minutes" Type="int" />
     <Property Name="EndDate" Type="numeric" Precision="18" Scale="4" />
     <Property Name="Price" Type="numeric" Precision="18" Scale="0" />
-    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="PriceCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Sale" Type="int" />
     <Property Name="NameAscii" Type="nvarchar" MaxLength="255" />
     <Property Name="Description" Type="ntext" />
     <Property Name="Details" Type="ntext" />
@@ -3700,9 +3705,6 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="CateID" Type="int" />
     <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
     <Property Name="IDPictureMap" Type="int" />
-    <Property Name="Sale" Type="int" />
-    <Property Name="PriceCost" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Percent" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Incurred" Type="decimal" Precision="18" Scale="0" />
@@ -3711,6 +3713,8 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="IsShow24hApp" Type="bit" />
     <Property Name="Knowledge" Type="ntext" />
     <Property Name="Proccess" Type="ntext" />
+    <Property Name="IsUpcoming" Type="int" />
+    <Property Name="CustomerID" Type="int" />
   </EntityType>
   <EntityType Name="Shop_Product_Detail_Picture">
     <Key>
@@ -9957,6 +9961,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Shop_Product_Detail_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product_Detail">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Shop_Product_Detail_DN_Unit">
     <End Role="DN_Unit" Type="Self.DN_Unit" Multiplicity="0..1" />
     <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
@@ -13756,6 +13772,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_Category" Association="Self.FK_Shop_Product_Detail_Category">
       <End Role="Category" EntitySet="Category" />
+      <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Detail_Customer" Association="Self.FK_Shop_Product_Detail_Customer">
+      <End Role="Customer" EntitySet="Customer" />
       <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_Product_Detail_DN_Unit" Association="Self.FK_Shop_Product_Detail_DN_Unit">

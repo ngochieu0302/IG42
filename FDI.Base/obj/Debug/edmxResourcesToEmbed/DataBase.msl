@@ -1053,6 +1053,8 @@
     <EntitySetMapping Name="DN_Agency">
       <EntityTypeMapping TypeName="FDIModel.DN_Agency">
         <MappingFragment StoreEntitySet="DN_Agency">
+          <ScalarProperty Name="IsBank" ColumnName="IsBank" />
+          <ScalarProperty Name="IsVerify" ColumnName="IsVerify" />
           <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
           <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
           <ScalarProperty Name="TokenDevice" ColumnName="TokenDevice" />
@@ -3574,6 +3576,8 @@
     <EntitySetMapping Name="Shop_Product_Detail">
       <EntityTypeMapping TypeName="FDIModel.Shop_Product_Detail">
         <MappingFragment StoreEntitySet="Shop_Product_Detail">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="IsUpcoming" ColumnName="IsUpcoming" />
           <ScalarProperty Name="Proccess" ColumnName="Proccess" />
           <ScalarProperty Name="Knowledge" ColumnName="Knowledge" />
           <ScalarProperty Name="IsShow24hApp" ColumnName="IsShow24hApp" />
@@ -3582,9 +3586,6 @@
           <ScalarProperty Name="Incurred" ColumnName="Incurred" />
           <ScalarProperty Name="Value" ColumnName="Value" />
           <ScalarProperty Name="Percent" ColumnName="Percent" />
-          <ScalarProperty Name="PriceOld" ColumnName="PriceOld" />
-          <ScalarProperty Name="PriceCost" ColumnName="PriceCost" />
-          <ScalarProperty Name="Sale" ColumnName="Sale" />
           <ScalarProperty Name="IDPictureMap" ColumnName="IDPictureMap" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
           <ScalarProperty Name="CateID" ColumnName="CateID" />
@@ -3600,13 +3601,16 @@
           <ScalarProperty Name="Details" ColumnName="Details" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="NameAscii" ColumnName="NameAscii" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sale" ColumnName="Sale" />
+          <ScalarProperty Name="PriceOld" ColumnName="PriceOld" />
+          <ScalarProperty Name="PriceCost" ColumnName="PriceCost" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="Minutes" ColumnName="Minutes" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="QuantityDay" ColumnName="QuantityDay" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -76,8 +76,8 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\bin\HtmlAgilityPack.pdb
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\bin\HtmlAgilityPack.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\bin\EPPlus.xml
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\bin\log4net.xml
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csprojAssemblyReference.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csproj.CopyComplete
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.pdb
+E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\obj\Debug\FDI.MvcAPI.csprojAssemblyReference.cache

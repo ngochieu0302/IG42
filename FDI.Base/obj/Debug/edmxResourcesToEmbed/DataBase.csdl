@@ -797,6 +797,10 @@
       <End Role="Customer" EntitySet="Customers" />
       <End Role="Shop_Product" EntitySet="Shop_Product" />
     </AssociationSet>
+    <AssociationSet Name="FK_Shop_Product_Detail_Customer" Association="FDIModel.FK_Shop_Product_Detail_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+    </AssociationSet>
     <AssociationSet Name="FK_SMS_Customer" Association="FDIModel.FK_SMS_Customer">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="SM" EntitySet="SMS" />
@@ -3777,6 +3781,7 @@
     <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Customer" ToRole="Shop_Order_Details" />
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Customer" ToRole="Shop_Orders" />
     <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
+    <NavigationProperty Name="Shop_Product_Detail" Relationship="FDIModel.FK_Shop_Product_Detail_Customer" FromRole="Customer" ToRole="Shop_Product_Detail" />
     <NavigationProperty Name="SMS" Relationship="FDIModel.FK_SMS_Customer" FromRole="Customer" ToRole="SM" />
     <NavigationProperty Name="Therapy_History" Relationship="FDIModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
     <NavigationProperty Name="WalletCustomers" Relationship="FDIModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
@@ -4112,6 +4117,8 @@
     <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="AvatarUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsVerify" Type="Boolean" />
+    <Property Name="IsBank" Type="Boolean" />
     <NavigationProperty Name="Agency_Module" Relationship="FDIModel.FK_Agency_Module_DN_Agency" FromRole="DN_Agency" ToRole="Agency_Module" />
     <NavigationProperty Name="Areas" Relationship="FDIModel.FK_Area_DN_Agency" FromRole="DN_Agency" ToRole="Area" />
     <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Cate_Value_DN_Agency" FromRole="DN_Agency" ToRole="Cate_Value" />
@@ -7003,13 +7010,16 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="QuantityDay" Type="Int32" />
     <Property Name="StartDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Minutes" Type="Int32" />
     <Property Name="EndDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Sale" Type="Int32" />
     <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -7025,9 +7035,6 @@
     <Property Name="CateID" Type="Int32" />
     <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IDPictureMap" Type="Int32" />
-    <Property Name="Sale" Type="Int32" />
-    <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Percent" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Value" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Incurred" Type="Decimal" Precision="18" Scale="0" />
@@ -7036,9 +7043,12 @@
     <Property Name="IsShow24hApp" Type="Boolean" />
     <Property Name="Knowledge" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Proccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsUpcoming" Type="Int32" />
+    <Property Name="CustomerID" Type="Int32" />
     <NavigationProperty Name="AttributeOptions" Relationship="FDIModel.FK_AttributeOptions_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="AttributeOption" />
     <NavigationProperty Name="Category" Relationship="FDIModel.FK_Shop_Product_Detail_Category" FromRole="Shop_Product_Detail" ToRole="Category" />
     <NavigationProperty Name="Category_Product_Recipe" Relationship="FDIModel.FK_Category_Product_Recipe_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Category_Product_Recipe" />
+    <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Product_Detail_Customer" FromRole="Shop_Product_Detail" ToRole="Customer" />
     <NavigationProperty Name="DN_Unit" Relationship="FDIModel.FK_Shop_Product_Detail_DN_Unit" FromRole="Shop_Product_Detail" ToRole="DN_Unit" />
     <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_Shop_Product_Detail_DN_Users" FromRole="Shop_Product_Detail" ToRole="DN_Users" />
     <NavigationProperty Name="FreightWarehouses" Relationship="FDIModel.FK_FreightWarehouse_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="FreightWarehouse" />
@@ -9633,6 +9643,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Shop_Product">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Product_Detail_Customer">
+    <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="FDIModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shop_Product_Detail">
         <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
