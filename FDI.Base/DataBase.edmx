@@ -1086,6 +1086,8 @@ warning 6002: The table/view 'NNIG4.dbo.AspNetUserRoles' does not have a primary
           <Property Name="TokenDevice" Type="varchar" MaxLength="250" />
           <Property Name="AvatarUrl" Type="nvarchar" MaxLength="250" />
           <Property Name="ImageTimeline" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsVerify" Type="bit" />
+          <Property Name="IsBank" Type="bit" />
         </EntityType>
         <EntityType Name="DN_AttributeDynamic">
           <Key>
@@ -3683,13 +3685,16 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="QuantityDay" Type="int" />
           <Property Name="StartDate" Type="numeric" Precision="18" Scale="4" />
           <Property Name="Minutes" Type="int" />
           <Property Name="EndDate" Type="numeric" Precision="18" Scale="4" />
           <Property Name="Price" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="PriceCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Sale" Type="int" />
           <Property Name="NameAscii" Type="nvarchar" MaxLength="255" />
           <Property Name="Description" Type="ntext" />
           <Property Name="Details" Type="ntext" />
@@ -3705,9 +3710,6 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="CateID" Type="int" />
           <Property Name="DateCreate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="IDPictureMap" Type="int" />
-          <Property Name="Sale" Type="int" />
-          <Property Name="PriceCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PriceOld" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Percent" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Incurred" Type="decimal" Precision="18" Scale="0" />
@@ -3716,6 +3718,8 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="IsShow24hApp" Type="bit" />
           <Property Name="Knowledge" Type="ntext" />
           <Property Name="Proccess" Type="ntext" />
+          <Property Name="IsUpcoming" Type="int" />
+          <Property Name="CustomerID" Type="int" />
         </EntityType>
         <EntityType Name="Shop_Product_Detail_Picture">
           <Key>
@@ -9962,6 +9966,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shop_Product_Detail_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Detail">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Shop_Product_Detail_DN_Unit">
           <End Role="DN_Unit" Type="Self.DN_Unit" Multiplicity="0..1" />
           <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="*" />
@@ -13763,6 +13779,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Category" EntitySet="Category" />
             <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Detail_Customer" Association="Self.FK_Shop_Product_Detail_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Shop_Product_Detail_DN_Unit" Association="Self.FK_Shop_Product_Detail_DN_Unit">
             <End Role="DN_Unit" EntitySet="DN_Unit" />
             <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
@@ -14780,6 +14800,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_Shop_Product_Customer1" Association="FDIModel.FK_Shop_Product_Customer1">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Shop_Product" EntitySet="Shop_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Detail_Customer" Association="FDIModel.FK_Shop_Product_Detail_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_SMS_Customer" Association="FDIModel.FK_SMS_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -17761,6 +17785,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Customer" ToRole="Shop_Order_Details" />
           <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Customer" ToRole="Shop_Orders" />
           <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
+          <NavigationProperty Name="Shop_Product_Detail" Relationship="FDIModel.FK_Shop_Product_Detail_Customer" FromRole="Customer" ToRole="Shop_Product_Detail" />
           <NavigationProperty Name="SMS" Relationship="FDIModel.FK_SMS_Customer" FromRole="Customer" ToRole="SM" />
           <NavigationProperty Name="Therapy_History" Relationship="FDIModel.FK_Therapy_History_Customer" FromRole="Customer" ToRole="Therapy_History" />
           <NavigationProperty Name="WalletCustomers" Relationship="FDIModel.FK_WalletCustomer_Customer" FromRole="Customer" ToRole="WalletCustomer" />
@@ -18096,6 +18121,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="AvatarUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsVerify" Type="Boolean" />
+          <Property Name="IsBank" Type="Boolean" />
           <NavigationProperty Name="Agency_Module" Relationship="FDIModel.FK_Agency_Module_DN_Agency" FromRole="DN_Agency" ToRole="Agency_Module" />
           <NavigationProperty Name="Areas" Relationship="FDIModel.FK_Area_DN_Agency" FromRole="DN_Agency" ToRole="Area" />
           <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Cate_Value_DN_Agency" FromRole="DN_Agency" ToRole="Cate_Value" />
@@ -20987,13 +21014,16 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QuantityDay" Type="Int32" />
           <Property Name="StartDate" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Minutes" Type="Int32" />
           <Property Name="EndDate" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Sale" Type="Int32" />
           <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -21009,9 +21039,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="CateID" Type="Int32" />
           <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IDPictureMap" Type="Int32" />
-          <Property Name="Sale" Type="Int32" />
-          <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Percent" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Value" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Incurred" Type="Decimal" Precision="18" Scale="0" />
@@ -21020,9 +21047,12 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="IsShow24hApp" Type="Boolean" />
           <Property Name="Knowledge" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Proccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsUpcoming" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
           <NavigationProperty Name="AttributeOptions" Relationship="FDIModel.FK_AttributeOptions_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="AttributeOption" />
           <NavigationProperty Name="Category" Relationship="FDIModel.FK_Shop_Product_Detail_Category" FromRole="Shop_Product_Detail" ToRole="Category" />
           <NavigationProperty Name="Category_Product_Recipe" Relationship="FDIModel.FK_Category_Product_Recipe_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Category_Product_Recipe" />
+          <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Product_Detail_Customer" FromRole="Shop_Product_Detail" ToRole="Customer" />
           <NavigationProperty Name="DN_Unit" Relationship="FDIModel.FK_Shop_Product_Detail_DN_Unit" FromRole="Shop_Product_Detail" ToRole="DN_Unit" />
           <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK_Shop_Product_Detail_DN_Users" FromRole="Shop_Product_Detail" ToRole="DN_Users" />
           <NavigationProperty Name="FreightWarehouses" Relationship="FDIModel.FK_FreightWarehouse_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="FreightWarehouse" />
@@ -23617,6 +23647,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Shop_Product">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Detail_Customer">
+          <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="FDIModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Detail">
               <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
@@ -28699,6 +28741,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="DN_Agency">
             <EntityTypeMapping TypeName="FDIModel.DN_Agency">
               <MappingFragment StoreEntitySet="DN_Agency">
+                <ScalarProperty Name="IsBank" ColumnName="IsBank" />
+                <ScalarProperty Name="IsVerify" ColumnName="IsVerify" />
                 <ScalarProperty Name="ImageTimeline" ColumnName="ImageTimeline" />
                 <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
                 <ScalarProperty Name="TokenDevice" ColumnName="TokenDevice" />
@@ -31220,6 +31264,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Shop_Product_Detail">
             <EntityTypeMapping TypeName="FDIModel.Shop_Product_Detail">
               <MappingFragment StoreEntitySet="Shop_Product_Detail">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="IsUpcoming" ColumnName="IsUpcoming" />
                 <ScalarProperty Name="Proccess" ColumnName="Proccess" />
                 <ScalarProperty Name="Knowledge" ColumnName="Knowledge" />
                 <ScalarProperty Name="IsShow24hApp" ColumnName="IsShow24hApp" />
@@ -31228,9 +31274,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Incurred" ColumnName="Incurred" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Percent" ColumnName="Percent" />
-                <ScalarProperty Name="PriceOld" ColumnName="PriceOld" />
-                <ScalarProperty Name="PriceCost" ColumnName="PriceCost" />
-                <ScalarProperty Name="Sale" ColumnName="Sale" />
                 <ScalarProperty Name="IDPictureMap" ColumnName="IDPictureMap" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="CateID" ColumnName="CateID" />
@@ -31246,13 +31289,16 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NameAscii" ColumnName="NameAscii" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sale" ColumnName="Sale" />
+                <ScalarProperty Name="PriceOld" ColumnName="PriceOld" />
+                <ScalarProperty Name="PriceCost" ColumnName="PriceCost" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="QuantityDay" ColumnName="QuantityDay" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

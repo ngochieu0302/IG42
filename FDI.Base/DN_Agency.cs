@@ -82,6 +82,8 @@ namespace FDI.Base
         public string TokenDevice { get; set; }
         public string AvatarUrl { get; set; }
         public string ImageTimeline { get; set; }
+        public Nullable<bool> IsVerify { get; set; }
+        public Nullable<bool> IsBank { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Agency_Module> Agency_Module { get; set; }
