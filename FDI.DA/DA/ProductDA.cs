@@ -36,7 +36,7 @@ namespace FDI.DA
         {
             Request = new ParramRequest(httpRequest);
             var query = from c in FDIDB.Shop_Product
-                        where c.IsDelete == false
+                        where c.IsDelete == false && c.Shop_Product_Detail.IsDelete != true
                         orderby c.ID descending
                         select new ProductItem
                         {
