@@ -25,7 +25,7 @@ namespace FDI.Simple
         public int? Check { get; set; }
         public virtual CustomerItem Customer { get; set; }
         public virtual OrderItem Order { get; set; }
-        public virtual ProductItem Shop_Product { get; set; }
+        public virtual ProductAppIG4Item Shop_Product { get; set; }
         public bool? IsPrestige { get; set; }
     }
 

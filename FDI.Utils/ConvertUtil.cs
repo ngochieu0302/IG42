@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace FDI.Utils
@@ -28,7 +29,11 @@ namespace FDI.Utils
             FDIEntities _d = new FDIEntities();
             try
             {
-                var check = _d.Database.SqlQuery<float>("SELECT dbo.DistanceBetween (@la1, @lo1, @la2, @lo2)");
+                var pla1 = new SqlParameter("@la1", la1);
+                var plo1 = new SqlParameter("@lo1", lo1);
+                var pla2 = new SqlParameter("@la2 ", la2);
+                var plo2 = new SqlParameter("@lo2 ", lo2);
+                var check = _d.Database.SqlQuery<double>("SELECT dbo.DistanceBetween (@la1, @lo1, @la2, @lo2)", pla1, plo1, pla2, plo2);
 
                 return check.FirstOrDefault();
             }

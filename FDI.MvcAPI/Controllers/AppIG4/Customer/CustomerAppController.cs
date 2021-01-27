@@ -36,13 +36,9 @@ namespace FDI.MvcAPI.Controllers
         readonly CustomerPolicyAppIG4DA _customerPolicyDa = new CustomerPolicyAppIG4DA("#");
         readonly CashOutWalletAppIG4DA _cashOutWalletDa = new CashOutWalletAppIG4DA("#");
         readonly RewardHistoryAppIG4DA _rewardHistoryDa = new RewardHistoryAppIG4DA("#");
-<<<<<<< HEAD
-        
-=======
-        //readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
->>>>>>> eb09eded42210267c7f3ad53ee0857bc4e939f5a
         readonly AgencyDA _agencyDa = new AgencyDA("");
 
+        //readonly CustomerRewardAppIG4DA _customerRewardDa = new CustomerRewardAppIG4DA();
         //public ActionResult CustomerOrther(string lstInt)
         //{
         //    var model = customerDA.GetItemByID()
