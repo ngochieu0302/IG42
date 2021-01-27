@@ -35,13 +35,16 @@ namespace FDI.Base
         }
     
         public int ID { get; set; }
+        public string Name { get; set; }
         public string Code { get; set; }
         public Nullable<int> QuantityDay { get; set; }
         public Nullable<decimal> StartDate { get; set; }
         public Nullable<int> Minutes { get; set; }
         public Nullable<decimal> EndDate { get; set; }
         public Nullable<decimal> Price { get; set; }
-        public string Name { get; set; }
+        public Nullable<decimal> PriceCost { get; set; }
+        public Nullable<decimal> PriceOld { get; set; }
+        public Nullable<int> Sale { get; set; }
         public string NameAscii { get; set; }
         public string Description { get; set; }
         public string Details { get; set; }
@@ -57,9 +60,6 @@ namespace FDI.Base
         public Nullable<int> CateID { get; set; }
         public Nullable<decimal> DateCreate { get; set; }
         public Nullable<int> IDPictureMap { get; set; }
-        public Nullable<int> Sale { get; set; }
-        public Nullable<decimal> PriceCost { get; set; }
-        public Nullable<decimal> PriceOld { get; set; }
         public Nullable<decimal> Percent { get; set; }
         public Nullable<decimal> Value { get; set; }
         public Nullable<decimal> Incurred { get; set; }
@@ -68,6 +68,7 @@ namespace FDI.Base
         public Nullable<bool> IsShow24hApp { get; set; }
         public string Knowledge { get; set; }
         public string Proccess { get; set; }
+        public Nullable<int> IsUpcoming { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttributeOption> AttributeOptions { get; set; }

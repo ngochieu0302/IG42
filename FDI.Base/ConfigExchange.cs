@@ -31,5 +31,7 @@ namespace FDI.Base
         public Nullable<decimal> DiscountSale { get; set; }
         public Nullable<int> ProfitSouce { get; set; }
         public Nullable<decimal> DiscountSouce { get; set; }
+        public Nullable<decimal> DiscountOrderAgency { get; set; }
+        public Nullable<decimal> DiscountOrderPacket { get; set; }
     }
 }

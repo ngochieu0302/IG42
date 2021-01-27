@@ -31,6 +31,7 @@ namespace FDI.Base
             this.Documents = new HashSet<Document>();
             this.Product_Value = new HashSet<Product_Value>();
             this.RewardAgencyHistories = new HashSet<RewardAgencyHistory>();
+            this.RewardHistories = new HashSet<RewardHistory>();
             this.Shop_ContactOrder = new HashSet<Shop_ContactOrder>();
             this.Shop_Orders = new HashSet<Shop_Orders>();
             this.StorageWarehousings = new HashSet<StorageWarehousing>();
@@ -81,6 +82,8 @@ namespace FDI.Base
         public string TokenDevice { get; set; }
         public string AvatarUrl { get; set; }
         public string ImageTimeline { get; set; }
+        public Nullable<bool> IsVerify { get; set; }
+        public Nullable<bool> IsBank { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Agency_Module> Agency_Module { get; set; }
@@ -114,6 +117,8 @@ namespace FDI.Base
         public virtual ICollection<Product_Value> Product_Value { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RewardAgencyHistory> RewardAgencyHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RewardHistory> RewardHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop_ContactOrder> Shop_ContactOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

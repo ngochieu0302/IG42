@@ -2,8 +2,6 @@ D:\Projects\Web\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cach
 D:\Projects\Web\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache
 E:\Projects\Web\GAB2\FDI\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cache
 E:\Projects\Web\GAB2\FDI\Gab\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache
-C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cache
-C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\FDI.Web.dll.config
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\FDI.Web.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\FDI.Web.pdb
@@ -17,6 +15,7 @@ C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OAuth.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OpenId.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.dll
+C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.SqlServer.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EPPlus.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\FDI.Base.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\FDI.CORE.dll
@@ -67,6 +66,7 @@ C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OAuth.Consumer.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OpenId.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.xml
+C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.SqlServer.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\Microsoft.Web.WebPages.OAuth.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\System.Net.Http.Formatting.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\System.Web.Helpers.xml
@@ -83,9 +83,8 @@ C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\HtmlAgilityPack.pdb
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\HtmlAgilityPack.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\Org.Mentalis.Security.Cryptography.xml
 C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\Mono.Math.xml
+C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.WebApp.csprojAssemblyReference.cache
+C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.WebApp.csproj.CopyComplete
 C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.Web.dll
 C:\IG4\CodeIG4\IG4\FDI.WebApp\obj\Debug\FDI.Web.pdb
-C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.SqlServer.dll
-C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\EntityFramework.SqlServer.xml
-C:\IG4\CodeIG4\IG4\FDI.WebApp\bin\Newtonsoft.Json.xml

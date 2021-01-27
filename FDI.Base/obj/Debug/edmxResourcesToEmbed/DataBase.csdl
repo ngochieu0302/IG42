@@ -806,6 +806,17 @@
       <Parameter Name="userid" Mode="In" Type="Guid" />
       <Parameter Name="lid" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="StaticChartsAgencyTotalPrice" ReturnType="Collection(FDIModel.StaticChartsAgencyTotalPrice_Result)">
+      <Parameter Name="from" Mode="In" Type="Decimal" />
+      <Parameter Name="to" Mode="In" Type="Decimal" />
+      <Parameter Name="aid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="StaticChartsbyDayAgencyTotalPrice" ReturnType="Collection(FDIModel.StaticChartsbyDayAgencyTotalPrice_Result)">
+      <Parameter Name="from" Mode="In" Type="Decimal" />
+      <Parameter Name="to" Mode="In" Type="Decimal" />
+      <Parameter Name="aid" Mode="In" Type="Int32" />
+      <Parameter Name="type" Mode="In" Type="Int32" />
+    </FunctionImport>
     <EntitySet Name="C__EFMigrationsHistory" EntityType="FDIModel.C__EFMigrationsHistory" />
     <EntitySet Name="ActiveRoles" EntityType="FDIModel.ActiveRole" />
     <EntitySet Name="AddMinutes" EntityType="FDIModel.AddMinute" />
@@ -1745,6 +1756,10 @@
     <AssociationSet Name="FK_RewardAgencyHistory_DN_Agency" Association="FDIModel.FK_RewardAgencyHistory_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
       <End Role="RewardAgencyHistory" EntitySet="RewardAgencyHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_DN_Agency" Association="FDIModel.FK_RewardHistory_DN_Agency">
+      <End Role="DN_Agency" EntitySet="DN_Agency" />
+      <End Role="RewardHistory" EntitySet="RewardHistories" />
     </AssociationSet>
     <AssociationSet Name="FK_Shop_ContactOrder_DN_Agency" Association="FDIModel.FK_Shop_ContactOrder_DN_Agency">
       <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -3394,6 +3409,19 @@
     <Property Type="String" Name="Email" Nullable="true" MaxLength="64" />
     <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="4" />
   </ComplexType>
+  <ComplexType Name="StaticChartsAgencyTotalPrice_Result">
+    <Property Type="Int32" Name="AgencyId" Nullable="true" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="TotalOld" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="totalcustomer" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="totalagency" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="totalsouce" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="StaticChartsbyDayAgencyTotalPrice_Result">
+    <Property Type="Int32" Name="AgencyId" Nullable="true" />
+    <Property Type="Decimal" Name="Date" Nullable="true" Precision="18" Scale="4" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
   <EntityType Name="C__EFMigrationsHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -4132,6 +4160,8 @@
     <Property Name="DiscountSale" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="ProfitSouce" Type="Int32" />
     <Property Name="DiscountSouce" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrderAgency" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountOrderPacket" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="ControlValue">
     <Key>
@@ -4630,6 +4660,8 @@
     <Property Name="TokenDevice" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="AvatarUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="ImageTimeline" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsVerify" Type="Boolean" />
+    <Property Name="IsBank" Type="Boolean" />
     <NavigationProperty Name="Agency_Module" Relationship="FDIModel.FK_Agency_Module_DN_Agency" FromRole="DN_Agency" ToRole="Agency_Module" />
     <NavigationProperty Name="Areas" Relationship="FDIModel.FK_Area_DN_Agency" FromRole="DN_Agency" ToRole="Area" />
     <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Cate_Value_DN_Agency" FromRole="DN_Agency" ToRole="Cate_Value" />
@@ -4648,6 +4680,7 @@
     <NavigationProperty Name="Documents" Relationship="FDIModel.FK_Documents_DN_Agency" FromRole="DN_Agency" ToRole="Document" />
     <NavigationProperty Name="Product_Value" Relationship="FDIModel.FK_Product_Value_DN_Agency" FromRole="DN_Agency" ToRole="Product_Value" />
     <NavigationProperty Name="RewardAgencyHistories" Relationship="FDIModel.FK_RewardAgencyHistory_DN_Agency" FromRole="DN_Agency" ToRole="RewardAgencyHistory" />
+    <NavigationProperty Name="RewardHistories" Relationship="FDIModel.FK_RewardHistory_DN_Agency" FromRole="DN_Agency" ToRole="RewardHistory" />
     <NavigationProperty Name="Shop_ContactOrder" Relationship="FDIModel.FK_Shop_ContactOrder_DN_Agency" FromRole="DN_Agency" ToRole="Shop_ContactOrder" />
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_DN_Agency" FromRole="DN_Agency" ToRole="Shop_Orders" />
     <NavigationProperty Name="StorageWarehousings" Relationship="FDIModel.FK_StorageWarehousing_DN_Agency" FromRole="DN_Agency" ToRole="StorageWarehousing" />
@@ -7160,8 +7193,11 @@
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="TotalCp" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="WalletCusId" Type="Int32" />
+    <Property Name="OrderPacketID" Type="Int32" />
+    <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="BonusType" Relationship="FDIModel.FK_RewardHistory_BonusType" FromRole="RewardHistory" ToRole="BonusType" />
     <NavigationProperty Name="Customer" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
+    <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_RewardHistory_DN_Agency" FromRole="RewardHistory" ToRole="DN_Agency" />
     <NavigationProperty Name="DN_ImportProduct" Relationship="FDIModel.FK_RewardHistory_DN_ImportProduct" FromRole="RewardHistory" ToRole="DN_ImportProduct" />
     <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_RewardHistory_Shop_Orders" FromRole="RewardHistory" ToRole="Shop_Orders" />
     <NavigationProperty Name="WalletCustomer" Relationship="FDIModel.FK_RewardHistory_WalletCustomer" FromRole="RewardHistory" ToRole="WalletCustomer" />
@@ -7467,6 +7503,7 @@
     <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PriceNew" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Format" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Weight" Type="Decimal" Precision="18" Scale="2" />
@@ -7516,13 +7553,16 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="QuantityDay" Type="Int32" />
     <Property Name="StartDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Minutes" Type="Int32" />
     <Property Name="EndDate" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Sale" Type="Int32" />
     <Property Name="NameAscii" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -7538,9 +7578,6 @@
     <Property Name="CateID" Type="Int32" />
     <Property Name="DateCreate" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="IDPictureMap" Type="Int32" />
-    <Property Name="Sale" Type="Int32" />
-    <Property Name="PriceCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="PriceOld" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Percent" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Value" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Incurred" Type="Decimal" Precision="18" Scale="0" />
@@ -7549,6 +7586,7 @@
     <Property Name="IsShow24hApp" Type="Boolean" />
     <Property Name="Knowledge" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Proccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsUpcoming" Type="Int32" />
     <NavigationProperty Name="AttributeOptions" Relationship="FDIModel.FK_AttributeOptions_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="AttributeOption" />
     <NavigationProperty Name="Category" Relationship="FDIModel.FK_Shop_Product_Detail_Category" FromRole="Shop_Product_Detail" ToRole="Category" />
     <NavigationProperty Name="Category_Product_Recipe" Relationship="FDIModel.FK_Category_Product_Recipe_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Category_Product_Recipe" />
@@ -10578,6 +10616,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="RewardAgencyHistory">
+        <PropertyRef Name="AgencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RewardHistory_DN_Agency">
+    <End Type="FDIModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
+    <End Type="FDIModel.RewardHistory" Role="RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DN_Agency">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
         <PropertyRef Name="AgencyId" />
       </Dependent>
     </ReferentialConstraint>
