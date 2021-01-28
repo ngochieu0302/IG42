@@ -414,6 +414,7 @@ namespace FDI.DA
                 });
             return query.ToList();
         }
+        
         public List<ProductAppIG4Item> GetProductNearPosition(int km, double latitude, double longitude, int page, int pagesize)
         {
             var query = FDIDB.ProductGetNearPosition(km, latitude, longitude, page, pagesize).Select(m =>

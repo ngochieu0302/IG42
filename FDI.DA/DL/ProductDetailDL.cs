@@ -52,6 +52,32 @@ namespace FDI.DA.DL
                         };
             return query.ToList();
         }
+        public List<ProductDetailsItem> ListAll()
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                where !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) &&m.SizeID.HasValue)
+                select
+                    new ProductDetailsItem
+                    {
+                        ID = c.ID,
+                        Name = c.Name,
+                        Slug = c.NameAscii,
+                        SlugCate = c.Category.Slug,
+                        PriceNew = c.Price,
+                        NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
+                        UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                        Description = c.Description,
+                        //freeShipFor = c.d
+                        PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
+                        {
+                            ID = m.ID,
+                            Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
+                            Value = m.Product_Size.Value,
+                        }),
+                        CateId = c.CateID
+                    };
+            return query.ToList();
+        }
         public List<ShopProductDetailItem> GetListProductbylstCateId(int lstId)
         {
 

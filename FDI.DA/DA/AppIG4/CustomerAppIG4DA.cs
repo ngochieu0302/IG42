@@ -307,21 +307,22 @@ namespace FDI.DA
             entry.Property(e => e.IsDelete).IsModified = true;
             // DB.Customers.Remove(customer);
         }
+        
         public List<CustomerAppIG4Item> GetPrestige(int page, int pagesize)
         {
             var query = from c in FDIDB.Customers
-                        where c.IsPrestige
-                        orderby c.Ratings descending
-                        select new CustomerAppIG4Item
-                        {
-                            ID = c.ID,
-                            Fullname = c.FullName,
-                            Address = c.Address,
-                            Ratings = c.Ratings,
-                            AvgRating = c.AvgRating,
-                            LikeTotal = c.LikeTotal,
-                            ImageTimeline = c.ImageTimeline
-                        };
+                where c.IsPrestige
+                orderby c.Ratings descending
+                select new CustomerAppIG4Item
+                {
+                    ID = c.ID,
+                    Fullname = c.FullName,
+                    Address = c.Address,
+                    Ratings = c.Ratings,
+                    AvgRating = c.AvgRating,
+                    LikeTotal = c.LikeTotal,
+                    ImageTimeline = c.ImageTimeline
+                };
 
             query = query.Skip(pagesize * (page - 1)).Take(pagesize);
             return query.ToList();
