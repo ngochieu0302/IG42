@@ -122,6 +122,7 @@ namespace FDI.MvcAPI.Controllers
 
         public ActionResult GetDiscount()
         {
+            // var abc
             var discount = _walletCustomerDa.GetConfigItem();
             return Json(new BaseResponse<ConfigItemAppIG4> { Code = 200, Data = discount }, JsonRequestBehavior.AllowGet);
         }
