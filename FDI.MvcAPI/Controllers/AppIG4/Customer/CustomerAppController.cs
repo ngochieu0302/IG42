@@ -29,6 +29,7 @@ namespace FDI.MvcAPI.Controllers
     {
         TokenOtpDA tokenOtpDA = new TokenOtpDA();
         CustomerAppIG4DA customerDA = new CustomerAppIG4DA();
+        CustomerBL _customerBl = new CustomerBL();
         OrderAppIG4DA orderDA = new OrderAppIG4DA();
         CustomerAddressAppIG4DA customerAddressDA = new CustomerAddressAppIG4DA();
         readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
@@ -715,6 +716,12 @@ namespace FDI.MvcAPI.Controllers
             }
         }
         [AllowAnonymous]
+        public ActionResult ListByMap(int km, float la, float lo)
+        {
+            var lst = _customerBl.ListByMap(km, la, lo);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetShopPrestige(int page, int pagesize)
         {
             var lst = customerDA.GetPrestige(Latitude, Longitude, page, pagesize);
