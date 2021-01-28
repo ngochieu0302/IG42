@@ -1,2 +1,0 @@
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csprojAssemblyReference.cache
-E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Web\obj\Debug\FDI.Web.csproj.CoreCompileInputs.cache

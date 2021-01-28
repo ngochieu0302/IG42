@@ -1,2 +1,0 @@
-E:\CSharp\ASP.NET CORE\IG4\IG4\NhapKho.Web\NhapKho.Web\obj\Debug\NhapKho.Web.csprojAssemblyReference.cache
-E:\CSharp\ASP.NET CORE\IG4\IG4\NhapKho.Web\NhapKho.Web\obj\Debug\NhapKho.Web.csproj.CoreCompileInputs.cache

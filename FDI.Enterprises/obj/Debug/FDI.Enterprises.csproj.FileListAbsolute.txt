@@ -1,4 +1,0 @@
-D:\Projects\Web\Gab\FDI.Enterprises\obj\Debug\FDI.Enterprises.csprojAssemblyReference.cache
-D:\Projects\Web\Gab\FDI.Enterprises\obj\Debug\FDI.Enterprises.csproj.CoreCompileInputs.cache
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Enterprises\obj\Debug\FDI.Enterprises.csprojAssemblyReference.cache
-E:\Projects\Web\GAB2\FDI\Gab\FDI.Enterprises\obj\Debug\FDI.Enterprises.csproj.CoreCompileInputs.cache

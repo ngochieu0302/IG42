@@ -424,6 +424,7 @@ namespace FDI.DA
                             ImageTimeline = c.ImageTimeline,
                             AvartaUrl = c.AvatarUrl,
                             Mobile = c.Mobile,
+                            Birthday = c.Birthday,
                             ListID = c.ListID,
                             tokenDevice = c.TokenDevice,
                             Wallets = c.Customer_Reward.Sum(a => a.PriceReward - a.PriceReceive),

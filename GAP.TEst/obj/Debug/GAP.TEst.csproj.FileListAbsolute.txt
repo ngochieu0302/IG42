@@ -1,2 +1,0 @@
-E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csprojAssemblyReference.cache
-E:\CSharp\ASP.NET CORE\IG4\IG4\GAP.TEst\obj\Debug\GAP.TEst.csproj.CoreCompileInputs.cache
