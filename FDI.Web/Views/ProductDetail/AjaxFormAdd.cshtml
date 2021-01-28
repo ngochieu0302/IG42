@@ -25,6 +25,26 @@
                 $('.maskPrice').each(function (i) {
                     $(this).val($(this).val().replace(/\,/g, ''));
                 });
+
+                var lst = [];
+                $('#rolecate .rolediv').each(function () {
+                    var checked = [];
+                    $('.checkbox-value', this).each(function () {
+                        var d = $(this).is(":checked");
+                        checked.push(d);
+                    });
+                    var item = {
+                        IsFrame: checked[0],
+                        IsOpacity: checked[1],
+                        IsPosition: checked[2],
+                        IsMargin: checked[3],
+                        IsDecoration: checked[4],
+                        IsTextStyle: checked[5]
+                    };
+                    lst.push(item);
+                });
+                $("#listrole-add").val(JSON.stringify(lst));
+
                 $("#btnSave").attr("disabled", true);
                 $.post(urlPostAction, $("#modalForm").serialize(), function (data) {
                     $("#btnSave").attr("disabled", false);
@@ -82,8 +102,8 @@
             });
             $("body").on("click", "#Delete_" + stt, function (e) {
                 e.preventDefault();
+                $("#id_add_" + stt).remove();
                 stt--;
-                $("#" + id).remove();
 
             });
             $("#do_stt").val(stt);

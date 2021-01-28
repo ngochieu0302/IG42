@@ -226,6 +226,12 @@ namespace FDI.Utils
         }
     }
 
+    public enum IsUpcoming : int
+    {
+        Sapco =  1,
+        Daco = 2
+    }
+
     public enum Criteria
     {
         Level = 1,

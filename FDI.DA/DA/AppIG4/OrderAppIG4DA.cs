@@ -44,7 +44,27 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
-        // đây
+        public List<OrderAppIG4Item> GetListSimpleByCusId(int CusId)
+        {
+            var query = from c in FDIDB.Shop_Orders
+                        where c.IsDelete != true && c.CustomerID == CusId
+                        select new OrderAppIG4Item
+                        {
+                            ID = c.ID,
+                            LisOrderDetailItems = c.Shop_Order_Details.Select(a => new OrderDetailAppIG4Item { 
+                                ID = a.ID,
+                                Shop_Product = new ProductAppIG4Item
+                                {
+                                    ID = a.Shop_Product.ID,
+                                    Name = a.Shop_Product.Name,
+                                    PriceNew = a.Shop_Product.PriceNew,
+                                    PriceOld = a.Shop_Product.PriceOld,
+                                    SizeID = a.Shop_Product.SizeID
+                                }
+                            })
+                        };
+            return query.ToList();
+        }
         public List<OrderShopAppIG4Item> GetListProductByNew(int shopid, int status, int page, int take)
         {
             var query = from c in FDIDB.Shop_Orders

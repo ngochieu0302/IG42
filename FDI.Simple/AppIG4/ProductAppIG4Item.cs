@@ -14,6 +14,7 @@ namespace FDI.Simple
         public int? ProductTypeId { get; set; }
         public int? ColorId { get; set; }
         public int? Sale { get; set; }
+        public int? SizeID { get; set; }
         public int? Sort { get; set; }
         public decimal? Quantity { get; set; }
         public int? freeShipFor { get; set; }
@@ -72,6 +73,7 @@ namespace FDI.Simple
         public string PictureUrlIssUing { get; set; }
         public IEnumerable<int> LstInt { get; set; }
         public IEnumerable<PictureAppIG4Item> LstPictures { get; set; }
+        public PictureAppIG4Item PictureItem { get; set; }
         public IEnumerable<TagItem> Tags { get; set; }
         public List<CategoryAppIG4Item> CategoryItems { get; set; }
         public CategoryItem CategoryItem { get; set; }
@@ -103,8 +105,10 @@ namespace FDI.Simple
         public virtual IEnumerable<OrderDetailAppIG4Item> OrderDetails { get; set; }
         public virtual Customer1Item CustomerItem { get; set; }
         public virtual Customer2Item CustomerItem1 { get; set; }
+        public virtual ProductSizeItem SizeItem { get; set; }
         public int? CustomerId1 { get; set; }
         public bool? IsShop { get; set; }
+        public decimal? Price { get; set; }
     }
     public class ProductDetailsItem
     {
