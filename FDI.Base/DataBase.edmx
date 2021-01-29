@@ -3720,6 +3720,9 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="Proccess" Type="ntext" />
           <Property Name="IsUpcoming" Type="int" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="IsAll" Type="bit" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Shop_Product_Detail_Picture">
           <Key>
@@ -21049,6 +21052,9 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="Proccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsUpcoming" Type="Int32" />
           <Property Name="CustomerID" Type="Int32" />
+          <Property Name="IsAll" Type="Boolean" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
           <NavigationProperty Name="AttributeOptions" Relationship="FDIModel.FK_AttributeOptions_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="AttributeOption" />
           <NavigationProperty Name="Category" Relationship="FDIModel.FK_Shop_Product_Detail_Category" FromRole="Shop_Product_Detail" ToRole="Category" />
           <NavigationProperty Name="Category_Product_Recipe" Relationship="FDIModel.FK_Category_Product_Recipe_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Category_Product_Recipe" />
@@ -31264,6 +31270,9 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Shop_Product_Detail">
             <EntityTypeMapping TypeName="FDIModel.Shop_Product_Detail">
               <MappingFragment StoreEntitySet="Shop_Product_Detail">
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="IsAll" ColumnName="IsAll" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="IsUpcoming" ColumnName="IsUpcoming" />
                 <ScalarProperty Name="Proccess" ColumnName="Proccess" />

@@ -610,7 +610,7 @@ namespace FDI.MvcAPI.Controllers
         public ActionResult GetAdress()
         {
             var lst = customerAddressDA.GetAll(CustomerId);
-            return Json(new BaseResponse<List<CustomerAddressAppIG4Item>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
         }
         public async Task<ActionResult> UpdateAddress(CustomerAddressAppIG4Item data)
         {

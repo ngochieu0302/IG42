@@ -12,7 +12,7 @@ namespace FDI.Simple
         public bool? Gender { get; set; }
         public bool? IsPrestige { get; set; }
         public string TaxCode { get; set; }
-        public DateTime? Birthday { get; set; }
+        public decimal? Birthday { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
         public decimal? DateCreated { get; set; }
