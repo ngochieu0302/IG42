@@ -214,17 +214,6 @@ namespace FDI.MvcAPI.Controllers
             var product = _productDa.GetListProductIncoming();
             return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetById(int id, double latitude, double longitude)
-        {
-            var product = _productDa.GetProductItem(id, latitude, longitude);
-            if (product == null)
-            {
-                return Json(new JsonMessage(1004, "Sản phẩm không tồn tại"));
-            }
-            //var a = _orderPackageDa.GetOrderPackage(product.CustomerId.Value);
-            //product.Km = ConvertUtil.distance(latitude, longitude, product.Latitude, product.Longitude, 'K');
-            return Json(new BaseResponse<ProductAppIG4Item> { Code = 200, Erros = false, Data = product }, JsonRequestBehavior.AllowGet);
-        }
         public ActionResult GetBestProductForYou(int km, double latitude, double longitude, int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;
@@ -315,6 +304,12 @@ namespace FDI.MvcAPI.Controllers
                 product.Km = ConvertUtil.distance(Latitude, Longitude, product.Latitude, product.Longitude, 'K');
             }
             return Json(new BaseResponse<List<ProductAppIG4Item>>() { Code = 200, Data = lst }, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        public ActionResult GetById(int id)
+        {
+            var model = _detailBl.GetById(id);
+            return Json(new BaseResponse<ProductDetailsItem> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult ListAll()

@@ -55,7 +55,7 @@ namespace FDI.DA.DL
         public List<ProductDetailsItem> ListAll()
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                where !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) &&m.SizeID.HasValue)
+                where (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) &&m.SizeID.HasValue)
                 select
                     new ProductDetailsItem
                     {
@@ -67,7 +67,7 @@ namespace FDI.DA.DL
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                         Description = c.Description,
-                        //DateSale = c.StartDate,
+                        DateSale = c.StartDate,
                         //freeShipFor = c.d
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
@@ -82,7 +82,7 @@ namespace FDI.DA.DL
         public ProductDetailsItem GetById(int id)
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                where c.ID == id && !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
+                where c.ID == id && (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
                 select
                     new ProductDetailsItem
                     {
@@ -93,9 +93,10 @@ namespace FDI.DA.DL
                         PriceNew = c.Price,
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                        Pictures = c.Gallery_Picture2.Select(m=>m.Folder+m.Url),
                         Description = c.Description,
                         Details = c.Details,
-                        //DateSale = c.StartDate,
+                        DateSale = c.StartDate,
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
                             ID = m.ID,
