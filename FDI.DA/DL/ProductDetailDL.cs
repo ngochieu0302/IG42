@@ -67,7 +67,7 @@ namespace FDI.DA.DL
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                         Description = c.Description,
-                        //DateSale = c.StartDate,
+                        DateSale = c.StartDate,
                         //freeShipFor = c.d
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
@@ -93,9 +93,10 @@ namespace FDI.DA.DL
                         PriceNew = c.Price,
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                        Pictures = c.Gallery_Picture2.Select(m=>m.Folder+m.Url),
                         Description = c.Description,
                         Details = c.Details,
-                        //DateSale = c.StartDate,
+                        DateSale = c.StartDate,
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
                             ID = m.ID,
