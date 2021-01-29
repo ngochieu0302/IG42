@@ -70,22 +70,23 @@ namespace FDI.DA
                 item.IsDefault = false;
             }
         }
-        public List<CustomerAppIG4Item> GetAll(int customerId)
+        public List<CustomerAddressAppIG4Item> GetAll(int customerId)
         {
-            var query = from c in FDIDB.Customers
-                        where c.ID == customerId
-                        select new CustomerAppIG4Item
+            var query = from c in FDIDB.CustomerAddresses
+                        where c.CustomerId == customerId
+                        select new CustomerAddressAppIG4Item
                         {
                             ID = c.ID,
-                            Fullname = c.FullName,
+                            Phone = c.Phone,
+                            CustomerName = c.CustomerName,
                             Address = c.Address,
-                            ListCustomerAddressItems = c.CustomerAddresses.Select(a => new CustomerAddressAppIG4Item {
-                                Address = a.Address,
-                                IsDefault = a.IsDefault,
-                                Latitude = a.Latitude,
-                                Longitude = a.Longitude,
-                                Phone = a.Phone
-                            }),
+                            City = c.City,
+                            District = c.District,
+                            Commune = c.Commune,
+                            AddressType = c.AddressType,
+                            IsDefault = c.IsDefault,
+                            Latitude = c.Latitude,
+                            Longitude = c.Longitude
                         };
             return query.ToList();
         }

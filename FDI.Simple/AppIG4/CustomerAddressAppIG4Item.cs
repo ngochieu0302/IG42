@@ -15,6 +15,9 @@ namespace FDI.Simple
         public bool IsDefault { get; set; }
         public int AddressType { get; set; }
         public double? Km { get; set; }
+        public string City { get; set; }
+        public string District { get; set; }
+        public string Commune { get; set; }
     }
 
     public class ModelCustomerAddressItem : BaseModelSimple

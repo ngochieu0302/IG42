@@ -580,6 +580,9 @@ namespace FDI.MvcAPI.Controllers
                 Phone = data.Phone,
                 Latitude = data.Latitude,
                 Longitude = data.Longitude,
+                City = data.City,
+                District = data.District,
+                Commune = data.Commune,
                 IsDelete = false,
                 AddressType = data.AddressType
             };
@@ -609,7 +612,7 @@ namespace FDI.MvcAPI.Controllers
         public ActionResult GetAdress()
         {
             var lst = customerAddressDA.GetAll(CustomerId);
-            return Json(new BaseResponse<List<CustomerAppIG4Item>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<CustomerAddressAppIG4Item>>() { Code = 200, Data = lst, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
         }
         public async Task<ActionResult> UpdateAddress(CustomerAddressAppIG4Item data)
         {
@@ -625,11 +628,11 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(1000, "Địa chỉ không tồn tại"), JsonRequestBehavior.AllowGet);
             }
 
-            if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))
-            {
-                return Json(new JsonMessage(1000, "Tọa độ đã tồn tại"), JsonRequestBehavior.AllowGet);
+            //if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))
+            //{
+            //    return Json(new JsonMessage(1000, "Tọa độ đã tồn tại"), JsonRequestBehavior.AllowGet);
 
-            }
+            //}
 
             if (data.IsDefault)
             {
@@ -640,6 +643,9 @@ namespace FDI.MvcAPI.Controllers
             item.Phone = data.Phone;
             item.Latitude = data.Latitude;
             item.Longitude = data.Longitude;
+            item.City = data.City;
+            item.District = data.District;
+            item.Commune = data.Commune;
             item.IsDefault = data.IsDefault;
             item.AddressType = data.AddressType;
 
@@ -670,6 +676,8 @@ namespace FDI.MvcAPI.Controllers
             customer.FullName = data.Fullname;
             customer.Mobile = data.Mobile;
             customer.AgencyID = data.AgencyID ?? 1006;
+            customer.Birthday = data.Birthday;
+            customer.Gender = data.Gender;
             var file = Request.Files["fileAvatar"];
             if (file != null)
             {

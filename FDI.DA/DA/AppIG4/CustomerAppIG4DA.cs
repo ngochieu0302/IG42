@@ -426,6 +426,7 @@ namespace FDI.DA
                             Mobile = c.Mobile,
                             Birthday = c.Birthday,
                             ListID = c.ListID,
+                            Gender = c.Gender,
                             tokenDevice = c.TokenDevice,
                             Wallets = c.Customer_Reward.Sum(a => a.PriceReward - a.PriceReceive),
                             TotalWallets = c.Wallets.Sum(a => a.WalletCus - a.CashOutWallet),

@@ -16,14 +16,11 @@ namespace FDI.Base
         public Nullable<int> id { get; set; }
         public string Name { get; set; }
         public Nullable<int> PictureID { get; set; }
-        public Nullable<int> Ratings { get; set; }
-        public Nullable<double> AvgRating { get; set; }
         public Nullable<int> CateId { get; set; }
         public Nullable<decimal> PriceNew { get; set; }
         public Nullable<bool> IsPrestige { get; set; }
         public Nullable<bool> IsPrestige1 { get; set; }
         public Nullable<double> kc { get; set; }
-        public Nullable<double> kc1 { get; set; }
         public Nullable<int> sort { get; set; }
         public Nullable<double> km { get; set; }
         public string Folder { get; set; }
