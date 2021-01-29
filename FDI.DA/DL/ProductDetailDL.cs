@@ -55,7 +55,7 @@ namespace FDI.DA.DL
         public List<ProductDetailsItem> ListAll()
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                where !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) &&m.SizeID.HasValue)
+                where (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) &&m.SizeID.HasValue)
                 select
                     new ProductDetailsItem
                     {
@@ -82,7 +82,7 @@ namespace FDI.DA.DL
         public ProductDetailsItem GetById(int id)
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                where c.ID == id && !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
+                where c.ID == id && (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
                 select
                     new ProductDetailsItem
                     {
