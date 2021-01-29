@@ -67,7 +67,7 @@ namespace FDI.DA.DL
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                         Description = c.Description,
-                        DateSale = c.StartDate,
+                        //DateSale = c.StartDate,
                         //freeShipFor = c.d
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
@@ -95,14 +95,14 @@ namespace FDI.DA.DL
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                         Description = c.Description,
                         Details = c.Details,
-                        DateSale = c.StartDate,
+                        //DateSale = c.StartDate,
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
                             ID = m.ID,
                             Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
                             Value = m.Product_Size.Value,
                         }),
-                        Pictures = c.Gallery_Picture2.Where(a => a.IsDeleted == false && a.IsShow == true).Select(z => z.Folder + z.Url),
+                        //Pictures = c.Gallery_Picture2.Where(a => a.IsDeleted == false && a.IsShow == true).Select(z => z.Folder + z.Url),
                         CateId = c.CateID
                     };
             return query.FirstOrDefault();

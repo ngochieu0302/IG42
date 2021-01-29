@@ -17,7 +17,6 @@ using Facebook;
 using System.Net;
 using System.Web.Script.Serialization;
 using FDI.DA.DA;
-using Microsoft.Ajax.Utilities;
 using FDI.CORE;
 using Newtonsoft.Json.Linq;
 using ZaloDotNetSDK;
@@ -77,7 +76,7 @@ namespace FDI.MvcAPI.Controllers
         }
 
 
-        [AllowAnonymous]
+        [System.Web.Http.AllowAnonymous]
         public ActionResult GetListWalletsHistory(int customerId, int type, int page, int take)
         {
             var list = _walletCustomerDa.GetListWalletCustomerbyId(customerId);
@@ -225,7 +224,7 @@ namespace FDI.MvcAPI.Controllers
 
             return Json(new JsonMessage { Code = 200, Message = "" });
         }
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
 
         public ActionResult FacebookCallback(string accesstoken, string token)
@@ -358,7 +357,7 @@ namespace FDI.MvcAPI.Controllers
             return Redirect("/");
         }
         [AllowAnonymous]
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult ZaloCallback(string accesstoken)
         {
             try
@@ -498,7 +497,7 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, Fullname = customer.FullName  } }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public async Task<ActionResult> RefreshToken(string refreshToken)
         {
             if (!JWTService.Instance.IsTokenValid(refreshToken))
@@ -649,7 +648,7 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<CustomerAddressAppIG4Item>() { Code = 200, Data = data, Erros = false, Message = "" }, JsonRequestBehavior.AllowGet);
 
         }
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public async Task<ActionResult> UpdateAcount(CustomerAppIG4Item data)
         {
             var customer = customerDA.GetById(CustomerId);
