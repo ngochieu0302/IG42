@@ -77,8 +77,8 @@ namespace FDI.DA
                         select new CustomerAddressAppIG4Item
                         {
                             ID = c.ID,
-                            Phone = c.Phone,
-                            CustomerName = c.CustomerName,
+                            Phone = c.Customer.Mobile,
+                            CustomerName = c.Customer.FullName,
                             Address = c.Address,
                             City = c.City,
                             District = c.District,

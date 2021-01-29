@@ -570,14 +570,15 @@ namespace FDI.MvcAPI.Controllers
                 customerAddressDA.ResetDefault(CustomerId);
             }
 
+            var cus = customerDA.GetById(CustomerId);
             var item = new CustomerAddress()
             {
                 CustomerId = CustomerId,
-                CustomerName = data.CustomerName,
+                CustomerName = cus.FullName,
                 Address = data.Address,
                 DateCreated = DateTime.Now,
                 IsDefault = data.IsDefault,
-                Phone = data.Phone,
+                Phone = cus.Mobile,
                 Latitude = data.Latitude,
                 Longitude = data.Longitude,
                 City = data.City,
@@ -628,19 +629,19 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(1000, "Địa chỉ không tồn tại"), JsonRequestBehavior.AllowGet);
             }
 
-            //if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))
-            //{
-            //    return Json(new JsonMessage(1000, "Tọa độ đã tồn tại"), JsonRequestBehavior.AllowGet);
+            if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))
+            {
+                return Json(new JsonMessage(1000, "Tọa độ đã tồn tại"), JsonRequestBehavior.AllowGet);
 
-            //}
+            }
 
             if (data.IsDefault)
             {
                 customerAddressDA.ResetDefault(CustomerId);
             }
 
+            var cus = customerDA.GetById(CustomerId);
             item.Address = data.Address;
-            item.Phone = data.Phone;
             item.Latitude = data.Latitude;
             item.Longitude = data.Longitude;
             item.City = data.City;
