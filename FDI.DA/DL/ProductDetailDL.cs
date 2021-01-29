@@ -93,7 +93,7 @@ namespace FDI.DA.DL
                         PriceNew = c.Price,
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
-                        Pictures = c.Gallery_Picture2.Select(m=>m.Folder+m.Url),
+                        Pictures = c.Gallery_Picture2.Any()?c.Gallery_Picture2.Select(m=>m.Folder+m.Url).ToList():new List<string>{(c.Gallery_Picture.Folder + c.Gallery_Picture.Url)},
                         Description = c.Description,
                         Details = c.Details,
                         DateSale = c.StartDate,

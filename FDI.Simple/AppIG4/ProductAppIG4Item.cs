@@ -117,7 +117,7 @@ namespace FDI.Simple
         public string Slug { get; set; }
         public string SlugCate { get; set; }
         public string UrlPicture { get; set; }
-        public IEnumerable<string> Pictures { get; set; }
+        public List<string> Pictures { get; set; }
         public string Details { get; set; }
         public decimal? PriceNew { get; set; }
         public decimal? DateSale { get; set; }
