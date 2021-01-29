@@ -67,6 +67,7 @@ namespace FDI.DA.DL
                         NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                         UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
                         Description = c.Description,
+                        DateSale = c.StartDate,
                         //freeShipFor = c.d
                         PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                         {
@@ -77,6 +78,34 @@ namespace FDI.DA.DL
                         CateId = c.CateID
                     };
             return query.ToList();
+        }
+        public ProductDetailsItem GetById(int id)
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                where c.ID == id && !c.IsDelete.HasValue || !c.IsDelete.Value && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
+                select
+                    new ProductDetailsItem
+                    {
+                        ID = c.ID,
+                        Name = c.Name,
+                        Slug = c.NameAscii,
+                        SlugCate = c.Category.Slug,
+                        PriceNew = c.Price,
+                        NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
+                        UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                        Description = c.Description,
+                        Details = c.Details,
+                        DateSale = c.StartDate,
+                        PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
+                        {
+                            ID = m.ID,
+                            Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
+                            Value = m.Product_Size.Value,
+                        }),
+                        Pictures = c.Gallery_Picture2.Where(a => a.IsDeleted == false && a.IsShow == true).Select(z => z.Folder + z.Url),
+                        CateId = c.CateID
+                    };
+            return query.FirstOrDefault();
         }
         public List<ShopProductDetailItem> GetListProductbylstCateId(int lstId)
         {

@@ -54,6 +54,27 @@ namespace FDI.DA
                 return data;
             }
         }
+        public ProductDetailsItem GetById(int id)
+        {
+            if (ConfigCache.EnableCache != 1)
+                return _dl.GetById(id);
+            var key = string.Format("ProductDetailBL-GetById{0}", id);
+            if (Cache.KeyExistsCache(key))
+            {
+                var lst = (ProductDetailsItem)Cache.GetCache(key);
+                if (lst != null) return lst;
+                Cache.DeleteCache(key);
+                var data = _dl.GetById(id);
+                Cache.Set(key, data, ConfigCache.TimeExpire);
+                return data;
+            }
+            else
+            {
+                var data = _dl.GetById(id);
+                Cache.Set(key, data, ConfigCache.TimeExpire);
+                return data;
+            }
+        }
         public List<ShopProductDetailItem> GetListProductbylstCateId(int id)
         {
             if (ConfigCache.EnableCache != 1)
