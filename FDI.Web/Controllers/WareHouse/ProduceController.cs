@@ -103,7 +103,7 @@ namespace FDI.Web.Controllers.WareHouse
                         ProductName = item.ProductName,
                         SizeId = item.SizeId,
                         UnitName = item.UnitName,
-                        Weight = item.Quantity * item.UnitValue
+                        //Weight = item.Quantity * item.UnitValue
                     });
                 }
             }

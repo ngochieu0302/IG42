@@ -15,7 +15,7 @@ namespace FDI.Base
     {
         public int ProductDetailID { get; set; }
         public Nullable<int> SizeID { get; set; }
-        public Nullable<int> UnitValue { get; set; }
+        public Nullable<double> UnitValue { get; set; }
         public string UnitName { get; set; }
         public string CateName { get; set; }
         public string Name { get; set; }

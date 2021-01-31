@@ -449,7 +449,7 @@ namespace FDI.DA.DA.StorageWarehouse
                             ID = o.ID,
                             Date = o.CreateDate,
                             DateEnd = o.EndDate,
-                            Price = o.Shop_Product_Detail.Price * o.Product_Size.Value / 1000
+                            //Price = o.Shop_Product_Detail.Price * o.Product_Size.Value / 1000
                         };
             return query.ToList();
         }

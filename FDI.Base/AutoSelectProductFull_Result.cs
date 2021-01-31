@@ -15,7 +15,7 @@ namespace FDI.Base
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Nullable<decimal> PriceNew { get; set; }
+        public Nullable<double> PriceNew { get; set; }
         public string CodeSku { get; set; }
         public string namesize { get; set; }
         public Nullable<int> QuantityDay { get; set; }

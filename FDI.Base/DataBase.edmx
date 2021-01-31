@@ -3050,7 +3050,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Value" Type="int" />
+          <Property Name="Value" Type="float" />
         </EntityType>
         <EntityType Name="Product_Value">
           <Key>
@@ -20400,7 +20400,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="Int32" />
+          <Property Name="Value" Type="Double" />
           <NavigationProperty Name="ProduceProductDetails" Relationship="FDIModel.FK__ProducePr__SizeI__10822311" FromRole="Product_Size" ToRole="ProduceProductDetail" />
           <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Product_Size" FromRole="Product_Size" ToRole="Shop_Product" />
         </EntityType>
@@ -27358,7 +27358,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
         <ComplexType Name="AutoSelectProductFull_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
-          <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="35" Scale="6" />
+          <Property Type="Double" Name="PriceNew" Nullable="true" />
           <Property Type="String" Name="CodeSku" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="namesize" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="QuantityDay" Nullable="true" />
@@ -27716,7 +27716,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
         <ComplexType Name="sp_GetOrderDetail_Result">
           <Property Type="Int32" Name="ProductDetailID" Nullable="false" />
           <Property Type="Int32" Name="SizeID" Nullable="true" />
-          <Property Type="Int32" Name="UnitValue" Nullable="true" />
+          <Property Type="Double" Name="UnitValue" Nullable="true" />
           <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CateName" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />

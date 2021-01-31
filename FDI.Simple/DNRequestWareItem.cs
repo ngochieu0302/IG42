@@ -77,7 +77,7 @@ namespace FDI.Simple
         public int? SizeId { get; set; }
         public string UnitName { get; set; }
         public decimal Quantity { get; set; }
-        public int UnitValue { get; set; }
+        public double? UnitValue { get; set; }
         public decimal Weight { get; set; }
         public decimal PriceUnit { get; set; }
         public decimal WeightRecipe { get; set; }
