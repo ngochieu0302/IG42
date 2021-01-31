@@ -604,7 +604,6 @@ namespace FDI.MvcAPI.Controllers
             if (address != null)
             {
                 address.IsDelete = true;
-
             }
             customerAddressDA.Save();
 
@@ -632,7 +631,6 @@ namespace FDI.MvcAPI.Controllers
             if (customerAddressDA.CheckExit(data.ID, CustomerId, data.Latitude.Value, data.Longitude.Value))
             {
                 return Json(new JsonMessage(1000, "Tọa độ đã tồn tại"), JsonRequestBehavior.AllowGet);
-
             }
 
             if (data.IsDefault)

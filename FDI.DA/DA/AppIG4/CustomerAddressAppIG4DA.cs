@@ -73,7 +73,7 @@ namespace FDI.DA
         public List<CustomerAddressAppIG4Item> GetAll(int customerId)
         {
             var query = from c in FDIDB.CustomerAddresses
-                        where c.CustomerId == customerId
+                        where c.CustomerId == customerId && c.IsDelete != true
                         select new CustomerAddressAppIG4Item
                         {
                             ID = c.ID,
