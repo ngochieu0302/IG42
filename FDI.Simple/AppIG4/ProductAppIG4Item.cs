@@ -116,13 +116,15 @@ namespace FDI.Simple
         public string Name { get; set; }
         public string Slug { get; set; }
         public string SlugCate { get; set; }
+        public string NameCate { get; set; }
         public string UrlPicture { get; set; }
         public IEnumerable<string> Pictures { get; set; }
         public string Details { get; set; }
         public decimal? PriceNew { get; set; }
         public decimal? DateSale { get; set; }
         public IEnumerable<PAppItem> PAppItems { get; set; }
-        public List<int> ProductDetailIDs { get; set; }
+        public IEnumerable<int> CateIds { get; set; }
+        public int CountCate { get; set; }
         public int? CateId { get; set; }
         public int? Sort { get; set; }
         public double? Km { get; set; }
