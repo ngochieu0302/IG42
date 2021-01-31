@@ -35,6 +35,7 @@ namespace FDI.Base
         public virtual Customer Customer { get; set; }
         public virtual DN_Agency DN_Agency { get; set; }
         public virtual DN_ImportProduct DN_ImportProduct { get; set; }
+        public virtual Order_Package Order_Package { get; set; }
         public virtual Shop_Orders Shop_Orders { get; set; }
         public virtual WalletCustomer WalletCustomer { get; set; }
     }

@@ -6570,6 +6570,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DN_Agency_DN_Agency">
+          <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="0..1" />
+          <End Role="DN_Agency1" Type="Self.DN_Agency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DN_Agency1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DN_Agency_DN_Enterprises">
           <End Role="DN_Enterprises" Type="Self.DN_Enterprises" Multiplicity="0..1" />
           <End Role="DN_Agency" Type="Self.DN_Agency" Multiplicity="*" />
@@ -9447,6 +9459,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Principal>
             <Dependent Role="RewardHistory">
               <PropertyRef Name="ImportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RewardHistory_Order_Package">
+          <End Role="Order_Package" Type="Self.Order_Package" Multiplicity="0..1" />
+          <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Package">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RewardHistory">
+              <PropertyRef Name="OrderPacketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12683,6 +12707,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="System_City" EntitySet="System_City" />
             <End Role="System_District" EntitySet="System_District" />
           </AssociationSet>
+          <AssociationSet Name="FK_DN_Agency_DN_Agency" Association="Self.FK_DN_Agency_DN_Agency">
+            <End Role="DN_Agency" EntitySet="DN_Agency" />
+            <End Role="DN_Agency1" EntitySet="DN_Agency" />
+          </AssociationSet>
           <AssociationSet Name="FK_DN_Agency_DN_Enterprises" Association="Self.FK_DN_Agency_DN_Enterprises">
             <End Role="DN_Enterprises" EntitySet="DN_Enterprises" />
             <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -13625,6 +13653,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           </AssociationSet>
           <AssociationSet Name="FK_RewardHistory_DN_ImportProduct" Association="Self.FK_RewardHistory_DN_ImportProduct">
             <End Role="DN_ImportProduct" EntitySet="DN_ImportProduct" />
+            <End Role="RewardHistory" EntitySet="RewardHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RewardHistory_Order_Package" Association="Self.FK_RewardHistory_Order_Package">
+            <End Role="Order_Package" EntitySet="Order_Package" />
             <End Role="RewardHistory" EntitySet="RewardHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_RewardHistory_Shop_Orders" Association="Self.FK_RewardHistory_Shop_Orders">
@@ -14917,6 +14949,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="DN_Active" EntitySet="DN_Active" />
             <End Role="DN_User_ModuleActive" EntitySet="DN_User_ModuleActive" />
           </AssociationSet>
+          <AssociationSet Name="FK_DN_Agency_DN_Agency" Association="FDIModel.FK_DN_Agency_DN_Agency">
+            <End Role="DN_Agency" EntitySet="DN_Agency" />
+            <End Role="DN_Agency1" EntitySet="DN_Agency" />
+          </AssociationSet>
           <AssociationSet Name="FK_DN_Agency_DN_Enterprises" Association="FDIModel.FK_DN_Agency_DN_Enterprises">
             <End Role="DN_Enterprises" EntitySet="DN_Enterprises" />
             <End Role="DN_Agency" EntitySet="DN_Agency" />
@@ -15704,6 +15740,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_TM_News_Comment_News_News" Association="FDIModel.FK_TM_News_Comment_News_News">
             <End Role="News_News" EntitySet="News_News" />
             <End Role="TM_News_Comment" EntitySet="TM_News_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RewardHistory_Order_Package" Association="FDIModel.FK_RewardHistory_Order_Package">
+            <End Role="Order_Package" EntitySet="Order_Package" />
+            <End Role="RewardHistory" EntitySet="RewardHistories" />
           </AssociationSet>
           <AssociationSet Name="FK__OrderCar__Worksh__3123FCCD" Association="FDIModel.FK__OrderCar__Worksh__3123FCCD">
             <End Role="P_Workshop" EntitySet="P_Workshop" />
@@ -18165,6 +18205,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Cate_Value_DN_Agency" FromRole="DN_Agency" ToRole="Cate_Value" />
           <NavigationProperty Name="Customers" Relationship="FDIModel.FK_Customer_DN_Agency" FromRole="DN_Agency" ToRole="Customer" />
           <NavigationProperty Name="Customer_Reward" Relationship="FDIModel.FK_Customer_Reward_DN_Agency" FromRole="DN_Agency" ToRole="Customer_Reward" />
+          <NavigationProperty Name="DN_Agency1" Relationship="FDIModel.FK_DN_Agency_DN_Agency" FromRole="DN_Agency" ToRole="DN_Agency1" />
+          <NavigationProperty Name="DN_Agency2" Relationship="FDIModel.FK_DN_Agency_DN_Agency" FromRole="DN_Agency1" ToRole="DN_Agency" />
           <NavigationProperty Name="DN_Enterprises" Relationship="FDIModel.FK_DN_Agency_DN_Enterprises" FromRole="DN_Agency" ToRole="DN_Enterprises" />
           <NavigationProperty Name="DN_GroupAgency" Relationship="FDIModel.FK_DN_Agency_DN_GroupAgency" FromRole="DN_Agency" ToRole="DN_GroupAgency" />
           <NavigationProperty Name="Market" Relationship="FDIModel.FK_DN_Agency_Market" FromRole="DN_Agency" ToRole="Market" />
@@ -20079,6 +20121,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Order_Package_Customer" FromRole="Order_Package" ToRole="Customer" />
           <NavigationProperty Name="Customer_Type" Relationship="FDIModel.FK_Order_Package_Customer_Type" FromRole="Order_Package" ToRole="Customer_Type" />
+          <NavigationProperty Name="RewardHistories" Relationship="FDIModel.FK_RewardHistory_Order_Package" FromRole="Order_Package" ToRole="RewardHistory" />
         </EntityType>
         <EntityType Name="OrderCar">
           <Key>
@@ -20697,6 +20740,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="RewardHistory" ToRole="Customer" />
           <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_RewardHistory_DN_Agency" FromRole="RewardHistory" ToRole="DN_Agency" />
           <NavigationProperty Name="DN_ImportProduct" Relationship="FDIModel.FK_RewardHistory_DN_ImportProduct" FromRole="RewardHistory" ToRole="DN_ImportProduct" />
+          <NavigationProperty Name="Order_Package" Relationship="FDIModel.FK_RewardHistory_Order_Package" FromRole="RewardHistory" ToRole="Order_Package" />
           <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_RewardHistory_Shop_Orders" FromRole="RewardHistory" ToRole="Shop_Orders" />
           <NavigationProperty Name="WalletCustomer" Relationship="FDIModel.FK_RewardHistory_WalletCustomer" FromRole="RewardHistory" ToRole="WalletCustomer" />
         </EntityType>
@@ -23979,6 +24023,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DN_Agency_DN_Agency">
+          <End Type="FDIModel.DN_Agency" Role="DN_Agency" Multiplicity="0..1" />
+          <End Type="FDIModel.DN_Agency" Role="DN_Agency1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DN_Agency1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DN_Agency_DN_Enterprises">
           <End Type="FDIModel.DN_Enterprises" Role="DN_Enterprises" Multiplicity="0..1" />
           <End Type="FDIModel.DN_Agency" Role="DN_Agency" Multiplicity="*" />
@@ -26377,6 +26433,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RewardHistory_Order_Package">
+          <End Type="FDIModel.Order_Package" Role="Order_Package" Multiplicity="0..1" />
+          <End Type="FDIModel.RewardHistory" Role="RewardHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Package">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RewardHistory">
+              <PropertyRef Name="OrderPacketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__OrderCar__Worksh__3123FCCD">
           <End Type="FDIModel.P_Workshop" Role="P_Workshop" Multiplicity="1" />
           <End Type="FDIModel.OrderCar" Role="OrderCar" Multiplicity="*" />
@@ -27695,7 +27763,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Type="Decimal" Name="totalsouce" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
         <ComplexType Name="StaticChartsbyDayAgencyTotalPrice_Result">
-          <Property Type="Int32" Name="AgencyId" Nullable="true" />
           <Property Type="Decimal" Name="DateCreate" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
@@ -33501,7 +33568,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <FunctionImportMapping FunctionImportName="StaticChartsbyDayAgencyTotalPrice" FunctionName="FDIModel.Store.StaticChartsbyDayAgencyTotalPrice">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FDIModel.StaticChartsbyDayAgencyTotalPrice_Result">
-                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
