@@ -59,7 +59,7 @@ namespace FDI.DA.DA.AppCustomer
                             detail = c.Details,
                             PrD = (decimal)c.Shop_Product.FirstOrDefault().Product_Size.Value * c.Price / 1000,
                             Size = c.Shop_Product.FirstOrDefault().Product_Size.Name,
-                            SizeValue = c.Shop_Product.FirstOrDefault().Product_Size.Value, //TODO: thiếu where
+                            //SizeValue = c.Shop_Product.FirstOrDefault().Product_Size.Value, //TODO: thiếu where
                             des = c.Description,
                             ledge = c.Knowledge,
                             procces = c.Proccess,
