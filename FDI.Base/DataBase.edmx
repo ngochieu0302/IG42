@@ -3051,6 +3051,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Value" Type="float" />
+          <Property Name="UnitID" Type="int" />
         </EntityType>
         <EntityType Name="Product_Value">
           <Key>
@@ -3682,6 +3683,20 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           </Key>
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop_Product_Comingsoon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SupplierId" Type="int" />
+          <Property Name="SupplierAmountId" Type="int" />
+          <Property Name="DateEx" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="QuantityOut" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="Shop_Product_Detail">
           <Key>
@@ -9960,6 +9975,42 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_DN_Supplier">
+          <End Role="DN_Supplier" Type="Self.DN_Supplier" Multiplicity="0..1" />
+          <End Role="Shop_Product_Comingsoon" Type="Self.Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_Shop_Product_Detail">
+          <End Role="Shop_Product_Detail" Type="Self.Shop_Product_Detail" Multiplicity="0..1" />
+          <End Role="Shop_Product_Comingsoon" Type="Self.Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop_Product_Detail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_SupplierAmountProduct">
+          <End Role="SupplierAmountProduct" Type="Self.SupplierAmountProduct" Multiplicity="0..1" />
+          <End Role="Shop_Product_Comingsoon" Type="Self.Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierAmountProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="SupplierAmountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Shop_Product_Customer1">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Shop_Product" Type="Self.Shop_Product" Multiplicity="*" />
@@ -11872,6 +11923,7 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
           <EntitySet Name="Shop_Orders" EntityType="Self.Shop_Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shop_Product" EntityType="Self.Shop_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shop_Product_Category" EntityType="Self.Shop_Product_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shop_Product_Comingsoon" EntityType="Self.Shop_Product_Comingsoon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shop_Product_Detail" EntityType="Self.Shop_Product_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shop_Product_Detail_Picture" EntityType="Self.Shop_Product_Detail_Picture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shop_Product_Picture" EntityType="Self.Shop_Product_Picture" Schema="dbo" store:Type="Tables" />
@@ -13819,6 +13871,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Shop_Product" EntitySet="Shop_Product" />
             <End Role="Shop_Product_Category" EntitySet="Shop_Product_Category" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_DN_Supplier" Association="Self.FK_Shop_Product_Comingsoon_DN_Supplier">
+            <End Role="DN_Supplier" EntitySet="DN_Supplier" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_Shop_Product_Detail" Association="Self.FK_Shop_Product_Comingsoon_Shop_Product_Detail">
+            <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_SupplierAmountProduct" Association="Self.FK_Shop_Product_Comingsoon_SupplierAmountProduct">
+            <End Role="SupplierAmountProduct" EntitySet="SupplierAmountProduct" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
+          </AssociationSet>
           <AssociationSet Name="FK_Shop_Product_Customer1" Association="Self.FK_Shop_Product_Customer1">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Shop_Product" EntitySet="Shop_Product" />
@@ -14279,6 +14343,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySet Name="Shop_Order_Details" EntityType="FDIModel.Shop_Order_Details" />
           <EntitySet Name="Shop_Orders" EntityType="FDIModel.Shop_Orders" />
           <EntitySet Name="Shop_Product" EntityType="FDIModel.Shop_Product" />
+          <EntitySet Name="Shop_Product_Comingsoon" EntityType="FDIModel.Shop_Product_Comingsoon" />
           <EntitySet Name="Shop_Product_Detail" EntityType="FDIModel.Shop_Product_Detail" />
           <EntitySet Name="Shop_Product_Picture" EntityType="FDIModel.Shop_Product_Picture" />
           <EntitySet Name="Shop_Product_Type" EntityType="FDIModel.Shop_Product_Type" />
@@ -15369,6 +15434,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="DN_Supplier" EntitySet="DN_Supplier" />
             <End Role="Document" EntitySet="Documents" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_DN_Supplier" Association="FDIModel.FK_Shop_Product_Comingsoon_DN_Supplier">
+            <End Role="DN_Supplier" EntitySet="DN_Supplier" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
+          </AssociationSet>
           <AssociationSet Name="FK_StorageProduct_DN_Supplier" Association="FDIModel.FK_StorageProduct_DN_Supplier">
             <End Role="DN_Supplier" EntitySet="DN_Supplier" />
             <End Role="StorageProduct" EntitySet="StorageProducts" />
@@ -15900,6 +15969,14 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_TM_Products_Comment_Shop_Product" Association="FDIModel.FK_TM_Products_Comment_Shop_Product">
             <End Role="Shop_Product" EntitySet="Shop_Product" />
             <End Role="TM_Products_Comment" EntitySet="TM_Products_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_Shop_Product_Detail" Association="FDIModel.FK_Shop_Product_Comingsoon_Shop_Product_Detail">
+            <End Role="Shop_Product_Detail" EntitySet="Shop_Product_Detail" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Product_Comingsoon_SupplierAmountProduct" Association="FDIModel.FK_Shop_Product_Comingsoon_SupplierAmountProduct">
+            <End Role="SupplierAmountProduct" EntitySet="SupplierAmountProducts" />
+            <End Role="Shop_Product_Comingsoon" EntitySet="Shop_Product_Comingsoon" />
           </AssociationSet>
           <AssociationSet Name="FK_Source_StorageProduct" Association="FDIModel.FK_Source_StorageProduct">
             <End Role="StorageProduct" EntitySet="StorageProducts" />
@@ -19137,6 +19214,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="SupplierAmountProducts" Relationship="FDIModel.FK__SupplierA__Suppl__38060486" FromRole="DN_Supplier" ToRole="SupplierAmountProduct" />
           <NavigationProperty Name="TotalProductToDays" Relationship="FDIModel.FK__TotalProd__Suppl__6C79CCC5" FromRole="DN_Supplier" ToRole="TotalProductToDay" />
           <NavigationProperty Name="Documents" Relationship="FDIModel.FK_Documents_DN_Supplier" FromRole="DN_Supplier" ToRole="Document" />
+          <NavigationProperty Name="Shop_Product_Comingsoon" Relationship="FDIModel.FK_Shop_Product_Comingsoon_DN_Supplier" FromRole="DN_Supplier" ToRole="Shop_Product_Comingsoon" />
           <NavigationProperty Name="StorageProducts" Relationship="FDIModel.FK_StorageProduct_DN_Supplier" FromRole="DN_Supplier" ToRole="StorageProduct" />
         </EntityType>
         <EntityType Name="DN_SupplierProduct">
@@ -20401,6 +20479,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="Double" />
+          <Property Name="UnitID" Type="Int32" />
           <NavigationProperty Name="ProduceProductDetails" Relationship="FDIModel.FK__ProducePr__SizeI__10822311" FromRole="Product_Size" ToRole="ProduceProductDetail" />
           <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Product_Size" FromRole="Product_Size" ToRole="Shop_Product" />
         </EntityType>
@@ -21090,6 +21169,23 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="DN_Combo" Relationship="FDIModel.DN_Combo_Product" FromRole="Shop_Product" ToRole="DN_Combo" />
           <NavigationProperty Name="Categories" Relationship="FDIModel.Shop_Product_Category" FromRole="Shop_Product" ToRole="Category" />
         </EntityType>
+        <EntityType Name="Shop_Product_Comingsoon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="SupplierAmountId" Type="Int32" />
+          <Property Name="DateEx" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="QuantityOut" Type="Decimal" Precision="18" Scale="4" />
+          <NavigationProperty Name="DN_Supplier" Relationship="FDIModel.FK_Shop_Product_Comingsoon_DN_Supplier" FromRole="Shop_Product_Comingsoon" ToRole="DN_Supplier" />
+          <NavigationProperty Name="Shop_Product_Detail" Relationship="FDIModel.FK_Shop_Product_Comingsoon_Shop_Product_Detail" FromRole="Shop_Product_Comingsoon" ToRole="Shop_Product_Detail" />
+          <NavigationProperty Name="SupplierAmountProduct" Relationship="FDIModel.FK_Shop_Product_Comingsoon_SupplierAmountProduct" FromRole="Shop_Product_Comingsoon" ToRole="SupplierAmountProduct" />
+        </EntityType>
         <EntityType Name="Shop_Product_Detail">
           <Key>
             <PropertyRef Name="ID" />
@@ -21150,6 +21246,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="ProductDetail_Recipe" Relationship="FDIModel.FK_ProductDetail_Recipe_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="ProductDetail_Recipe" />
           <NavigationProperty Name="Shop_ContactOrder_Details" Relationship="FDIModel.FK_Shop_ContactOrder_Details_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Shop_ContactOrder_Details" />
           <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Shop_Product" />
+          <NavigationProperty Name="Shop_Product_Comingsoon" Relationship="FDIModel.FK_Shop_Product_Comingsoon_Shop_Product_Detail" FromRole="Shop_Product_Detail" ToRole="Shop_Product_Comingsoon" />
           <NavigationProperty Name="Categories" Relationship="FDIModel.Product_Detail_Category" FromRole="Shop_Product_Detail" ToRole="Category" />
           <NavigationProperty Name="DN_Sale" Relationship="FDIModel.Product_Sale" FromRole="Shop_Product_Detail" ToRole="DN_Sale" />
           <NavigationProperty Name="Gallery_Picture2" Relationship="FDIModel.Shop_Product_Detail_Picture" FromRole="Shop_Product_Detail" ToRole="Gallery_Picture" />
@@ -21428,6 +21525,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="Category" Relationship="FDIModel.FK__SupplierA__Produ__38FA28BF" FromRole="SupplierAmountProduct" ToRole="Category" />
           <NavigationProperty Name="DN_Supplier" Relationship="FDIModel.FK__SupplierA__Suppl__38060486" FromRole="SupplierAmountProduct" ToRole="DN_Supplier" />
           <NavigationProperty Name="DN_Users" Relationship="FDIModel.FK__SupplierA__UserA__39EE4CF8" FromRole="SupplierAmountProduct" ToRole="DN_Users" />
+          <NavigationProperty Name="Shop_Product_Comingsoon" Relationship="FDIModel.FK_Shop_Product_Comingsoon_SupplierAmountProduct" FromRole="SupplierAmountProduct" ToRole="Shop_Product_Comingsoon" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -25297,6 +25395,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_DN_Supplier">
+          <End Type="FDIModel.DN_Supplier" Role="DN_Supplier" Multiplicity="0..1" />
+          <End Type="FDIModel.Shop_Product_Comingsoon" Role="Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DN_Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StorageProduct_DN_Supplier">
           <End Type="FDIModel.DN_Supplier" Role="DN_Supplier" Multiplicity="0..1" />
           <End Type="FDIModel.StorageProduct" Role="StorageProduct" Multiplicity="*" />
@@ -26912,6 +27022,30 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="TM_Products_Comment">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_Shop_Product_Detail">
+          <End Type="FDIModel.Shop_Product_Detail" Role="Shop_Product_Detail" Multiplicity="0..1" />
+          <End Type="FDIModel.Shop_Product_Comingsoon" Role="Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop_Product_Detail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Product_Comingsoon_SupplierAmountProduct">
+          <End Type="FDIModel.SupplierAmountProduct" Role="SupplierAmountProduct" Multiplicity="0..1" />
+          <End Type="FDIModel.Shop_Product_Comingsoon" Role="Shop_Product_Comingsoon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierAmountProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Product_Comingsoon">
+              <PropertyRef Name="SupplierAmountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -30783,6 +30917,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Product_Size">
             <EntityTypeMapping TypeName="FDIModel.Product_Size">
               <MappingFragment StoreEntitySet="Product_Size">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -31381,6 +31516,21 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="SizeID" ColumnName="SizeID" />
                 <ScalarProperty Name="ProductDetailID" ColumnName="ProductDetailID" />
                 <ScalarProperty Name="ProductionCostID" ColumnName="ProductionCostID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop_Product_Comingsoon">
+            <EntityTypeMapping TypeName="FDIModel.Shop_Product_Comingsoon">
+              <MappingFragment StoreEntitySet="Shop_Product_Comingsoon">
+                <ScalarProperty Name="QuantityOut" ColumnName="QuantityOut" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DateEx" ColumnName="DateEx" />
+                <ScalarProperty Name="SupplierAmountId" ColumnName="SupplierAmountId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

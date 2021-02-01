@@ -52,10 +52,19 @@ namespace FDI.Web.Controllers
                 model.ProductDetailID = objProduct.ID;
             }
             ViewBag.ColorID = _systemColorApi.GetAll(UserItem.AgencyID);
-            ViewBag.SizeID = _productSizeApi.GetAll(UserItem.AgencyID);
+            if (model.UnitID != null)
+            {
+                ViewBag.SizeID = _productSizeApi.GetAllByUnitID(UserItem.AgencyID, model.UnitID ?? 0);
+            }
+            else
+            {
+                ViewBag.SizeID = _productSizeApi.GetAll(UserItem.AgencyID);
+            }
+            ViewBag.Action = DoAction;
+            ViewBag.ActionText = ActionText;
             ViewBag.Unit = _dnUnit.GetListUnit(UserItem.AgencyID);
             ViewBag.type = _productTypeApi.GetAll();
-            ViewBag.Action = DoAction;
+            ViewBag.Color = _productTypeApi.GetAll();
             ViewBag.CreateBy = UserItem.UserName;
             ViewBag.AgencyID = UserItem.AgencyID;
             return View(model);

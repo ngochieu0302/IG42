@@ -379,19 +379,22 @@ namespace FDI.MvcAPI.Controllers
                     var list = new List<Shop_Product>();
                     foreach (var item in model)
                     {
-                        var name = Request["Size_old" + item.ID];
-                        var pricenew = Request["PriceNew_old" + item.ID];
-                        var priceold = Request["PriceOld_old" + item.ID];
-                        if (string.IsNullOrEmpty(name))
+                        var size = Request["Size_old" + item.ID];
+                        var Type = Request["Type_old" + item.ID];
+                        var color = Request["Color_old" + item.ID];
+                        if (string.IsNullOrEmpty(size))
                         {
                             list.Add(item);
                         }
                         else
                         {
-                            item.SizeID = int.Parse(name);
+                            item.SizeID = int.Parse(size);
+                            item.TypeID = int.Parse(Type);
+                            item.ColorID = int.Parse(color);
                             _da.Save();
-                            item.PriceNew = (item.Shop_Product_Detail.Price * (item.Product_Size == null ? 1000 : (decimal)item.Product_Size.Value) / 1000) ?? 0;
-                            item.PriceOld = decimal.Parse(priceold);
+
+                            item.PriceNew = item.Shop_Product_Detail.Price * (item.Product_Size == null ? 0 : (decimal)item.Product_Size.Value) ?? 0;
+                            //item.PriceOld = decimal.Parse(priceold);
                             //item.SizeID = ConvertUtil.ToInt32(Request["Size_old" + item.ID]);
                         }
                     }
@@ -404,20 +407,22 @@ namespace FDI.MvcAPI.Controllers
                     for (int i = 1; i <= stt; i++)
                     {
                         var name = Request["Size_add_" + i];
-                        var pricenew = Request["PriceNew_add_" + i];
-                        var priceold = Request["PriceOld_add_" + i];
+                        var type = Request["Type_add_" + i];
+                        var color = Request["Color_add_" + i];
                         if (!string.IsNullOrEmpty(name))
                         {
                             var obj = new Shop_Product()
                             {
                                 ProductDetailID = product.ID,
                                 SizeID = int.Parse(name),
-                                PriceOld = decimal.Parse(priceold),
+                                TypeID = int.Parse(type),
+                                ColorID = int.Parse(color),
+                                //PriceOld = decimal.Parse(priceold),
                                 // SizeID = ConvertUtil.ToInt32(Request["Size_add_" + i]),
                                 IsShow = true,
                                 IsDelete = false,
                             };
-                            obj.PriceNew = (product.Price * (obj.Product_Size == null ? 1000 : (decimal)obj.Product_Size.Value) / 1000) ?? 0;
+                            obj.PriceNew = product.Price * (obj.Product_Size == null ? 0 : (decimal)obj.Product_Size.Value) ?? 0;
                             _da.AddProduct(obj);
                         }
                     }

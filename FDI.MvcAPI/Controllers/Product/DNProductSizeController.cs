@@ -28,6 +28,11 @@ namespace FDI.MvcAPI.Controllers
             var obj = key != Keyapi ? new List<ProductSizeItem>() : _da.GetAll(Agencyid());
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllByUnitID(string key, string code, int? unitID)
+        {
+            var obj = key != Keyapi ? new List<ProductSizeItem>() : _da.GetAllByUnitID(Agencyid(), unitID);
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult GetById(string key, int id)
         {

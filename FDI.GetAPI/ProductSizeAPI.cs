@@ -18,6 +18,11 @@ namespace FDI.GetAPI
             var urlJson = string.Format("{0}DNProductSize/GetAll?key={1}&agencyId={2}", _url, Keyapi,agencyid);
             return GetObjJson<List<ProductSizeItem>>(urlJson);
         }
+        public List<ProductSizeItem> GetAllByUnitID(int agencyid, int? unitID)
+        {
+            var urlJson = string.Format("{0}DNProductSize/GetAllByUnitID?key={1}&agencyId={2}&unitID={3}", _url, Keyapi,agencyid,unitID);
+            return GetObjJson<List<ProductSizeItem>>(urlJson);
+        }
 
         public ProductSizeItem GetItemById(int agencyid, int id = 0)
         {

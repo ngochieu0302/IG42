@@ -28,6 +28,7 @@ namespace FDI.Base
             this.ProductDetail_Recipe = new HashSet<ProductDetail_Recipe>();
             this.Shop_ContactOrder_Details = new HashSet<Shop_ContactOrder_Details>();
             this.Shop_Product = new HashSet<Shop_Product>();
+            this.Shop_Product_Comingsoon = new HashSet<Shop_Product_Comingsoon>();
             this.Categories = new HashSet<Category>();
             this.DN_Sale = new HashSet<DN_Sale>();
             this.Gallery_Picture2 = new HashSet<Gallery_Picture>();
@@ -102,6 +103,8 @@ namespace FDI.Base
         public virtual ICollection<Shop_ContactOrder_Details> Shop_ContactOrder_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop_Product> Shop_Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop_Product_Comingsoon> Shop_Product_Comingsoon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
