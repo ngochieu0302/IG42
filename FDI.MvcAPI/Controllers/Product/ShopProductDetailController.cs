@@ -389,11 +389,13 @@ namespace FDI.MvcAPI.Controllers
                         else
                         {
                             item.SizeID = int.Parse(name);
-                            item.PriceNew = decimal.Parse(pricenew);
+                            _da.Save();
+                            item.PriceNew = (item.Shop_Product_Detail.Price * (item.Product_Size == null ? 1000 : (decimal)item.Product_Size.Value) / 1000) ?? 0;
                             item.PriceOld = decimal.Parse(priceold);
                             //item.SizeID = ConvertUtil.ToInt32(Request["Size_old" + item.ID]);
                         }
                     }
+
                     foreach (var item in list)
                     {
                         _da.DeleteProduct(item);
@@ -409,14 +411,13 @@ namespace FDI.MvcAPI.Controllers
                             var obj = new Shop_Product()
                             {
                                 ProductDetailID = product.ID,
-
                                 SizeID = int.Parse(name),
-                                PriceNew = decimal.Parse(pricenew),
                                 PriceOld = decimal.Parse(priceold),
                                 // SizeID = ConvertUtil.ToInt32(Request["Size_add_" + i]),
                                 IsShow = true,
                                 IsDelete = false,
                             };
+                            obj.PriceNew = (product.Price * (obj.Product_Size == null ? 1000 : (decimal)obj.Product_Size.Value) / 1000) ?? 0;
                             _da.AddProduct(obj);
                         }
                     }

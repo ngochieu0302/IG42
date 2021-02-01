@@ -17,7 +17,6 @@ using Facebook;
 using System.Net;
 using System.Web.Script.Serialization;
 using FDI.DA.DA;
-using Microsoft.Ajax.Utilities;
 using FDI.CORE;
 using Newtonsoft.Json.Linq;
 using ZaloDotNetSDK;

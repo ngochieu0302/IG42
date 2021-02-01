@@ -48,11 +48,11 @@
     <Reference Include="EPPlus">
       <HintPath>..\..\DuongThuy\ThiDuongThuy\FDI.Web\bin\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\DuongThuy\ThiDuongThuy\FDI.Web\bin\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.24.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.24\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\DuongThuy\ThiDuongThuy\FDI.Web\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>

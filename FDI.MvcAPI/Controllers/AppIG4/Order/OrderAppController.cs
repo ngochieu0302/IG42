@@ -122,6 +122,7 @@ namespace FDI.MvcAPI.Controllers
 
         public ActionResult GetDiscount()
         {
+            // var abc
             var discount = _walletCustomerDa.GetConfigItem();
             return Json(new BaseResponse<ConfigItemAppIG4> { Code = 200, Data = discount }, JsonRequestBehavior.AllowGet);
         }
@@ -224,7 +225,7 @@ namespace FDI.MvcAPI.Controllers
                 foreach (var items in data.Shop_Order_Details)
                 {
                     var k = items.Shop_Product.Category.Profit;
-                    totak += (items.Shop_Product.Product_Size != null ? items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+                    totak += (items.Shop_Product.Product_Size != null ? (decimal)items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
                 }
                 var TotalPricegstore = data.Total + data.FeeShip;
                 var config = _walletCustomerDa.GetConfig();

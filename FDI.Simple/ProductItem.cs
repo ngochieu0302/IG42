@@ -90,7 +90,7 @@ namespace FDI.Simple
         public decimal? Weight { get; set; }
         public decimal? PrD { get; set; }//gia
         public string Size { get; set; } // size mac dinh
-        public int? SizeValue { get; set; }
+        public double? SizeValue { get; set; }
         public string des { get; set; } // mo ta sp
         public string detail { get; set; } // cjhi tiêt
         public string ledge { get; set; }// kien thuc

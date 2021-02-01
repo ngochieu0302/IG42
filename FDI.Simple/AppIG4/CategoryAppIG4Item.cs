@@ -31,7 +31,7 @@ namespace FDI.Simple
         public string UrlIcon { get; set; }
         public bool IsPrestige { get; set; }
         public IEnumerable<NewsItem> ListNewsItem { get; set; }
-        public IEnumerable<ProductItem> ListProductItem { get; set; }
+        public IEnumerable<ProductAppIG4Item> ListProductItem { get; set; }
         public int? TotalProduct { get; set; }
         public List<int> lstInt { get; set; }
 

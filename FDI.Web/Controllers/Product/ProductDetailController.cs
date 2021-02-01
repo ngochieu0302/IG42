@@ -127,7 +127,7 @@ namespace FDI.Web.Controllers
             {
                 case ActionType.Add:
                     UpdateModel(model);
-                    model.IsDelete = false;
+                   model.IsDelete = false;
                     if (IsAdmin)
                     {
                         model.IsShow = true;

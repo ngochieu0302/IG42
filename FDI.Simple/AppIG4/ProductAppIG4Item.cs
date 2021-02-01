@@ -65,9 +65,6 @@ namespace FDI.Simple
         public string Format { get; set; }
         public int? NumberPage { get; set; }
         public int? YearOfManufacture { get; set; }
-        public int? ChapterNumber { get; set; }
-        public string UrlPdf { get; set; }
-        public bool? IsReadFree { get; set; }
         public string DescriptionReview { get; set; }
         public bool? BookOld { get; set; }
         public bool? hasShip{ get; set; }
@@ -82,8 +79,6 @@ namespace FDI.Simple
         public CategoryItem CategoryItem { get; set; }
         public string FolderFile { get; set; }
         public string Filename { get; set; }
-        public string FolderReadtry { get; set; }
-        public string FileReadtry { get; set; }
         public int? FileReadId { get; set; }
         public int? FileReadTryId { get; set; }
         public string ISBNE { get; set; }
@@ -113,6 +108,36 @@ namespace FDI.Simple
         public virtual ProductSizeItem SizeItem { get; set; }
         public int? CustomerId1 { get; set; }
         public bool? IsShop { get; set; }
+        public decimal? Price { get; set; }
+    }
+    public class ProductDetailsItem
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Slug { get; set; }
+        public string SlugCate { get; set; }
+        public string NameCate { get; set; }
+        public string UrlPicture { get; set; }
+        public IEnumerable<string> Pictures { get; set; }
+        public string Details { get; set; }
+        public decimal? PriceNew { get; set; }
+        public decimal? DateSale { get; set; }
+        public IEnumerable<PAppItem> PAppItems { get; set; }
+        public IEnumerable<int> CateIds { get; set; }
+        public int CountCate { get; set; }
+        public int? CateId { get; set; }
+        public int? Sort { get; set; }
+        public double? Km { get; set; }
+        public string NameUnit { get; set; }
+        public string Description { get; set; }
+    }
+    public class PAppItem
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        
+        public double? Value { get; set; }
+        public int? Quantity { get; set; }
     }
     public class ModelProductAppIG4Item : BaseModelSimple
     {
@@ -196,7 +221,6 @@ namespace FDI.Simple
         public virtual SizeItem Size { get; set; }
         public virtual ColorItem System_Color { get; set; }
     }
-
     public class ProductCartItem
     {
         public int ID { get; set; }

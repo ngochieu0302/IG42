@@ -14,7 +14,7 @@ namespace FDI.DA.DL
         {
             var ltsArrId = FDIUtils.StringToListInt(lstId);
             var query = from c in FDIDB.Shop_Product_Detail
-                        where c.IsDelete == false  && c.IsShow == true && (c.Categories.Any(a => ltsArrId.Contains(a.Id)) || c.Categories.Any(b => ltsArrId.Contains(b.ParentId ?? 3))) && c.IsHot == true
+                        where c.IsDelete == false && c.IsShow == true && (c.Categories.Any(a => ltsArrId.Contains(a.Id)) || c.Categories.Any(b => ltsArrId.Contains(b.ParentId ?? 3))) && c.IsHot == true
                         orderby c.ID
                         select new ShopProductDetailItem
                         {
@@ -30,7 +30,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -52,11 +52,53 @@ namespace FDI.DA.DL
                         };
             return query.ToList();
         }
+        public List<ProductDetailsItem> ListAll()
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                        where (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
+                        select
+                            new ProductDetailsItem
+                            {
+                                ID = c.ID,
+                                Name = c.Name,
+                                Slug = c.NameAscii,
+                                SlugCate = c.Category.Slug,
+                                NameCate = c.Category.Name,
+                                PriceNew = c.Price,
+                                NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
+                                UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
+                                Pictures = c.Gallery_Picture2.Where(m=> !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m => m.Folder + m.Url),
+                                Description = c.Description,
+                                DateSale = c.StartDate,
+                                CountCate = c.Categories.Count(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value),
+                                PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
+                                {
+                                    ID = m.ID,
+                                    Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
+                                    Value = m.Product_Size.Value,
+                                }),
+                                CateIds = c.Categories.Where(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m =>m.Id),
+                                CateId = c.CateID
+                            };
+            return query.ToList();
+        }
+        public ProductDetailsItem GetById(int id)
+        {
+            var query = from c in FDIDB.Shop_Product_Detail
+                        where c.ID == id && (!c.IsDelete.HasValue || !c.IsDelete.Value) && c.Shop_Product.Any(m => (!m.IsDelete.HasValue || !m.IsDelete.Value) && m.SizeID.HasValue)
+                        select
+                            new ProductDetailsItem
+                            {
+                                ID = c.ID,
+                                Details = c.Details,
+                            };
+            return query.FirstOrDefault();
+        }
         public List<ShopProductDetailItem> GetListProductbylstCateId(int lstId)
         {
 
             var query = from c in FDIDB.Shop_Product_Detail
-                        where c.IsDelete == false  && c.IsShow == true && (c.Categories.Any(a => a.Id == lstId))
+                        where c.IsDelete == false && c.IsShow == true && (c.Categories.Any(a => a.Id == lstId))
                         orderby c.ID
                         select new ShopProductDetailItem
                         {
@@ -73,7 +115,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -98,7 +140,7 @@ namespace FDI.DA.DL
         public ShopProductDetailItem GetProductbySlug(string slug)
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                        where c.IsDelete == false  && c.IsShow == true && c.NameAscii == slug
+                        where c.IsDelete == false && c.IsShow == true && c.NameAscii == slug
                         select new ShopProductDetailItem
                         {
                             ID = c.ID,
@@ -109,7 +151,7 @@ namespace FDI.DA.DL
         public List<ShopProductDetailItem> GetListHot()
         {
             var query = from c in FDIDB.Shop_Product_Detail
-                        where c.IsDelete != true  && c.IsShow == true && c.IsHot == true
+                        where c.IsDelete != true && c.IsShow == true && c.IsHot == true
                         orderby c.ID descending
                         select new ShopProductDetailItem
                         {
@@ -122,7 +164,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -148,7 +190,7 @@ namespace FDI.DA.DL
         public List<ShopProductDetailItem> GetList(string slug, int page, int rowPage, ref int total, string color, string size, string sort)
         {
             var query = from n in FDIDB.Shop_Product_Detail
-                        where n.IsDelete == false && n.IsShow == true 
+                        where n.IsDelete == false && n.IsShow == true
                         //&& n.Categories.Any(a => a.Slug == slug)
                         orderby n.ID descending
                         select new ShopProductDetailItem
@@ -164,7 +206,7 @@ namespace FDI.DA.DL
                             ListProductItem = n.Shop_Product.Where(c => c.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in n.Shop_Product
@@ -219,7 +261,7 @@ namespace FDI.DA.DL
         public List<ShopProductDetailItem> GetListBykeyword(string keyword, int page, int rowPage, ref int total, string color, string size, string sort)
         {
             var query = from n in FDIDB.Shop_Product_Detail
-                        where n.IsDelete == false && n.IsShow == true 
+                        where n.IsDelete == false && n.IsShow == true
                         && n.NameAscii.Contains(keyword)
                         orderby n.ID descending
                         select new ShopProductDetailItem
@@ -234,7 +276,7 @@ namespace FDI.DA.DL
                             ListProductItem = n.Shop_Product.Where(c => c.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in n.Shop_Product

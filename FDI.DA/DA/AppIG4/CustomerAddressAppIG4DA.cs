@@ -73,17 +73,20 @@ namespace FDI.DA
         public List<CustomerAddressAppIG4Item> GetAll(int customerId)
         {
             var query = from c in FDIDB.CustomerAddresses
-                        where c.CustomerId == customerId && !c.IsDelete
+                        where c.CustomerId == customerId && c.IsDelete != true
                         select new CustomerAddressAppIG4Item
                         {
-                            CustomerName = c.CustomerName,
+                            ID = c.ID,
+                            Phone = c.Customer.Mobile,
+                            CustomerName = c.Customer.FullName,
                             Address = c.Address,
+                            City = c.City,
+                            District = c.District,
+                            Commune = c.Commune,
+                            AddressType = c.AddressType,
                             IsDefault = c.IsDefault,
                             Latitude = c.Latitude,
-                            Longitude = c.Longitude,
-                            Phone = c.Phone,
-                            ID = c.ID,
-                            AddressType = c.AddressType
+                            Longitude = c.Longitude
                         };
             return query.ToList();
         }
