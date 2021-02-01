@@ -764,6 +764,9 @@
     <Compile Include="ProductDetail_Recipe.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductFullOld_Result.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductFull_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

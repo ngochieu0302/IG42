@@ -46,7 +46,7 @@ namespace FDI.Utils
     {
         Root = 0,    //Thưởng gốc
         Parent = 1,  //Thưởng cha
-        Cus = 2,     // thưởng trực tiếp
+        Cus = 2,     // thưởng khach hang
         Receive1 = 0,// trừ tích lũy vào đơn hàng
         Receive2 = 1, // Rút tiền trực tiếp
         Cus1 = 3,     // thưởng giới thiệu
@@ -55,7 +55,9 @@ namespace FDI.Utils
         Sale = 6,
         QR = 7,
         Depvelop = 8,
-        Packet = 9
+        Packet = 9,
+        Agency = 10,
+        Souce = 11,
     }
     public static class TypeSale
     {

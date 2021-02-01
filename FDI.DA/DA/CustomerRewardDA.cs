@@ -197,7 +197,20 @@ namespace FDI.DA
                 };
             return query.FirstOrDefault();
         }
-#endregion
+        public TotalRefAppItem GetTotalRef(int id)
+        {
+            var query = from c in FDIDB.DN_Agency
+                where c.ID == id
+                select new TotalRefAppItem
+                {
+                    customer = (from a in FDIDB.Customers where a.AgencyID == c.ID  && a.Type == 1 select a.ID).Count(),
+                    agency = (from a in FDIDB.Customers where a.AgencyID == c.ID && a.IsActive == true && a.Type == 2 select a.ID).Count(),
+                    souce = (from a in FDIDB.Customers where a.AgencyID == c.ID && a.IsActive == true && a.Type == 3 select a.ID).Count(),
+                    ctv = (from a in FDIDB.DN_Agency where a.IsActive == true && a.ParentID == c.ID select a.ID).Count(),
+                };
+            return query.FirstOrDefault();
+        }
+        #endregion
         public void Add(ReceiveHistory item)
         {
             FDIDB.ReceiveHistories.Add(item);

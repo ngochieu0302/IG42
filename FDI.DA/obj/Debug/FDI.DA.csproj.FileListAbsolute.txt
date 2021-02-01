@@ -26,7 +26,6 @@ C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.pdb
 C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\HtmlAgilityPack.xml
 C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\EPPlus.xml
 C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\log4net.xml
-C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml
 C:\IG4\CodeIG4\IG4\FDI.DA\obj\Debug\FDI.DA.csprojAssemblyReference.cache
 C:\IG4\CodeIG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
 C:\IG4\CodeIG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CopyComplete
@@ -36,3 +35,4 @@ E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csprojAssemblyReference.c
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.csproj.CoreCompileInputs.cache
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.dll
 E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.DA\obj\Debug\FDI.DA.pdb
+C:\IG4\CodeIG4\IG4\FDI.DA\bin\Debug\Newtonsoft.Json.xml

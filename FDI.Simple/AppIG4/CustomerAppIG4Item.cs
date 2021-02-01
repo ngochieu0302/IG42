@@ -71,8 +71,14 @@ namespace FDI.Simple
         public bool? IsBank { get; set; }
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
+    }
 
-
+    public class CustomerBankItem 
+    {
+        public string Bankname { get; set; }
+        public string Branchname { get; set; }
+        public string FullnameBank { get; set; }
+        public string Sotaikhoan { get; set; }
 
     }
 

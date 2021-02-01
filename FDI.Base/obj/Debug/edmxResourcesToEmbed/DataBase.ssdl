@@ -943,6 +943,9 @@ warning 6002: The table/view 'NNIG4.dbo.AspNetUserRoles' does not have a primary
     <Property Name="IsDelete" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" />
     <Property Name="AddressType" Type="int" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="District" Type="nvarchar" MaxLength="250" />
+    <Property Name="Commune" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="CustomerContact">
     <Key>
@@ -3715,6 +3718,9 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
     <Property Name="Proccess" Type="ntext" />
     <Property Name="IsUpcoming" Type="int" />
     <Property Name="CustomerID" Type="int" />
+    <Property Name="IsAll" Type="bit" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Shop_Product_Detail_Picture">
     <Key>
@@ -9439,6 +9445,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RewardHistory_Order_Package">
+    <End Role="Order_Package" Type="Self.Order_Package" Multiplicity="0..1" />
+    <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order_Package">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RewardHistory">
+        <PropertyRef Name="OrderPacketID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RewardHistory_Shop_Orders">
     <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="0..1" />
     <End Role="RewardHistory" Type="Self.RewardHistory" Multiplicity="*" />
@@ -11337,6 +11355,20 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
     </ReturnType>
   </Function>
   <Function Name="ProductFull" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="kmmax" Type="float" Mode="In" />
+    <Parameter Name="kmmin" Type="float" Mode="In" />
+    <Parameter Name="cateid" Type="int" Mode="In" />
+    <Parameter Name="x" Type="float" Mode="In" />
+    <Parameter Name="y" Type="float" Mode="In" />
+    <Parameter Name="minprice" Type="int" Mode="In" />
+    <Parameter Name="maxprice" Type="int" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="HasTransfer" Type="bit" Mode="In" />
+    <Parameter Name="shopid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ProductFullOld" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="name" Type="nvarchar" Mode="In" />
     <Parameter Name="kmmax" Type="float" Mode="In" />
     <Parameter Name="kmmin" Type="float" Mode="In" />
@@ -13600,6 +13632,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_DN_ImportProduct" Association="Self.FK_RewardHistory_DN_ImportProduct">
       <End Role="DN_ImportProduct" EntitySet="DN_ImportProduct" />
+      <End Role="RewardHistory" EntitySet="RewardHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RewardHistory_Order_Package" Association="Self.FK_RewardHistory_Order_Package">
+      <End Role="Order_Package" EntitySet="Order_Package" />
       <End Role="RewardHistory" EntitySet="RewardHistory" />
     </AssociationSet>
     <AssociationSet Name="FK_RewardHistory_Shop_Orders" Association="Self.FK_RewardHistory_Shop_Orders">

@@ -2369,6 +2369,59 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductFull_Result>("ProductFull", nameParameter, kmmaxParameter, kmminParameter, cateidParameter, xParameter, yParameter, minpriceParameter, maxpriceParameter, pageNumberParameter, pageSizeParameter, hasTransferParameter, shopidParameter);
         }
     
+        public virtual ObjectResult<ProductFullOld_Result> ProductFullOld(string name, Nullable<double> kmmax, Nullable<double> kmmin, Nullable<int> cateid, Nullable<double> x, Nullable<double> y, Nullable<int> minprice, Nullable<int> maxprice, Nullable<int> pageNumber, Nullable<int> pageSize, Nullable<bool> hasTransfer, Nullable<int> shopid)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var kmmaxParameter = kmmax.HasValue ?
+                new ObjectParameter("kmmax", kmmax) :
+                new ObjectParameter("kmmax", typeof(double));
+    
+            var kmminParameter = kmmin.HasValue ?
+                new ObjectParameter("kmmin", kmmin) :
+                new ObjectParameter("kmmin", typeof(double));
+    
+            var cateidParameter = cateid.HasValue ?
+                new ObjectParameter("cateid", cateid) :
+                new ObjectParameter("cateid", typeof(int));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(double));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(double));
+    
+            var minpriceParameter = minprice.HasValue ?
+                new ObjectParameter("minprice", minprice) :
+                new ObjectParameter("minprice", typeof(int));
+    
+            var maxpriceParameter = maxprice.HasValue ?
+                new ObjectParameter("maxprice", maxprice) :
+                new ObjectParameter("maxprice", typeof(int));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var hasTransferParameter = hasTransfer.HasValue ?
+                new ObjectParameter("HasTransfer", hasTransfer) :
+                new ObjectParameter("HasTransfer", typeof(bool));
+    
+            var shopidParameter = shopid.HasValue ?
+                new ObjectParameter("shopid", shopid) :
+                new ObjectParameter("shopid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductFullOld_Result>("ProductFullOld", nameParameter, kmmaxParameter, kmminParameter, cateidParameter, xParameter, yParameter, minpriceParameter, maxpriceParameter, pageNumberParameter, pageSizeParameter, hasTransferParameter, shopidParameter);
+        }
+    
         public virtual ObjectResult<ProductGetbyShop_Result> ProductGetbyShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
         {
             var cateidParameter = cateid.HasValue ?
