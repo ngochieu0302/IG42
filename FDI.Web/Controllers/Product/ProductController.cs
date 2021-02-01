@@ -128,6 +128,7 @@ namespace FDI.Web.Controllers
                     break;
                 case ActionType.Hide:
                     msg = _api.Hide(lst1);
+
                     break;
                 default:
                     msg.Message = "Bạn không được phần quyền cho chức năng này.";
