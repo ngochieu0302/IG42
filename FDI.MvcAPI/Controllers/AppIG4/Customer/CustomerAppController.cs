@@ -826,7 +826,7 @@ namespace FDI.MvcAPI.Controllers
             foreach (var items in data.Shop_Order_Details)
             {
                 var k = items.Shop_Product.Category.Profit;
-                totak += (items.Shop_Product.Product_Size != null ? items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+                totak += (items.Shop_Product.Product_Size != null ? (decimal)items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
             }
             data.Status = status;
             data.Check = 2;

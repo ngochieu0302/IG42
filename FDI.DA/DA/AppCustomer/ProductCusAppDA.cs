@@ -37,7 +37,7 @@ namespace FDI.DA.DA.AppCustomer
                             Q = 1,
                             D = c.DateCreate,
                             Pr = c.Price,
-                            PrD = c.Shop_Product.FirstOrDefault().Product_Size.Value * c.Price / 1000,
+                            PrD = (decimal)c.Shop_Product.FirstOrDefault().Product_Size.Value * c.Price / 1000,
                         };
             return query.ToList();
         }
@@ -57,7 +57,7 @@ namespace FDI.DA.DA.AppCustomer
                             D = c.DateCreate,
                             Pr = c.Price,
                             detail = c.Details,
-                            PrD = c.Shop_Product.FirstOrDefault().Product_Size.Value * c.Price / 1000,
+                            PrD = (decimal)c.Shop_Product.FirstOrDefault().Product_Size.Value * c.Price / 1000,
                             Size = c.Shop_Product.FirstOrDefault().Product_Size.Name,
                             SizeValue = c.Shop_Product.FirstOrDefault().Product_Size.Value, //TODO: thiếu where
                             des = c.Description,
@@ -67,7 +67,7 @@ namespace FDI.DA.DA.AppCustomer
                             {
                                 ID = a.FirstOrDefault().Shop_Product_Type.ID,
                                 Name = a.FirstOrDefault().Shop_Product_Type.Name,
-                                Price = a.FirstOrDefault().Shop_Product_Detail.Price * (a.FirstOrDefault().Product_Size == null ? 1000 : a.FirstOrDefault().Product_Size.Value) / 1000
+                                Price = a.FirstOrDefault().Shop_Product_Detail.Price * (a.FirstOrDefault().Product_Size == null ? 1000 : (decimal)a.FirstOrDefault().Product_Size.Value) / 1000
                             }),
                             lstId = c.Shop_Product.Where(a => a.IsDelete == false).Select(v => new PtemAppItem
                             {

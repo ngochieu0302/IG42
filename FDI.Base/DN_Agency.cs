@@ -22,6 +22,7 @@ namespace FDI.Base
             this.Cate_Value = new HashSet<Cate_Value>();
             this.Customers = new HashSet<Customer>();
             this.Customer_Reward = new HashSet<Customer_Reward>();
+            this.DN_Agency1 = new HashSet<DN_Agency>();
             this.DN_ImportProduct = new HashSet<DN_ImportProduct>();
             this.DN_RequestWare = new HashSet<DN_RequestWare>();
             this.DN_Roles = new HashSet<DN_Roles>();
@@ -95,6 +96,9 @@ namespace FDI.Base
         public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Reward> Customer_Reward { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DN_Agency> DN_Agency1 { get; set; }
+        public virtual DN_Agency DN_Agency2 { get; set; }
         public virtual DN_Enterprises DN_Enterprises { get; set; }
         public virtual DN_GroupAgency DN_GroupAgency { get; set; }
         public virtual Market Market { get; set; }

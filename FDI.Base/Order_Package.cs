@@ -14,6 +14,12 @@ namespace FDI.Base
     
     public partial class Order_Package
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order_Package()
+        {
+            this.RewardHistories = new HashSet<RewardHistory>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> TypeID { get; set; }
         public Nullable<int> CustomerID { get; set; }
@@ -24,5 +30,7 @@ namespace FDI.Base
     
         public virtual Customer Customer { get; set; }
         public virtual Customer_Type Customer_Type { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RewardHistory> RewardHistories { get; set; }
     }
 }

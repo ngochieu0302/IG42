@@ -13,7 +13,6 @@ namespace FDI.Base
     
     public partial class StaticChartsbyDayAgencyTotalPrice_Result
     {
-        public Nullable<int> AgencyId { get; set; }
         public Nullable<decimal> DateCreate { get; set; }
         public Nullable<decimal> Total { get; set; }
     }

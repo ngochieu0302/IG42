@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\FDI\NNIG4\FDI.Base\DataBase.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Base\DataBase.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
