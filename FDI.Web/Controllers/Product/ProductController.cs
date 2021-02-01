@@ -138,7 +138,7 @@ namespace FDI.Web.Controllers
         }
         public string CheckByCode(string CodeSku, int pId)
         {
-            var result = _api.CheckExitCode(CodeSku, pId, UserItem.AgencyID);
+            var result = _api.CheckExitCode(CodeSku, pId, UserItem.AgencyID); // abc
             return result == 1 ? "false" : "true";
         }
 
