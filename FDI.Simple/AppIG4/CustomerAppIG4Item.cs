@@ -25,6 +25,7 @@ namespace FDI.Simple
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
         public bool? IsAdmin { get; set; }
+        public string ListAgencyId { get; set; }
         public int? TypeId { get; set; }
         public bool? IsLockedOut { get; set; }
         public decimal? Wallets { get; set; }
