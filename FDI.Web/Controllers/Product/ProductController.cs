@@ -115,7 +115,7 @@ namespace FDI.Web.Controllers
                     msg = _api.Coppy(UserItem.AgencyID, ArrId.FirstOrDefault());
                     break;
                 case ActionType.Edit:
-                    msg = _api.Update(url, CodeLogin());
+                    msg = _api.Update(url, CodeLogin()); // abc
                     break;
                 case ActionType.View:
                     msg = _api.AddRecipe(ArrId.FirstOrDefault(),CodeLogin());
