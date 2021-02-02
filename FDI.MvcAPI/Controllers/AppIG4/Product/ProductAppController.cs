@@ -312,6 +312,14 @@ namespace FDI.MvcAPI.Controllers
             return Json(new BaseResponse<ProductDetailsItem> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
+        public ActionResult ListProducComingsoonAll()
+        {
+            var date = DateTime.Now.TotalSeconds();
+            var model = _detailBl.ListProducComingsoonAll(date);
+            return Json(new BaseResponse<List<ProducComingsoonItem>> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
+        }
+        
+        [AllowAnonymous]
         public ActionResult ListAll()
         {
             var model = _detailBl.ListAll();

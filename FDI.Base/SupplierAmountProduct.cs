@@ -14,8 +14,14 @@ namespace FDI.Base
     
     public partial class SupplierAmountProduct
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SupplierAmountProduct()
+        {
+            this.Shop_Product_Comingsoon = new HashSet<Shop_Product_Comingsoon>();
+        }
+    
         public int ID { get; set; }
-        public Nullable<int> SupplierId { get; set; }
+        public int SupplierId { get; set; }
         public Nullable<int> ProductID { get; set; }
         public decimal PublicationDate { get; set; }
         public Nullable<decimal> ExpireDate { get; set; }
@@ -31,5 +37,7 @@ namespace FDI.Base
         public virtual Category Category { get; set; }
         public virtual DN_Supplier DN_Supplier { get; set; }
         public virtual DN_Users DN_Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop_Product_Comingsoon> Shop_Product_Comingsoon { get; set; }
     }
 }
