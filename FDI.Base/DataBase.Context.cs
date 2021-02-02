@@ -249,6 +249,7 @@ namespace FDI.Base
         public virtual DbSet<Shop_Order_Details> Shop_Order_Details { get; set; }
         public virtual DbSet<Shop_Orders> Shop_Orders { get; set; }
         public virtual DbSet<Shop_Product> Shop_Product { get; set; }
+        public virtual DbSet<Shop_Product_Comingsoon> Shop_Product_Comingsoon { get; set; }
         public virtual DbSet<Shop_Product_Detail> Shop_Product_Detail { get; set; }
         public virtual DbSet<Shop_Product_Picture> Shop_Product_Picture { get; set; }
         public virtual DbSet<Shop_Product_Type> Shop_Product_Type { get; set; }

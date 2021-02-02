@@ -879,6 +879,9 @@
     <Compile Include="Shop_Product.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Shop_Product_Comingsoon.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Shop_Product_Detail.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

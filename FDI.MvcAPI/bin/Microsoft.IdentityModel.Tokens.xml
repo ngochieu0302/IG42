@@ -14,11 +14,6 @@
             Calls <see cref="M:Microsoft.IdentityModel.Tokens.AsymmetricAdapter.Dispose(System.Boolean)"/> and <see cref="M:System.GC.SuppressFinalize(System.Object)"/>
             </summary>
         </member>
-        <member name="M:Microsoft.IdentityModel.Tokens.AsymmetricAdapter.GetSystemCoreType(System.String)">
-            <summary>
-            The following code determines if RSACng is available on the .Net framework that is installed.
-            </summary>
-        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.AsymmetricSecurityKey">
             <summary>
             Base class for a Security Key that contains Asymmetric key material.
@@ -116,24 +111,16 @@
             Gets the mapping from algorithm to the minimum <see cref="T:Microsoft.IdentityModel.Tokens.AsymmetricSecurityKey"/>.KeySize for verifying signatures.
             </summary>
         </member>
-        <member name="M:Microsoft.IdentityModel.Tokens.AsymmetricSignatureProvider.GetHashAlgorithmString(System.String)">
+        <member name="M:Microsoft.IdentityModel.Tokens.AsymmetricSignatureProvider.GetHashAlgorithmName(System.String)">
             <summary>
             Creating a Signature requires the use of a <see cref="T:System.Security.Cryptography.HashAlgorithm"/>.
-            This method returns the type of the HashAlgorithm (as a string)
+            This method returns the <see cref="T:System.Security.Cryptography.HashAlgorithmName"/>
             that describes the <see cref="T:System.Security.Cryptography.HashAlgorithm"/>to use when generating a Signature.
             </summary>
             <param name="algorithm">The SignatureAlgorithm in use.</param>
-            <exception cref="T:System.ArgumentNullException">if <paramref name="algorithm"/>is null or whitespace.</exception>
-            <exception cref="T:System.ArgumentException">if <paramref name="algorithm"/> is not supported.</exception>
-        </member>
-        <member name="M:Microsoft.IdentityModel.Tokens.AsymmetricSignatureProvider.ResolveAsymmetricAdapter(Microsoft.IdentityModel.Tokens.SecurityKey,System.String,System.Boolean)">
-            <summary>
-            This method is here, just to keep the #if out of the constructor.
-            </summary>
-            <param name="key"></param>
-            <param name="algorithm"></param>
-            <param name="requirePrivateKey"></param>
-            <returns></returns>
+            <returns>The <see cref="T:System.Security.Cryptography.HashAlgorithmName"/> to use.</returns>
+            <exception cref="T:System.ArgumentNullException">if <paramref name="algorithm"/> is null or whitespace.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">if <paramref name="algorithm"/> is not supported.</exception>
         </member>
         <member name="M:Microsoft.IdentityModel.Tokens.AsymmetricSignatureProvider.Sign(System.Byte[])">
             <summary>
@@ -512,6 +499,16 @@
             <exception cref="T:System.ArgumentOutOfRangeException"><see cref="T:Microsoft.IdentityModel.Tokens.SymmetricSecurityKey"/> is too small.</exception>
             <exception cref="T:System.ArgumentException"><see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/>' is not a <see cref="T:Microsoft.IdentityModel.Tokens.AsymmetricSecurityKey"/> or a <see cref="T:Microsoft.IdentityModel.Tokens.SymmetricSecurityKey"/>.</exception>
             <remarks>When finished with the <see cref="T:Microsoft.IdentityModel.Tokens.SignatureProvider"/> call <see cref="M:Microsoft.IdentityModel.Tokens.CryptoProviderFactory.ReleaseSignatureProvider(Microsoft.IdentityModel.Tokens.SignatureProvider)"/>.</remarks>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.CryptoProviderFactory.CreateHashAlgorithm(System.Security.Cryptography.HashAlgorithmName)">
+            <summary>
+            Returns a <see cref="T:System.Security.Cryptography.HashAlgorithm"/> for a specific algorithm.
+            </summary>
+            <param name="algorithm">the name of the hash algorithm to create.</param>
+            <returns>A <see cref="T:System.Security.Cryptography.HashAlgorithm"/></returns>
+            <remarks>When finished with the <see cref="T:System.Security.Cryptography.HashAlgorithm"/> call <see cref="M:Microsoft.IdentityModel.Tokens.CryptoProviderFactory.ReleaseHashAlgorithm(System.Security.Cryptography.HashAlgorithm)"/>.</remarks>
+            <exception cref="T:System.ArgumentNullException">'algorithm' is null or empty.</exception>
+            <exception cref="T:System.InvalidOperationException">'algorithm' is not supported.</exception>
         </member>
         <member name="M:Microsoft.IdentityModel.Tokens.CryptoProviderFactory.CreateHashAlgorithm(System.String)">
             <summary>
@@ -1413,6 +1410,47 @@
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
         </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException">
+            <summary>
+            This exception is thrown when a cryptographic algorithm is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.InvalidAlgorithm">
+            <summary>
+            Gets or sets the invalid algorithm that created the validation exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException"/> class.
+            </summary>
+            <param name="message">Additional information to be included in the exception and displayed to user.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException"/> class.
+            </summary>
+            <param name="message">Additional information to be included in the exception and displayed to user.</param>
+            <param name="innerException">A <see cref="T:System.Exception"/> that represents the root cause of the exception.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException"/> class.
+            </summary>
+            <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
+            <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAlgorithmException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
+        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException">
             <summary>
             This exception is thrown when 'audience' of a token was not valid.
@@ -1448,6 +1486,9 @@
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
         </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidAudienceException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
+        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidIssuerException">
             <summary>
             This exception is thrown when 'issuer' of a token was not valid.
@@ -1482,6 +1523,9 @@
             </summary>
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidIssuerException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
         </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidLifetimeException">
             <summary>
@@ -1522,6 +1566,9 @@
             </summary>
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidLifetimeException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
         </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidSignatureException">
             <summary>
@@ -1620,6 +1667,9 @@
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
         </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
+        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenKeyWrapException">
             <summary>
             Represents a key wrap exception when encryption failed.
@@ -1713,6 +1763,9 @@
             </summary>
             <param name="info">the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data.</param>
             <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.SecurityTokenNotYetValidException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc/>
         </member>
         <member name="T:Microsoft.IdentityModel.Tokens.SecurityTokenReplayAddFailedException">
             <summary>
@@ -3141,6 +3194,36 @@
             <remarks>Used during token creation to set the default expiration ('exp'). </remarks>
             <exception cref="T:System.ArgumentOutOfRangeException">'value' less than 1.</exception>
         </member>
+        <member name="T:Microsoft.IdentityModel.Tokens.TokenUtilities">
+            <summary>
+            A class which contains useful methods for processing tokens.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.TokenUtilities.GetAllSigningKeys(Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+            <summary>
+            Returns all <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> provided in validationParameters.
+            </summary>
+            <param name="validationParameters">A <see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
+            <returns>Returns all <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> provided in validationParameters.</returns>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.TokenUtilities.MergeClaims(System.Collections.Generic.IEnumerable{System.Security.Claims.Claim},System.Collections.Generic.IEnumerable{System.Security.Claims.Claim})">
+            <summary>
+            Merges claims. If a claim with same type exists in both <paramref name="claims"/> and <paramref name="subjectClaims"/>, the one in claims will be kept.
+            </summary>
+            <param name="claims"> Collection of <see cref="T:System.Security.Claims.Claim"/>'s.</param>
+            <param name="subjectClaims"> Collection of <see cref="T:System.Security.Claims.Claim"/>'s.</param>
+            <returns> A Merged list of <see cref="T:System.Security.Claims.Claim"/>'s.</returns>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Tokens.AlgorithmValidator">
+            <summary>
+            Definition for AlgorithmValidator
+            </summary>
+            <param name="algorithm">The algorithm to validate.</param>
+            <param name="securityKey">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> that signed the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/>.</param>
+            <param name="securityToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> being validated.</param>
+            <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
+            <returns><c>true</c> if the algorithm is considered valid</returns>
+        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.AudienceValidator">
             <summary>
             Definition for AudienceValidator.
@@ -3220,6 +3303,15 @@
             <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
             <returns>A <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use when decrypting the token.</returns>
         </member>
+        <member name="T:Microsoft.IdentityModel.Tokens.TypeValidator">
+            <summary>
+            Definition for TypeValidator.
+            </summary>
+            <param name="type">The token type to validate.</param>
+            <param name="securityToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> that is being validated.</param>
+            <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
+            <returns>The actual token type, that may be the same as <paramref name="type"/> or a different value if the token type was resolved from a different location.</returns>
+        </member>
         <member name="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters">
             <summary>
             Contains a set of parameters that are used by a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenHandler"/> when validating a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/>.
@@ -3256,6 +3348,15 @@
             <summary>
             Gets or sets <see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/>.
             </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.AlgorithmValidator">
+            <summary>
+            Gets or sets a delegate used to validate the cryptographic algorithm used.
+            </summary>
+            <remarks>
+            If set, this delegate will validate the cryptographic algorithm used and
+            the algorithm will not be checked against <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidAlgorithms"/>.
+            </remarks>
         </member>
         <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.AudienceValidator">
             <summary>
@@ -3453,6 +3554,23 @@
             Even if <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidateTokenReplay"/> is false, this delegate will still be called.
             </remarks>
         </member>
+        <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TryAllIssuerSigningKeys">
+            <summary>
+            Gets or sets a value indicating whether all <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.IssuerSigningKeys"/> should be tried during signature validation when a key is not matched to token kid or if token kid is empty.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TypeValidator">
+            <summary>
+            Gets or sets a delegate that will be used to validate the type of the token.
+            If the token type cannot be validated, an exception MUST be thrown by the delegate.
+            Note: the 'type' parameter may be null if it couldn't be extracted from its usual location.
+            Implementations that need to resolve it from a different location can use the 'token' parameter.
+            </summary>
+            <remarks>
+            If set, this delegate will be called to validate the 'type' of the token, instead of normal processing.
+            This means that no default 'type' validation will occur.
+            </remarks>
+        </member>
         <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidateActor">
             <summary>
             Gets or sets a value indicating if an actor token is detected, whether it should be validated.
@@ -3507,6 +3625,14 @@
             <remarks>
             This boolean only applies to default token replay validation. If <see cref= "P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TokenReplayValidator" /> is set, it will be called regardless of whether this
             property is true or false.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidAlgorithms">
+            <summary>
+            Gets or sets the valid algorithms for cryptographic operations.
+            </summary>
+            <remarks>
+            If set to a non-empty collection, only the algorithms listed will be considered valid.
             </remarks>
         </member>
         <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidAudience">
@@ -3574,6 +3700,10 @@
         <member name="P:Microsoft.IdentityModel.Tokens.TokenValidationResult.TokenType">
             <summary>
             Gets or sets the token type of the <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationResult.SecurityToken"/> that was validated.
+            When a <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TypeValidator"/> is registered,
+            the type returned by the delegate is used to populate this property.
+            Otherwise, the type is resolved from the token itself, if available
+            (e.g for a JSON Web Token, from the "typ" header). 
             </summary>
         </member>
         <member name="T:Microsoft.IdentityModel.Tokens.UniqueId">
@@ -3702,6 +3832,15 @@
             AudienceValidator
             </summary>
         </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.Validators.ValidateAlgorithm(System.String,Microsoft.IdentityModel.Tokens.SecurityKey,Microsoft.IdentityModel.Tokens.SecurityToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+            <summary>
+            Validates if a given algorithm for a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> is valid.
+            </summary>
+            <param name="algorithm">The algorithm to be validated.</param>
+            <param name="securityKey">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> that signed the <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/>.</param>
+            <param name="securityToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> being validated.</param>
+            <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
+        </member>
         <member name="M:Microsoft.IdentityModel.Tokens.Validators.ValidateAudience(System.Collections.Generic.IEnumerable{System.String},Microsoft.IdentityModel.Tokens.SecurityToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
             <summary>
             Determines if the audiences found in a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> are valid.
@@ -3780,6 +3919,20 @@
             <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenNoExpirationException">If <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TokenReplayCache"/> is not null and expirationTime.HasValue is false. When a TokenReplayCache is set, tokens require an expiration time.</exception>
             <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenReplayDetectedException">If the 'securityToken' is found in the cache.</exception>
             <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenReplayAddFailedException">If the 'securityToken' could not be added to the <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.TokenReplayCache"/>.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Tokens.Validators.ValidateTokenType(System.String,Microsoft.IdentityModel.Tokens.SecurityToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+            <summary>
+            Validates the type of the token.
+            </summary>
+            <param name="type">The token type or <c>null</c> if it couldn't be resolved (e.g from the 'typ' header for a JWT).</param>
+            <param name="securityToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> that is being validated.</param>
+            <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="validationParameters"/> is null.</exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="securityToken"/> is null.</exception>
+            <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException">If <paramref name="type"/> is null or whitespace and <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/> is not null.</exception>
+            <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException">If <paramref name="type"/> failed to match <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/>.</exception>
+            <remarks>An EXACT match is required. <see cref="F:System.StringComparison.Ordinal"/> (case sensitive) is used for comparing <paramref name="type"/> against <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/>.</remarks>
+            <returns>The actual token type, that may be the same as <paramref name="type"/> or a different value if the token type was resolved from a different location.</returns>
         </member>
         <member name="T:Microsoft.IdentityModel.Tokens.X509EncryptingCredentials">
             <summary>

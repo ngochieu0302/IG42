@@ -549,15 +549,6 @@
             <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenEncryptionFailedException">if encryption fails using the <see cref="P:Microsoft.IdentityModel.Tokens.EncryptingCredentials.Enc"/> (algorithm), <see cref="P:Microsoft.IdentityModel.Tokens.EncryptingCredentials.Key"/> pair.</exception>
             <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenEncryptionFailedException">if not using one of the supported content encryption key (CEK) algorithms: 128, 384 or 512 AesCbcHmac (this applies in the case of key wrap only, not direct encryption).</exception>
         </member>
-        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ResolveIssuerSigningKey(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
-            <summary>
-            Returns a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use when validating the signature of a token.
-            </summary>
-            <param name="jwtToken">The <see cref="T:Microsoft.IdentityModel.JsonWebTokens.JsonWebToken"/> that is being validated.</param>
-            <param name="validationParameters">A <see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/>  required for validation.</param>
-            <returns>Returns a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use for signature validation.</returns>
-            <remarks>If key fails to resolve, then null is returned</remarks>
-        </member>
         <member name="M:Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ResolveTokenDecryptionKey(System.String,Microsoft.IdentityModel.JsonWebTokens.JsonWebToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
             <summary>
             Returns a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use when decrypting a JWE.
@@ -601,7 +592,7 @@
             Validates the JWT signature.
             </summary>
         </member>
-        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(System.Byte[],System.Byte[],Microsoft.IdentityModel.Tokens.SecurityKey,System.String,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(System.Byte[],System.Byte[],Microsoft.IdentityModel.Tokens.SecurityKey,System.String,Microsoft.IdentityModel.Tokens.SecurityToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
             <summary>
             Obtains a <see cref="T:Microsoft.IdentityModel.Tokens.SignatureProvider"/> and validates the signature.
             </summary>
@@ -609,6 +600,7 @@
             <param name="signature">Signature to compare against.</param>
             <param name="key"><See cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use.</param>
             <param name="algorithm">Crypto algorithm to use.</param>
+            <param name="securityToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> being validated.</param>
             <param name="validationParameters">Priority will be given to <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.CryptoProviderFactory"/> over <see cref="P:Microsoft.IdentityModel.Tokens.SecurityKey.CryptoProviderFactory"/>.</param>
             <returns>'true' if signature is valid.</returns>
         </member>
@@ -881,6 +873,13 @@
             Regex that is used to figure out if a token is in JWE format.
             </summary>
         </member>
+        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JwtTokenUtilities.CreateDictionaryFromClaims(System.Collections.Generic.IEnumerable{System.Security.Claims.Claim})">
+            <summary>
+            Creates a dictionary from a list of Claim's.
+            </summary>
+            <param name="claims"> A list of claims.</param>
+            <returns> A Dictionary representing claims.</returns>
+        </member>
         <member name="M:Microsoft.IdentityModel.JsonWebTokens.JwtTokenUtilities.CreateEncodedSignature(System.String,Microsoft.IdentityModel.Tokens.SigningCredentials)">
             <summary>
             Produces a signature over the 'input'.
@@ -933,16 +932,16 @@
             <exception cref="T:System.FormatException">If the value of the claim cannot be parsed into a long.</exception>
             <returns>The DateTime representation of a claim.</returns>
         </member>
-        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JwtTokenUtilities.ValidateTokenType(System.String,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+        <member name="M:Microsoft.IdentityModel.JsonWebTokens.JwtTokenUtilities.ResolveTokenSigningKey(System.String,System.String,Microsoft.IdentityModel.Tokens.SecurityToken,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
             <summary>
-            Validates the 'typ' claim of the JWT token header.
+            Returns a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use when validating the signature of a token.
             </summary>
-            <param name="type">The value of the 'typ' header claim."/></param>
-            <param name="validationParameters"><see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/> required for validation.</param>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="validationParameters"/> is null or whitespace.</exception>
-            <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException">If <paramref name="type"/> is null or whitespace and <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/> is not null.</exception>
-            <exception cref="T:Microsoft.IdentityModel.Tokens.SecurityTokenInvalidTypeException">If <paramref name="type"/> failed to match <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/>.</exception>
-            <remarks>An EXACT match is required. <see cref="F:System.StringComparison.Ordinal"/> (case sensitive) is used for comparing <paramref name="type"/> against <see cref="P:Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidTypes"/>.</remarks>
+            <param name="kid">The <see cref="T:System.String"/> kid field of the token being validated</param>
+            <param name="x5t">The <see cref="T:System.String"/> x5t field of the token being validated</param>
+            <param name="jwtToken">The <see cref="T:Microsoft.IdentityModel.Tokens.SecurityToken"/> that is being validated.</param>
+            <param name="validationParameters">A <see cref="T:Microsoft.IdentityModel.Tokens.TokenValidationParameters"/>  required for validation.</param>
+            <returns>Returns a <see cref="T:Microsoft.IdentityModel.Tokens.SecurityKey"/> to use for signature validation.</returns>
+            <remarks>If key fails to resolve, then null is returned</remarks>
         </member>
         <member name="T:Microsoft.IdentityModel.JsonWebTokens.LogMessages">
             <summary>

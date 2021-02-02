@@ -24,6 +24,7 @@ namespace FDI.Base
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<double> Value { get; set; }
+        public Nullable<int> UnitID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProduceProductDetail> ProduceProductDetails { get; set; }
