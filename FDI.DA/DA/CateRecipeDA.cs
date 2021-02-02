@@ -88,7 +88,6 @@ namespace FDI.DA
                                 ProductName = c.Shop_Product_Detail.Name,
                                 Quantity = c.Quantity,
                                 Price = c.Price,
-
                                 IsCheck = c.IsCheck,
                                 PriceProduct = c.PriceProduct,
                                 DateCreate = c.DateCreate,
@@ -98,6 +97,7 @@ namespace FDI.DA
                                 ProductId = c.ProductId,
                                 TotalPrice = c.Price * c.Quantity,
                                 Percent = c.Percent,
+                                UnitId = c.Shop_Product_Detail.UnitID
                             }),
                             LstMappingCategoryRecipeItems = o.Mapping_Category_Recipe.Where(c => c.IsDeleted == false).Select(c => new MappingCategoryRecipeItem
                             {
@@ -107,6 +107,68 @@ namespace FDI.DA
                                 Price = c.Price,
                                 IsCheck = c.IsCheck,
                                 PriceProduct = c.PriceProduct,
+                                UnitId = c.Category.UnitID,
+                                DateCreate = c.DateCreate,
+                                PercentProduct = o.Category.Percent,
+                                Incurred = c.Incurred,
+                                UnitName = c.Category.DN_Unit.Name,
+                                CategoryID = c.CategoryID,
+                                TotalPrice = c.Price,
+                                Percent = c.Percent,
+                                Sl = c.Sl,
+                            })
+                        };
+            return query.FirstOrDefault();
+        }
+        public CateRecipeItem GetItemByCateIdUser(int id)
+        {
+            var query = from o in FDIDB.Category_Recipe
+                        where o.CategoryID == id &&(o.IsDeleted.HasValue || o.IsDeleted == false) && o.IsUse == true
+                        select new CateRecipeItem
+                        {
+                            ID = o.ID,
+                            Code = o.Code,
+                            CategoryID = o.CategoryID,
+                            DateCreate = o.DateCreate,
+                            DateUpdate = o.DateUpdate,
+                            CateName = o.Category.Name,
+                            Username = o.DN_Users.UserName,
+                            TotalPrice = o.TotalPrice,
+                            TotalPriceFinal = o.TotalPriceFinal,
+                            TotalIncurred = o.TotalIncurred,
+                            Weight = o.Weight,
+                            IsUse = o.IsUse,
+                            Loss = o.Category.PercentLoss ?? 0,
+                            TotalPercent = o.TotalPercent,
+                            Totalkg = o.Totalkg,
+                            Price = o.Category.Price,
+                            PriceFinal = o.Category.PriceFinal,
+                            LstCategoryRecipeItems = o.Category_Product_Recipe.Where(c => c.IsDeleted == false).Select(c => new CategoryRecipeItem
+                            {
+                                ID = c.ID,
+                                ProductName = c.Shop_Product_Detail.Name,
+                                Quantity = c.Quantity,
+                                Price = c.Price,
+                                IsCheck = c.IsCheck,
+                                PriceProduct = c.PriceProduct,
+                                DateCreate = c.DateCreate,
+                                PercentProduct = o.Category.Percent,
+                                Incurred = c.Incurred,
+                                UnitName = c.Shop_Product_Detail.DN_Unit.Name,
+                                ProductId = c.ProductId,
+                                TotalPrice = c.Price * c.Quantity,
+                                Percent = c.Percent,
+                                UnitId = c.Shop_Product_Detail.UnitID
+                            }),
+                            LstMappingCategoryRecipeItems = o.Mapping_Category_Recipe.Where(c => c.IsDeleted == false).Select(c => new MappingCategoryRecipeItem
+                            {
+                                ID = c.ID,
+                                ProductName = c.Category.Name,
+                                Quantity = c.Quantity,
+                                Price = c.Price,
+                                IsCheck = c.IsCheck,
+                                PriceProduct = c.PriceProduct,
+                                UnitId = c.Category.UnitID,
                                 DateCreate = c.DateCreate,
                                 PercentProduct = o.Category.Percent,
                                 Incurred = c.Incurred,

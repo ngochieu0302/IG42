@@ -115,7 +115,7 @@ namespace FDI.Web.Controllers
             if (obj.Listproduct != null && obj.Listproduct.Any())
             {
                 model.Time = 0;
-                //model.Price = obj.Listproduct.Sum(c => c.Shop_Product.Shop_Product_Detail.Price * c.Shop_Product.Product_Size.Value / 1000);
+                model.Price = obj.Listproduct.Sum(c => c.Shop_Product.Shop_Product_Detail.Price * (decimal)c.Shop_Product.Product_Size.Value / 1000);
             }
             else if (lstProductDefault.ListProductPacketItems != null && lstProductDefault.ListProductPacketItems.Any())
             {

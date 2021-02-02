@@ -30,6 +30,20 @@ namespace FDI.Simple.Supplier
         public string SupplierAdress { get; set; }
 
     }
+    public class SupplierAmountProductFormItem : BaseSimple
+    {
+        public int? SupplierId { get; set; }
+        public int? ProductID { get; set; }
+        public string _PublicationDate { get; set; }
+        public string _ExpireDate { get; set; }
+        public bool? IsAlwayExist { get; set; }
+        public int? AmountEstimate { get; set; }
+        public int? AmountPayed { get; set; }
+        public string _CallDate { get; set; }
+        public Guid? UserActiveId { get; set; }
+        public string Note { get; set; }
+
+    }
 
 
     public class SupplierAmountProductResponse : BaseModelSimple

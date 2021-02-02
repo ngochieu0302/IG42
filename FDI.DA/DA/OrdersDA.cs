@@ -795,7 +795,7 @@ namespace FDI.DA
                                         ID = v.ID,
                                         Name = v.Shop_Product_Detail.Name,
                                         //Value = v.Value,
-                                        //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                        PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                         Quantity = 0
                                     })
                         };
@@ -818,7 +818,7 @@ namespace FDI.DA
                                 ID = m.ID,
                                 Name = m.Shop_Product_Detail.Name,
                                 //Value = m.Value,
-                                //PriceNew = (m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (m.Shop_Product_Detail.Price * (decimal)m.Product_Size.Value / 1000) ?? 0,
                             })
                         }).FirstOrDefault();
             return list;
@@ -837,7 +837,7 @@ namespace FDI.DA
                                 {
                                     ProductId = z.ProductId,
                                     NameProduct = z.Shop_Product.Shop_Product_Detail.Name,
-                                    //Price = z.Shop_Product.Shop_Product_Detail.Price * z.Shop_Product.Product_Size.Value / 1000,
+                                    Price = z.Shop_Product.Shop_Product_Detail.Price * (decimal)z.Shop_Product.Product_Size.Value / 1000,
                                     Time = 0,
                                 }),
                                 IsEarly = c.IsEarly ?? false,
@@ -856,7 +856,7 @@ namespace FDI.DA
                                 {
                                     ProductId = z.ProductId,
                                     NameProduct = z.Shop_Product.Shop_Product_Detail.Name,
-                                    //Price = z.Shop_Product.Shop_Product_Detail.Price * z.Shop_Product.Product_Size.Value / 1000,
+                                    Price = z.Shop_Product.Shop_Product_Detail.Price * (decimal)z.Shop_Product.Product_Size.Value / 1000,
                                     Time = 0,
                                 }),
                                 IsEarly = c.IsEarly ?? false,
@@ -898,7 +898,7 @@ namespace FDI.DA
                                         ID = v.ID,
                                         Name = v.Shop_Product_Detail.Name,
                                         Value = 0,
-                                        //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                        PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                     })
                         };
             if (query.Any())
@@ -920,7 +920,7 @@ namespace FDI.DA
                                 ID = m.ID,
                                 Name = m.Shop_Product_Detail.Name,
                                 Value = 0,
-                                //PriceNew = (m.Shop_Product_Detail.Price * m.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (m.Shop_Product_Detail.Price * (decimal)m.Product_Size.Value / 1000) ?? 0,
                             })
                         }).FirstOrDefault();
             return list;
@@ -1148,7 +1148,7 @@ namespace FDI.DA
                         select new ProductItem
                         {
                             ID = c.ID,
-                            //PriceNew = (c.Shop_Product_Detail.Price * c.Product_Size.Value / 1000) ?? 0,
+                            PriceNew = (c.Shop_Product_Detail.Price * (decimal)c.Product_Size.Value / 1000) ?? 0,
                             Value = 0,
                         };
             return query.FirstOrDefault();

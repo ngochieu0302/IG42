@@ -85,7 +85,7 @@ namespace FDI.DA
                             {
                                 ID = m.Shop_Product.ID,
                                 //Value = m.Shop_Product.Value,
-                                //PriceNew = (m.Shop_Product.Shop_Product_Detail.Price*m.Shop_Product.Product_Size.Value/1000) ?? 0
+                                PriceNew = (m.Shop_Product.Shop_Product_Detail.Price* (decimal)m.Shop_Product.Product_Size.Value/1000) ?? 0
                             })
                         };
             return query.ToList();
@@ -122,7 +122,7 @@ namespace FDI.DA
                                          ListProductPacketItems = o.DN_Product_Packet.Select(z=>new DNProductPacketItem
                                          {
                                              ProductId = z.ProductId,
-                                             //Price = z.Shop_Product.Shop_Product_Detail.Price* z.Shop_Product.Product_Size.Value/1000,
+                                             Price = z.Shop_Product.Shop_Product_Detail.Price* (decimal)z.Shop_Product.Product_Size.Value/1000,
                                              NameProduct = z.Shop_Product.Shop_Product_Detail.Name,
                                              IsDefault = z.IsDefault,
                                             

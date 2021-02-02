@@ -31,7 +31,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -133,7 +133,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -182,7 +182,7 @@ namespace FDI.DA.DL
                             ListProductItem = c.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in c.Shop_Product
@@ -224,7 +224,7 @@ namespace FDI.DA.DL
                             ListProductItem = n.Shop_Product.Where(c => c.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in n.Shop_Product
@@ -294,7 +294,7 @@ namespace FDI.DA.DL
                             ListProductItem = n.Shop_Product.Where(c => c.IsDelete != true).Select(v => new ProductItem
                             {
                                 ID = v.ID,
-                                //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                 //PriceOld = v.PriceOld
                             }),
                             //ListColorProductItem = from a in n.Shop_Product

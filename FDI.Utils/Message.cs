@@ -29,7 +29,7 @@ namespace FDI.Utils
 
         public int TotalItems { get; set; }
         public int RowPerPage { get; set; }
-        public int Total { get; set; }
+        public decimal Total { get; set; }
         public JsonMessage()
         {
             Erros = false;

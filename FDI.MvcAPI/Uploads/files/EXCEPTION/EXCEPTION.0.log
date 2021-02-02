@@ -153,3 +153,19 @@ System.Core
    at FDI.MvcAPI.Controllers.ShopProductDetailController.Coppy(String key) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\Product\ShopProductDetailController.cs:line 318
 Boolean MoveNext()
 
+01/02/2021 16:00:32 Input string was not in a correct format.
+mscorlib
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Decimal.Parse(String s)
+   at FDI.MvcAPI.Controllers.ShopProductDetailController.Addproduct(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\Product\ShopProductDetailController.cs:line 411
+Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+
+01/02/2021 17:26:43 Input string was not in a correct format.
+mscorlib
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at FDI.MvcAPI.Controllers.ShopProductDetailController.Addproduct(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\Product\ShopProductDetailController.cs:line 414
+Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
+

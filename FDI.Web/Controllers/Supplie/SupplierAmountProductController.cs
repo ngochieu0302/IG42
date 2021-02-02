@@ -53,39 +53,73 @@ namespace FDI.Web.Controllers
             var msg = new JsonMessage { Erros = false };
             var url = Request.Form.ToString();
             var lstID = string.Join(",", ArrId);
-            switch (DoAction)
+            var temp = new SupplierAmountProductFormItem();
+            try
             {
-                case ActionType.Add:
-                    var request = new SupplierAmountProductItem();
-                    UpdateModel(request);
-                    var result = await _apiSupplierAmount.Add(request);
-                    if (result.Erros)
-                    {
-                        msg.Erros = true;
-                        msg.Message = result.Message;
+                switch (DoAction)
+                {
+                    case ActionType.Add:
+                        
+                        
+                        UpdateModel(temp);
+                        var request = new SupplierAmountProductItem()
+                        {
+                            SupplierId = temp.SupplierId ?? 1,
+                            ProductID = temp.ProductID,
+                            PublicationDate = temp._PublicationDate.StringToDecimal(),
+                            AmountEstimate = temp.AmountEstimate ?? 0,
+                            AmountPayed = temp.AmountPayed ?? 0,
+                            CallDate = temp._CallDate.StringToDecimal(),
+                            ExpireDate = temp._ExpireDate.StringToDecimal(),
+                            IsAlwayExist = temp.IsAlwayExist == true,
+                            Note = temp.Note,
+                            UserActiveId = UserItem.UserId,
+                        };
+                        var result = await _apiSupplierAmount.Add(request);
+                        if (result.Erros)
+                        {
+                            msg.Erros = true;
+                            msg.Message = result.Message;
+                            break;
+                        }
+                        msg.Message = "Cập nhật dữ liệu thành công !";
                         break;
-                    }
-                    msg.Message = "Cập nhật dữ liệu thành công !";
-                    break;
 
-                case ActionType.Edit:
-                    var requestUpdate = new SupplierAmountProductItem();
-                    UpdateModel(requestUpdate);
+                    case ActionType.Edit:
+                        UpdateModel(temp);
+                        var requestUpdate = new SupplierAmountProductItem()
+                        {
+                            SupplierId = temp.SupplierId ?? 1,
+                            ProductID = temp.ProductID,
+                            PublicationDate = temp._PublicationDate.StringToDecimal(),
+                            AmountEstimate = temp.AmountEstimate ?? 0,
+                            AmountPayed = temp.AmountPayed ?? 0,
+                            CallDate = temp._CallDate.StringToDecimal(),
+                            ExpireDate = temp._ExpireDate.StringToDecimal(),
+                            IsAlwayExist = temp.IsAlwayExist == true,
+                            Note = temp.Note,
+                            UserActiveId = UserItem.UserId,
+                        };
+                        UpdateModel(requestUpdate);
 
-                    await _apiSupplierAmount.Update(requestUpdate);
-                   
-                    msg.Message = "Cập nhật dữ liệu thành công !";
-                    break;
-                case ActionType.Delete:
-                    await _apiSupplierAmount.Delete(ArrId.FirstOrDefault());
-                    msg.Message = "Cập nhật thành công.";
-                    break;
+                        await _apiSupplierAmount.Update(requestUpdate);
+
+                        msg.Message = "Cập nhật dữ liệu thành công !";
+                        break;
+                    case ActionType.Delete:
+                        await _apiSupplierAmount.Delete(ArrId.FirstOrDefault());
+                        msg.Message = "Cập nhật thành công.";
+                        break;
+                }
             }
-            if (string.IsNullOrEmpty(msg.Message))
+            catch (Exception e)
             {
-                msg.Message = "Không có hành động nào được thực hiện.";
-                msg.Erros = true;
+               
+                    msg.Erros = true;
+                    msg.Message = e.ToString();
             }
+           
+           
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
     }

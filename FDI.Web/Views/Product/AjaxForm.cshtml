@@ -123,25 +123,9 @@
                             <div class="col-sm-4">
                                 <input type="number" class="form-control" name="QuantityDay" id="QuantityDay" min="0" value="@(Model.QuantityDay ?? 0)" />
                             </div>
-                            @*<label class="col-sm-2 control-label">Giá cost</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control maskPrice" id="PriceCost" name="PriceCost" value="@Model.PriceCost.Money()" />
-            </div>*@
-                        </div>
-                        @*<div class="form-group">
-            <label class="col-sm-2 control-label">Giá cost Parent</label>
-            <div class="col-sm-4">
-                <input type="number" class="form-control maskPrice" name="PriceCostParent" id="PriceCostParent" min="0" value="@(Model.PriceCostParent.Money())" />
-            </div>
-            <label class="col-sm-2 control-label">Chi phí phát sinh</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control maskPrice" id="PriceInCurr" name="PriceInCurr" value="@Model.PriceInCurr.Money()" />
-            </div>
-        </div>*@
-                        <div class="form-group">
                             <label class="col-sm-2 control-label">Chọn Loại</label>
                             <div class="col-sm-4">
-                                 <select class="select2-drop" name="TypeID" id="TypeID">
+                                <select class="select2-drop" name="TypeID" id="TypeID">
                                     <option value="">-- Chọn Loại --</option>
                                     @foreach (var item in ViewBag.type)
                                     {
@@ -149,11 +133,8 @@
                                     }
                                 </select>
                             </div>
-                            @*<label class="col-sm-2 control-label">Hệ số</label>
-            <div class="col-sm-4">
-                <input type="number" readonly class="form-control" name="Percent" id="Percent" value="@(Model.Percent)" />
-            </div>*@
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Size</label>
                             <div class="col-sm-4">
@@ -165,27 +146,17 @@
                                     }
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label">Đơn Vị</label>
+                            <label class="col-sm-2 control-label">Màu sắc</label>
                             <div class="col-sm-4">
-                                <select class="select2-drop" name="UnitID" id="UnitID">
-                                    <option value="">-- Chọn Đơn vị --</option>
-                                    @foreach (var item in ViewBag.Unit)
+                                <select class="select2-drop" name="ColorID" id="ColorID">
+                                    <option value="">-- Chọn Màu sắc --</option>
+                                    @foreach (var item in ViewBag.ColorID)
                                     {
-                                        <option value="@item.ID" @(item.ID == Model.UnitID ? "selected" : "")>@item.Name</option>
+                                        <option value="@item.ID" @(item.ID == Model.ColorID ? "selected" : "")>@item.Name</option>
                                     }
                                 </select>
                             </div>
                         </div>
-                        @*<div class="form-group">
-            <label class="col-sm-2 control-label">Giá bán</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control maskPrice" name="PriceNew" id="PriceNew" value="@Model.PriceNew" />
-            </div>
-            <label class="col-sm-2 control-label">Giá trị</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" placeholder="..." name="Value" id="Value" value="@Model.Value" />
-            </div>
-        </div>*@
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-4">

@@ -116,7 +116,7 @@ namespace FDI.DA
                                 ListProductItem = z.Shop_Product.Where(a=>a.IsDelete != true).Select(v=> new ProductItem
                                 {
                                    ID = v.ID,
-                                    //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                    PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                     //PriceOld = v.PriceOld,
                                     
                                 }),
@@ -165,7 +165,7 @@ namespace FDI.DA
                                 ListProductItem = z.Shop_Product.Where(a => a.IsDelete != true).Select(v => new ProductItem
                                 {
                                     ID = v.ID,
-                                    //PriceNew = (v.Shop_Product_Detail.Price * v.Product_Size.Value / 1000) ?? 0,
+                                    PriceNew = (v.Shop_Product_Detail.Price * (decimal)v.Product_Size.Value / 1000) ?? 0,
                                     //PriceOld = v.PriceOld
                                 }),
                                 //ListColorProductItem = from a in z.Shop_Product

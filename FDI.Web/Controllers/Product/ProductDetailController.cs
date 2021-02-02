@@ -18,8 +18,11 @@ namespace FDI.Web.Controllers
         readonly ShopProductDetailAPI _api;
         readonly SystemColorAPI _systemColorApi;
         readonly DNUnitAPI _dnUnitApi;
+        readonly System_ColorDA _colorDa = new System_ColorDA();
+        readonly ProductTypeDA _productTypeDa = new ProductTypeDA();
         readonly ProductAPI _productApi = new ProductAPI();
         readonly ProductSizeAPI _productSizeApi = new ProductSizeAPI();
+        readonly ProductTypeAPI _productTypeApi = new ProductTypeAPI();
         private readonly ProductValueAPI _valueApi = new ProductValueAPI();
         readonly CategoryAPI _categoryApi = new CategoryAPI();
         public ProductDetailController()
@@ -64,13 +67,24 @@ namespace FDI.Web.Controllers
             var model = _api.GetItemById(UserItem.AgencyID, productId);
             ViewBag.Action = DoAction;
             ViewBag.ActionText = ActionText;
-            //ViewBag.listcolor = _colorDa.GetAll(2010);
-            ViewBag.listSize = _productSizeApi.GetAll(UserItem.AgencyID);
+            ViewBag.listcolor = _colorDa.GetAll(2010);
+            ViewBag.listSize = _productSizeApi.GetAllByUnitID(UserItem.AgencyID, model.UnitID);
+            ViewBag.listType = _productTypeDa.GetAll();
             return View(model);
         }
         public ActionResult GetListSize()
         {
             var model = _productSizeApi.GetAll(UserItem.AgencyID);
+            return View(model);
+        }
+        public ActionResult GetListType()
+        {
+            var model = _productTypeApi.GetAll();
+            return View(model);
+        }
+        public ActionResult GetListColor()
+        {
+            var model = _systemColorApi.GetAll(UserItem.AgencyID);
             return View(model);
         }
         public ActionResult ListProduct()
