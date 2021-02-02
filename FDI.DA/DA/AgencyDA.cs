@@ -309,16 +309,54 @@ namespace FDI.DA
                     Branchname = c.Branchname,
                     IsActive = c.IsActive,
                     Level = c.Level,
-                    ListGalleryPictureItems = c.Gallery_Picture.Where(a=>a.IsDeleted == false || !a.IsDeleted.HasValue).Select(z=> new GalleryPictureItem
-                    {
-                        Url = z.Folder + z.Url,
-                        Name = z.Name,
-                    }),
                     UserName = c.DN_Users.OrderBy(m => m.CreateDate).Select(m => m.UserName).FirstOrDefault(),
                     
                 };
             return query.FirstOrDefault();
         }
+
+        public StaticWalletsTotal GetStaticChartsTotal(int id, decimal fo, decimal to)
+        {
+            var query = from c in FDIDB.StaticChartsAgencyTotalPrice(fo,to,id)
+                        select new StaticWalletsTotal
+                        {
+                            Total = c.Total??0,
+                            TotalCustomer = c.totalcustomer??0,
+                            TotalAgency = c.totalagency??0,
+                            TotalSouce = c.totalsouce??0,
+                            Percent = ((c.Total - c.TotalOld)*c.TotalOld/100) ?? 0
+                        };
+            return query.FirstOrDefault();
+        }
+        public List<StaticWalletsTotal> GetStaticChartsTotalDay(int id, decimal fo, decimal to,int type)
+        {
+            var query = from c in FDIDB.StaticChartsbyDayAgencyTotalPrice(fo, to, id,type)
+                select new StaticWalletsTotal
+                {
+                    Total = c.Total ?? 0,
+                    DateCreate = c.DateCreate
+                };
+            return query.ToList();
+
+        }
+        public  List<ListRewardAgencyApp> GetListRewardApp(int id,int type ,int page, int take,decimal fr,decimal to)
+        {
+            var query = from c in FDIDB.RewardHistories
+                where c.IsActive == true && (!c.IsDeleted.HasValue || c.IsDeleted == false)
+                      && c.AgencyId == id && (type == 0 || c.Type == type)
+                      && c.DateCreate >= fr && c.DateCreate <= to
+                      orderby c.DateCreate descending 
+                select new ListRewardAgencyApp
+                {
+                    Fullname = c.Type == (int)Reward.Cus || c.Type == (int)Reward.Agency ? (c.Shop_Orders.Customer.FullName?? "Không xác định") : (c.Order_Package.Customer.FullName ?? "Không xác định"),
+                    Avatar = c.Type == (int)Reward.Cus || c.Type == (int)Reward.Agency ? c.Shop_Orders.Customer.AvatarUrl : c.Order_Package.Customer.AvatarUrl,
+                    Total = c.Price,
+                    Des = c.Type == (int)Reward.Cus || c.Type == (int)Reward.Agency ? "Đã mua "+ c.Shop_Orders.Shop_Order_Details.Sum(a=>a.Quantity ?? 0)+ " sản phẩm" : "Đã gia hạn gói"+ c.Order_Package.Customer_Type.Customer_TypeGroup.Name
+                    ,Date = c.DateCreate,
+                };
+            return query.Skip(take * (page - 1)).Take(take).ToList();
+        }
+
         public bool CheckExitsByPhone(string phone,int id)
         {
             var query = (from c in FDIDB.DN_Agency

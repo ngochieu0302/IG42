@@ -20,6 +20,8 @@ namespace FDI.Utils
         public static string DomaApi = "http://localhost:13655/";
         public static string ApiSv = "http://localhost:13655/";
         //public static string DomaApi = "http://gabapi.fditech.vn/";
+        public static string DomaApi = "https://ctv.ig4.vn/";
+        public static string ApiSv = "https://ctv.ig4.vn/";
         //public static string DomaApi = "http://apiver1.ig4.vn/";
         //public static string ApiSv = "http://apiver1.ig4.vn/";
         //public static string _d = "http://localhost:2160/";

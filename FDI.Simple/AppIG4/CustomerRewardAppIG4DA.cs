@@ -34,13 +34,36 @@ namespace FDI.Simple
         public decimal? PricenoteActive { get; set; }
     }
 
-    public class ModelCustomerRewardAppIG4Item : BaseModelSimple
+    public class StaticWalletsTotal
     {
-        public IEnumerable<CustomerRewardAppIG4Item> ListItems { get; set; }
-        public string DateMonth { get; set; }
-        public string DateYear { get; set; }
-        public decimal? TotalReward { get; set; }
-        public decimal? TotalReceipt { get; set; }
-        public ReceiveHistory ReceiveHistorys { get; set; }
+        public decimal? Total { get; set; }
+        public decimal? Percent { get; set; }
+        public decimal? TotalCustomer { get; set; }
+        public decimal? TotalAgency { get; set; }
+        public decimal? TotalSouce { get; set; }
+
+        public decimal? DateCreate { get; set; }
+
+    }
+
+    public class ListRewardAgencyApp
+    {
+        public string Avatar { get; set; }
+        public string Fullname { get; set; }
+        public decimal? Total { get; set; }
+        public string Des { get; set; }
+        public  decimal? Date { get; set; }
+
+    }
+
+    public class TotalRefAppItem
+    {
+        public int customer { get; set; }
+        public int agency { get; set; }
+
+        public int souce { get; set; }
+
+        public int ctv { get; set; }
+
     }
 }

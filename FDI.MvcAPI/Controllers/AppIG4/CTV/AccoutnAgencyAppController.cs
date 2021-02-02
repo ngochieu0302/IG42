@@ -32,13 +32,13 @@ namespace FDI.MvcAPI.Controllers
         readonly WalletCustomerAppIG4DA _walletCustomerDa = new WalletCustomerAppIG4DA("#");
         readonly CustomerAppIG4DA _customerApp = new CustomerAppIG4DA("");
 
-        readonly  CustomerRewardDA _customerRewardApp = new CustomerRewardDA();
+        readonly CustomerRewardDA _customerRewardApp = new CustomerRewardDA();
         public ActionResult GetProfile()
         {
             var obj = _agencyDa.GetItemById(CustomerId);
             return Json(new BaseResponse<AgencyItem> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-        
+
         [AllowAnonymous]
         public async Task<ActionResult> Login(string phone)
         {
@@ -97,16 +97,20 @@ namespace FDI.MvcAPI.Controllers
         {
             try
             {
-                if (!_agencyDa.CheckExitsByPhone(phone,0))
+                if (!_agencyDa.CheckExitsByPhone(phone, 0))
                 {
                     var model = new DN_Agency
                     {
                         Phone = phone,
+                        IsActive = false,
+                        IsVerify = false,
+                        IsBank = false,
+                        IsFdi = false,
                         IsDelete = false,
                         CreateDate = DateTime.Now.TotalSeconds(),
                     };
                     _agencyDa.Add(model);
-                    customerDA.Save();
+                    _agencyDa.Save();
                 }
                 //var otp = FDIUtils.RandomOtp(4);
                 //var otppost = new PostOtpLoginAppIG4()
@@ -184,7 +188,7 @@ namespace FDI.MvcAPI.Controllers
             _agencyDa.InsertToken(new TokenRefresh() { GuidId = key });
             customer.TokenDevice = tokenDevice;
             _agencyDa.Save();
-            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, IsPrestige = customer.IsFdi,IsVerify = customer.IsVerify,IsBank = customer.IsBank,IsActive = customer.IsActive} }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<CustomerAppIG4Item>() { Code = 200, Erros = false, Message = "", Data = new CustomerAppIG4Item() { Token = tokenResponse, RefreshToken = refreshToken, ID = customer.ID, IsPrestige = customer.IsFdi, IsVerify = customer.IsVerify, IsBank = customer.IsBank, IsActive = customer.IsActive } }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]
@@ -294,7 +298,7 @@ namespace FDI.MvcAPI.Controllers
             var obj = _agencyDa.GetItemByIdApp(CustomerId);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-        
+
         public async Task<ActionResult> UpdateAcountRegister(CustomerAppIG4Item data)
         {
             var customer = _agencyDa.GetById(CustomerId);
@@ -303,7 +307,7 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(1000, "Not found"));
             }
 
-            if (!string.IsNullOrEmpty(data.Mobile) && customerDA.CheckExitsByPhone(data.Mobile, CustomerId))
+            if (!string.IsNullOrEmpty(data.Mobile) && _agencyDa.CheckExitsByPhone(data.Mobile, CustomerId))
             {
                 return Json(new JsonMessage(1001, "Số điện thoại đã tồn tại"));
             }
@@ -354,8 +358,9 @@ namespace FDI.MvcAPI.Controllers
             var obj = _agencyDa.GetItemByIdApp(CustomerId);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
-        
-        public ActionResult UpdateAcountRegisterStep2(CustomerAppIG4Item data)
+
+        [HttpPost]
+        public ActionResult UpdateAcountRegisterStep2(CustomerBankItem data)
         {
             var customer = _agencyDa.GetById(CustomerId);
             if (customer == null)
@@ -363,7 +368,7 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(1000, "Not found"));
             }
 
-            if (string.IsNullOrEmpty(data.STK))
+            if (string.IsNullOrEmpty(data.Sotaikhoan))
             {
                 return Json(new JsonMessage(-1, "Số tài khoản không được để trống"));
             }
@@ -373,13 +378,13 @@ namespace FDI.MvcAPI.Controllers
                 return Json(new JsonMessage(-2, "Tên ngân hàng không được để trống"));
             }
             customer.BankName = data.Bankname;
-            customer.STK = data.STK;
+            customer.STK = data.Sotaikhoan;
             customer.Branchname = data.Branchname;
             customer.FullnameBank = data.FullnameBank;
             customer.IsFdi = true;
             customer.IsBank = true;
             _agencyDa.Save();
-            var obj = _agencyDa.GetItemByIdApp(data.ID);
+            var obj = _agencyDa.GetItemByIdApp(CustomerId);
             return Json(new BaseResponse<CustomerAppIG4Item> { Code = 200, Data = obj }, JsonRequestBehavior.AllowGet);
         }
 
@@ -425,7 +430,7 @@ namespace FDI.MvcAPI.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         var datas = await result.Content.ReadAsStringAsync();
-                        return JsonConvert.DeserializeObject<BaseResponse<GalleryPictureItem>>(datas);
+                        return new JavaScriptSerializer().Deserialize<BaseResponse<GalleryPictureItem>>(datas);
                     }
                     return new BaseResponse<GalleryPictureItem>() { Code = 1000 };
                 }
@@ -441,23 +446,25 @@ namespace FDI.MvcAPI.Controllers
                     var fileContent = new ByteArrayContent(fileBytes);
                     fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.FileName };
                     content.Add(fileContent);
-                    var result = await client.PostAsync("http://imggstore.fditech.vn/home/upload", content);
+                    var result = await client.PostAsync("https://imgg.wini.vn/home/upload", content);
                     if (result.IsSuccessStatusCode)
                     {
                         var datas = await result.Content.ReadAsStringAsync();
-                        return JsonConvert.DeserializeObject<BaseResponse<GalleryPictureItem>>(datas);
+
+                        return new JavaScriptSerializer().Deserialize<BaseResponse<GalleryPictureItem>>(datas);
+
                     }
                     return new BaseResponse<GalleryPictureItem>() { Code = 1000 };
                 }
             }
         }
 
-        public  ActionResult GetListCustomer(int page, int total)
+        public ActionResult GetListCustomer(int page, int total)
         {
             var model = _customerApp.GetListCustomerbyAgencyId(CustomerId, page, total);
-            return Json(new BaseResponse<List<CustomerAppIG4Item>> {Code = 200, Data = model});
+            return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = model });
         }
-        public  ActionResult GetListAgency(int page, int total)
+        public ActionResult GetListAgency(int page, int total)
         {
             var model = _customerApp.GetListAgencyCustomerbyAgencyId(CustomerId, page, total);
             return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = model });
@@ -467,18 +474,120 @@ namespace FDI.MvcAPI.Controllers
             var model = _customerApp.GetListSouceCustomerbyAgencyId(CustomerId, page, total);
             return Json(new BaseResponse<List<CustomerAppIG4Item>> { Code = 200, Data = model });
         }
-
         public ActionResult GetWallet()
         {
             var model = _customerRewardApp.GetWallet(CustomerId);
-            return Json(new BaseResponse<CustomerRewardAppIG4Item> {Code = 200, Data = model});
+            return Json(new BaseResponse<CustomerRewardAppIG4Item> { Code = 200, Data = model });
         }
-
-        public ActionResult StaticWalletTotal(decimal? from, decimal? to)
+        public ActionResult GetTotalref()
         {
+            var model = _customerRewardApp.GetTotalRef(CustomerId);
+            return Json(new BaseResponse<TotalRefAppItem> { Code = 200, Data = model });
+        }
+        [HttpGet]
+        public ActionResult StaticWalletTotal(int type)
+        {
+            var to = DateTime.Now.TotalSeconds();
+            var fr = DateTime.Today.TotalSeconds();
+            if (type == 1)
+            {
+                fr = DateTime.Today.AddDays(-7).TotalSeconds();
+            }
+            if (type == 2)
+            {
+                fr = DateTime.Today.AddMonths(-1).TotalSeconds();
+            }
+            if (type == 3)
+            {
+                fr = DateTime.Today.AddMonths(-3).TotalSeconds();
+            }
+            if (type == 4)
+            {
+                fr = DateTime.Today.AddMonths(-6).TotalSeconds();
+            }
+            if (type == 5)
+            {
+                fr = DateTime.Today.AddYears(-1).TotalSeconds();
+            }
+            var model = _agencyDa.GetStaticChartsTotal(CustomerId, fr, to);
+            return Json(new BaseResponse<StaticWalletsTotal>() { Code = 200, Data = model != null ? model : new StaticWalletsTotal() { Total = 0, TotalAgency = 0, TotalSouce = 0, TotalCustomer = 0, Percent = 0, DateCreate = DateTime.Now.TotalSeconds() } }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult StaticWalletTotalDay(int type)
+        {
+            var to = DateTime.Now.TotalSeconds();
+            var fr = DateTime.Today.AddDays(-7).TotalSeconds();
+            if (type == 1)
+            {
+                type = (int)Reward.Cus;
+            }
+            if (type == 2)
+            {
+                type = (int)Reward.Agency;
+            }
+            if (type == 3)
+            {
+                type = (int)Reward.Souce;
+            }
 
-            return Json(new BaseResponse<CustomerRewardAppIG4Item>());
+            var model = _agencyDa.GetStaticChartsTotalDay(CustomerId, fr, to, type);
+            return Json(new BaseResponse<List<StaticWalletsTotal>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetListRewardApp(int page, int take)
+        {
+            
+            var model = _agencyDa.GetListRewardApp(CustomerId, 0, page, take,0,DateTime.Today.AddDays(1).TotalSeconds());
+            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetListAllSearchRewardApp(int type,int typeSearch,int typeSort,int page, int take)
+        {
+            var now = DateTime.Now;
+            
+            // type =0 lay thang nay. tu ngay dau thang den nay
+            decimal fr = 0;/*new DateTime(now.Year,now.Month,1).TotalSeconds();*/
+            var to = DateTime.Now.AddDays(1).TotalSeconds();
+            // thang trc
+            if (typeSearch == 1)
+            {
+                to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
+                fr = new DateTime(now.Year, now.Month, 1).AddMonths(-1).TotalSeconds();
+            }
+            // 3 thang truoc
+            if (typeSearch == 2)
+            {
+                to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
+                fr = new DateTime(now.Year, now.Month, 1).AddMonths(-3).TotalSeconds();
+            }
+            // 6 thang truoc
+            if (typeSearch == 3)
+            {
+                to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
+                fr = new DateTime(now.Year, now.Month, 1).AddMonths(-6).TotalSeconds();
+            }
+            // nam truoc
+            if (typeSearch == 4)
+            {
+                to = new DateTime(now.Year,1,1).TotalSeconds();
+                fr = new DateTime(now.Year - 1, 1, 1).TotalSeconds();
+            }
+            var model = _agencyDa.GetListRewardApp(CustomerId, type, page, take,fr,to);
+            //ty==0 sắp xếp mới nhất
+            //type =1 sắp xếp theo price tăng dần
+            if (typeSort == 1)
+            {
+                model = model.OrderBy(c => c.Total).ToList();
+            }
+            //type =1 sắp xếp theo price giảm dần
+
+            if (typeSort == 2)
+            {
+                model = model.OrderByDescending(c => c.Total).ToList();
+            }
+            if (typeSort == 3)
+            {
+                model = model.OrderBy(c => c.Date).ToList();
+            }
+            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -21,11 +21,11 @@ namespace FDI.Simple
         public string Password { get; set; }
         public int? DistrictId { get; set; }
         public int? AgencyID { get; set; }
-        public string ListAgencyId { get; set; }
         public int? CityId { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
         public bool? IsAdmin { get; set; }
+        public string ListAgencyId { get; set; }
         public int? TypeId { get; set; }
         public bool? IsLockedOut { get; set; }
         public decimal? Wallets { get; set; }
@@ -71,8 +71,14 @@ namespace FDI.Simple
         public bool? IsBank { get; set; }
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
+    }
 
-
+    public class CustomerBankItem 
+    {
+        public string Bankname { get; set; }
+        public string Branchname { get; set; }
+        public string FullnameBank { get; set; }
+        public string Sotaikhoan { get; set; }
 
     }
 
