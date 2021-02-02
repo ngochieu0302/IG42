@@ -33,6 +33,10 @@ namespace FDI.DA.DA.Supplier
         {
             FDIDB.SupplierAmountProducts.Add(item);
         }
+        public void AddCommingsoon(List<Shop_Product_Comingsoon> item)
+        {
+            FDIDB.Shop_Product_Comingsoon.AddRange(item);
+        }
         public SupplierAmountProduct GetById(int id)
         {
             return FDIDB.SupplierAmountProducts.FirstOrDefault(m => m.ID == id);
@@ -50,7 +54,7 @@ namespace FDI.DA.DA.Supplier
                 IsAlwayExist = m.IsAlwayExist,
                 Note = m.Note,
                 PublicationDate = m.PublicationDate,
-                SupplierId = m.SupplierId.Value,
+                SupplierId = m.SupplierId,
                 ProductID = m.ProductID,
                 UserActiveId = m.UserActiveId
             }).FirstOrDefault();
@@ -68,7 +72,7 @@ namespace FDI.DA.DA.Supplier
                             AmountEstimate = o.AmountEstimate,
                             AmountPayed = o.AmountPayed,
                             SupplierName = o.DN_Supplier.Name,
-                            SupplierId = o.SupplierId.Value,
+                            SupplierId = o.SupplierId,
                             ProductID = o.ProductID,
                             PublicationDate = o.PublicationDate,
                             SupplierPhone = o.DN_Supplier.Mobile,
@@ -88,7 +92,7 @@ namespace FDI.DA.DA.Supplier
                             AmountEstimate = g.Sum(x => x.AmountEstimate),
                             AmountPayed = g.Sum(x => x.AmountPayed),
                             SupplierName = g.Key.Name,
-                            SupplierId = g.Key.SupplierId.Value
+                            SupplierId = g.Key.SupplierId
                         };
             return query.ToList();
         }

@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FDI.Base;
 using FDI.CORE;
+using FDI.DA;
 
 namespace FDI.MvcAPI.Controllers.Supplier
 {
@@ -15,6 +17,8 @@ namespace FDI.MvcAPI.Controllers.Supplier
         //
         // GET: /SupplierAmountProduct/
         private readonly SupplierAmountProductDA _da = new SupplierAmountProductDA();
+        private readonly CateRecipeDA _cateRecipeDa = new CateRecipeDA("#");
+
 
         public ActionResult ListItems()
         {
@@ -24,7 +28,7 @@ namespace FDI.MvcAPI.Controllers.Supplier
 
         public ActionResult Add(SupplierAmountProductItem request)
         {
-            _da.Add(new Base.SupplierAmountProduct()
+            var model = new Base.SupplierAmountProduct()
             {
                 SupplierId = request.SupplierId,
                 ProductID = request.ProductID,
@@ -37,8 +41,42 @@ namespace FDI.MvcAPI.Controllers.Supplier
                 Note = request.Note,
                 IsDelete = false,
                 CreatedDate = DateTime.Now.TotalSeconds()
-            });
-            _da.Save();
+            };
+            
+            var temp = _cateRecipeDa.GetItemByCateIdUser(request.ProductID ?? 0);
+            if (temp != null)
+            {
+                var lstProduct = temp.LstCategoryRecipeItems.Select(item => new Shop_Product_Comingsoon
+                    {
+                        ProductID = item.ProductId,
+                        DateEx = request.PublicationDate,
+                        Quantity = request.AmountEstimate * item.Quantity,
+                        Price = item.PriceProduct,
+                        TotalPrice = request.AmountEstimate * item.Quantity * item.PriceProduct,
+                        QuantityOut = 0,
+                    })
+                    .ToList();
+
+                foreach (var itema in temp.LstMappingCategoryRecipeItems)
+                {
+                    temp = _cateRecipeDa.GetItemByCateIdUser(itema.CategoryID ?? 0);
+                    if (temp != null)
+                    {
+                        lstProduct.AddRange(temp.LstCategoryRecipeItems.Select(item1 => new Shop_Product_Comingsoon
+                        {
+                            ProductID = item1.ProductId,
+                            DateEx = request.PublicationDate,
+                            Quantity = request.AmountEstimate * item1.Quantity,
+                            Price = item1.PriceProduct,
+                            TotalPrice = request.AmountEstimate * item1.Quantity * item1.PriceProduct,
+                            QuantityOut = 0,
+                        }));
+                    }
+                }
+                model.Shop_Product_Comingsoon = lstProduct;
+                _da.Add(model);
+                _da.Save();
+            }
             return Json(new JsonMessage() { Erros = false }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Update(SupplierAmountProductItem request)
@@ -54,7 +92,41 @@ namespace FDI.MvcAPI.Controllers.Supplier
             model.SupplierId = request.SupplierId;
             model.UserActiveId = request.UserActiveId;
             model.PublicationDate = request.PublicationDate;
-            _da.Save();
+            model.Shop_Product_Comingsoon.Clear();
+            var temp = _cateRecipeDa.GetItemByCateIdUser(request.ProductID ?? 0);
+            if (temp != null)
+            {
+                var lstProduct = temp.LstCategoryRecipeItems.Select(item => new Shop_Product_Comingsoon
+                    {
+                        ProductID = item.ProductId,
+                        DateEx = request.PublicationDate,
+                        Quantity = request.AmountEstimate * item.Quantity,
+                        Price = item.PriceProduct,
+                        TotalPrice = request.AmountEstimate * item.Quantity * item.PriceProduct,
+                        QuantityOut = 0,
+                    })
+                    .ToList();
+
+                foreach (var itema in temp.LstMappingCategoryRecipeItems)
+                {
+                    temp = _cateRecipeDa.GetItemByCateIdUser(itema.CategoryID ?? 0);
+                    if (temp != null)
+                    {
+                        lstProduct.AddRange(temp.LstCategoryRecipeItems.Select(item1 => new Shop_Product_Comingsoon
+                        {
+                            ProductID = item1.ProductId,
+                            DateEx = request.PublicationDate,
+                            Quantity = request.AmountEstimate * item1.Quantity,
+                            Price = item1.PriceProduct,
+                            TotalPrice = request.AmountEstimate * item1.Quantity * item1.PriceProduct,
+                            QuantityOut = 0,
+                        }));
+                    }
+                }
+                model.Shop_Product_Comingsoon = lstProduct;
+                _da.Save();
+            }
+
             return Json(new JsonMessage() { Erros = false }, JsonRequestBehavior.AllowGet);
         }
 

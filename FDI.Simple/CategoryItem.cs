@@ -77,6 +77,7 @@ namespace FDI.Simple
         public decimal? DateCreate { get; set; }
         public string ProductName { get; set; }
         public string UnitName { get; set; }
+        public int? UnitId { get; set; }
         public decimal? TotalPrice { get; set; }
         public bool? IsCheck { get; set; }
         public decimal? Percent { get; set; }
@@ -94,6 +95,7 @@ namespace FDI.Simple
         public decimal? DateCreate { get; set; }
         public string ProductName { get; set; }
         public string UnitName { get; set; }
+        public int? UnitId { get; set; }
         public decimal? TotalPrice { get; set; }
         public bool? IsCheck { get; set; }
         public decimal? Percent { get; set; }
