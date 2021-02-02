@@ -23,6 +23,7 @@ namespace FDI.Base
             this.SupplierAmountProducts = new HashSet<SupplierAmountProduct>();
             this.TotalProductToDays = new HashSet<TotalProductToDay>();
             this.Documents = new HashSet<Document>();
+            this.Shop_Product_Comingsoon = new HashSet<Shop_Product_Comingsoon>();
             this.StorageProducts = new HashSet<StorageProduct>();
         }
     
@@ -57,6 +58,8 @@ namespace FDI.Base
         public virtual ICollection<TotalProductToDay> TotalProductToDays { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Document> Documents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop_Product_Comingsoon> Shop_Product_Comingsoon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StorageProduct> StorageProducts { get; set; }
     }

@@ -19,6 +19,7 @@ namespace FDI.Simple
         public decimal? PriceCost { get; set; }
         public decimal? PriceOld { get; set; }
         public decimal PriceNew { get; set; }
+        public double? SizeValue { get; set; }
         public decimal? Quantity { get; set; }
         public decimal? Percent { get; set; }
         public int? QuantityDay { get; set; }
@@ -45,9 +46,11 @@ namespace FDI.Simple
         public IEnumerable<RecipeItem> LstRecipeItems { get; set; }
         public IEnumerable<ShopProductPictureItem> LstShopProductPictureItem { get; set; }
         public IEnumerable<PictureItem> LstPictures { get; set; }
+        public ProductAppIG4Item productItem { get; set; }
         public string SizeName { get; set; }
         public string ColorName { get; set; }
         public string UnitName { get; set; }
+        public string ProductName { get; set; }
         public decimal? PriceCostParent { get; set; }
         public decimal? PriceInCurr { get; set; }
         public CategoryItem CategoryItem { get; set; }

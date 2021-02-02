@@ -71,6 +71,18 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
+        public List<ProductSizeItem> GetAllByUnitID(int agencyId, int? unitID)
+        {
+            var query = from o in FDIDB.Product_Size
+                        where o.UnitID == unitID
+                        select new ProductSizeItem
+                        {
+                            ID = o.ID,
+                            Name = o.Name.Trim(),
+                            Value = o.Value
+                        };
+            return query.ToList();
+        }
 
         public List<Product_Size> ListByArrId(string lstId)
         {

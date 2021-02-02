@@ -294,4 +294,12 @@ __pycache__/
 /FDI.Web/Uploads/Thumbs/2019/12/17/extra1shutterstock52424524915262842097601275874550154010531600crop15262842162421840337017-1217013605.jpg
 /FDI.Web/Uploads/Thumbs/2019/12/17/thummailxay-dung-xanh1-1217013950.jpg
 FDI.Web/obj/Debug/
-
+FDI.Web/obj/Debug/
+FDI.Web/bin/
+FDI.Simple/bin/
+FDI.Simple/obj/Debug/
+*.dll
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release

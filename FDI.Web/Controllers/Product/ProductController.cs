@@ -52,10 +52,19 @@ namespace FDI.Web.Controllers
                 model.ProductDetailID = objProduct.ID;
             }
             ViewBag.ColorID = _systemColorApi.GetAll(UserItem.AgencyID);
-            ViewBag.SizeID = _productSizeApi.GetAll(UserItem.AgencyID);
+            if (model.UnitID != null)
+            {
+                ViewBag.SizeID = _productSizeApi.GetAllByUnitID(UserItem.AgencyID, model.UnitID ?? 0);
+            }
+            else
+            {
+                ViewBag.SizeID = _productSizeApi.GetAll(UserItem.AgencyID);
+            }
+            ViewBag.Action = DoAction;
+            ViewBag.ActionText = ActionText;
             ViewBag.Unit = _dnUnit.GetListUnit(UserItem.AgencyID);
             ViewBag.type = _productTypeApi.GetAll();
-            ViewBag.Action = DoAction;
+            ViewBag.Color = _productTypeApi.GetAll();
             ViewBag.CreateBy = UserItem.UserName;
             ViewBag.AgencyID = UserItem.AgencyID;
             return View(model);
@@ -106,7 +115,7 @@ namespace FDI.Web.Controllers
                     msg = _api.Coppy(UserItem.AgencyID, ArrId.FirstOrDefault());
                     break;
                 case ActionType.Edit:
-                    msg = _api.Update(url, CodeLogin());
+                    msg = _api.Update(url, CodeLogin()); // abc
                     break;
                 case ActionType.View:
                     msg = _api.AddRecipe(ArrId.FirstOrDefault(),CodeLogin());
@@ -119,6 +128,7 @@ namespace FDI.Web.Controllers
                     break;
                 case ActionType.Hide:
                     msg = _api.Hide(lst1);
+
                     break;
                 default:
                     msg.Message = "Bạn không được phần quyền cho chức năng này.";
@@ -129,7 +139,7 @@ namespace FDI.Web.Controllers
         }
         public string CheckByCode(string CodeSku, int pId)
         {
-            var result = _api.CheckExitCode(CodeSku, pId, UserItem.AgencyID);
+            var result = _api.CheckExitCode(CodeSku, pId, UserItem.AgencyID); // abc
             return result == 1 ? "false" : "true";
         }
 

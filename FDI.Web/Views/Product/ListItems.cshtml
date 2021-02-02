@@ -57,7 +57,7 @@
                                 <td>
                                     <div style="width: 45px; height: 25px; background-color: @item.ColorName; border: 1px solid #ccc;"></div>
                                 </td>
-                                <td class="text-right">@item.PriceNew.Money()</td>
+                                <td class="text-right">@((item.PriceCost * (decimal)item.SizeValue).Money())</td>
                                 @*<td class="text-right">@item.PriceOld.Money()</td>*@
                                 <td>@item.CreateDate.DecimalToString("dd/MM/yyyy")</td>
                                 <td class="text-center">
