@@ -75,6 +75,27 @@ namespace FDI.DA
                 return data;
             }
         }
+        public List<ProducComingsoonItem> ListProducComingsoonAll(decimal date)
+        {
+            if (ConfigCache.EnableCache != 1)
+                return _dl.ListProducComingsoonAll(date);
+            var key = string.Format("ProductDetailBL-ListProducComingsoonAll{0}", date);
+            if (Cache.KeyExistsCache(key))
+            {
+                var lst = (List<ProducComingsoonItem>)Cache.GetCache(key);
+                if (lst != null) return lst;
+                Cache.DeleteCache(key);
+                var data = _dl.ListProducComingsoonAll(date);
+                Cache.Set(key, data, ConfigCache.TimeExpire);
+                return data;
+            }
+            else
+            {
+                var data = _dl.ListProducComingsoonAll(date);
+                Cache.Set(key, data, ConfigCache.TimeExpire);
+                return data;
+            }
+        }
         public List<ShopProductDetailItem> GetListProductbylstCateId(int id)
         {
             if (ConfigCache.EnableCache != 1)

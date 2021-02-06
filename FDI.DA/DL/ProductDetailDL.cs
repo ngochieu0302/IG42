@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FDI.CORE;
 using FDI.Simple;
 using FDI.Utils;
 
@@ -67,9 +68,8 @@ namespace FDI.DA.DL
                                 PriceNew = c.Price,
                                 NameUnit = c.UnitID.HasValue ? c.DN_Unit.Name : null,
                                 UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url,
-                                Pictures = c.Gallery_Picture2.Where(m=> !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m => m.Folder + m.Url),
+                                Pictures = c.Gallery_Picture2.Where(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m => m.Folder + m.Url),
                                 Description = c.Description,
-                                DateSale = c.StartDate,
                                 CountCate = c.Categories.Count(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value),
                                 PAppItems = c.Shop_Product.Where(m => !m.IsDelete.HasValue || !m.IsDelete.Value).Select(m => new PAppItem
                                 {
@@ -77,8 +77,26 @@ namespace FDI.DA.DL
                                     Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
                                     Value = m.Product_Size.Value,
                                 }),
-                                CateIds = c.Categories.Where(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m =>m.Id),
+                                CateIds = c.Categories.Where(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m => m.Id),
                                 CateId = c.CateID
+                            };
+            return query.ToList();
+        }
+        public List<ProducComingsoonItem> ListProducComingsoonAll(decimal date)
+        {
+
+            var query = from c in FDIDB.Shop_Product_Comingsoon
+                        orderby c.DateEx
+                        where c.DateEx > date && c.Quantity - (c.QuantityOut ?? 0) > 0
+                        select
+                            new ProducComingsoonItem
+                            {
+                                ID = c.ID,
+                                Quantity = c.Quantity ?? 0,
+                                QuantityOut = c.QuantityOut ?? 0,
+                                ProductID = c.ProductID,
+                                SupplierAmountId = c.SupplierAmountId,
+                                DateEx = c.DateEx
                             };
             return query.ToList();
         }

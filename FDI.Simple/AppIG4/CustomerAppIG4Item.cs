@@ -34,9 +34,9 @@ namespace FDI.Simple
         public string AvartaUrl { get; set; }
         public string ImageTimeline { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Ratings { get; set; }
-        public Nullable<double> AvgRating { get; set; }
-        public Nullable<int> LikeTotal { get; set; }
+        public int? Ratings { get; set; }
+        public double? AvgRating { get; set; }
+        public int? LikeTotal { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
         public CategoryAppIG4Item CategoryItem { get; set; }
@@ -71,6 +71,7 @@ namespace FDI.Simple
         public bool? IsBank { get; set; }
 
         public IEnumerable<GalleryPictureItem> ListGalleryPictureItems { get; set; }
+        public IEnumerable<int> ListPId { get; set; }
     }
 
     public class CustomerBankItem 

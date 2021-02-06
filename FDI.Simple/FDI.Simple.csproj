@@ -73,6 +73,7 @@
     <Compile Include="AppIG4\OrderPackageAppIG4Item.cs" />
     <Compile Include="AppIG4\PictureAppIG4Item.cs" />
     <Compile Include="AppIG4\ProductAppIG4Item.cs" />
+    <Compile Include="AppIG4\ProducComingsoonItem.cs" />
     <Compile Include="AppIG4\PushNotifyItem.cs" />
     <Compile Include="AppIG4\RatingAppIG4Item.cs" />
     <Compile Include="AppIG4\RewardHistoryAppIG4Item.cs" />
