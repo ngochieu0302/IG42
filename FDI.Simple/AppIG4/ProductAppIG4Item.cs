@@ -137,6 +137,7 @@ namespace FDI.Simple
         public string Name { get; set; }
         
         public double? Value { get; set; }
+        public decimal? PriceNew { get; set; }
         public int? Quantity { get; set; }
     }
     public class ModelProductAppIG4Item : BaseModelSimple

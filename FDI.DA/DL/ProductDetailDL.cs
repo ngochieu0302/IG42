@@ -76,6 +76,7 @@ namespace FDI.DA.DL
                                     ID = m.ID,
                                     Name = m.SizeID.HasValue ? m.Product_Size.Name : null,
                                     Value = m.Product_Size.Value,
+                                    PriceNew = m.PriceNew,
                                 }),
                                 CateIds = c.Categories.Where(m => !m.IsDeleted.HasValue || !m.IsDeleted.Value).Select(m => m.Id),
                                 CateId = c.CateID
