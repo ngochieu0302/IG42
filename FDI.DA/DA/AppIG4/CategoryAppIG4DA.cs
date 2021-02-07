@@ -244,18 +244,15 @@ namespace FDI.DA
         public List<CategoryAppIG4Item> GetAllByType(int type)
         {
             var query = from c in FDIDB.Categories
-                        where c.Id > 1 && c.Type == type && c.IsShow.HasValue && c.IsShow.Value && (!c.IsDeleted.HasValue || !c.IsDeleted.Value) && c.LanguageId == LanguageId
+                        where c.Id > 1 && c.Type == type && (c.IsShow.HasValue && c.IsShow.Value) && (!c.IsDeleted.HasValue || !c.IsDeleted.Value)
                         orderby c.Sort
                         select new CategoryAppIG4Item
                         {
                             ID = c.Id,
                             Name = c.Name.Trim(),
-                            Description = c.Description,
-                            LanguageId = c.LanguageId,
                             Sort = c.Sort,
                             ParentId = c.ParentId,
                             Slug = c.Slug,
-                            UrlPicture = c.Gallery_Picture.Folder + c.Gallery_Picture.Url
                         };
             return query.ToList();
         }

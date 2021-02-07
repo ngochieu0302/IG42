@@ -56,7 +56,7 @@ namespace FDI.Web.Controllers
                 model = _api.GetItemById(UserItem.AgencyID, ArrId.FirstOrDefault());
             }
             ViewBag.UnitID = _dnUnitApi.GetListUnit(UserItem.AgencyID).OrderBy(x => x.Name);
-            ViewBag.category = _categoryApi.GetChildByParentId(true);
+            ViewBag.category = _categoryApi.GetChildByParentId(true).Where(m=>m.Type == 2).ToList();
             ViewBag.Action = DoAction;
             ViewBag.ActionText = ActionText;
             return View(model);
