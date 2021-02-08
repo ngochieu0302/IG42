@@ -1,4 +1,5 @@
 ﻿@using FDI.CORE
+@using FDI.Utils
 @model FDI.Simple.ModelRewardHistoryItem
 @{
     Layout = "~/Views/Shared/_Ajax.cshtml";
@@ -19,7 +20,8 @@
                         <th class="text-center"><a href="#Field=OrderID">Số HD</a></th>
                         <th class="text-right"><a href="#Field=Price">Số tiền</a></th>
                         <th class="text-right"><a href="#Field=Price">Tổng HĐ</a></th>
-                        <th class="text-center"><a href="#Field=Type">Loại</a></th>                       
+                        <th class="text-center"><a href="#Field=Type">Loại</a></th>    
+
                     </tr>
                 </thead>
                 <tbody>
@@ -27,27 +29,33 @@
                 {
                     foreach (var item in Model.ListItems)
                     {
-                        <tr data-id="@item.ID">
-                            <td class="act_roles">
-                                <input type="checkbox" value="@item.ID" class="check">
-                            </td>
-                            <td class="text-center">@item.ID</td>
-                            <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy HH:mm")</td>
-                            <td class="text-center">@item.CustomerName</td>
-                            <td class="text-center">@item.OrderID</td>
-                            <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
-                            <td class="text-right">@string.Format("{0:0,0}", item.PriceOrder)</td>
-                            @if (item.Type == (int)Reward.Cus)
-                            {
-                                <td class="text-center">Thưởng trực tiếp</td>
-                            }else if (item.Type == (int)Reward.Parent)
-                            {
-                                <td class="text-center">Thưởng cha</td>
-                            }else if (item.Type == (int)Reward.Root)
-                            {
-                                <td class="text-center">thưởng ssc</td>
-                            }                            
-                        </tr>
+                    <tr data-id="@item.ID">
+                        <td class="act_roles">
+                            <input type="checkbox" value="@item.ID" class="check">
+                        </td>
+                        <td class="text-center">@item.ID</td>
+                        <td class="text-center">@item.Date.DecimalToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="text-center">@item.CustomerName</td>
+                        <td class="text-center">@item.OrderID</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.Price)</td>
+                        <td class="text-right">@string.Format("{0:0,0}", item.PriceOrder)</td>
+                        @if (item.Type == (int)Reward.Cus)
+                        {
+                            <td class="text-center">Khách hàng</td>
+                        }
+                        @if (item.Type == (int)Reward.Agency)
+                        {
+                            <td class="text-center">Đại lý</td>
+                        }
+                        @if (item.Type == (int)Reward.Souce)
+                        {
+                            <td class="text-center">Nguồn hàng</td>
+                        }
+                        @if (item.Type == (int)Reward.Packet)
+                        {
+                            <td class="text-center">Đại lý gia hạn gói</td>
+                        }
+                    </tr>
                     }
                 }
                 </tbody>

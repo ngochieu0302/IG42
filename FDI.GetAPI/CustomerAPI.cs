@@ -23,10 +23,10 @@ namespace FDI.GetAPI
             var urlJson = string.Format("{0}Customer/GetListByParent?key={1}&parentId={2}", _url, Keyapi, parentId);
             return GetObjJson<List<CustomerItem>>(urlJson);
         }
-        public ModelCustomerItem ListItems(int agencyId, string url)
+        public ModelCustomerItem ListItems(int agencyId, string url,int type)
         {
             url = string.IsNullOrEmpty(url) ? "?" : url;
-            var urlJson = string.Format("{0}Customer/ListItems{1}&key={2}&agencyId={3}", _url, url, Keyapi, agencyId);
+            var urlJson = string.Format("{0}Customer/ListItems{1}&key={2}&agencyId={3}&type={4}", _url, url, Keyapi, agencyId,type);
             return GetObjJson<ModelCustomerItem>(urlJson);
         }
 

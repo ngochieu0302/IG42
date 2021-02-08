@@ -28,11 +28,11 @@
                             <input value="" type="checkbox" class="checkAll" />
                         </th>
                         <th><a href="#Field=ID">ID</a></th>
-                        <th><a href="#Field=CodeSku">Mã SP</a></th>
+                        @*<th><a href="#Field=CodeSku">Mã SP</a></th>*@
                         <th>Ảnh</th>
                         <th><a href="#Field=Name">Tên sản phẩm</a></th>
                         <th><a href="#Field=SizeName">Kích thước</a></th>
-                        <th class="text-center"><a href="#Field=ColorName">Màu</a></th>
+                        @*<th class="text-center"><a href="#Field=ColorName">Màu</a></th>*@
                         <th class="text-right"><a href="#Field=PriceNew">Giá bán</a></th>
                         @*<th class="text-right"><a href="#Field=PriceOld">Giá cũ</a></th>*@
                         <th><a href="#Field=CreateDate">Ngày tạo</a></th>
@@ -50,13 +50,13 @@
                                     <input type="checkbox" value="@item.ID" class="check">
                                 </td>
                                 <td>@item.ID</td>
-                                <td>@item.CodeSku</td>
+                                @*<td>@item.CodeSku</td>*@
                                 <td class="text-center"><img src="@item.UrlPicture.Picture()" class="lazyImg" width="80px"></td>
                                 <td>@Grid.DisplayShowStrike(item.Name, item.IsShow == true)</td>
                                 <td>@item.SizeName</td>
-                                <td>
+                                @*<td>
                                     <div style="width: 45px; height: 25px; background-color: @item.ColorName; border: 1px solid #ccc;"></div>
-                                </td>
+                                </td>*@
                                 <td class="text-right">@((item.PriceCost * (decimal)item.SizeValue).Money())</td>
                                 @*<td class="text-right">@item.PriceOld.Money()</td>*@
                                 <td>@item.CreateDate.DecimalToString("dd/MM/yyyy")</td>

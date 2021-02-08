@@ -20,10 +20,10 @@ namespace FDI.Utils
         //public static string DomaApi = "http://localhost:13655/";
         //public static string ApiSv = "http://localhost:13655/";
         //public static string DomaApi = "http://gabapi.fditech.vn/";
-        public static string DomaApi = "https://ctv.ig4.vn/";
-        public static string ApiSv = "https://ctv.ig4.vn/";
-        //public static string DomaApi = "http://apiver1.ig4.vn/";
-        //public static string ApiSv = "http://apiver1.ig4.vn/";
+        //public static string DomaApi = "https://ctv.ig4.vn/";
+        //public static string ApiSv = "https://ctv.ig4.vn/";
+        public static string DomaApi = "http://apiver1.ig4.vn/";
+        public static string ApiSv = "http://apiver1.ig4.vn/";
         //public static string _d = "http://localhost:2160/";
         //public static string _dimg = "http://img.ig4.vn/";
         //public static string _dimg = "http://localhost:2160/";
@@ -232,7 +232,7 @@ namespace FDI.Utils
                         if (item.Length > 1)
                         {
                             var fileLocal = item.Split('.');
-                            var fileName = fileLocal[0] +"." + fileLocal[1];
+                            var fileName = fileLocal[0] + "." + fileLocal[1];
                             File.Copy(ConfigData.TempFolder + fileName, urlFolder + fileName);
                             var fileItem = new FilesItem
                             {

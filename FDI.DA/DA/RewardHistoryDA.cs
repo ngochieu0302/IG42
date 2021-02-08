@@ -54,12 +54,12 @@ namespace FDI.DA
         public List<RewardHistoryItem> GetListSimpleByRequest(HttpRequestBase httpRequest, int agencyId)
         {
             Request = new ParramRequest(httpRequest);
-            var cusId = httpRequest["cusId"];
+            var cusId = httpRequest["cusId"] ?? "0";
             var Id = int.Parse(cusId);
             var from = httpRequest["fromDate"];
             var to = httpRequest["toDate"];            
             var query = from c in FDIDB.RewardHistories
-                        where c.IsDeleted == false && c.CustomerID == Id
+                        where c.IsDeleted == false && (c.CustomerID == Id || Id == 0)
                         orderby c.ID descending
                         select new RewardHistoryItem
                         {

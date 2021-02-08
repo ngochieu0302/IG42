@@ -21,8 +21,10 @@ namespace FDI.Simple
         public decimal? TotalReward { get; set; }
         public decimal? TotalReceipt { get; set; }
         public decimal? Total { get; set; }
-        public decimal? PricePersonal { get; set; }
-        public decimal? PriceParent { get; set; }
+        public decimal? PriceCus { get; set; }
+        public decimal? PriceAgency { get; set; }
+        public decimal? PriceSouce { get; set; }
+        public decimal? PricePacket { get; set; }
         public decimal? PriceReward { get; set; }
         public decimal? PriceReceive { get; set; }
     }

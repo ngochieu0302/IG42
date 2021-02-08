@@ -50,40 +50,40 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\CKFinder.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder_FileEditor">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\CKFinder_FileEditor.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\CKFinder_FileEditor.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder_ImageResize">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\CKFinder_ImageResize.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\CKFinder_ImageResize.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder_Watermark">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\CKFinder_Watermark.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\CKFinder_Watermark.dll</HintPath>
     </Reference>
     <Reference Include="DataAnnotationsExtensions, Version=5.0.1.27, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataAnnotationsExtensions.5.0.1.27\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.AspNet.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.Core.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.Core.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.OAuth.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -91,15 +91,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=5.2.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.5.2.0\lib\net45\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=5.5.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.5.3\lib\net45\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FDI.Memcached, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\FDI.Memcached.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\FDI.Memcached.dll</HintPath>
     </Reference>
     <Reference Include="FDI.MvcMembership">
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\FDI.MvcMembership.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\FDI.MvcMembership.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Glimpse.AspNet.1.8.1\lib\net45\Glimpse.AspNet.dll</HintPath>
@@ -112,25 +112,32 @@
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
       <HintPath>..\packages\CodeContracts.Unofficial.1.0.0.0\lib\Net35\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.3.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.3.6\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.1.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Team_CTT\CTT_NXBXD\FDI.Web\bin\NPOI.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
@@ -148,10 +155,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -197,19 +204,19 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\WebGrease.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\WebMatrix.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\Microsoft.Web.WebPages.OAuth.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+      <HintPath>..\..\..\..\Codecu\ProjectTFS\FDI\KhangMinh\FDI.WebApp\bin\WebMatrix.WebData.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

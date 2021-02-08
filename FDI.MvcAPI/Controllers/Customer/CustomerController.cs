@@ -37,11 +37,11 @@ namespace FDI.MvcAPI.Controllers
             var obj = key != Keyapi ? new List<CustomerItem>() : _da.GetListByParent(parentId);
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult ListItems(int agencyId)
+        public ActionResult ListItems(int agencyId,int type)
         {
             var obj = Request["key"] != Keyapi
                 ? new ModelCustomerItem()
-                : new ModelCustomerItem { ListItem = _da.GetListSimpleByRequest(Request, agencyId), PageHtml = _da.GridHtmlPage };
+                : new ModelCustomerItem { ListItem = _da.GetListSimpleByRequest(Request, agencyId, type), PageHtml = _da.GridHtmlPage };
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetDiscountRequest()

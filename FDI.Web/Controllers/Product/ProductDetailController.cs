@@ -137,6 +137,8 @@ namespace FDI.Web.Controllers
             url = HttpUtility.UrlDecode(url);
             var model = new Shop_Product_Detail();
             var lstArrId = "";
+            var lstPicture = Request["Value_ImagesProducts"];
+
             switch (DoAction)
             {
                 case ActionType.Add:
@@ -161,6 +163,10 @@ namespace FDI.Web.Controllers
                         IsShow = model.IsShow
                     };
                     model.Shop_Product.Add(objProduct);
+                    if (!string.IsNullOrEmpty(lstPicture))
+                    {
+                        model.Gallery_Picture2 = _da.GetListPictureByArrId(lstPicture);
+                    }
                     _da.Add(model);
                     _da.Save();
                     break;
@@ -173,6 +179,11 @@ namespace FDI.Web.Controllers
                     if (!IsAdmin)
                     {
                         model.IsShow = false;
+                    }
+                    model.Gallery_Picture2.Clear();
+                    if (!string.IsNullOrEmpty(lstPicture))
+                    {
+                        model.Gallery_Picture2 = _da.GetListPictureByArrId(lstPicture);
                     }
                     _da.Save();
                     break;

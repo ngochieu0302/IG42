@@ -6,7 +6,7 @@ using FDI.Utils;
 
 namespace FDI.Web.Controllers
 {
-    public class CustomerController : BaseController
+    public class CustomerAgencyController : BaseController
     {
         //
         // GET: /Admin/Customer/
@@ -18,7 +18,7 @@ namespace FDI.Web.Controllers
         }
         public ActionResult ListItems()
         {
-            return View(_api.ListItems(UserItem.AgencyID, Request.Url.Query,1));
+            return View(_api.ListItems(UserItem.AgencyID, Request.Url.Query,2));
         }
         public ActionResult AjaxView()
         {

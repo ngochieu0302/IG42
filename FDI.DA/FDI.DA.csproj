@@ -97,6 +97,7 @@
     <Compile Include="DA\AppIG4\TokenOtpDA.cs" />
     <Compile Include="DA\AppIG4\WalletCustomerAppIG4DA.cs" />
     <Compile Include="DA\AppIG4\WalletsAppIG4DA.cs" />
+    <Compile Include="DA\ProductComingDA.cs" />
     <Compile Include="DA\BannerDA.cs" />
     <Compile Include="DA\PolicyAgencyDA.cs" />
     <Compile Include="DA\AdminDA.cs" />

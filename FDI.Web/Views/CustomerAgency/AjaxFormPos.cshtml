@@ -1,0 +1,179 @@
+﻿@model FDI.Base.Customer
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+     
+        $("#@Html.IdFor(model => model.Birthday)").datepicker({
+            showOn: "button",
+            buttonImageOnly: true,
+            format:'dd/mm/yyyy'
+        }).mask('00/00/0000');
+
+        $("#CustomerForm").validate({
+            rules: {
+                CardSerial: {
+                    remote: "@Url.Action("CheckMaKH", "Customer", new { id = Model.ID })"
+                },
+                FullName: { required: true },
+                Email: {
+                    email: true,
+                    remote: "@Url.Action("CheckByEmail", "Customer", new { id = Model.ID })"
+                },
+                //Address: { required: true },
+                DistrictID: { required: true },
+                CityID: { required: true },
+                Phone: { number: true },
+                Mobile: { number: true },
+            },
+            messages: {
+                MaKH: { remote: "Mã khách hàng đã tồn tại !" },
+                FirstName: "Trường bắt buộc nhập !",
+                FullName: "Trường bắt buộc nhập !",
+                Email: {
+                    remote: "Email đã tồn tại !",
+                    email: "Không đúng định dạng !"
+                },
+                //Address: "Trường bắt buộc nhập!",
+                Phone: { number: "Định dạng không đúng !" },
+                Mobile: { number: "Định dạng không đúng !" },
+                CityID: { required: "Chọn Tỉnh/Thành Phố !" },
+                DistrictID: { required: "Chọn Tỉnh/Thành Phố !" }
+            },
+            submitHandler: function () { //onSubmit
+                $.post("@Url.Action("Actions", "Customer")", $("#CustomerForm").serialize(), function (data) {
+                    if (data.Erros)
+                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                    else {
+                        $('#customer').val(data.Message);
+                        $('#printKH').html(data.Message);
+                        $('#CustomerID').val(data.ID);
+                        $.notify('Thêm mới KH:' + data.Message, 'success');
+                        $("#dialog-form").dialog("close");
+                    }
+                });
+                return false;
+            }
+        });
+
+     
+        $("#@Html.IdFor(model => model.CityID)").change(function () {
+            var cityId = $(this).val();
+            $.post("@(Url.Action("getDistrictByCity", "SystemDistrict"))", { "cityId": cityId }, function (data) {
+                $("#@Html.IdFor(model => model.DistrictID)").html("");
+                $.each(data.list, function (i, val) {
+                    $("#@Html.IdFor(model => model.DistrictID)").append("<option value='" + val.ID + "'>" + val.Name + "</option>");
+                });
+            });
+        });
+        $("#ShopId").val($("#selectShop").val());
+    });
+
+        $("body").on("keypress", "#MaKH", function (e) {
+            if (e.keyCode == 13) {
+                $("#FullName").focus();
+            }
+        });
+</script>
+<form id="CustomerForm">
+    <input type="hidden" name="do" id="do" value="@ViewBag.Action"/>
+    <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID"/>
+    @if (ViewBag.Action == CTS.Enum.ActionType.Add)
+    {
+        <input type="hidden" name="ShopId" id="ShopId" value="" />
+    }
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">Thông tin Khách hàng</header>
+            <div class="panel-body">
+                <div class="bs-example form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Mã khách hàng</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.MaKH, new { @class = "form-control", @placeholder = "Nhập mã khách hàng (tự động sinh nếu để trống)" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên khách hàng</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Ngày sinh</label>
+                        <div class="col-sm-4">
+                            <input class="input-sm input-s date-picker form-control valid" id="Birthday" name="Birthday" size="16" type="text" value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                        </div>
+                        <label class="col-sm-2 control-label">Hạn thẻ</label>
+                        <div class="col-sm-4">
+                            <input class="input-sm input-s date-picker form-control valid" id="HanThe" name="HanThe" size="16" type="text" value="@(Model.HanThe.HasValue ? Model.HanThe.Value.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        </div>
+                        <label class="col-sm-2 control-label">CMND</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.Cmnd, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" id="Address" name="Address">@Model.Address</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điện thoại 1</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="Phone" name="Phone" class="form-control" value="@Model.Phone"/>
+                        </div>
+                        <label class="col-sm-2 control-label">Điện thoại 2</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="Mobile" name="Mobile" class="form-control" value="@Model.Mobile"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Giới tính</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="Gender" name="Gender">
+                                <option value="False" @(Model.Gender == false ? "selected" : "")>Nữ</option>
+                                <option value="True" @(Model.Gender == true ? "selected" : "")>Nam</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Hạng</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="Hang" name="Hang" value="@Model.Hang">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@Resources.CSResourceString.Customer_City</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="CityID" name="CityID">
+                                <option value=""></option>
+                                @foreach (var item in ViewBag.ListCity)
+                                {
+                                    <option value="@item.ID" @(item.ID == Model.CityID ? "selected" : "")>@item.Name.Trim()</option>
+                                }
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Quận/Huyện</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="DistrictID" name="DistrictID">
+                                @Html.Action("District", "Customer", new { cityId = Model.CityID ?? 0, districtId = Model.DistrictID })
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div style="display: none;">
+        <button id="btn_SaveCus" type="submit" class="btn btn-sm btn-primary">@ViewBag.ActionText</button>
+        <button id="btnReset" type="reset" name="reset" class="btn btn-sm btn-primary">Nhập lại</button>
+        <button id="close" type="button" class="btn btn-sm btn-primary">Đóng lại</button>
+    </div>
+</form>

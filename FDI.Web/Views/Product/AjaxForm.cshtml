@@ -113,10 +113,10 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="Name" id="Name" value="@Model.Name" />
                             </div>
-                            <label class="col-sm-2 control-label">Mã SP</label>
+                            @*<label class="col-sm-2 control-label">Mã SP</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="CodeSku" id="CodeSku" value="@Model.CodeSku" />
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Hạn sử dụng(Tháng)</label>
@@ -146,7 +146,7 @@
                                     }
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label">Màu sắc</label>
+                            @*<label class="col-sm-2 control-label">Màu sắc</label>
                             <div class="col-sm-4">
                                 <select class="select2-drop" name="ColorID" id="ColorID">
                                     <option value="">-- Chọn Màu sắc --</option>
@@ -155,7 +155,7 @@
                                         <option value="@item.ID" @(item.ID == Model.ColorID ? "selected" : "")>@item.Name</option>
                                     }
                                 </select>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
@@ -163,7 +163,7 @@
                                 @Html.CheckBox("IsShow", true) Hiển thị
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label class="col-sm-2 control-label">Ảnh đại diện</label>
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="true" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn hỉnh ảnh đại diện</button>
@@ -188,120 +188,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         
                     </div>
                 </div>
             </div>
         </div>
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-external-link-square"></i>Công thức nguyên liệu
-                </div>
-            </div>
-            <div class="portlet-body form">
-                <div class="form-body">
-                    <div class="form-horizontal" style="margin-bottom: 20px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-search"></i>
-                            </span>
-                            <input type="text" class="form-control" id="autoProduct" placeholder="Nhập mã hoặc tên hàng hóa" />
-                        </div>
-                    </div>
-                    <table class="gridView table table-bordered table-striped" id="ProductDetail">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên SP</th>
-                                <th class='text-center' style="width: 100px">Số lượng</th>
-                                <th class='text-center'>Đơn vị</th>
-                                <th class='text-center'>Giá</th>
-                                <th class='text-center'>Thành tiền</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.LstRecipeItems != null)
-                            {
-                                foreach (var item in Model.LstRecipeItems.Where(c => c.IsDelete == false && c.ValueId != null))
-                                {
-                                    <tr class="data">
-                                        <td>@(stt++)</td>
-                                        <td>@item.ValueName</td>
-                                        <td align="center">
-                                            <input type="hidden" class="inputValue" value="@item.ValueId">
-                                            <input type="number" step="0.0001" class="form-control text-right inputValue quan" data-pid="@item.ValueId" value="@item.Quantity.Quantity("0:0.######")">
-                                        </td>
-                                        <td class="text-center">@item.UnitName</td>
-                                        <td class="text-right inputValue price-@item.ValueId">@string.Format("{0:0,0}", item.Price)</td>
-                                        <td class="text-right total total-@item.ValueId">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
-                                        <td class="text-right">
-                                            <button class="btn btn-default pdelete" data-pid="@item.ValueId" data-price="@(item.Price * item.Quantity)"><i class="fa fa-trash-o" style="color: red;"></i></button>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-external-link-square"></i>Công thức sản phẩm
-                </div>
-            </div>
-            <div class="portlet-body form">
-                <div class="form-body">
-                    <div class="form-horizontal" style="margin-bottom: 20px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-search"></i>
-                            </span>
-                            <input type="text" class="form-control" id="autoProductDetail" placeholder="Nhập mã hoặc tên hàng hóa" />
-                        </div>
-                    </div>
-                    <table class="gridView table table-bordered table-striped" id="ProductDetail1">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên SP</th>
-                                <th class='text-center' style="width: 100px">Số lượng</th>
-                                <th class='text-center'>Đơn vị</th>
-                                <th class='text-center'>Giá</th>
-                                <th class='text-center'>Thành tiền</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.LstRecipeItems != null)
-                            {
-                                foreach (var item in Model.LstRecipeItems.Where(c => c.IsDelete == false && c.ProductDetailID != null))
-                                {
-                                    <tr class="data">
-                                        <td>@(stt++)</td>
-                                        <td>@item.ProductName</td>
-                                        <td align="center">
-                                            <input type="hidden" class="inputProduct" value="@item.ProductDetailID">
-                                            <input type="number" step="0.0001" class="form-control text-right inputProduct quanProduct" data-pid="@item.ProductDetailID" value="@item.Quantity.Quantity("0:0.######")">
-                                        </td>
-                                        <td class="text-center">@item.UnitName</td>
-                                        <td class="text-right inputProduct price-@item.ProductDetailID">@string.Format("{0:0,0}", item.Price)</td>
-                                        <td class="text-right total total-@item.ProductDetailID">@string.Format("{0:0,0}", item.Price * item.Quantity)</td>
-                                        <td class="text-right">
-                                            <button class="btn btn-default pdeleteD" data-pid="@item.ProductDetailID" data-price="@(item.Price * item.Quantity)"><i class="fa fa-trash-o" style="color: red;"></i></button>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <div class="modal-footer">
         <button id="btnSave" type="submit" class="btn btn-sm btn-success">Cập nhật</button>

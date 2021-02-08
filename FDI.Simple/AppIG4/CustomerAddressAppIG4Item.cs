@@ -6,7 +6,7 @@ namespace FDI.Simple
     [Serializable]
     public class CustomerAddressAppIG4Item : BaseSimple
     {
-        public Nullable<int> CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
