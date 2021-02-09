@@ -3541,7 +3541,6 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="QuantityOld" Type="int" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="DateCreated" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Status" Type="int" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ContentPromotion" Type="ntext" />
@@ -3556,7 +3555,6 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="ProductValueID" Type="int" />
           <Property Name="CateValueID" Type="int" />
           <Property Name="ImportProductGID" Type="uniqueidentifier" />
-          <Property Name="CustomerId" Type="int" />
           <Property Name="StatusPayment" Type="int" />
           <Property Name="IsPrestige" Type="bit" />
           <Property Name="Check" Type="int" />
@@ -9746,18 +9744,6 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shop_Order_Details_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Shop_Order_Details" Type="Self.Shop_Order_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Shop_Order_Details">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Shop_Order_Details_DN_Combo">
           <End Role="DN_Combo" Type="Self.DN_Combo" Multiplicity="0..1" />
           <End Role="Shop_Order_Details" Type="Self.Shop_Order_Details" Multiplicity="*" />
@@ -9851,6 +9837,18 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Principal>
             <Dependent Role="Shop_Orders">
               <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Orders_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Orders">
+              <PropertyRef Name="ShopID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13782,10 +13780,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Cate_Value" EntitySet="Cate_Value" />
             <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shop_Order_Details_Customer" Association="Self.FK_Shop_Order_Details_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
-          </AssociationSet>
           <AssociationSet Name="FK_Shop_Order_Details_DN_Combo" Association="Self.FK_Shop_Order_Details_DN_Combo">
             <End Role="DN_Combo" EntitySet="DN_Combo" />
             <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
@@ -13815,6 +13809,10 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Shop_Orders_Customer" Association="Self.FK_Shop_Orders_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Shop_Orders" EntitySet="Shop_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Orders_Customer1" Association="Self.FK_Shop_Orders_Customer1">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
           </AssociationSet>
@@ -14889,11 +14887,11 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Shop_ContactOrder" EntitySet="Shop_ContactOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shop_Order_Details_Customer" Association="FDIModel.FK_Shop_Order_Details_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
-          </AssociationSet>
           <AssociationSet Name="FK_Shop_Orders_Customer" Association="FDIModel.FK_Shop_Orders_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Shop_Orders" EntitySet="Shop_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shop_Orders_Customer1" Association="FDIModel.FK_Shop_Orders_Customer1">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
           </AssociationSet>
@@ -16817,7 +16815,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="ProductGetOrderShop" ReturnType="Collection(FDIModel.ProductGetOrderShop_Result)">
+          <FunctionImport Name="ProductGetOrderShop">
             <Parameter Name="cateid" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="isAll" Mode="In" Type="Boolean" />
@@ -16892,7 +16890,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <Parameter Name="isValue" Mode="In" Type="Int32" />
             <Parameter Name="AgencyId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetListOrderDetail" ReturnType="Collection(FDIModel.sp_GetListOrderDetail_Result)">
+          <FunctionImport Name="sp_GetListOrderDetail">
             <Parameter Name="starDate" Mode="In" Type="Decimal" />
             <Parameter Name="endDate" Mode="In" Type="Decimal" />
           </FunctionImport>
@@ -16953,7 +16951,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <FunctionImport Name="StaticChartsCustomerBuyPacket" ReturnType="Collection(FDIModel.StaticChartsCustomerBuyPacket_Result)">
             <Parameter Name="i" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="StaticChartsShop" ReturnType="Collection(FDIModel.StaticChartsShop_Result)">
+          <FunctionImport Name="StaticChartsShop">
             <Parameter Name="year" Mode="In" Type="Int32" />
             <Parameter Name="month" Mode="In" Type="Int32" />
             <Parameter Name="week" Mode="In" Type="Int32" />
@@ -17912,8 +17910,8 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <NavigationProperty Name="RewardHistories" Relationship="FDIModel.FK_RewardHistory_Customer" FromRole="Customer" ToRole="RewardHistory" />
           <NavigationProperty Name="Send_Card" Relationship="FDIModel.FK_Send_Card_Customer" FromRole="Customer" ToRole="Send_Card" />
           <NavigationProperty Name="Shop_ContactOrder" Relationship="FDIModel.FK_Shop_ContactOrder_Customer" FromRole="Customer" ToRole="Shop_ContactOrder" />
-          <NavigationProperty Name="Shop_Order_Details" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Customer" ToRole="Shop_Order_Details" />
           <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Customer" ToRole="Shop_Orders" />
+          <NavigationProperty Name="Shop_Orders1" Relationship="FDIModel.FK_Shop_Orders_Customer1" FromRole="Customer" ToRole="Shop_Orders" />
           <NavigationProperty Name="Shop_Product" Relationship="FDIModel.FK_Shop_Product_Customer1" FromRole="Customer" ToRole="Shop_Product" />
           <NavigationProperty Name="Shop_Product_Detail" Relationship="FDIModel.FK_Shop_Product_Detail_Customer" FromRole="Customer" ToRole="Shop_Product_Detail" />
           <NavigationProperty Name="SMS" Relationship="FDIModel.FK_SMS_Customer" FromRole="Customer" ToRole="SM" />
@@ -20964,7 +20962,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="QuantityOld" Type="Int32" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Status" Type="Int32" />
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ContentPromotion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -20979,13 +20976,11 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="ProductValueID" Type="Int32" />
           <Property Name="CateValueID" Type="Int32" />
           <Property Name="ImportProductGID" Type="Guid" />
-          <Property Name="CustomerId" Type="Int32" />
           <Property Name="StatusPayment" Type="Int32" />
           <Property Name="IsPrestige" Type="Boolean" />
           <Property Name="Check" Type="Int32" />
           <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Cate_Value" Relationship="FDIModel.FK_Shop_Order_Details_Cate_Value" FromRole="Shop_Order_Details" ToRole="Cate_Value" />
-          <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Order_Details_Customer" FromRole="Shop_Order_Details" ToRole="Customer" />
           <NavigationProperty Name="DN_Combo" Relationship="FDIModel.FK_Shop_Order_Details_DN_Combo" FromRole="Shop_Order_Details" ToRole="DN_Combo" />
           <NavigationProperty Name="DN_ImportProduct" Relationship="FDIModel.FK_Shop_Order_Details_DN_ImportProduct" FromRole="Shop_Order_Details" ToRole="DN_ImportProduct" />
           <NavigationProperty Name="Product_Value" Relationship="FDIModel.FK_Shop_Order_Details_Product_Value" FromRole="Shop_Order_Details" ToRole="Product_Value" />
@@ -21054,6 +21049,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="AddMinute" Relationship="FDIModel.FK_Shop_Orders_AddMinute" FromRole="Shop_Orders" ToRole="AddMinute" />
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Shop_Orders" ToRole="Customer" />
+          <NavigationProperty Name="Customer1" Relationship="FDIModel.FK_Shop_Orders_Customer1" FromRole="Shop_Orders" ToRole="Customer" />
           <NavigationProperty Name="Customer_Review" Relationship="FDIModel.FK_Customer_Review_Shop_Orders" FromRole="Shop_Orders" ToRole="Customer_Review" />
           <NavigationProperty Name="CustomerAddress" Relationship="FDIModel.FK_Shop_Orders_CustomerAddress" FromRole="Shop_Orders" ToRole="CustomerAddress" />
           <NavigationProperty Name="DN_Agency" Relationship="FDIModel.FK_Shop_Orders_DN_Agency" FromRole="Shop_Orders" ToRole="DN_Agency" />
@@ -23773,18 +23769,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shop_Order_Details_Customer">
-          <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="FDIModel.Shop_Order_Details" Role="Shop_Order_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Shop_Order_Details">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Shop_Orders_Customer">
           <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
           <End Type="FDIModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
@@ -23794,6 +23778,18 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="Shop_Orders">
               <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shop_Orders_Customer1">
+          <End Type="FDIModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="FDIModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Shop_Orders">
+              <PropertyRef Name="ShopID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -27750,15 +27746,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Type="Int32" Name="Sort" Nullable="true" />
           <Property Type="Boolean" Name="HasTransfer" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="ProductGetOrderShop_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="Folder" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Url" Nullable="true" MaxLength="255" />
-          <Property Type="Decimal" Name="PriceNew" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DateCreated" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
         <ComplexType Name="SearchListNewsAdmin_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
@@ -27800,16 +27787,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Type="String" Name="Name" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Unitname" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="sp_GetListOrderDetail_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="CodeSku" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="Color" Nullable="true" MaxLength="400" />
-          <Property Type="String" Name="Size" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <ComplexType Name="sp_GetOrderDetail_Result">
           <Property Type="Int32" Name="ProductDetailID" Nullable="false" />
@@ -27871,10 +27848,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
         <ComplexType Name="StaticChartsCustomerBuyPacket_Result">
           <Property Type="Int32" Name="I" Nullable="true" />
           <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="StaticChartsShop_Result">
-          <Property Type="Int32" Name="I" Nullable="true" />
-          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <ComplexType Name="StaticDocumentYear_Result">
           <Property Type="Int32" Name="I" Nullable="true" />
@@ -31342,7 +31315,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="Check" ColumnName="Check" />
                 <ScalarProperty Name="IsPrestige" ColumnName="IsPrestige" />
                 <ScalarProperty Name="StatusPayment" ColumnName="StatusPayment" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ImportProductGID" ColumnName="ImportProductGID" />
                 <ScalarProperty Name="CateValueID" ColumnName="CateValueID" />
                 <ScalarProperty Name="ProductValueID" ColumnName="ProductValueID" />
@@ -31357,7 +31329,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
                 <ScalarProperty Name="ContentPromotion" ColumnName="ContentPromotion" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="QuantityOld" ColumnName="QuantityOld" />
@@ -33502,19 +33473,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductGetOrderShop" FunctionName="FDIModel.Store.ProductGetOrderShop">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FDIModel.ProductGetOrderShop_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Folder" ColumnName="Folder" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="PriceNew" ColumnName="PriceNew" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProductGetOrderShop" FunctionName="FDIModel.Store.ProductGetOrderShop" />
           <FunctionImportMapping FunctionImportName="ResultSearchDocument" FunctionName="FDIModel.Store.ResultSearchDocument" />
           <FunctionImportMapping FunctionImportName="SearchListNewsAdmin" FunctionName="FDIModel.Store.SearchListNewsAdmin">
             <ResultMapping>
@@ -33582,20 +33541,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetListOrderDetail" FunctionName="FDIModel.Store.sp_GetListOrderDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FDIModel.sp_GetListOrderDetail_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CodeSku" ColumnName="CodeSku" />
-                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetListOrderDetail" FunctionName="FDIModel.Store.sp_GetListOrderDetail" />
           <FunctionImportMapping FunctionImportName="sp_GetListValueDetail" FunctionName="FDIModel.Store.sp_GetListValueDetail" />
           <FunctionImportMapping FunctionImportName="sp_GetOrderDetail" FunctionName="FDIModel.Store.sp_GetOrderDetail">
             <ResultMapping>
@@ -33702,14 +33648,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="StaticChartsShop" FunctionName="FDIModel.Store.StaticChartsShop">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FDIModel.StaticChartsShop_Result">
-                <ScalarProperty Name="I" ColumnName="I" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StaticChartsShop" FunctionName="FDIModel.Store.StaticChartsShop" />
           <FunctionImportMapping FunctionImportName="StaticDocumentYear" FunctionName="FDIModel.Store.StaticDocumentYear">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FDIModel.StaticDocumentYear_Result">
