@@ -160,10 +160,10 @@
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-sm btn-primary" id="Button_DefaultImages" data-type="gallery" data-type-value="2" data-multi="false" data-container="DefaultImages" data-value="Value_DefaultImages"><span class="fa fa-picture-o"></span>Chọn ảnh đại diện</button>
                                 <label id="errorPicture" class="error" style="display: none">Chưa chọn hình ảnh.</label>
-                                <input type="hidden" name="PictureID" id="Value_DefaultImages" value="@Model.PictureID" data-multi="false" />
+                                <input type="hidden" name="PictureID" id="Value_DefaultImages" value="@(Model.PictureID)" data-multi="false" />
                                 <div id="Text_DefaultImages">
                                     <div class="gridView list-images-popup">
-                                        @if (Model.PictureID > 0)
+                                        @if (Model.PictureID != null )
                                         {
                                             <div class="image-product" id="@Model.PictureID">
                                                 <div class="image">
@@ -184,15 +184,13 @@
                             <div class="col-sm-10">
                                 <button type="button" class="btn btn-sm btn-primary"  data-type="gallery" data-type-value="2" data-multi="true" data-container="ImagesProducts" data-value="Value_ImagesProducts"><span class="fa fa-picture-o"></span>Chọn ảnh đại diện</button>
                                 <label id="errorPicture1" class="error" style="display: none">Chưa chọn hình ảnh.</label>
-                                <input type="hidden" name="Value_ImagesProducts" id="Value_ImagesProducts" value="@(string.Join(",", Model.ListGalleryPictureItems.Select(a=>a.ID)))" data-multi="true" />
+                                <input type="hidden" name="Value_ImagesProducts" id="Value_ImagesProducts" value="@(Model.ListGalleryPictureItems != null ? string.Join(",", Model.ListGalleryPictureItems.Select(a=>a.ID)) : string.Empty)" data-multi="true" />
                                 <div id="Text_ImagesProducts">
                                     <div class="gridView list-images-popup">
-                                        @if (Model.ListGalleryPictureItems.Any())
+                                        @if (Model.ListGalleryPictureItems != null)
                                         {
                                             foreach (var items in Model.ListGalleryPictureItems)
                                             {
-                                                
-                                            
                                                 <div class="image-product" id="@items.ID">
                                                     <div class="image">
                                                         @Gallery.DisplayImage(items.Url + items.Folder, 120)

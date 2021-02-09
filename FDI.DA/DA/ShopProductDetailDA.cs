@@ -312,6 +312,7 @@ namespace FDI.DA
                                 SizeID = c.SizeID,
                                 ColorID = c.ColorID,
                                 TypeID = c.TypeID,
+                                PriceNew = c.PriceNew ?? 0,
                                 //PriceOld = c.PriceOld,
                                 //PriceNew = c.PriceNew ?? 0
                             }),

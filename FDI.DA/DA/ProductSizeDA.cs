@@ -63,6 +63,7 @@ namespace FDI.DA
         public List<ProductSizeItem> GetAll(int agencyId)
         {
             var query = from o in FDIDB.Product_Size
+                orderby o.Value
                         select new ProductSizeItem
                         {
                             ID = o.ID,
@@ -75,6 +76,7 @@ namespace FDI.DA
         {
             var query = from o in FDIDB.Product_Size
                         where o.UnitID == unitID
+                        orderby o.Value
                         select new ProductSizeItem
                         {
                             ID = o.ID,

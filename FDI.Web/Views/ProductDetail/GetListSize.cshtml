@@ -1,6 +1,5 @@
 ﻿@model List<FDI.Simple.ProductSizeItem>
-<option value="">Chọn Size</option>
 @foreach (var item in Model)
 {
-    <option value="@item.ID" >@item.Name</option>
+    <option value="@item.ID" data-value="@item.Value" @(item.Value == 1 ? "selected" : "") >@item.Value @ViewBag.unit</option>
 }

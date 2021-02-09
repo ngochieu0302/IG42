@@ -25,7 +25,7 @@
                 $('.maskPrice').each(function (i) {
                     $(this).val($(this).val().replace(/\,/g, ''));
                 });
-                
+
                 $("#btnSave").attr("disabled", true);
                 $.post(urlPostAction, $("#modalFormSize").serialize(), function (data) {
                     $("#btnSave").attr("disabled", false);
@@ -56,9 +56,17 @@
 
                 '<div class="item">' +
                 '<div class="form-group">' +
-                ' <label class="col-sm-4 control-label">Type</label>' +
+                ' <label class="col-sm-4 control-label">Loại</label>' +
                 '<div class="col-sm-8">' +
                 '<select name="Type_add_' + stt + '"" id="Type_' + stt + '"" class="form-control"></select>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="item">' +
+                '<div class="form-group">' +
+                ' <label class="col-sm-4 control-label">Giá</label>' +
+                '<div class="col-sm-8">' +
+                '<input type="text" name="Price_add_' + stt + '"" id="Price_' + stt + '"" value="'+(1*(@Model.Price))+'"   class="form-control maskPrice" />'+
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -66,9 +74,9 @@
                 '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div>';
             $("#content-ncc").append(html);
 
-            var urlsize = '@Url.Action("GetListSize", "ProductDetail")';
+            var urlsize = '@Url.Action("GetListSize", "ProductDetail", new {unit = Model.UnitName})';
             var urltype = '@Url.Action("GetListType", "ProductDetail")';
-            
+
             $.post(urlsize, function (data) {
                 $("#Size_" + stt).html(data);
             });
@@ -82,6 +90,13 @@
                 stt--;
 
             });
+            $("body").on("change",
+                "#Size_" + stt,
+                function() {
+                    var id = $("#Size_"+stt+" option:selected").data("value");
+                    var price = parseFloat('@Model.Price') * id;
+                    $("#Price_" + stt).val(price);
+                });
             $("#do_stt").val(stt);
             //callSelect2("#Color_" + stt, "100%");
             $(".maskPrice").mask('000,000,000', { reverse: true });
@@ -126,7 +141,7 @@
                                                     <select name="Size_old@(item.ID)" id="Size_old@(item.ID)" class="form-control">
                                                         @foreach (var item1 in ViewBag.listSize)
                                                         {
-                                                            <option value="@item1.ID" @(item1.ID == item.SizeID ? "selected" : "")>@item1.Name</option>
+                                                            <option data-value="@item1.Value" value="@item1.ID" @(item1.ID == item.SizeID ? "selected" : "")>@item1.Value @Model.UnitName</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -144,6 +159,14 @@
                                                             <option value="@item1.ID" @(item1.ID == item.TypeID ? "selected" : "")>@item1.Name</option>
                                                         }
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Giá</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="Price_old@(item.ID)" value="@item.PriceNew.Money()" class="form-control maskPrice" />
                                                 </div>
                                             </div>
                                         </div>

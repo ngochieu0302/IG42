@@ -72,9 +72,10 @@ namespace FDI.Web.Controllers
             ViewBag.listType = _productTypeDa.GetAll();
             return View(model);
         }
-        public ActionResult GetListSize()
+        public ActionResult GetListSize(string unit)
         {
             var model = _productSizeApi.GetAll(UserItem.AgencyID);
+            ViewBag.unit = unit;
             return View(model);
         }
         public ActionResult GetListType()
