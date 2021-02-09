@@ -9,25 +9,17 @@
     $(document).ready(function () {
         registerGallery();
         LoadCKEDITOR('Details', true);
-        LoadCKEDITOR('Description', true);
         callSelect2("#UnitID", "100%");
         $("#modalForm").validate({
             rules: {
                 Name: { required: true },
-                Code: {
-                    required: true,
-                    remote: "@Url.Action("CheckByCodeDetail", "ProductDetail", new { pId = Model.ID })"
-                },
+                
                 PriceNew: { required: true },
                 UnitID: { required: true },
                 CateID :{ required: true },
             },
             messages: {
                 Name: "Mời bạn nhập tên sản phẩm",
-                Code: {
-                    required: "Mời bạn nhập mã sản phẩm (SKU).",
-                    remote: "Mã sản phẩm (SKU) này đã tồn tại, Xin mời nhập mã khác."
-                },
                 PriceNew: "Mời bạn nhập giá sản phẩm.",
                 UnitID: { required: "Trường này bắt buộc" },
                 CateID: { required: "Trường này bắt buộc" }

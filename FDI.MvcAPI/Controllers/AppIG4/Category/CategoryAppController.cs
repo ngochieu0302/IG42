@@ -17,7 +17,6 @@ namespace FDI.MvcAPI.Controllers
         [AllowAnonymous]
         public ActionResult GetAllProducts()
         {
-            //_categoryDa.updatenameasi();
             var lst = _categoryDa.GetAllByType((int)ModuleType.Product);
             return Json(new BaseResponse<List<CategoryAppIG4Item>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
         }
