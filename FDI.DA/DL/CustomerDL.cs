@@ -24,7 +24,8 @@ namespace FDI.DA
         public List<CustomerAppIG4Item> ListByMap(int km, float la, float lo)
         {
             var query = from c in FDIDB.Customers
-                        where c.Type == 2 && (km == 0 || ConvertUtil.DistanceBetween(la, lo, (float)c.Latitude, (float)c.Longitude) <= km)
+                        where c.Type == 2 
+                        && (km == 0 || ConvertUtil.DistanceBetween(la, lo, (float)c.Latitude, (float)c.Longitude) <= km)
                         orderby c.Ratings descending
                         select new CustomerAppIG4Item
                         {
