@@ -68,7 +68,7 @@ namespace FDI.DA
             query = query.SelectByRequest(Request, ref TotalRecord);
             return query.ToList();
         }
-        public List<CustomerRewardItem> GetListCustomerByRequest(HttpRequestBase httpRequest, int agencyId)
+        public List<CustomerRewardItem> GetListCustomerByRequest(HttpRequestBase httpRequest)
         {
             Request = new ParramRequest(httpRequest);
             var from = httpRequest["fromDate"];
@@ -76,8 +76,10 @@ namespace FDI.DA
             var fromDate = !string.IsNullOrEmpty(from) ? from.StringToDecimal(0) : 0;
             var toDate = !string.IsNullOrEmpty(from) ? to.StringToDecimal(1) : DateTime.Now.TotalSeconds();
             const int personal = (int)Reward.Cus;
-            const int parent = (int)Reward.Parent;
-            var query = from c in FDIDB.Customers
+            const int agency = (int)Reward.Agency;
+            const int souce = (int)Reward.Souce;
+            const int packet = (int)Reward.Packet;
+            var query = from c in FDIDB.DN_Agency
                         where c.RewardHistories.Any(x =>  x.Date >= fromDate && x.Date <= toDate)
                         orderby c.ID
                         select new CustomerRewardItem
@@ -85,12 +87,16 @@ namespace FDI.DA
                             ID = c.ID,
                             CustomerName = c.FullName,
                             Phone = c.Phone,
-                            PricePersonal = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == personal && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
-                            PriceParent = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == parent && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
+                            PriceCus = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == personal && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
+                            PriceAgency = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == agency && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
+                            PriceSouce = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == souce && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
+                            PricePacket = c.RewardHistories.Where(u => u.IsDeleted == false && u.Type == packet && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
                             TotalReward = c.RewardHistories.Where(u => u.IsDeleted == false && u.Date >= fromDate && u.Date <= toDate).Sum(v => v.Price),
-                            PriceReward = c.Customer_Reward.Where(u => u.AgencyID == agencyId).Sum(v => v.PriceReward - v.PriceReceive),
-                            TotalReceipt = c.ReceiveHistories.Where(u => u.AgencyId == agencyId && u.IsDeleted == false && u.DateCreate >= fromDate && u.DateCreate <= toDate).Sum(v => v.Price),
-                            
+                            PriceReward = c.Customer_Reward.Where(a=>a.AgencyID == c.ID).Sum(v => v.PriceReward - v.PriceReceive),
+                            TotalReceipt = 0,
+                            Count = (from a in FDIDB.DN_Agency where a.ParentID == c.ID
+                                    select a.ID).Count()
+                                    
                         };
             query = query.SelectByRequest(Request, ref TotalRecord);
             return query.ToList();

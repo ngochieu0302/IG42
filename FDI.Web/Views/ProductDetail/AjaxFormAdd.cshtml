@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
     $(function () {
-        $("#modalForm").validate({
+        $("#modalFormSize").validate({
             rules: {
 
                 Size_add_:
@@ -25,34 +25,15 @@
                 $('.maskPrice').each(function (i) {
                     $(this).val($(this).val().replace(/\,/g, ''));
                 });
-
-                var lst = [];
-                $('#rolecate .rolediv').each(function () {
-                    var checked = [];
-                    $('.checkbox-value', this).each(function () {
-                        var d = $(this).is(":checked");
-                        checked.push(d);
-                    });
-                    var item = {
-                        IsFrame: checked[0],
-                        IsOpacity: checked[1],
-                        IsPosition: checked[2],
-                        IsMargin: checked[3],
-                        IsDecoration: checked[4],
-                        IsTextStyle: checked[5]
-                    };
-                    lst.push(item);
-                });
-                $("#listrole-add").val(JSON.stringify(lst));
-
+                
                 $("#btnSave").attr("disabled", true);
-                $.post(urlPostAction, $("#modalForm").serialize(), function (data) {
+                $.post(urlPostAction, $("#modalFormSize").serialize(), function (data) {
                     $("#btnSave").attr("disabled", false);
                     if (data.Erros)
-                        createMessage("Đã có lỗi xảy ra", data.Message); // Tạo thông báo lỗi
+                        createMessage("Đã có lỗi xảy ra", data.Message,""); // Tạo thông báo lỗi
                     else {
                         $(".modal").modal('hide');
-                        createCloseMessage("Thông báo", data.Message);
+                        createCloseMessage("Thông báo", data.Message,"");
 
                     }
                 });
@@ -81,32 +62,18 @@
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="item">' +
-                '<div class="form-group">' +
-                ' <label class="col-sm-4 control-label">Color</label>' +
-                '<div class="col-sm-8">' +
-                '<select name="Color_add_' + stt + '"" id="Color_' + stt + '"" class="form-control"></select>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
 
                 '<div class="item-button"><a id="Delete_' + stt + '" data-id="id_add_' + stt + '" href="#"  class="btn btn-sm btn-block btn-danger">Xóa</a></div ></div>';
             $("#content-ncc").append(html);
 
             var urlsize = '@Url.Action("GetListSize", "ProductDetail")';
             var urltype = '@Url.Action("GetListType", "ProductDetail")';
-            var urlcolor = '@Url.Action("GetListColor", "ProductDetail")';
-            //$.post(urlcolor, function (data) {
-            //    $("#Color_" + stt).html(data);
-            //});
+            
             $.post(urlsize, function (data) {
                 $("#Size_" + stt).html(data);
             });
             $.post(urltype, function (data) {
                 $("#Type_" + stt).html(data);
-            });
-            $.post(urlcolor, function (data) {
-                $("#Color_" + stt).html(data);
             });
 
             $("body").on("click", "#Delete_" + stt, function (e) {
@@ -131,7 +98,7 @@
         width: calc(((100% - 60px)/3) - 10px) !important;
     }
 </style>
-<form id="modalForm">
+<form id="modalFormSize" method="post">
     <div class="modal-body">
         <input type="hidden" name="do" id="do" value="@ViewBag.Action" />
         <input type="hidden" name="ItemID" id="ItemID" value="@Model.ID" />
@@ -175,19 +142,6 @@
                                                         @foreach (var item1 in ViewBag.listType)
                                                         {
                                                             <option value="@item1.ID" @(item1.ID == item.TypeID ? "selected" : "")>@item1.Name</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Color</label>
-                                                <div class="col-sm-8">
-                                                    <select name="Color_old@(item.ID)" id="Color_old@(item.ID)" class="form-control">
-                                                        @foreach (var item1 in ViewBag.listColor)
-                                                        {
-                                                            <option value="@item1.ID" @(item1.ID == item.ColorID ? "selected" : "")>@item1.Name</option>
                                                         }
                                                     </select>
                                                 </div>

@@ -339,9 +339,9 @@ namespace FDI.DA
             return query.ToList();
 
         }
-        public  List<ListRewardAgencyApp> GetListRewardApp(int id,int type ,int page, int take,decimal fr,decimal to)
+        public  List<ListRewardAgencyApp> GetListRewardApp(int id,int type ,int page, int take,decimal fr,decimal to,string key, ref decimal total)
         {
-            var query = from c in FDIDB.RewardHistories
+            var query = (from c in FDIDB.RewardHistories
                 where c.IsActive == true && (!c.IsDeleted.HasValue || c.IsDeleted == false)
                       && c.AgencyId == id && (type == 0 || c.Type == type)
                       && c.DateCreate >= fr && c.DateCreate <= to
@@ -353,7 +353,12 @@ namespace FDI.DA
                     Total = c.Price,
                     Des = c.Type == (int)Reward.Cus || c.Type == (int)Reward.Agency ? "Đã mua "+ c.Shop_Orders.Shop_Order_Details.Sum(a=>a.Quantity ?? 0)+ " sản phẩm" : "Đã gia hạn gói"+ c.Order_Package.Customer_Type.Customer_TypeGroup.Name
                     ,Date = c.DateCreate,
-                };
+                }).ToList();
+            if (!string.IsNullOrEmpty(key))
+            {
+                query = query.Where(a => a.Fullname.ToLower().Contains(key.ToLower())).ToList();
+            }
+            total = query.Sum(a => a.Total ?? 0);
             return query.Skip(take * (page - 1)).Take(take).ToList();
         }
 

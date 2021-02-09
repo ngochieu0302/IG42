@@ -68,11 +68,11 @@ namespace FDI.DA
             query = query.SelectByRequest(Request, ref TotalRecord);
             return query.ToList();
         }
-        public List<CustomerItem> GetListSimpleByRequest(HttpRequestBase httpRequest, int agencyId)
+        public List<CustomerItem> GetListSimpleByRequest(HttpRequestBase httpRequest, int agencyId,int type)
         {
             Request = new ParramRequest(httpRequest);
             var query = from c in FDIDB.Customers
-                        where c.IsDelete == false
+                        where c.IsDelete == false && (c.Type == type || type == 0)
                         orderby c.ID descending
                         select new CustomerItem
                         {

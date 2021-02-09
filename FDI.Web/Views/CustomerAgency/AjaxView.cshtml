@@ -1,0 +1,108 @@
+﻿@using FDI.CORE
+@model FDI.Simple.CustomerItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-user"></i>Thông tin về khách hàng
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 150px;">
+                            <label>Họ tên</label>
+                        </td>
+                        <td>@Model.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Mã thẻ</label>
+                        </td>
+                        <td>@Model.CardSerial</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số ĐT</label>
+                        </td>
+                        <td>@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tên đăng nhập</label>
+                        </td>
+                        <td>@Model.UserName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Email</label>
+                        </td>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Người giới thiệu</label>
+                        </td>
+                        <td>@Model.ParentName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Giới tính</label>
+                        </td>
+                        <td>@(Model.Gender.HasValue ? Model.Gender.Value ? "Nam" : "Nữ" : "")</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Số CMND</label>
+                        </td>
+                        <td>@Model.PeoplesIdentity</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Ngày sinh</label>
+                        </td>
+                        <td>@Model.Birthday.DecimalToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tỉnh/Thành Phố</label>
+                        </td>
+                        <td>@Model.CityName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Quận/Huyện</label>
+                        </td>
+                        <td>@Model.DistrictName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Địa chỉ</label>
+                        </td>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Sở thích</label>
+                        </td>
+                        <td>@Model.NoteCate</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Trạng thái</label>
+                        </td>
+                        <td>@(Model.IsActive == true ? "Đã kích hoạt" : "Chưa kích hoạt")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm">Đóng</button>
+</div>

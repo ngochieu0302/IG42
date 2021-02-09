@@ -1,0 +1,61 @@
+﻿@using FDI.CORE
+@model FDI.Simple.ModelProductComingItem
+@{
+    Layout = "~/Views/Shared/_Ajax.cshtml";
+}
+<div id="mygird">
+    <div class="box-control">
+        <div class="scrollable box-control-content">
+            <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
+                <thead>
+                    <tr>
+                        <th class="act_roles">
+                            <input value="" type="checkbox" class="checkAll" />
+                        </th>
+                        <th class="text-center"><a href="#Field=ID">ID</a></th>
+                        <th><a href="#Field=Productname">Tên sản phẩm</a></th>
+                        <th class="text-center">Chuyên mục</th>
+                        <th class="text-center">Nhà cung cấp</th>
+
+                        <th class="text-center"><a href="#Field=DateEx">Ngày có</a></th>
+                        <th><a href="#Field=Price">Giá bán</a></th>
+                        <th><a href="#Field=Quantity">Số lượng</a></th>
+                        <th><a href="#Field=QuantityOut">đã bán</a></th>
+                        <th class="text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.ListItems)
+                {
+
+
+            <tr title="@item.Productname">
+                <td class="act_roles"><input type="checkbox" value="@item.ID" class="check"></td>
+                <td class="text-center">@item.ID</td>
+                <td class="text-center">@item.Productname</td>
+                <td class="text-center">@item.Catename</td>
+                <td class="text-center">@item.Ncc</td>
+                <td class="text-center">@item.DateEx.DecimalToString("dd/MM/yyyy")</td>
+                <td class="text-center">@item.Price.Money()</td>
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-center">@item.QuantityOut</td>
+                <td class="text-right">
+                    @Grid.ActionEdit(item.ID, item.Productname)
+                    @Grid.ActionDelete(item.ID, item.Productname)
+                </td>
+            </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="footer-control">
+        @if (Model.PageHtml != null)
+        {
+            @Html.Raw(Model.PageHtml)
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        registerGridView('#mygird');
+    });
+</script>

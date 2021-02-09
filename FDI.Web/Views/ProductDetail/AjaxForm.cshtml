@@ -73,10 +73,10 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" placeholder="..." name="Name" id="Name" value="@Model.Name" />
                             </div>
-                            <label class="col-sm-2 control-label">Mã SP</label>
+                            @*<label class="col-sm-2 control-label">Mã SP</label>
                             <div class="col-sm-4">
                                 <input type="text" name="Code" id="Code" value="@Model.Code" class="form-control" />
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Đơn vị</label>
@@ -91,21 +91,21 @@
                             </div>
                             <label class="col-sm-2 control-label">Giá Cost sp</label>
                             <div class="col-sm-4">
-                                <input type="text" name="Value" id="Value" value="@(Model.Value ?? 0)" class="form-control maskPrice" />
+                                <input type="text" name="Value" readonly id="Value" value="@(Model.Value ?? 0)" class="form-control maskPrice" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Hệ số</label>
-                            <div class="col-sm-4">
-                                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
-                            </div>
-                        </div>
+                        @*<div class="form-group">
+            <label class="col-sm-2 control-label">Hệ số</label>
+            <div class="col-sm-4">
+                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
+            </div>
+        </div>*@
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Hệ số</label>
-                            <div class="col-sm-4">
-                                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
-                            </div>
+                            @*<label class="col-sm-2 control-label">Hệ số</label>
+            <div class="col-sm-4">
+                <input type="text" readonly="readonly" name="Percent" id="Percent" value="@(Model.Percent ?? 0)" class="form-control" />
+            </div>*@
                             <label class="col-sm-2 control-label">Sắp xếp</label>
                             <div class="col-sm-4">
                                 <input type="text" name="Sort" id="Sort" value="@(Model.Sort ?? 0)" class="form-control" />
@@ -118,17 +118,17 @@
                             </div>
                             <label class="col-sm-2 control-label">Giá Cost theo công thức</label>
                             <div class="col-sm-4">
-                                <input type="text" name="PriceCost" id="PriceCost" value="@(Model.PriceCost ?? 0)" class="form-control maskPrice" />
+                                <input type="text" name="PriceCost" id="PriceCost" readonly value="@(Model.PriceCost ?? 0)" class="form-control maskPrice" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Giá bán Ct</label>
                             <div class="col-sm-4">
-                                <input type="text" name="PriceOld" id="PriceOld" value="@(Model.PriceOld ?? 0)" class="form-control maskPrice" />
+                                <input type="text" name="PriceOld" id="PriceOld" readonly value="@(Model.PriceOld ?? 0)" class="form-control maskPrice" />
                             </div>
                             <label class="col-sm-2 control-label">Chi phí</label>
                             <div class="col-sm-4">
-                                <input type="text" name="Incurred" id="Incurred" value="@(Model.Incurred ?? 0)" class="form-control maskPrice" />
+                                <input type="text" name="Incurred" id="Incurred" readonly value="@(Model.Incurred ?? 0)" class="form-control maskPrice" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -172,6 +172,35 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Danh sách ảnh</label>
+                            <div class="col-sm-10">
+                                <button type="button" class="btn btn-sm btn-primary"  data-type="gallery" data-type-value="2" data-multi="true" data-container="ImagesProducts" data-value="Value_ImagesProducts"><span class="fa fa-picture-o"></span>Chọn ảnh đại diện</button>
+                                <label id="errorPicture1" class="error" style="display: none">Chưa chọn hình ảnh.</label>
+                                <input type="hidden" name="Value_ImagesProducts" id="Value_ImagesProducts" value="@(string.Join(",", Model.ListGalleryPictureItems.Select(a=>a.ID)))" data-multi="true" />
+                                <div id="Text_ImagesProducts">
+                                    <div class="gridView list-images-popup">
+                                        @if (Model.ListGalleryPictureItems.Any())
+                                        {
+                                            foreach (var items in Model.ListGalleryPictureItems)
+                                            {
+                                                
+                                            
+                                                <div class="image-product" id="@items.ID">
+                                                    <div class="image">
+                                                        @Gallery.DisplayImage(items.Url + items.Folder, 120)
+                                                        <div class="option">
+                                                            <button type="button" class="btn red deleteImg" data-id="@items.ID" data-ctn="ImagesProducts"><i class="fa fa-trash-o"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <span>@items.Name</span>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">Mô tả</label>
                             <div class="col-sm-10">
                                 <textarea cols="5" name="Description" id="Description" class="form-control ">@Model.Description</textarea>
@@ -190,11 +219,11 @@
                                         @Html.CheckBox("IsShow", true) Hiện thị
                                     </label>
                                 </div>
-                                <div class="checkbox col-md-6">
-                                    <label>
-                                        @Html.CheckBox("IsShow24hApp") Hiện thị 24h App
-                                    </label>
-                                </div>
+                                @*<div class="checkbox col-md-6">
+                    <label>
+                        @Html.CheckBox("IsShow24hApp") Hiện thị 24h App
+                    </label>
+                </div>*@
                             </div>
                         </div>
 

@@ -32,7 +32,7 @@ namespace FDI.MvcAPI.Controllers
         {
             var obj = Request["key"] != Keyapi
                 ? new ModelCustomerRewardItem()
-                : new ModelCustomerRewardItem { ListItems = _da.GetListCustomerByRequest(Request, Agencyid()), PageHtml = _da.GridHtmlPage };
+                : new ModelCustomerRewardItem { ListItems = _da.GetListCustomerByRequest(Request), PageHtml = _da.GridHtmlPage };
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetListUserRequest()

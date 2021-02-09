@@ -535,42 +535,51 @@ namespace FDI.MvcAPI.Controllers
 
         public ActionResult GetListRewardApp(int page, int take)
         {
-            
-            var model = _agencyDa.GetListRewardApp(CustomerId, 0, page, take,0,DateTime.Today.AddDays(1).TotalSeconds());
-            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+            decimal total = 0;
+            var model = _agencyDa.GetListRewardApp(CustomerId, 0, page, take,0,DateTime.Today.AddDays(1).TotalSeconds(),"", ref total);
+            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model,Total = total}, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetListAllSearchRewardApp(int type,int typeSearch,int typeSort,int page, int take)
+        public ActionResult GetListAllSearchRewardApp(string key,int type,int typeSearch,int typeSort,int page, int take)
         {
             var now = DateTime.Now;
             
             // type =0 lay thang nay. tu ngay dau thang den nay
             decimal fr = 0;/*new DateTime(now.Year,now.Month,1).TotalSeconds();*/
             var to = DateTime.Now.AddDays(1).TotalSeconds();
-            // thang trc
+
+            // thang này
             if (typeSearch == 1)
+            {
+                to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
+                fr = DateTime.Now.AddDays(1).TotalSeconds();
+            }
+            // thang truoc
+            if (typeSearch == 2)
             {
                 to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
                 fr = new DateTime(now.Year, now.Month, 1).AddMonths(-1).TotalSeconds();
             }
             // 3 thang truoc
-            if (typeSearch == 2)
+            if (typeSearch == 3)
             {
                 to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
                 fr = new DateTime(now.Year, now.Month, 1).AddMonths(-3).TotalSeconds();
             }
             // 6 thang truoc
-            if (typeSearch == 3)
+            if (typeSearch == 4)
             {
                 to = new DateTime(now.Year, now.Month, 1).TotalSeconds();
                 fr = new DateTime(now.Year, now.Month, 1).AddMonths(-6).TotalSeconds();
             }
             // nam truoc
-            if (typeSearch == 4)
+            if (typeSearch == 5)
             {
                 to = new DateTime(now.Year,1,1).TotalSeconds();
                 fr = new DateTime(now.Year - 1, 1, 1).TotalSeconds();
             }
-            var model = _agencyDa.GetListRewardApp(CustomerId, type, page, take,fr,to);
+
+            decimal total = 0;
+            var model = _agencyDa.GetListRewardApp(CustomerId, type, page, take,fr,to,key, ref total);
             //ty==0 sắp xếp mới nhất
             //type =1 sắp xếp theo price tăng dần
             if (typeSort == 1)
@@ -587,7 +596,7 @@ namespace FDI.MvcAPI.Controllers
             {
                 model = model.OrderBy(c => c.Date).ToList();
             }
-            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+            return Json(new BaseResponse<List<ListRewardAgencyApp>>() { Code = 200, Data = model,Total = total}, JsonRequestBehavior.AllowGet);
         }
     }
 }

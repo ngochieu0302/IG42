@@ -139,6 +139,7 @@
     <Compile Include="Order\UserStorageWarehousingRequest.cs" />
     <Compile Include="PaymentMethodItem.cs" />
     <Compile Include="PaymentOrderItem.cs" />
+    <Compile Include="ProductComingItem.cs" />
     <Compile Include="QLCN\CamCNItem.cs" />
     <Compile Include="QLCN\CateCNItem.cs" />
     <Compile Include="QLCN\MenCNItem.cs" />

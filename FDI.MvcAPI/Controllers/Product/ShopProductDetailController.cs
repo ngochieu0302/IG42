@@ -126,6 +126,7 @@ namespace FDI.MvcAPI.Controllers
                     {
                         model.Gallery_Picture2 = _da.GetListPictureByArrId(lstPicture);
                     }
+
                     model.Name = HttpUtility.UrlDecode(model.Name);
                     model.NameAscii = FomatString.Slug(model.Name);
                     model.IsDelete = false;
@@ -193,6 +194,7 @@ namespace FDI.MvcAPI.Controllers
                     var pricecost = vaulePrice + productPrice;
                     detail.PriceCost = pricecost;
                     detail.PriceOld = pricecost + detail.Percent * 1000 + (detail.Incurred ?? 0);
+                    
                     _da.Save();
                 }
             }
@@ -347,12 +349,7 @@ namespace FDI.MvcAPI.Controllers
                     {
                         model.IsShow = false;
                     }
-                    var lstPicture = Request["Value_ImagesProducts"];
-                    model.Gallery_Picture2.Clear();
-                    if (!string.IsNullOrEmpty(lstPicture))
-                    {
-                        model.Gallery_Picture2 = _da.GetListPictureByArrId(lstPicture);
-                    }
+                    
                     model.Name = HttpUtility.UrlDecode(model.Name);
                     model.NameAscii = FomatString.Slug(model.Name);
                     _da.Save();
@@ -381,7 +378,6 @@ namespace FDI.MvcAPI.Controllers
                     {
                         var size = Request["Size_old" + item.ID];
                         var Type = Request["Type_old" + item.ID];
-                        var color = Request["Color_old" + item.ID];
                         if (string.IsNullOrEmpty(size))
                         {
                             list.Add(item);
@@ -390,10 +386,8 @@ namespace FDI.MvcAPI.Controllers
                         {
                             item.SizeID = int.Parse(size);
                             item.TypeID = int.Parse(Type);
-                            item.ColorID = int.Parse(color);
-                            _da.Save();
-
                             item.PriceNew = item.Shop_Product_Detail.Price * (item.Product_Size == null ? 0 : (decimal)item.Product_Size.Value) ?? 0;
+                            _da.Save();
                             //item.PriceOld = decimal.Parse(priceold);
                             //item.SizeID = ConvertUtil.ToInt32(Request["Size_old" + item.ID]);
                         }
@@ -408,7 +402,6 @@ namespace FDI.MvcAPI.Controllers
                     {
                         var name = Request["Size_add_" + i];
                         var type = Request["Type_add_" + i];
-                        var color = Request["Color_add_" + i];
                         if (!string.IsNullOrEmpty(name))
                         {
                             var obj = new Shop_Product()
@@ -416,9 +409,6 @@ namespace FDI.MvcAPI.Controllers
                                 ProductDetailID = product.ID,
                                 SizeID = int.Parse(name),
                                 TypeID = int.Parse(type),
-                                ColorID = int.Parse(color),
-                                //PriceOld = decimal.Parse(priceold),
-                                // SizeID = ConvertUtil.ToInt32(Request["Size_add_" + i]),
                                 IsShow = true,
                                 IsDelete = false,
                             };

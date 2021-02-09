@@ -347,6 +347,7 @@
     <Compile Include="Controllers\CheckOrigin\GalleryVideoController.cs" />
     <Compile Include="Controllers\CheckOrigin\SourceController.cs" />
     <Compile Include="Controllers\Customer\CustomerByGroupController.cs" />
+    <Compile Include="Controllers\Customer\CustomerAgencyController.cs" />
     <Compile Include="Controllers\Customer\CustomerGroupController.cs" />
     <Compile Include="Controllers\Customer\CustomerListReviewController.cs" />
     <Compile Include="Controllers\Customer\CustomerPointController.cs" />
@@ -434,6 +435,7 @@
     <Compile Include="Controllers\LevelRoom\DNRoomController.cs" />
     <Compile Include="Controllers\Product\PacketController.cs" />
     <Compile Include="Controllers\Product\DNComboController.cs" />
+    <Compile Include="Controllers\Product\ProductComingController.cs" />
     <Compile Include="Controllers\Product\ProductDetailController.cs" />
     <Compile Include="Controllers\Product\ProductDetailRecipeController.cs" />
     <Compile Include="Controllers\Product\ProductTypeController.cs" />
@@ -2830,6 +2832,16 @@
     <Content Include="Views\Banner\AjaxForm.cshtml" />
     <Content Include="Views\ProductDetail\GetListType.cshtml" />
     <Content Include="Views\ProductDetail\GetListColor.cshtml" />
+    <Content Include="Views\ProductComing\Index.cshtml" />
+    <Content Include="Views\ProductComing\ListItems.cshtml" />
+    <Content Include="Views\ProductComing\AjaxForm.cshtml" />
+    <Content Include="Views\CustomerAgency\AjaxForm.cshtml" />
+    <Content Include="Views\CustomerAgency\AjaxFormPos.cshtml" />
+    <Content Include="Views\CustomerAgency\AjaxHistory.cshtml" />
+    <Content Include="Views\CustomerAgency\AjaxView.cshtml" />
+    <Content Include="Views\CustomerAgency\District.cshtml" />
+    <Content Include="Views\CustomerAgency\Index.cshtml" />
+    <Content Include="Views\CustomerAgency\ListItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Browsers\" />

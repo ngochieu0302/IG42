@@ -13,7 +13,7 @@
                             <input value="" type="checkbox" class="checkAll" />
                         </th>
                         <th class="text-center"><a href="#Field=ID">ID</a></th>
-                        <th class="text-center"><a href="#Field=Code">Mã SP</a></th>
+                        @*<th class="text-center"><a href="#Field=Code">Mã SP</a></th>*@
                         <th class="text-center"><a href="#Field=Code">Ảnh</a></th>
                         <th><a href="#Field=Name">Tên sản phẩm</a></th>
                         <th class="text-center">Chuyên mục</th>
@@ -36,7 +36,7 @@
             <tr title="@item.Name">
                 <td class="act_roles"><input type="checkbox" value="@item.ID" class="check"></td>
                 <td class="text-center">@item.ID</td>
-                <td class="text-center">@item.Code</td>
+                @*<td class="text-center">@item.Code</td>*@
                 <td class="text-center"><img src="@item.UrlPicture.Picture()" class="lazyImg" width="80px"></td>
                 <td>@Grid.DisplayShowStrike(item.Name, item.IsShow.HasValue && item.IsShow.Value)</td>
                 <td class="text-center">@item.Catename</td>
