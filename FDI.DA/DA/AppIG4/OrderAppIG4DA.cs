@@ -55,7 +55,7 @@ namespace FDI.DA
                             OrderTotal = c.TotalPrice,
                             DateCreated = c.DateCreated,
                             ShopID = c.ShopID,
-                            ShopName = c.Customer1.FullName,
+                            ShopName = c.Customer.FullName,
                             LisOrderDetailItems = c.Shop_Order_Details.Select(a => new OrderDetailAppIG4Item
                             {
                                 ID = a.ID,
