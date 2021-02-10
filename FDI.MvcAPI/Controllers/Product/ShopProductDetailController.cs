@@ -378,6 +378,7 @@ namespace FDI.MvcAPI.Controllers
                     {
                         var size = Request["Size_old" + item.ID];
                         var Type = Request["Type_old" + item.ID];
+                        var price = Request["Price_old" + item.ID];
                         if (string.IsNullOrEmpty(size))
                         {
                             list.Add(item);
@@ -386,10 +387,8 @@ namespace FDI.MvcAPI.Controllers
                         {
                             item.SizeID = int.Parse(size);
                             item.TypeID = int.Parse(Type);
-                            item.PriceNew = item.Shop_Product_Detail.Price * (item.Product_Size == null ? 0 : (decimal)item.Product_Size.Value) ?? 0;
+                            item.PriceNew = decimal.Parse(price);
                             _da.Save();
-                            //item.PriceOld = decimal.Parse(priceold);
-                            //item.SizeID = ConvertUtil.ToInt32(Request["Size_old" + item.ID]);
                         }
                     }
 
@@ -402,6 +401,7 @@ namespace FDI.MvcAPI.Controllers
                     {
                         var name = Request["Size_add_" + i];
                         var type = Request["Type_add_" + i];
+                        var price = Request["Price_add_" + i];
                         if (!string.IsNullOrEmpty(name))
                         {
                             var obj = new Shop_Product()
@@ -412,7 +412,7 @@ namespace FDI.MvcAPI.Controllers
                                 IsShow = true,
                                 IsDelete = false,
                             };
-                            obj.PriceNew = product.Price * (obj.Product_Size == null ? 0 : (decimal)obj.Product_Size.Value) ?? 0;
+                            obj.PriceNew = decimal.Parse(price);
                             _da.AddProduct(obj);
                         }
                     }

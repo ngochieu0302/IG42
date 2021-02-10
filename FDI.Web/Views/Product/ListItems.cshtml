@@ -8,33 +8,16 @@
     <div class="box-control">
         <div class="scrollable box-control-content">
             <table class="gridView table table-striped table-bordered table-hover table-orimid" role="grid">
-                <colgroup>
-                    <col class="colgroup check" />
-                    <col class="colgroup indentity" />
-                    <col class="colgroup indentity" />
-                    <col class="colgroup date" />
-                    <col />
-                    <col class="colgroup size" />
-                    <col class="colgroup color" />
-                    <col class="colgroup price" />
-                    @*<col class="colgroup price" />*@
-                    <col class="colgroup date" />
-                    <col class="colgroup date" />
-                    <col class="colgroup action-5" />
-                </colgroup>
                 <thead>
                     <tr>
                         <th class="act_roles">
                             <input value="" type="checkbox" class="checkAll" />
                         </th>
                         <th><a href="#Field=ID">ID</a></th>
-                        @*<th><a href="#Field=CodeSku">Mã SP</a></th>*@
                         <th>Ảnh</th>
                         <th><a href="#Field=Name">Tên sản phẩm</a></th>
                         <th><a href="#Field=SizeName">Kích thước</a></th>
-                        @*<th class="text-center"><a href="#Field=ColorName">Màu</a></th>*@
                         <th class="text-right"><a href="#Field=PriceNew">Giá bán</a></th>
-                        @*<th class="text-right"><a href="#Field=PriceOld">Giá cũ</a></th>*@
                         <th><a href="#Field=CreateDate">Ngày tạo</a></th>
                         <th class="text-center">Ẩn/Hiện</th>
                         <th>Thao tác</th>
@@ -53,19 +36,19 @@
                                 @*<td>@item.CodeSku</td>*@
                                 <td class="text-center"><img src="@item.UrlPicture.Picture()" class="lazyImg" width="80px"></td>
                                 <td>@Grid.DisplayShowStrike(item.Name, item.IsShow == true)</td>
-                                <td>@item.SizeName</td>
+                                <td>@item.SizeValue @item.UnitName</td>
                                 @*<td>
                                     <div style="width: 45px; height: 25px; background-color: @item.ColorName; border: 1px solid #ccc;"></div>
                                 </td>*@
-                                <td class="text-right">@((item.PriceCost * (decimal)item.SizeValue).Money())</td>
+                                <td class="text-right">@((item.PriceNew).Money())</td>
                                 @*<td class="text-right">@item.PriceOld.Money()</td>*@
                                 <td>@item.CreateDate.DecimalToString("dd/MM/yyyy")</td>
                                 <td class="text-center">
                                     @Grid.ActionShow(item.ID, item.Name, item.IsShow.HasValue && item.IsShow.Value)
                                 </td>
                                 <td class="text-right">
-                                    @Grid.ActionView(item.ID, item.Name)
-                                    <a href="#@item.ID" class="btn btn-sm btn-default" data-id="@item.ID" data-event="Copy" title="Copy sản phẩm"><i class="fa fa-clone"></i></a>
+                                    @*@Grid.ActionView(item.ID, item.Name)*@
+                                    @*<a href="#@item.ID" class="btn btn-sm btn-default" data-id="@item.ID" data-event="Copy" title="Copy sản phẩm"><i class="fa fa-clone"></i></a>*@
                                     @*<a class="btn btn-sm btn-default" data-id="@item.ID" data-event="AddRecipe" title="Lập công thức"><i class="fa fa-cutlery"></i></a>*@
                                     @Grid.ActionEdit(item.ID, item.Name)
                                     @Grid.ActionDelete(item.ID, item.Name)
