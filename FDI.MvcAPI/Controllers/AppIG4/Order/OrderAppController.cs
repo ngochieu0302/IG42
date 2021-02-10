@@ -72,14 +72,8 @@ namespace FDI.MvcAPI.Controllers
                     Note = data.Note,
                     CustomerAddressID = data.CustomerAddressID,
                 };
-                if (!string.IsNullOrEmpty(data.Coupon))
-                {
-                    order.CouponPrice = coupon.DN_Sale.Price ?? 0;
-                }
-                else
-                {
-                    order.CouponPrice = 0;
-                }
+                order.CouponPrice = !string.IsNullOrEmpty(data.Coupon) ? coupon.DN_Sale.Price ?? 0 : order.CouponPrice = 0;
+
                 foreach (var product in data.LisOrderDetailItems)
                 {
                     var productData = _productDa.GetProductItem(product.ProductId ?? 0);
@@ -92,9 +86,7 @@ namespace FDI.MvcAPI.Controllers
                         ProductID = product.ProductId,
                         Price = productData.PriceNew ?? 0,
                         Quantity = product.Quantity ?? 1,
-                        CustomerId = data.ShopID,
                         Status = (int)StatusOrder.Create,
-                        DateCreated = DateTime.Now.TotalSeconds(),
                         TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
                         StatusPayment = (int)PaymentOrder.Process,
                         IsPrestige = product.IsPrestige,
@@ -113,7 +105,7 @@ namespace FDI.MvcAPI.Controllers
                 await orderDA.SaveAsync();
                 await _productDa.SaveAsync();
                 var notify = orderDA.GetNotifyById(7);
-                var gettoken = _customerDa.GetItemByID(data.ShopID);
+                var gettoken = _customerDa.GetItemByID(data.ShopID??0);
                 var token = gettoken.tokenDevice;
                 Pushnotifycation(notify.Title, notify.Content.Replace("{customer}", data.CustomerName), token, notify.ID.ToString());
             }
@@ -245,7 +237,7 @@ namespace FDI.MvcAPI.Controllers
 
                 var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
                 //var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
-                
+
                 var totalshop = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
 
                 var walletcus = new WalletCustomer
