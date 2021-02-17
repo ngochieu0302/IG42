@@ -221,31 +221,31 @@ namespace FDI.MvcAPI.Controllers
 
             return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = lst }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult ProductGetOrderShop(int cateid, int shopid, bool IsAll, int type, DateTime date, int page, int pagesize)
-        {
-            pagesize = pagesize > 15 ? 15 : pagesize;
-            var model = new List<ProductAppIG4Item>();
-            if (type == 1)
-            {
-                var firstDay = new DateTime(date.Year, 1, 1).TotalSeconds();
-                var lastDay = new DateTime(date.Year, 12, 31).TotalSeconds();
-                model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, firstDay, lastDay, page, pagesize);
-            }
-            if (type == 2)
-            {
-                var startDate = new DateTime(date.Year, date.Month, 1);
-                var endDate = startDate.AddMonths(1).AddDays(-1);
-                model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, startDate.TotalSeconds(), endDate.TotalSeconds(), page, pagesize);
-            }
-            if (type == 3)
-            {
-                var startweek = date.ThisWeekStart();
-                var endweek = date.ThisWeekEnd();
-                model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, startweek.TotalSeconds(), endweek.TotalSeconds(), page, pagesize);
+        //public ActionResult ProductGetOrderShop(int cateid, int shopid, bool IsAll, int type, DateTime date, int page, int pagesize)
+        //{
+        //    pagesize = pagesize > 15 ? 15 : pagesize;
+        //    var model = new List<ProductAppIG4Item>();
+        //    if (type == 1)
+        //    {
+        //        var firstDay = new DateTime(date.Year, 1, 1).TotalSeconds();
+        //        var lastDay = new DateTime(date.Year, 12, 31).TotalSeconds();
+        //        model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, firstDay, lastDay, page, pagesize);
+        //    }
+        //    if (type == 2)
+        //    {
+        //        var startDate = new DateTime(date.Year, date.Month, 1);
+        //        var endDate = startDate.AddMonths(1).AddDays(-1);
+        //        model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, startDate.TotalSeconds(), endDate.TotalSeconds(), page, pagesize);
+        //    }
+        //    if (type == 3)
+        //    {
+        //        var startweek = date.ThisWeekStart();
+        //        var endweek = date.ThisWeekEnd();
+        //        model = _productDa.ProductGetOrderShop(cateid, shopid, IsAll, startweek.TotalSeconds(), endweek.TotalSeconds(), page, pagesize);
 
-            }
-            return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
-        }
+        //    }
+        //    return Json(new BaseResponse<List<ProductAppIG4Item>> { Code = 200, Erros = false, Data = model }, JsonRequestBehavior.AllowGet);
+        //}
         public ActionResult ProductGetbyShop(int cateid, int shopid, bool IsAll, DateTime dates, DateTime datee, int page, int pagesize)
         {
             pagesize = pagesize > 15 ? 15 : pagesize;

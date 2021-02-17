@@ -290,7 +290,7 @@ namespace FDI.MvcAPI.Controllers
                                 Status = (int)FDI.CORE.OrderStatus.Complete,
                                 QuantityOld = 0,
                                 Price = saleItem.Price,
-                                DateCreated = dateCreated,
+                                //DateCreated = dateCreated,
                                 Discount = saleItem.PriceSale > 0
                                     ? saleItem.PriceSale
                                     : saleItem.PercentSale > 0 ? (saleItem.PercentSale * saleItem.Price / 100) : 0
@@ -309,7 +309,7 @@ namespace FDI.MvcAPI.Controllers
                                                        Status = (int)FDI.CORE.OrderStatus.Complete,
                                                        QuantityOld = 0,
                                                        Price = orderDetailse.Price ?? 0,
-                                                       DateCreated = dateCreated,
+                                                       //DateCreated = dateCreated,
                                                        IsPromotion = true,
                                                        //PromotionID = shopOrderDetailse.ID,
                                                    });
@@ -326,7 +326,7 @@ namespace FDI.MvcAPI.Controllers
                                                Status = (int)FDI.CORE.OrderStatus.Complete,
                                                QuantityOld = 0,
                                                Price = items.Price ?? 0,
-                                               DateCreated = dateCreated,
+                                               //DateCreated = dateCreated,
                                                IsPromotion = true,
                                                //PromotionID = itemP.ID,
                                            });
@@ -414,7 +414,7 @@ namespace FDI.MvcAPI.Controllers
                                          TotalPrice = item.PriceNew - discount,
                                          Total = item.PriceNew,
                                          Discount = discount,
-                                         DateCreated = datenow,
+                                         //DateCreated = datenow,
                                          Status = (int)FDI.CORE.OrderStatus.Complete,
                                          Value = item.Value,
                                      }).ToList();
@@ -637,7 +637,7 @@ namespace FDI.MvcAPI.Controllers
                                     Quantity = 1,
                                     Status = (int)FDI.CORE.OrderStatus.Complete,
                                     Price = product.PriceNew,
-                                    DateCreated = dateCreated
+                                    //DateCreated = dateCreated
                                 };
                                 order.Shop_Order_Details.Add(orderDetail);
                             }
@@ -806,7 +806,7 @@ namespace FDI.MvcAPI.Controllers
                                     Quantity = 1,
                                     Status = (int)FDI.CORE.OrderStatus.Complete,
                                     Price = product.PriceNew,
-                                    DateCreated = dateCreated
+                                    //DateCreated = dateCreated
                                 };
                                 order.Shop_Order_Details.Add(orderDetail);
                             }
@@ -1255,7 +1255,7 @@ namespace FDI.MvcAPI.Controllers
                 Quantity = item.Quantity,
                 Status = (int)FDI.CORE.OrderStatus.Complete,
                 Price = item.Price ?? 0,
-                DateCreated = date,
+                //DateCreated = date,
                 QuantityOld = 0,
                 Discount = item.Discount,
                 ContentPromotion = item.ContentPromotion,

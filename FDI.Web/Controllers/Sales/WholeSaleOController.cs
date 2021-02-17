@@ -110,7 +110,7 @@ namespace FDI.Web.Controllers.Sales
                                         CateValueID = saleItem.CateValueID,
                                         Price = item.Price ?? 0,
                                         Barcode = item.Barcode,
-                                        DateCreated = dateCreated,
+                                        //DateCreated = dateCreated,
                                         Percent = item.PercentSale,
                                         Value = item.Value,
                                         ImportProductGID = item.Idimport,
