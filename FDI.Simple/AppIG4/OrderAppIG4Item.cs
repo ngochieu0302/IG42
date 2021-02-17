@@ -27,8 +27,8 @@ namespace FDI.Simple
         public decimal? Payment { get; set; }
         public string CityName { get; set; }
         public string District { get; set; }
-        public int ShopID { get; set; }
-        public string Shopname { get; set; }
+        public int? ShopID { get; set; }
+        public string ShopName { get; set; }
         public decimal? CouponPrice { get; set; }
         public string Wards { get; set; }
         public string vpc_TransactionNo { get; set; }

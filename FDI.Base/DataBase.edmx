@@ -3619,6 +3619,7 @@ warning 6002: The table/view 'NNIG4.dbo.module_aspnetroles_core' does not have a
           <Property Name="CustomerAddressID" Type="int" />
           <Property Name="Check" Type="int" />
           <Property Name="DateUpdateStatus" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="AdminConfirm" Type="int" />
         </EntityType>
         <EntityType Name="Shop_Product">
           <Key>
@@ -21047,6 +21048,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="CustomerAddressID" Type="Int32" />
           <Property Name="Check" Type="Int32" />
           <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="AdminConfirm" Type="Int32" />
           <NavigationProperty Name="AddMinute" Relationship="FDIModel.FK_Shop_Orders_AddMinute" FromRole="Shop_Orders" ToRole="AddMinute" />
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Shop_Orders" ToRole="Customer" />
           <NavigationProperty Name="Customer1" Relationship="FDIModel.FK_Shop_Orders_Customer1" FromRole="Shop_Orders" ToRole="Customer" />
@@ -31342,6 +31344,7 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <EntitySetMapping Name="Shop_Orders">
             <EntityTypeMapping TypeName="FDIModel.Shop_Orders">
               <MappingFragment StoreEntitySet="Shop_Orders">
+                <ScalarProperty Name="AdminConfirm" ColumnName="AdminConfirm" />
                 <ScalarProperty Name="DateUpdateStatus" ColumnName="DateUpdateStatus" />
                 <ScalarProperty Name="Check" ColumnName="Check" />
                 <ScalarProperty Name="CustomerAddressID" ColumnName="CustomerAddressID" />

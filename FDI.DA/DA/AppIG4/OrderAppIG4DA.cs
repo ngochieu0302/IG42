@@ -51,16 +51,15 @@ namespace FDI.DA
                         select new OrderAppIG4Item
                         {
                             ID = c.ID,
-                            LisOrderDetailItems = c.Shop_Order_Details.Select(a => new OrderDetailAppIG4Item { 
+                            Status = c.Status,
+                            OrderTotal = c.TotalPrice,
+                            DateCreated = c.DateCreated,
+                            ShopID = c.ShopID,
+                            ShopName = c.Customer.FullName,
+                            LisOrderDetailItems = c.Shop_Order_Details.Select(a => new OrderDetailAppIG4Item
+                            {
                                 ID = a.ID,
-                                Shop_Product = new ProductAppIG4Item
-                                {
-                                    ID = a.Shop_Product.ID,
-                                    Name = a.Shop_Product.Name,
-                                    PriceNew = a.Shop_Product.PriceNew,
-                                    PriceOld = a.Shop_Product.PriceOld,
-                                    SizeID = a.Shop_Product.SizeID
-                                }
+                                UrlPicture = a.Shop_Product.Gallery_Picture.Folder + a.Shop_Product.Gallery_Picture.Url,
                             })
                         };
             return query.ToList();
@@ -68,7 +67,7 @@ namespace FDI.DA
         public List<OrderShopAppIG4Item> GetListProductByNew(int shopid, int status, int page, int take)
         {
             var query = from c in FDIDB.Shop_Orders
-                        where c.ShopID == shopid && (c.Status == status || status == 0)
+                        where c.ShopID == shopid && (status == 0 || c.Status == status)
                         orderby c.ID descending
                         select new OrderShopAppIG4Item
                         {
@@ -92,7 +91,6 @@ namespace FDI.DA
                                 ProductName = a.Shop_Product.Name,
                                 Quantity = a.Quantity,
                                 Price = a.Price,
-                                DateCreate = a.DateCreated,
                                 Status = a.Status,
                                 UrlPicture = a.Shop_Product.Gallery_Picture.Folder + a.Shop_Product.Gallery_Picture.Url,
                                 Check = a.Check
@@ -105,8 +103,8 @@ namespace FDI.DA
         /// Lấy về kiểu đơn giản, phân trang
         /// </summary>
         /// <returns>Danh sách bản ghi</returns>
-        
-       
+
+
         /// <summary>
         /// Lấy về mảng đơn giản qua mảng ID
         /// </summary>
@@ -146,7 +144,7 @@ namespace FDI.DA
                         };
             return query.FirstOrDefault();
         }
-        
+
         public PushNotifyItem GetNotifyById(int id)
         {
             var query = from c in FDIDB.PushNotifications

@@ -98,6 +98,19 @@ namespace FDI.MvcAPI.Controllers
                 throw new Exception("longitude missing");
             }
         }
+
+        public bool CheckWallets(decimal? total, int cusId)
+        {
+            var cus = _customerDa.GetItemByID(cusId);
+            if (cus.TotalWallets >= total)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void InsertRewardOrderCustomer(CustomerAppIG4Item customer, ConfigExchange config, decimal? totalprice, int OrderId, List<BonusTypeItem> bonusItems, int type = 0, int idkho = 0, decimal discountKH = 60)
         {
             var now = DateTime.Now.TotalSeconds();

@@ -38,27 +38,26 @@ namespace FDI.MvcAPI.Controllers
         {
             try
             {
-                var cus = _customerDa.GetItemByID(CustomerId);
-                decimal? totalpriceall = 0;
+
+                decimal? totalall = 0;
                 foreach (var data in datas)
                 {
                     if (data.LisOrderDetailItems == null || !data.LisOrderDetailItems.Any())
                     {
-                        return Json(new JsonMessage(1000, "Không có sản phẩm trong giỏ hàng"), JsonRequestBehavior.AllowGet);
+                        return Json(new JsonMessage(1000, "Không có sản phẩm trong giỏ hàng"),
+                            JsonRequestBehavior.AllowGet);
                     }
+
                     SaleCode coupon = null;
                     if (!string.IsNullOrEmpty(data.Coupon))
                     {
                         coupon = _productDa.GetSaleCodeUseByCode(data.Coupon);
-                        if (coupon == null)
-                        {
-                            return Json(new JsonMessage(1001, "Coupon không tồn tại"));
-                        }
-                        if (coupon != null)
-                        {
-                            coupon.IsUse = true;
-                        }
+                        //if (coupon == null)
+                        //{
+                        //    return Json(new JsonMessage(1000, "Coupon không tồn tại"));
+                        //}
                     }
+
                     var order = new Shop_Orders()
                     {
                         Address = data.Address,
@@ -70,24 +69,20 @@ namespace FDI.MvcAPI.Controllers
                         DateCreated = DateTime.Now.TotalSeconds(),
                         Code = FDIUtils.RandomCode(12),
                         FeeShip = data.FeeShip ?? 0,
-                        StatusPayment = (int)PaymentOrder.Process,
+                        StatusPayment = (int) PaymentOrder.Process,
                         Coupon = data.Coupon,
                         ShopID = data.ShopID,
                         //Discount = data.Discount,
                         CouponPrice = coupon?.DN_Sale.Price ?? 0,
                         PaymentMethodId = data.PaymentmethodId,
-                        Status = (int)StatusOrder.Create,
+                        Status = (int) StatusOrder.Create,
                         Note = data.Note,
                         CustomerAddressID = data.CustomerAddressID,
                     };
-                    if (!string.IsNullOrEmpty(data.Coupon))
-                    {
-                        order.CouponPrice = coupon.DN_Sale.Price ?? 0;
-                    }
-                    else
-                    {
-                        order.CouponPrice = 0;
-                    }
+                    order.CouponPrice = !string.IsNullOrEmpty(data.Coupon)
+                        ? coupon.DN_Sale.Price ?? 0
+                        : order.CouponPrice = 0;
+
                     foreach (var product in data.LisOrderDetailItems)
                     {
                         var productData = _productDa.GetProductItem(product.ProductId ?? 0);
@@ -95,54 +90,45 @@ namespace FDI.MvcAPI.Controllers
                         {
                             return Json(new JsonMessage(1000, "Sản phẩm không tồn tại"), JsonRequestBehavior.AllowGet);
                         }
+
                         var item = new Shop_Order_Details()
                         {
                             ProductID = product.ProductId,
                             Price = productData.PriceNew ?? 0,
                             Quantity = product.Quantity ?? 1,
-                            CustomerId = data.ShopID,
-                            Status = (int)StatusOrder.Create,
-                            DateCreated = DateTime.Now.TotalSeconds(),
+                            Status = (int) StatusOrder.Create,
                             TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
-                            StatusPayment = (int)PaymentOrder.Process,
+                            StatusPayment = (int) PaymentOrder.Process,
                             IsPrestige = product.IsPrestige,
                         };
                         order.Shop_Order_Details.Add(item);
                     }
+
                     var total = order.Shop_Order_Details.Sum(m => m.Price * m.Quantity);
                     order.Total = total;
                     order.TotalPrice = total;
-                    order.Payments = total - order.CouponPrice + decimal.Round(data.FeeShip ?? 0);
-                    totalpriceall += order.Payments;
+                    order.Payments = total - order.CouponPrice + data.FeeShip;
+                    totalall += total - order.CouponPrice + data.FeeShip;
                     orderDA.Add(order);
-
+                    if (coupon != null)
+                    {
+                        coupon.IsUse = true;
+                    }
                 }
-                if (cus.TotalWallets >= totalpriceall)
+                var check = CheckWallets(totalall, CustomerId);
+                if (check)
                 {
-                    await orderDA.SaveAsync();
-                    await _productDa.SaveAsync();
-                    #region notify
-
-                    //var notify = orderDA.GetNotifyById(7);
-                    //foreach (var data in datas)
-                    //{
-                    //    var gettoken = _customerDa.GetItemByID(data.ShopID);
-                    //    var token = gettoken.tokenDevice;
-                    //    Pushnotifycation(notify.Title, notify.Content.Replace("{customer}", data.CustomerName), token, notify.ID.ToString());
-                    //}
-
-                    #endregion
+                  await orderDA.SaveAsync();
+                  await _productDa.SaveAsync();
                 }
-                else
-                {
-                    return Json(new JsonMessage(1000, "Ví của bạn không đủ tiền để đặt hàng."), JsonRequestBehavior.AllowGet);
-                }
+
             }
             catch (Exception e)
             {
                 return Json(new JsonMessage(404, e.ToString()), JsonRequestBehavior.AllowGet);
 
             }
+
             return Json(new JsonMessage(200, ""), JsonRequestBehavior.AllowGet);
         }
 
