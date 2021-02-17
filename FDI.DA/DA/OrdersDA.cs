@@ -617,7 +617,7 @@ namespace FDI.DA
             var query = from c in FDIDB.Shop_Order_Details
                         where c.Shop_Orders.AgencyId == agencyid && c.Shop_Orders.IsDelete == false
                         && c.Shop_Orders.DateCreated >= fromDate && c.Shop_Orders.DateCreated <= toDate && c.Shop_Orders.IsActive == false
-                        orderby c.DateCreated descending
+                        //orderby c.DateCreated descending
                         select new OrderDetailItem
                         {
                             //GID = c.GID,

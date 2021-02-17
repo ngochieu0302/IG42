@@ -430,20 +430,20 @@ namespace FDI.DA
                 });
             return query.ToList();
         }
-        public List<ProductAppIG4Item> ProductGetOrderShop(int cateid, int shopid, bool IsAll, decimal dates, decimal datee, int page, int pagesize)
-        {
-            var query = FDIDB.ProductGetOrderShop(cateid, shopid, IsAll, dates, datee, page, pagesize).Select(m =>
-                 new ProductAppIG4Item
-                 {
-                     ID = m.ID,
-                     Name = m.Name,
-                     PriceNew = m.PriceNew ?? 0,
-                     DateCreated = m.DateCreated,
-                     Quantity = m.Quantity,
-                     UrlPicture = m.Folder + m.Url,
-                 });
-            return query.ToList();
-        }
+        //public List<ProductAppIG4Item> ProductGetOrderShop(int cateid, int shopid, bool IsAll, decimal dates, decimal datee, int page, int pagesize)
+        //{
+        //    var query = FDIDB.ProductGetOrderShop(cateid, shopid, IsAll, dates, datee, page, pagesize).Select(m =>
+        //         new ProductAppIG4Item
+        //         {
+        //             ID = m.ID,
+        //             Name = m.Name,
+        //             PriceNew = m.PriceNew ?? 0,
+        //             DateCreated = m.DateCreated,
+        //             Quantity = m.Quantity,
+        //             UrlPicture = m.Folder + m.Url,
+        //         });
+        //    return query.ToList();
+        //}
         public List<DashboardItem> GroupProductGetOrderShop(int shopid, bool IsAll, decimal dates, decimal datee, int cateId)
         {
             var query = FDIDB.GroupProductGetOrderShop(shopid, IsAll, dates, datee, cateId).Select(m =>

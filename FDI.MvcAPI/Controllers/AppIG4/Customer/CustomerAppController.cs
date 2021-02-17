@@ -1039,24 +1039,24 @@ namespace FDI.MvcAPI.Controllers
                 customerDA.Save();
             }
         }
-        [AllowAnonymous]
-        public ActionResult StaticChartShop(int shopId, int type, DateTime date, int cateId = 0)
-        {
-            var model = new List<ListOrderShopChartAppIG4Item>();
-            if (type == 1)
-            {
-                model = customerDA.GetStaticChartsShop(date.Year, 0, 0, date, shopId, cateId);
-            }
-            if (type == 2)
-            {
-                model = customerDA.GetStaticChartsShop(0, date.Month, 0, date, shopId, cateId);
-            }
-            if (type == 3)
-            {
-                model = customerDA.GetStaticChartsShop(0, 0, 1, date, shopId, cateId);
-            }
-            return Json(new BaseResponse<List<ListOrderShopChartAppIG4Item>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
-        }
+        //[AllowAnonymous]
+        //public ActionResult StaticChartShop(int shopId, int type, DateTime date, int cateId = 0)
+        //{
+        //    var model = new List<ListOrderShopChartAppIG4Item>();
+        //    if (type == 1)
+        //    {
+        //        model = customerDA.GetStaticChartsShop(date.Year, 0, 0, date, shopId, cateId);
+        //    }
+        //    if (type == 2)
+        //    {
+        //        model = customerDA.GetStaticChartsShop(0, date.Month, 0, date, shopId, cateId);
+        //    }
+        //    if (type == 3)
+        //    {
+        //        model = customerDA.GetStaticChartsShop(0, 0, 1, date, shopId, cateId);
+        //    }
+        //    return Json(new BaseResponse<List<ListOrderShopChartAppIG4Item>>() { Code = 200, Data = model }, JsonRequestBehavior.AllowGet);
+        //}
 
     }
 }

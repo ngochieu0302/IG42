@@ -218,16 +218,16 @@ namespace FDI.DA
                         };
             return query.ToList();
         }
-        public List<ListOrderShopChartAppIG4Item> GetStaticChartsShop(int year, int month, int week, DateTime date, int shopId, int cateId)
-        {
-            var query = from c in FDIDB.StaticChartsShop(year, month, week, date, shopId, cateId)
-                        select new ListOrderShopChartAppIG4Item
-                        {
-                            I = c.I,
-                            Total = c.Total
-                        };
-            return query.ToList();
-        }
+        //public List<ListOrderShopChartAppIG4Item> GetStaticChartsShop(int year, int month, int week, DateTime date, int shopId, int cateId)
+        //{
+        //    var query = from c in FDIDB.StaticChartsShop(year, month, week, date, shopId, cateId)
+        //                select new ListOrderShopChartAppIG4Item
+        //                {
+        //                    I = c.I,
+        //                    Total = c.Total
+        //                };
+        //    return query.ToList();
+        //}
         public Customer GetbyidUserZalo(string idUserZalo)
         {
             var query = from c in FDIDB.Customers where c.idUserZalo == idUserZalo && c.IsDelete == false select c;
@@ -393,13 +393,13 @@ namespace FDI.DA
                             LisOrderDetailItems = c.Shop_Order_Details.Select(v => new OrderDetailCustomerAppItem
                             {
                                 Id = v.ID,
-                                Shopname = v.Customer.FullName,
+                                //Shopname = v.Customer.FullName,
                                 Productname = v.Shop_Product.Name,
                                 UrlPicture = v.Shop_Product.Gallery_Picture.Folder + v.Shop_Product.Gallery_Picture.Url,
                                 Status = v.Status,
                                 Price = v.Price,
                                 Quantity = v.Quantity,
-                                DateCreate = v.DateCreated,
+                                //DateCreate = v.DateCreated,
                                 Check = v.Check,
                             })
                         };

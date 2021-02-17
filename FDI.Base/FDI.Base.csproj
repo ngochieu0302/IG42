@@ -49,6 +49,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -1126,6 +1127,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="bin\Debug\FDI.Base.dll.config" />
+    <None Include="bin\FDI.Base.dll.config" />
+    <None Include="bin\Release\FDI.Base.dll.config" />
     <None Include="DataBase.edmx.diagram">
       <DependentUpon>DataBase.edmx</DependentUpon>
     </None>
@@ -1135,6 +1139,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\FDI.Base.dll" />
+    <Content Include="bin\Debug\FDI.Base.pdb" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\FDI.Base.dll" />
+    <Content Include="bin\FDI.Base.pdb" />
+    <Content Include="bin\Release\EntityFramework.dll" />
+    <Content Include="bin\Release\EntityFramework.xml" />
+    <Content Include="bin\Release\FDI.Base.dll" />
+    <Content Include="bin\Release\FDI.Base.pdb" />
     <Content Include="DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataBase.Context.cs</LastGenOutput>

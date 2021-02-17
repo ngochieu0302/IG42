@@ -103,8 +103,8 @@ namespace FDI.DA
         public List<ProductExportItem> ProductTop(int agencyid, decimal start, decimal end)
         {
             var query = from c in FDIDB.Shop_Product
-                        where c.Shop_Order_Details.Any(m => m.Shop_Orders.Status < 4 && m.DateCreated >= start && m.DateCreated <= end && m.Shop_Orders.AgencyId == agencyid)
-                        orderby c.Shop_Order_Details.Where(m => m.Shop_Orders.Status < 4 && m.DateCreated >= start && m.DateCreated <= end).Sum(m => m.Quantity - m.QuantityOld) descending
+                        where c.Shop_Order_Details.Any(m => m.Shop_Orders.Status < 4 && m.Shop_Orders.DateCreated >= start && m.Shop_Orders.DateCreated <= end && m.Shop_Orders.AgencyId == agencyid)
+                        orderby c.Shop_Order_Details.Where(m => m.Shop_Orders.Status < 4 && m.Shop_Orders.DateCreated >= start && m.Shop_Orders.DateCreated <= end).Sum(m => m.Quantity - m.QuantityOld) descending
                         select new ProductExportItem
                         {
                             ID = c.ID,
@@ -113,7 +113,7 @@ namespace FDI.DA
                             UrlPicture = c.Shop_Product_Detail.Gallery_Picture.Folder + c.Shop_Product_Detail.Gallery_Picture.Url,
                             SizeName = c.Product_Size.Name,
                             ColorName = c.System_Color.Name,
-                            Quantity = c.Shop_Order_Details.Where(m => m.Shop_Orders.Status < 4 && m.DateCreated >= start && m.DateCreated <= end).Sum(m => m.Quantity - m.QuantityOld),
+                            Quantity = c.Shop_Order_Details.Where(m => m.Shop_Orders.Status < 4 && m.Shop_Orders.DateCreated >= start && m.Shop_Orders.DateCreated <= end).Sum(m => m.Quantity - m.QuantityOld),
                         };
             return query.Take(10).ToList();
         }
