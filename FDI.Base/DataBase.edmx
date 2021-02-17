@@ -9817,18 +9817,6 @@ warning 6002: The table/view 'NNIG4.dbo.vw_aspnet_WebPartState_User' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shop_Orders_AddMinute">
-          <End Role="AddMinute" Type="Self.AddMinute" Multiplicity="0..1" />
-          <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AddMinute">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Shop_Orders">
-              <PropertyRef Name="AddMinuteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Shop_Orders_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Shop_Orders" Type="Self.Shop_Orders" Multiplicity="*" />
@@ -13805,10 +13793,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             <End Role="Shop_Product" EntitySet="Shop_Product" />
             <End Role="Shop_Order_Details" EntitySet="Shop_Order_Details" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shop_Orders_AddMinute" Association="Self.FK_Shop_Orders_AddMinute">
-            <End Role="AddMinute" EntitySet="AddMinute" />
-            <End Role="Shop_Orders" EntitySet="Shop_Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Shop_Orders_Customer" Association="Self.FK_Shop_Orders_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Shop_Orders" EntitySet="Shop_Orders" />
@@ -14399,10 +14383,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <AssociationSet Name="FK_User_ModuleActive_ActiveRole" Association="FDIModel.FK_User_ModuleActive_ActiveRole">
             <End Role="ActiveRole" EntitySet="ActiveRoles" />
             <End Role="User_ModuleActive" EntitySet="User_ModuleActive" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shop_Orders_AddMinute" Association="FDIModel.FK_Shop_Orders_AddMinute">
-            <End Role="AddMinute" EntitySet="AddMinutes" />
-            <End Role="Shop_Orders" EntitySet="Shop_Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Advertising_Advertising_Position" Association="FDIModel.FK_Advertising_Advertising_Position">
             <End Role="Advertising_Position" EntitySet="Advertising_Position" />
@@ -17041,7 +17021,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="IsShow" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="DateCreated" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="Shop_Orders" Relationship="FDIModel.FK_Shop_Orders_AddMinute" FromRole="AddMinute" ToRole="Shop_Orders" />
         </EntityType>
         <EntityType Name="Advertising">
           <Key>
@@ -21049,7 +21028,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
           <Property Name="Check" Type="Int32" />
           <Property Name="DateUpdateStatus" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="AdminConfirm" Type="Int32" />
-          <NavigationProperty Name="AddMinute" Relationship="FDIModel.FK_Shop_Orders_AddMinute" FromRole="Shop_Orders" ToRole="AddMinute" />
           <NavigationProperty Name="Customer" Relationship="FDIModel.FK_Shop_Orders_Customer" FromRole="Shop_Orders" ToRole="Customer" />
           <NavigationProperty Name="Customer1" Relationship="FDIModel.FK_Shop_Orders_Customer1" FromRole="Shop_Orders" ToRole="Customer" />
           <NavigationProperty Name="Customer_Review" Relationship="FDIModel.FK_Customer_Review_Shop_Orders" FromRole="Shop_Orders" ToRole="Customer_Review" />
@@ -22276,18 +22254,6 @@ FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</Defin
             </Principal>
             <Dependent Role="User_ModuleActive">
               <PropertyRef Name="ActiveRoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shop_Orders_AddMinute">
-          <End Type="FDIModel.AddMinute" Role="AddMinute" Multiplicity="0..1" />
-          <End Type="FDIModel.Shop_Orders" Role="Shop_Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AddMinute">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Shop_Orders">
-              <PropertyRef Name="AddMinuteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

@@ -2481,7 +2481,7 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductGetNearPosition_Result>("ProductGetNearPosition", kmParameter, xParameter, yParameter, pageNumberParameter, pageSizeParameter);
         }
     
-        public virtual ObjectResult<ProductGetOrderShop_Result> ProductGetOrderShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
+        public virtual int ProductGetOrderShop(Nullable<int> cateid, Nullable<int> customerID, Nullable<bool> isAll, Nullable<decimal> dates, Nullable<decimal> datee, Nullable<int> pageNumber, Nullable<int> pageSize)
         {
             var cateidParameter = cateid.HasValue ?
                 new ObjectParameter("cateid", cateid) :
@@ -2511,7 +2511,7 @@ namespace FDI.Base
                 new ObjectParameter("PageSize", pageSize) :
                 new ObjectParameter("PageSize", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductGetOrderShop_Result>("ProductGetOrderShop", cateidParameter, customerIDParameter, isAllParameter, datesParameter, dateeParameter, pageNumberParameter, pageSizeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductGetOrderShop", cateidParameter, customerIDParameter, isAllParameter, datesParameter, dateeParameter, pageNumberParameter, pageSizeParameter);
         }
     
         public virtual int ResultSearchDocument(string categoryID, string keywords)
@@ -2739,7 +2739,7 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetListInventoryValue_Result>("sp_GetListInventoryValue", isValueParameter, agencyIdParameter);
         }
     
-        public virtual ObjectResult<sp_GetListOrderDetail_Result> sp_GetListOrderDetail(Nullable<decimal> starDate, Nullable<decimal> endDate)
+        public virtual int sp_GetListOrderDetail(Nullable<decimal> starDate, Nullable<decimal> endDate)
         {
             var starDateParameter = starDate.HasValue ?
                 new ObjectParameter("starDate", starDate) :
@@ -2749,7 +2749,7 @@ namespace FDI.Base
                 new ObjectParameter("endDate", endDate) :
                 new ObjectParameter("endDate", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetListOrderDetail_Result>("sp_GetListOrderDetail", starDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetListOrderDetail", starDateParameter, endDateParameter);
         }
     
         public virtual int sp_GetListValueDetail(Nullable<decimal> starDate, Nullable<decimal> endDate, Nullable<int> agencyId)
@@ -2943,7 +2943,7 @@ namespace FDI.Base
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsCustomerBuyPacket_Result>("StaticChartsCustomerBuyPacket", iParameter);
         }
     
-        public virtual ObjectResult<StaticChartsShop_Result> StaticChartsShop(Nullable<int> year, Nullable<int> month, Nullable<int> week, Nullable<System.DateTime> d, Nullable<int> cusId, Nullable<int> cateId)
+        public virtual int StaticChartsShop(Nullable<int> year, Nullable<int> month, Nullable<int> week, Nullable<System.DateTime> d, Nullable<int> cusId, Nullable<int> cateId)
         {
             var yearParameter = year.HasValue ?
                 new ObjectParameter("year", year) :
@@ -2969,7 +2969,7 @@ namespace FDI.Base
                 new ObjectParameter("cateId", cateId) :
                 new ObjectParameter("cateId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StaticChartsShop_Result>("StaticChartsShop", yearParameter, monthParameter, weekParameter, dParameter, cusIdParameter, cateIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("StaticChartsShop", yearParameter, monthParameter, weekParameter, dParameter, cusIdParameter, cateIdParameter);
         }
     
         public virtual ObjectResult<StaticDocumentYear_Result> StaticDocumentYear(Nullable<int> year, Nullable<int> areaid)

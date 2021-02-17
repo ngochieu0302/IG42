@@ -40,6 +40,7 @@ namespace FDI.MvcAPI.Controllers
             {
 
                 decimal? totalall = 0;
+                var listOrder = new List<Shop_Orders>();
                 foreach (var data in datas)
                 {
                     if (data.LisOrderDetailItems == null || !data.LisOrderDetailItems.Any())
@@ -52,6 +53,10 @@ namespace FDI.MvcAPI.Controllers
                     if (!string.IsNullOrEmpty(data.Coupon))
                     {
                         coupon = _productDa.GetSaleCodeUseByCode(data.Coupon);
+                        if (coupon != null)
+                        {
+                            coupon.IsUse = true;
+                        }
                         //if (coupon == null)
                         //{
                         //    return Json(new JsonMessage(1000, "Coupon không tồn tại"));
@@ -69,13 +74,13 @@ namespace FDI.MvcAPI.Controllers
                         DateCreated = DateTime.Now.TotalSeconds(),
                         Code = FDIUtils.RandomCode(12),
                         FeeShip = data.FeeShip ?? 0,
-                        StatusPayment = (int) PaymentOrder.Process,
+                        StatusPayment = (int)PaymentOrder.Process,
                         Coupon = data.Coupon,
                         ShopID = data.ShopID,
                         //Discount = data.Discount,
                         CouponPrice = coupon?.DN_Sale.Price ?? 0,
                         PaymentMethodId = data.PaymentmethodId,
-                        Status = (int) StatusOrder.Create,
+                        Status = (int)StatusOrder.Create,
                         Note = data.Note,
                         CustomerAddressID = data.CustomerAddressID,
                     };
@@ -96,9 +101,9 @@ namespace FDI.MvcAPI.Controllers
                             ProductID = product.ProductId,
                             Price = productData.PriceNew ?? 0,
                             Quantity = product.Quantity ?? 1,
-                            Status = (int) StatusOrder.Create,
+                            Status = (int)StatusOrder.Create,
                             TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
-                            StatusPayment = (int) PaymentOrder.Process,
+                            StatusPayment = (int)PaymentOrder.Process,
                             IsPrestige = product.IsPrestige,
                         };
                         order.Shop_Order_Details.Add(item);
@@ -109,24 +114,44 @@ namespace FDI.MvcAPI.Controllers
                     order.TotalPrice = total;
                     order.Payments = total - order.CouponPrice + data.FeeShip;
                     totalall += total - order.CouponPrice + data.FeeShip;
-                    orderDA.Add(order);
-                    if (coupon != null)
-                    {
-                        coupon.IsUse = true;
-                    }
+                    listOrder.Add(order);
+                    //orderDA.Add(order);
+
                 }
+
+                //kiểm tra ví và trừ tiền khách hàng sau đó lưu đơn hàng
                 var check = CheckWallets(totalall, CustomerId);
                 if (check)
                 {
-                  await orderDA.SaveAsync();
-                  await _productDa.SaveAsync();
+                    foreach (var order in listOrder)
+                    {
+                        orderDA.Add(order);
+                        await orderDA.SaveAsync();
+                        var cashout = new CashOutWallet
+                        {
+                            CustomerID = CustomerId,
+                            TotalPrice = order.Payments,
+                            DateCreate = DateTime.Now.TotalSeconds(),
+                            OrderID = order.ID,
+                            Type = 1,
+                            Code = order.Code,
+                        };
+                        _cashOutWalletDa.Add(cashout);
+                        _cashOutWalletDa.Save();
+                    }
+                    await _productDa.SaveAsync();
+
+                }
+                else
+                {
+                    return Json(new JsonMessage(1001, "Tài khoản của bạn không đủ tiền."),
+                        JsonRequestBehavior.AllowGet);
                 }
 
             }
             catch (Exception e)
             {
                 return Json(new JsonMessage(404, e.ToString()), JsonRequestBehavior.AllowGet);
-
             }
 
             return Json(new JsonMessage(200, ""), JsonRequestBehavior.AllowGet);
@@ -171,22 +196,15 @@ namespace FDI.MvcAPI.Controllers
             if (type == (int)StatusOrder.Complete)
             {
                 // tru tien khach hang
-                var cashout = new CashOutWallet
-                {
-                    CustomerID = data.CustomerID,
-                    TotalPrice = totalPrice ?? 0,
-                    DateCreate = DateTime.Now.TotalSeconds(),
-                    OrderID = data.ID,
-                    Type = 1,
-                    Code = data.Code,
-                };
-                _cashOutWalletDa.Add(cashout);
-                _cashOutWalletDa.Save();
+
                 decimal? totak = 0;
                 foreach (var items in data.Shop_Order_Details)
                 {
                     var k = items.Shop_Product.Category.Profit;
-                    totak += (items.Shop_Product.Product_Size != null ? (decimal)items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+                    if (items.Shop_Product.Product_Size.Value != null)
+                        totak += (items.Shop_Product.Product_Size != null
+                                     ? (decimal)items.Shop_Product.Product_Size.Value
+                                     : 1) * items.Quantity * k * 1000;
                     var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
                     var config = _walletCustomerDa.GetConfig();
                     var totalshop = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
@@ -209,7 +227,7 @@ namespace FDI.MvcAPI.Controllers
                     //var shopsucess = orderDA.GetNotifyById(5);
                     //var tokenshop = shop.tokenDevice;
                     //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalshop.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
-                    
+
                     var bonusItems = _customerDa.ListBonusTypeItems();
                     #region hoa hồng khách hàng và shop ký gửi
                     var iskg = data.Customer.Type == 2;
@@ -267,10 +285,10 @@ namespace FDI.MvcAPI.Controllers
             //    notify = orderDA.GetNotifyById(3);
             //    Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", totalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
             //}
-#endregion
+            #endregion
             return Json(new BaseResponse<List<ProductItem>> { Code = 200, Message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
-        
+
         public ActionResult GetCoupon(string code)
         {
             var coupon = _productDa.GetSaleCodeUseByCode(code);

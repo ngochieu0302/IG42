@@ -103,7 +103,8 @@ namespace FDI.MvcAPI.Controllers
         {
             var cus = _customerDa.GetItemByID(cusId);
             if (cus.TotalWallets >= total)
-            {
+            { 
+                
                 return true;
             }
             else

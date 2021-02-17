@@ -774,9 +774,6 @@
     <Compile Include="ProductGetNearPosition_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductGetOrderShop_Result.cs">
-      <DependentUpon>DataBase.tt</DependentUpon>
-    </Compile>
     <Compile Include="ProductRating.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -907,9 +904,6 @@
     <Compile Include="sp_GetListInventoryValue_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_GetListOrderDetail_Result.cs">
-      <DependentUpon>DataBase.tt</DependentUpon>
-    </Compile>
     <Compile Include="sp_GetOrderDetail_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -938,9 +932,6 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="StaticChartsCustomer_Result.cs">
-      <DependentUpon>DataBase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StaticChartsShop_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="StaticDocumentYear_Result.cs">
@@ -1135,23 +1126,25 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataBase.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataBase.edmx</DependentUpon>
-      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
-    </None>
     <None Include="DataBase.edmx.diagram">
       <DependentUpon>DataBase.edmx</DependentUpon>
-    </None>
-    <None Include="DataBase.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataBase.edmx</DependentUpon>
-      <LastGenOutput>DataBase.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataBase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataBase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataBase.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
