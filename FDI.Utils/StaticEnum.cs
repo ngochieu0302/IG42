@@ -293,11 +293,13 @@ namespace FDI.Utils
     {
         Create = 1,
         Process = 2,
-        Complete = 3,
-        Cancel = -1,
+        Shipping = 3,
+        Complete = 4,
+        Complain = 5,
+        Refunded = 6,
+        Cancel = 7,
         All = 0,
-        Complain = 4,
-        Refunded = 5,
+        
     }
     public enum PaymentOrder
     {

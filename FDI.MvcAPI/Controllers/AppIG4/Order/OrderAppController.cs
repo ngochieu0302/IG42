@@ -36,86 +36,112 @@ namespace FDI.MvcAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Booking(List<OrderAppIG4Item> datas)
         {
-            foreach (var data in datas)
+            try
             {
-                if (data.LisOrderDetailItems == null || !data.LisOrderDetailItems.Any())
+                var cus = _customerDa.GetItemByID(CustomerId);
+                decimal? totalpriceall = 0;
+                foreach (var data in datas)
                 {
-                    return Json(new JsonMessage(1000, "Không có sản phẩm trong giỏ hàng"), JsonRequestBehavior.AllowGet);
+                    if (data.LisOrderDetailItems == null || !data.LisOrderDetailItems.Any())
+                    {
+                        return Json(new JsonMessage(1000, "Không có sản phẩm trong giỏ hàng"), JsonRequestBehavior.AllowGet);
+                    }
+                    SaleCode coupon = null;
+                    if (!string.IsNullOrEmpty(data.Coupon))
+                    {
+                        coupon = _productDa.GetSaleCodeUseByCode(data.Coupon);
+                        if (coupon == null)
+                        {
+                            return Json(new JsonMessage(1001, "Coupon không tồn tại"));
+                        }
+                        if (coupon != null)
+                        {
+                            coupon.IsUse = true;
+                        }
+                    }
+                    var order = new Shop_Orders()
+                    {
+                        Address = data.Address,
+                        CustomerID = CustomerId,
+                        Longitude = data.Longitude,
+                        Latitude = data.Latitude,
+                        Mobile = data.Mobile,
+                        CustomerName = data.CustomerName,
+                        DateCreated = DateTime.Now.TotalSeconds(),
+                        Code = FDIUtils.RandomCode(12),
+                        FeeShip = data.FeeShip ?? 0,
+                        StatusPayment = (int)PaymentOrder.Process,
+                        Coupon = data.Coupon,
+                        ShopID = data.ShopID,
+                        //Discount = data.Discount,
+                        CouponPrice = coupon?.DN_Sale.Price ?? 0,
+                        PaymentMethodId = data.PaymentmethodId,
+                        Status = (int)StatusOrder.Create,
+                        Note = data.Note,
+                        CustomerAddressID = data.CustomerAddressID,
+                    };
+                    if (!string.IsNullOrEmpty(data.Coupon))
+                    {
+                        order.CouponPrice = coupon.DN_Sale.Price ?? 0;
+                    }
+                    else
+                    {
+                        order.CouponPrice = 0;
+                    }
+                    foreach (var product in data.LisOrderDetailItems)
+                    {
+                        var productData = _productDa.GetProductItem(product.ProductId ?? 0);
+                        if (productData == null)
+                        {
+                            return Json(new JsonMessage(1000, "Sản phẩm không tồn tại"), JsonRequestBehavior.AllowGet);
+                        }
+                        var item = new Shop_Order_Details()
+                        {
+                            ProductID = product.ProductId,
+                            Price = productData.PriceNew ?? 0,
+                            Quantity = product.Quantity ?? 1,
+                            CustomerId = data.ShopID,
+                            Status = (int)StatusOrder.Create,
+                            DateCreated = DateTime.Now.TotalSeconds(),
+                            TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
+                            StatusPayment = (int)PaymentOrder.Process,
+                            IsPrestige = product.IsPrestige,
+                        };
+                        order.Shop_Order_Details.Add(item);
+                    }
+                    var total = order.Shop_Order_Details.Sum(m => m.Price * m.Quantity);
+                    order.Total = total;
+                    order.TotalPrice = total;
+                    order.Payments = total - order.CouponPrice + decimal.Round(data.FeeShip ?? 0);
+                    totalpriceall += order.Payments;
+                    orderDA.Add(order);
+
                 }
-                SaleCode coupon = null;
-                if (!string.IsNullOrEmpty(data.Coupon))
+                if (cus.TotalWallets >= totalpriceall)
                 {
-                    coupon = _productDa.GetSaleCodeUseByCode(data.Coupon);
-                    //if (coupon == null)
+                    await orderDA.SaveAsync();
+                    await _productDa.SaveAsync();
+                    #region notify
+
+                    //var notify = orderDA.GetNotifyById(7);
+                    //foreach (var data in datas)
                     //{
-                    //    return Json(new JsonMessage(1000, "Coupon không tồn tại"));
+                    //    var gettoken = _customerDa.GetItemByID(data.ShopID);
+                    //    var token = gettoken.tokenDevice;
+                    //    Pushnotifycation(notify.Title, notify.Content.Replace("{customer}", data.CustomerName), token, notify.ID.ToString());
                     //}
-                }
-                var order = new Shop_Orders()
-                {
-                    Address = data.Address,
-                    CustomerID = CustomerId,
-                    Longitude = data.Longitude,
-                    Latitude = data.Latitude,
-                    Mobile = data.Mobile,
-                    CustomerName = data.CustomerName,
-                    DateCreated = DateTime.Now.TotalSeconds(),
-                    Code = FDIUtils.RandomCode(12),
-                    FeeShip = data.FeeShip ?? 0,
-                    StatusPayment = (int)PaymentOrder.Process,
-                    Coupon = data.Coupon,
-                    ShopID = data.ShopID,
-                    //Discount = data.Discount,
-                    CouponPrice = coupon?.DN_Sale.Price ?? 0,
-                    PaymentMethodId = data.PaymentmethodId,
-                    Status = (int)StatusOrder.Create,
-                    Note = data.Note,
-                    CustomerAddressID = data.CustomerAddressID,
-                };
-                if (!string.IsNullOrEmpty(data.Coupon))
-                {
-                    order.CouponPrice = coupon.DN_Sale.Price ?? 0;
+
+                    #endregion
                 }
                 else
                 {
-                    order.CouponPrice = 0;
+                    return Json(new JsonMessage(1000, "Ví của bạn không đủ tiền để đặt hàng."), JsonRequestBehavior.AllowGet);
                 }
-                foreach (var product in data.LisOrderDetailItems)
-                {
-                    var productData = _productDa.GetProductItem(product.ProductId ?? 0);
-                    if (productData == null)
-                    {
-                        return Json(new JsonMessage(1000, "Sản phẩm không tồn tại"), JsonRequestBehavior.AllowGet);
-                    }
-                    var item = new Shop_Order_Details()
-                    {
-                        ProductID = product.ProductId,
-                        Price = productData.PriceNew ?? 0,
-                        Quantity = product.Quantity ?? 1,
-                        CustomerId = data.ShopID,
-                        Status = (int)StatusOrder.Create,
-                        DateCreated = DateTime.Now.TotalSeconds(),
-                        TotalPrice = productData.PriceNew * (product.Quantity ?? 1),
-                        StatusPayment = (int)PaymentOrder.Process,
-                        IsPrestige = product.IsPrestige,
-                    };
-                    order.Shop_Order_Details.Add(item);
-                }
-                var total = order.Shop_Order_Details.Sum(m => m.Price * m.Quantity);
-                order.Total = total;
-                order.TotalPrice = total;
-                order.Payments = total - order.CouponPrice + decimal.Round(data.FeeShip ?? 0);
-                orderDA.Add(order);
-                if (coupon != null)
-                {
-                    coupon.IsUse = true;
-                }
-                await orderDA.SaveAsync();
-                await _productDa.SaveAsync();
-                var notify = orderDA.GetNotifyById(7);
-                var gettoken = _customerDa.GetItemByID(data.ShopID);
-                var token = gettoken.tokenDevice;
-                Pushnotifycation(notify.Title, notify.Content.Replace("{customer}", data.CustomerName), token, notify.ID.ToString());
+            }
+            catch (Exception e)
+            {
+                return Json(new JsonMessage(404, e.ToString()), JsonRequestBehavior.AllowGet);
+
             }
             return Json(new JsonMessage(200, ""), JsonRequestBehavior.AllowGet);
         }
@@ -139,11 +165,12 @@ namespace FDI.MvcAPI.Controllers
         [AllowAnonymous]
         public ActionResult UpdateStatus(int orderId, int type)
         {
+
             var data = orderDA.GetById(orderId);
             data.Status = type;
             data.Check = 1;
             data.DateUpdateStatus = DateTime.Now.TotalSeconds();
-            var totalPrice = data.Total - data.CouponPrice + data.FeeShip;
+            var totalPrice = data.Payments;
             //var TotalPricegstore = data.OrderTotal - ((data.Discount * data.OrderTotal / 100)) + data.FeeShip;
             //var config = _walletCustomerDa.GetConfig();
             //var totaldis = data.Discount + config.Percent;
@@ -157,6 +184,7 @@ namespace FDI.MvcAPI.Controllers
 
             if (type == (int)StatusOrder.Complete)
             {
+                // tru tien khach hang
                 var cashout = new CashOutWallet
                 {
                     CustomerID = data.CustomerID,
@@ -168,137 +196,95 @@ namespace FDI.MvcAPI.Controllers
                 };
                 _cashOutWalletDa.Add(cashout);
                 _cashOutWalletDa.Save();
-                var walletcus = new WalletCustomer
+                decimal? totak = 0;
+                foreach (var items in data.Shop_Order_Details)
                 {
-                    CustomerID = 1,
-                    TotalPrice = totalPrice ?? 0,
-                    DateCreate = DateTime.Now.TotalSeconds(),
-                    IsActive = true,
-                    IsDelete = false,
-                    Type = 2,
-                    Transaction_no = data.Code,
-                    CustomerIDR = data.CustomerID,
-                };
-                _walletCustomerDa.Add(walletcus);
-                _walletCustomerDa.Save();
-                // xử lý trừ số lượng trong kho của shop
+                    var k = items.Shop_Product.Category.Profit;
+                    totak += (items.Shop_Product.Product_Size != null ? (decimal)items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
+                    var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
+                    var config = _walletCustomerDa.GetConfig();
+                    var totalshop = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
+                    var walletcus = new WalletCustomer
+                    {
+                        CustomerID = data.ShopID,
+                        TotalPrice = totalshop ?? 0,
+                        DateCreate = DateTime.Now.TotalSeconds(),
+                        IsActive = true,
+                        IsDelete = false,
+                        Type = 2,
+                        Transaction_no = data.Code,
+                        CustomerIDR = data.CustomerID,
+                    };
+                    _walletCustomerDa.Add(walletcus);
+                    _walletCustomerDa.Save();
+                    // kiem tra level khach hang.
+                    //UpdateLevelCustomer(data.CustomerID ?? 0);
+                    var cus = _customerDa.GetItemByID(data.CustomerID ?? 0);
+                    //var shopsucess = orderDA.GetNotifyById(5);
+                    //var tokenshop = shop.tokenDevice;
+                    //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalshop.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
+                    
+                    var bonusItems = _customerDa.ListBonusTypeItems();
+                    #region hoa hồng khách hàng và shop ký gửi
+                    var iskg = data.Customer.Type == 2;
+                    if (!iskg)
+                    {
+                        InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
+                        InsertRewardOrderAgency(shop, config, totak, data.ID, bonusItems);
+                    }
+                    else
+                    {
+                        // chiết khấu shop ký gửi
+                        //decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
+                        //decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
+                        //if (totalpres > 0)
+                        //{
+                        //    //InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        //    InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
+                        //}
+                        //if (totalnopres > 0)
+                        //{
+                        //    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
+                        //}
+                    }
+                    #endregion
+                }
+                #region // xử lý trừ số lượng trong kho của shop
                 foreach (var item in data.Shop_Order_Details)
                 {
                     var product = _productDa.GetById(item.ProductID ?? 0);
                     product.QuantityOut += item.Quantity;
                     _productDa.Save();
                 }
-                var processOrder = new OrderProcessAppIG4Item
-                {
-                    OrderId = orderId,
-                    EndDate = DateTime.Now.AddHours(24).TotalSeconds(),
-                };
-                HandlingNode(":4000", processOrder);
+
+
+                #endregion
             }
-            var notify = orderDA.GetNotifyById(8);
-            var gettoken = _customerDa.GetItemByID(data.CustomerID ?? 0);
-            var token = gettoken.tokenDevice;
-            if (type == (int)StatusOrder.Process)
-            {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == 2 ? "đang được giao" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
-            }
-            if (type == (int)StatusOrder.Cancel)
-            {
-                Pushnotifycation(notify.Title, notify.Content.Replace("{status}", type == -1 ? "vừa bị hủy bởi chủ cửa hàng.!" : "").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
-            }
-            if (type == (int)StatusOrder.Complete)
-            {
-                notify = orderDA.GetNotifyById(3);
-                Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", totalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
-            }
+            #region push notify
+            //var notify = orderDA.GetNotifyById(8);
+            //var gettoken = _customerDa.GetItemByID(data.CustomerID ?? 0);
+            //var token = gettoken.tokenDevice;
+            //if (type == (int)StatusOrder.Process)
+            //{
+            //    Pushnotifycation(notify.Title, notify.Content.Replace("{status}", "đang được xử lý").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
+            //}
+            //if (type == (int)StatusOrder.Shipping)
+            //{
+            //    Pushnotifycation(notify.Title, notify.Content.Replace("{status}", "đang được giao").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
+            //}
+            //if (type == (int)StatusOrder.Cancel)
+            //{
+            //    Pushnotifycation(notify.Title, notify.Content.Replace("{status}", "vừa bị hủy bởi chủ cửa hàng.!").Replace("{shop}", data.Customer.FullName).Replace("{code}", data.Code), token, notify.ID.ToString());
+            //}
+            //if (type == (int)StatusOrder.Complete)
+            //{
+            //    notify = orderDA.GetNotifyById(3);
+            //    Pushnotifycation(notify.Title, notify.Content.Replace("{shop}", data.Customer.FullName).Replace("{price}", totalPrice.Money()).Replace("{code}", data.Code), token, notify.ID.ToString());
+            //}
+#endregion
             return Json(new BaseResponse<List<ProductItem>> { Code = 200, Message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
-        [AllowAnonymous]
-        public ActionResult ProcessOrderShip(string key, string json)
-        {
-            if (key == "Fdi@123")
-            {
-                var model = new JavaScriptSerializer().Deserialize<OrderProcessAppIG4Item>(json);
-
-                var data = orderDA.GetById(model.OrderId);
-                decimal? totak = 0;
-                foreach (var items in data.Shop_Order_Details)
-                {
-                    var k = items.Shop_Product.Category.Profit;
-                    totak += (items.Shop_Product.Product_Size != null ? (decimal)items.Shop_Product.Product_Size.Value : 1) * items.Quantity * k * 1000;
-                }
-                var TotalPricegstore = data.Total + data.FeeShip;
-                var config = _walletCustomerDa.GetConfig();
-                // chuyen tien tu vi trung gian cua gstore customerId = 1 den shop
-                #region đơn hàng đã giao thành công cộng tiền cho shop
-                var cashout = new CashOutWallet
-                {
-                    CustomerID = 1,
-                    TotalPrice = TotalPricegstore ?? 0,
-                    DateCreate = DateTime.Now.TotalSeconds(),
-                    OrderID = data.ID,
-                    Type = 1,
-                    Code = data.Code,
-                };
-                _cashOutWalletDa.Add(cashout);
-                _cashOutWalletDa.Save();
-
-                var shop = _customerDa.GetItemByID(data.ShopID ?? 0);
-                //var totalshop = data.Total - (data.Total * config.DiscountOrder / 100) + data.FeeShip;
-                
-                var totalshop = (data.Total - totak) + (totak * shop.PercentDiscount / 100) + data.FeeShip;
-
-                var walletcus = new WalletCustomer
-                {
-                    CustomerID = data.ShopID,
-                    TotalPrice = totalshop ?? 0,
-                    DateCreate = DateTime.Now.TotalSeconds(),
-                    IsActive = true,
-                    IsDelete = false,
-                    Type = 2,
-                    Transaction_no = data.Code,
-                    CustomerIDR = 1,
-                };
-                _walletCustomerDa.Add(walletcus);
-                _walletCustomerDa.Save();
-                var cus = _customerDa.GetItemByID(data.CustomerID ?? 0);
-                var shopsucess = orderDA.GetNotifyById(5);
-                var tokenshop = shop.tokenDevice;
-                Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", totalshop.Money()).Replace("{code}", data.Code).Replace("{customer}", data.Customer.FullName), tokenshop, shopsucess.ID.ToString());
-                #endregion
-                var bonusItems = _customerDa.ListBonusTypeItems();
-                #region hoa hồng khách hàng và shop ký gửi
-                var iskg = data.Customer.Type == 2;
-                if (!iskg)
-                {
-                    InsertRewardOrderCustomer(cus, config, totak, data.ID, bonusItems);
-                    InsertRewardOrderAgency(shop, config, totak, data.ID, bonusItems);
-                }
-                else
-                {
-                    // chiết khấu shop ký gửi
-                    //decimal totalpres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == true).Sum(detail => detail.TotalPrice ?? 0);
-                    //decimal totalnopres = data.Shop_Order_Details.Where(detail => detail.IsPrestige == false || !detail.IsPrestige.HasValue).Sum(detail => detail.TotalPrice ?? 0);
-                    //if (totalpres > 0)
-                    //{
-                    //    //InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                    //    InsertRewardCustomer(data.Customer.ListID, data.Customer.ParentID ?? 0, totalpres, data.ID, bonusItems, 2, data.ShopID ?? 0);
-                    //}
-                    //if (totalnopres > 0)
-                    //{
-                    //    InsertRewardCustomer(data.Customer.ListID,data.Customer.ParentID ?? 0, totalnopres, data.ID, bonusItems);
-                    //}
-                }
-                #endregion
-                // kiem tra level khach hang.
-                UpdateLevelCustomer(data.CustomerID ?? 0);
-                return Json(new BaseResponse<JsonMessage> { Code = 200, Message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new BaseResponse<JsonMessage> { Code = -1, Message = "Bạn không có quyền truy cập.!" }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        
         public ActionResult GetCoupon(string code)
         {
             var coupon = _productDa.GetSaleCodeUseByCode(code);
@@ -313,8 +299,6 @@ namespace FDI.MvcAPI.Controllers
             };
             return Json(new BaseResponse<SaleCodeAppIG4Item> { Code = 200, Data = data }, JsonRequestBehavior.AllowGet);
         }
-
-
         public static string publickey = "<RSAKeyValue><Modulus>r+YDcXLRLkdA9uaBddhz8gvkh3CoPNVehawkSXt9VTPoQApdWeVyTkLTXsKSyASdyIqhbQo4rxQ1k38CPvWwQFM21V46rtq5S2j/MeXHUmjlTd22VCEno8vBN+g26m/aQC5R6WAf0PjZ9bu1R3BWaHR51jVBF7eiG8ALNj5M9hMK+tSmtrQc0BiWlUYR232zK8zXElT9Ls5he+GXvRWl0hB+SSXS2KqoN9nwPc+vuTxxisvMS0PW6o3VG1tCP2gQTLdsTnJ2bQZYkx4WQIY9bLucUYAP84t3Ymd2XC9xg6hab6sBdGjbZiReLd4gOxlB7KJPH/7PRCI28TJKAbqqAXREvDv4jUeob9zFTlZpcbsdJy5PURUq0uhZzf/BmwEpokdrjdV5V7btuL4fLNjqyKIDj9spXnk9ohvIFBPmA+eu/9xKxeOwFTSqEvZcJzKDg87K4AIN/T6UBBDI3qGr9eCVQK0BPhw9wHHyELzFQOJKnqtqCBHMXNk8rB6wu+k5RuZjzVmULKNRnNgJ7moxkasyEs/lPYg5uPvCBtCDroEviFdI6+gg7aRaypIcirSUeiqDfoTTgDI2PNH7RNyvXMuqWU+KJ3+nwTi32dwJ02jShMXb22e3SwxkxIMntMWCyTegb5W2qR8vkiPQm4ZOUFHD7a+LajAbcwd2BZZMAjU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
         public static string PartnerCode = "MOMOYIQU20200912";
         public static string serectkey = "Mod7W9MkCZ5ZhAIvQDhahaUlDMn2Boqd";

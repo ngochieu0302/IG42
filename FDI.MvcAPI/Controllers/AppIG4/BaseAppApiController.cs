@@ -207,10 +207,10 @@ namespace FDI.MvcAPI.Controllers
                                 TotalCp = totalD,
                             };
                             _rewardHistoryDa.Add(reward);
-                            var cus = _customerDa.GetItemByID(item.ID);
-                            var shopsucess = _orderDa.GetNotifyById(6);
-                            var tokenshop = cus.tokenDevice;
-                            Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                            //var cus = _customerDa.GetItemByID(item.ID);
+                            //var shopsucess = _orderDa.GetNotifyById(6);
+                            //var tokenshop = cus.tokenDevice;
+                            //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
                             per += bonusItem.Percent ?? 0;
                     }
                         //}
@@ -335,10 +335,10 @@ namespace FDI.MvcAPI.Controllers
                             TotalCp = totalD,
                         };
                         _rewardHistoryDa.Add(reward);
-                        var cus = _customerDa.GetItemByID(item.ID);
-                        var shopsucess = _orderDa.GetNotifyById(6);
-                        var tokenshop = cus.tokenDevice;
-                        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                        //var cus = _customerDa.GetItemByID(item.ID);
+                        //var shopsucess = _orderDa.GetNotifyById(6);
+                        //var tokenshop = cus.tokenDevice;
+                        //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
                         per += bonusItem.Percent ?? 0;
                     }
                 }
@@ -396,10 +396,10 @@ namespace FDI.MvcAPI.Controllers
                             TotalCp = totalD,
                         };
                         _rewardHistoryDa.Add(reward);
-                        var cus = _customerDa.GetItemByID(item.ID);
-                        var shopsucess = _orderDa.GetNotifyById(6);
-                        var tokenshop = cus.tokenDevice;
-                        Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
+                        //var cus = _customerDa.GetItemByID(item.ID);
+                        //var shopsucess = _orderDa.GetNotifyById(6);
+                        //var tokenshop = cus.tokenDevice;
+                        //Pushnotifycation(shopsucess.Title, shopsucess.Content.Replace("{price}", reward.Price.Money().Replace("{hoahong}", bonusItem.Name).Replace("{customer}", item.Fullname)), tokenshop);
                         per += bonusItem.Percent ?? 0;
                     }
                 }
