@@ -1,0 +1,3353 @@
+{
+	"info": {
+		"_postman_id": "1857da2a-ea1a-444f-8f04-1d805ad1eb0e",
+		"name": "GStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Khach hang",
+			"item": [
+				{
+					"name": "Valid Phone Number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\" : \"0904539708\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:13655/CustomerApp/Login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "13655",
+							"path": [
+								"CustomerApp",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid Token Zalo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);\r",
+									"var token = response.Data;\r",
+									"postman.setEnvironmentVariable(\"token\", token.Token);\r",
+									"postman.setEnvironmentVariable(\"refresh_token\", token.RefreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accesstoken\" : \"G3LERWtReH97EqXg2TAY5amwGt1-qwzxIMKpLbJ9d55YO7KfAFdpM1TLQMXTn8LqH7OvVGcTcKCnD31kEBRPImi1SM0_h9jP23CMUYAyzbLp0qPCIEscNNTz4qfSoAzoOLmFUrVLWtGSFcC99z3-CpDN4XKBrlCKE3n9DpA--aT-5a9bExJmVn5RN00bji8bAoTZ1Jco-oPeAt0nHhpp0micKWOUkE4D25XeCn_gvo4v14qQ7Upi1WfbTpz0XTazTXnu6qUDy3joPsO2JVp-6L17VDZPI0_3fH8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/ZaloCallback",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"ZaloCallback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid token facebook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);\r",
+									"var token = response.Data;\r",
+									"postman.setEnvironmentVariable(\"token\", token.Token);\r",
+									"postman.setEnvironmentVariable(\"refresh_token\", token.RefreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accesstoken\" : \"jUSI6lTgXaQowHGUysE5Ghde7mIx9VHTWwa2PfvY_q22l2mRfpBb9uVbA6A6RB9ykR9cLfDnh4-a-5bqlJVDGxZP3aVp1lrCjOK0Jx9Crs65WKrDcMwfOQMRRZkxJRGXh9vmUf0Jd7hLztnYmmMMHVtOR4__B9n3jSvrUPuH-dsRqo4jfX3vAUtHCJ2i8Ue2x-eo4lS0-Hd5usiyWH2nPwZ98qEBGj4RlRf41VPigYdGf6Kto4-VR8w7Sa_F2fLGskXIM-vWasp9kNPtRp97SxkYQFLoWaO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/FacebookCallback",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"FacebookCallback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid token Google",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);\r",
+									"var token = response.Data;\r",
+									"postman.setEnvironmentVariable(\"token\", token.Token);\r",
+									"postman.setEnvironmentVariable(\"refresh_token\", token.RefreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accesstoken\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}customerApp/GoogleCallback",
+							"host": [
+								"{{url}}customerApp"
+							],
+							"path": [
+								"GoogleCallback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\" : \"\",\r\n    \"phone\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/ValidateToken",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"ValidateToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);\r",
+									"var token = response.Data;\r",
+									"postman.setEnvironmentVariable(\"token\", token.Token);\r",
+									"postman.setEnvironmentVariable(\"refresh_token\", token.RefreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IjA5MDQ1Mzk3MDgiLCJUeXBlIjoiVG9rZW4iLCJJRCI6IjYxNSIsIm5iZiI6MTYwOTEyMTQ5MiwiZXhwIjoxNjEwMzMxMDkyLCJpYXQiOjE2MDkxMjE0OTJ9.HmrIPTiukhjbigzp6J9akJGZqHvpb-1xWdiPyZeXEJU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/RefreshToken?refreshToken={{refresh_token}}",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"RefreshToken"
+							],
+							"query": [
+								{
+									"key": "refreshToken",
+									"value": "{{refresh_token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update thong tin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMTUiLCJuYmYiOjE2MTE5MDQ5NTUsImV4cCI6MTYxMzExNDU1NSwiaWF0IjoxNjExOTA0OTU1fQ.bzcdcsAfJMJOzLcfHfT2D5nrYB3EktC4YEsTvOD1F1U"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileAvatar",
+									"type": "file",
+									"src": "/C:/Users/Vuong Ngoc Hieu/Desktop/Image.png"
+								},
+								{
+									"key": "fileImgTimeline",
+									"type": "file",
+									"src": "/C:/Users/nguye/OneDrive/Desktop/img1.jpg"
+								},
+								{
+									"key": "UserName",
+									"value": "Chiến nguyễn 1",
+									"type": "text"
+								},
+								{
+									"key": "Mobile",
+									"value": "0905539708",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "test123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "Description",
+									"value": "Mô tả",
+									"type": "text"
+								},
+								{
+									"key": "Gender",
+									"value": "False",
+									"type": "text"
+								},
+								{
+									"key": "Birthday",
+									"value": "1617004533000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:13655/CustomerApp/UpdateAcount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "13655",
+							"path": [
+								"CustomerApp",
+								"UpdateAcount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://apiver1.ig4.vn/CustomerApp/GetProfile",
+							"protocol": "http",
+							"host": [
+								"apiver1",
+								"ig4",
+								"vn"
+							],
+							"path": [
+								"CustomerApp",
+								"GetProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "san pham dang ban",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU0NjM2NSwiZXhwIjoxNjEyNzU1OTY1LCJpYXQiOjE2MTE1NDYzNjV9.YGxzc17K91LMjNmNh1HfRw8G_4hGAA_Wm1L1SKoANiA "
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetMyProduct1?page=1&pagesize=100",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetMyProduct1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "shop uy tin detail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU0NjM2NSwiZXhwIjoxNjEyNzU1OTY1LCJpYXQiOjE2MTE1NDYzNjV9.YGxzc17K91LMjNmNh1HfRw8G_4hGAA_Wm1L1SKoANiA "
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/ShopPresigeDetail?id=3",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"ShopPresigeDetail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete dia chi",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}CustomerApp/DeleteAdress?id=3",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"DeleteAdress"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add comment user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU1OTQyMCwiZXhwIjoxNjEyNzY5MDIwLCJpYXQiOjE2MTE1NTk0MjB9.1azjpxwPUFMtGYbneUIL04X1kxfwC19WrmmWBrUVH3k"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ShopId",
+									"value": "21",
+									"type": "text"
+								},
+								{
+									"key": "TypeRating",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "Title",
+									"value": "tieu de",
+									"type": "text"
+								},
+								{
+									"key": "Comment",
+									"value": "nội dung 1",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/nguye/OneDrive/Desktop/img1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/AddComment",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"AddComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comment rating",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU1OTQyMCwiZXhwIjoxNjEyNzY5MDIwLCJpYXQiOjE2MTE1NTk0MjB9.1azjpxwPUFMtGYbneUIL04X1kxfwC19WrmmWBrUVH3k"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/GetCommentRatings?id=21",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetCommentRatings"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user rating",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU1OTQyMCwiZXhwIjoxNjEyNzY5MDIwLCJpYXQiOjE2MTE1NTk0MjB9.1azjpxwPUFMtGYbneUIL04X1kxfwC19WrmmWBrUVH3k"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetRatingsCustomer?id=2\n\n\n",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetRatingsCustomer"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2\n\n\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get same shop",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU1OTQyMCwiZXhwIjoxNjEyNzY5MDIwLCJpYXQiOjE2MTE1NTk0MjB9.1azjpxwPUFMtGYbneUIL04X1kxfwC19WrmmWBrUVH3k"
+							}
+						],
+						"url": {
+							"raw": "{{url}}customerApp/GetShopSame?shopid=2&minKm=0&maxKm=0&latitude=21.018820&longitude=105.783272&page=1&pagesize=12",
+							"host": [
+								"{{url}}customerApp"
+							],
+							"path": [
+								"GetShopSame"
+							],
+							"query": [
+								{
+									"key": "shopid",
+									"value": "2"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "latitude",
+									"value": "21.018820"
+								},
+								{
+									"key": "longitude",
+									"value": "105.783272"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}CustomerApp/GetAdress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update địa chỉ khách hàng",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							},
+							{
+								"key": "Longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID\" : 11,\r\n    \"IsDefault\" : true,\r\n    \"Latitude\" : {{latitude}},\r\n    \"Longitude\" : {{longitude}},\r\n    \"City\" : \"Ha Noi\",\r\n    \"District\" : \"Bac Tu Liem\",\r\n    \"Commune\" : \"Co Nhue\",\r\n    \"Address\" : \"Co Nhue, Bac Tu Liem, Ha Noi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/UpdateAddress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"UpdateAddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm địa chỉ khách hàng",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IsDefault\" : true,\r\n    \"Latitude\" : {{latitude}},\r\n    \"Longitude\" : {{longitude}},\r\n    \"City\" : \"Ha Noi\",\r\n    \"District\" : \"Cau giay\",\r\n    \"Commune\" : \"Mai Dich\",\r\n    \"Address\" : \"79 Đường Hồ Tùng Mậu, Mai Dịch, Cầu Giấy, Hà Nội 122868, Việt Nam\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/AddAdress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"AddAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa địa chỉ khách hàng",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/DeleteAdress?id=10",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"DeleteAdress"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chi tiet san pham",
+			"item": [
+				{
+					"name": "chi tiet san pham",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU1OTQyMCwiZXhwIjoxNjEyNzY5MDIwLCJpYXQiOjE2MTE1NTk0MjB9.1azjpxwPUFMtGYbneUIL04X1kxfwC19WrmmWBrUVH3k"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetById?id=10&latitude=21.0285879&longitude=105.770674",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								},
+								{
+									"key": "latitude",
+									"value": "21.0285879"
+								},
+								{
+									"key": "longitude",
+									"value": "105.770674"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU2NTIzNSwiZXhwIjoxNjEyNzc0ODM1LCJpYXQiOjE2MTE1NjUyMzV9.FpLDfjS2BtKO4bX3NQ3BoqEnqCUmbICOalK96JQTbOU"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ProductId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "TypeRating",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "Title",
+									"value": "tieu de",
+									"type": "text"
+								},
+								{
+									"key": "Comment",
+									"value": "noi dung thay đổi",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/nguye/OneDrive/Desktop/89907622_567272610799092_8612626398873387008_o.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}ProductApp/AddComment",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"AddComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get sp theo nguoi ban",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU2NTIzNSwiZXhwIjoxNjEyNzc0ODM1LCJpYXQiOjE2MTE1NjUyMzV9.FpLDfjS2BtKO4bX3NQ3BoqEnqCUmbICOalK96JQTbOU"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductSampleShop?id=3&page=1&pagesize=100&latitude=1&longitude=4",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductSampleShop"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								},
+								{
+									"key": "latitude",
+									"value": "1"
+								},
+								{
+									"key": "longitude",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get rating",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IiIsIlR5cGUiOiJUb2tlbiIsIklEIjoiMiIsIm5iZiI6MTYxMTU2NTIzNSwiZXhwIjoxNjEyNzc0ODM1LCJpYXQiOjE2MTE1NjUyMzV9.FpLDfjS2BtKO4bX3NQ3BoqEnqCUmbICOalK96JQTbOU"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetRatings?id=2",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetRatings"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comment rating",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetCommentRatings?id=2",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetCommentRatings"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"item": [
+				{
+					"name": "lay sp mua nhieu",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "21.01836198465782"
+							},
+							{
+								"key": "longitude",
+								"value": "105.78406235007142"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetBestBuy?page=1&pagesize=100",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetBestBuy"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cua hang uy tin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}CustomerApp/GetShopPrestige?page=1&pagesize=100",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetShopPrestige"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sp tot gan ban",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetBestProductForYou?km=10&latitude=21.0298012&longitude=105.7580405&page=1&pagesize=10",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetBestProductForYou"
+							],
+							"query": [
+								{
+									"key": "km",
+									"value": "10"
+								},
+								{
+									"key": "latitude",
+									"value": "21.0298012"
+								},
+								{
+									"key": "longitude",
+									"value": "105.7580405"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lấy cửa hàng uy tín quanh bạn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}CustomerApp/GetShopPrestigeForMap?km=15&latitude={{latitude}}&longitude={{longitude}}",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetShopPrestigeForMap"
+							],
+							"query": [
+								{
+									"key": "km",
+									"value": "15"
+								},
+								{
+									"key": "latitude",
+									"value": "{{latitude}}"
+								},
+								{
+									"key": "longitude",
+									"value": "{{longitude}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Danh mục sản phẩm",
+			"item": [
+				{
+					"name": "lay sp danh gia theo category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "20.007"
+							},
+							{
+								"key": "longitude",
+								"value": "21.008"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductIsReviewByCategoryId?id=15&page=1&pagesize=100&maxKm=0&minPrice=0&maxPrice=0&minKm=0&name=",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductIsReviewByCategoryId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "15"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lay sp ban chay theo category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductIsHotByCategoryId?id=3&page=1&pagesize=100&maxKm=0&minPrice=0&maxPrice=0&minKm=0&name=",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductIsHotByCategoryId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lay sp co chuyen hang theo category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductHasTranferByCategoryId?id=15&page=1&pagesize=100&maxKm=0&minPrice=0&maxPrice=0&minKm=0&name=",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductHasTranferByCategoryId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "15"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lay san pham gan ban theo category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetNearProductByCategoryId?id=15&page=1&pagesize=100&maxKm=0&minPrice=0&maxPrice=0&minKm=0&name=",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetNearProductByCategoryId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "15"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "100"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total san pham header",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetSummaryTotalByCategoryId?id=15&maxKm=0&minPrice=0&maxPrice=0&minKm=0&name=",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetSummaryTotalByCategoryId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "15"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy sản phẩm giảm giá",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/Product_Sales",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"Product_Sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy sản phẩm sắp có",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/Product_Incoming",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"Product_Incoming"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sản phẩm đã mua của khách hàng",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}OrderApp/GetListProductByCustomerID",
+							"host": [
+								"{{url}}OrderApp"
+							],
+							"path": [
+								"GetListProductByCustomerID"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "THong ke",
+			"item": [
+				{
+					"name": "san pham da ban",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/ProductGetOrderShop?cateId=3&shopid=10&IsAll=false&type=3&date=2020-10-27&page=1&pagesize=12",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"ProductGetOrderShop"
+							],
+							"query": [
+								{
+									"key": "cateId",
+									"value": "3"
+								},
+								{
+									"key": "shopid",
+									"value": "10"
+								},
+								{
+									"key": "IsAll",
+									"value": "false"
+								},
+								{
+									"key": "type",
+									"value": "3"
+								},
+								{
+									"key": "date",
+									"value": "2020-10-27"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "số liệu bản đồ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GroupProductGetOrderShop?shopid=513&IsAll=false&date=2020-10-27&type=3&cateId=0",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GroupProductGetOrderShop"
+							],
+							"query": [
+								{
+									"key": "shopid",
+									"value": "513"
+								},
+								{
+									"key": "IsAll",
+									"value": "false"
+								},
+								{
+									"key": "date",
+									"value": "2020-10-27"
+								},
+								{
+									"key": "type",
+									"value": "3"
+								},
+								{
+									"key": "cateId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "data column chart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}CustomerApp/StaticChartShop?shopId=513&type=1&date=2020-10-27&cateId=0",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"StaticChartShop"
+							],
+							"query": [
+								{
+									"key": "shopId",
+									"value": "513"
+								},
+								{
+									"key": "type",
+									"value": "1"
+								},
+								{
+									"key": "date",
+									"value": "2020-10-27"
+								},
+								{
+									"key": "cateId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "đơn hàng",
+			"item": [
+				{
+					"name": "đơn bán",
+					"item": [
+						{
+							"name": "Đơn bán",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "shopid",
+											"value": "481",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "totalpage",
+											"value": "12",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}OrderApp/GetListProductByNew?shopid=513&status=1&page=1&take=12",
+									"host": [
+										"{{url}}OrderApp"
+									],
+									"path": [
+										"GetListProductByNew"
+									],
+									"query": [
+										{
+											"key": "shopid",
+											"value": "513"
+										},
+										{
+											"key": "status",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "take",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cap nhat status",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "shopid",
+											"value": "481",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "0",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "orderdetailids",
+											"value": "876,877",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}OrderApp/UpdateStatus?orderId=1&type=3",
+									"host": [
+										"{{url}}OrderApp"
+									],
+									"path": [
+										"UpdateStatus"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "1"
+										},
+										{
+											"key": "type",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "đơn mua",
+					"item": [
+						{
+							"name": "trạng thái đơn hàng",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}CustomerApp/GetListOrderStatus?cusId=503&status=1&page=1&pagesize=12",
+									"host": [
+										"{{url}}CustomerApp"
+									],
+									"path": [
+										"GetListOrderStatus"
+									],
+									"query": [
+										{
+											"key": "cusId",
+											"value": "503"
+										},
+										{
+											"key": "status",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagesize",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhaaj trạng thái đơn mua",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "orderId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "cusId",
+											"value": "513",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}CustomerApp/UpdateStatusCustomer",
+									"host": [
+										"{{url}}CustomerApp"
+									],
+									"path": [
+										"UpdateStatusCustomer"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "địa chỉ",
+			"item": [
+				{
+					"name": "add dia chi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerName\":\"hieu vuong ngoc\",\r\n    \"Address\": \"Hà Nội\",\r\n    \"IsDefault\":true,\r\n    \"Phone\":\"0902939\",\r\n    \"Latitude\":2,\r\n    \"Longitude\":30,\r\n    \"AddressType\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/AddAdress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"AddAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ds dia chi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}CustomerApp/GetAdress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cap nhat dia chi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"CustomerName\":\"hieu vuong\",\n    \"Address\": \"Hà Nội\",\n    \"IsDefault\":true,\n    \"Phone\":\"0902939\",\n    \"Latitude\":1,\n    \"Longitude\":2,\n    \"AddressType\":2,\n    \"ID\":2\n}"
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/UpdateAddress",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"UpdateAddress"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tim kiem san pham",
+			"item": [
+				{
+					"name": "lay sp cho ban do",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductForMap?name=&minKm=0&maxKm=0&cateId=0&minPrice=0&maxPrice=0&latitude=21.0200605&longitude=105.7839498&page=1&pagesize=15",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductForMap"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "cateId",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "latitude",
+									"value": "21.0200605"
+								},
+								{
+									"key": "longitude",
+									"value": "105.7839498"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lấy sp cho một shop",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"disabled": true
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetProductForMap?name=&minKm=0&maxKm=0&cateId=0&minPrice=0&maxPrice=0&latitude=21.0200605&longitude=105.7839498&page=1&pagesize=15&shopId=513",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetProductForMap"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "maxKm",
+									"value": "0"
+								},
+								{
+									"key": "cateId",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "latitude",
+									"value": "21.0200605"
+								},
+								{
+									"key": "longitude",
+									"value": "105.7839498"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "15"
+								},
+								{
+									"key": "shopId",
+									"value": "513"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category cho ban do",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"value": "{{latitude}}",
+								"type": "text"
+							},
+							{
+								"key": "longitude",
+								"value": "{{longitude}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}productapp/GetCategoryForMap?name=&minKm=0&minPrice=0&maxPrice=0&latitude=21.0200605&longitude=105.7839498&categoryId=0&maxKm=5",
+							"host": [
+								"{{url}}productapp"
+							],
+							"path": [
+								"GetCategoryForMap"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "minKm",
+									"value": "0"
+								},
+								{
+									"key": "minPrice",
+									"value": "0"
+								},
+								{
+									"key": "maxPrice",
+									"value": "0"
+								},
+								{
+									"key": "latitude",
+									"value": "21.0200605"
+								},
+								{
+									"key": "longitude",
+									"value": "105.7839498"
+								},
+								{
+									"key": "categoryIds",
+									"value": "13",
+									"disabled": true
+								},
+								{
+									"key": "categoryId",
+									"value": "0"
+								},
+								{
+									"key": "maxKm",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search tru tien",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "query",
+									"value": "quan-ao",
+									"type": "text"
+								},
+								{
+									"key": "cusId",
+									"value": "513",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}Customer/SearchMoney",
+							"host": [
+								"{{url}}Customer"
+							],
+							"path": [
+								"SearchMoney"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "personal",
+			"item": [
+				{
+					"name": "tao moi sanpham",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/HungHo/Downloads/image/IMG_20201018_103429.jpg"
+								},
+								{
+									"key": "Name",
+									"value": "áo thun",
+									"type": "text"
+								},
+								{
+									"key": "CateId",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "Quantity",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "HasTransfer",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "PriceNew",
+									"value": "1002",
+									"type": "text"
+								},
+								{
+									"key": "Description",
+									"value": "Mô tả",
+									"type": "text"
+								},
+								{
+									"key": "Type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "file1",
+									"type": "file",
+									"src": "/C:/Users/Vuong Ngoc Hieu/Desktop/Image.png"
+								},
+								{
+									"key": "AddressId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "CustomerId1",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}ProductApp/add",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "xóa sảnphẩm",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/delete?id=2",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cap nhat san pham",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/HungHo/Downloads/image/logo_big.jpg"
+								},
+								{
+									"key": "Name",
+									"value": "áo thun",
+									"type": "text"
+								},
+								{
+									"key": "CateId",
+									"value": "51",
+									"type": "text"
+								},
+								{
+									"key": "Quantity",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "HasTransfer",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "PriceNew",
+									"value": "2500",
+									"type": "text"
+								},
+								{
+									"key": "Description",
+									"value": "Mô tả ho van hung",
+									"type": "text"
+								},
+								{
+									"key": "Type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "file1",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "AddressId",
+									"value": "60",
+									"type": "text"
+								},
+								{
+									"key": "ID",
+									"value": "161",
+									"type": "text"
+								},
+								{
+									"key": "PictureDeleteIds",
+									"value": "120",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "PictureDeleteIds",
+									"value": "121",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "PictureDeleteIds",
+									"value": "16",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}ProductApp/Update",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"Update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"item": [
+				{
+					"name": "get ma giam gia",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}orderApp/GetCoupon?code=NHCF4TL9R",
+							"host": [
+								"{{url}}orderApp"
+							],
+							"path": [
+								"GetCoupon"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "NHCF4TL9R"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get % giam gia mac dinh",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}OrderApp/GetDiscount",
+							"host": [
+								"{{url}}OrderApp"
+							],
+							"path": [
+								"GetDiscount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Danh sach shop ki gui",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetCustomerForMap?km=5&latitude={{latitude}}&longitude={{longitude}}&page=1&pagesize=20",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetCustomerForMap"
+							],
+							"query": [
+								{
+									"key": "km",
+									"value": "5"
+								},
+								{
+									"key": "latitude",
+									"value": "{{latitude}}"
+								},
+								{
+									"key": "longitude",
+									"value": "{{longitude}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "LanguageId=vi"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Address\": \"P 306 – Tầng 3 TTTM – 48B, Phạm Hùng, Keangnam, Từ Liêm, Hà Nội, Vietnam\",\r\n  \"Longitude\": 105.7837724,\r\n  \"Latitude\": 21.0178247,\r\n  \"Phone\": \"0972522129\",\r\n  \"CustomerName\": \"Truc Anh\",\r\n  \"FeeShip\": 25644.999999999996,\r\n  \"OrderTotal\": 1000000.0,\r\n  \"Coupon\": \"\",\r\n  \"CustomerAddressID\":115,\r\n  \"LisOrderDetailItems\": [\r\n    {\r\n      \"ID\": 10,\r\n      \"CustomerID\":481,\r\n      \"Quantity\": 1\r\n    },\r\n    {\r\n      \"ID\": 11,\r\n      \"Quantity\": 1,\r\n      \"CustomerID\":481\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Order/Booking",
+							"host": [
+								"{{url}}Order"
+							],
+							"path": [
+								"Booking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News",
+			"item": [
+				{
+					"name": "tin tuc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "shopid",
+									"value": "481",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "totalpage",
+									"value": "12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}NewsApp/ListItems?page=1&totalpage=12",
+							"host": [
+								"{{url}}NewsApp"
+							],
+							"path": [
+								"ListItems"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "totalpage",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "chi tiet tin tuc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "shopid",
+									"value": "481",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "totalpage",
+									"value": "12",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}NewsApp/GetItemById?id=1",
+							"host": [
+								"{{url}}NewsApp"
+							],
+							"path": [
+								"GetItemById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gói dịch vụ",
+			"item": [
+				{
+					"name": "Danh sách các gói dịch vụ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetListCustomerType",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetListCustomerType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Danh sách các gói dịch vụ của 1 khách hàng",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetOrderPackage?customerid=1",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetOrderPackage"
+							],
+							"query": [
+								{
+									"key": "customerid",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mua goi dich vu",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customerid",
+									"value": "513",
+									"type": "text"
+								},
+								{
+									"key": "typeid",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}ProductApp/AddOrderPackage",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"AddOrderPackage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "các gói dịch vụ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}ProductApp/GetOrderPackage?customerid=1",
+							"host": [
+								"{{url}}ProductApp"
+							],
+							"path": [
+								"GetOrderPackage"
+							],
+							"query": [
+								{
+									"key": "customerid",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "ví thưởng",
+					"item": [
+						{
+							"name": "total money reward",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}CustomerApp/GetTotalWalletsReward?customerId=513",
+									"host": [
+										"{{url}}CustomerApp"
+									],
+									"path": [
+										"GetTotalWalletsReward"
+									],
+									"query": [
+										{
+											"key": "customerId",
+											"value": "513"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lich su giao dich tien thuong",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}CustomerApp/GetListWalletsRewardHistory?customerId=513&type=0&page=1&take=12",
+									"host": [
+										"{{url}}CustomerApp"
+									],
+									"path": [
+										"GetListWalletsRewardHistory"
+									],
+									"query": [
+										{
+											"key": "customerId",
+											"value": "513"
+										},
+										{
+											"key": "type",
+											"value": "0"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "take",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get total money",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customerId",
+									"value": "513",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/GetTotalWallets?customerId=513",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetTotalWallets"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "513"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lich su giao dich",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customerId",
+									"value": "513",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/GetListWalletsHistory?customerId=513&type=0&page=1&take=12",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"GetListWalletsHistory"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "513"
+								},
+								{
+									"key": "type",
+									"value": "0"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "take",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MOMo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "latitude",
+								"type": "text",
+								"value": "{{latitude}}",
+								"disabled": true
+							},
+							{
+								"key": "longitude",
+								"type": "text",
+								"value": "{{longitude}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "token",
+									"value": "v2/ehg7SeC3DUvc7xIvj/nHZQkAFHmfaXvKpO831SqaXYKYpeHvB1BPr5oS5YIj7F/rpwpiinshDoSLDT9gyLGOkXXvZ8IB3orpO3LzNfLnoCSUsgI9kCetV0XTyvVGrPtAKLvTM/grlp3Ar98vPIQfUXjgQcMUn1YizHkhKnQ885jtKg6IUFkizLyWfjZiDvYouzCOXIo4k46n+QYq/tKucYPVmKeeS+TCzO/LDchHlQrIbcjcwWLHlQMfOIwRQaIXuGqxThwx5p640nJAFysUu3RyUBwlUHuxhgnms2mLTTNkQ7yfO+2K92NF+Vv4FLcgPbfdJbPWvp+1EJsV+0Deih+fF80Hj8iS3LrmmNpa/zpcUSQIrq/4cjMth+aoWE1X8H7SKg7TRSPyWZrM84iPyFMNrDqxOcq1djIOrLrqeveJX11EIffk1OaTd1V63g60Pe+d0nsV6aH7PFWc7jTTWbuyE3Im2g08Sd7wKdqeswkhOHZyWd6aK2rpGHT38M4nZLnNAHZtUyJP/iHoSIfYXsb+e1Jbds2v7u1rvSxQgFm9eBBWd9T2d32/VNj0GB3Q4GJPbVN+SiQ/SLhZX6SjTEZnrFEp0nr+BO8ntgatWU3dcWaCWqk8VY8GNdv3fZ8+C4wgCLcQoig6B3cQ7ZQknGQn9YFLbJeY9OcCWeR1azHpAFZXIz8EdiWdy/7B8BZzm2kGVbhFxj8DfJSt5yx5zoVJ4VogLm5M1bOLJ25Wc/hLHaixbE7SXrKdsZ1odv8Tm2WRjUrVRqcxRU/wmxOHm+mlXXxNQ/kOdByZkfhn++QNfKQ3Cqvc4Og5zRC5Lpzn31wLwY9deZYOFA2gSpUeq0t7HDoEXoNp9moMcOd/7oA=",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "customerNumber",
+									"value": "0917300300",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}orderApp/PaymentMoMoServer",
+							"host": [
+								"{{url}}orderApp"
+							],
+							"path": [
+								"PaymentMoMoServer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nap tien",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "CustomerID",
+									"value": "513",
+									"type": "text"
+								},
+								{
+									"key": "Totalprice",
+									"value": "1000000",
+									"type": "text"
+								},
+								{
+									"key": "TransactionNo",
+									"value": "09876543222",
+									"type": "text"
+								},
+								{
+									"key": "Note",
+									"value": "nạp tiền test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}CustomerApp/AddWallets",
+							"host": [
+								"{{url}}CustomerApp"
+							],
+							"path": [
+								"AddWallets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get all category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{url}}CategoryApp/GetAllProducts",
+					"host": [
+						"{{url}}CategoryApp"
+					],
+					"path": [
+						"GetAllProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get slide",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQaG9uZSI6IjA5MTUyODA5ODYiLCJJRCI6IjE4IiwibmJmIjoxNjAwMjI4NTA4LCJleHAiOjE2MDE0MzgxMDgsImlhdCI6MTYwMDIyODUwOH0.lV8f_abaLANiVUy4cQ2BbdQFOmFi5i_HqEzTfpxBlyk"
+					}
+				],
+				"url": {
+					"raw": "{{url}}Advertising/GetByPosition?id=2",
+					"host": [
+						"{{url}}Advertising"
+					],
+					"path": [
+						"GetByPosition"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get sp theo categoryid",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}"
+					},
+					{
+						"key": "latitude",
+						"value": "2",
+						"type": "text"
+					},
+					{
+						"key": "longitude",
+						"value": "3",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}productapp/GetProductByCategoryId?id=13&page=1&pagesize=12&maxKm=10&minPrice=0&maxPrice=0",
+					"host": [
+						"{{url}}productapp"
+					],
+					"path": [
+						"GetProductByCategoryId"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "13"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pagesize",
+							"value": "12"
+						},
+						{
+							"key": "maxKm",
+							"value": "10"
+						},
+						{
+							"key": "minPrice",
+							"value": "0"
+						},
+						{
+							"key": "maxPrice",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Push firebase notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "key=AAAAGBvodiE:APA91bFe8RB42680q29-faFPseMpONPUJn2p_sp-Dcu-1sOtsPKq5TMKuGTZq65kOMP4vO9OWsCmaXT-BoisvkffCELWXBR1zvBpn_AtXmnzX9fgnw12ZrBwppyTJgq7LOjHfLQrn5_K"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"to\":\"f4ebqCj8QeewuhtDIw3WMy:APA91bEgYa092FvR7txPLLpg0zWpv4-2e13h5UMl4kaZzBuDizAmVEdkbqyo0bEtaKHwIeI_dFeFrv8uSvvyaVIjbMvIBPl1fazrgWrVySJhbBu-1QW7zT9e1ed9cC7ge6d-pZ5YlAkr\",\n \"collapse_key\" : \"type_a\",\n \"notification\" : {\n     \"body\" : \"Body of Your Notification ne\",\n     \"title\": \"Title of Your Notification\"\n },\n \"click_action\": \"FLUTTER_NOTIFICATION_CLICK\",\n \"data\" : {\n     \"body\" : \"Body of Your Notification in Data\",\n     \"title\": \"Title of Your Notification in Title\",\n     \"key_1\" : \"Value for key_1\",\n     \"key_2\" : \"Value for key_2\"\n }\n}"
+				},
+				"url": {
+					"raw": "https://fcm.googleapis.com/fcm/send",
+					"protocol": "https",
+					"host": [
+						"fcm",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"fcm",
+						"send"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

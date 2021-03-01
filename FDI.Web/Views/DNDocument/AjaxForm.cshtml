@@ -147,7 +147,6 @@
                             <label class="col-sm-2 control-label">Loại hợp đồng</label>
                             <div class="col-sm-4">
                                 <select name="Type" id="Type" class="form-control">
-                                    <option value="">Chọn loại hợp đồng</option>
                                     @foreach (var items in FDI.Utils.TypeDocument.Document())
                                     {
                                         <option value="@items.Value" @(Model.Type == items.Value ? "selected" : "")>@items.Key</option>

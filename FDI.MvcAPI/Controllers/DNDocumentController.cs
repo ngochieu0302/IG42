@@ -66,12 +66,19 @@ namespace FDI.MvcAPI.Controllers
                 UpdateModel(model);
                 var ds = Request["_DateStart"];
                 var de = Request["_DateEnd"];
+
+                DateTime Dates = DateTime.ParseExact(ds, "dd/MM/yyyy",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+                DateTime Datee = DateTime.ParseExact(ds, "dd/MM/yyyy",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+            
+
                 model.IsShow = true;
                 model.IsCancel = false;
                 model.Status = false;
                 model.CreatedDate = DateTime.Now.TotalSeconds();
-                model.DateStart = ConvertUtil.ToDateTime(ds).TotalSeconds();
-                model.DateEnd = ConvertUtil.ToDateTime(de).TotalSeconds();
+                model.DateStart = Dates.TotalSeconds();
+                model.DateEnd = Datee.TotalSeconds();
                 var lst = FDIUtils.StringToListInt(json);
                 if (lst.Count > 0)
                 {
@@ -96,8 +103,14 @@ namespace FDI.MvcAPI.Controllers
                 UpdateModel(model);
                 var ds = Request["_DateStart"];
                 var de = Request["_DateEnd"];
-                model.DateStart = ConvertUtil.ToDateTime(ds).TotalSeconds();
-                model.DateEnd = ConvertUtil.ToDateTime(de).TotalSeconds();
+
+                DateTime Dates = DateTime.ParseExact(ds, "dd/MM/yyyy",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+                DateTime Datee = DateTime.ParseExact(ds, "dd/MM/yyyy",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+                model.DateStart = Dates.TotalSeconds();
+                model.DateEnd = Datee.TotalSeconds();
                 var lstRemove = Request["lstRemove"];
                 if (!string.IsNullOrEmpty(lstRemove))
                 {
@@ -124,7 +137,7 @@ namespace FDI.MvcAPI.Controllers
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult Delete(string key, string lstArrId,string usercan)
+        public ActionResult Delete(string key, string lstArrId, string usercan)
         {
             if (key == Keyapi)
             {

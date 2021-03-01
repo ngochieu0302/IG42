@@ -40,8 +40,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Nodejs", "Nodejs\", "{89A82
 		SlnRelativePath = "Nodejs\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDI.Admin", "FDI.Admin\FDI.Admin.csproj", "{5441F703-5033-4BA5-BE5D-5D805282F7B0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,10 +82,6 @@ Global
 		{89A825A8-BFDF-4B10-BF6F-2B84ADD215A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A825A8-BFDF-4B10-BF6F-2B84ADD215A9}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{89A825A8-BFDF-4B10-BF6F-2B84ADD215A9}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5441F703-5033-4BA5-BE5D-5D805282F7B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

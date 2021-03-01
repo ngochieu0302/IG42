@@ -28,6 +28,7 @@ namespace FDI.DA
         {
             Request = new ParramRequest(httpRequest);
             var query = from o in FDIDB.Documents
+                        where o.IsCancel != true
                         orderby o.ID descending
                         select new DocumentItem
                         {

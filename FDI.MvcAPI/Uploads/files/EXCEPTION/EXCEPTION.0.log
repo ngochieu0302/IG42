@@ -169,3 +169,147 @@ mscorlib
    at FDI.MvcAPI.Controllers.ShopProductDetailController.Addproduct(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\Product\ShopProductDetailController.cs:line 414
 Void StringToNumber(System.String, System.Globalization.NumberStyles, NumberBuffer ByRef, System.Globalization.NumberFormatInfo, Boolean)
 
+17/02/2021 14:31:41 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 14:31:49 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 14:31:58 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 14:33:08 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 14:42:08 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 15:00:52 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 15:31:46 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 15:33:21 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+17/02/2021 15:38:25 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:05:57 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:10:08 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 314
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime ParseExact(System.String, System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:20:37 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:28:35 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:29:56 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:32:52 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 73
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:42:24 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 78
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 09:44:09 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Add(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 78
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+
+18/02/2021 10:01:42 String was not recognized as a valid DateTime.
+mscorlib
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at FDI.Utils.ConvertUtil.ToDateTime(String obj) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.Utils\ConvertUtil.cs:line 313
+   at FDI.MvcAPI.Controllers.DNDocumentController.Update(String key, String json) in E:\CSharp\ASP.NET CORE\IG4\IG4\FDI.MvcAPI\Controllers\DNDocumentController.cs:line 106
+System.DateTime Parse(System.String, System.Globalization.DateTimeFormatInfo, System.Globalization.DateTimeStyles)
+

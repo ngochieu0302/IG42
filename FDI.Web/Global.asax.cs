@@ -24,6 +24,8 @@ namespace FDI.Web
 
             //ModelBinders.Binders.Add(typeof(decimal), new DecimalBinder());
             //ModelBinders.Binders.Add(typeof(decimal?), new NullableDecimalBinder());
+            //ModelBinders.Binders.Add(typeof(decimal), new DateTimeBinder());
+
         }
     }
     //public class DateTimeBinder : IModelBinder

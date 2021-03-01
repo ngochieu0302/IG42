@@ -261,7 +261,6 @@ namespace FDI.Utils
         }
         public static DateTime ToDateTime(string obj)
         {
-
             var retVal = DateTime.Now;
             var strArr = obj.Split(' ');
             var lenStrArr = strArr.Length;

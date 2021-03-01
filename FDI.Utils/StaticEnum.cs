@@ -106,10 +106,11 @@ namespace FDI.Utils
         {
             var list = new Dictionary<string, int>
             {
-                {"Hợp đồng đại lý", 1},
-                {"Hợp đồng nhân sự", 2},
-                {"Hợp đồng đối tác", 3},
-                //{"Hợp đồng cho thuê", 4},
+                {"Đại lý", 1},
+                {"Cộng tác viên", 2},
+                {"Nhà cung cấp - nguồn hàng", 3},
+                {"Khách hàng", 4},
+                {"Khác", 5},
             };
             return list;
         }
